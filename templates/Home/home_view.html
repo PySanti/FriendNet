@@ -16,23 +16,36 @@
             {{home_data.description}}
         </p>
     </section>
-    <section class="sign-section">
-        <div class="signin">
-            <h2 class="signin-title">
-                Ya tienes una cuenta?  
+    
+    {% if user.is_authenticated %}
+        <h1>Ya estas autenticado {{user.username}}</h1>
+        <div class="signout-section">
+            <h2 class="signout-title">
+                Deseas salir?
             </h2>
-            <button class="signin-btn">
-                <a href="">acceder</a>
+            <button class="signout-btn">
+                <a href="{% url 'users:signout'%}">Salir</a>
             </button>
         </div>
-        <div class="signup">
-            <h2 class="signup-title">
-                Aun no tienes una cuenta? Regístrate!
-            </h2>
-            <button class="signup-btn">
-                <a href="">registrar</a>
-            </button>
-        </div>
-    </section>
+    {% else %}
+        <section class="sign-section">
+            <div class="signin">
+                <h2 class="signin-title">
+                    Ya tienes una cuenta?  
+                </h2>
+                <button class="signin-btn">
+                    <a href="{% url 'users:signin'%}">acceder</a>
+                </button>
+            </div>
+            <div class="signup">
+                <h2 class="signup-title">
+                    Aun no tienes una cuenta? Regístrate!
+                </h2>
+                <button class="signup-btn">
+                    <a href="">registrar</a>
+                </button>
+            </div>
+        </section>
+    {% endif %}
 </body>
 </html>
