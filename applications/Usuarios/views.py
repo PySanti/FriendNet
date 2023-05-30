@@ -1,5 +1,6 @@
 from .models import Usuarios
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import (
@@ -23,7 +24,8 @@ class LoginView(FormView):
         return super().form_valid(form)
 
 
-class LogoutView(View):
+class LogoutView(View, LoginRequiredMixin):
+    login_url = reverse_lazy('home:home')
     def get(self, request, *args, **kwargs):
         logout(request)
         return  HttpResponseRedirect(
@@ -46,6 +48,6 @@ class SignUpView(FormView):
             photo = data['photo'],
         )
         authenticate(username=data['username'], password=data['password'])
-        login(new_user)
+        login(self.request, user=new_user)
         return super().form_valid(form)
 

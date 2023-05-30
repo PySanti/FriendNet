@@ -3,7 +3,6 @@ from django.contrib.auth import authenticate
 from django import forms
 from .models import Usuarios
 
-UNIQUE_TOGETHER_FIRST_NAMES_ERROR = "Estos datos ya existen en la base de datos !!"
 
 class UsuariosLoginViewForm(forms.Form):
     username = forms.CharField(label='Usuario')
@@ -33,30 +32,27 @@ class UsuariosSignupViewForm(forms.ModelForm):
             'password',
         )
         labels = {
-            'first_names' : 'Nombres',
-            'last_names' :  'Apellidos',
-            'age' :         'Edad',
-            'username' :    'Usuario',
-            'password' :    'Contraseña',
-            'email' : 'Correo',
-            'photo' : 'Foto',
+            'first_names'   : 'Nombres',
+            'last_names'    : 'Apellidos',
+            'age'           : 'Edad',
+            'username'      : 'Usuario',
+            'password'      : 'Contraseña',
+            'email'         : 'Correo',
+            'photo'         : 'Foto',
         }
         widgets = {
             'password' : forms.PasswordInput(),
             'photo' : forms.FileInput(attrs={
-                'enctype' : 'multipart/form-data'
+                'accept' : 'image/png'
             })
         }
         error_messages = {
             NON_FIELD_ERRORS : {
-                'unique_together' : UNIQUE_TOGETHER_FIRST_NAMES_ERROR,
-            },
-            'photo' : {
-                'required' : 'Debes cargar una imagen de '
+                'unique_together' : "Estos datos ya existen en la base de datos !!",
             },
             'username' : {
                 'unique' : 'Este usuario ya existe !'
-            },
+            }
         }
 
     def clean(self):
