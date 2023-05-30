@@ -1,0 +1,34 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    {% if not user %}
+        <header class="header-container">
+            <h1 class="header-title">
+                Hola, al fin nos conocemos :)
+            </h1>
+        </header>
+        <section class="form-section">
+            <form method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button type="submit">registrarme</button>
+            </form>
+        </section>
+    {% else %}
+        <h1>
+            No puedes crear un usuario si ya estas registrado :(
+        </h1>
+        <button class="home-btn">
+            <a href="{% url 'home:home'%}">volver</a>
+        </button>
+    {% endif %}
+        
+
+</body>
+</html>

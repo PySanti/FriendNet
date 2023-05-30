@@ -9,7 +9,7 @@ class Usuarios(AbstractBaseUser, PermissionsMixin):
     """
     #* BASE ATTRS
     username = models.CharField(max_length=8, unique=True)
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
     is_staff = models.BooleanField()
 
     REQUIRED_FIELDS = ['email', 'first_names', 'last_names', 'age']
@@ -20,7 +20,7 @@ class Usuarios(AbstractBaseUser, PermissionsMixin):
     first_names = models.CharField(max_length=20)
     last_names = models.CharField(max_length=25)
     age = models.PositiveSmallIntegerField()
-    photo = models.ImageField()
+    photo = models.ImageField(upload_to='media/', blank=True)
     is_online = models.BooleanField(default=False)
     current_status = models.CharField(default='bored',max_length=15)
     #* MANAGER
@@ -33,3 +33,7 @@ class Usuarios(AbstractBaseUser, PermissionsMixin):
         verbose_name = 'Usuario'
         verbose_name_plural = 'Usuarios'
         unique_together = ['first_names', 'last_names']
+    
+    def save(self, **kwargs):
+        print(self.photo)
+        return super().save(**kwargs)

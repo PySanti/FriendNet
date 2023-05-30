@@ -1,0 +1,7 @@
+// TODO : guardar imagenes con estandar
+// TODO : refactorizar y repasar codigo
+// TODO: agregar title a todos los templates
+// TODO: agregar diferencias en la interfaz para administrador
+// TODO: Ecriptar almacenamiento de imagenes en 'user_photos'
+// TODO: Limitar tamanio de las imagenes para produccion (seguridad)
+// TODO: investigar sobre seguridad para proyectos django
