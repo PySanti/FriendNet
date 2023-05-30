@@ -2,6 +2,7 @@ from django.contrib.auth.models import BaseUserManager
 
 class UsuariosManager(BaseUserManager):
     def _create_user(self, username, password, email, is_staff, is_superuser, **kwargs):
+        # BUG : Agregar usuarios con uppercase en first_names y last_names
         new_user = self.model(
             username = username,
             email = email,
