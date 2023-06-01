@@ -5,7 +5,8 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import (
     FormView,
-    View
+    View,
+    DetailView
 )
 from django.urls import reverse_lazy
 from .forms import (
@@ -51,3 +52,24 @@ class SignUpView(FormView):
         login(self.request, user=new_user)
         return super().form_valid(form)
 
+class ShowUserDetailView(DetailView):
+    template_name = 'Usuarios/usuarios_detail.html'
+    model = Usuarios
+    context_object_name = 'usuario'
+    USERS_TRADUCTION_ATTRS = {
+        'username' : 'Usuario',
+        'email' : 'Correo',
+        'first_names' : 'Nombres',
+        'last_names' : 'Apellidos',
+        'age' : 'Edad',
+    }
+    NOT_TEMPLATEABLE_ATTRS = ['id', 'password', 'last_login', 'is_superuser', 'is_staff', 'is_online', 'current_status', '_state', 'photo']
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        cleaned_usuario_dict = {
+            self.USERS_TRADUCTION_ATTRS[i[0]]:i[1] for i in context['usuario'].__dict__.items() if i[0] not in self.NOT_TEMPLATEABLE_ATTRS
+        }
+        context['user_data'] = cleaned_usuario_dict
+        context['user_photo'] = context['usuario'].photo.url
+        return context
+    

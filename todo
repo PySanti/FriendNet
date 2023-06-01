@@ -6,3 +6,5 @@
 // TODO: Ecriptar almacenamiento de imagenes en 'user_photos'
 // TODO: Limitar tamanio de las imagenes para produccion (seguridad)
 // TODO: investigar sobre seguridad para proyectos django
+// TODO: agregar activacion de cuenta por gmail
+// TODO: agregar cambio de contrasenia con codigo de confirmacion por gmail

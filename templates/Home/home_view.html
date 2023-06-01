@@ -27,6 +27,14 @@
                 <a href="{% url 'users:signout'%}">Salir</a>
             </button>
         </div>
+        <div class="detail-section">
+            <h2 class="detail-title">
+                Deseas ver tu perfil ?
+            </h2>
+            <button class="detail-btn">
+                <a href="{% url 'users:detail' user.id %}">ver</a>
+            </button>
+        </div>
     {% else %}
         <section class="sign-section">
             <div class="signin">
