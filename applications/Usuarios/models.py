@@ -23,6 +23,7 @@ class Usuarios(AbstractBaseUser, PermissionsMixin):
     photo = models.ImageField(upload_to='media/', blank=True)
     is_online = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
+    activation_code = models.CharField(max_length=6)
 
     current_status = models.CharField(default='bored',max_length=15)
     #* MANAGER

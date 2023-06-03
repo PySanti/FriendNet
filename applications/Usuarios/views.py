@@ -63,7 +63,7 @@ class ShowUserDetailView(DetailView):
         'last_names' : 'Apellidos',
         'age' : 'Edad',
     }
-    NOT_TEMPLATEABLE_ATTRS = ['id', 'password', 'last_login', 'is_superuser', 'is_staff', 'is_online', 'current_status', '_state', 'photo']
+    NOT_TEMPLATEABLE_ATTRS = ['id', 'password', 'last_login', 'is_superuser', 'is_staff', 'is_online', 'current_status', '_state', 'photo', 'is_active', 'activation_code']
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         cleaned_usuario_dict = {
