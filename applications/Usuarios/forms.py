@@ -52,6 +52,9 @@ class UsuariosSignupViewForm(forms.ModelForm):
             },
             'username' : {
                 'unique' : 'Este usuario ya existe !'
+            },
+            'email' : {
+                'unique' : 'Ya existe un usuario con este correo !'
             }
         }
 

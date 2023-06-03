@@ -4,6 +4,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from .tools import generateActivationCode
+from django.core.mail import send_mail
+from django.conf import settings
 from django.views.generic import (
     FormView,
     View,
@@ -53,7 +55,16 @@ class SignUpView(FormView):
             photo = data['photo'],
             activation_code = code ,
         )
-        print(f"~~~~~~~~ Codigo de activacion : {code}")
+        send_mail(
+            "FRIENDNET",
+            f"""
+            Ingresa este codigo para activar tu usuario, {new_user.username}
+
+            {code}
+            """,
+            settings.SECRETS['EMAIL_USER'],
+            [new_user.email]
+        )
         return HttpResponseRedirect(
             reverse_lazy('users:activation',  kwargs={'pk':new_user.id})
         )
