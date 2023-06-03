@@ -22,6 +22,8 @@ class Usuarios(AbstractBaseUser, PermissionsMixin):
     age = models.PositiveSmallIntegerField()
     photo = models.ImageField(upload_to='media/', blank=True)
     is_online = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=False)
+
     current_status = models.CharField(default='bored',max_length=15)
     #* MANAGER
     objects = UsuariosManager()

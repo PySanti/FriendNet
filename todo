@@ -8,3 +8,10 @@
 // TODO: investigar sobre seguridad para proyectos django
 // TODO: agregar activacion de cuenta por gmail
 // TODO: agregar cambio de contrasenia con codigo de confirmacion por gmail
+
+
+//TODO: envio de codigo de activacion por mail
+//TODO: actualizacion de datos de la cuenta
+//TODO: sistema de mensajeria
+//TODO: crear ingreso como invitado
+
