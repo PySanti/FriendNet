@@ -8,6 +8,7 @@
 // TODO: investigar sobre seguridad para proyectos django
 // TODO: agregar activacion de cuenta por gmail
 // TODO: agregar cambio de contrasenia con codigo de confirmacion por gmail
+// TODO: hacer que cuando los usuarios sean eliminados, se elimine tambien su imagen de la DB
 
 
 //TODO: envio de codigo de activacion por mail

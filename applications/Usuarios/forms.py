@@ -58,5 +58,23 @@ class UsuariosSignupViewForm(forms.ModelForm):
     def clean(self):
         data = super().clean()
         if data['password'] != data['password2']:
-            raise forms.ValidationError('Las contraseñas no son iguales !')
+            self.add_error('password','Las contraseñas no son iguales !')
         return data
+
+
+class accountActivationForm(forms.Form):
+    code = forms.CharField(max_length=6, required=True, label='Codigo', widget=forms.TextInput(attrs={
+        'placeholder' : 'Ingresa el código de activación'
+    }))
+    def __init__(self, pk, *args, **kwargs):
+        self.pk = pk
+        return super().__init__(*args, **kwargs)
+    def clean(self):
+        data = super().clean()
+        if len(data['code']) != 6:
+            self.add_error('code', 'El código debe tener al menos 6 caracteres !')
+        else:
+            if not Usuarios.objects.checkActivationCode(self.pk, data['code']):
+                self.add_error('code', 'El código es invalido !')
+            else:
+                return data

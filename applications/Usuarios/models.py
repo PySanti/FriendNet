@@ -36,7 +36,3 @@ class Usuarios(AbstractBaseUser, PermissionsMixin):
         verbose_name = 'Usuario'
         verbose_name_plural = 'Usuarios'
         unique_together = ['first_names', 'last_names']
-    
-    def save(self, **kwargs):
-        print(self.photo)
-        return super().save(**kwargs)

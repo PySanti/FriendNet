@@ -24,7 +24,7 @@
                 Deseas salir?
             </h2>
             <button class="signout-btn">
-                <a href="{% url 'users:signout'%}">Salir</a>
+                <a href="{% url 'users:signout' user.id%}">Salir</a>
             </button>
         </div>
         <div class="detail-section">
