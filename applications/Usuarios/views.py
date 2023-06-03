@@ -1,7 +1,8 @@
+from typing import Any, Dict
 from .models import Usuarios
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
 from .tools import generateActivationCode
 from django.core.mail import send_mail
@@ -15,7 +16,9 @@ from django.urls import reverse_lazy
 from .forms import (
     UsuariosLoginViewForm,
     UsuariosSignupViewForm,
-    accountActivationForm
+    accountActivationForm,
+    PasswordConfirmationForm,
+    DoublePasswordForm
 )
 # Create your views here.
 
@@ -102,4 +105,27 @@ class ShowUserDetailView(DetailView):
         context['user_data'] = cleaned_usuario_dict
         context['user_photo'] = context['usuario'].photo.url
         return context
-    
+
+class PasswordConfirmationView(FormView):
+    template_name = 'Usuarios/pwd_confirmation_view.html'
+    form_class = PasswordConfirmationForm
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['pk'] = self.kwargs['pk']
+        return kwargs
+    def form_valid(self, form):
+        return HttpResponseRedirect(
+            reverse_lazy('users:pwd-change', kwargs={'pk' : self.kwargs['pk']})
+        )
+
+class ChangePasswordView(FormView):
+    template_name = 'Usuarios/change_password_view.html'
+    form_class = DoublePasswordForm
+
+    def form_valid(self, form):
+        user = Usuarios.objects.get(id=self.kwargs['pk'])
+        user.set_password(form.cleaned_data['password1'])
+        user.save()
+        return HttpResponseRedirect(
+            reverse_lazy('users:detail', kwargs={'pk':self.kwargs['pk']})
+        )

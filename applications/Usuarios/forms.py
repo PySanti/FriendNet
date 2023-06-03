@@ -81,3 +81,39 @@ class accountActivationForm(forms.Form):
                 self.add_error('code', 'El código es invalido !')
             else:
                 return data
+
+
+
+class PasswordConfirmationForm(forms.ModelForm):
+    def __init__(self, pk, *args, **kwargs):
+        self.pk = pk
+        return super().__init__(*args, **kwargs)
+    class Meta:
+        model = Usuarios
+        fields = ('password',)
+        labels = {
+            'password' : 'Contraseña actual'
+        }
+        widgets = {
+            'password' : forms.PasswordInput(attrs={
+                'placeholder' : 'Ingresa la contraseña actual'
+            })
+        }
+    def clean(self):
+        data = self.cleaned_data
+        user = Usuarios.objects.get(id=self.pk)
+        if user.check_password(data['password']):
+            return data;
+        else:
+            raise forms.ValidationError('La contraseña es invalida !')
+
+class DoublePasswordForm(forms.Form):
+    password1 = forms.CharField(required=True,  label='Ingresa la contraseña nueva ', widget=forms.PasswordInput())
+    password2 = forms.CharField(required=True,  label='Ingresa la contraseña nueva (nuevamente)', widget=forms.PasswordInput())
+
+    def clean(self):
+        data = self.cleaned_data
+        if data['password1'] != data['password2']:
+            raise forms.ValidationError('Las contraseñas no son iguales !')
+        else:
+            return data

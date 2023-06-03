@@ -25,6 +25,9 @@
         </ul>
             
     </section>
+    <button class="change-pwd-btn-container">
+        <a class="change-pwd-btn" href="{% url 'users:pwd-confirmation' usuario.id%}">cambiar contraseña</a>
+    </button>
     <button class="back-btn-container">
         <a class="back-btn"href="../">volver</a>
     </button>
