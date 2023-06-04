@@ -5,7 +5,6 @@
     // TODO: hacer que cuando los usuarios sean eliminados, se elimine tambien su imagen de la DB 
 
 //TODO: sistema de mensajeria
-//TODO: crear ingreso como invitado
 //TODO: agregar base.html
 //TODO: agregar css
 //TODO: agregar traducciones
