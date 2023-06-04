@@ -52,7 +52,8 @@ class UsuariosSignupViewForm(forms.ModelForm):
         widgets = {
             'password' : forms.PasswordInput(),
             'photo' : forms.FileInput(attrs={
-                'accept' : 'image/png'
+                'accept' : 'image/png',
+                'class' : 'photo-input'
             })
         }
         error_messages = {
@@ -163,3 +164,9 @@ class UpdateUserFormClass(forms.ModelForm):
     class Meta:
         model = Usuarios
         fields = ('username', 'email', 'first_names', 'last_names', 'age', 'photo')
+        widgets = {
+            'photo' : forms.FileInput(attrs={
+                'accept' : 'image/png',
+                'class' : 'photo-input'
+            })
+        }

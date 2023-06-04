@@ -13,9 +13,10 @@
         </h1>
     </header>
     <section class="detail-container">
-        <form class="detail-form"method="post" >
+        <form class="detail-form"method="post"  enctype="multipart/form-data">
             {% csrf_token %}
             {{form.as_p}}
+            <img src="" alt="Imagen no encontrada ..." class="img-preview" width="200vw" height="200vh">
             <button type="submit">actualizar</button>
         </form>
         <ul class="detail-list">
@@ -40,6 +41,7 @@
     <button class="update-btn">
         Actualizar
     </button>
+    <script src="{% static 'js/image_preview.js'%}"></script>
     <script src="{%static 'js/update_system.js'%}"></script>
 </body>
 </html>
