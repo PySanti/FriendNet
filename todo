@@ -10,3 +10,8 @@
 //TODO: agregar traducciones
 //todo : agregar una previsualizacion de las imagenes al agregar o actualizar
 //todo: agregar display:none al formulario en la showDetailView de los Usuarios
+// todo: refactorizar js
+// todo: refactorizar uso de clases en implementacion de js
+// bug: arreglar error de actualizacion de photo
+// bug: arreglar error cuando se desea actualizar usuario sin foto
+// bug: arreglar preview de imagen cuando se actualiza

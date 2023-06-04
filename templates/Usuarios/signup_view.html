@@ -1,3 +1,4 @@
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -17,12 +18,14 @@
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{form.as_p}}
+                <img src="" alt="Imagen no encontrada ..." class="img-preview" width="200vw" height="200vh">
                 <button type="submit">registrarme</button>
             </form>
         </section>
         <button class="back-btn-container">
             <a href="../" class="back-btn">volver</a>
         </button>
+        <script src="{% static 'js/image_preview.js'%}"></script>
     {% else %}
         <h1>
             No puedes crear un usuario si ya estas registrado :(

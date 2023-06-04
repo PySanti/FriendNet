@@ -1,6 +1,5 @@
 from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth import login
-from .models import Usuarios
 
 class UsuariosManager(BaseUserManager):
     def _create_user(self, username, password, email, is_staff, is_superuser, **kwargs):
@@ -50,7 +49,7 @@ class UsuariosManager(BaseUserManager):
         user=self.get(id=user_id)
         user.is_online = False
         user.save()
-    def dataIsDiferent(self, user : Usuarios, data : dict):
+    def dataIsDiferent(self, user, data : dict):
         """
             Comprueba que los datos del diccionario data son diferentes
             a los datos contenidos por el usuario. Metodo creado para
