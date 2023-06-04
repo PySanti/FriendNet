@@ -142,7 +142,10 @@ class ShowUserDetailView(UpdateView):
             self.USERS_TRADUCTION_ATTRS[i[0]]:i[1] for i in context['usuario'].__dict__.items() if i[0] not in self.NOT_TEMPLATEABLE_ATTRS
         }
         context['user_data'] = cleaned_usuario_dict
-        context['user_photo'] = context['usuario'].photo.url
+        if not context['usuario'].photo:
+            context['user_photo'] = ""
+        else:
+            context['user_photo'] = context['usuario'].photo.url
         return context
     
     def form_valid(self, form):

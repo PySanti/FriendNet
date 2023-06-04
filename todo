@@ -13,5 +13,3 @@
 // todo: refactorizar js
 // todo: refactorizar uso de clases en implementacion de js
 // bug: arreglar error de actualizacion de photo
-// bug: arreglar error cuando se desea actualizar usuario sin foto
-// bug: arreglar preview de imagen cuando se actualiza
