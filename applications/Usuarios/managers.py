@@ -1,5 +1,6 @@
 from django.contrib.auth.models import BaseUserManager
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login
+from .models import Usuarios
 
 class UsuariosManager(BaseUserManager):
     def _create_user(self, username, password, email, is_staff, is_superuser, **kwargs):
@@ -18,26 +19,46 @@ class UsuariosManager(BaseUserManager):
         return self._create_user(username, password, email, True, True, **kwargs)
     def create_user(self, username, password, email, **kwargs):
         return self._create_user(username, password, email, False, False, **kwargs)
-    def checkActivationCode(self, user_id, code):
+    def checkActivationCode(self, user_id : int, code : str):
+        """
+            Comprueba que el codigo enviado por parametro es igual al
+            codigo asociado al usuario. Manager creado para activacion 
+            de usuario
+        """
         return self.get(id=user_id).activation_code == code
-    def activeUser(self, user_id, request):
+    def activeUser(self, user_id : int, request):
+        """
+            Realiza las funciones necesarias para activar por completo
+            a un usuario despues de haber sido creado
+        """
         user = self.get(id=user_id)
         user.is_active = True
         user.is_online = True
         user.save()
         login(request=request, user=user)
-    def connectUser(self, user_id):
+    def connectUser(self, user_id : int):
+        """
+            Settea el atributo is_online=True
+        """
         user=self.get(id=user_id)
         user.is_online = True
         user.save()
-    def disconnectUser(self, user_id):
+    def disconnectUser(self, user_id : int):
+        """
+            Settea el atributo is_online=False
+        """
         user=self.get(id=user_id)
         user.is_online = False
         user.save()
-    def dataIsDiferent(self, user, data ):
+    def dataIsDiferent(self, user : Usuarios, data : dict):
+        """
+            Comprueba que los datos del diccionario data son diferentes
+            a los datos contenidos por el usuario. Metodo creado para
+            optimizar la actualizacion de usuarios
+        """
         user_dict = user.__dict__
         for item in data.items():
             if user_dict[item[0]] != item[1]:
                 return True
-        return False
+        return True
 

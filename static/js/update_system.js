@@ -3,6 +3,11 @@ DETAILLIST_CLASSNAME = "detail-list"
 UPDATE_BTN_CLASSNAME = "update-btn"
 SECTION_CLASSNAME = "detail-container"
 function setUpdatingFunction(form_classname, detailList_classname, updateBtn_classname, section_classname){
+    /*
+        Funcion creada para eliminar inicialmente el formulario de actualizacion del template,
+        por otro lado, configurar los elementos para, al presionar el update-btn,
+        surga el formulario
+    */
     section = document.getElementsByClassName(section_classname)[0]
     form = document.getElementsByClassName(form_classname)[0]
     detailList = document.getElementsByClassName(detailList_classname)[0]
