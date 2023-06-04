@@ -4,12 +4,17 @@
     // TODO: investigar sobre seguridad para proyectos django
     // TODO: hacer que cuando los usuarios sean eliminados, se elimine tambien su imagen de la DB 
 
-// TODO: home para acceso a chats
-//TODO: sistema de mensajeria
-//TODO: agregar base.html
-//TODO: agregar css
-//TODO: agregar traducciones
-//todo: agregar display:none al formulario en la showDetailView de los Usuarios
-// todo: refactorizar js
-// todo: refactorizar uso de clases en implementacion de js
-// bug: arreglar error de actualizacion de photo
+
+// Logica:
+    // TODO: home para acceso a chats
+    //TODO: sistema de mensajeria
+    //TODO: agregar traducciones
+    // todo: refactorizar js
+    // todo: refactorizar uso de clases en implementacion de js
+
+// Estaticos:
+    //TODO: agregar base.html
+    //TODO: agregar css
+    //todo: agregar display:none al formulario en la showDetailView de los Usuarios
+    // todo: mejorar alt de imagenes en update y detail
+
