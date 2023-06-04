@@ -1,41 +1,54 @@
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <link rel="stylesheet" href="{% static 'css/home.css'%} ">
 </head>
 <body>
-    <header class="header-container">
-        <h1 class="header-title">
-            {{home_data.header}}
-        </h1>
-    </header>
-    <section class="description">
-        <p class="description-content">
-            {{home_data.description}}
-        </p>
-    </section>
+
     
     {% if user.is_authenticated %}
-        <h1>Ya estas autenticado {{user.username}}</h1>
-        <div class="signout-section">
-            <h2 class="signout-title">
-                Deseas salir?
-            </h2>
-            <button class="signout-btn">
-                <a href="{% url 'users:signout' user.id%}">Salir</a>
-            </button>
-        </div>
-        <div class="detail-section">
-            <h2 class="detail-title">
-                Deseas ver tu perfil ?
-            </h2>
-            <button class="detail-btn">
-                <a href="{% url 'users:detail' user.id %}">ver</a>
-            </button>
-        </div>
+        <section class="profile_section">
+            {% include '../include/home_header.html' %}
+            <div class="profile_section__btns">
+                <button class="signout-btn">
+                    <a href="{% url 'users:signout' user.id%}">Salir</a>
+                </button>
+                <button class="detail-btn">
+                    <a href="{% url 'users:detail' user.id %}">ver</a>
+                </button>
+            </div>
+        </section>
+        <section class="users_section">
+            <div class="users_section__users_list">
+                <ul class="users_section__users-list">
+                {% for u in users  %}
+                    <li class="user-item">
+                        <button class="user-item__btn">
+                            <a href="user-item__btn__ref">
+                                {{u.username}} || {{u.current_status}} || 
+                                {% if u.is_online %}
+                                    online
+                                {% else %}
+                                    offline
+                                {% endif %}
+                            </a>
+                        </button>
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
+            <div class="users_section__chat_section">
+                chatting
+            </div>
+        </section>
+
+
     {% else %}
+        {% include '../include/home_header.html' %}
         <section class="sign-section">
             <div class="signin">
                 <h2 class="signin-title">

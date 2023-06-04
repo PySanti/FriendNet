@@ -1,0 +1,14 @@
+.profile_section{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.users_section{
+    display: flex;
+    width: 100vw;
+}
+.users_section > *{
+    border: 1px solid #000;
+    background-color: rgb(255, 223, 255);
+    width: 50%;
+}

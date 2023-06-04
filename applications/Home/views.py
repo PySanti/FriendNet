@@ -2,6 +2,7 @@ from django.views.generic import (
     TemplateView
 )
 from .models import Home
+from applications.Usuarios.models import Usuarios
 # Create your views here.
 class HomeView(TemplateView):
     """
@@ -14,4 +15,5 @@ class HomeView(TemplateView):
         """
         context = super().get_context_data(**kwargs)
         context['home_data'] = Home.objects.get(id=1)
+        context['users'] = Usuarios.objects.all().exclude(id=self.request.user.id)
         return context
