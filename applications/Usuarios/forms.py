@@ -117,3 +117,8 @@ class DoublePasswordForm(forms.Form):
             raise forms.ValidationError('Las contraseñas no son iguales !')
         else:
             return data
+
+class UpdateUserFormClass(forms.ModelForm):
+    class Meta:
+        model = Usuarios
+        fields = ('username', 'email', 'first_names', 'last_names', 'age', 'photo')

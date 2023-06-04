@@ -1,3 +1,4 @@
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,6 +13,11 @@
         </h1>
     </header>
     <section class="detail-container">
+        <form class="detail-form"method="post" >
+            {% csrf_token %}
+            {{form.as_p}}
+            <button type="submit">actualizar</button>
+        </form>
         <ul class="detail-list">
             
             {% for i in user_data.items  %}
@@ -31,5 +37,9 @@
     <button class="back-btn-container">
         <a class="back-btn"href="../">volver</a>
     </button>
+    <button class="update-btn">
+        Actualizar
+    </button>
+    <script src="{%static 'js/update_system.js'%}"></script>
 </body>
 </html>

@@ -34,6 +34,10 @@ class UsuariosManager(BaseUserManager):
         user=self.get(id=user_id)
         user.is_online = False
         user.save()
-
-
+    def dataIsDiferent(self, user, data ):
+        user_dict = user.__dict__
+        for item in data.items():
+            if user_dict[item[0]] != item[1]:
+                return True
+        return False
 
