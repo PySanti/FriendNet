@@ -4,11 +4,11 @@
     // TODO: investigar sobre seguridad para proyectos django
     // TODO: hacer que cuando los usuarios sean eliminados, se elimine tambien su imagen de la DB 
 
+// TODO: home para acceso a chats
 //TODO: sistema de mensajeria
 //TODO: agregar base.html
 //TODO: agregar css
 //TODO: agregar traducciones
-//todo : agregar una previsualizacion de las imagenes al agregar o actualizar
 //todo: agregar display:none al formulario en la showDetailView de los Usuarios
 // todo: refactorizar js
 // todo: refactorizar uso de clases en implementacion de js
