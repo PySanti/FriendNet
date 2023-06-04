@@ -16,4 +16,9 @@ class HomeView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['home_data'] = Home.objects.get(id=1)
         context['users'] = Usuarios.objects.all().exclude(id=self.request.user.id)
+        try:
+            context['chat_user'] = Usuarios.objects.get(id=self.kwargs['chat_user_id'])
+        except KeyError:
+            print('Error')
+            context['chat_user'] =None 
         return context

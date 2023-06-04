@@ -28,7 +28,7 @@
                 {% for u in users  %}
                     <li class="user-item">
                         <button class="user-item__btn">
-                            <a href="user-item__btn__ref">
+                            <a href="{{u.id}}">
                                 {{u.username}} || {{u.current_status}} || 
                                 {% if u.is_online %}
                                     online
@@ -42,7 +42,13 @@
                 </ul>
             </div>
             <div class="users_section__chat_section">
-                chatting
+                
+                {% if chat_user %}
+                    Chateando con {{chat_user.username}}
+                {% else %}
+                    Haz click en alguno de los usuarios para chatear con el
+                {% endif %}
+                    
             </div>
         </section>
 

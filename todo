@@ -11,6 +11,7 @@
     //TODO: agregar traducciones
     // todo: refactorizar js
     // todo: refactorizar uso de clases en implementacion de js
+    //todo: agregar filtrado de usuarios en home
 
 // Estaticos:
     //TODO: agregar base.html
