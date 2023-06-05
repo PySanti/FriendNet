@@ -16,6 +16,9 @@
     // todo: refactorizar y optimizar codigo de mensajeria
     // todo: crear managers para consumo de mensajes    
     // todo: agregar sistema de notificaciones
+    //todo: modificar sistema de mensajeria en DB
+                                                    ~ No almacenar los chats en los usuarios
+                                                    ~ Solo un objeto chat por chat
 
 // Estaticos:
     //TODO: agregar base.html
