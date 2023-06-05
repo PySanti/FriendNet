@@ -61,3 +61,15 @@ class UsuariosManager(BaseUserManager):
                 return True
         return True
 
+    def getChatBetween(self,session_user, with_user_id):
+        """
+            Retorna objeto chat con el usuario con id with_id.
+            En caso de que ese chat no exista, retorna None
+        """
+        chat = session_user.chats.filter(user_id=with_user_id)
+        if not chat:
+            return None
+        else:
+            return chat[0]
+
+

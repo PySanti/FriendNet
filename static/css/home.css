@@ -12,3 +12,18 @@
     background-color: rgb(255, 223, 255);
     width: 50%;
 }
+
+.users_section__chat_section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.session_user{
+    align-items: start;
+    background: #0f0;
+}
+.with_user{
+    align-items: end;
+    background: #af0;
+}

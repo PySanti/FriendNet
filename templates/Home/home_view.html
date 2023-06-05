@@ -45,6 +45,29 @@
                 
                 {% if chat_user %}
                     Chateando con {{chat_user.username}}
+                    
+                    {% if messages_hist != None %}
+                        <ul class="messages-list">
+                            {% for m in messages_hist %}
+                                
+                                {% if m.parent_id != chat_user.id %}
+                                    <li style="background-color: gray;"class="msg-item session_user">{{m.content}}</li>
+                                {% else %}
+                                    <li style="background-color: aqua;"class="msg-item with_user">{{m.content}}</li>
+                                {% endif %}
+                                    
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        Aun no tienes mensajes con {{chat_user.username}}
+                    {% endif %}
+                        
+
+                    <form method="post">
+                        {% csrf_token %}
+                        {{form.as_p}}
+                        <button type="submit">enviar</button>
+                    </form>
                 {% else %}
                     Haz click en alguno de los usuarios para chatear con el
                 {% endif %}

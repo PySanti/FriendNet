@@ -6,12 +6,16 @@
 
 
 // Logica:
-    // TODO: home para acceso a chats
-    //TODO: sistema de mensajeria
+    //todo: agregar cambio de status
     //TODO: agregar traducciones
     // todo: refactorizar js
     // todo: refactorizar uso de clases en implementacion de js
     //todo: agregar filtrado de usuarios en home
+    //todo: modificar sistema de saludo`` en home_header (estamos comprobando dos veces si el usuario esta autenticado)
+    // todo: optimizar home view y home template
+    // todo: refactorizar y optimizar codigo de mensajeria
+    // todo: crear managers para consumo de mensajes    
+    // todo: agregar sistema de notificaciones
 
 // Estaticos:
     //TODO: agregar base.html

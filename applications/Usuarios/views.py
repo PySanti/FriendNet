@@ -127,7 +127,7 @@ class ShowUserDetailView(UpdateView):
         'last_names' : 'Apellidos',
         'age' : 'Edad',
     }
-    NOT_TEMPLATEABLE_ATTRS = ['id', 'password', 'last_login', 'is_superuser', 'is_staff', 'is_online', 'current_status', '_state', 'photo', 'is_active', 'activation_code']
+    NOT_TEMPLATEABLE_ATTRS = ['id', 'password', 'last_login', 'is_superuser', 'is_staff', 'is_online', 'current_status', '_state', 'photo', 'is_active', 'activation_code', 'chats']
     def get_context_data(self, **kwargs):
         """
             Agregar las siguientes variables al contexto del template

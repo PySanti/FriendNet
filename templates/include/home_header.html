@@ -1,6 +1,12 @@
 <header class="header-container">
     <h1 class="header-title">
-        {{home_data.header}}, {{user.username}}
+        
+        {% if user.is_authenticated %}
+            {{home_data.header}}, {{user.username}}
+        {% else %}
+            {{home_data.header}}
+        {% endif %}
+            
     </h1>
     <p class="header-content">
         {{home_data.description}}
