@@ -1,4 +1,5 @@
 from django.db import models
+from .managers import ChatsManager
 
 # Create your models here.
 
@@ -10,9 +11,11 @@ class Messages(models.Model):
         return f"{self.parent_id} : {self.content}"
 
 class Chat(models.Model):
-    user_id = models.PositiveSmallIntegerField()
+    users_id = models.CharField(max_length=3, default=None)
     messages = models.ManyToManyField(Messages)
+    # manager
+    objects = ChatsManager() 
 
     def __str__(self):
-        info = f"chat with {self.user_id}"
+        info = f"chat with {self.users_id}"
         return info

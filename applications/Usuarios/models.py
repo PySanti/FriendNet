@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from .managers import UsuariosManager
-from applications.Chats.models import Chat
 
 # Create your models here.
 class Usuarios(AbstractBaseUser, PermissionsMixin):
@@ -22,7 +21,6 @@ class Usuarios(AbstractBaseUser, PermissionsMixin):
     is_online       = models.BooleanField(default=False)
     is_active       = models.BooleanField(default=False)
     activation_code = models.CharField(max_length=6)
-    chats           = models.ManyToManyField(Chat)
     current_status  = models.CharField(default='bored',max_length=15)
     #* MANAGER
     objects         = UsuariosManager()
