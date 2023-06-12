@@ -16,13 +16,12 @@
     // todo: refactorizar y optimizar codigo de mensajeria
     // todo: crear managers para consumo de mensajes    
     // todo: agregar sistema de notificaciones
-    //todo: modificar sistema de mensajeria en DB
-                                                    ~ No almacenar los chats en los usuarios
-                                                    ~ Solo un objeto chat por chat
+
 
 // Estaticos:
     //TODO: agregar base.html
     //TODO: agregar css
     //todo: agregar display:none al formulario en la showDetailView de los Usuarios
     // todo: mejorar alt de imagenes en update y detail
+    // todo: comprobacion de datos de formulario en tiempo real
 
