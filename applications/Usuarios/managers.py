@@ -71,5 +71,15 @@ class UsuariosManager(BaseUserManager):
             return None
         else:
             return chat[0]
+    def getParsedNotifications(self,user):
+        """
+            Recibe un usuario y retorna la lista de notificaciones del usuario
+            en forma de tuplas:
+                n[0] : mensaje
+                n[1] : datetime de envio
+        """
+        return [ (i.msg, i.receive_time.strftime("%Y-%m-%d %H:%M:%S")) for  i in user.notifications.all()]
+
+
 
 

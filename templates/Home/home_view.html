@@ -79,6 +79,18 @@
             {{status_form.as_p}}
             <button type="submit">enviar</button>
         </form>
+        <section class="notifications_section">
+            <h1 class="notifications_section__title">
+                Revisa tus notificaciones
+            </h1>
+            <ul class="notifications_section__list">
+                {% for n in user_notifications  %}
+                    <li class="notification_item">
+                        {{n.0}} a las {{n.1}}
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
     {% else %}
         {% include '../include/home_header.html' %}
         <section class="sign-section">

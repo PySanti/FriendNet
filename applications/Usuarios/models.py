@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from applications.Notifications.models import Notifications
 from .managers import UsuariosManager
 
 # Create your models here.
@@ -22,6 +23,7 @@ class Usuarios(AbstractBaseUser, PermissionsMixin):
     is_active       = models.BooleanField(default=False)
     activation_code = models.CharField(max_length=6)
     current_status  = models.CharField(default='bored',max_length=15)
+    notifications   = models.ManyToManyField(Notifications)
     #* MANAGER
     objects         = UsuariosManager()
 

@@ -1,11 +1,13 @@
 from django.views.generic import (
-    FormView,
-    View
+    FormView
 )
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from .models import Home
 from applications.Usuarios.models import Usuarios
+from applications.Notifications.models import (
+    Notifications
+)
 from applications.Chats.models import (
     Messages,
     Chat
@@ -27,8 +29,10 @@ class HomeView(FormView):
         """
         context = super().get_context_data(**kwargs)
         context['home_data'] = Home.objects.get(id=1)
-        context['users'] = Usuarios.objects.all().exclude(id=self.request.user.id)
-        context['status_form'] = StatusForm()
+        if self.request.user.is_authenticated:
+            context['status_form'] = StatusForm()
+            context['users'] = Usuarios.objects.all().exclude(id=self.request.user.id)
+            context['user_notifications'] = Usuarios.objects.getParsedNotifications(self.request.user)
         try:
             context['chat_user'] = Usuarios.objects.get(id=self.kwargs['chat_user_id'])
             chat_between = Chat.objects.chatBetween(self.request.user.id, self.kwargs['chat_user_id'])
@@ -51,6 +55,12 @@ class HomeView(FormView):
                 new_chat.save()
                 new_chat.messages.add(new_message)
                 new_chat.save()
+            
+            receiver_user = Usuarios.objects.get(id=self.kwargs['chat_user_id'])
+            newNotification = Notifications(msg=f"{self.request.user.username} te ha enviado un mensaje")
+            newNotification.save()
+            receiver_user.notifications.add(newNotification)
+            receiver_user.save()
 
         return HttpResponseRedirect(
             reverse_lazy('home:home', kwargs={'chat_user_id':self.kwargs['chat_user_id']})

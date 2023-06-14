@@ -42,6 +42,7 @@ LOCAL_APPS = [
     "applications.Usuarios",
     "applications.Home",
     "applications.Chats",
+    "applications.Notifications"
 ]
 
 THIRD_PARTY_APPS = [
