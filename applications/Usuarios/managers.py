@@ -1,5 +1,7 @@
 from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth import login
+from django.utils.timezone import  now
+from .tools import getFormatedDateDiff
 
 class UsuariosManager(BaseUserManager):
     def _create_user(self, username, password, email, is_staff, is_superuser, **kwargs):
@@ -78,7 +80,8 @@ class UsuariosManager(BaseUserManager):
                 n[0] : mensaje
                 n[1] : datetime de envio
         """
-        return [ (i.msg, i.receive_time.strftime("%Y-%m-%d %H:%M:%S")) for  i in user.notifications.all()]
+
+        return [ (i.msg, getFormatedDateDiff(now(), i.receive_time)) for  i in user.notifications.all()]
 
 
 

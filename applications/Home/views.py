@@ -33,11 +33,11 @@ class HomeView(FormView):
             context['status_form'] = StatusForm()
             context['users'] = Usuarios.objects.all().exclude(id=self.request.user.id)
             context['user_notifications'] = Usuarios.objects.getParsedNotifications(self.request.user)
-        try:
+        if 'chat_user_id' in self.kwargs:
             context['chat_user'] = Usuarios.objects.get(id=self.kwargs['chat_user_id'])
             chat_between = Chat.objects.chatBetween(self.request.user.id, self.kwargs['chat_user_id'])
             context['messages_hist'] = chat_between.messages.all() if chat_between else None
-        except KeyError:
+        else:
             context['chat_user'] =None 
         return context
 
@@ -61,10 +61,15 @@ class HomeView(FormView):
             newNotification.save()
             receiver_user.notifications.add(newNotification)
             receiver_user.save()
+        if 'chat_user_id' in self.kwargs:
+            return HttpResponseRedirect(
+                reverse_lazy('home:home', kwargs={'chat_user_id':self.kwargs['chat_user_id']} )
+            )
+        else:
+            return HttpResponseRedirect(
+                reverse_lazy('home:home' )
+            )
 
-        return HttpResponseRedirect(
-            reverse_lazy('home:home', kwargs={'chat_user_id':self.kwargs['chat_user_id']})
-        )
     def post(self, request, *args, **kwargs):
         if 'status' in request.POST:
             status_form = StatusForm(request.POST)

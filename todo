@@ -20,7 +20,6 @@
     // todo: arreglar error de campo invisible
     // todo : hacer que los usuarios no se creen hasta introducir codigo de activacion
     // todo: cuando se pseudo-termine la parte logica, borrar la base de datos y debugear toda el proyecto desde 0
-    // todo: formatear fechas del template
     // todo: optimizar vista del Home
 
 
