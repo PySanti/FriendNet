@@ -74,8 +74,10 @@
                     
             </div>
         </section>
-
-
+        <form class="status_form" method="post">
+            {% csrf_token %}
+            {{status_form.as_p}}
+        </form>
     {% else %}
         {% include '../include/home_header.html' %}
         <section class="sign-section">

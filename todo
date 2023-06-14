@@ -16,6 +16,8 @@
     // todo: refactorizar y optimizar codigo de mensajeria
     // todo: crear managers para consumo de mensajes    
     // todo: agregar sistema de notificaciones
+    // todo: quitar error de mensaje obligatorio
+    // todo: arreglar error de campo invisible
 
 
 // Estaticos:

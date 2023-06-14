@@ -1,5 +1,6 @@
 from django.views.generic import (
-    FormView
+    FormView,
+    View
 )
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
@@ -9,7 +10,10 @@ from applications.Chats.models import (
     Messages,
     Chat
 )
-from .forms import MessagesForm
+from .forms import (
+    MessagesForm,
+    StatusForm
+)
 # Create your views here.
 class HomeView(FormView):
     """
@@ -24,6 +28,7 @@ class HomeView(FormView):
         context = super().get_context_data(**kwargs)
         context['home_data'] = Home.objects.get(id=1)
         context['users'] = Usuarios.objects.all().exclude(id=self.request.user.id)
+        context['status_form'] = StatusForm()
         try:
             context['chat_user'] = Usuarios.objects.get(id=self.kwargs['chat_user_id'])
             chat_between = Chat.objects.chatBetween(self.request.user.id, self.kwargs['chat_user_id'])
@@ -49,3 +54,11 @@ class HomeView(FormView):
         return HttpResponseRedirect(
             reverse_lazy('home:home', kwargs={'chat_user_id':self.kwargs['chat_user_id']})
         )
+    def post(self, request, *args, **kwargs):
+        if 'status' in request.POST:
+            status_form = StatusForm(request.POST)
+            if status_form.is_valid():
+                print(f'cambiando estado a {request.POST["status"]}')
+                request.user.current_status = request.POST['status']
+                request.user.save()
+        return super().post(request, *args, **kwargs)
