@@ -6,21 +6,20 @@
 
 
 // Logica:
-    //todo: agregar cambio de status
+    // todo: refactorizar y optimizar codigo de mensajeria, status y notificaciones (optimizar y modular usando managers y tools)
+    // todo: optimizar home view y home template
+    // todo: crear managers para consumo de mensajes    
+    // todo : hacer que los usuarios no se creen hasta introducir codigo de activacion
+    // todo: arreglar error de campo invisible
+
     //TODO: agregar traducciones
     // todo: refactorizar js
     // todo: refactorizar uso de clases en implementacion de js
     //todo: agregar filtrado de usuarios en home
     //todo: modificar sistema de saludo`` en home_header (estamos comprobando dos veces si el usuario esta autenticado)
-    // todo: optimizar home view y home template
-    // todo: refactorizar y optimizar codigo de mensajeria
-    // todo: crear managers para consumo de mensajes    
     // todo: agregar sistema de notificaciones
     // todo: quitar error de mensaje obligatorio
-    // todo: arreglar error de campo invisible
-    // todo : hacer que los usuarios no se creen hasta introducir codigo de activacion
     // todo: cuando se pseudo-termine la parte logica, borrar la base de datos y debugear toda el proyecto desde 0
-    // todo: optimizar vista del Home
 
 
 // Estaticos:
