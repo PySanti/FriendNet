@@ -25,5 +25,6 @@
     //TODO: agregar css
     //todo: agregar display:none al formulario en la showDetailView de los Usuarios
     // todo: mejorar alt de imagenes en update y detail
+    // todo: agregar js a el cambio de status
     // todo: comprobacion de datos de formulario en tiempo real
 

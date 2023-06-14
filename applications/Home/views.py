@@ -39,17 +39,18 @@ class HomeView(FormView):
 
     def form_valid(self, form):
         msg = form.cleaned_data['msg']
-        new_message = Messages(parent_id=self.request.user.id, content=msg)
-        new_message.save()
-        chat_between = Chat.objects.chatBetween(self.request.user.id, self.kwargs['chat_user_id'])
-        if chat_between:
-            chat_between.messages.add(new_message)
-            chat_between.save()
-        else:
-            new_chat = Chat(users_id=f"{self.request.user.id},{self.kwargs['chat_user_id']}")
-            new_chat.save()
-            new_chat.messages.add(new_message)
-            new_chat.save()
+        if msg != '':
+            new_message = Messages(parent_id=self.request.user.id, content=msg)
+            new_message.save()
+            chat_between = Chat.objects.chatBetween(self.request.user.id, self.kwargs['chat_user_id'])
+            if chat_between:
+                chat_between.messages.add(new_message)
+                chat_between.save()
+            else:
+                new_chat = Chat(users_id=f"{self.request.user.id},{self.kwargs['chat_user_id']}")
+                new_chat.save()
+                new_chat.messages.add(new_message)
+                new_chat.save()
 
         return HttpResponseRedirect(
             reverse_lazy('home:home', kwargs={'chat_user_id':self.kwargs['chat_user_id']})
