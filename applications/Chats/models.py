@@ -1,17 +1,21 @@
 from django.db import models
-from .managers import ChatsManager
+from .managers import (
+    ChatsManager,
+    MessagesManager
+)
 
 # Create your models here.
 
 class Messages(models.Model):
     parent_id = models.PositiveIntegerField()
     content = models.CharField(max_length=50)
+    objects = MessagesManager()
 
     def __str__(self):
         return f"{self.parent_id} : {self.content}"
 
 class Chat(models.Model):
-    users_id = models.CharField(max_length=3, default=None)
+    users_id = models.CharField(max_length=10, default=None)
     messages = models.ManyToManyField(Messages)
     # manager
     objects = ChatsManager() 

@@ -82,7 +82,10 @@ class UsuariosManager(BaseUserManager):
         """
 
         return [ (i.msg, getFormatedDateDiff(now(), i.receive_time)) for  i in user.notifications.all()]
-
+    
+    def setState(self, user, new_state):
+        user.current_status = new_state
+        user.save()
 
 
 

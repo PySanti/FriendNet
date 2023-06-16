@@ -9,8 +9,8 @@ from applications.Notifications.models import (
     Notifications
 )
 from applications.Chats.models import (
-    Messages,
-    Chat
+    Chat,
+    Messages
 )
 from .forms import (
     MessagesForm,
@@ -43,24 +43,20 @@ class HomeView(FormView):
 
     def form_valid(self, form):
         msg = form.cleaned_data['msg']
-        if msg != '':
-            new_message = Messages(parent_id=self.request.user.id, content=msg)
-            new_message.save()
-            chat_between = Chat.objects.chatBetween(self.request.user.id, self.kwargs['chat_user_id'])
-            if chat_between:
-                chat_between.messages.add(new_message)
-                chat_between.save()
-            else:
-                new_chat = Chat(users_id=f"{self.request.user.id},{self.kwargs['chat_user_id']}")
-                new_chat.save()
-                new_chat.messages.add(new_message)
-                new_chat.save()
-            
-            receiver_user = Usuarios.objects.get(id=self.kwargs['chat_user_id'])
-            newNotification = Notifications(msg=f"{self.request.user.username} te ha enviado un mensaje")
-            newNotification.save()
-            receiver_user.notifications.add(newNotification)
-            receiver_user.save()
+        if msg:
+            receiver_user = Usuarios.objects.get(id=self.kwargs['chat_user_id']) 
+            Chat.objects.sendMessage(
+                sender_user     = self.request.user, 
+                receiver_user   = receiver_user, 
+                new_message     = Messages.objects.CreateMessage(
+                    parent_id   =  self.request.user.id,
+                    msg         = msg
+                )
+            )
+            Notifications.objects.addNotification(
+                receiver_user   = receiver_user, 
+                sender_username = self.request.user.username
+            )
         if 'chat_user_id' in self.kwargs:
             return HttpResponseRedirect(
                 reverse_lazy('home:home', kwargs={'chat_user_id':self.kwargs['chat_user_id']} )
@@ -74,7 +70,5 @@ class HomeView(FormView):
         if 'status' in request.POST:
             status_form = StatusForm(request.POST)
             if status_form.is_valid():
-                print(f'cambiando estado a {request.POST["status"]}')
-                request.user.current_status = request.POST['status']
-                request.user.save()
+                Usuarios.objects.setState(request.user, request.POST['status'])
         return super().post(request, *args, **kwargs)
