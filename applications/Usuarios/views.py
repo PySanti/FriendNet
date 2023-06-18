@@ -154,7 +154,7 @@ class ShowUserDetailView(UpdateView):
             y envíe datos a traves de el, se actualizan
             los datos del usuario
         """
-        user = self.request.user
+        user = Usuarios.objects.get(id=self.kwargs['pk'])
         data = form.cleaned_data
         if Usuarios.objects.dataIsDiferent(user, data):
             user.username = data['username']

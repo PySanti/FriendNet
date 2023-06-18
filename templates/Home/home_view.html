@@ -85,11 +85,19 @@
             </h1>
             <ul class="notifications_section__list">
                 {% for n in user_notifications  %}
-                    <a href="{{n.2}}">
-                        <li class="notification_item">
-                            {{n.0}} hace {{n.1}}
-                        </li>
-                    </a>
+                    {% if n.2 == "u" %}
+                        <a href="{% url 'users:detail' user.id%}">
+                            <li class="notification_item">
+                                {{n.0}} hace {{n.1}}
+                            </li>
+                        </a>
+                    {% else %}
+                        <a href="{{n.2}}">
+                            <li class="notification_item">
+                                {{n.0}} hace {{n.1}}
+                            </li>
+                        </a>
+                    {% endif %}
                 {% endfor %}
             </ul>
         </section>
