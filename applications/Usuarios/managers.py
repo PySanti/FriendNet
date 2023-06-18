@@ -61,7 +61,7 @@ class UsuariosManager(BaseUserManager):
         for item in data.items():
             if user_dict[item[0]] != item[1]:
                 return True
-        return True
+        return False
 
     def getChatBetween(self,session_user, with_user_id):
         """
@@ -87,6 +87,27 @@ class UsuariosManager(BaseUserManager):
     def setState(self, user, new_state):
         user.current_status = new_state
         user.save()
+    
+    def getCleanedUserData(self, user):
+        USERS_TRADUCTION_ATTRS = {
+            'username' : 'Usuario',
+            'email' : 'Correo',
+            'first_names' : 'Nombres',
+            'last_names' : 'Apellidos',
+            'age' : 'Edad',
+        }
+        NOT_TEMPLATEABLE_ATTRS = ['id', 'password', 'last_login', 'is_superuser', 'is_staff', 'is_online', 'current_status', '_state', 'photo', 'is_active', 'activation_code', 'chats']
+        cleaned_usuario_dict = {
+            USERS_TRADUCTION_ATTRS[i[0]]:i[1] for i in user.__dict__.items() if i[0] not in NOT_TEMPLATEABLE_ATTRS
+        }
+        return cleaned_usuario_dict
 
-
+    def updateUserWithData(self, user, data):
+        user.username = data['username']
+        user.email = data['email']
+        user.first_names = data['first_names']
+        user.last_names = data['last_names']
+        user.age = data['age']
+        user.photo = data['photo']
+        user.save()
 

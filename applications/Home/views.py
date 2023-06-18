@@ -1,5 +1,3 @@
-from typing import Any
-from django import http
 from django.views.generic import (
     FormView
 )
@@ -41,8 +39,10 @@ class HomeView(FormView):
             context['user_notifications'] = Usuarios.objects.getParsedNotifications(self.request.user)
         if 'chat_user_id' in self.kwargs:
             context['chat_user'] = Usuarios.objects.get(id=self.kwargs['chat_user_id'])
-            chat_between = Chat.objects.chatBetween(self.request.user.id, self.kwargs['chat_user_id'])
-            context['messages_hist'] = chat_between.messages.all() if chat_between else None
+            context['messages_hist'] = Chat.objects.getMessagesHistorial(
+                session_user_id=self.request.user.id,
+                chat_user_id=self.kwargs['chat_user_id']
+            )
         else:
             context['chat_user'] =None 
         return context
@@ -61,7 +61,7 @@ class HomeView(FormView):
             )
             Notifications.objects.addNotification(
                 receiver_user   = receiver_user,
-                msg             = f"{self.request.user.username} te ha enviado un mensaje!",
+                msg             = f"{self.request.user.username} te ha enviado un mensaje",
                 code            =  str(self.request.user.id)
             )
         if 'chat_user_id' in self.kwargs:

@@ -9,10 +9,7 @@
     // todo: refactorizar y optimizar codigo de mensajeria, status y notificaciones (optimizar y modular usando managers y tools)
     // todo: optimizar home view y home template
     // todo : hacer que los usuarios no se creen hasta introducir codigo de activacion
-
-    // todo: agregar link notificaciones
-    // todo: agregar despacho de notificaciones
-    // todo: agregar notificationes por actualizacion de datos del perfil
+    // todo: agregar soporte para mensajes recientes
     //  todo: agregar traducciones
     //  todo: refactorizar js
     //  todo: refactorizar uso de clases en implementacion de js

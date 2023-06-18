@@ -122,14 +122,7 @@ class ShowUserDetailView(UpdateView):
     template_name = 'Usuarios/usuarios_detail.html'
     form_class = UpdateUserFormClass
     model = Usuarios
-    USERS_TRADUCTION_ATTRS = {
-        'username' : 'Usuario',
-        'email' : 'Correo',
-        'first_names' : 'Nombres',
-        'last_names' : 'Apellidos',
-        'age' : 'Edad',
-    }
-    NOT_TEMPLATEABLE_ATTRS = ['id', 'password', 'last_login', 'is_superuser', 'is_staff', 'is_online', 'current_status', '_state', 'photo', 'is_active', 'activation_code', 'chats']
+
     def dispatch(self, request, *args, **kwargs):
         """
             Este metodo se ejecutara justo cuando la vista sea llamada.
@@ -148,10 +141,7 @@ class ShowUserDetailView(UpdateView):
         """
         context = super().get_context_data(**kwargs)
         context['usuario'] = Usuarios.objects.get(id=self.kwargs['pk'])
-        cleaned_usuario_dict = {
-            self.USERS_TRADUCTION_ATTRS[i[0]]:i[1] for i in context['usuario'].__dict__.items() if i[0] not in self.NOT_TEMPLATEABLE_ATTRS
-        }
-        context['user_data'] = cleaned_usuario_dict
+        context['user_data'] = Usuarios.objects.getCleanedUserData(context['usuario'])
         if not context['usuario'].photo:
             context['user_photo'] = ""
         else:
@@ -167,19 +157,17 @@ class ShowUserDetailView(UpdateView):
         user = Usuarios.objects.get(id=self.kwargs['pk'])
         data = form.cleaned_data
         if Usuarios.objects.dataIsDiferent(user, data):
-            user.username = data['username']
-            user.email = data['email']
-            user.first_names = data['first_names']
-            user.last_names = data['last_names']
-            user.age = data['age']
-            user.photo = data['photo']
-            user.save()
+            Usuarios.objects.updateUserWithData(
+                user=user,
+                data=data
+            )
             Notifications.objects.addNotification(
                 receiver_user=user,
                 msg = "Has hecho modificaciones en tu perfil !",
                 code = 'u'
             )
-            
+        else:
+            print('No hubieron cambios')
         return HttpResponseRedirect(
             reverse_lazy('users:detail', kwargs={'pk': self.kwargs['pk'] })
         )
