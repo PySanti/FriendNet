@@ -79,10 +79,11 @@ class UsuariosManager(BaseUserManager):
             en forma de tuplas:
                 n[0] : mensaje
                 n[1] : datetime de envio
+                n[2] : codigo de notificacion
         """
 
-        return [ (i.msg, getFormatedDateDiff(now(), i.receive_time)) for  i in user.notifications.all()]
-    
+        return [ (i.msg, getFormatedDateDiff(now(), i.receive_time), i.code) for  i in user.notifications.all()]
+
     def setState(self, user, new_state):
         user.current_status = new_state
         user.save()

@@ -54,8 +54,9 @@ class HomeView(FormView):
                 )
             )
             Notifications.objects.addNotification(
-                receiver_user   = receiver_user, 
-                sender_username = self.request.user.username
+                receiver_user   = receiver_user,
+                msg             = f"{self.request.user.username} te ha enviado un mensaje!",
+                code            =  str(self.request.user.id)
             )
         if 'chat_user_id' in self.kwargs:
             return HttpResponseRedirect(

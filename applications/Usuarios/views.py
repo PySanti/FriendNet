@@ -1,12 +1,12 @@
-from typing import Any, Dict
 from .models import Usuarios
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import  HttpResponseRedirect
 from django.urls import reverse_lazy
 from .tools import generateActivationCode
 from django.core.mail import send_mail
 from django.conf import settings
+from applications.Notifications.models import Notifications
 from django.views.generic import (
     FormView,
     View,
@@ -154,7 +154,7 @@ class ShowUserDetailView(UpdateView):
             y envíe datos a traves de el, se actualizan
             los datos del usuario
         """
-        user = Usuarios.objects.get(id=self.kwargs['pk'])
+        user = self.request.user
         data = form.cleaned_data
         if Usuarios.objects.dataIsDiferent(user, data):
             user.username = data['username']
@@ -164,6 +164,12 @@ class ShowUserDetailView(UpdateView):
             user.age = data['age']
             user.photo = data['photo']
             user.save()
+            Notifications.objects.addNotification(
+                receiver_user=user,
+                msg = "Has hecho modificaciones en tu perfil !",
+                code = 'u'
+            )
+            
         return HttpResponseRedirect(
             reverse_lazy('users:detail', kwargs={'pk': self.kwargs['pk'] })
         )
