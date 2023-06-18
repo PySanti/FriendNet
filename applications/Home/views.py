@@ -1,3 +1,5 @@
+from typing import Any
+from django import http
 from django.views.generic import (
     FormView
 )
@@ -23,6 +25,10 @@ class HomeView(FormView):
     """
     template_name = 'Home/home_view.html'
     form_class = MessagesForm
+    def dispatch(self, request, *args, **kwargs):
+        if 'chat_user_id' in self.kwargs:
+            Notifications.objects.deleteUserChatNotificactions(user=self.request.user,chat_user_id=self.kwargs['chat_user_id'])
+        return super().dispatch(request, *args, **kwargs)
     def get_context_data(self, **kwargs):
         """
             Envia la informacion del Home extraida de la DB al template del Home

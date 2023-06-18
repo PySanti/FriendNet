@@ -21,6 +21,8 @@ from .forms import (
     DoublePasswordForm,
     UpdateUserFormClass
 )
+
+from applications.Notifications.models import Notifications
 # Create your views here.
 
 class LoginView(FormView):
@@ -128,6 +130,14 @@ class ShowUserDetailView(UpdateView):
         'age' : 'Edad',
     }
     NOT_TEMPLATEABLE_ATTRS = ['id', 'password', 'last_login', 'is_superuser', 'is_staff', 'is_online', 'current_status', '_state', 'photo', 'is_active', 'activation_code', 'chats']
+    def dispatch(self, request, *args, **kwargs):
+        """
+            Este metodo se ejecutara justo cuando la vista sea llamada.
+            Este deberia de eliminar todas las notificaciones de 
+            actualizacion del usuario
+        """
+        Notifications.objects.deleteUserUpdateNofications(user=self.request.user)
+        return super().dispatch(request, *args, **kwargs)
     def get_context_data(self, **kwargs):
         """
             Agregar las siguientes variables al contexto del template
