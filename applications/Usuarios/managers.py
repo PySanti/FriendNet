@@ -110,4 +110,7 @@ class UsuariosManager(BaseUserManager):
         user.age = data['age']
         user.photo = data['photo']
         user.save()
-
+    
+    def changePassword(self, user, new_password):
+        user.set_password(new_password)
+        user.save()

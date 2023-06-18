@@ -129,7 +129,8 @@ class ShowUserDetailView(UpdateView):
             Este deberia de eliminar todas las notificaciones de 
             actualizacion del usuario
         """
-        Notifications.objects.deleteUserUpdateNofications(user=self.request.user)
+        if self.request.user.is_authenticated:
+            Notifications.objects.deleteUserUpdateNofications(user=self.request.user)
         return super().dispatch(request, *args, **kwargs)
     def get_context_data(self, **kwargs):
         """
@@ -207,9 +208,15 @@ class ChangePasswordView(FormView):
     template_name = 'Usuarios/change_password_view.html'
     form_class = DoublePasswordForm
     def form_valid(self, form):
-        user = Usuarios.objects.get(id=self.kwargs['pk'])
-        user.set_password(form.cleaned_data['password1'])
-        user.save()
+        Usuarios.objects.changePassword(
+            user=self.request.user,
+            new_password=form.cleaned_data['password1']
+        )
+        Notifications.objects.addNotification(
+            msg = "Has cambiado tu contraseña",
+            receiver_user=self.request.user,
+            code = 'u'
+        )
         return HttpResponseRedirect(
             reverse_lazy('users:detail', kwargs={'pk':self.kwargs['pk']})
         )
