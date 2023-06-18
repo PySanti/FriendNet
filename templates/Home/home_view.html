@@ -13,9 +13,12 @@
     {% if user.is_authenticated %}
         <section class="profile_section">
             {% include '../include/home_header.html' %}
+            <h2 class="username_section">
+                {{user.username}}
+            </h2>
             <div class="profile_section__btns">
                 <button class="signout-btn">
-                    <a href="{% url 'users:signout' user.id%}">Salir</a>
+                    <a href="{% url 'users:signout' user.id%}">salir</a>
                 </button>
                 <button class="detail-btn">
                     <a href="{% url 'users:detail' user.id %}">ver</a>
@@ -42,27 +45,21 @@
                 </ul>
             </div>
             <div class="users_section__chat_section">
-                
                 {% if chat_user %}
                     Chateando con {{chat_user.username}}
-                    
                     {% if messages_hist != None %}
                         <ul class="messages-list">
                             {% for m in messages_hist %}
-                                
                                 {% if m.parent_id != chat_user.id %}
                                     <li style="background-color: gray;"class="msg-item session_user">{{m.content}}</li>
                                 {% else %}
                                     <li style="background-color: aqua;"class="msg-item with_user">{{m.content}}</li>
                                 {% endif %}
-                                    
                             {% endfor %}
                         </ul>
                     {% else %}
                         Aun no tienes mensajes con {{chat_user.username}}
                     {% endif %}
-                        
-
                     <form method="post">
                         {% csrf_token %}
                         {{form.as_p}}
@@ -71,7 +68,6 @@
                 {% else %}
                     Haz click en alguno de los usuarios para chatear con el
                 {% endif %}
-                    
             </div>
         </section>
         <form class="status_form" method="post">

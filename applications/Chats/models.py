@@ -13,7 +13,6 @@ class Messages(models.Model):
 
     def __str__(self):
         return f"{self.parent_id} : {self.content}"
-
 class Chat(models.Model):
     users_id = models.CharField(max_length=10, default=None)
     messages = models.ManyToManyField(Messages)

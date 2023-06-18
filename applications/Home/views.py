@@ -46,7 +46,6 @@ class HomeView(FormView):
         else:
             context['chat_user'] =None 
         return context
-
     def form_valid(self, form):
         msg = form.cleaned_data['msg']
         if msg:
@@ -72,7 +71,6 @@ class HomeView(FormView):
             return HttpResponseRedirect(
                 reverse_lazy('home:home' )
             )
-
     def post(self, request, *args, **kwargs):
         if 'status' in request.POST:
             status_form = StatusForm(request.POST)

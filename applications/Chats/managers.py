@@ -7,9 +7,6 @@ class MessagesManager(manager.Manager):
             Crea un objecto mensaje y lo retorna mensaje 
         """
         return self.create(parent_id=parent_id, content=msg)
-
-
-
 class ChatsManager(manager.Manager):
     def _chatBetween(self, id_1, id_2):
         """
@@ -18,7 +15,6 @@ class ChatsManager(manager.Manager):
         """
         chat = self.filter(users_id__contains=id_1).filter(users_id__contains=id_2)
         return chat[0] if chat else None
-
     def sendMessage(self, sender_user, receiver_user, new_message):
         """
             Envia un mensaje de un usuario a otro
@@ -28,7 +24,6 @@ class ChatsManager(manager.Manager):
             chat_between = self.create(users_id=f"{sender_user.id},{receiver_user.id}")
         chat_between.messages.add(new_message)
         chat_between.save()
-    
     def getMessagesHistorial(self, session_user_id, chat_user_id):
         """
             Retorna el historial de mensajes entre session_user

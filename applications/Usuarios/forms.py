@@ -73,6 +73,7 @@ class UsuariosSignupViewForm(forms.ModelForm):
             Unicamente comprueba que las dos contraseñas del formulario sean iguales, en caso contrario da error
         """
         data = super().clean()
+
         if data['password'] != data['password2']:
             self.add_error('password','Las contraseñas no son iguales !')
         return data

@@ -62,7 +62,6 @@ class UsuariosManager(BaseUserManager):
             if user_dict[item[0]] != item[1]:
                 return True
         return False
-
     def getChatBetween(self,session_user, with_user_id):
         """
             Retorna objeto chat con el usuario con id with_id.
@@ -83,11 +82,9 @@ class UsuariosManager(BaseUserManager):
         """
 
         return [ (i.msg, getFormatedDateDiff(now(), i.receive_time), i.code) for  i in user.notifications.all()]
-
     def setState(self, user, new_state):
         user.current_status = new_state
         user.save()
-    
     def getCleanedUserData(self, user):
         USERS_TRADUCTION_ATTRS = {
             'username' : 'Usuario',
@@ -101,7 +98,6 @@ class UsuariosManager(BaseUserManager):
             USERS_TRADUCTION_ATTRS[i[0]]:i[1] for i in user.__dict__.items() if i[0] not in NOT_TEMPLATEABLE_ATTRS
         }
         return cleaned_usuario_dict
-
     def updateUserWithData(self, user, data):
         user.username = data['username']
         user.email = data['email']
@@ -110,7 +106,6 @@ class UsuariosManager(BaseUserManager):
         user.age = data['age']
         user.photo = data['photo']
         user.save()
-    
     def changePassword(self, user, new_password):
         user.set_password(new_password)
         user.save()

@@ -38,7 +38,6 @@ class LoginView(FormView):
         login(self.request,user=user)
         Usuarios.objects.connectUser(user.id)
         return super().form_valid(form)
-
 class LogoutView(View, LoginRequiredMixin):
     """
         Vista creada para deslogear al usuario y desconectarlo 
@@ -50,7 +49,6 @@ class LogoutView(View, LoginRequiredMixin):
         return  HttpResponseRedirect(
             reverse_lazy('home:home')
         )
-
 class SignUpView(FormView):
     """
         Vista creada para la creacion del usuario
@@ -88,7 +86,6 @@ class SignUpView(FormView):
         return HttpResponseRedirect(
             reverse_lazy('users:activation',  kwargs={'pk':new_user.id})
         )
-
 class AccountActivationView(FormView):
     """
         Vista creada para activar al usuario por el codigo enviado
@@ -113,7 +110,6 @@ class AccountActivationView(FormView):
         """
         Usuarios.objects.activeUser(self.kwargs['pk'], self.request)
         return super().form_valid(form)
-
 class ShowUserDetailView(UpdateView):
     """
         Vista creada para llevar a cabo la actualizacion y detalle
@@ -172,7 +168,6 @@ class ShowUserDetailView(UpdateView):
         return HttpResponseRedirect(
             reverse_lazy('users:detail', kwargs={'pk': self.kwargs['pk'] })
         )
-
 class PasswordConfirmationView(FormView):
     """
         Vista creada para comprobar que el usuario
@@ -200,7 +195,6 @@ class PasswordConfirmationView(FormView):
         return HttpResponseRedirect(
             reverse_lazy('users:pwd-change', kwargs={'pk' : self.kwargs['pk']})
         )
-
 class ChangePasswordView(FormView):
     """
         Vista creada para cambio de contraseña

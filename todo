@@ -6,8 +6,8 @@
 
 
 // Logica:
-    // todo: refactorizar y optimizar codigo de mensajeria, status y notificaciones (optimizar y modular usando managers y tools)
-    // todo: optimizar home view y home template
+    // todo: agregar boton para ver previa de contrasenia
+    // todo
     // todo : hacer que los usuarios no se creen hasta introducir codigo de activacion
     // todo: agregar soporte para mensajes recientes
     //  todo: agregar traducciones
