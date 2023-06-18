@@ -8,7 +8,7 @@ from .managers import (
 
 class Messages(models.Model):
     parent_id = models.PositiveIntegerField()
-    content = models.CharField(max_length=50)
+    content = models.CharField(max_length=200)
     objects = MessagesManager()
 
     def __str__(self):

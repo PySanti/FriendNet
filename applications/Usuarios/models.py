@@ -9,7 +9,7 @@ class Usuarios(AbstractBaseUser, PermissionsMixin):
         Modelo creado para almacenamiento de todo tipo de usuarios
     """
     #* BASE ATTRS
-    username        = models.CharField(max_length=8, unique=True)
+    username        = models.CharField(max_length=15, unique=True)
     email           = models.EmailField(unique=True)
     is_staff        = models.BooleanField()
     REQUIRED_FIELDS = ['email', 'first_names', 'last_names', 'age']
@@ -23,7 +23,7 @@ class Usuarios(AbstractBaseUser, PermissionsMixin):
     is_active       = models.BooleanField(default=False)
     activation_code = models.CharField(max_length=6)
     current_status  = models.CharField(default='bored',max_length=15)
-    notifications   = models.ManyToManyField(Notifications)
+    notifications   = models.ManyToManyField(Notifications, blank=True)
     #* MANAGER
     objects         = UsuariosManager()
 
