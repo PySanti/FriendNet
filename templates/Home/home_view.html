@@ -12,106 +12,116 @@
 
 {% block body %}
     {% if user.is_authenticated %}
-    <header class="profile-section">
-        <h2 class="username-section">
-            {{user.username}}
-        </h2>
+        <header class="profile-section">
+            <h2 class="username-section">
+                {{user.username}}
+            </h2>
+            {% include '../include/home_header.html' %}
+            <div class="profile-section__btns">
+                <section class="notifications-section ">
+                    {% if user_notifications %}
+                        <div class="notification-globe" id="notification-globe">
+                        </div>
+                    {% endif %}
+                    <img id="notification-icon" src="../../static/images/notificacion2.png" class="notification-icon" alt="">
+                    <div id="notifications-container"class="notifications_section__list notifications-hidden ">
+                        {% if user_notifications %}
+                            {% for n in user_notifications  %}
+                                {% if n.2 == "u" %}
+                                    <a href="{% url 'users:detail' user.id%}">
+                                        <li class="notification-item">
+                                            {{n.0}} hace {{n.1}}
+                                        </li>
+                                    </a>
+                                {% else %}
+                                    <a href="{{n.2}}">
+                                        <li class="notification-item">
+                                            {{n.0}} hace {{n.1}}
+                                        </li>
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <h3 class="notification-item  no-notification">No hay notificaciones</h3>
+                        {% endif %}
+
+                    </div>
+                </section>
+                    <button class="signout-btn">
+                    <a href="{% url 'users:signout' user.id%}">salir</a>
+                </button>
+                <button class="detail-btn">
+                    <a href="{% url 'users:detail' user.id %}">ver</a>
+                </button>
+            </div>
+        </header>
+        <section class="users-section">
+            <div class="users-section__users_list">
+                <div class="users-section__users-list">
+                {% for u in users  %}
+                    <li class="user-item">
+                        <button class="user-item__btn">
+                            <a href="{{u.id}}">
+                                {{u.username}} 
+                                {% if u.is_online %}
+                                    , en linea
+                                {% endif %}
+                            </a>
+                        </button>
+                    </li>
+                {% endfor %}
+                </div>
+            </div>
+            <div class="users-section__chat_section">
+                {% if chat_user %}
+                    <h2 class="users_section__chat_section__chat-username">
+                        {{chat_user.username}}
+                    </h2>
+                    {% if messages_hist != None %}
+                        <div class="messages-list">
+                            {% for m in messages_hist %}
+                                {% if m.parent_id != chat_user.id %}
+                                    <li class="msg-item session-user-msg">{{m.content}}</li>
+                                {% else %}
+                                    <li class="msg-item chat-user-msg">{{m.content}}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        Aun no tienes mensajes con {{chat_user.username}}
+                    {% endif %}
+                    <form method="post">
+                        {% csrf_token %}
+                        {{form.as_p}}
+                        <button type="submit" class="hidden-submit-btn">enviar</button>
+                    </form>
+                {% else %}
+                    Haz click en alguno de los usuarios para chatear con el
+                {% endif %}
+            </div>
+        </section>
+        <script src="../../static/js/notifications.js">
+        </script>
+    {% else %}
         {% include '../include/home_header.html' %}
-        <div class="profile-section__btns">
-            <button class="signout-btn">
-                <a href="{% url 'users:signout' user.id%}">salir</a>
-            </button>
-            <button class="detail-btn">
-                <a href="{% url 'users:detail' user.id %}">ver</a>
-            </button>
-        </div>
-    </header>
-    <section class="users-section">
-        <div class="users-section__users_list">
-            <ul class="users-section__users-list">
-            {% for u in users  %}
-                <li class="user-item">
-                    <button class="user-item__btn">
-                        <a href="{{u.id}}">
-                            {{u.username}} 
-                            {% if u.is_online %}
-                                , en linea
-                            {% endif %}
-                        </a>
-                    </button>
-                </li>
-            {% endfor %}
-            </ul>
-        </div>
-        <div class="users-section__chat_section">
-            {% if chat_user %}
-                <h2 class="users_section__chat_section__chat-username">
-                    {{chat_user.username}}
+        <section class="sign-section">
+            <div class="signin">
+                <h2 class="signin-title">
+                    Ya tienes una cuenta?  
                 </h2>
-                {% if messages_hist != None %}
-                    <ul class="messages-list">
-                        {% for m in messages_hist %}
-                            {% if m.parent_id != chat_user.id %}
-                                <li class="msg-item session-user-msg">{{m.content}}</li>
-                            {% else %}
-                                <li class="msg-item chat-user-msg">{{m.content}}</li>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    Aun no tienes mensajes con {{chat_user.username}}
-                {% endif %}
-                <form method="post">
-                    {% csrf_token %}
-                    {{form.as_p}}
-                    <button type="submit" class="hidden-submit-btn">enviar</button>
-                </form>
-            {% else %}
-                Haz click en alguno de los usuarios para chatear con el
-            {% endif %}
-        </div>
-    </section>
-    <section class="notifications_section">
-        <h1 class="notifications_section__title">
-            Revisa tus notificaciones
-        </h1>
-        <ul class="notifications_section__list">
-            {% for n in user_notifications  %}
-                {% if n.2 == "u" %}
-                    <a href="{% url 'users:detail' user.id%}">
-                        <li class="notification_item">
-                            {{n.0}} hace {{n.1}}
-                        </li>
-                    </a>
-                {% else %}
-                    <a href="{{n.2}}">
-                        <li class="notification_item">
-                            {{n.0}} hace {{n.1}}
-                        </li>
-                    </a>
-                {% endif %}
-            {% endfor %}
-        </ul>
-    </section>
-{% else %}
-    {% include '../include/home_header.html' %}
-    <section class="sign-section">
-        <div class="signin">
-            <h2 class="signin-title">
-                Ya tienes una cuenta?  
-            </h2>
-            <button class="signin-btn">
-                <a href="{% url 'users:signin'%}">acceder</a>
-            </button>
-        </div>
-        <div class="signup">
-            <h2 class="signup-title">
-                Aun no tienes una cuenta? Regístrate!
-            </h2>
-            <button class="signup-btn">
-                <a href="{% url 'users:signup'%}">registrar</a>
-            </button>
-        </div>
-    </section>
-{% endif %}
+                <button class="signin-btn">
+                    <a href="{% url 'users:signin'%}">acceder</a>
+                </button>
+            </div>
+            <div class="signup">
+                <h2 class="signup-title">
+                    Aun no tienes una cuenta? Regístrate!
+                </h2>
+                <button class="signup-btn">
+                    <a href="{% url 'users:signup'%}">registrar</a>
+                </button>
+            </div>
+        </section>
+
+    {% endif %}
 {% endblock body %}

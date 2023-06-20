@@ -3,6 +3,7 @@ a{
     text-decoration: none;
     color : #000;
     padding: 1vw;
+    cursor: pointer;
 }
 
 .hidden-submit-btn{
@@ -20,12 +21,14 @@ html{
     --base-color-hovered : rgb(207, 141, 0);
     background-color: #242424;
 }
+
 button{
     outline: none;
     border-radius: 10px;
     border : 1px solid #000;
     padding: var(--standart-box-padding);
     background-color: var(--base-color);
+    cursor: pointer;
     transition: background-color .2s;
 }
 button:hover{
