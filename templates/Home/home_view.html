@@ -1,122 +1,121 @@
+{% extends '../include/base.html' %}
 {% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="{% static 'css/home.css'%} ">
-</head>
-<body>
 
-    
+{% block title %}
+    Home
+{% endblock title %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/home.css'%} ">
+{% endblock styles %}
+
+{% block body %}
     {% if user.is_authenticated %}
-        <section class="profile_section">
-            {% include '../include/home_header.html' %}
-            <h2 class="username_section">
-                {{user.username}}
-            </h2>
-            <div class="profile_section__btns">
-                <button class="signout-btn">
-                    <a href="{% url 'users:signout' user.id%}">salir</a>
-                </button>
-                <button class="detail-btn">
-                    <a href="{% url 'users:detail' user.id %}">ver</a>
-                </button>
-            </div>
-        </section>
-        <section class="users_section">
-            <div class="users_section__users_list">
-                <ul class="users_section__users-list">
-                {% for u in users  %}
-                    <li class="user-item">
-                        <button class="user-item__btn">
-                            <a href="{{u.id}}">
-                                {{u.username}} || {{u.current_status}} || 
-                                {% if u.is_online %}
-                                    online
-                                {% else %}
-                                    offline
-                                {% endif %}
-                            </a>
-                        </button>
-                    </li>
-                {% endfor %}
-                </ul>
-            </div>
-            <div class="users_section__chat_section">
-                {% if chat_user %}
-                    Chateando con {{chat_user.username}}
-                    {% if messages_hist != None %}
-                        <ul class="messages-list">
-                            {% for m in messages_hist %}
-                                {% if m.parent_id != chat_user.id %}
-                                    <li style="background-color: gray;"class="msg-item session_user">{{m.content}}</li>
-                                {% else %}
-                                    <li style="background-color: aqua;"class="msg-item with_user">{{m.content}}</li>
-                                {% endif %}
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                        Aun no tienes mensajes con {{chat_user.username}}
-                    {% endif %}
-                    <form method="post">
-                        {% csrf_token %}
-                        {{form.as_p}}
-                        <button type="submit">enviar</button>
-                    </form>
-                {% else %}
-                    Haz click en alguno de los usuarios para chatear con el
-                {% endif %}
-            </div>
-        </section>
-        <form class="status_form" method="post">
-            {% csrf_token %}
-            {{status_form.as_p}}
-            <button type="submit">enviar</button>
-        </form>
-        <section class="notifications_section">
-            <h1 class="notifications_section__title">
-                Revisa tus notificaciones
-            </h1>
-            <ul class="notifications_section__list">
-                {% for n in user_notifications  %}
-                    {% if n.2 == "u" %}
-                        <a href="{% url 'users:detail' user.id%}">
-                            <li class="notification_item">
-                                {{n.0}} hace {{n.1}}
-                            </li>
-                        </a>
-                    {% else %}
-                        <a href="{{n.2}}">
-                            <li class="notification_item">
-                                {{n.0}} hace {{n.1}}
-                            </li>
-                        </a>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        </section>
-    {% else %}
+    <section class="profile_section">
         {% include '../include/home_header.html' %}
-        <section class="sign-section">
-            <div class="signin">
-                <h2 class="signin-title">
-                    Ya tienes una cuenta?  
-                </h2>
-                <button class="signin-btn">
-                    <a href="{% url 'users:signin'%}">acceder</a>
-                </button>
-            </div>
-            <div class="signup">
-                <h2 class="signup-title">
-                    Aun no tienes una cuenta? Regístrate!
-                </h2>
-                <button class="signup-btn">
-                    <a href="{% url 'users:signup'%}">registrar</a>
-                </button>
-            </div>
-        </section>
-    {% endif %}
-</body>
-</html>
+        <h2 class="username_section">
+            {{user.username}}
+        </h2>
+        <div class="profile_section__btns">
+            <button class="signout-btn">
+                <a href="{% url 'users:signout' user.id%}">salir</a>
+            </button>
+            <button class="detail-btn">
+                <a href="{% url 'users:detail' user.id %}">ver</a>
+            </button>
+        </div>
+    </section>
+    <section class="users_section">
+        <div class="users_section__users_list">
+            <ul class="users_section__users-list">
+            {% for u in users  %}
+                <li class="user-item">
+                    <button class="user-item__btn">
+                        <a href="{{u.id}}">
+                            {{u.username}} || {{u.current_status}} || 
+                            {% if u.is_online %}
+                                online
+                            {% else %}
+                                offline
+                            {% endif %}
+                        </a>
+                    </button>
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+        <div class="users_section__chat_section">
+            {% if chat_user %}
+                Chateando con {{chat_user.username}}
+                {% if messages_hist != None %}
+                    <ul class="messages-list">
+                        {% for m in messages_hist %}
+                            {% if m.parent_id != chat_user.id %}
+                                <li style="background-color: gray;"class="msg-item session_user">{{m.content}}</li>
+                            {% else %}
+                                <li style="background-color: aqua;"class="msg-item with_user">{{m.content}}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    Aun no tienes mensajes con {{chat_user.username}}
+                {% endif %}
+                <form method="post">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <button type="submit">enviar</button>
+                </form>
+            {% else %}
+                Haz click en alguno de los usuarios para chatear con el
+            {% endif %}
+        </div>
+    </section>
+    <form class="status_form" method="post">
+        {% csrf_token %}
+        {{status_form.as_p}}
+        <button type="submit">enviar</button>
+    </form>
+    <section class="notifications_section">
+        <h1 class="notifications_section__title">
+            Revisa tus notificaciones
+        </h1>
+        <ul class="notifications_section__list">
+            {% for n in user_notifications  %}
+                {% if n.2 == "u" %}
+                    <a href="{% url 'users:detail' user.id%}">
+                        <li class="notification_item">
+                            {{n.0}} hace {{n.1}}
+                        </li>
+                    </a>
+                {% else %}
+                    <a href="{{n.2}}">
+                        <li class="notification_item">
+                            {{n.0}} hace {{n.1}}
+                        </li>
+                    </a>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </section>
+{% else %}
+    {% include '../include/home_header.html' %}
+    <section class="sign-section">
+        <div class="signin">
+            <h2 class="signin-title">
+                Ya tienes una cuenta?  
+            </h2>
+            <button class="signin-btn">
+                <a href="{% url 'users:signin'%}">acceder</a>
+            </button>
+        </div>
+        <div class="signup">
+            <h2 class="signup-title">
+                Aun no tienes una cuenta? Regístrate!
+            </h2>
+            <button class="signup-btn">
+                <a href="{% url 'users:signup'%}">registrar</a>
+            </button>
+        </div>
+    </section>
+{% endif %}
+{% endblock body %}

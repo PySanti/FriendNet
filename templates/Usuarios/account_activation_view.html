@@ -1,11 +1,11 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Activación</title>
-</head>
-<body>
+{% extends '../include/base.html' %}
+
+{% block title %}
+    Activación
+{% endblock title %}
+
+
+{% block body %}
     <header class="header-container">
         <h1 class="header-container__title">
             Ingresa el código de activación
@@ -19,5 +19,5 @@
             enviar
         </button>
     </form>
-</body>
-</html>
+{% endblock body %}
+

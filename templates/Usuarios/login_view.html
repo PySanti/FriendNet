@@ -1,12 +1,12 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ingresar</title>
-</head>
-<body>
-    
+{% extends '../include/base.html' %}
+
+
+{% block title %}
+    Ingresar
+{% endblock title %}
+
+
+{% block body %}
     {% if not user.is_authenticated %}
         <header class="signin-section">
             <h1 class="sigin-title">
@@ -27,5 +27,5 @@
     {% else %}
         {% include '../include/user_already_authenticated.html' %}
     {% endif %}
-</body>
-</html>
+{% endblock body %}
+

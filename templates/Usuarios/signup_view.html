@@ -1,13 +1,13 @@
+{% extends '../include/base.html' %}
 {% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear cuenta</title>
-</head>
-<body>
-    
+
+
+{% block title %}
+    Crear cuenta
+{% endblock title %}
+
+
+{% block body %}
     {% if not user.is_authenticated %}
         <header class="header-container">
             <h1 class="header-title">
@@ -29,5 +29,4 @@
     {% else %}
         {% include '../include/user_already_authenticated.html' %}
     {% endif %}
-</body>
-</html>
+{% endblock body %}

@@ -71,7 +71,7 @@ class LoginView(FormView):
         if 'failed_activation_user' in form.cleaned_data:
             Usuarios.objects.updateActivationCode(form.cleaned_data['user'])
             return HttpResponseRedirect(
-                reverse_lazy('users:unactive_login', kwargs={'pk':user.id} )
+                reverse_lazy('users:unactive_login', kwargs={'pk':form.cleaned_data['user'].id} )
             )
         else:
             user = form.cleaned_data['user']

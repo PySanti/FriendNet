@@ -1,12 +1,10 @@
+{% extends '../include/base.html' %}
 {% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil</title>
-</head>
-<body>
+{% block title %}
+    Perfil
+{% endblock title %}
+
+{% block body %}
     <header class="header-container">
         <h1 class="header-container">
             "Si la vida te da limones ponte a hacer limonada"
@@ -43,5 +41,5 @@
     </button>
     <script src="{% static 'js/image_preview.js'%}"></script>
     <script src="{%static 'js/update_system.js'%}"></script>
-</body>
-</html>
+{% endblock body %}
+
