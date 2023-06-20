@@ -9,6 +9,8 @@
 
 
 // Logica:
+
+    // todo: eliminar status
     // todo: agregar boton para ver previa de contrasenia
     //  todo: agregar traducciones
     //  todo: refactorizar js
@@ -18,6 +20,7 @@
 
 
 // Estaticos:
+    // todo: agregar modo obscuro y claro
     //TODO: agregar base.html
     //TODO: agregar css
     //todo: agregar display:none al formulario en la showDetailView de los Usuarios

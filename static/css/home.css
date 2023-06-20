@@ -1,29 +1,78 @@
-.profile_section{
-    display: flex;
+.profile-section{
+    margin-top: 1vh;
+    display: flex ;
+    flex-direction: row ;
     justify-content: space-around;
     align-items: center;
+    height: 40vh;
 }
-.users_section{
+.profile-section__btns{
+    --padding-container : 5vw;
+    align-self: flex-start;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 15vw;
+}
+
+
+.users-section{
     display: flex;
     width: 100vw;
+    background-color: rgb(50, 50, 50);
 }
-.users_section > *{
-    border: 1px solid #000;
-    background-color: rgb(255, 223, 255);
-    width: 50%;
+.user-item{
+    margin-top : .5vh;
+}
+.users-section__users-list{
+    list-style: none;
+}
+.users-section__users_list{
+    width: 25%;
+}
+.users-section__chat_section{
+    width: 74%;
 }
 
-.users_section__chat_section{
+
+.users-section > *{
+    border: 1px solid var(--base-color);
+}
+
+.users_section__chat_section__chat-username{
+    width: 100% ;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid var(--base-color);
+}
+.users-section__chat_section{
     display: flex;
     flex-direction: column;
-    align-items: center;
+}
+.messages-list{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    height: 40vh ;
+    overflow: scroll;
+}
+.msg-item{
+    line-height: 0;
+    margin-top : 1vw;
+    color : #000;
+    font-size: 16px;
+    padding: 16px;
+    border-radius: 10px;
+}
+.session-user-msg{
+    align-self: flex-end;
+    background-color: var(--base-color);
+}
+.chat-user-msg{
+    align-self: flex-start;
+    background-color: var(--base-color);
 }
 
-.session_user{
-    align-items: start;
-    background: #0f0;
-}
-.with_user{
-    align-items: end;
-    background: #af0;
+.django-msg-input{
+    margin-left : 1vw;
 }

@@ -7,16 +7,17 @@
 
 {% block styles %}
     <link rel="stylesheet" href="{% static 'css/home.css'%} ">
+    <link rel="stylesheet" href="{% static 'css/home_header.css'%} ">
 {% endblock styles %}
 
 {% block body %}
     {% if user.is_authenticated %}
-    <section class="profile_section">
-        {% include '../include/home_header.html' %}
-        <h2 class="username_section">
+    <header class="profile-section">
+        <h2 class="username-section">
             {{user.username}}
         </h2>
-        <div class="profile_section__btns">
+        {% include '../include/home_header.html' %}
+        <div class="profile-section__btns">
             <button class="signout-btn">
                 <a href="{% url 'users:signout' user.id%}">salir</a>
             </button>
@@ -24,10 +25,10 @@
                 <a href="{% url 'users:detail' user.id %}">ver</a>
             </button>
         </div>
-    </section>
-    <section class="users_section">
-        <div class="users_section__users_list">
-            <ul class="users_section__users-list">
+    </header>
+    <section class="users-section">
+        <div class="users-section__users_list">
+            <ul class="users-section__users-list">
             {% for u in users  %}
                 <li class="user-item">
                     <button class="user-item__btn">
@@ -44,16 +45,18 @@
             {% endfor %}
             </ul>
         </div>
-        <div class="users_section__chat_section">
+        <div class="users-section__chat_section">
             {% if chat_user %}
-                Chateando con {{chat_user.username}}
+                <h2 class="users_section__chat_section__chat-username">
+                    {{chat_user.username}}
+                </h2>
                 {% if messages_hist != None %}
                     <ul class="messages-list">
                         {% for m in messages_hist %}
                             {% if m.parent_id != chat_user.id %}
-                                <li style="background-color: gray;"class="msg-item session_user">{{m.content}}</li>
+                                <li class="msg-item session-user-msg">{{m.content}}</li>
                             {% else %}
-                                <li style="background-color: aqua;"class="msg-item with_user">{{m.content}}</li>
+                                <li class="msg-item chat-user-msg">{{m.content}}</li>
                             {% endif %}
                         {% endfor %}
                     </ul>
@@ -63,7 +66,7 @@
                 <form method="post">
                     {% csrf_token %}
                     {{form.as_p}}
-                    <button type="submit">enviar</button>
+                    <button type="submit" class="hidden-submit-btn">enviar</button>
                 </form>
             {% else %}
                 Haz click en alguno de los usuarios para chatear con el
