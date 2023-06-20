@@ -1,11 +1,13 @@
+from typing import Any
+
 from .models import Usuarios
 from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import  HttpResponseRedirect
 from django.urls import reverse_lazy
-from .tools import generateActivationCode
-from django.core.mail import send_mail
-from django.conf import settings
+from .tools import (
+    sendActivationCodeEmail
+)
 from applications.Notifications.models import Notifications
 from django.views.generic import (
     FormView,
@@ -25,6 +27,29 @@ from .forms import (
 from applications.Notifications.models import Notifications
 # Create your views here.
 
+class UnactiveUserLogin(FormView):
+    template_name = 'Usuarios/unactive_user_login_view.html'
+    form_class= accountActivationForm
+    success_url = reverse_lazy('home:home')
+    def get_form_kwargs(self):
+        """
+            Envia el pk del usuario que se esta evaluando al formulario
+            para poder comprobar que el codigo ingresado es valido
+            desde el mismo formulario
+        """
+        kwargs = super(UnactiveUserLogin, self).get_form_kwargs()
+        kwargs['pk'] = self.kwargs['pk']
+        return kwargs
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = Usuarios.objects.get(id=self.kwargs['pk'])
+        context['user_email'] = user.email
+        return context
+
+    def form_valid(self, form):
+        Usuarios.objects.activeUser(self.kwargs['pk'], self.request)
+        return super().form_valid(form)
+
 class LoginView(FormView):
     """
         Vista creada para logear al usuario y conectarlo 
@@ -34,10 +59,16 @@ class LoginView(FormView):
     success_url = reverse_lazy('home:home')
 
     def form_valid(self, form):
-        user = form.cleaned_data['user']
-        login(self.request,user=user)
-        Usuarios.objects.connectUser(user.id)
-        return super().form_valid(form)
+        if 'unactive_user_id' in form.cleaned_data:
+            Usuarios.objects.activateFailedUser(form.cleaned_data['user'])
+            return HttpResponseRedirect(
+                reverse_lazy('users:unactive_login', kwargs={'pk':form.cleaned_data['unactive_user_id']} )
+            )
+        else:
+            user = form.cleaned_data['user']
+            login(self.request,user=user)
+            Usuarios.objects.connectUser(user.id)
+            return super().form_valid(form)
 class LogoutView(View, LoginRequiredMixin):
     """
         Vista creada para deslogear al usuario y desconectarlo 
@@ -62,7 +93,7 @@ class SignUpView(FormView):
             y redirije a la vista para activacion
         """
         data = form.cleaned_data 
-        code = generateActivationCode()
+        code = sendActivationCodeEmail(data['username'], data['email'])
         new_user = Usuarios.objects.create_user(
             data['username'],
             data['password'],
@@ -72,16 +103,6 @@ class SignUpView(FormView):
             age = data['age'],
             photo = data['photo'],
             activation_code = code ,
-        )
-        send_mail(
-            "FRIENDNET",
-            f"""
-            Ingresa este codigo para activar tu usuario, {new_user.username}
-
-            {code}
-            """,
-            settings.SECRETS['EMAIL_USER'],
-            [new_user.email]
         )
         return HttpResponseRedirect(
             reverse_lazy('users:activation',  kwargs={'pk':new_user.id})

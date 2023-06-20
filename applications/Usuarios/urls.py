@@ -8,7 +8,8 @@ from .views import (
     ShowUserDetailView,
     AccountActivationView,
     PasswordConfirmationView,
-    ChangePasswordView
+    ChangePasswordView,
+    UnactiveUserLogin
     )
 
 app_name = 'users'
@@ -21,5 +22,6 @@ urlpatterns = [
     path('detail/<int:pk>', ShowUserDetailView.as_view(),name='detail'),
     path('password_confirmation/<int:pk>', PasswordConfirmationView.as_view(),name='pwd-confirmation'),
     path('change_password/<int:pk>', ChangePasswordView.as_view(),name='pwd-change'),
+    path('unactive_user_login/<int:pk>',UnactiveUserLogin.as_view(), name='unactive_login')
 
 ] 

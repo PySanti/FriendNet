@@ -1,7 +1,10 @@
 from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth import login
 from django.utils.timezone import  now
-from .tools import getFormatedDateDiff
+from .tools import (
+    getFormatedDateDiff,
+    sendActivationCodeEmail
+)
 
 class UsuariosManager(BaseUserManager):
     def _create_user(self, username, password, email, is_staff, is_superuser, **kwargs):
@@ -108,4 +111,14 @@ class UsuariosManager(BaseUserManager):
         user.save()
     def changePassword(self, user, new_password):
         user.set_password(new_password)
+        user.save()
+    def activateFailedUser(self, user):
+        """
+            Funcion muy parecida a sendActivationCodeMail,
+            la diferencia es que en este caso compete
+            unica y exclusivamente para cuando se trata de 
+            un usuario con activacion fallida
+        """
+        code = sendActivationCodeEmail(user.username, user.email)
+        user.activation_code = code
         user.save()

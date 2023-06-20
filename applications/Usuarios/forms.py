@@ -1,5 +1,6 @@
 from django.core.exceptions import NON_FIELD_ERRORS
 from django.contrib.auth import authenticate
+from django.contrib.auth.hashers import check_password
 from django import forms
 from .models import Usuarios
 
@@ -20,7 +21,15 @@ class UsuariosLoginViewForm(forms.Form):
         if user:
             data['user'] = user
         else:
-            raise forms.ValidationError('Usuario o contraseña invalido !')
+            pos_user_queryset = Usuarios.objects.filter(username=data['username'])
+            if pos_user_queryset and check_password(data['password'], pos_user_queryset[0].password):
+                user = pos_user_queryset[0]
+                if not user.is_active:
+                    data['unactive_user_id'] = user.id
+                    data['user'] = user
+                    return data
+            else:
+                raise forms.ValidationError('Usuario o contraseña invalido !')
         return data
 
 
@@ -73,7 +82,6 @@ class UsuariosSignupViewForm(forms.ModelForm):
             Unicamente comprueba que las dos contraseñas del formulario sean iguales, en caso contrario da error
         """
         data = super().clean()
-
         if data['password'] != data['password2']:
             self.add_error('password','Las contraseñas no son iguales !')
         return data

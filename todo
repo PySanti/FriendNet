@@ -6,8 +6,9 @@
 
 
 // Logica:
+    // todo: arreglar errores de acceso a views directamente por url
     // todo: agregar boton para ver previa de contrasenia
-    // todo
+    // todo : agregar herencia de vistas en vistas parecidas
     // todo : hacer que los usuarios no se creen hasta introducir codigo de activacion
     // todo: agregar soporte para mensajes recientes
     //  todo: agregar traducciones

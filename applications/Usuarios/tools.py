@@ -1,4 +1,6 @@
 from random import randint
+from django.core.mail import send_mail
+from django.conf import settings
 
 def generateActivationCode():
     """
@@ -27,3 +29,21 @@ def getFormatedDateDiff(new_date, old_date):
     elif seconds:
         diff_string = f"{round(seconds)} segundos"
     return diff_string
+
+def sendActivationCodeEmail(username, email):
+    """
+        Automatiza el proceso de envio de email
+        a usuario {username} y retorna el codigo
+        de activacion en cuestion
+    """
+    code = generateActivationCode()
+    send_mail(
+        "FRIENDNET",
+        f"""
+        Ingresa este codigo para activar tu usuario, {username}
+        {code}
+        """,
+        settings.SECRETS['EMAIL_USER'],
+        [email]
+    )
+    return code
