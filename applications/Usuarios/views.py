@@ -51,7 +51,6 @@ class AccountActivationView(FormView):
         """
         Usuarios.objects.activeUser(self.kwargs['pk'], self.request)
         return super().form_valid(form)
-
 class UnactiveUserLogin(AccountActivationView):
     template_name = 'Usuarios/unactive_user_login_view.html'
     def get_context_data(self, **kwargs):
@@ -69,7 +68,7 @@ class LoginView(FormView):
     success_url = reverse_lazy('home:home')
 
     def form_valid(self, form):
-        if 'unactive_user_id' in form.cleaned_data:
+        if 'failed_activation_user' in form.cleaned_data:
             Usuarios.objects.updateActivationCode(form.cleaned_data['user'])
             return HttpResponseRedirect(
                 reverse_lazy('users:unactive_login', kwargs={'pk':user.id} )

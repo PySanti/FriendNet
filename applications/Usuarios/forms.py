@@ -23,6 +23,7 @@ class UsuariosLoginViewForm(forms.Form):
             user = Usuarios.objects.isExistingUnactiveUser(data['username'], data['password'])
             if user:
                 data['user'] = user
+                data['failed_activation_user'] = True
                 return data
             else:
                 raise forms.ValidationError('Usuario o contraseña invalido !')
