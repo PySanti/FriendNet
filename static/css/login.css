@@ -1,0 +1,27 @@
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.signin-section{
+    margin-top: 30vh;
+}
+
+.form-section{
+    margin-top: 5vh;
+    width: 35%;
+}
+
+.form-section > p{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btns-container{
+    margin-top: 5vh;
+    display: flex;
+    justify-content: space-around;
+}
+

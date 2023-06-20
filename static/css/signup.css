@@ -1,0 +1,33 @@
+.header-container{
+    margin-top: 5vh;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.btns-section{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.form-section > p{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.data-section{
+    display: flex;
+    align-items: center;
+}
+
+.img-preview{
+    margin-left : 5vw;
+    object-fit: contain;
+    width: 200px;
+    height: 200px;
+}

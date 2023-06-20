@@ -1,0 +1,13 @@
+.signin-section{
+    margin-top: 20vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+.signin-section > *{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

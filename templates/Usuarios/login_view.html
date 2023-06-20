@@ -1,9 +1,17 @@
 {% extends '../include/base.html' %}
+{% load static %}
 
 
 {% block title %}
     Ingresar
 {% endblock title %}
+
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/login.css'%}">
+    <link rel="stylesheet" href="{% static 'css/user_already_logged.css'%}">
+{% endblock styles %}
+    
 
 
 {% block body %}
@@ -17,13 +25,14 @@
         <form method="post" class="form-section">
             {% csrf_token %}
             {{form.as_p}}
-            <button type="submit">acceder</button>
+            <div class="btns-container">
+                <button type="submit">acceder</button>
+                <button class="btn-container">
+                    <a href="../">volver</a>
+                </button>
+            </div>
         </form>
-        <div class="back-btn-container">
-            <button class="btn-container">
-                <a href="../">volver</a>
-            </button>
-        </div>
+
     {% else %}
         {% include '../include/user_already_authenticated.html' %}
     {% endif %}
