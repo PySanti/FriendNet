@@ -27,9 +27,13 @@ from .forms import (
 from applications.Notifications.models import Notifications
 # Create your views here.
 
-class UnactiveUserLogin(FormView):
-    template_name = 'Usuarios/unactive_user_login_view.html'
-    form_class= accountActivationForm
+class AccountActivationView(FormView):
+    """
+        Vista creada para activar al usuario por el codigo enviado
+        a su correo
+    """
+    template_name = 'Usuarios/account_activation_view.html'
+    form_class = accountActivationForm
     success_url = reverse_lazy('home:home')
     def get_form_kwargs(self):
         """
@@ -37,18 +41,24 @@ class UnactiveUserLogin(FormView):
             para poder comprobar que el codigo ingresado es valido
             desde el mismo formulario
         """
-        kwargs = super(UnactiveUserLogin, self).get_form_kwargs()
+        kwargs = super(AccountActivationView, self).get_form_kwargs()
         kwargs['pk'] = self.kwargs['pk']
         return kwargs
+    def form_valid(self, form):
+        """
+            En caso de que el codigo ingresado sea correcto, se activa
+            al usuario
+        """
+        Usuarios.objects.activeUser(self.kwargs['pk'], self.request)
+        return super().form_valid(form)
+
+class UnactiveUserLogin(AccountActivationView):
+    template_name = 'Usuarios/unactive_user_login_view.html'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = Usuarios.objects.get(id=self.kwargs['pk'])
         context['user_email'] = user.email
         return context
-
-    def form_valid(self, form):
-        Usuarios.objects.activeUser(self.kwargs['pk'], self.request)
-        return super().form_valid(form)
 
 class LoginView(FormView):
     """
@@ -60,9 +70,9 @@ class LoginView(FormView):
 
     def form_valid(self, form):
         if 'unactive_user_id' in form.cleaned_data:
-            Usuarios.objects.activateFailedUser(form.cleaned_data['user'])
+            Usuarios.objects.updateActivationCode(form.cleaned_data['user'])
             return HttpResponseRedirect(
-                reverse_lazy('users:unactive_login', kwargs={'pk':form.cleaned_data['unactive_user_id']} )
+                reverse_lazy('users:unactive_login', kwargs={'pk':user.id} )
             )
         else:
             user = form.cleaned_data['user']
@@ -107,30 +117,7 @@ class SignUpView(FormView):
         return HttpResponseRedirect(
             reverse_lazy('users:activation',  kwargs={'pk':new_user.id})
         )
-class AccountActivationView(FormView):
-    """
-        Vista creada para activar al usuario por el codigo enviado
-        a su correo
-    """
-    template_name = 'Usuarios/account_activation_view.html'
-    form_class = accountActivationForm
-    success_url = reverse_lazy('home:home')
-    def get_form_kwargs(self):
-        """
-            Envia el pk del usuario que se esta evaluando al formulario
-            para poder comprobar que el codigo ingresado es valido
-            desde el mismo formulario
-        """
-        kwargs = super(AccountActivationView, self).get_form_kwargs()
-        kwargs['pk'] = self.kwargs['pk']
-        return kwargs
-    def form_valid(self, form):
-        """
-            En caso de que el codigo ingresado sea correcto, se activa
-            al usuario
-        """
-        Usuarios.objects.activeUser(self.kwargs['pk'], self.request)
-        return super().form_valid(form)
+
 class ShowUserDetailView(UpdateView):
     """
         Vista creada para llevar a cabo la actualizacion y detalle

@@ -1,6 +1,7 @@
 from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth import login
 from django.utils.timezone import  now
+from django.contrib.auth.hashers import check_password
 from .tools import (
     getFormatedDateDiff,
     sendActivationCodeEmail
@@ -112,7 +113,7 @@ class UsuariosManager(BaseUserManager):
     def changePassword(self, user, new_password):
         user.set_password(new_password)
         user.save()
-    def activateFailedUser(self, user):
+    def updateActivationCode(self, user):
         """
             Funcion muy parecida a sendActivationCodeMail,
             la diferencia es que en este caso compete
@@ -122,3 +123,15 @@ class UsuariosManager(BaseUserManager):
         code = sendActivationCodeEmail(user.username, user.email)
         user.activation_code = code
         user.save()
+    def isExistingUnactiveUser(self, username, password):
+        """
+            Retorna el usuario en caso de que 
+            exista pero no este activo todavia,
+            retorna False en caso de que le usuario
+            no exista
+        """
+        pos_user_queryset = self.filter(username=username)
+        if pos_user_queryset and check_password(password, pos_user_queryset[0].password) and (not pos_user_queryset[0].is_active):
+            return pos_user_queryset[0]
+        else:
+            return False

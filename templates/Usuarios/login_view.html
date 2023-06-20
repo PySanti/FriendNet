@@ -6,21 +6,26 @@
     <title>Ingresar</title>
 </head>
 <body>
-    <header class="signin-section">
-        <h1 class="sigin-title">
-            Ingresa tus credenciales para acceder 
-        </h1>
-    </header>
+    
+    {% if not user.is_authenticated %}
+        <header class="signin-section">
+            <h1 class="sigin-title">
+                Ingresa tus credenciales para acceder 
+            </h1>
+        </header>
 
-    <form method="post" class="form-section">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit">acceder</button>
-    </form>
-    <div class="back-btn-container">
-        <button class="btn-container">
-            <a href="../">volver</a>
-        </button>
-    </div>
+        <form method="post" class="form-section">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button type="submit">acceder</button>
+        </form>
+        <div class="back-btn-container">
+            <button class="btn-container">
+                <a href="../">volver</a>
+            </button>
+        </div>
+    {% else %}
+        {% include '../include/user_already_authenticated.html' %}
+    {% endif %}
 </body>
 </html>

@@ -1,6 +1,5 @@
 from django.core.exceptions import NON_FIELD_ERRORS
 from django.contrib.auth import authenticate
-from django.contrib.auth.hashers import check_password
 from django import forms
 from .models import Usuarios
 
@@ -21,13 +20,10 @@ class UsuariosLoginViewForm(forms.Form):
         if user:
             data['user'] = user
         else:
-            pos_user_queryset = Usuarios.objects.filter(username=data['username'])
-            if pos_user_queryset and check_password(data['password'], pos_user_queryset[0].password):
-                user = pos_user_queryset[0]
-                if not user.is_active:
-                    data['unactive_user_id'] = user.id
-                    data['user'] = user
-                    return data
+            user = Usuarios.objects.isExistingUnactiveUser(data['username'], data['password'])
+            if user:
+                data['user'] = user
+                return data
             else:
                 raise forms.ValidationError('Usuario o contraseña invalido !')
         return data

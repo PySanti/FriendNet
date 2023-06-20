@@ -3,21 +3,17 @@
     // TODO: Limitar tamanio de las imagenes para produccion (seguridad)
     // TODO: investigar sobre seguridad para proyectos django
     // TODO: hacer que cuando los usuarios sean eliminados, se elimine tambien su imagen de la DB 
+    // todo: arreglar errores de acceso a views directamente por url a traves de metodos como:
+            ~ urls encriptadas
+            ~ ocultamiento de urls
 
 
 // Logica:
-    // todo: arreglar errores de acceso a views directamente por url
     // todo: agregar boton para ver previa de contrasenia
-    // todo : agregar herencia de vistas en vistas parecidas
-    // todo : hacer que los usuarios no se creen hasta introducir codigo de activacion
-    // todo: agregar soporte para mensajes recientes
     //  todo: agregar traducciones
     //  todo: refactorizar js
     //  todo: refactorizar uso de clases en implementacion de js
     //  todo: agregar filtrado de usuarios en home
-    //  todo: modificar sistema de saludo`` en home_header (estamos comprobando dos veces si el usuario esta autenticado)
-    //  todo: agregar sistema de notificaciones
-    //  todo: quitar error de mensaje obligatorio
     //  todo: cuando se pseudo-termine la parte logica, borrar la base de datos y debugear toda el proyecto desde 0
 
 

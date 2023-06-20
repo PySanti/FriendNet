@@ -27,12 +27,7 @@
         </button>
         <script src="{% static 'js/image_preview.js'%}"></script>
     {% else %}
-        <h1>
-            No puedes crear un usuario si ya estas registrado :(
-        </h1>
-        <button class="home-btn">
-            <a href="{% url 'home:home'%}">volver</a>
-        </button>
+        {% include '../include/user_already_authenticated.html' %}
     {% endif %}
 </body>
 </html>
