@@ -86,9 +86,6 @@ class UsuariosManager(BaseUserManager):
         """
 
         return [ (i.msg, getFormatedDateDiff(now(), i.receive_time), i.code) for  i in user.notifications.all()]
-    def setState(self, user, new_state):
-        user.current_status = new_state
-        user.save()
     def getCleanedUserData(self, user):
         USERS_TRADUCTION_ATTRS = {
             'username' : 'Usuario',
@@ -97,7 +94,7 @@ class UsuariosManager(BaseUserManager):
             'last_names' : 'Apellidos',
             'age' : 'Edad',
         }
-        NOT_TEMPLATEABLE_ATTRS = ['id', 'password', 'last_login', 'is_superuser', 'is_staff', 'is_online', 'current_status', '_state', 'photo', 'is_active', 'activation_code', 'chats']
+        NOT_TEMPLATEABLE_ATTRS = ['id', 'password', 'last_login', 'is_superuser', 'is_staff', 'is_online', '_state', 'photo', 'is_active', 'activation_code', 'chats']
         cleaned_usuario_dict = {
             USERS_TRADUCTION_ATTRS[i[0]]:i[1] for i in user.__dict__.items() if i[0] not in NOT_TEMPLATEABLE_ATTRS
         }

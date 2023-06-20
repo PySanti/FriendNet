@@ -14,7 +14,6 @@ from applications.Chats.models import (
 )
 from .forms import (
     MessagesForm,
-    StatusForm
 )
 # Create your views here.
 class HomeView(FormView):
@@ -34,7 +33,6 @@ class HomeView(FormView):
         context = super().get_context_data(**kwargs)
         context['home_data'] = Home.objects.get(id=1)
         if self.request.user.is_authenticated:
-            context['status_form'] = StatusForm()
             context['users'] = Usuarios.objects.all().exclude(id=self.request.user.id)
             context['user_notifications'] = Usuarios.objects.getParsedNotifications(self.request.user)
         if 'chat_user_id' in self.kwargs:
@@ -71,9 +69,3 @@ class HomeView(FormView):
             return HttpResponseRedirect(
                 reverse_lazy('home:home' )
             )
-    def post(self, request, *args, **kwargs):
-        if 'status' in request.POST:
-            status_form = StatusForm(request.POST)
-            if status_form.is_valid():
-                Usuarios.objects.setState(request.user, request.POST['status'])
-        return super().post(request, *args, **kwargs)

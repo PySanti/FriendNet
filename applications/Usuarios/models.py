@@ -22,7 +22,6 @@ class Usuarios(AbstractBaseUser, PermissionsMixin):
     is_online       = models.BooleanField(default=False)
     is_active       = models.BooleanField(default=False)
     activation_code = models.CharField(max_length=6)
-    current_status  = models.CharField(default='bored',max_length=15)
     notifications   = models.ManyToManyField(Notifications, blank=True)
     #* MANAGER
     objects         = UsuariosManager()

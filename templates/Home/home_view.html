@@ -33,11 +33,9 @@
                 <li class="user-item">
                     <button class="user-item__btn">
                         <a href="{{u.id}}">
-                            {{u.username}} || {{u.current_status}} || 
+                            {{u.username}} 
                             {% if u.is_online %}
-                                online
-                            {% else %}
-                                offline
+                                , en linea
                             {% endif %}
                         </a>
                     </button>
@@ -73,11 +71,6 @@
             {% endif %}
         </div>
     </section>
-    <form class="status_form" method="post">
-        {% csrf_token %}
-        {{status_form.as_p}}
-        <button type="submit">enviar</button>
-    </form>
     <section class="notifications_section">
         <h1 class="notifications_section__title">
             Revisa tus notificaciones
