@@ -1,13 +1,9 @@
 {% extends '../include/base.html' %}
-{% load static %}
 
 
 {% block title %}
     Cambio de contraseña
 {% endblock title %}
-{% block styles %}
-    <link rel="stylesheet" href="{% static 'css/change_password.css'%}">
-{% endblock styles %}
 
 
 {% block body %}
@@ -19,14 +15,11 @@
     <form  method="post">
         {% csrf_token %}
         {{form.as_p}}
-        <div class="btns-section">
-            <button class="back-btn-container">
-                <a class="back-btn"href="../">volver</a>
-            </button>
-            <button class="hidden-submit-btn" type="submit ">enviar</button>
-        </div>
+        <button type="submit hidden-submit-btn">enviar</button>
     </form>
-
+    <button class="back-btn-container">
+        <a class="back-btn"href="../">volver</a>
+    </button>
 {% endblock body %}
 
 
