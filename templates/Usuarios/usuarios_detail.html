@@ -4,41 +4,53 @@
     Perfil
 {% endblock title %}
 
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/usuarios_detail.css'%}">
+{% endblock styles %}
+    
+
 {% block body %}
     <header class="header-container">
         <h1 class="header-container">
-            "Si la vida te da limones ponte a hacer limonada"
+            Mira los datos de tu perfil
         </h1>
     </header>
     <section class="detail-container">
         <form class="detail-form"method="post"  enctype="multipart/form-data">
-            {% csrf_token %}
-            {{form.as_p}}
-            <img src="{{user_photo}}" alt="Imagen no encontrada ..." class="img-preview" width="200vw" height="200vh">
+            <div class="detail-form__data-section">
+                {% csrf_token %}
+                {{form.as_p}}
+            </div>
+            <img src="{{user_photo}}" alt="Imagen no encontrada ..." class="circular-img img-preview photo-input"  width="200vw" height="200vh">
             <button type="submit">actualizar</button>
         </form>
-        <ul class="detail-list">
-            
-            {% for i in user_data.items  %}
-                <li class="detail-item">
-                    {{i.0}} : {{i.1}}
-                </li>
-            {% endfor %}
-            <li class="detail-item-photo">
-                <img src="{{user_photo}}" alt="imagen no encontrada ... " width="200px" height="200px">
-            </li>
-        </ul>
-            
+        <section class="detail-section">
+            <ul class="detail-list">
+                {% for i in user_data.items  %}
+                    <li class="detail-item">
+                        <div class="detail-item__name">
+                            {{i.0}} : 
+                        </div>
+                        <div class="detail-item__content">
+                            {{i.1}}
+                        </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <img class="circular-img user-img"src="{{user_photo}}" id="img-detail-preview"alt="imagen no encontrada ... " width="200px" height="200px">
+            </section>
+        </section>
+        <section class="btn-section">
+            <button class="change-pwd-btn-container">
+            <a class="change-pwd-btn" href="{% url 'users:pwd-confirmation' usuario.id%}">cambiar contraseña</a>
+        </button>
+        <button class="back-btn-container">
+            <a class="back-btn"href="../">volver</a>
+        </button>
+        <button class="update-btn">
+            Actualizar
+        </button>
     </section>
-    <button class="change-pwd-btn-container">
-        <a class="change-pwd-btn" href="{% url 'users:pwd-confirmation' usuario.id%}">cambiar contraseña</a>
-    </button>
-    <button class="back-btn-container">
-        <a class="back-btn"href="../">volver</a>
-    </button>
-    <button class="update-btn">
-        Actualizar
-    </button>
     <script src="{% static 'js/image_preview.js'%}"></script>
     <script src="{%static 'js/update_system.js'%}"></script>
 {% endblock body %}
