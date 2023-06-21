@@ -52,7 +52,7 @@
                     <a href="{% url 'users:signout' user.id%}">salir</a>
                 </button>
                 <button class="detail-btn">
-                    <a href="{% url 'users:detail' user.id %}">ver</a>
+                    <a href="{% url 'users:detail' user.id %}">perfil</a>
                 </button>
             </div>
         </header>
@@ -75,9 +75,13 @@
             </div>
             <div class="users-section__chat_section">
                 {% if chat_user %}
-                    <h2 class="users_section__chat_section__chat-username">
-                        {{chat_user.username}}
-                    </h2>
+                    <div class="chat-user-info">
+                        <img class='chat-user-info__img circular-img'src="media/{{chat_user.photo}}" alt="imagen no encontrada">
+                        <h2 class="chat-user-info__username">
+                            {{chat_user.username}}
+                        </h2>
+                    </div>
+
                     {% if messages_hist != None %}
                         <div class="messages-list">
                             {% for m in messages_hist %}
@@ -89,7 +93,9 @@
                             {% endfor %}
                         </div>
                     {% else %}
-                        Aun no tienes mensajes con {{chat_user.username}}
+                        <h2 class="no-chat-messages">
+                            Aun no tienes mensajes con {{chat_user.username}}
+                        </h2>
                     {% endif %}
                     <form method="post">
                         {% csrf_token %}
@@ -97,7 +103,9 @@
                         <button type="submit" class="hidden-submit-btn">enviar</button>
                     </form>
                 {% else %}
-                    Haz click en alguno de los usuarios para chatear con el
+                    <h2 class="no-chat-selected">
+                        Haz click en alguno de los usuarios para chatear con el
+                    </h2>
                 {% endif %}
             </div>
         </section>

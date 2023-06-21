@@ -105,7 +105,17 @@
     border: 1px solid var(--base-color);
 }
 
-.users_section__chat_section__chat-username{
+.chat-user-info{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+.chat-user-info__img{
+    width: 100px;
+    height: 100px;
+}
+.chat-user-info__username{
     width: 100% ;
     display: flex;
     justify-content: center;
@@ -152,3 +162,9 @@
     align-items: center;
 }
 
+.no-chat-selected,
+.no-chat-messages{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -1,21 +1,27 @@
 {% extends '../include/base.html' %}
+{% load static %}
 
 
 {% block title %}
     Activación fallida
 {% endblock title %}
 
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/unactive_user_login.css'%}">
+{% endblock styles %}
+    
+
 
 {% block body %}
     <header class="header-container">
-        <h1 class="title-container">
+        <h2 class="title-container">
             Hemos detectado que este usuario ya existe, pero aun no ha sido activado.
             Hemos enviado el codigo de activacion a {{user_email}}
-        </h1>
+        </h2>
     </header>
     <form method="POST" class="form-container">
         {% csrf_token %}
         {{form.as_p}}
-        <button type="submit">enviar</button>
+        <button class='submit-btn hidden-submit-btn'type="submit">enviar</button>
     </form> 
 {% endblock body %}

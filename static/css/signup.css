@@ -20,6 +20,7 @@ body{
     justify-content: space-between;
     align-items: center;
 }
+
 .data-section{
     display: flex;
     align-items: center;
@@ -27,7 +28,7 @@ body{
 
 .img-preview{
     margin-left : 5vw;
-    object-fit: contain;
     width: 200px;
     height: 200px;
 }
+

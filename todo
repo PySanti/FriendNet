@@ -20,6 +20,8 @@
 
 
 // Estaticos:
+    // todo: hacer refactor en todos los html y css antes de pasar al responsive
+    // todo: darle estilos a todos los mensajes de erorr de los formularios
     // todo: agregar animcion bien arrecha en la palabra FriendNet del home unloged
     // todo: recordar responsive
     // todo: agregar modo obscuro y claro

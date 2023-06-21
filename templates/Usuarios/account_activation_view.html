@@ -1,8 +1,15 @@
 {% extends '../include/base.html' %}
+{% load static %}
 
 {% block title %}
     Activación
 {% endblock title %}
+
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/account_activation.css'%}">
+{% endblock styles %}
+    
 
 
 {% block body %}
@@ -12,10 +19,10 @@
         </h1>
     </header>
 
-    <form method="post">
+    <form class="activation-form"method="post">
         {% csrf_token %}
         {{form.as_p}}
-        <button type="submit">
+        <button class="submit-btn hidden-submit-btn"type="submit">
             enviar
         </button>
     </form>

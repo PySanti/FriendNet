@@ -1,5 +1,5 @@
 .signin-section{
-    margin-top: 20vh;
+    margin-top: var(--base-window-top-distance);
     display: flex;
     flex-direction: row;
     justify-content: space-around;

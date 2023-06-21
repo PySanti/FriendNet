@@ -15,7 +15,7 @@
     <form  method="post">
         {% csrf_token %}
         {{form.as_p}}
-        <button type="submit">enviar</button>
+        <button type="submit hidden-submit-btn">enviar</button>
     </form>
     <button class="back-btn-container">
         <a class="back-btn"href="../">volver</a>

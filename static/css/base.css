@@ -19,6 +19,8 @@ html{
     --standart-box-padding : 16px;
     --base-color : rgb(252, 172, 0);
     --base-color-hovered : rgb(207, 141, 0);
+    --base-window-top-distance : 30vh;
+    --base-input-fields-distance: 1vw;
     background-color: #242424;
 }
 
@@ -40,6 +42,35 @@ input{
     outline: 0px solid var(--base-color);
     transition: outline .1s;
 }
+
+/*
+    Estilo para distancia entre
+    labels e inputs en formularios
+    creados desde Django
+*/
+form > p > *{
+    margin-left: var(--base-input-fields-distance);
+}
 input:focus{
     outline: 5px solid var(--base-color);
+}
+
+/*
+    Estilos base para imagenes
+*/
+.circular-img{
+    border-radius: 100%;
+    border: 2px solid var(--base-color);
+    object-fit: cover;
+}
+
+/*
+    Estilos para errores en formularios
+    creados desde Django
+*/
+
+.errorlist{
+    list-style: none;
+    font-weight: 900;
+    color : rgb(140, 126, 71);
 }

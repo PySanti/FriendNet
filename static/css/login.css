@@ -5,7 +5,7 @@ body{
     justify-content: center;
 }
 .signin-section{
-    margin-top: 30vh;
+    margin-top: var(--base-window-top-distance);
 }
 
 .form-section{
@@ -18,7 +18,6 @@ body{
     justify-content: space-between;
     align-items: center;
 }
-
 .btns-container{
     margin-top: 5vh;
     display: flex;
