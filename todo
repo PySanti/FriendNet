@@ -1,3 +1,11 @@
+// Pasos generales:
+    ~ Terminar los estilos de la pagina, abierto a finalizacion de detalles (implementar tailwind, hacer refactor, agregar responsive)
+    ~ Empezar con implementacion de web sockets
+
+
+
+
+
 //Produccion:
     // todo: pruebas unitarias
     // TODO: Ecriptar almacenamiento de imagenes en 'user_photos'
