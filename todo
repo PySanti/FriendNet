@@ -21,6 +21,7 @@
 
 
 // Estaticos:
+    // todo: mejorar estilos basicos de los input[type:photo] en formularios
     // todo: terminar estilos basicos y despues del refactor empezar con responsive
     // todo: hacer refactor en todos los html y css antes de pasar al responsive
     // todo: darle estilos a todos los mensajes de erorr de los formularios
