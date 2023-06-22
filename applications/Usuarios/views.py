@@ -1,5 +1,3 @@
-from typing import Any
-
 from .models import Usuarios
 from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
