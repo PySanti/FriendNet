@@ -1,3 +1,14 @@
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.views import (
+    APIView
+)
+from rest_framework.response import Response
+from django.contrib.auth import (
+    authenticate
+)
+
+
+from .serializers import UsuariosModelSerializer
 from .models import Usuarios
 from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -6,6 +17,34 @@ from django.urls import reverse_lazy
 from .tools import (
     sendActivationCodeEmail
 )
+
+# crud api
+class UsuariosModelViewSet(ModelViewSet):
+    queryset = Usuarios.objects.all()
+    serializer_class = UsuariosModelSerializer
+
+
+# login api
+class LoginAPIView(APIView):
+    def post(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return Response({'message': 'Login successful.'})
+        else:
+            return Response({'message': 'Invalid credentials.'}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+
+
+
+
+
+
+
+
 from applications.Notifications.models import Notifications
 from django.views.generic import (
     FormView,

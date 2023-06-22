@@ -3,7 +3,6 @@ from django.views.generic import (
 )
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
-from .models import Home
 from applications.Usuarios.models import Usuarios
 from applications.Notifications.models import (
     Notifications
