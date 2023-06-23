@@ -40,7 +40,6 @@ DJANGO_APPS = [
 
 LOCAL_APPS = [
     "applications.Usuarios",
-    "applications.Home",
     "applications.Chats",
     "applications.Notifications"
 ]

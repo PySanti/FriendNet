@@ -17,6 +17,7 @@
 
 
 // Logica:
+    // todo: depurar todo el codigo inutil del backend
     // todo: agregar boton para ver previa de contrasenia
     //  todo: agregar traducciones
     //  todo: agregar filtrado de usuarios en home
@@ -27,5 +28,3 @@
     // todo: agregar animcion bien arrecha en la palabra FriendNet del home unloged
     // todo: recordar responsive
     // todo: agregar modo obscuro y claro
-    // todo: mejorar alt de imagenes en update y detail
-    // todo: comprobacion de datos de formulario en tiempo real
