@@ -1,20 +1,21 @@
 // Pasos generales:
-    ~ Volver a conseguir el proyecto antiguo pero con implementacion de React y DRF ( validaciones, logica perfecta, optimizacion basica)
-    ~ Refactorizar para entendimiento de todos los elementos de la logica, opmitizacion base y depuracion de codigo inutil
-    ~ Estilos con tailwind
+    //todo:~ Volver a conseguir el proyecto antiguo pero con implementacion de React y DRF ( validaciones, logica perfecta, optimizacion basica)
+    //todo:~ Refactorizar para entendimiento de todos los elementos de la logica, opmitizacion base y depuracion de codigo inutil
+    //todo:~ Estilos con tailwind
 
 
 
 
 //Produccion:
+    //todo: agrgar documentacion a la api
     // todo: pruebas unitarias
     // TODO: Ecriptar almacenamiento de imagenes en 'user_photos'
     // TODO: Limitar tamanio de las imagenes para produccion (seguridad)
     // TODO: investigar sobre seguridad para proyectos django
     // TODO: hacer que cuando los usuarios sean eliminados, se elimine tambien su imagen de la DB 
     // todo: arreglar errores de acceso a views directamente por url a traves de metodos como:
-            ~ urls encriptadas
-            ~ ocultamiento de urls
+            //todo: ~ urls encriptadas
+            //todo: ~ ocultamiento de urls
 
 
 // Logica:
@@ -26,6 +27,8 @@
 
 
 // Estaticos:
+    // todo : mejorar estilos de emailjs
+    // todo: eliminar marca de agua de emailjs
     // todo: agregar animcion bien arrecha en la palabra FriendNet del home unloged
     // todo: recordar responsive
     // todo: agregar modo obscuro y claro

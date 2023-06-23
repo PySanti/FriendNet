@@ -4,7 +4,6 @@ from django.utils.timezone import  now
 from django.contrib.auth.hashers import check_password
 from .tools import (
     getFormatedDateDiff,
-    sendActivationCodeEmail
 )
 
 class UsuariosManager(BaseUserManager):
@@ -109,16 +108,6 @@ class UsuariosManager(BaseUserManager):
         user.save()
     def changePassword(self, user, new_password):
         user.set_password(new_password)
-        user.save()
-    def updateActivationCode(self, user):
-        """
-            Funcion muy parecida a sendActivationCodeMail,
-            la diferencia es que en este caso compete
-            unica y exclusivamente para cuando se trata de 
-            un usuario con activacion fallida
-        """
-        code = sendActivationCodeEmail(user.username, user.email)
-        user.activation_code = code
         user.save()
     def isExistingUnactiveUser(self, username, password):
         """

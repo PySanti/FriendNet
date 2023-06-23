@@ -3,102 +3,184 @@ import { Navigate } from "react-router-dom";
 import {useForm} from "react-hook-form"
 import { createUsuario } from "../api/createUsuario.api.js";
 import "../styles/signup-styles.css"
+import { sendActivationEmail } from "../tools/sendActivationEmail";
 
 export function SignUp() {
-    const {register, handleSubmit, formState: {errors}} = useForm()
+    const {register, handleSubmit, formState: {errors}, watch} = useForm()
+
     const onSubmit = handleSubmit(async (data) =>{
-        console.log(data)
+        delete data.confirmPwd // el confirmPwd no puede ser enviado al backend
+        const response = sendActivationEmail(data.email, data.username)
+        console.log(response)
         const res = await createUsuario(data)
-        console.log(res)
         return <Navigate to="signup-activate"></Navigate>
     })
+
+    const validatePassword = (confirmPwd) =>{
+        /*
+            Valida que las claves ingresadas sean iguales
+        */
+        if (confirmPwd != watch("password")){
+            return "Las contrasenias no son iguales"
+        }
+    }
     return (
         <>
         <Header/>
-        <form  onSubmit={onSubmit} method="POST" encType="multipart/form-data"  > 
-            {errors.username && <p>introduce el nombre de usuario pana</p>}
-            {errors.email && <p>introduce el correo de usuario pana</p>}
-            {errors.password && <p>introduce la contrasenia</p>}
+        <form className="signup-form" onSubmit={onSubmit} method="POST" encType="multipart/form-data"  > 
+            {errors.username &&   <p>{errors.username.message}</p>}
             <label>
                 Nombre de usuario:
                 <input 
-                    defaultValue="aly99"
+                    defaultValue="aly999"
+                    maxLength={15}
                     type="text" 
                     id="nombre" 
                     name="username"
                     {...register("username", {
-                        required:true
+                        required: {
+                            value : true,
+                            message : "Por favor, ingresa el nombre de tu usuario"
+                        },
+                        minLength : {
+                            value : 6,
+                            message : "Por favor, ingresa un usuario con al menos 6 caracteres"
+                        }
                     })}
                 />
             </label>
+            {errors.email   &&   <p>{errors.email.message}</p>}
             <label>
                 Correo electrónico:
                 <input 
-                    defaultValue="santi@gmail.com" 
+                    defaultValue="aly@gmail.com"
                     type="email" 
                     id="email" 
                     name="email"
                     {...register("email", {
-                        required:true
+                        required:{
+                            value: true,
+                            message : "Por favor, ingresa tu correo electrónico"
+                        },
+                        pattern:{
+                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                            message : "Por favor, ingresa un correo electrónico valido"
+                        }
                     })}
                 />
             </label>
-            <label>
-                Contraseña : 
-                <input 
-                    defaultValue="16102005" 
-                    type="password" 
-                    id="password" 
-                    name="password"
-                    {...register("password", {
-                        required:true
-                    })}
-                    />
-            </label>
+            {errors.first_names  &&   <p>{errors.first_names.message}</p>}
             <label>
                 Primer(os) Nombre(s) : 
                 <input 
-                    defaultValue="Alayla" 
+                    defaultValue="Alayla Andreina"
+                    maxLength={30}
                     type="text" 
                     id="first_names" 
                     name="first_names"
                     {...register("first_names", {
-                        required:true
+                        required:{
+                            value: true,
+                            message : "Por favor, ingresa tu(s) primer(os) nombre(s)"
+                        },
+                        pattern : {
+                            value :/^[^\d]+$/,
+                            message : "Por favor, ingresa un(os) nombre(s) valido(s)"
+                        }
                     })}
                     />
             </label>
+            {errors.last_names  &&   <p>{errors.last_names.message}</p>}
             <label>
                 Apellido (s): 
                 <input 
-                    defaultValue="Guzman" 
+                    defaultValue="Guzman Hurtado"
+                    maxLength={30}
                     type="text" 
                     id="last_names" 
                     name="last_names"
                     {...register("last_names", {
-                        required:true
+                        required:{
+                            value: true,
+                            message : "Por favor, ingresa tu(s) apellido(s)" 
+                        },
+                        pattern : {
+                            value :/^[^\d]+$/,
+                            message : "Por favor, ingresa un(os) apellido(s) valido(s)"
+                        }
                     })}
                     />
             </label>
+            {errors.age  &&   <p>{errors.age.message}</p>}
             <label>
                 Edad : 
                 <input 
-                    defaultValue="18" 
+                    defaultValue="18"
                     type="number" 
                     id="age" 
                     name="age"
                     {...register("age", {
-                        required:true
+                        required:{
+                            value : true,
+                            message : "Por favor, ingresa tu edad."
+                        },
+                        max : {
+                            value : 120,
+                            message : "Por favor, ingresa una edad valida"
+                        },
+                        min : {
+                            value : 5,
+                            message : "Debes tener al menos 5 años"
+                        }
                     })}
                     />
             </label>
+            {errors.photo  &&   <p>{errors.photo.message}</p>}
             <label>
                 Foto : 
                 <input 
-                    type="file" 
+                    type="file"
                     id="photo" 
                     name="photo"
                     {...register("photo", {
-                        required:true
+                        required:{
+                            value : true,
+                            message : "Por favor, selecciona tu foto"
+                        }
+                    })}
+                    />
+            </label>
+            {errors.password &&   <p>{errors.password.message}</p>}
+            <label>
+                Contraseña : 
+                <input 
+                    defaultValue="16102005 python"
+                    type="password" 
+                    id="password" 
+                    name="password"
+                    {...register("password", {
+                        required:{
+                            value: true,
+                            message : "Por favor, ingresa una contraseña"
+                        },
+                        minLength : {
+                            value : 10,
+                            message : "Por favor, ingresa una contraseña con al menos 10 caracteres"
+                        }
+                    })}
+                    />
+            </label>
+            {errors.confirmPwd  &&   <p>{errors.confirmPwd.message}</p>}
+            <label>
+                Contraseña (nuevamente): 
+                <input 
+
+                    defaultValue="16102005 python"
+                    type="password" 
+                    id="confirmPwd" 
+                    name="confirmPwd"
+                    {...register("confirmPwd", {
+                        validate : validatePassword
                     })}
                     />
             </label>

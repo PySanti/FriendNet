@@ -9,19 +9,19 @@ class Usuarios(AbstractBaseUser, PermissionsMixin):
         Modelo creado para almacenamiento de todo tipo de usuarios
     """
     #* BASE ATTRS
+
     username        = models.CharField(max_length=15, unique=True)
     email           = models.EmailField(unique=True)
     is_staff        = models.BooleanField()
     REQUIRED_FIELDS = ['email', 'first_names', 'last_names', 'age']
     USERNAME_FIELD  = 'username'
     #* NEW ATTRS
-    first_names     = models.CharField(max_length=20)
-    last_names      = models.CharField(max_length=25)
+    first_names     = models.CharField(max_length=30)
+    last_names      = models.CharField(max_length=30)
     age             = models.PositiveSmallIntegerField()
-    photo           = models.ImageField(upload_to='media/', blank=True)
+    photo           = models.CharField(max_length=30)
     is_online       = models.BooleanField(default=False)
     is_active       = models.BooleanField(default=False)
-    activation_code = models.CharField(max_length=6)
     notifications   = models.ManyToManyField(Notifications, blank=True)
     #* MANAGER
     objects         = UsuariosManager()
