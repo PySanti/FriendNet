@@ -1,6 +1,7 @@
 // Pasos generales:
-    ~ Terminar los estilos de la pagina, abierto a finalizacion de detalles (implementar tailwind, hacer refactor, agregar responsive)
-    ~ Empezar con implementacion de web sockets
+    ~ Volver a conseguir el proyecto antiguo pero con implementacion de React y DRF ( validaciones, logica perfecta, optimizacion basica)
+    ~ Refactorizar para entendimiento de todos los elementos de la logica, opmitizacion base y depuracion de codigo inutil
+    ~ Estilos con tailwind
 
 
 
