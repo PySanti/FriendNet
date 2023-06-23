@@ -5,7 +5,6 @@
 
 
 
-
 //Produccion:
     // todo: pruebas unitarias
     // TODO: Ecriptar almacenamiento de imagenes en 'user_photos'
@@ -18,23 +17,15 @@
 
 
 // Logica:
-    // todo : arreglar error de notificacion en update
-
     // todo: agregar boton para ver previa de contrasenia
     //  todo: agregar traducciones
-    //  todo: refactorizar js
-    //  todo: refactorizar uso de clases en implementacion de js
     //  todo: agregar filtrado de usuarios en home
     //  todo: cuando se pseudo-termine la parte logica, borrar la base de datos y debugear toda el proyecto desde 0
 
 
 // Estaticos:
-    // todo: terminar estilos basicos y despues del refactor empezar con responsive
-    // todo: hacer refactor en todos los html y css antes de pasar al responsive
-    // todo: darle estilos a todos los mensajes de erorr de los formularios
     // todo: agregar animcion bien arrecha en la palabra FriendNet del home unloged
     // todo: recordar responsive
     // todo: agregar modo obscuro y claro
-    //todo: agregar display:none al formulario en la showDetailView de los Usuarios
     // todo: mejorar alt de imagenes en update y detail
     // todo: comprobacion de datos de formulario en tiempo real

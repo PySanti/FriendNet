@@ -12,12 +12,10 @@ from .views import (
     PasswordConfirmationView,
     ChangePasswordView,
     UnactiveUserLogin,
-    UsuariosModelViewSet
+
+    CreateUsuariosAPI
     )
 
-app_name = 'users'
-router = routers.DefaultRouter()
-router.register('usuarios', UsuariosModelViewSet)
 urlpatterns = [
     path('signin/', LoginView.as_view(), name='signin'),
     path('signup/', SignUpView.as_view(), name='signup'),
@@ -29,5 +27,5 @@ urlpatterns = [
     path('unactive_user_login/<int:pk>',UnactiveUserLogin.as_view(), name='unactive_login'),
 
 
-    path('api/', include(router.urls)),
+    path('api/create', CreateUsuariosAPI.as_view()),
 ] 
