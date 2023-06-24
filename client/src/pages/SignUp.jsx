@@ -1,10 +1,14 @@
-import { Header } from "../components/Header";
-import { Navigate } from "react-router-dom";
-import {useForm} from "react-hook-form"
-import { createUsuarioAPI } from "../api/createUsuario.api.js";
+// react modules
+import { Header }                   from "../components/Header";
+import { Navigate }                 from "react-router-dom";
+import {useForm}                    from "react-hook-form"
+// api's
+import { createUsuarioAPI }         from "../api/createUsuario.api";
+import { postCloudinaryImgAPI }     from "../api/postCloudinaryImg.api";
+import { sendActivationEmailAPI }   from "../api/sendActivationEmail.api";
+
+// styles
 import "../styles/signup-styles.css"
-import { sendActivationEmail } from "../tools/sendActivationEmail";
-import { postCloudinaryImgAPI } from "../api/postCloudinaryImg.api";
 
 export function SignUp() {
     const {register, handleSubmit, formState: {errors}, watch} = useForm()
@@ -15,7 +19,7 @@ export function SignUp() {
             delete data['photo']
             const uploadedImgData           = await postCloudinaryImgAPI(photo)
             data['photo_link']              = uploadedImgData.data.url // el serializer el backend recibe photo_link, no la foto en si
-            const userActivationCode        = await sendActivationEmail(data.email, data.username)
+            const userActivationCode        = await sendActivationEmailAPI(data.email, data.username)
             await createUsuarioAPI(data)
             // redireccionar a pagina de activacion
         } catch(error){

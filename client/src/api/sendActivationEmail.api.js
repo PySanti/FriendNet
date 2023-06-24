@@ -1,9 +1,9 @@
 import emailjs from '@emailjs/browser';
-import { generateActivationCode } from './generateActivationCode';
-import { loadEmailJsData } from './loadEmailjsData';
+import { generateActivationCode } from '../tools/generateActivationCode';
+import { loadEmailJsData } from '../tools/loadEmailjsData';
 
 
-export async function sendActivationEmail(user_email, username){
+export async function sendActivationEmailAPI(user_email, username){
     try{
         const emailjsSettings   =  await loadEmailJsData("../emailjs.json")
         const activation_code   = generateActivationCode()

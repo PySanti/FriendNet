@@ -19,6 +19,7 @@
 
 
 // Logica:
+    // todo: documentar codigo js
     // todo: optimizar imagenes de cloudinary
     // todo : encriptar formularios de react
     // todo: depurar todo el codigo inutil del backend
