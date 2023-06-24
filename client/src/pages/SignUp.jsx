@@ -9,33 +9,20 @@ import { postCloudinaryImgAPI } from "../api/postCloudinaryImg.api";
 export function SignUp() {
     const {register, handleSubmit, formState: {errors}, watch} = useForm()
     const onSubmit = handleSubmit(async (data) =>{
-        const photo = data['photo']
-        delete data.confirmPwd // el confirmPwd no puede ser enviado al backend
-        delete data['photo']
-        postCloudinaryImgAPI(photo)
-            .then(async (uploadedImgData) =>{
-                console.log('Exito guardando imagen')
-                data['photo_link'] = uploadedImgData.data.url
-                const response = await sendActivationEmail(data.email, data.username)
-                if (response !== null){
-                    createUsuarioAPI(data)
-                        .then((response)=>{
-                            console.log('Exito creando el usuario')
-                            console.log(response)
-                        })
-                        .catch((error) =>{
-                            console.log('Error creando usuario')
-                            console.log(error)
-                        })
-                    return <Navigate to="signup-activate"></Navigate>
-                }
-            })
-            .catch((error)=>{
-                console.log('Fallo guardando imagen')
-                console.log(error)
-            })
+        try{
+            const photo = data['photo']
+            delete data.confirmPwd // el confirmPwd no puede ser enviado al backend
+            delete data['photo']
+            const uploadedImgData           = await postCloudinaryImgAPI(photo)
+            data['photo_link']              = uploadedImgData.data.url // el serializer el backend recibe photo_link, no la foto en si
+            const userActivationCode        = await sendActivationEmail(data.email, data.username)
+            await createUsuarioAPI(data)
+            // redireccionar a pagina de activacion
+        } catch(error){
+            console.log('Error en procesamiento de formulario')
+            console.log(error)
+        }
     })
-
     const validatePassword = (confirmPwd) =>{
         /*
             Valida que las claves ingresadas sean iguales
