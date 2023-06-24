@@ -31,7 +31,6 @@ class Usuarios(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = 'Usuario'
         verbose_name_plural = 'Usuarios'
-        unique_together = ['first_names', 'last_names']
 
 
 

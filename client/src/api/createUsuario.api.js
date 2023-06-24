@@ -6,7 +6,7 @@ export async function createUsuarioAPI(data){
         const response = await axios.post(BACKEND_URL+"api/create",data)
         return response
     } catch(error){
-        console.log('Creando usuario ')
-        console.log(error)
+        console.log('Error al crear usuario ')
+        return error.response
     }
 }

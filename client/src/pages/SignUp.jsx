@@ -20,7 +20,16 @@ export function SignUp() {
             const uploadedImgData           = await postCloudinaryImgAPI(photo)
             data['photo_link']              = uploadedImgData.data.url // el serializer el backend recibe photo_link, no la foto en si
             const userActivationCode        = await sendActivationEmailAPI(data.email, data.username)
-            await createUsuarioAPI(data)
+            const userCreationResponse      = await createUsuarioAPI(data)
+            console.log(userCreationResponse.status)
+            if (userCreationResponse.status == 400){
+                if (userCreationResponse.data.message === "existing username"){
+                    console.log('Username existente')
+                }
+                if (userCreationResponse.data.message === "existing email"){
+                    console.log('Email existente')
+                }
+            }
             // redireccionar a pagina de activacion
         } catch(error){
             console.log('Error en procesamiento de formulario')
