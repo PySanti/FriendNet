@@ -1,19 +1,39 @@
 import { Header } from "../components/Header";
 import { Navigate } from "react-router-dom";
 import {useForm} from "react-hook-form"
-import { createUsuario } from "../api/createUsuario.api.js";
+import { createUsuarioAPI } from "../api/createUsuario.api.js";
 import "../styles/signup-styles.css"
 import { sendActivationEmail } from "../tools/sendActivationEmail";
+import { postCloudinaryImgAPI } from "../api/postCloudinaryImg.api";
 
 export function SignUp() {
     const {register, handleSubmit, formState: {errors}, watch} = useForm()
-
     const onSubmit = handleSubmit(async (data) =>{
+        const photo = data['photo']
         delete data.confirmPwd // el confirmPwd no puede ser enviado al backend
-        const response = sendActivationEmail(data.email, data.username)
-        console.log(response)
-        const res = await createUsuario(data)
-        return <Navigate to="signup-activate"></Navigate>
+        delete data['photo']
+        postCloudinaryImgAPI(photo)
+            .then(async (uploadedImgData) =>{
+                console.log('Exito guardando imagen')
+                data['photo_link'] = uploadedImgData.data.url
+                const response = await sendActivationEmail(data.email, data.username)
+                if (response !== null){
+                    createUsuarioAPI(data)
+                        .then((response)=>{
+                            console.log('Exito creando el usuario')
+                            console.log(response)
+                        })
+                        .catch((error) =>{
+                            console.log('Error creando usuario')
+                            console.log(error)
+                        })
+                    return <Navigate to="signup-activate"></Navigate>
+                }
+            })
+            .catch((error)=>{
+                console.log('Fallo guardando imagen')
+                console.log(error)
+            })
     })
 
     const validatePassword = (confirmPwd) =>{

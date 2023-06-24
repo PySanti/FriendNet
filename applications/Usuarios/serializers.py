@@ -13,7 +13,7 @@ class CreateUsuariosSerializer(serializers.ModelSerializer):
             "first_names", 
             "last_names", 
             "age", 
-            "photo", 
+            "photo_link", 
             ]
     def create(self, validated_data):
         new_user = Usuarios.objects.create_user(
@@ -23,7 +23,7 @@ class CreateUsuariosSerializer(serializers.ModelSerializer):
             first_names     = validated_data['first_names'],
             last_names      = validated_data['last_names'],
             age             = validated_data['age'],
-            photo           = validated_data['photo'],
+            photo_link           = validated_data['photo_link'],
         )
         return  new_user
 
