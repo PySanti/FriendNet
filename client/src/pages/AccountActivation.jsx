@@ -11,7 +11,7 @@ export function AccountActivation() {
     const {userActivationCode, userId} = useParams()
     const navigate = useNavigate()
     const {register, handleSubmit, formState:{errors}} = useForm()
-    const [userActivated, setUserActivated] = useState(false)
+    let [userActivated, setUserActivated] = useState(false)
     const onSubmit = handleSubmit(async (data)=>{
         if (Number(data.activation_code) === Number(userActivationCode)){
             try {

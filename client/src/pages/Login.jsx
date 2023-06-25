@@ -5,7 +5,7 @@ import { FormField } from "../components/FormField"
 
 
 export function Login() {
-    const {register, handleSubmit, formState : {errors}} = useForm()
+    let {register, handleSubmit, formState : {errors}} = useForm()
     const onSubmit = handleSubmit((data)=>{
         console.log('Logeando usuario')
         console.log(data)

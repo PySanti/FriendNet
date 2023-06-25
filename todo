@@ -20,6 +20,7 @@
 
 
 // Logica:
+    // todo : especificar todos los media types en las peticiones
     // todo: agregar props validation
     // todo: mejorar solucion de activacion de cuenta (envio de activacion y id por url) (user context?)
     // todo : agregar mas soporte para errores en signup

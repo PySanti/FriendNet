@@ -15,10 +15,8 @@ import {
     BASE_FIRSTNAMES_MAX_LENGTH, 
     BASE_LASTNAMES_MAX_LENGTH, 
     BASE_PASSWORD_CONSTRAINTS, 
-    BASE_PASSWORD_MIN_LENGTH, 
     BASE_USERNAME_CONSTRAINTS, 
-    BASE_USERNAME_MAX_LENGTH, 
-    BASE_USERNAME_MIN_LENGTH } from "../main";
+    BASE_USERNAME_MAX_LENGTH, } from "../main";
 import { FormField } from "../components/FormField";
 
 
@@ -27,8 +25,8 @@ import { FormField } from "../components/FormField";
 
 export function SignUp() {
     const {register, handleSubmit, formState: {errors}, watch} = useForm()
-    const [userActivationCode, setUserActivationCode] = useState(false);
-    const [userId, setUserId] = useState(false);
+    let [userActivationCode, setUserActivationCode] = useState(false);
+    let [userId, setUserId] = useState(false);
     const navigate = useNavigate()
     const onSubmit = handleSubmit(async (data) =>{
         try{
