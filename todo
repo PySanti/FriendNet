@@ -16,9 +16,11 @@
     // todo: arreglar errores de acceso a views directamente por url a traves de metodos como:
             //todo: ~ urls encriptadas
             //todo: ~ ocultamiento de urls
+    // todo: repasar todo lo aprendido en el proyecto, revisando todo el mismo
 
 
 // Logica:
+    // todo: mejorar solucion de activacion de cuenta (envio de activacion y id por url) (user context?)
     // todo : agregar mas soporte para errores en signup
     // todo : revisar envio de parametros al backend ( url o header?)
     // todo : optimizar codigo usando gpt
