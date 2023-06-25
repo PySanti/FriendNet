@@ -17,9 +17,6 @@ DATABASES = {
     }
 }
 SECRET_KEY = SECRETS['KEY']
-MEDIA_URL = 'media/'  
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')  
-
 
 # exception Handling 
 REST_FRAMEWORK = {

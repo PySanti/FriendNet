@@ -19,8 +19,9 @@
 
 
 // Logica:
-    // todo : agregar mas soporte para errores en signup
-    // todo : revisar envio de parametros al backend ( url o header?)
+    // todo : agregar mas soporte para errores en todos lados 
+    // todo: estandarizar camelCase o no
+    // todo : revisar envio de parametros al backend ( url o header?), mejorar checkExistingUserAPI
     // todo : optimizar codigo usando gpt
     // todo: utilizar estrategias de cacheo para evitar llamadas inncesarias 
     // todo: documentar codigo js
