@@ -12,7 +12,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Root />}/>
         <Route exact path="/signup/" element={<SignUp />}/>
-        <Route exact path="/signup/activate/:userActivationCode/:userId" element={<AccountActivation />}/>
+        <Route exact path="/signup/activate/" element={<AccountActivation />}/>
         <Route exact path="/login/" element={ <AuthContextProvider> <Login/> </AuthContextProvider>}/>
         <Route exact path='/home/' element={<AuthContextProvider> <Home/> </AuthContextProvider>}/>
       </Routes>

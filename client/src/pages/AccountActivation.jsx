@@ -1,5 +1,5 @@
 // components
-import {  useNavigate, useParams } from "react-router-dom"
+import {  useLocation, useNavigate, useParams } from "react-router-dom"
 import { Header } from "../components/Header"
 import { useForm } from "react-hook-form"
 import { useEffect, useState } from "react"
@@ -8,14 +8,15 @@ import { activateUserAPI } from "../api/activateUser.api"
 import { FormField } from "../components/FormField"
 
 export function AccountActivation() {
-    const {userActivationCode, userId} = useParams()
+    const props = useLocation().state
+    console.log(props)
     const navigate = useNavigate()
     const {register, handleSubmit, formState:{errors}} = useForm()
     let [userActivated, setUserActivated] = useState(false)
     const onSubmit = handleSubmit(async (data)=>{
-        if (Number(data.activation_code) === Number(userActivationCode)){
+        if (Number(data.activation_code) === Number(props.activation_code)){
             try {
-                const response = await activateUserAPI(userId)
+                const response = await activateUserAPI(props.userId)
                 if (response.status === 200){
                     console.log('Exito activando el usuario')
                     console.log(response)
