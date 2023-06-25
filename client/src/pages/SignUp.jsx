@@ -34,7 +34,7 @@ export function SignUp() {
     })
     useEffect(function RedirectUser(){
         if (activationCode !== false){
-            window.location.href += `activate?activation_code=${activationCode}`
+            window.location.href += `activate/${activationCode}`
         }
     }, [activationCode])
     const validatePassword = (confirmPwd) =>{
@@ -49,7 +49,7 @@ export function SignUp() {
     return (
         <>
         <Header/>
-        <form className="signup-form" onSubmit={onSubmit} method="POST" encType="multipart/form-data"  > 
+        <form className="signup-form" onSubmit={onSubmit} method="POST" > 
             <div id="existing-user-element">Ya existe un usuario con ese nombre o correo!</div>
             {errors.username &&   <p>{errors.username.message}</p>}
             <label>
@@ -154,6 +154,10 @@ export function SignUp() {
                         min : {
                             value : 5,
                             message : "Debes tener al menos 5 años"
+                        },
+                        pattern : {
+                            value : /^-?\d+$/,
+                            message : "Por favor, ingresa una edad valida"
                         }
                     })}
                     />
