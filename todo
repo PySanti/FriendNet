@@ -20,9 +20,10 @@
 
 
 // Logica:
+    // todo: agregar props validation
     // todo: mejorar solucion de activacion de cuenta (envio de activacion y id por url) (user context?)
     // todo : agregar mas soporte para errores en signup
-    // todo : revisar envio de parametros al backend ( url o header?)
+    // todo : revisar envio de parametros al backend ( url o header?) (userActivationAPI)
     // todo : optimizar codigo usando gpt
     // todo: utilizar estrategias de cacheo para evitar llamadas inncesarias 
     // todo: documentar codigo js
