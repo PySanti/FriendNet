@@ -11,11 +11,22 @@ import { checkExistingUserAPI } from "../api/checkExistingUser.api";
 // styles
 import "../styles/signup-styles.css"
 import { useNavigate } from "react-router-dom";
+import { 
+    BASE_FIRSTNAMES_MAX_LENGTH, 
+    BASE_LASTNAMES_MAX_LENGTH, 
+    BASE_PASSWORD_CONSTRAINTS, 
+    BASE_USERNAME_CONSTRAINTS, 
+    BASE_USERNAME_MAX_LENGTH, } from "../main";
+import { FormField } from "../components/FormField";
+
+
+// constants
+
 
 export function SignUp() {
     const {register, handleSubmit, formState: {errors}, watch} = useForm()
-    const [userActivationCode, setUserActivationCode] = useState(false);
-    const [userId, setUserId] = useState(false);
+    let [userActivationCode, setUserActivationCode] = useState(false);
+    let [userId, setUserId] = useState(false);
     const navigate = useNavigate()
     const onSubmit = handleSubmit(async (data) =>{
         try{
@@ -54,31 +65,17 @@ export function SignUp() {
         <>
         <Header/>
         <form className="signup-form" onSubmit={onSubmit} method="POST" > 
-            <div id="existing-user-element">Ya existe un usuario con ese nombre o correo!</div>
-            {errors.username &&   <p>{errors.username.message}</p>}
-            <label>
-                Nombre de usuario:
+            <FormField label="Nombre de usuario" errors={errors.username &&  errors.username.message}>
                 <input 
                     defaultValue="aly999"
-                    maxLength={15}
+                    maxLength={BASE_USERNAME_MAX_LENGTH}
                     type="text" 
                     id="nombre" 
                     name="username"
-                    {...register("username", {
-                        required: {
-                            value : true,
-                            message : "Por favor, ingresa el nombre de tu usuario"
-                        },
-                        minLength : {
-                            value : 6,
-                            message : "Por favor, ingresa un usuario con al menos 6 caracteres"
-                        },
-                    })}
+                    {...register("username", BASE_USERNAME_CONSTRAINTS)}
                 />
-            </label>
-            {errors.email   &&   <p>{errors.email.message}</p>}
-            <label>
-                Correo electrónico:
+            </FormField>
+            <FormField label="Correo electronico" errors={errors.email &&  errors.email.message}>
                 <input 
                     defaultValue="aly@gmail.com"
                     type="email" 
@@ -95,13 +92,11 @@ export function SignUp() {
                         }
                     })}
                 />
-            </label>
-            {errors.first_names  &&   <p>{errors.first_names.message}</p>}
-            <label>
-                Primer(os) Nombre(s) : 
+            </FormField>
+            <FormField label="Nombres" errors={errors.first_names  && errors.first_names.message}>
                 <input 
                     defaultValue="Alayla Andreina"
-                    maxLength={30}
+                    maxLength={BASE_FIRSTNAMES_MAX_LENGTH}
                     type="text" 
                     id="first_names" 
                     name="first_names"
@@ -116,13 +111,11 @@ export function SignUp() {
                         }
                     })}
                     />
-            </label>
-            {errors.last_names  &&   <p>{errors.last_names.message}</p>}
-            <label>
-                Apellido (s): 
+            </FormField>
+            <FormField label="Apellidos" errors={errors.last_names  && errors.last_names.message}>
                 <input 
                     defaultValue="Guzman Hurtado"
-                    maxLength={30}
+                    maxLength={BASE_LASTNAMES_MAX_LENGTH}
                     type="text" 
                     id="last_names" 
                     name="last_names"
@@ -137,10 +130,8 @@ export function SignUp() {
                         }
                     })}
                     />
-            </label>
-            {errors.age  &&   <p>{errors.age.message}</p>}
-            <label>
-                Edad : 
+            </FormField>
+            <FormField label="Edad" errors={errors.age  && errors.age.message}>
                 <input 
                     defaultValue="18"
                     type="number" 
@@ -165,10 +156,8 @@ export function SignUp() {
                         }
                     })}
                     />
-            </label>
-            {errors.photo  &&   <p>{errors.photo.message}</p>}
-            <label>
-                Foto : 
+            </FormField>
+            <FormField label="Foto de perfil" errors={errors.photo  && errors.photo.message}>
                 <input 
                     type="file"
                     id="photo" 
@@ -180,32 +169,18 @@ export function SignUp() {
                         }
                     })}
                     />
-            </label>
-            {errors.password &&   <p>{errors.password.message}</p>}
-            <label>
-                Contraseña : 
+            </FormField>
+            <FormField label="Contraseña" errors={errors.password && errors.password.message}>
                 <input 
                     defaultValue="16102005 python"
                     type="password" 
                     id="password" 
                     name="password"
-                    {...register("password", {
-                        required:{
-                            value: true,
-                            message : "Por favor, ingresa una contraseña"
-                        },
-                        minLength : {
-                            value : 10,
-                            message : "Por favor, ingresa una contraseña con al menos 10 caracteres"
-                        }
-                    })}
+                    {...register("password", BASE_PASSWORD_CONSTRAINTS)}
                     />
-            </label>
-            {errors.confirmPwd  &&   <p>{errors.confirmPwd.message}</p>}
-            <label>
-                Contraseña (nuevamente): 
+            </FormField>
+            <FormField label="Confirma la contraseña" errors={errors.confirmPwd  && errors.confirmPwd.message}>
                 <input 
-
                     defaultValue="16102005 python"
                     type="password" 
                     id="confirmPwd" 
@@ -214,7 +189,7 @@ export function SignUp() {
                         validate : validatePassword
                     })}
                     />
-            </label>
+            </FormField>
             <button type="submit">enviar</button>
         </form>
         </>
