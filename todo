@@ -19,6 +19,7 @@
 
 
 // Logica:
+    // todo: emplear validate para validaciones
     // todo : agregar mas soporte para errores en todos lados 
     // todo: estandarizar camelCase o no
     // todo : revisar envio de parametros al backend ( url o header?), mejorar checkExistingUserAPI
