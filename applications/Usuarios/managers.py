@@ -23,13 +23,6 @@ class UsuariosManager(BaseUserManager):
         return self._create_user(username, password, email, True, True, **kwargs)
     def create_user(self, username, password, email, **kwargs):
         return self._create_user(username, password, email, False, False, **kwargs)
-    def checkActivationCode(self, user_id : int, code : str):
-        """
-            Comprueba que el codigo enviado por parametro es igual al
-            codigo asociado al usuario. Manager creado para activacion 
-            de usuario
-        """
-        return self.get(id=user_id).activation_code == code
     def activeUser(self, user_id : int, request):
         """
             Realiza las funciones necesarias para activar por completo
@@ -121,3 +114,5 @@ class UsuariosManager(BaseUserManager):
             return pos_user_queryset[0]
         else:
             return False
+    def userExists(self, username, email):
+        return (self.filter(username=username)) or (self.filter(email=email))

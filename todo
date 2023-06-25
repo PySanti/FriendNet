@@ -19,8 +19,9 @@
 
 
 // Logica:
+    // todo: utilizar estrategias de cacheo para evitar llamadas inncesarias 
     // todo: documentar codigo js
-    // todo: optimizar imagenes de cloudinary
+    // todo: optimizar imagenes de cloudinary, y eliminar las que sean ejemplares 
     // todo : encriptar formularios de react
     // todo: depurar todo el codigo inutil del backend
     // todo: agregar boton para ver previa de contrasenia
@@ -30,6 +31,8 @@
 
 
 // Estaticos:
+    // todo: agregar estilos para cuando el usuario ya exista en SignUp.jsx 
+    // todo: agregar loader mientras se registra el usuario
     // todo : mejorar estilos de emailjs
     // todo: eliminar marca de agua de emailjs
     // todo: agregar animcion bien arrecha en la palabra FriendNet del home unloged

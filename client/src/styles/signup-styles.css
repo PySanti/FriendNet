@@ -2,3 +2,11 @@
     display: flex;
     flex-direction: row;
 }
+
+#existing-user-element{
+    display: none;
+}
+
+.existing-user-element__ACTIVE{
+    display: block;
+}

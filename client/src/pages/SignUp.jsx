@@ -1,41 +1,42 @@
 // react modules
 import { Header }                   from "../components/Header";
-import { Navigate }                 from "react-router-dom";
-import {useForm}                    from "react-hook-form"
+import { useForm }                    from "react-hook-form"
+import { useEffect, useState } from "react";
 // api's
 import { createUsuarioAPI }         from "../api/createUsuario.api";
 import { postCloudinaryImgAPI }     from "../api/postCloudinaryImg.api";
 import { sendActivationEmailAPI }   from "../api/sendActivationEmail.api";
+import { checkExistingUserAPI } from "../api/checkExistingUser.api";
 
 // styles
 import "../styles/signup-styles.css"
 
 export function SignUp() {
     const {register, handleSubmit, formState: {errors}, watch} = useForm()
+    const [activationCode, setActivationCode] = useState(false);
     const onSubmit = handleSubmit(async (data) =>{
         try{
-            const photo = data['photo']
-            delete data.confirmPwd // el confirmPwd no puede ser enviado al backend
-            delete data['photo']
-            const uploadedImgData           = await postCloudinaryImgAPI(photo)
-            data['photo_link']              = uploadedImgData.data.url // el serializer el backend recibe photo_link, no la foto en si
-            const userActivationCode        = await sendActivationEmailAPI(data.email, data.username)
-            const userCreationResponse      = await createUsuarioAPI(data)
-            console.log(userCreationResponse.status)
-            if (userCreationResponse.status == 400){
-                if (userCreationResponse.data.message === "existing username"){
-                    console.log('Username existente')
-                }
-                if (userCreationResponse.data.message === "existing email"){
-                    console.log('Email existente')
-                }
+            const userAlreadyExists = await checkExistingUserAPI(data['username'], data['email'])
+            if (userAlreadyExists.data.existing === "false"){
+                const photo = data['photo']
+                delete data.confirmPwd // el confirmPwd no puede ser enviado al backend
+                delete data.photo
+                const uploadedImgData           = await postCloudinaryImgAPI(photo)
+                data['photo_link']              = uploadedImgData.data.url // el serializer el backend recibe photo_link, no la foto en si
+                const activation_code           = await sendActivationEmailAPI(data.email, data.username)
+                await createUsuarioAPI(data)
+                setActivationCode(activation_code)
             }
-            // redireccionar a pagina de activacion
         } catch(error){
             console.log('Error en procesamiento de formulario')
             console.log(error)
         }
     })
+    useEffect(function RedirectUser(){
+        if (activationCode !== false){
+            window.location.href += `activate?activation_code=${activationCode}`
+        }
+    }, [activationCode])
     const validatePassword = (confirmPwd) =>{
         /*
             Valida que las claves ingresadas sean iguales
@@ -44,10 +45,12 @@ export function SignUp() {
             return "Las contrasenias no son iguales"
         }
     }
+
     return (
         <>
         <Header/>
         <form className="signup-form" onSubmit={onSubmit} method="POST" encType="multipart/form-data"  > 
+            <div id="existing-user-element">Ya existe un usuario con ese nombre o correo!</div>
             {errors.username &&   <p>{errors.username.message}</p>}
             <label>
                 Nombre de usuario:
@@ -65,7 +68,7 @@ export function SignUp() {
                         minLength : {
                             value : 6,
                             message : "Por favor, ingresa un usuario con al menos 6 caracteres"
-                        }
+                        },
                     })}
                 />
             </label>

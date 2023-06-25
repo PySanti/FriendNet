@@ -3,6 +3,15 @@ from applications.Notifications.serializers import NotificationsSerializers
 from .models import Usuarios
 
 
+class CheckExistingUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Usuarios
+        fields = [
+            "username", 
+            "email",
+        ]
+
+
 class CreateUsuariosSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuarios
