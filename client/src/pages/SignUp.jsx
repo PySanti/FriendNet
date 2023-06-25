@@ -10,10 +10,13 @@ import { checkExistingUserAPI } from "../api/checkExistingUser.api";
 
 // styles
 import "../styles/signup-styles.css"
+import { useNavigate } from "react-router-dom";
 
 export function SignUp() {
     const {register, handleSubmit, formState: {errors}, watch} = useForm()
-    const [activationCode, setActivationCode] = useState(false);
+    const [userActivationCode, setUserActivationCode] = useState(false);
+    const [userId, setUserId] = useState(false);
+    const navigate = useNavigate()
     const onSubmit = handleSubmit(async (data) =>{
         try{
             const userAlreadyExists = await checkExistingUserAPI(data['username'], data['email'])
@@ -24,19 +27,20 @@ export function SignUp() {
                 const uploadedImgData           = await postCloudinaryImgAPI(photo)
                 data['photo_link']              = uploadedImgData.data.url // el serializer el backend recibe photo_link, no la foto en si
                 const activation_code           = await sendActivationEmailAPI(data.email, data.username)
-                await createUsuarioAPI(data)
-                setActivationCode(activation_code)
-            }
+                const createUserResponse        = await createUsuarioAPI(data)
+                setUserActivationCode(activation_code)
+                setUserId(createUserResponse.data.new_user_id)
+            } 
         } catch(error){
             console.log('Error en procesamiento de formulario')
             console.log(error)
         }
     })
     useEffect(function RedirectUser(){
-        if (activationCode !== false){
-            window.location.href += `activate/${activationCode}`
+        if (userActivationCode !== false && userId !== false ){
+            navigate(`activate/${userActivationCode}/${userId}`)
         }
-    }, [activationCode])
+    }, [userActivationCode, userId, navigate])
     const validatePassword = (confirmPwd) =>{
         /*
             Valida que las claves ingresadas sean iguales

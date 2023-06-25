@@ -3,10 +3,13 @@ from django.urls import (
 )
 from .views import (
     CreateUsuariosAPI,
-    CheckExistingUser
+    CheckExistingUserAPI,
+    ActivateUserAPI
+
     )
 
 urlpatterns = [
     path('api/create', CreateUsuariosAPI.as_view()),
-    path('api/create/check_existing_user/<str:username>/<str:email>', CheckExistingUser.as_view()),
+    path('api/create/check_existing_user/<str:username>/<str:email>', CheckExistingUserAPI.as_view()),
+    path('api/create/activateUser/', ActivateUserAPI.as_view()),
 ] 

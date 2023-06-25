@@ -24,3 +24,10 @@ class CreateUsuariosSerializer(serializers.ModelSerializer):
             "age", 
             "photo_link", 
             ]
+
+class ActivateUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Usuarios
+        fields = [
+            "id"
+        ]

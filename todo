@@ -19,6 +19,9 @@
 
 
 // Logica:
+    // todo : agregar mas soporte para errores en signup
+    // todo : revisar envio de parametros al backend ( url o header?)
+    // todo : optimizar codigo usando gpt
     // todo: utilizar estrategias de cacheo para evitar llamadas inncesarias 
     // todo: documentar codigo js
     // todo: optimizar imagenes de cloudinary, y eliminar las que sean ejemplares 

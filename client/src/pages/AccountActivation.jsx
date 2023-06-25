@@ -1,14 +1,39 @@
-import { useParams } from "react-router-dom"
+// components
+import {  useNavigate, useParams } from "react-router-dom"
 import { Header } from "../components/Header"
 import { useForm } from "react-hook-form"
+import { useEffect, useState } from "react"
+// api's
+import { activateUserAPI } from "../api/activateUser.api"
+
 export function AccountActivation() {
-    const {userActivationCode} = useParams()
+    const {userActivationCode, userId} = useParams()
+    const navigate = useNavigate()
     const {register, handleSubmit, formState:{errors}} = useForm()
-    const onSubmit = handleSubmit((data)=>{
+    const [userActivated, setUserActivated] = useState(false)
+    const onSubmit = handleSubmit(async (data)=>{
         if (Number(data.activation_code) === Number(userActivationCode)){
-            console.log("Activar usuario")
+            try {
+                const response = await activateUserAPI(userId)
+                if (response.status === 200){
+                    console.log('Exito activando el usuario')
+                    console.log(response)
+                    setUserActivated(true)
+                } else {
+                    console.log('Error activando usuario')
+                    console.log(response)
+                }
+            } catch(error){
+                console.log('Error activando el usuario')
+                console.log(error)
+            }
         }
     })
+    useEffect(()=>{
+        if (userActivated === true){
+            navigate('/login/')
+        }
+    }, [userActivated, navigate])
     return (
         <>
             <Header/>
@@ -18,7 +43,7 @@ export function AccountActivation() {
                 </h1>
                 <form onSubmit={onSubmit}>
                     {errors.activation_code && <p>{errors.activation_code.message}</p>}
-                    <label>codigo : </label>
+                    <label>código : </label>
                     <input 
                         type="text"
                         maxLength={6}
