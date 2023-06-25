@@ -1,6 +1,11 @@
 import {Header} from "../components/Header.jsx"
+import { userIsAuthenticated } from "../tools/userIsAuthenticated.js"
+import { UserLogged } from "./UserLogged.jsx"
 
 export function Root() {
+    if (userIsAuthenticated()){
+        return <UserLogged/>
+    }else{
     return (
         <>
             <Header/>
@@ -24,4 +29,5 @@ export function Root() {
             </section>
         </>
     )
+}
 }

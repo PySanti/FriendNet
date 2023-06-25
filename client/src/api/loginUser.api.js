@@ -1,8 +1,14 @@
 import axios from "axios";
 import { BACKEND_URL } from "../main";
 
-export function loginUserAPI(username, password){
+export async function loginUserAPI(username, password){
     try {
-        const response = axios(BACKEND_URL+'')
+        const response = await axios.post(BACKEND_URL+'api/token/',{
+            'username' : username,
+            'password' : password
+        })
+        return response
+    } catch(error){
+        return error
     }
 }

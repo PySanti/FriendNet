@@ -18,6 +18,8 @@ import {
     BASE_USERNAME_CONSTRAINTS, 
     BASE_USERNAME_MAX_LENGTH, } from "../main";
 import { FormField } from "../components/FormField";
+import { userIsAuthenticated } from "../tools/userIsAuthenticated";
+import { UserLogged } from "./UserLogged";
 
 
 // constants
@@ -60,138 +62,143 @@ export function SignUp() {
             return "Las contrasenias no son iguales"
         }
     }
-
-    return (
-        <>
-        <Header/>
-        <form className="signup-form" onSubmit={onSubmit} method="POST" > 
-            <FormField label="Nombre de usuario" errors={errors.username &&  errors.username.message}>
-                <input 
-                    defaultValue="aly999"
-                    maxLength={BASE_USERNAME_MAX_LENGTH}
-                    type="text" 
-                    id="nombre" 
-                    name="username"
-                    {...register("username", BASE_USERNAME_CONSTRAINTS)}
-                />
-            </FormField>
-            <FormField label="Correo electronico" errors={errors.email &&  errors.email.message}>
-                <input 
-                    defaultValue="aly@gmail.com"
-                    type="email" 
-                    id="email" 
-                    name="email"
-                    {...register("email", {
-                        required:{
-                            value: true,
-                            message : "Por favor, ingresa tu correo electrónico"
-                        },
-                        pattern:{
-                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                            message : "Por favor, ingresa un correo electrónico valido"
-                        }
-                    })}
-                />
-            </FormField>
-            <FormField label="Nombres" errors={errors.first_names  && errors.first_names.message}>
-                <input 
-                    defaultValue="Alayla Andreina"
-                    maxLength={BASE_FIRSTNAMES_MAX_LENGTH}
-                    type="text" 
-                    id="first_names" 
-                    name="first_names"
-                    {...register("first_names", {
-                        required:{
-                            value: true,
-                            message : "Por favor, ingresa tu(s) primer(os) nombre(s)"
-                        },
-                        pattern : {
-                            value :/^[^\d]+$/,
-                            message : "Por favor, ingresa un(os) nombre(s) valido(s)"
-                        }
-                    })}
+    if (userIsAuthenticated()){
+        return (
+            <UserLogged/>
+        )
+    } else {
+        return (
+            <>
+            <Header/>
+            <form className="signup-form" onSubmit={onSubmit} method="POST" > 
+                <FormField label="Nombre de usuario" errors={errors.username &&  errors.username.message}>
+                    <input 
+                        defaultValue="aly999"
+                        maxLength={BASE_USERNAME_MAX_LENGTH}
+                        type="text" 
+                        id="nombre" 
+                        name="username"
+                        {...register("username", BASE_USERNAME_CONSTRAINTS)}
                     />
-            </FormField>
-            <FormField label="Apellidos" errors={errors.last_names  && errors.last_names.message}>
-                <input 
-                    defaultValue="Guzman Hurtado"
-                    maxLength={BASE_LASTNAMES_MAX_LENGTH}
-                    type="text" 
-                    id="last_names" 
-                    name="last_names"
-                    {...register("last_names", {
-                        required:{
-                            value: true,
-                            message : "Por favor, ingresa tu(s) apellido(s)" 
-                        },
-                        pattern : {
-                            value :/^[^\d]+$/,
-                            message : "Por favor, ingresa un(os) apellido(s) valido(s)"
-                        }
-                    })}
+                </FormField>
+                <FormField label="Correo electronico" errors={errors.email &&  errors.email.message}>
+                    <input 
+                        defaultValue="aly@gmail.com"
+                        type="email" 
+                        id="email" 
+                        name="email"
+                        {...register("email", {
+                            required:{
+                                value: true,
+                                message : "Por favor, ingresa tu correo electrónico"
+                            },
+                            pattern:{
+                                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                message : "Por favor, ingresa un correo electrónico valido"
+                            }
+                        })}
                     />
-            </FormField>
-            <FormField label="Edad" errors={errors.age  && errors.age.message}>
-                <input 
-                    defaultValue="18"
-                    type="number" 
-                    id="age" 
-                    name="age"
-                    {...register("age", {
-                        required:{
-                            value : true,
-                            message : "Por favor, ingresa tu edad."
-                        },
-                        max : {
-                            value : 120,
-                            message : "Por favor, ingresa una edad valida"
-                        },
-                        min : {
-                            value : 5,
-                            message : "Debes tener al menos 5 años"
-                        },
-                        pattern : {
-                            value : /^-?\d+$/,
-                            message : "Por favor, ingresa una edad valida"
-                        }
-                    })}
-                    />
-            </FormField>
-            <FormField label="Foto de perfil" errors={errors.photo  && errors.photo.message}>
-                <input 
-                    type="file"
-                    id="photo" 
-                    name="photo"
-                    {...register("photo", {
-                        required:{
-                            value : true,
-                            message : "Por favor, selecciona tu foto"
-                        }
-                    })}
-                    />
-            </FormField>
-            <FormField label="Contraseña" errors={errors.password && errors.password.message}>
-                <input 
-                    defaultValue="16102005 python"
-                    type="password" 
-                    id="password" 
-                    name="password"
-                    {...register("password", BASE_PASSWORD_CONSTRAINTS)}
-                    />
-            </FormField>
-            <FormField label="Confirma la contraseña" errors={errors.confirmPwd  && errors.confirmPwd.message}>
-                <input 
-                    defaultValue="16102005 python"
-                    type="password" 
-                    id="confirmPwd" 
-                    name="confirmPwd"
-                    {...register("confirmPwd", {
-                        validate : validatePassword
-                    })}
-                    />
-            </FormField>
-            <button type="submit">enviar</button>
-        </form>
-        </>
-    )
+                </FormField>
+                <FormField label="Nombres" errors={errors.first_names  && errors.first_names.message}>
+                    <input 
+                        defaultValue="Alayla Andreina"
+                        maxLength={BASE_FIRSTNAMES_MAX_LENGTH}
+                        type="text" 
+                        id="first_names" 
+                        name="first_names"
+                        {...register("first_names", {
+                            required:{
+                                value: true,
+                                message : "Por favor, ingresa tu(s) primer(os) nombre(s)"
+                            },
+                            pattern : {
+                                value :/^[^\d]+$/,
+                                message : "Por favor, ingresa un(os) nombre(s) valido(s)"
+                            }
+                        })}
+                        />
+                </FormField>
+                <FormField label="Apellidos" errors={errors.last_names  && errors.last_names.message}>
+                    <input 
+                        defaultValue="Guzman Hurtado"
+                        maxLength={BASE_LASTNAMES_MAX_LENGTH}
+                        type="text" 
+                        id="last_names" 
+                        name="last_names"
+                        {...register("last_names", {
+                            required:{
+                                value: true,
+                                message : "Por favor, ingresa tu(s) apellido(s)" 
+                            },
+                            pattern : {
+                                value :/^[^\d]+$/,
+                                message : "Por favor, ingresa un(os) apellido(s) valido(s)"
+                            }
+                        })}
+                        />
+                </FormField>
+                <FormField label="Edad" errors={errors.age  && errors.age.message}>
+                    <input 
+                        defaultValue="18"
+                        type="number" 
+                        id="age" 
+                        name="age"
+                        {...register("age", {
+                            required:{
+                                value : true,
+                                message : "Por favor, ingresa tu edad."
+                            },
+                            max : {
+                                value : 120,
+                                message : "Por favor, ingresa una edad valida"
+                            },
+                            min : {
+                                value : 5,
+                                message : "Debes tener al menos 5 años"
+                            },
+                            pattern : {
+                                value : /^-?\d+$/,
+                                message : "Por favor, ingresa una edad valida"
+                            }
+                        })}
+                        />
+                </FormField>
+                <FormField label="Foto de perfil" errors={errors.photo  && errors.photo.message}>
+                    <input 
+                        type="file"
+                        id="photo" 
+                        name="photo"
+                        {...register("photo", {
+                            required:{
+                                value : true,
+                                message : "Por favor, selecciona tu foto"
+                            }
+                        })}
+                        />
+                </FormField>
+                <FormField label="Contraseña" errors={errors.password && errors.password.message}>
+                    <input 
+                        defaultValue="16102005 python"
+                        type="password" 
+                        id="password" 
+                        name="password"
+                        {...register("password", BASE_PASSWORD_CONSTRAINTS)}
+                        />
+                </FormField>
+                <FormField label="Confirma la contraseña" errors={errors.confirmPwd  && errors.confirmPwd.message}>
+                    <input 
+                        defaultValue="16102005 python"
+                        type="password" 
+                        id="confirmPwd" 
+                        name="confirmPwd"
+                        {...register("confirmPwd", {
+                            validate : validatePassword
+                        })}
+                        />
+                </FormField>
+                <button type="submit">enviar</button>
+            </form>
+            </>
+        )
+    }
 }
