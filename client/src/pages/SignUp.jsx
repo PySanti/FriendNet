@@ -27,22 +27,25 @@ import { UserLogged } from "./UserLogged";
 
 export function SignUp() {
     const {register, handleSubmit, formState: {errors}, watch} = useForm()
-    let [userActivationCode, setUserActivationCode] = useState(null);
     let [userId, setUserId] = useState(null);
+    let [username, setUsername] = useState(null);
+    let [userEmail, setUserEmail] = useState(null);
     const onSubmit = handleSubmit(async (data) =>{
         try{
             const userAlreadyExists = await checkExistingUserAPI(data['username'], data['email'])
-            if (userAlreadyExists.data.existing === "false"){
+            if (userAlreadyExists.status === 200 && userAlreadyExists.data.existing === "false"){
                 const photo = data['photo']
                 delete data.confirmPwd // el confirmPwd no puede ser enviado al backend
                 delete data.photo
                 const uploadedImgData           = await postCloudinaryImgAPI(photo)
                 data['photo_link']              = uploadedImgData.data.url // el serializer el backend recibe photo_link, no la foto en si
-                const activation_code           = await sendActivationEmailAPI(data.email, data.username)
                 const createUserResponse        = await createUsuarioAPI(data)
-                setUserActivationCode(activation_code)
                 setUserId(createUserResponse.data.new_user_id)
-            } 
+                setUsername(data.username)
+                setUserEmail(data.email)
+            } else {
+                alert('Error comprobando existencia de usuario')
+            }
         } catch(error){
             console.log('Error en procesamiento de formulario')
             console.log(error)
@@ -56,10 +59,11 @@ export function SignUp() {
             return "Las contrasenias no son iguales"
         }
     }
-    if (userId && userActivationCode){ // si el usuario ya fue registrado
+    if (userId && username && userEmail){ // si el usuario ya fue registrado
         const props = {
-            'activation_code' : userActivationCode,
-            'userId' : userId
+            'userId' : userId,
+            'username' : username,
+            'userEmail' : userEmail
         }
         return <Navigate to="/signup/activate/" state={props}/>
     } else{

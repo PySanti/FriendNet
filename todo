@@ -1,8 +1,6 @@
 // Pasos generales:
-    //todo:~ Volver a conseguir el proyecto antiguo pero con implementacion de React y DRF ( validaciones, logica perfecta, optimizacion basica)
-    //todo:~ Refactorizar para entendimiento de todos los elementos de la logica, opmitizacion base y depuracion de codigo inutil
-    //todo:~ Estilos con tailwind
-
+    ~ Finalizar fase de activacion tanto en signup como en login
+    ~ Depurar, refactorizar, repasar, testar, agregar codigos de error en todo el codigo actual
 
 
 
@@ -19,7 +17,12 @@
     // todo: repasar todo lo aprendido en el proyecto, revisando todo el mismo
 
 
-// Logica:
+// Logica: 
+    // todo : revisar quota de emailjs
+    // todo : cambiar logica de activacion para que el usuario se active unicamente cuando se haya creado el usuario, y que despues de eso se mande el correo,
+    Que el componente AccountActivation se encargue de toda es parte
+    // todo : recordar modificacion de is_online al crear usuario
+    // todo : optimizar comprobacion de exitencia de usuario no activado
     // todo : agregar permission classes en el backedn
     // todo : especificar todos los media types en las peticiones
     // todo: agregar props validation

@@ -114,5 +114,5 @@ class UsuariosManager(BaseUserManager):
             return pos_user_queryset[0]
         else:
             return False
-    def userExists(self, username, email):
+    def userExists(self, username, email=None):
         return (self.filter(username=username)) or (self.filter(email=email))

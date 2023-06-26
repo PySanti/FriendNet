@@ -21,3 +21,4 @@ SECRET_KEY = SECRETS['KEY']
 REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'applications.Usuarios.utils.custom_exception_handler'
 }
+

@@ -1,10 +1,12 @@
 from rest_framework import status
 from rest_framework.views import APIView
+from .utils import USER_SHOWABLE_FIELDS
 
 from .serializers import (
     CreateUsuariosSerializer,
     CheckExistingUserSerializer,
-    ActivateUserSerializer
+    ActivateUserSerializer,
+    GetUserDetailSerializer,
 )
 from rest_framework.response import Response
 from .models import Usuarios
@@ -28,11 +30,31 @@ class CreateUsuariosAPI(APIView):
 
 class CheckExistingUserAPI(APIView):
     serializer_class = CheckExistingUserSerializer
-    def get(self, request, *args, **kwargs):
-        if Usuarios.objects.userExists(kwargs['username'], kwargs['email']):
-            return Response({'existing' : 'true'}, status.HTTP_202_ACCEPTED)
+    def post(self, request, *args, **kwargs):
+        serialized_data = self.serializer_class(data=request.data)
+        if serialized_data.is_valid():
+            if Usuarios.objects.userExists(request.data['username'], request.data['email']):
+                return Response({'existing' : 'true'}, status.HTTP_200_OK)
+            else:
+                return Response({'existing' : 'false'}, status.HTTP_200_OK)
         else:
-            return Response({'existing' : 'false'}, status.HTTP_202_ACCEPTED)
+            return Response({'error' : 'invalid data send'}, status.HTTP_400_BAD_REQUEST)
+
+class GetUserDetailAPI(APIView):
+    serializer_class = GetUserDetailSerializer
+    def post(self, request, *args, **kwargs):
+        serialized_data = self.serializer_class(data=request.data)
+        if serialized_data.is_valid():
+            user = Usuarios.objects.userExists(request.data['username'])
+            if user:
+                user=user[0]
+                user = {i[0]:i[1] for i in user.__dict__.items() if i[0] in USER_SHOWABLE_FIELDS}
+                return Response(user, status.HTTP_200_OK)
+            else:
+                return Response({'error' : 'user_not_exists'}, status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({'error' : 'seralizer failed'}, status=status.HTTP_400_BAD_REQUEST)
+
 
 class ActivateUserAPI(APIView):
     serializer_class = ActivateUserSerializer

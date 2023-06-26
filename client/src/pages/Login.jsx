@@ -2,28 +2,53 @@ import { useForm } from "react-hook-form"
 import { Header } from "../components/Header"
 import { FormField } from "../components/FormField"
 import { BASE_USERNAME_MAX_LENGTH, BASE_USERNAME_CONSTRAINTS, BASE_PASSWORD_CONSTRAINTS } from "../main"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { AuthContext } from "../context/AuthContext"
-import { useNavigate } from "react-router-dom"
+import { Navigate } from "react-router-dom"
 import { userIsAuthenticated } from "../tools/userIsAuthenticated"
 import { UserLogged } from "./UserLogged"
+import { getUserDetailAPI } from "../api/getUserDetailApi.api"
 
 
 export function Login() {
-    const {register, handleSubmit, formState : {errors}} = useForm()
-    const {loginUser} = useContext(AuthContext)
-    const navigate = useNavigate()
+    const   {register, handleSubmit, formState : {errors}} = useForm()
+    const   {loginUser} = useContext(AuthContext)
+    let     [userIsUnactive, setUserIsUnactive] = useState(false)
+    let     [user, setUser] = useState(null)
+    let     [userLogged, setUserLogged] = useState(false)
     const onSubmit = handleSubmit(async (data)=>{
-        if (!localStorage.getItem('authToken')){
-            const response = await loginUser(data)
-            if (response.status === 200){
-                navigate('/home')
+        // en este punto ya se sabe que el usuario no esta autenticado
+        let response = await getUserDetailAPI(data.username)
+        if (response.status === 200){
+            const user = response.data
+            setUser(user)
+            if (user.is_active){
+                response = await loginUser(data)
+                if (response.status === 200){
+                    setUserLogged(true)
+                } else {
+                    // handle
+                }
+            } else if (!user.is_active){
+                setUserIsUnactive(true)
             } else {
-                // handle
+                alert('Error con respuesta de api de checkeo de usuario activo')
             }
+        } else {
+            // handle
         }
     })
-    if (userIsAuthenticated()){
+    if (userLogged){
+        return <Navigate to="/home/"/>
+    }
+    if (userIsUnactive){
+        const props = {
+            'userId' : user.id,
+            'username' : user.username,
+            'userEmail' : user.email
+        }
+        return <Navigate to="/signup/activate" state={props}/>
+    } else if (userIsAuthenticated()){
         return <UserLogged/> 
     } else{
         return (

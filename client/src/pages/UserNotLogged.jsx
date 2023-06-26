@@ -3,7 +3,7 @@ export function UserNotLogged(){
         <>
         <h1>Aun no estas logeado</h1>
         <button>
-            <a href="/login/">Logearme</a>
+            <a href="/">Logearme</a>
         </button>
         </>
     )
