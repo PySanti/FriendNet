@@ -13,7 +13,6 @@ export function AuthContextProvider({children}){
     // evitar que siempre que se recargue el context, se anulen nuevamente las variables que lo conforman
     let [authToken, setAuthToken]   = useState(()=>userStorageData ? JSON.parse(userStorageData) : null)
     let [user, setUser]             = useState(()=>userStorageData ? jwt_decode(JSON.parse(userStorageData).access) : null)
-    let [loading, setLoading]       = useState(true)
     const updateContextData=(data)=>{
         setAuthToken(data) // context
         setUser(data? jwt_decode(data.access) : null) //context
@@ -48,24 +47,19 @@ export function AuthContextProvider({children}){
         }
     }
     useEffect(() => {
-        const refreshTime = 1000 * 60 * 9
+        const refreshTime = 1000 * 60 * 0.1
         if (userIsAuthenticated()){ // hacemos esto para que el token se actualice justo cuando el usuario carga la pagina
-            if (loading){
-                setLoading(false)
-            }
             let intervalId = setInterval(async ()=>{
                 console.log('Refrescando token')
                 await refreshToken()
             }, refreshTime)
             return ()=>clearInterval(intervalId) //* al retornar una funcion, hacemos que esta se ejecute cuando elcomponente se vuelva a montar
         }
-    }, [authToken, loading])
+    }, [authToken])
     const contextData = {
-        authTokens : authToken,
         user : user,
         loginUser : loginUser,
         logoutUser : logoutUser,
-        refreshToken : refreshToken
     }
     return (
         <AuthContext.Provider value={{...contextData}}>
