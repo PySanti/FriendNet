@@ -1,7 +1,5 @@
 from rest_framework import serializers
-from applications.Notifications.serializers import NotificationsSerializers
 from .models import Usuarios
-from .utils import USER_SHOWABLE_FIELDS
 
 
 class CreateUsuariosSerializer(serializers.ModelSerializer):
@@ -17,12 +15,8 @@ class CreateUsuariosSerializer(serializers.ModelSerializer):
             "photo_link", 
             ]
 
-class ActivateUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Usuarios
-        fields = [
-            "id"
-        ]
+class ActivateUserSerializer(serializers.Serializer):
+    id=serializers.IntegerField()
 
 
 class GetUserDetailSerializer(serializers.Serializer):

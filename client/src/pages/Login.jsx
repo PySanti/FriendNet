@@ -11,47 +11,51 @@ import { useNavigate } from "react-router-dom"
 
 
 export function Login() {
-    const   {register, handleSubmit, formState : {errors}} = useForm()
-    const   navigate = useNavigate()
-    const   {loginUser} = useContext(AuthContext)
-    let     [userIsUnactive, setUserIsUnactive] = useState(false)
-    let     [user, setUser] = useState(null)
-    let     [userLogged, setUserLogged] = useState(false)
+    const   {register, handleSubmit, formState : {errors}}  = useForm()
+    const   navigate                                        = useNavigate()
+    const   {loginUser}                                     = useContext(AuthContext)
+    let     [user, setUser]                                 = useState(null)
+    let     [userLogged, setUserLogged]                     = useState(false)
+    let     [userNotExists, setUserNotExists]               = useState(false)
+    let     [unExpectedError, setUnExpectedError]           = useState(false)
     const onSubmit = handleSubmit(async (data)=>{
         // en este punto ya se sabe que el usuario no esta autenticado
-        let response = await getUserDetailAPI(data.username)
-        if (response.status === 200){
+        try{
+            let response = await getUserDetailAPI(data.username)
             const user = response.data
             setUser(user)
             if (user.is_active){
-                response = await loginUser(data)
-                if (response.status === 200){
+                try {
+                    response = await loginUser(data)
                     setUserLogged(true)
-                } else {
-                    // handle
+                } catch(error){
+                    if (error.response.status === 401){
+                        setUserNotExists(true) // en este caso el problema seria el password, no el username
+                    } else {
+                        setUnExpectedError("Error inesperado logeando usuario!")
+                    }
                 }
-            } else if (!user.is_active){
-                setUserIsUnactive(true)
-            } else {
-                alert('Error con respuesta de api de checkeo de usuario activo')
             }
-        } else {
-            // handle
+        } catch(error){
+            const errorMsg = error.response.data.error
+            if (errorMsg ===  "user_not_exists"){
+                setUserNotExists(true)
+            } else {
+                setUnExpectedError("Error inesperado en repuesta de api userDetail!")
+            }
         }
     })
 
     useEffect(()=>{
         // Se ejecutara cuando se finalice el proceso de logeo
         if (userLogged){
-            console.log('Redigiendo usuario al home')
             navigate('/home/')
         }
     }, [userLogged])
 
     useEffect(()=>{
-        if (userIsUnactive){
+        if (user && !user.is_active){
         // Se ejecutara si se detecta que el usuario existe pero esta inactivo
-            console.log('Redigiendo usuario para activacion')
             const props = {
                 'userId' : user.id,
                 'username' : user.username,
@@ -59,7 +63,7 @@ export function Login() {
             }
             navigate('/signup/activate', {state: props})
         }
-    }, [userIsUnactive])
+    }, [user])
 
 
     if (userIsAuthenticated()){
@@ -69,7 +73,8 @@ export function Login() {
             <>
                 <Header/>
                 <form onSubmit={onSubmit}>
-                    <FormField  label="Nombre de usuario" errors={errors.username && errors.username.message}>
+                    {unExpectedError && unExpectedError}
+                    <FormField  label="Nombre de usuario" errors={errors.username && errors.username.message || userNotExists && "Usuario o contraseña inválidos !"}>
                         <input 
                             defaultValue="pysanti"
                             type="text"

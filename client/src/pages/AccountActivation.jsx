@@ -10,8 +10,12 @@ import { sendActivationEmailAPI } from "../api/sendActivationEmail.api"
 import { generateActivationCode } from "../tools/generateActivationCode"
 
 export function AccountActivation() {
-    const props = useLocation().state
-    const navigate = useNavigate()
+    let [userActivated, setUserActivated]               = useState(false)
+    let [realActivationCode, setRealActivationCode]     = useState(null)
+    let [failedErrorCode, setFailedErrorCode]           = useState(false)  
+    let [unExpectedError, setUnExpectedError]           = useState(null)
+    const props                                         = useLocation().state
+    const navigate                                      = useNavigate()
     if (!props){
         console.warn('Atencion: el componente AccountActivation no esta recibiendo props')
     }
@@ -24,26 +28,20 @@ export function AccountActivation() {
     const onSubmit = handleSubmit(async (data)=>{
         if (Number(data.activation_code) === Number(realActivationCode)){
             try {
-                const response = await activateUserAPI(props.userId)
-                if (response.status === 200){
-                    console.log('Exito activando el usuario')
-                    console.log(response)
-                    setUserActivated(true)
-                } else {
-                    console.log('Error activando usuario')
-                    console.log(response)
-                }
+                const response = await activateUserAPI(realActivationCode)
+                setUserActivated(true)
             } catch(error){
-                console.log('Error activando el usuario')
-                console.log(error)
+                const errorMsg = error.response.data.error
+                if (errorMsg === "serializer_error"){
+                    setUnExpectedError("Error en el serializador de la api!")
+                } else {
+                    setUnExpectedError("Error inesperado en el servidor al crear usuario!")
+                }
             }
         } else {
-            console.log(realActivationCode)
-            alert('Codigo invalido')
+            setFailedErrorCode(true)
         }
     })
-    let [userActivated, setUserActivated]               = useState(false)
-    let [realActivationCode, setRealActivationCode]     = useState(null)
 
     useEffect(()=>{
         // se enviara el correo de activacion la primera vez que se monte el componente
@@ -65,7 +63,8 @@ export function AccountActivation() {
                     Activa tu cuenta antes de continuar !
                 </h1>
                 <form onSubmit={onSubmit}>
-                    <FormField label="Codigo " errors={errors.activation_code && errors.activation_code.message}>
+                    {unExpectedError && unExpectedError}
+                    <FormField label="Codigo " errors={errors.activation_code && errors.activation_code.message || failedErrorCode && "Error, codigo invalido!"}>
                         <input 
                             type="text"
                             maxLength={6}

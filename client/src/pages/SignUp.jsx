@@ -5,12 +5,11 @@ import { useEffect, useState } from "react";
 // api's
 import { createUsuarioAPI }         from "../api/createUsuario.api";
 import { postCloudinaryImgAPI }     from "../api/postCloudinaryImg.api";
-import { sendActivationEmailAPI }   from "../api/sendActivationEmail.api";
 import { checkExistingUserAPI } from "../api/checkExistingUser.api";
 
 // styles
 import "../styles/signup-styles.css"
-import { Navigate, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { 
     BASE_FIRSTNAMES_MAX_LENGTH, 
     BASE_LASTNAMES_MAX_LENGTH, 
@@ -26,38 +25,45 @@ import { UserLogged } from "./UserLogged";
 
 
 export function SignUp() {
+    let [userData, setUserData]                                 = useState(null);
+    let [unExpectedError, setUnExpectedError]                   = useState(null)
+    let [userExists, setUserExists]                             = useState(false)
     const {register, handleSubmit, formState: {errors}, watch}  = useForm()
     const navigate                                              = useNavigate()
-    let [userData, setUserData]                                 = useState(null);
     const onSubmit = handleSubmit(async (data) =>{
         try{
-            console.log(data['username'])
-            console.log(data['email'])
             const checkUserResponse = await checkExistingUserAPI(data['username'], data['email'])
-            if (checkUserResponse.status === 200){
-                const userAlreadyExists = checkUserResponse.data.existing === "true"
-                if (!userAlreadyExists){
-                    const photo = data['photo']
-                    delete data.confirmPwd // el confirmPwd no puede ser enviado al backend
-                    delete data.photo
+            const userAlreadyExists = checkUserResponse.data.existing === "true"
+            if (!userAlreadyExists){
+                const photo = data['photo']
+                delete data.confirmPwd // el confirmPwd no puede ser enviado al backend
+                delete data.photo
+                try {
                     // const uploadedImgData           = await postCloudinaryImgAPI(photo)
                     data['photo_link']              = "(test)" // el serializer el backend recibe photo_link, no la foto en si
-                    const createUserResponse        = await createUsuarioAPI(data)
-                    setUserData({
-                        'userId' : createUserResponse.data.new_user_id,
-                        'username' : data.username,
-                        'userEmail' : data.email,
-                    })
-                } else {
-                    alert('El usuario ya existe')
+                    try{
+                        const createUserResponse        = await createUsuarioAPI(data)
+                        setUserData({
+                            'userId' : createUserResponse.data.new_user_id,
+                            'username' : data.username,
+                            'userEmail' : data.email,
+                        })
+                    } catch(error){
+                        const errorMsg = error.response.data.error
+                        if (errorMsg === "error_creating"){
+                            setUnExpectedError("Error inesperado creando usuario!")
+                        } else{
+                            setUnExpectedError("Error inesperado lanzado por serializador de api!")
+                        }
+                    }
+                } catch(error){
+                    setUnExpectedError("Error inesperado subiendo imagen de usuario a la nube!")
                 }
-
             } else {
-                alert('Error comprobando existencia de usuario')
+                setUserExists(true)
             }
         } catch(error){
-            console.log('Error en procesamiento de formulario')
-            console.log(error)
+            setUnExpectedError("Error inesperado chequeando existencia de usuario en la base de datos!")
         }
     })
     const validatePassword = (confirmPwd) =>{
@@ -75,13 +81,14 @@ export function SignUp() {
     }, [userData])
 
     if (userIsAuthenticated()){
-        return (<UserLogged/>)
+        return <UserLogged/>
     } else {
         return (
             <>
             <Header/>
             <form className="signup-form" onSubmit={onSubmit} method="POST" > 
-                <FormField label="Nombre de usuario" errors={errors.username &&  errors.username.message}>
+                {unExpectedError && unExpectedError}
+                <FormField label="Nombre de usuario" errors={errors.username &&  errors.username.message || userExists && "Ya existe un usuario con ese Nombre de usuario o Correo electrónico"}>
                     <input 
                         defaultValue="aly999"
                         maxLength={BASE_USERNAME_MAX_LENGTH}

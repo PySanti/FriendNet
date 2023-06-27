@@ -1,6 +1,9 @@
 from rest_framework import status
 from rest_framework.views import APIView
-from .utils import USER_SHOWABLE_FIELDS
+from .utils import (
+    USER_SHOWABLE_FIELDS,
+    BASE_SERIALIZER_ERROR_RESPONSE
+)
 
 from .serializers import (
     CreateUsuariosSerializer,
@@ -23,9 +26,9 @@ class CreateUsuariosAPI(APIView):
                 new_user = Usuarios.objects.create_user(**request.data)
                 return Response({'new_user_id' : new_user.id}, status=status.HTTP_201_CREATED)
             except:
-                return Response({'Bad Request': "Error creating user..."}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'error': "error_creating"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
-            return Response({'Bad Request': f"{serializer.error_messages}"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': BASE_SERIALIZER_ERROR_RESPONSE}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CheckExistingUserAPI(APIView):
@@ -38,8 +41,7 @@ class CheckExistingUserAPI(APIView):
             else:
                 return Response({'existing' : 'false'}, status.HTTP_200_OK)
         else:
-
-            return Response({'error' : f"{serialized_data.error_messages}"}, status.HTTP_400_BAD_REQUEST)
+            return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status.HTTP_400_BAD_REQUEST)
 
 class GetUserDetailAPI(APIView):
     serializer_class = GetUserDetailSerializer
@@ -50,12 +52,11 @@ class GetUserDetailAPI(APIView):
             if user:
                 user=user[0]
                 user = {i[0]:i[1] for i in user.__dict__.items() if i[0] in USER_SHOWABLE_FIELDS}
-                print(user)
                 return Response(user, status.HTTP_200_OK)
             else:
                 return Response({'error' : 'user_not_exists'}, status.HTTP_400_BAD_REQUEST)
         else:
-            return Response({'error' : 'seralizer failed'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ActivateUserAPI(APIView):
@@ -67,10 +68,10 @@ class ActivateUserAPI(APIView):
                 user = Usuarios.objects.get(id=request.data['user_id'])
                 user.is_active = True
                 user.save()
-                return Response({'Success' : 'User activated !'}, status.HTTP_200_OK)
+                return Response({'success' : 'user_activated'}, status.HTTP_200_OK)
             except:
-                return Response({'Error' : 'Error while activating user'}, status.HTTP_500_INTERNAL_SERVER_ERROR) 
+                return Response({'error' : 'error_activating_user'}, status.HTTP_500_INTERNAL_SERVER_ERROR) 
         else:
-            return Response({'Bad request' : f'{serialized_data.error_messages}'}, status.HTTP_400_BAD_REQUEST)
+            return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status.HTTP_400_BAD_REQUEST)
 
 

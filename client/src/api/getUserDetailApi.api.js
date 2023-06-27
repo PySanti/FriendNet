@@ -1,9 +1,13 @@
 import axios from "axios";
 import { BACKEND_URL } from "../main";
+import { config } from "./baseConfig.api";
 
 export async function getUserDetailAPI(username){
-    const response = await axios.post(BACKEND_URL + 'api/get_user_detail/', {
+    /**
+     * Recibe nombre de usuario, retorna la informacion "showable" del mismo
+     */
+    const data = {
         'username' : username
-    })
-    return response
+    }
+    return await axios.post(BACKEND_URL + 'api/get_user_detail/', data, config)
 }
