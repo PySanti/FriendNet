@@ -8,6 +8,9 @@ import { activateUserAPI } from "../api/activateUser.api"
 import { FormField } from "../components/FormField"
 import { sendActivationEmailAPI } from "../api/sendActivationEmail.api"
 import { generateActivationCode } from "../tools/generateActivationCode"
+import { userIsAuthenticated } from "../tools/userIsAuthenticated"
+import { UserLogged } from "./UserLogged"
+import { UserNotLogged } from "./UserNotLogged"
 
 export function AccountActivation() {
     let [userActivated, setUserActivated]               = useState(false)
@@ -16,9 +19,7 @@ export function AccountActivation() {
     let [unExpectedError, setUnExpectedError]           = useState(null)
     const props                                         = useLocation().state
     const navigate                                      = useNavigate()
-    if (!props){
-        console.warn('Atencion: el componente AccountActivation no esta recibiendo props')
-    }
+
     const sendMail = async (activation_code)=>{
         // const response = await sendActivationEmailAPI(props.userEmail, props.username, activation_code)
         console.log(activation_code)
@@ -28,14 +29,14 @@ export function AccountActivation() {
     const onSubmit = handleSubmit(async (data)=>{
         if (Number(data.activation_code) === Number(realActivationCode)){
             try {
-                const response = await activateUserAPI(realActivationCode)
+                const response = await activateUserAPI(props.userId)
                 setUserActivated(true)
             } catch(error){
                 const errorMsg = error.response.data.error
                 if (errorMsg === "serializer_error"){
                     setUnExpectedError("Error en el serializador de la api!")
                 } else {
-                    setUnExpectedError("Error inesperado en el servidor al crear usuario!")
+                    setUnExpectedError("Error inesperado en el servidor al activar usuario!")
                 }
             }
         } else {
@@ -55,41 +56,48 @@ export function AccountActivation() {
             navigate("/login/")
         } 
     }, [userActivated])
-    return (
-        <>
-            <Header/>
-            <div>
-                <h1>
-                    Activa tu cuenta antes de continuar !
-                </h1>
-                <form onSubmit={onSubmit}>
-                    {unExpectedError && unExpectedError}
-                    <FormField label="Codigo " errors={errors.activation_code && errors.activation_code.message || failedErrorCode && "Error, codigo invalido!"}>
-                        <input 
-                            type="text"
-                            maxLength={6}
-                            minLength={1}
-                            name="activation_code"
-                            id="activation_code"
-                            {...register("activation_code", {
-                                required : {
-                                    value : true,
-                                    message : "Por favor ingresa un código de activación"
-                                },
-                                pattern : {
-                                    value : /^-?\d+$/,
-                                    message : "Por favor, ingresa un codigo valido"
-                                },
-                                minLength : {
-                                    value : 6,
-                                    message : 'Debes ingresar al menos 6 caracteres',
-                                }
-                                })}
-                        />
-                    <button type="submit">enviar</button>
-                    </FormField>
-                </form>
-            </div>
-        </>
-    )
+    if (userIsAuthenticated()){ // comprobaciones para cuando se ejecute la url directamente 
+        return <UserLogged/>
+    } else if (!props){
+        return <UserNotLogged/>
+    } else{
+        return (
+                <>
+                    <Header/>
+                    <div>
+                        <h1>
+                            Activa tu cuenta antes de continuar !
+                        </h1>
+                        <form onSubmit={onSubmit}>
+                            {unExpectedError && unExpectedError}
+                            {failedErrorCode && "Error, codigo invalido!"}
+                            <FormField label="Codigo " errors={errors.activation_code && errors.activation_code.message}>
+                                <input 
+                                    type="text"
+                                    maxLength={6}
+                                    minLength={1}
+                                    name="activation_code"
+                                    id="activation_code"
+                                    {...register("activation_code", {
+                                        required : {
+                                            value : true,
+                                            message : "Por favor ingresa un código de activación"
+                                        },
+                                        pattern : {
+                                            value : /^-?\d+$/,
+                                            message : "Por favor, ingresa un codigo valido"
+                                        },
+                                        minLength : {
+                                            value : 6,
+                                            message : 'Debes ingresar al menos 6 caracteres',
+                                        }
+                                        })}
+                                />
+                            <button type="submit">enviar</button>
+                            </FormField>
+                        </form>
+                    </div>
+                </>
+            )
+    }
 }

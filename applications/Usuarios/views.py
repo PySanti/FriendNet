@@ -72,6 +72,7 @@ class ActivateUserAPI(APIView):
             except:
                 return Response({'error' : 'error_activating_user'}, status.HTTP_500_INTERNAL_SERVER_ERROR) 
         else:
+            print(serialized_data.errors)
             return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status.HTTP_400_BAD_REQUEST)
 
 

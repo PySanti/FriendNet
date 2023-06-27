@@ -16,7 +16,7 @@ class CreateUsuariosSerializer(serializers.ModelSerializer):
             ]
 
 class ActivateUserSerializer(serializers.Serializer):
-    id=serializers.IntegerField()
+    user_id=serializers.IntegerField()
 
 
 class GetUserDetailSerializer(serializers.Serializer):
