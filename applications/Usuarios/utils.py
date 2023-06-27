@@ -8,7 +8,9 @@ USER_SHOWABLE_FIELDS = [
     "first_names",
     "last_names",
     "photo_link",
+    # los siguientes campos no son realmente showable, simplemente son requeridos para escalabilidad
     "is_active",
+    "id"
 ]
 
 def custom_exception_handler(exc, context):

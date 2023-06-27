@@ -29,11 +29,6 @@ class GetUserDetailSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=15)
 
 
-class CheckExistingUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model= Usuarios
-        fields = [
-            "username",
-            "email"
-        ]
+class CheckExistingUserSerializer(GetUserDetailSerializer):
+    email = serializers.EmailField()
 

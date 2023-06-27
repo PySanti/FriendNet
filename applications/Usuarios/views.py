@@ -38,7 +38,8 @@ class CheckExistingUserAPI(APIView):
             else:
                 return Response({'existing' : 'false'}, status.HTTP_200_OK)
         else:
-            return Response({'error' : 'invalid data send'}, status.HTTP_400_BAD_REQUEST)
+
+            return Response({'error' : f"{serialized_data.error_messages}"}, status.HTTP_400_BAD_REQUEST)
 
 class GetUserDetailAPI(APIView):
     serializer_class = GetUserDetailSerializer
@@ -49,6 +50,7 @@ class GetUserDetailAPI(APIView):
             if user:
                 user=user[0]
                 user = {i[0]:i[1] for i in user.__dict__.items() if i[0] in USER_SHOWABLE_FIELDS}
+                print(user)
                 return Response(user, status.HTTP_200_OK)
             else:
                 return Response({'error' : 'user_not_exists'}, status.HTTP_400_BAD_REQUEST)

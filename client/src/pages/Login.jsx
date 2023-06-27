@@ -2,16 +2,17 @@ import { useForm } from "react-hook-form"
 import { Header } from "../components/Header"
 import { FormField } from "../components/FormField"
 import { BASE_USERNAME_MAX_LENGTH, BASE_USERNAME_CONSTRAINTS, BASE_PASSWORD_CONSTRAINTS } from "../main"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../context/AuthContext"
-import { Navigate } from "react-router-dom"
 import { userIsAuthenticated } from "../tools/userIsAuthenticated"
 import { UserLogged } from "./UserLogged"
 import { getUserDetailAPI } from "../api/getUserDetailApi.api"
+import { useNavigate } from "react-router-dom"
 
 
 export function Login() {
     const   {register, handleSubmit, formState : {errors}} = useForm()
+    const   navigate = useNavigate()
     const   {loginUser} = useContext(AuthContext)
     let     [userIsUnactive, setUserIsUnactive] = useState(false)
     let     [user, setUser] = useState(null)
@@ -38,17 +39,30 @@ export function Login() {
             // handle
         }
     })
-    if (userLogged){
-        return <Navigate to="/home/"/>
-    }
-    if (userIsUnactive){
-        const props = {
-            'userId' : user.id,
-            'username' : user.username,
-            'userEmail' : user.email
+
+    useEffect(()=>{
+        // Se ejecutara cuando se finalice el proceso de logeo
+        if (userLogged){
+            console.log('Redigiendo usuario al home')
+            navigate('/home/')
         }
-        return <Navigate to="/signup/activate" state={props}/>
-    } else if (userIsAuthenticated()){
+    }, [userLogged])
+
+    useEffect(()=>{
+        if (userIsUnactive){
+        // Se ejecutara si se detecta que el usuario existe pero esta inactivo
+            console.log('Redigiendo usuario para activacion')
+            const props = {
+                'userId' : user.id,
+                'username' : user.username,
+                'userEmail' : user.email
+            }
+            navigate('/signup/activate', {state: props})
+        }
+    }, [userIsUnactive])
+
+
+    if (userIsAuthenticated()){
         return <UserLogged/> 
     } else{
         return (
