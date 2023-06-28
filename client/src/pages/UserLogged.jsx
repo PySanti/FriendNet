@@ -5,7 +5,7 @@ export function UserLogged(props){
      */
     return (
         <>
-            <h1>Ya estas autenticado, vuelve al Home</h1>
+            <h1>Ya estas autenticado, ve al Home</h1>
             <button>
                 <a href="/home/">Volver</a>
             </button>

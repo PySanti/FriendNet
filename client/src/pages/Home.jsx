@@ -4,7 +4,9 @@ import { userIsAuthenticated } from "../tools/userIsAuthenticated"
 import { UserNotLogged } from "./UserNotLogged"
 export function Home() {
     const {user, logoutUser} = useContext(AuthContext)
-    if (userIsAuthenticated()){
+    if (!userIsAuthenticated()){
+        return <UserNotLogged/>
+    } else {
         return (
             <>
                 <h1>
@@ -13,8 +15,5 @@ export function Home() {
                 <button onClick={logoutUser}>Salir</button>
             </>
         )
-    } else {
-        return <UserNotLogged/>
     }
-
 }

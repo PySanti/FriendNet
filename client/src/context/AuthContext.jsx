@@ -27,8 +27,7 @@ export function AuthContextProvider({children}){
         if (response.status === 200){
             updateContextData(response.data)
         } else{
-            alert('Error creando usuario')
-            console.log(response)
+            console.error("Error inesperado logeando usuario")
         }
         return response
     }

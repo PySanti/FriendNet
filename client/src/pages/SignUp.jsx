@@ -66,14 +66,6 @@ export function SignUp() {
             setUnExpectedError("Error inesperado chequeando existencia de usuario en la base de datos!")
         }
     })
-    const validatePassword = (confirmPwd) =>{
-        /*
-            Valida que las claves ingresadas sean iguales
-        */
-        if (confirmPwd != watch("password")){
-            return "Las contrasenias no son iguales"
-        }
-    }
     useEffect(() => {
         if (userData){
             navigate('/signup/activate', {state: userData})
@@ -209,7 +201,11 @@ export function SignUp() {
                         id="confirmPwd" 
                         name="confirmPwd"
                         {...register("confirmPwd", {
-                            validate : validatePassword
+                            validate : (confirmPwd) =>{
+                                if (confirmPwd != watch("password")){
+                                    return "Las contrasenias no son iguales"
+                                }
+                            }
                         })}
                         />
                 </FormField>
