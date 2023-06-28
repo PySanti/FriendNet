@@ -53,7 +53,13 @@ export function SignUp() {
                 }
             } else {
                 setUserExists(true)
-            }
+                const [backToRoot, setBackToRoot] = useState(false)
+                const navigate = useNavigate()
+                useEffect(()=>{
+                    if(backToRoot){
+                        navigate('/')
+                    }
+                }, [backToRoot])    }
         } catch(error){
             setUnExpectedError("Error inesperado chequeando existencia de usuario en la base de datos!")
         }
