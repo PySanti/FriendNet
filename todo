@@ -18,6 +18,14 @@
 
 
 // Logica: 
+    // todo: modularizar todo lo que se pueda, reducir grandes pages en pequenios componentes
+    // todo : modularizar Profile.jsx y EditProfile.jsx (mucho codigo repitiente)
+    // todo : crear un userDataContext para Profile.jsx y EditProfile.jsx
+    // todo : agregar logica para carga de datos con spinner como en profile 
+    en todo lo que requiera renderizado de datos desde el backend
+    // todo : acomodar key props
+    // todo: modular mas los comps 
+    // todo: usar states y effects en lugar de <a>
     // todo : revisar quota de emailjs
     // todo : recordar modificacion de is_online al crear usuario
     // todo : agregar permission classes en el backedn
@@ -26,7 +34,7 @@
     // todo : agregar mas soporte para errores en todos lados 
     // todo : optimizar codigo usando gpt
     // todo: utilizar estrategias de cacheo para evitar llamadas inncesarias 
-    // todo: documentar codigo js
+    // todo: documentar componentes de react
     // todo: optimizar imagenes de cloudinary, y eliminar las que sean ejemplares 
     // todo : encriptar formularios de react
     // todo: depurar todo el codigo inutil del backend
