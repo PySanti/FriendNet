@@ -11,7 +11,8 @@ import "../styles/signup-styles.css"
 import {  useNavigate } from "react-router-dom";
 import { userIsAuthenticated } from "../tools/userIsAuthenticated";
 import { UserLogged } from "./UserLogged";
-import { UserDataForm } from "../components/UserDataForm";
+import { UserForm } from "../components/UserForm";
+import { UnExpectedError } from "../components/UnExpectedError";
 
 
 // constants
@@ -20,7 +21,6 @@ import { UserDataForm } from "../components/UserDataForm";
 export function SignUp() {
     let [userData, setUserData]                                 = useState(null);
     let [unExpectedError, setUnExpectedError]                   = useState(null)
-    let [userExists, setUserExists]                             = useState(false)
     const navigate                                              = useNavigate()
     const onSignUp = async (data) =>{
         try{
@@ -32,7 +32,8 @@ export function SignUp() {
                 delete data.photo
                 try {
                     // const uploadedImgData           = await postCloudinaryImgAPI(photo)
-                    data['photo_link']              = "(test)" // el serializer el backend recibe photo_link, no la foto en si
+                    // data['photo_link']              = uploadedImgData.data.url // el serializer el backend recibe photo_link, no la foto en si
+                    data['photo_link'] = "(test)"
                     try{
                         const createUserResponse        = await createUsuarioAPI(data)
                         setUserData({
@@ -52,18 +53,13 @@ export function SignUp() {
                     setUnExpectedError("Error inesperado subiendo imagen de usuario a la nube!")
                 }
             } else {
-                setUserExists(true)
-                const [backToRoot, setBackToRoot] = useState(false)
-                const navigate = useNavigate()
-                useEffect(()=>{
-                    if(backToRoot){
-                        navigate('/')
-                    }
-                }, [backToRoot])    }
+                setUnExpectedError("Ya existe un usuario con ese Nombre de usuario o Correo electronico!")
+            }
         } catch(error){
             setUnExpectedError("Error inesperado chequeando existencia de usuario en la base de datos!")
         }
-    }
+}
+
     useEffect(() => {
         if (userData){
             navigate('/signup/activate', {state: userData})
@@ -75,14 +71,9 @@ export function SignUp() {
     } else {
         return (
             <>
-                <Header/>
-                {unExpectedError && unExpectedError}
-                {userExists && "Ya existe un usuario con ese Nombre de usuario o Correo electrónico"}
-                <UserDataForm 
-                    onSubmitFunction={onSignUp} 
-                    method="POST" 
-                    updating={false} 
-                />
+                <Header msg="Regístrate de una vez!"/>
+                {unExpectedError && <UnExpectedError message={unExpectedError}/>}
+                <UserForm onSubmitFunction={onSignUp} updating={false} />
             </>
         )
     }

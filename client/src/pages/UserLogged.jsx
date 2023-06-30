@@ -9,7 +9,7 @@ export function UserLogged(props){
     const navigate = useNavigate()
     useEffect(()=>{
         if(backToRoot){
-            navigate('/')
+            navigate('/home/')
         }
     }, [backToRoot])
     return (

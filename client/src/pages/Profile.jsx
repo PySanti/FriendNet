@@ -5,7 +5,8 @@ import { UserNotLogged } from "./UserNotLogged";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { getUserDetailAPI } from "../api/getUserDetailApi.api";
-import { UserData } from "../components/UserData";
+import { FormatedUserData } from "../components/FormatedUserData";
+import { UnExpectedError } from "../components/UnExpectedError";
 
 
 export function Profile(){
@@ -49,26 +50,20 @@ export function Profile(){
         return ( 
             <>
                 <Header username={user.username} msg="Viendo perfil"/>
-                <button onClick={()=>setBackToHome(true)}>Volver</button>
-                <div className="un-expected-error-container">
-                    {unExpectedError && unExpectedError}
-                </div>
+                {unExpectedError && <UnExpectedError message={unExpectedError}/>}
                 <div className="user-data-container">
-                    <img href={userData.photo_link}/>
-                    {userData && <UserData userData={userData}/>}
+                    <img href={userData.photo_link} />
+                    <FormatedUserData userData={userData}/>
                 </div>
-                <button onClick={()=>setEditProfile(true)}>
-                    editar perfil
-                </button>
+                <button onClick={()=>setEditProfile(true)}>editar perfil</button>
+                <button onClick={()=>setBackToHome(true)}>Volver</button>
             </>
         )
     } else {
+        // incluir loader spiner
         return (
             <>
-                <Header username={user.username}/>
-                <h2>
-                    Cargando datos del usuario
-                </h2>
+                <Header username={user.username} msg="Cargando datos de usuario"/>
             </>
         )
     }

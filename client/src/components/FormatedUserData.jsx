@@ -1,4 +1,4 @@
-export function UserData(props){
+export function FormatedUserData(props){
     /**
      * Componente creado para ser usado en conjunto con api getUserDetail
      * Toma los elementos de props.userData y retorna una lista de 

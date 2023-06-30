@@ -11,11 +11,11 @@ import { generateActivationCode } from "../tools/generateActivationCode"
 import { userIsAuthenticated } from "../tools/userIsAuthenticated"
 import { UserLogged } from "./UserLogged"
 import { UserNotLogged } from "./UserNotLogged"
+import { UnExpectedError } from "../components/UnExpectedError"
 
 export function AccountActivation() {
     let [userActivated, setUserActivated]               = useState(false)
     let [realActivationCode, setRealActivationCode]     = useState(null)
-    let [failedErrorCode, setFailedErrorCode]           = useState(false)  
     let [unExpectedError, setUnExpectedError]           = useState(null)
     const props                                         = useLocation().state
     const navigate                                      = useNavigate()
@@ -40,7 +40,7 @@ export function AccountActivation() {
                 }
             }
         } else {
-            setFailedErrorCode(true)
+            setUnExpectedError("Codigo invalido!")
         }
     })
 
@@ -63,40 +63,14 @@ export function AccountActivation() {
     } else{
         return (
                 <>
-                    <Header/>
-                    <div>
-                        <h1>
-                            Activa tu cuenta antes de continuar !
-                        </h1>
-                        <form onSubmit={onSubmit}>
-                            {unExpectedError && unExpectedError}
-                            {failedErrorCode && "Error, codigo invalido!"}
-                            <FormField label="Codigo " errors={errors.activation_code && errors.activation_code.message}>
-                                <input 
-                                    type="text"
-                                    maxLength={6}
-                                    minLength={1}
-                                    name="activation_code"
-                                    id="activation_code"
-                                    {...register("activation_code", {
-                                        required : {
-                                            value : true,
-                                            message : "Por favor ingresa un código de activación"
-                                        },
-                                        pattern : {
-                                            value : /^-?\d+$/,
-                                            message : "Por favor, ingresa un codigo valido"
-                                        },
-                                        minLength : {
-                                            value : 6,
-                                            message : 'Debes ingresar al menos 6 caracteres',
-                                        }
-                                        })}
-                                />
-                            <button type="submit">enviar</button>
-                            </FormField>
-                        </form>
-                    </div>
+                    <Header msg="Activa tu cuenta antes de continuar"/>
+                    {unExpectedError && <UnExpectedError message={unExpectedError}/>}
+                    <form onSubmit={onSubmit}>
+                        <FormField label="Codigo " errors={errors.activation_code && errors.activation_code.message}>
+                            <input type="text"maxLength={6}minLength={1}name="activation_code"id="activation_code"{...register("activation_code", {    required : {        value : true,        message : "Por favor ingresa un código de activación"    },    pattern : {        value : /^-?\d+$/,        message : "Por favor, ingresa un codigo valido"    },    minLength : {        value : 6,        message : 'Debes ingresar al menos 6 caracteres',    }    })}/>
+                        </FormField>
+                        <button type="submit">enviar</button>
+                    </form>
                 </>
             )
     }

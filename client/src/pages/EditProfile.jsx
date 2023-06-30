@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { Header } from "../components/Header";
-import { UserDataForm } from "../components/UserDataForm";
+import { UserForm } from "../components/UserForm";
 import { userIsAuthenticated } from "../tools/userIsAuthenticated";
 import { UserNotLogged } from "./UserNotLogged";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getUserDetailAPI } from "../api/getUserDetailApi.api";
 import { AuthContext } from "../context/AuthContext";
+import { UnExpectedError } from "../components/UnExpectedError";
 
 export function EditProfile(){
     const props  = useLocation().state
@@ -27,6 +28,7 @@ export function EditProfile(){
         }
     }
     const onUpdate = (data)=>{
+        console.log('Actualizar')
     }
     useEffect(()=>{
         if(backToProfile){
@@ -43,24 +45,17 @@ export function EditProfile(){
     } else if (userData){
         return <>
             <Header username={userData.username}msg="Editando perfil"/>
-            <div className="un-expected-error-container">
-                {unExpectedError && unExpectedError}
-            </div>
+            {unExpectedError && <UnExpectedError/>}
             <div className="editing-container">
                 <img href={userData.photo_link}/>
-                <UserDataForm updating={true} method="PUT" onSubmitFunction={onUpdate} userData={userData}/> 
+                <UserForm updating={true}  onSubmitFunction={onUpdate} userData={userData}/> 
             </div>
-            <button onClick={()=>setBackToProfile(true)}>
-                Volver
-            </button>
+            <button onClick={()=>setBackToProfile(true)}>Volver</button>
         </>
     } else {
         return (
             <>
-                <Header username={user.username}/>
-                <h2>
-                    Cargando datos del usuario
-                </h2>
+                <Header username={user.username} msg="Cargando datos del usuario, por favor espere"/>
             </>
         )
     }

@@ -1,6 +1,5 @@
 // Pasos generales:
-    ~ Repasar parte de users handling al 100%
-    ~ Empezar con desarrollo de home
+    ~ Repasar y refactoizar codigo actual de Profile y EditProfile, ademas, tratat de modularizar codigo
 
 
 
@@ -18,6 +17,8 @@
 
 
 // Logica: 
+    // todo: agregar loader cuando se suban los datos en el SignUp.jsx
+    // todo: hacer un img preview
     // todo: modularizar todo lo que se pueda, reducir grandes pages en pequenios componentes
     // todo : modularizar Profile.jsx y EditProfile.jsx (mucho codigo repitiente)
     // todo : crear un userDataContext para Profile.jsx y EditProfile.jsx
@@ -25,7 +26,6 @@
     en todo lo que requiera renderizado de datos desde el backend
     // todo : acomodar key props
     // todo: modular mas los comps 
-    // todo: usar states y effects en lugar de <a>
     // todo : revisar quota de emailjs
     // todo : recordar modificacion de is_online al crear usuario
     // todo : agregar permission classes en el backedn

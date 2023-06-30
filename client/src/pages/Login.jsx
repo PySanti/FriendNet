@@ -1,24 +1,21 @@
-import { useForm } from "react-hook-form"
 import { Header } from "../components/Header"
-import { FormField } from "../components/FormField"
-import { BASE_USERNAME_MAX_LENGTH, BASE_USERNAME_CONSTRAINTS, BASE_PASSWORD_CONSTRAINTS } from "../main"
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../context/AuthContext"
 import { userIsAuthenticated } from "../tools/userIsAuthenticated"
 import { UserLogged } from "./UserLogged"
 import { getUserDetailAPI } from "../api/getUserDetailApi.api"
 import { useNavigate } from "react-router-dom"
+import { UnExpectedError } from "../components/UnExpectedError"
+import { UserForm } from "../components/UserForm"
 
 
 export function Login() {
-    const   {register, handleSubmit, formState : {errors}}  = useForm()
     const   navigate                                        = useNavigate()
     const   {loginUser}                                     = useContext(AuthContext)
     let     [user, setUser]                                 = useState(null)
     let     [userLogged, setUserLogged]                     = useState(false)
-    let     [userNotExists, setUserNotExists]               = useState(false)
     let     [unExpectedError, setUnExpectedError]           = useState(false)
-    const onSubmit = handleSubmit(async (data)=>{
+    const onLogin = async (data)=>{
         // en este punto ya se sabe que el usuario no esta autenticado
         try{
             let response = await getUserDetailAPI(data.username)
@@ -30,7 +27,7 @@ export function Login() {
                     setUserLogged(true)
                 } catch(error){
                     if (error.response.status === 401){
-                        setUserNotExists(true) // en este caso el problema seria el password, no el username
+                        setUnExpectedError("Usuario o contraseña inválidos !") // en este caso el problema seria el password, no el username
                     } else {
                         setUnExpectedError("Error inesperado logeando usuario!")
                     }
@@ -39,13 +36,12 @@ export function Login() {
         } catch(error){
             const errorMsg = error.response.data.error
             if (errorMsg ===  "user_not_exists"){
-                setUserNotExists(true)
+                setUnExpectedError("Usuario o contraseña inválidos !") // en este caso el problema seria el password, no el username
             } else {
                 setUnExpectedError("Error inesperado en repuesta de api userDetail!")
             }
         }
-    })
-
+    }
     useEffect(()=>{
         // Se ejecutara cuando se finalice el proceso de logeo
         if (userLogged){
@@ -72,29 +68,8 @@ export function Login() {
         return (
             <>
                 <Header/>
-                <form onSubmit={onSubmit}>
-                    {unExpectedError && unExpectedError}
-                    <FormField  label="Nombre de usuario" errors={errors.username && errors.username.message || userNotExists && "Usuario o contraseña inválidos !"}>
-                        <input 
-                            defaultValue="pysanti"
-                            type="text"
-                            name="username"
-                            id="username"
-                            maxLength={BASE_USERNAME_MAX_LENGTH}
-                            {...register("username", BASE_USERNAME_CONSTRAINTS)}
-                        />
-                    </FormField>
-                    <FormField  label="Contraseña" errors={errors.password && errors.password.message}>
-                        <input 
-                            defaultValue="16102005 python"
-                            type="password"
-                            name="password"
-                            id="password"
-                            {...register("password", BASE_PASSWORD_CONSTRAINTS)}
-                        />
-                    </FormField>
-                    <button type="submit">acceder</button>
-                </form>
+                {unExpectedError && <UnExpectedError message = {unExpectedError}/>}
+                <UserForm onSubmitFunction={onLogin}login={true}/>
             </>
         )
     }
