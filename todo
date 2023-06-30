@@ -17,6 +17,7 @@
 
 
 // Logica: 
+    // todo : agregar Header a UserLogged.jsx y asociar a una url con el AuthContext
     // todo: agregar loader cuando se suban los datos en el SignUp.jsx
     // todo: hacer un img preview
     // todo: modularizar todo lo que se pueda, reducir grandes pages en pequenios componentes

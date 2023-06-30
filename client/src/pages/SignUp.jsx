@@ -1,6 +1,6 @@
 // react modules
 import { Header }                   from "../components/Header";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 // api's
 import { createUsuarioAPI }         from "../api/createUsuario.api";
 import { postCloudinaryImgAPI }     from "../api/postCloudinaryImg.api";
@@ -8,22 +8,25 @@ import { checkExistingUserAPI } from "../api/checkExistingUser.api";
 
 // styles
 import "../styles/signup-styles.css"
-import {  useNavigate } from "react-router-dom";
+import {   useNavigate } from "react-router-dom";
 import { userIsAuthenticated } from "../tools/userIsAuthenticated";
 import { UserLogged } from "./UserLogged";
 import { UserForm } from "../components/UserForm";
 import { UnExpectedError } from "../components/UnExpectedError";
+import { Loading } from "../components/Loading";
+import { SubmitStateContext } from "../context/SubmitStateContext";
 
 
 // constants
 
 
 export function SignUp() {
+    let {loading, unExpectedError, handleUnExpectedError, startLoading} = useContext(SubmitStateContext)
     let [userData, setUserData]                                 = useState(null);
-    let [unExpectedError, setUnExpectedError]                   = useState(null)
     const navigate                                              = useNavigate()
     const onSignUp = async (data) =>{
         try{
+            startLoading()
             const checkUserResponse = await checkExistingUserAPI(data['username'], data['email'])
             const userAlreadyExists = checkUserResponse.data.existing === "true"
             if (!userAlreadyExists){
@@ -44,19 +47,19 @@ export function SignUp() {
                     } catch(error){
                         const errorMsg = error.response.data.error
                         if (errorMsg === "error_creating"){
-                            setUnExpectedError("Error inesperado creando usuario!")
+                            handleUnExpectedError("Error inesperado creando usuario!")
                         } else{
-                            setUnExpectedError("Error inesperado lanzado por serializador de api!")
+                            handleUnExpectedError("Error inesperado lanzado por serializador de api!")
                         }
                     }
                 } catch(error){
-                    setUnExpectedError("Error inesperado subiendo imagen de usuario a la nube!")
+                    handleUnExpectedError("Error inesperado subiendo imagen de usuario a la nube!")
                 }
             } else {
-                setUnExpectedError("Ya existe un usuario con ese Nombre de usuario o Correo electronico!")
+                handleUnExpectedError("Ya existe un usuario con ese Nombre de usuario o Correo electronico!")
             }
         } catch(error){
-            setUnExpectedError("Error inesperado chequeando existencia de usuario en la base de datos!")
+            handleUnExpectedError("Error inesperado chequeando existencia de usuario en la base de datos!")
         }
 }
 
@@ -73,6 +76,7 @@ export function SignUp() {
             <>
                 <Header msg="Regístrate de una vez!"/>
                 {unExpectedError && <UnExpectedError message={unExpectedError}/>}
+                {loading && <Loading/>}
                 <UserForm onSubmitFunction={onSignUp} updating={false} />
             </>
         )

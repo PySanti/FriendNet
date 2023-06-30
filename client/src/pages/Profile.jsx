@@ -7,15 +7,17 @@ import { AuthContext } from "../context/AuthContext";
 import { getUserDetailAPI } from "../api/getUserDetailApi.api";
 import { FormatedUserData } from "../components/FormatedUserData";
 import { UnExpectedError } from "../components/UnExpectedError";
+import { Loading } from "../components/Loading";
+import { SubmitStateContext } from "../context/SubmitStateContext";
 
 
 export function Profile(){
     let [backToHome, setBackToHome] = useState(false)
+    let {loading, unExpectedError, handleUnExpectedError, startLoading, setLoading} = useContext(SubmitStateContext)
     const props = useLocation().state
     const {user} = useContext(AuthContext)
     const navigate = useNavigate()
     const [userData, setUserData] = useState(null)
-    const [unExpectedError, setUnExpectedError] = useState(null)
     const [editProfile, setEditProfile] = useState(false)
     const loadUserData = async ()=>{
         if (!props){
@@ -23,7 +25,7 @@ export function Profile(){
                 const response = await getUserDetailAPI(user.username)
                 setUserData(await response.data)
             } catch(error){
-                setUnExpectedError("Error inesperado en repuesta de api userDetail!")
+                handleUnExpectedError("Error inesperado en repuesta de api userDetail!")
             }
         } else {
             setUserData(props.userData)
@@ -36,7 +38,9 @@ export function Profile(){
     }, [backToHome])
     useEffect(()=>{
         if (userIsAuthenticated()){
+            startLoading()
             loadUserData()
+            setLoading(false)
         }
     }, [])
     useEffect(()=>{
@@ -46,11 +50,12 @@ export function Profile(){
     }, [editProfile])
     if (!userIsAuthenticated()){
         return <UserNotLogged/>
-    } else if (userData){
+    } else{
         return ( 
             <>
                 <Header username={user.username} msg="Viendo perfil"/>
                 {unExpectedError && <UnExpectedError message={unExpectedError}/>}
+                {loading && <Loading/>}
                 <div className="user-data-container">
                     <img href={userData.photo_link} />
                     <FormatedUserData userData={userData}/>
@@ -59,12 +64,5 @@ export function Profile(){
                 <button onClick={()=>setBackToHome(true)}>Volver</button>
             </>
         )
-    } else {
-        // incluir loader spiner
-        return (
-            <>
-                <Header username={user.username} msg="Cargando datos de usuario"/>
-            </>
-        )
-    }
+    } 
 }

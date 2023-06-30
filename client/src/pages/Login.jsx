@@ -7,17 +7,20 @@ import { getUserDetailAPI } from "../api/getUserDetailApi.api"
 import { useNavigate } from "react-router-dom"
 import { UnExpectedError } from "../components/UnExpectedError"
 import { UserForm } from "../components/UserForm"
+import { Loading } from "../components/Loading"
+import { SubmitStateContext } from "../context/SubmitStateContext"
 
 
 export function Login() {
+    let {loading, unExpectedError, handleUnExpectedError, startLoading} = useContext(SubmitStateContext)
     const   navigate                                        = useNavigate()
     const   {loginUser}                                     = useContext(AuthContext)
     let     [user, setUser]                                 = useState(null)
     let     [userLogged, setUserLogged]                     = useState(false)
-    let     [unExpectedError, setUnExpectedError]           = useState(false)
     const onLogin = async (data)=>{
         // en este punto ya se sabe que el usuario no esta autenticado
         try{
+            startLoading(true)
             let response = await getUserDetailAPI(data.username)
             const user = response.data
             setUser(user)
@@ -27,18 +30,18 @@ export function Login() {
                     setUserLogged(true)
                 } catch(error){
                     if (error.response.status === 401){
-                        setUnExpectedError("Usuario o contraseña inválidos !") // en este caso el problema seria el password, no el username
+                        handleUnExpectedError("Usuario o contraseña inválidos !") // en este caso el problema seria el password, no el username
                     } else {
-                        setUnExpectedError("Error inesperado logeando usuario!")
+                        handleUnExpectedError("Error inesperado logeando usuario!")
                     }
                 }
             }
         } catch(error){
             const errorMsg = error.response.data.error
             if (errorMsg ===  "user_not_exists"){
-                setUnExpectedError("Usuario o contraseña inválidos !") // en este caso el problema seria el password, no el username
+                handleUnExpectedError("Usuario o contraseña inválidos !") // en este caso el problema seria el password, no el username
             } else {
-                setUnExpectedError("Error inesperado en repuesta de api userDetail!")
+                handleUnExpectedError("Error inesperado en repuesta de api userDetail!")
             }
         }
     }
@@ -69,6 +72,7 @@ export function Login() {
             <>
                 <Header/>
                 {unExpectedError && <UnExpectedError message = {unExpectedError}/>}
+                {loading && <Loading/>}
                 <UserForm onSubmitFunction={onLogin}login={true}/>
             </>
         )

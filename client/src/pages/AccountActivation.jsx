@@ -2,7 +2,7 @@
 import {  useLocation, useNavigate} from "react-router-dom"
 import { Header } from "../components/Header"
 import { useForm } from "react-hook-form"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 // api's
 import { activateUserAPI } from "../api/activateUser.api"
 import { FormField } from "../components/FormField"
@@ -12,11 +12,13 @@ import { userIsAuthenticated } from "../tools/userIsAuthenticated"
 import { UserLogged } from "./UserLogged"
 import { UserNotLogged } from "./UserNotLogged"
 import { UnExpectedError } from "../components/UnExpectedError"
+import { Loading } from "../components/Loading"
+import { SubmitStateContext } from "../context/SubmitStateContext"
 
 export function AccountActivation() {
+    let {loading, unExpectedError, handleUnExpectedError, startLoading} = useContext(SubmitStateContext)
     let [userActivated, setUserActivated]               = useState(false)
     let [realActivationCode, setRealActivationCode]     = useState(null)
-    let [unExpectedError, setUnExpectedError]           = useState(null)
     const props                                         = useLocation().state
     const navigate                                      = useNavigate()
 
@@ -28,19 +30,20 @@ export function AccountActivation() {
     const {register, handleSubmit, formState:{errors}}  = useForm()
     const onSubmit = handleSubmit(async (data)=>{
         if (Number(data.activation_code) === Number(realActivationCode)){
+            startLoading(true)
             try {
                 const response = await activateUserAPI(props.userId)
                 setUserActivated(true)
             } catch(error){
                 const errorMsg = error.response.data.error
                 if (errorMsg === "serializer_error"){
-                    setUnExpectedError("Error en el serializador de la api!")
+                    handleUnExpectedError("Error en el serializador de la api!")
                 } else {
-                    setUnExpectedError("Error inesperado en el servidor al activar usuario!")
+                    handleUnExpectedError("Error inesperado en el servidor al activar usuario!")
                 }
             }
         } else {
-            setUnExpectedError("Codigo invalido!")
+            handleUnExpectedError("Codigo invalido!")
         }
     })
 
@@ -65,6 +68,7 @@ export function AccountActivation() {
                 <>
                     <Header msg="Activa tu cuenta antes de continuar"/>
                     {unExpectedError && <UnExpectedError message={unExpectedError}/>}
+                    {loading && <Loading/>}
                     <form onSubmit={onSubmit}>
                         <FormField label="Codigo " errors={errors.activation_code && errors.activation_code.message}>
                             <input type="text"maxLength={6}minLength={1}name="activation_code"id="activation_code"{...register("activation_code", {    required : {        value : true,        message : "Por favor ingresa un código de activación"    },    pattern : {        value : /^-?\d+$/,        message : "Por favor, ingresa un codigo valido"    },    minLength : {        value : 6,        message : 'Debes ingresar al menos 6 caracteres',    }    })}/>
