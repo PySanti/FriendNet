@@ -49,13 +49,15 @@ export function EditProfile(){
         return <UserNotLogged/>
     } else{
         return <>
-            <Header username={userData.username}msg="Editando perfil"/>
+            <Header username={user.username}msg="Editando perfil"/>
             {unExpectedError && <UnExpectedError/>}
             {loading && <Loading/>}
-            <div className="editing-container">
-                <img href={userData.photo_link}/>
-                <UserForm updating={true}  onSubmitFunction={onUpdate} userData={userData}/> 
-            </div>
+            {userData && (
+                <div className="editing-container">
+                    <img href={userData.photo_link}/>
+                    <UserForm updating={true}  onSubmitFunction={onUpdate} userData={userData}/> 
+                </div>
+            )}
             <button onClick={()=>setBackToProfile(true)}>Volver</button>
         </>
     }

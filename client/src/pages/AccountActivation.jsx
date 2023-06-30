@@ -32,7 +32,7 @@ export function AccountActivation() {
         if (Number(data.activation_code) === Number(realActivationCode)){
             startLoading(true)
             try {
-                const response = await activateUserAPI(props.userId)
+                await activateUserAPI(props.userId)
                 setUserActivated(true)
             } catch(error){
                 const errorMsg = error.response.data.error

@@ -1,7 +1,13 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useEffect, useState } from "react";
 export const SubmitStateContext = createContext()
 
 export function SubmitStateContextProvider({children}){
+    /**
+     * Context creado para estandarizar el manejo de estados
+     * en componentes que hagan solicitudes a api. Existiran
+     * dos states: loading y unExpectedError. Ambos no pueden
+     * ser true al mismo tiempo.
+     */
     let [unExpectedError, setUnExpectedError]           = useState(null)
     let [loading, setLoading]                           = useState(false)
     const handleUnExpectedError = (error)=>{
@@ -20,6 +26,12 @@ export function SubmitStateContextProvider({children}){
         setLoading : setLoading,
         setUnExpectedError: setUnExpectedError
     }
+    useEffect(() => {
+        // anulara los states cada vez que se use el context
+        setLoading(false)
+        setLoading(null)
+    }, [])
+    
     return (
         <SubmitStateContext.Provider value={context}>
             {children}

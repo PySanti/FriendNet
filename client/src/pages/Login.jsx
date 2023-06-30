@@ -12,11 +12,11 @@ import { SubmitStateContext } from "../context/SubmitStateContext"
 
 
 export function Login() {
-    let {loading, unExpectedError, handleUnExpectedError, startLoading} = useContext(SubmitStateContext)
-    const   navigate                                        = useNavigate()
-    const   {loginUser}                                     = useContext(AuthContext)
-    let     [user, setUser]                                 = useState(null)
-    let     [userLogged, setUserLogged]                     = useState(false)
+    let     {loading, unExpectedError, handleUnExpectedError, startLoading} = useContext(SubmitStateContext)
+    const   navigate                                                        = useNavigate()
+    const   {loginUser}                                                     = useContext(AuthContext)
+    let     [user, setUser]                                                 = useState(null)
+    let     [userLogged, setUserLogged]                                     = useState(false)
     const onLogin = async (data)=>{
         // en este punto ya se sabe que el usuario no esta autenticado
         try{

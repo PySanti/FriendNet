@@ -56,10 +56,12 @@ export function Profile(){
                 <Header username={user.username} msg="Viendo perfil"/>
                 {unExpectedError && <UnExpectedError message={unExpectedError}/>}
                 {loading && <Loading/>}
-                <div className="user-data-container">
-                    <img href={userData.photo_link} />
-                    <FormatedUserData userData={userData}/>
-                </div>
+                {userData && (
+                    <div className="user-data-container">
+                        <img href={userData.photo_link} />
+                        <FormatedUserData userData={userData}/>
+                    </div>
+                )}
                 <button onClick={()=>setEditProfile(true)}>editar perfil</button>
                 <button onClick={()=>setBackToHome(true)}>Volver</button>
             </>
