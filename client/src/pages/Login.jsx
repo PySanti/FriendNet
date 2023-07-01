@@ -12,7 +12,7 @@ import { SubmitStateContext } from "../context/SubmitStateContext"
 
 
 export function Login() {
-    let     {loading, unExpectedError, handleUnExpectedError, startLoading} = useContext(SubmitStateContext)
+    let     {loading, unExpectedError, handleUnExpectedError, startLoading, nullSubmitStates} = useContext(SubmitStateContext)
     const   navigate                                                        = useNavigate()
     const   {loginUser}                                                     = useContext(AuthContext)
     let     [user, setUser]                                                 = useState(null)
@@ -45,6 +45,9 @@ export function Login() {
             }
         }
     }
+    useEffect(()=>{
+        nullSubmitStates()
+    }, [])
     useEffect(()=>{
         // Se ejecutara cuando se finalice el proceso de logeo
         if (userLogged){

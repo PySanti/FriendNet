@@ -16,7 +16,7 @@ import { Loading } from "../components/Loading"
 import { SubmitStateContext } from "../context/SubmitStateContext"
 
 export function AccountActivation() {
-    let {loading, unExpectedError, handleUnExpectedError, startLoading} = useContext(SubmitStateContext)
+    let {loading, unExpectedError, handleUnExpectedError, startLoading, nullSubmitStates} = useContext(SubmitStateContext)
     let [userActivated, setUserActivated]               = useState(false)
     let [realActivationCode, setRealActivationCode]     = useState(null)
     const props                                         = useLocation().state
@@ -48,6 +48,7 @@ export function AccountActivation() {
     })
 
     useEffect(()=>{
+        nullSubmitStates()
         // se enviara el correo de activacion la primera vez que se monte el componente
         const activation_code = generateActivationCode()
         sendMail(activation_code)

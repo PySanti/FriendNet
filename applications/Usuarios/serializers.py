@@ -26,3 +26,16 @@ class GetUserDetailSerializer(serializers.Serializer):
 class CheckExistingUserSerializer(GetUserDetailSerializer):
     email = serializers.EmailField()
 
+
+class UpdateUsuariosSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Usuarios
+        fields = [
+            "username", 
+            "email", 
+            "first_names", 
+            "last_names", 
+            "age", 
+            "photo_link", 
+            ]
+

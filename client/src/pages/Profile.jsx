@@ -13,7 +13,7 @@ import { SubmitStateContext } from "../context/SubmitStateContext";
 
 export function Profile(){
     let [backToHome, setBackToHome] = useState(false)
-    let {loading, unExpectedError, handleUnExpectedError, startLoading, setLoading} = useContext(SubmitStateContext)
+    let {loading, unExpectedError, handleUnExpectedError, startLoading, setLoading, nullSubmitStates} = useContext(SubmitStateContext)
     const props = useLocation().state
     const {user} = useContext(AuthContext)
     const navigate = useNavigate()
@@ -37,6 +37,7 @@ export function Profile(){
         }
     }, [backToHome])
     useEffect(()=>{
+        nullSubmitStates()
         if (userIsAuthenticated()){
             startLoading()
             loadUserData()

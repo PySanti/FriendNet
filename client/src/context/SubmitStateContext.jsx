@@ -18,20 +18,23 @@ export function SubmitStateContextProvider({children}){
         setLoading(true)
         setUnExpectedError(false)
     }
+    const nullSubmitStates = ()=>{
+        /**
+         * Anulara los estados para evitar que se encadenen
+         * entre llamadas al contexto
+         */
+        setLoading(false)
+        setUnExpectedError(null)
+    }
     const context = {
         startLoading : startLoading,
         handleUnExpectedError : handleUnExpectedError,
         loading : loading,
         unExpectedError : unExpectedError,
         setLoading : setLoading,
-        setUnExpectedError: setUnExpectedError
+        setUnExpectedError: setUnExpectedError,
+        nullSubmitStates : nullSubmitStates
     }
-    useEffect(() => {
-        // anulara los states cada vez que se use el context
-        setLoading(false)
-        setLoading(null)
-    }, [])
-    
     return (
         <SubmitStateContext.Provider value={context}>
             {children}

@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form"
 import { BASE_FIRSTNAMES_MAX_LENGTH, BASE_LASTNAMES_MAX_LENGTH, BASE_PASSWORD_CONSTRAINTS, BASE_USERNAME_CONSTRAINTS, BASE_USERNAME_MAX_LENGTH } from "../main"
 import { FormField } from "./FormField"
+import { useState } from "react"
 
 export function UserForm(props){
     /**
@@ -43,7 +44,7 @@ export function UserForm(props){
                         <input defaultValue={props.userData && props.userData.age}type="number" id="age" name="age"{...register("age", {    required:{        value : true,        message : "Por favor, ingresa tu edad."    },    max : {        value : 120,        message : "Por favor, ingresa una edad valida"    },    min : {        value : 5,        message : "Debes tener al menos 5 años"    },    pattern : {        value : /^-?\d+$/,        message : "Por favor, ingresa una edad valida"    }})}/>
                     </FormField>
                     <FormField label="Foto de perfil" errors={errors.photo  && errors.photo.message}>
-                        <input  type="file"id="photo" name="photo"{...register("photo", {    required:{        value : !props.updating && true,        message : "Por favor, selecciona tu foto"    }})}/>
+                        <input type="file"id="photo" name="photo"{...register("photo", {    required:{        value : !props.updating && true,        message : "Por favor, selecciona tu foto"    }}) } onChange={props.onPhotoChange && props.onPhotoChange} />
                     </FormField>
                     {!props.updating && 
                         <>

@@ -21,7 +21,7 @@ import { SubmitStateContext } from "../context/SubmitStateContext";
 
 
 export function SignUp() {
-    let {loading, unExpectedError, handleUnExpectedError, startLoading} = useContext(SubmitStateContext)
+    let {loading, unExpectedError, handleUnExpectedError, startLoading, nullSubmitStates} = useContext(SubmitStateContext)
     let [userData, setUserData]                                 = useState(null);
     const navigate                                              = useNavigate()
     const onSignUp = async (data) =>{
@@ -62,7 +62,9 @@ export function SignUp() {
             handleUnExpectedError("Error inesperado chequeando existencia de usuario en la base de datos!")
         }
 }
-
+    useEffect(()=>{
+        nullSubmitStates()
+    }, [])
     useEffect(() => {
         if (userData){
             navigate('/signup/activate', {state: userData})
