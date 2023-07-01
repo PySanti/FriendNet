@@ -7,6 +7,7 @@ import { AccountActivation } from "./pages/AccountActivation.jsx"
 import { AuthContextProvider } from "./context/AuthContext.jsx"
 import { Profile } from "./pages/Profile.jsx"
 import { SubmitStateContextProvider } from "./context/SubmitStateContext.jsx"
+import { ChangePwd } from "./pages/ChangePwd.jsx"
 
 function App() {
   return (
@@ -63,6 +64,16 @@ function App() {
             <SubmitStateContextProvider>
               <AuthContextProvider> 
                 <Profile updating={true}/> 
+              </AuthContextProvider>
+            </SubmitStateContextProvider>
+          }/>
+        <Route 
+          exact 
+          path='/home/profile/change_pwd'  
+          element={
+            <SubmitStateContextProvider>
+              <AuthContextProvider> 
+                <ChangePwd/> 
               </AuthContextProvider>
             </SubmitStateContextProvider>
           }/>

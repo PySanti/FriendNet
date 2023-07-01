@@ -10,12 +10,17 @@ from .utils import (
     BASE_SERIALIZER_ERROR_RESPONSE
 )
 
+from django.contrib.auth.hashers import (
+    check_password
+)
+
 from .serializers import (
     CreateUsuariosSerializer,
     CheckExistingUserSerializer,
     ActivateUserSerializer,
     GetUserDetailSerializer,
-    UpdateUsuariosSerializer
+    UpdateUsuariosSerializer,
+    ChangeUserPwdSerializer
 )
 from rest_framework.response import Response
 from .models import Usuarios
@@ -82,6 +87,22 @@ class ActivateUserAPI(APIView):
             return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status.HTTP_400_BAD_REQUEST)
 
 
-class UpdateUserData(UpdateAPIView):
+class UpdateUserDataAPI(UpdateAPIView):
     serializer_class = UpdateUsuariosSerializer
     queryset = Usuarios.objects.all()
+
+class ChangeUserPwdAPI(APIView):
+    serializer_class = ChangeUserPwdSerializer
+    def post(self, request, *args, **kwargs):
+        serialized_data = self.serializer_class(data=request.data)
+        if serialized_data.is_valid():
+            user = Usuarios.objects.get(username=request.data['username'])
+            if check_password(request.data['old_password'], user.password):
+                user.set_password(request.data['new_password'])
+                user.save()
+                return Response({'success' : 'pwd_setted'}, status.HTTP_200_OK)
+            else:
+                return Response({'error' : 'invalid_pwd'}, status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status.HTTP_400_BAD_REQUEST)
+

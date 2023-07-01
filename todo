@@ -17,6 +17,9 @@
 
 
 // Logica: 
+    // todo : agregar buttons para limpiar form
+    // todo : cambiar change por set
+    // todo: agregar validacion al activar usuario en login para contrasenia
     // todo: destructurar props en todas partes
     // todo : agregar success state en el edit
     // todo: eliminar imagen antigua de usuario en cloudinary al actualizar perfil

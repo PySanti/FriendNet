@@ -27,6 +27,7 @@ export function Profile({updating}){
     let     [editProfile, setEditProfile]                       = useState(false)
     let     [photoChanged, setPhotoChanged]                     = useState(false)
     let     [backToProfile, setBackToProfile]                   = useState(false)
+    let     [changePwd, setChangePwd]                           = useState(false)
     let     {
         loadingState, 
         unExpectedError, 
@@ -82,6 +83,11 @@ export function Profile({updating}){
         }
     }, [])
     useEffect(()=>{
+        if(changePwd){
+            navigate('/home/profile/change_pwd')
+        }
+    }, [changePwd])
+    useEffect(()=>{
         if (backToHome){
             navigate('/home/')
             setBackToHome(false)
@@ -134,6 +140,7 @@ export function Profile({updating}){
                     <>
                         <button onClick={()=>setEditProfile(true)}>editar perfil</button>
                         <button onClick={()=>setBackToHome(true)}>Volver</button>
+                        <button onClick={()=>setChangePwd(true)}>modificar contraseña</button>
                     </>
                 )}
                 {updating &&(
