@@ -13,6 +13,7 @@ import {updateUserDataAPI} from "../api/updateUserData.api"
 import { SuccessUpdating } from "../components/SuccesUpdating";
 import { saveCloudinary } from "../tools/saveCloudinary";
 import { getUserDetailAPI } from "../api/getUserDetailApi.api";
+import {_}  from "lodash"
 
 
 export function Profile({updating}){
@@ -30,17 +31,38 @@ export function Profile({updating}){
     const loadProfileData = async (username,  unExpectedErrorHandler)=>{
         if (!profileData){
             try{
-                console.log('Cargando datos del usuario')
                 const response = await getUserDetailAPI(username)
-                setProfileData(await response.data)
-                console.log('Llamando a api para carga de datos de perfil en context')
+                setProfileData(response.data)
             } catch(error){
                 unExpectedErrorHandler("Error inesperado en repuesta de api userDetail!")
             }
         }
     }
+    const onUpdate = async (data)=>{
+        startLoading(true)
+        try{
+            const photo = data['photo']
+            delete data['photo']
+            data['photo_link'] = photoChanged ? await saveCloudinary(photo) : profileData.photo_link
+            setPhotoChanged(false)
+            const sendingData = data
+            // se prepara al data para la comparativa
+            data.id = profileData.id
+            data.is_active = profileData.is_active
+            data.age = Number(data.age)
+            if (!_.isEqual(profileData, data)){ // lodash
+                await updateUserDataAPI(sendingData, profileData.id)
+                setProfileData(data)
+                setUserUpdatedSuccesfully(true)
+            } else {
+                handleUnExpectedError("Sin cambios")
+            }
+        } catch(error){
+            console.log(error)
+            handleUnExpectedError("Error inesperado al actualizar datos del usuario!")
+        }
+    }
     useEffect(()=>{
-        console.log('Montando')
         nullSubmitStates()
         if (userIsAuthenticated()){
             startLoading(true)
@@ -76,30 +98,7 @@ export function Profile({updating}){
             console.log('La foto cambio')
         }
     }, [photoChanged])
-    const onUpdate = async (data)=>{
-        startLoading(true)
-        try{
-            // borrar profile context
-            const photo = data['photo']
-            delete data['photo']
-            data['photo_link'] = photoChanged ? saveCloudinary(photo) : profileData.photo_link
-            const sendingData = data
-            data.id = profileData.id
-            data.is_active = profileData.is_active
-            if (JSON.stringify(profileData) !== JSON.stringify(data)){ // lodash
-                await updateUserDataAPI(sendingData, profileData.id)
-                setProfileData(data)
-                setUserUpdatedSuccesfully(true)
-            } else {
-                handleUnExpectedError("Sin cambios")
-            }
-        } catch(error){
-            console.log(error)
-            handleUnExpectedError("Error inesperado al actualizar datos del usuario!")
-        }
-    }
-    // eliminar ProfileContext
-    // agregar mensaje de success
+
     // modularizar maas
 
 
@@ -108,10 +107,10 @@ export function Profile({updating}){
     } else{
         return (<>
                 <Header username={user.username} msg={headerMsg}/>
-                {unExpectedError && <UnExpectedError message={unExpectedError}/>}
-                {loading && <Loading/>}
+                {unExpectedError        && <UnExpectedError message={unExpectedError}/>}
+                {loading                && <Loading/>}
                 {userUpdatedSuccesfully && <SuccessUpdating/>}
-                {profileData && (
+                {profileData            && (
                     <div className="editing-container">
                         <img href={profileData.photo_link}/>
                         {updating && <UserForm updating={true}  onSubmitFunction={onUpdate} userData={profileData} onPhotoChange={()=>setPhotoChanged(true)}/> }
