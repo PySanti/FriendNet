@@ -12,11 +12,14 @@ import { userIsAuthenticated } from "../tools/userIsAuthenticated"
 import { UserLogged } from "./UserLogged"
 import { UserNotLogged } from "./UserNotLogged"
 import { UnExpectedError } from "../components/UnExpectedError"
-import { Loading } from "../components/Loading"
+import { Loader } from "../components/Loader"
 import { SubmitStateContext } from "../context/SubmitStateContext"
 
+/**
+ * Pagina creada para llevar activacion de cuenta
+ */
 export function AccountActivation() {
-    let {loading, unExpectedError, handleUnExpectedError, startLoading, nullSubmitStates} = useContext(SubmitStateContext)
+    let {loadingState, unExpectedError, handleUnExpectedError, startLoading, nullSubmitStates, successfullyLoaded} = useContext(SubmitStateContext)
     let [userActivated, setUserActivated]               = useState(false)
     let [realActivationCode, setRealActivationCode]     = useState(null)
     const props                                         = useLocation().state
@@ -34,6 +37,7 @@ export function AccountActivation() {
             try {
                 await activateUserAPI(props.userId)
                 setUserActivated(true)
+                successfullyLoaded()
             } catch(error){
                 const errorMsg = error.response.data.error
                 if (errorMsg === "serializer_error"){
@@ -68,8 +72,8 @@ export function AccountActivation() {
         return (
                 <>
                     <Header msg="Activa tu cuenta antes de continuar"/>
-                    {unExpectedError && <UnExpectedError message={unExpectedError}/>}
-                    {loading && <Loading/>}
+                    {unExpectedError && <UnExpectedError msg={unExpectedError}/>}
+                    {loadingState && <Loader msg={loadingState}/>}
                     <form onSubmit={onSubmit}>
                         <FormField label="Codigo " errors={errors.activation_code && errors.activation_code.message}>
                             <input type="text"maxLength={6}minLength={1}name="activation_code"id="activation_code"{...register("activation_code", {    required : {        value : true,        message : "Por favor ingresa un código de activación"    },    pattern : {        value : /^-?\d+$/,        message : "Por favor, ingresa un codigo valido"    },    minLength : {        value : 6,        message : 'Debes ingresar al menos 6 caracteres',    }    })}/>

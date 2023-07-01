@@ -1,16 +1,19 @@
 import { InputError } from "./InputError";
 import { Label } from "./Label";
+import { ReactElement } from "react";
 
-export function FormField(props){
+/**
+ * Componente creado para simplficar codigo de campos de Input
+ * @param {String} errors errores producidos por hook de manejo de errores de formulario
+ * @param {String} label etiqueta de input
+ * @param {ReactElement} children input perse
+ */
+export function FormField({errors, label, children}){
     return (
-        <>
-            <InputError message={props.errors}/>
-            <div className="form-field">
-                <Label>
-                    {props.label}
-                </Label>
-                {props.children}
-            </div>
-        </>
+        <div className="form-field-container">
+            <InputError msg={errors}/>
+            <Label msg={label}/>
+            {children}
+        </div>
     )
 }

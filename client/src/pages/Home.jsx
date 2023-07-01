@@ -4,13 +4,13 @@ import { userIsAuthenticated } from "../tools/userIsAuthenticated"
 import { UserNotLogged } from "./UserNotLogged"
 import { Header } from "../components/Header"
 import { useNavigate } from "react-router-dom"
+/**
+ * Pagina principal del sitio
+ */
 export function Home() {
     const {user, logoutUser} = useContext(AuthContext)
     const navigate = useNavigate()
     let [goToProfile, setGoToProfile] = useState(false)
-    const onProfile = (e)=>{
-        setGoToProfile(true)
-    }
     useEffect(()=>{
         if(goToProfile){
             navigate("/home/profile/")
@@ -23,7 +23,7 @@ export function Home() {
             <>
                 <Header username={user.username}/>
                 <button onClick={logoutUser}>Salir</button>
-                <button onClick={onProfile}>Perfil</button>
+                <button onClick={()=>{setGoToProfile(true)}}>Perfil</button>
             </>
         )
     }

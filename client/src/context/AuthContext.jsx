@@ -7,6 +7,10 @@ import { userIsAuthenticated } from "../tools/userIsAuthenticated";
 
 export const AuthContext = createContext()
 
+/**
+ * Context creado para contener datos del usuario logeado (id y username)
+ * Ademas para contener el token de autenticacion, token de refresco y metodo para refrescar tokens
+ */
 export function AuthContextProvider({children}){
     const userStorageData = localStorage.getItem('authToken')
     // se comprueba que las credenciales del usuario no esten ya en el localStorage para
@@ -26,8 +30,6 @@ export function AuthContextProvider({children}){
         const response = await loginUserAPI(formData.username, formData.password)
         if (response.status === 200){
             updateContextData(response.data)
-        } else{
-            console.error("Error inesperado logeando usuario")
         }
         return response
     }
@@ -42,7 +44,7 @@ export function AuthContextProvider({children}){
                 updateContextData(response.data)
             }
         } catch(error) {
-            // handle
+            console.error('Error inesperado al refrescar tokens')
         }
     }
     useEffect(() => {

@@ -3,7 +3,9 @@ import {Header} from "../components/Header.jsx"
 import { userIsAuthenticated } from "../tools/userIsAuthenticated.js"
 import { UserLogged } from "./UserLogged.jsx"
 import { useNavigate } from "react-router-dom"
-
+/**
+ * Pagina de inicio
+ */
 export function Root() {
     const [goToLogin, setGotToLogin] = useState(false)
     const [goToSignUp, setGoToSignUp] = useState(false)

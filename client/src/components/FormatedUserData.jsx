@@ -1,26 +1,27 @@
-export function FormatedUserData(props){
-    /**
-     * Componente creado para ser usado en conjunto con api getUserDetail
-     * Toma los elementos de props.userData y retorna una lista de 
-     * <p>'s con los atributos formateados
-     */
-    const NON_SHOWABLE_ATTRS = ["photo_link", "is_active", "id"]
-    const userData = props.userData
-    return Object.keys(userData).map((key)=>{
-        if (!(NON_SHOWABLE_ATTRS.includes(key))){
-            let showKey = null
-            if (key === "username"){
-                showKey = "Nombre de usuario"
-            } else if (key === "first_names"){
-                showKey = "Primeros nombres"
-            } else if (key === "last_names"){
-                showKey = "Apellidos"
-            } else if (key === "age"){
-                showKey = "Edad"
-            } else if (key === "email"){
-                showKey = "Correo electronico"
+
+
+/**
+ * Componente creado para ser usado en conjunto con api getUserDetail
+ * Toma los elementos de props.userData y retorna una lista de 
+ * <p>'s con los atributos formateados
+ * @param {Object} userData datos de usuario a formatear
+ * @param {Array} non_showable_attrs lista de atributos de objeto que no se formatearan
+ * @param {Object} attrs_traductions objeto con atributo actual(clave) : traduccion (valor)
+ */
+
+import { UserDataItem } from "./UserDataItem"
+
+export function FormatedUserData({userData, non_showable_attrs, attrs_traductions}){
+    const formatingFunction = (key)=>{
+        if (!(non_showable_attrs.includes(key))){
+            let showKey = key
+            if (Object.keys(attrs_traductions).includes(key)){
+                showKey = attrs_traductions[key]
             }
-            return <p key={key}>{showKey} : {userData[key]}</p>
+            return <UserDataItem key={key} attr={showKey} value={userData[key]}/>
         }
-    })
+    }
+    const compList = Object.keys(userData).map(formatingFunction)
+    return compList
 }
+

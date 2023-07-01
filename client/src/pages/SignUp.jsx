@@ -12,7 +12,7 @@ import { userIsAuthenticated } from "../tools/userIsAuthenticated";
 import { UserLogged } from "./UserLogged";
 import { UserForm } from "../components/UserForm";
 import { UnExpectedError } from "../components/UnExpectedError";
-import { Loading } from "../components/Loading";
+import { Loader } from "../components/Loader";
 import { SubmitStateContext } from "../context/SubmitStateContext";
 import { saveCloudinary } from "../tools/saveCloudinary";
 
@@ -20,8 +20,11 @@ import { saveCloudinary } from "../tools/saveCloudinary";
 // constants
 
 
+/**
+ * Pagina creada para llevar registro de usuario
+ */
 export function SignUp() {
-    let {loading, unExpectedError, handleUnExpectedError, startLoading, nullSubmitStates} = useContext(SubmitStateContext)
+    let {loadingState, unExpectedError, successfullyLoaded, handleUnExpectedError, startLoading, nullSubmitStates} = useContext(SubmitStateContext)
     let [userData, setUserData]                                 = useState(null);
     const navigate                                              = useNavigate()
     const onSignUp = async (data) =>{
@@ -43,6 +46,7 @@ export function SignUp() {
                             'username' : data.username,
                             'userEmail' : data.email,
                         })
+                        successfullyLoaded()
                     } catch(error){
                         const errorMsg = error.response.data.error
                         if (errorMsg === "error_creating"){
@@ -76,8 +80,8 @@ export function SignUp() {
         return (
             <>
                 <Header msg="Regístrate de una vez!"/>
-                {unExpectedError && <UnExpectedError message={unExpectedError}/>}
-                {loading && <Loading/>}
+                {unExpectedError && <UnExpectedError msg={unExpectedError}/>}
+                {loadingState && <Loader state={loadingState}/>}
                 <UserForm onSubmitFunction={onSignUp} updating={false} />
             </>
         )

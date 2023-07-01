@@ -6,16 +6,20 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { FormatedUserData } from "../components/FormatedUserData";
 import { UnExpectedError } from "../components/UnExpectedError";
-import { Loading } from "../components/Loading";
+import { Loader } from "../components/Loader";
 import { SubmitStateContext } from "../context/SubmitStateContext";
 import { UserForm } from "../components/UserForm";
 import {updateUserDataAPI} from "../api/updateUserData.api"
-import { SuccessUpdating } from "../components/SuccesUpdating";
 import { saveCloudinary } from "../tools/saveCloudinary";
 import { getUserDetailAPI } from "../api/getUserDetailApi.api";
 import {_}  from "lodash"
+import { UserPhoto } from "../components/UserPhoto";
 
 
+/**
+ * Pagina creada para llevar perfil de usuario, tanto para
+ * actualizacion como visualizacion
+ */
 export function Profile({updating}){
     // states
     let [profileData, setProfileData ] = useState(null)
@@ -23,8 +27,14 @@ export function Profile({updating}){
     let     [editProfile, setEditProfile]                       = useState(false)
     let     [photoChanged, setPhotoChanged]                     = useState(false)
     let     [backToProfile, setBackToProfile]                   = useState(false)
-    let     [userUpdatedSuccesfully, setUserUpdatedSuccesfully] = useState(false)
-    let     {loading, unExpectedError, handleUnExpectedError, startLoading, setLoading, nullSubmitStates} = useContext(SubmitStateContext)
+    let     {
+        loadingState, 
+        unExpectedError, 
+        handleUnExpectedError, 
+        startLoading, 
+        setLoadingState, 
+        nullSubmitStates,
+        successfullyLoaded} = useContext(SubmitStateContext)
     const   {user} = useContext(AuthContext)
     const   navigate = useNavigate()
     const   headerMsg = updating? "Editando perfil" : "Viendo perfil"
@@ -39,10 +49,11 @@ export function Profile({updating}){
         }
     }
     const onUpdate = async (data)=>{
-        startLoading(true)
+        startLoading()
         try{
             const photo = data['photo']
             delete data['photo']
+            console.log(profileData)
             data['photo_link'] = photoChanged ? await saveCloudinary(photo) : profileData.photo_link
             setPhotoChanged(false)
             const sendingData = data
@@ -53,7 +64,7 @@ export function Profile({updating}){
             if (!_.isEqual(profileData, data)){ // lodash
                 await updateUserDataAPI(sendingData, profileData.id)
                 setProfileData(data)
-                setUserUpdatedSuccesfully(true)
+                successfullyLoaded()
             } else {
                 handleUnExpectedError("Sin cambios")
             }
@@ -65,16 +76,11 @@ export function Profile({updating}){
     useEffect(()=>{
         nullSubmitStates()
         if (userIsAuthenticated()){
-            startLoading(true)
+            startLoading()
             loadProfileData(user.username, handleUnExpectedError)
-            setLoading(false)
+            setLoadingState(false)
         }
     }, [])
-    useEffect(()=>{
-        if(userUpdatedSuccesfully){
-            setLoading(false)
-        }
-    }, [userUpdatedSuccesfully])
     useEffect(()=>{
         if (backToHome){
             navigate('/home/')
@@ -83,22 +89,18 @@ export function Profile({updating}){
     }, [backToHome])
     useEffect(()=>{
         if (editProfile){
+            nullSubmitStates()
             navigate('/home/profile/edit')
             setEditProfile(false)
         }
     }, [editProfile])
     useEffect(()=>{
         if(backToProfile){
+            nullSubmitStates()
             navigate('/home/profile/')
             setBackToProfile(false)
         }
     }, [backToProfile])
-    useEffect(()=>{
-        if(photoChanged){
-            console.log('La foto cambio')
-        }
-    }, [photoChanged])
-
     // modularizar maas
 
 
@@ -107,14 +109,25 @@ export function Profile({updating}){
     } else{
         return (<>
                 <Header username={user.username} msg={headerMsg}/>
-                {unExpectedError        && <UnExpectedError message={unExpectedError}/>}
-                {loading                && <Loading/>}
-                {userUpdatedSuccesfully && <SuccessUpdating/>}
+                {unExpectedError        && <UnExpectedError msg={unExpectedError}/>}
+                {loadingState           && <Loader state={loadingState}/>}
                 {profileData            && (
                     <div className="editing-container">
-                        <img href={profileData.photo_link}/>
+                        <UserPhoto url={profileData.photo_link} />
                         {updating && <UserForm updating={true}  onSubmitFunction={onUpdate} userData={profileData} onPhotoChange={()=>setPhotoChanged(true)}/> }
-                        {!updating && <FormatedUserData userData={profileData}/>}
+                        {!updating && 
+                        <FormatedUserData 
+                        userData={profileData} 
+                        non_showable_attrs={["is_active", "id", "photo_link"]} 
+                        attrs_traductions={
+                            {
+                                "username" : "Nombre de usuario", 
+                                "email" : "Correo electrónico", 
+                                "first_names" : "Nombres",
+                                "last_names" : "Apellidos",
+                                "age" : "Edad",
+                            }
+                            }/>}
                     </div>
                 )}
                 {!updating &&(

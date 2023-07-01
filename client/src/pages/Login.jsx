@@ -7,16 +7,20 @@ import { getUserDetailAPI } from "../api/getUserDetailApi.api"
 import { useNavigate } from "react-router-dom"
 import { UnExpectedError } from "../components/UnExpectedError"
 import { UserForm } from "../components/UserForm"
-import { Loading } from "../components/Loading"
+import { Loader } from "../components/Loader"
 import { SubmitStateContext } from "../context/SubmitStateContext"
 
 
+/**
+ * Pagina creada para llevar logeo de usuarios
+ */
 export function Login() {
-    let     {loading, unExpectedError, handleUnExpectedError, startLoading, nullSubmitStates} = useContext(SubmitStateContext)
+    let     {loadingState, unExpectedError, handleUnExpectedError, startLoading, nullSubmitStates, successfullyLoaded} = useContext(SubmitStateContext)
     const   navigate                                                        = useNavigate()
     const   {loginUser}                                                     = useContext(AuthContext)
     let     [user, setUser]                                                 = useState(null)
     let     [userLogged, setUserLogged]                                     = useState(false)
+
     const onLogin = async (data)=>{
         // en este punto ya se sabe que el usuario no esta autenticado
         try{
@@ -28,6 +32,7 @@ export function Login() {
                 try {
                     response = await loginUser(data)
                     setUserLogged(true)
+                    successfullyLoaded()
                 } catch(error){
                     if (error.response.status === 401){
                         handleUnExpectedError("Usuario o contraseña inválidos !") // en este caso el problema seria el password, no el username
@@ -74,8 +79,8 @@ export function Login() {
         return (
             <>
                 <Header/>
-                {unExpectedError && <UnExpectedError message = {unExpectedError}/>}
-                {loading && <Loading/>}
+                {unExpectedError && <UnExpectedError msg = {unExpectedError}/>}
+                {loadingState && <Loader state={loadingState}/>}
                 <UserForm onSubmitFunction={onLogin}login={true}/>
             </>
         )
