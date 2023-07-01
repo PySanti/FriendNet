@@ -6,8 +6,7 @@ import { SignUp } from "./pages/SignUp.jsx"
 import { AccountActivation } from "./pages/AccountActivation.jsx"
 import { AuthContextProvider } from "./context/AuthContext.jsx"
 import { Profile } from "./pages/Profile.jsx"
-import { EditProfile } from "./pages/EditProfile.jsx"
-import { SubmitStateContext, SubmitStateContextProvider } from "./context/SubmitStateContext.jsx"
+import { SubmitStateContextProvider } from "./context/SubmitStateContext.jsx"
 import { ProfileContextProvider } from "./context/ProfileContext.jsx"
 
 function App() {
@@ -67,7 +66,7 @@ function App() {
           <ProfileContextProvider>
             <SubmitStateContextProvider>
               <AuthContextProvider> 
-                <EditProfile/> 
+                <Profile updating={true}/> 
               </AuthContextProvider>
             </SubmitStateContextProvider>
           </ProfileContextProvider>

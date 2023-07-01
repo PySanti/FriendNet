@@ -17,6 +17,7 @@
 
 
 // Logica: 
+    // todo: destructurar props en todas partes
     // todo : agregar success state en el edit
     // todo: eliminar imagen antigua de usuario en cloudinary al actualizar perfil
     // todo : agregar Header a UserLogged.jsx y asociar a una url con el AuthContext
