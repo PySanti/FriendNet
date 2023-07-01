@@ -8,6 +8,7 @@ import { AuthContextProvider } from "./context/AuthContext.jsx"
 import { Profile } from "./pages/Profile.jsx"
 import { EditProfile } from "./pages/EditProfile.jsx"
 import { SubmitStateContext, SubmitStateContextProvider } from "./context/SubmitStateContext.jsx"
+import { ProfileContextProvider } from "./context/ProfileContext.jsx"
 
 function App() {
   return (
@@ -51,21 +52,25 @@ function App() {
           exact 
           path='/home/profile/'      
           element={
-          <SubmitStateContextProvider>
-            <AuthContextProvider> 
-              <Profile/> 
-            </AuthContextProvider>
-          </SubmitStateContextProvider>
+          <ProfileContextProvider>
+            <SubmitStateContextProvider>
+              <AuthContextProvider> 
+                <Profile/> 
+              </AuthContextProvider>
+            </SubmitStateContextProvider>
+          </ProfileContextProvider>
           }/>
         <Route 
           exact 
           path='/home/profile/edit'  
           element={
-          <SubmitStateContextProvider>
-            <AuthContextProvider> 
-              <EditProfile/> 
-            </AuthContextProvider>
-          </SubmitStateContextProvider>
+          <ProfileContextProvider>
+            <SubmitStateContextProvider>
+              <AuthContextProvider> 
+                <EditProfile/> 
+              </AuthContextProvider>
+            </SubmitStateContextProvider>
+          </ProfileContextProvider>
           }/>
       </Routes>
     </BrowserRouter>

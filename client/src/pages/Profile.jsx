@@ -4,33 +4,21 @@ import { userIsAuthenticated } from "../tools/userIsAuthenticated";
 import { UserNotLogged } from "./UserNotLogged";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { getUserDetailAPI } from "../api/getUserDetailApi.api";
 import { FormatedUserData } from "../components/FormatedUserData";
 import { UnExpectedError } from "../components/UnExpectedError";
 import { Loading } from "../components/Loading";
 import { SubmitStateContext } from "../context/SubmitStateContext";
+import { ProfileContext } from "../context/ProfileContext";
 
 
 export function Profile(){
     let [backToHome, setBackToHome] = useState(false)
     let {loading, unExpectedError, handleUnExpectedError, startLoading, setLoading, nullSubmitStates} = useContext(SubmitStateContext)
-    const props = useLocation().state
     const {user} = useContext(AuthContext)
+    const {profileData,loadProfileData} = useContext(ProfileContext)
     const navigate = useNavigate()
-    const [userData, setUserData] = useState(null)
     const [editProfile, setEditProfile] = useState(false)
-    const loadUserData = async ()=>{
-        if (!props){
-            try{
-                const response = await getUserDetailAPI(user.username)
-                setUserData(await response.data)
-            } catch(error){
-                handleUnExpectedError("Error inesperado en repuesta de api userDetail!")
-            }
-        } else {
-            setUserData(props.userData)
-        }
-    }
+
     useEffect(()=>{
         if (backToHome){
             navigate('/home/')
@@ -40,13 +28,13 @@ export function Profile(){
         nullSubmitStates()
         if (userIsAuthenticated()){
             startLoading()
-            loadUserData()
+            loadProfileData(user.username, handleUnExpectedError)
             setLoading(false)
         }
     }, [])
     useEffect(()=>{
         if (editProfile){
-            navigate('/home/profile/edit', {state:{userData}})
+            navigate('/home/profile/edit')
         }
     }, [editProfile])
     if (!userIsAuthenticated()){
@@ -57,10 +45,10 @@ export function Profile(){
                 <Header username={user.username} msg="Viendo perfil"/>
                 {unExpectedError && <UnExpectedError message={unExpectedError}/>}
                 {loading && <Loading/>}
-                {userData && (
+                {profileData && (
                     <div className="user-data-container">
-                        <img href={userData.photo_link} />
-                        <FormatedUserData userData={userData}/>
+                        <img href={profileData.photo_link} />
+                        <FormatedUserData userData={profileData}/>
                     </div>
                 )}
                 <button onClick={()=>setEditProfile(true)}>editar perfil</button>

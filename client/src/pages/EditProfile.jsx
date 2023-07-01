@@ -3,66 +3,50 @@ import { Header } from "../components/Header";
 import { UserForm } from "../components/UserForm";
 import { userIsAuthenticated } from "../tools/userIsAuthenticated";
 import { UserNotLogged } from "./UserNotLogged";
-import { useLocation, useNavigate } from "react-router-dom";
-import { getUserDetailAPI } from "../api/getUserDetailApi.api";
+import {  useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { UnExpectedError } from "../components/UnExpectedError";
 import { Loading } from "../components/Loading";
 import { SubmitStateContext } from "../context/SubmitStateContext";
 import { updateUserDataAPI } from "../api/updateUserData.api";
 import { postCloudinaryImgAPI } from "../api/postCloudinaryImg.api";
-
+import { ProfileContext } from "../context/ProfileContext";
 export function EditProfile(){
     let {loading, unExpectedError, handleUnExpectedError, startLoading, setLoading, nullSubmitStates} = useContext(SubmitStateContext)
-    const props  = useLocation().state
     const {user} = useContext(AuthContext)
-    let [userData, setUserData] = useState(null)
+    const {profileData,setProfileData, loadProfileData} = useContext(ProfileContext)
     let [photoChanged, setPhotoChanged] = useState(false)
     let [backToProfile, setBackToProfile] = useState(false)
     const navigate = useNavigate()
-    const loadUserData = async ()=>{
-        if (!props){
-            try{
-                const response = await getUserDetailAPI(user.username)
-                setUserData(await response.data)
-            } catch(error){
-                handleUnExpectedError("Error inesperado en repuesta de api userDetail!")
-            }
-        } else {
-            console.log('Buscando datos en props')
-            setUserData(props.userData)
-        }
-    }
+
     const onUpdate = async (data)=>{
         startLoading(true)
         try{
             const photo = data['photo']
             delete data['photo']
-            data['photo_link'] = userData.photo_link
+            data['photo_link'] = profileData.photo_link
             if (photoChanged){
                 const uploadedImgData           = await postCloudinaryImgAPI(photo)
                 data['photo_link']              = uploadedImgData.data.url // el serializer el backend recibe photo_link, no la foto en si
             }
-            const response = await updateUserDataAPI(data, userData.id)
-            data.id = userData.id
-            data.is_active = userData.is_active
-            setUserData(data)
-            props.userData = userData
-            console.log(props.userData)
+            const response = await updateUserDataAPI(data, profileData.id)
+            data.id = profileData.id
+            data.is_active = profileData.is_active
+            setProfileData(data)
         } catch(error){
             handleUnExpectedError("Error inesperado al actualizar datos del usuario!")
         }
     }
     useEffect(()=>{
         if(backToProfile){
-            navigate('/home/profile/', {state : {userData:userData}})
+            navigate('/home/profile/')
         }
     }, [backToProfile])
     useEffect(()=>{
         nullSubmitStates()
         if (userIsAuthenticated()){
             startLoading(true)
-            loadUserData()
+            loadProfileData(user.username, handleUnExpectedError)
             setLoading(false)
         }
     }, [])
@@ -78,10 +62,10 @@ export function EditProfile(){
             <Header username={user.username}msg="Editando perfil"/>
             {unExpectedError && <UnExpectedError message={unExpectedError}/>}
             {loading && <Loading/>}
-            {userData && (
+            {profileData && (
                 <div className="editing-container">
-                    <img href={userData.photo_link}/>
-                    <UserForm updating={true}  onSubmitFunction={onUpdate} userData={userData} onPhotoChange={()=>setPhotoChanged(true)}/> 
+                    <img href={profileData.photo_link}/>
+                    <UserForm updating={true}  onSubmitFunction={onUpdate} userData={profileData} onPhotoChange={()=>setPhotoChanged(true)}/> 
                 </div>
             )}
             <button onClick={()=>setBackToProfile(true)}>Volver</button>
