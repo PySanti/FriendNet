@@ -44,7 +44,7 @@ export function Profile({updating}){
                 const response = await getUserDetailAPI(username)
                 setProfileData(response.data)
             } catch(error){
-                unExpectedErrorHandler("Error inesperado en repuesta de api userDetail!")
+                unExpectedErrorHandler("Error inesperado en repuesta del servidor")
             }
         }
     }

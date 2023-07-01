@@ -24,13 +24,13 @@ export function AccountActivation() {
     let [realActivationCode, setRealActivationCode]     = useState(null)
     const props                                         = useLocation().state
     const navigate                                      = useNavigate()
+    const {register, handleSubmit, formState:{errors}}  = useForm()
 
     const sendMail = async (activation_code)=>{
         // const response = await sendActivationEmailAPI(props.userEmail, props.username, activation_code)
         console.log(activation_code)
         console.log('enviando correo de activacion')
     }
-    const {register, handleSubmit, formState:{errors}}  = useForm()
     const onSubmit = handleSubmit(async (data)=>{
         if (Number(data.activation_code) === Number(realActivationCode)){
             startLoading(true)
@@ -39,12 +39,7 @@ export function AccountActivation() {
                 setUserActivated(true)
                 successfullyLoaded()
             } catch(error){
-                const errorMsg = error.response.data.error
-                if (errorMsg === "serializer_error"){
-                    handleUnExpectedError("Error en el serializador de la api!")
-                } else {
-                    handleUnExpectedError("Error inesperado en el servidor al activar usuario!")
-                }
+                handleUnExpectedError("Error inesperado en el servidor al activar usuario!")
             }
         } else {
             handleUnExpectedError("Codigo invalido!")

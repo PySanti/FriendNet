@@ -37,8 +37,8 @@ export function SignUp() {
                 delete data.confirmPwd // el confirmPwd no puede ser enviado al backend
                 delete data.photo
                 try {
-                    // data['photo_link']              = saveCloudinary(photo) // el serializer el backend recibe photo_link, no la foto en si
-                    data['photo_link'] = "(test)"
+                    data['photo_link']              = await saveCloudinary(photo) // el serializer el backend recibe photo_link, no la foto en si
+                    // data['photo_link'] = "(test)"
                     try{
                         const createUserResponse        = await createUsuarioAPI(data)
                         setUserData({
@@ -48,12 +48,7 @@ export function SignUp() {
                         })
                         successfullyLoaded()
                     } catch(error){
-                        const errorMsg = error.response.data.error
-                        if (errorMsg === "error_creating"){
-                            handleUnExpectedError("Error inesperado creando usuario!")
-                        } else{
-                            handleUnExpectedError("Error inesperado lanzado por serializador de api!")
-                        }
+                        handleUnExpectedError("Error inesperado creando usuario!")
                     }
                 } catch(error){
                     handleUnExpectedError("Error inesperado subiendo imagen de usuario a la nube!")
