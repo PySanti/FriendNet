@@ -1,11 +1,14 @@
+import { InputError } from "./InputError";
+import { Label } from "./Label";
+
 export function FormField(props){
     return (
         <>
-            <h4>
-                {props.errors}
-            </h4>
+            <InputError message={props.errors}/>
             <div className="form-field">
-                <label>{props.label} : </label>
+                <Label>
+                    {props.label}
+                </Label>
                 {props.children}
             </div>
         </>

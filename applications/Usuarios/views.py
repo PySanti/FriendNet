@@ -1,5 +1,10 @@
 from rest_framework import status
-from rest_framework.views import APIView
+from rest_framework.views import (
+    APIView,
+)
+from rest_framework.generics import (
+    UpdateAPIView
+)
 from .utils import (
     USER_SHOWABLE_FIELDS,
     BASE_SERIALIZER_ERROR_RESPONSE
@@ -10,6 +15,7 @@ from .serializers import (
     CheckExistingUserSerializer,
     ActivateUserSerializer,
     GetUserDetailSerializer,
+    UpdateUsuariosSerializer
 )
 from rest_framework.response import Response
 from .models import Usuarios
@@ -76,3 +82,6 @@ class ActivateUserAPI(APIView):
             return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status.HTTP_400_BAD_REQUEST)
 
 
+class UpdateUserData(UpdateAPIView):
+    serializer_class = UpdateUsuariosSerializer
+    queryset = Usuarios.objects.all()
