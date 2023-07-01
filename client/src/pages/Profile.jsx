@@ -8,22 +8,37 @@ import { FormatedUserData } from "../components/FormatedUserData";
 import { UnExpectedError } from "../components/UnExpectedError";
 import { Loading } from "../components/Loading";
 import { SubmitStateContext } from "../context/SubmitStateContext";
-import { ProfileContext } from "../context/ProfileContext";
 import { UserForm } from "../components/UserForm";
 import {updateUserDataAPI} from "../api/updateUserData.api"
-import { postCloudinaryImgAPI } from "../api/postCloudinaryImg.api";
+import { SuccessUpdating } from "../components/SuccesUpdating";
+import { saveCloudinary } from "../tools/saveCloudinary";
+import { getUserDetailAPI } from "../api/getUserDetailApi.api";
 
 
 export function Profile({updating}){
-    let [backToHome, setBackToHome] = useState(false)
-    const [editProfile, setEditProfile] = useState(false)
-    let [photoChanged, setPhotoChanged] = useState(false)
-    let [backToProfile, setBackToProfile] = useState(false)
+    // states
+    let [profileData, setProfileData ] = useState(null)
+    let     [backToHome, setBackToHome]                         = useState(false)
+    let     [editProfile, setEditProfile]                       = useState(false)
+    let     [photoChanged, setPhotoChanged]                     = useState(false)
+    let     [backToProfile, setBackToProfile]                   = useState(false)
+    let     [userUpdatedSuccesfully, setUserUpdatedSuccesfully] = useState(false)
     let     {loading, unExpectedError, handleUnExpectedError, startLoading, setLoading, nullSubmitStates} = useContext(SubmitStateContext)
     const   {user} = useContext(AuthContext)
-    const   {profileData,loadProfileData, setProfileData} = useContext(ProfileContext)
     const   navigate = useNavigate()
     const   headerMsg = updating? "Editando perfil" : "Viendo perfil"
+    const loadProfileData = async (username,  unExpectedErrorHandler)=>{
+        if (!profileData){
+            try{
+                console.log('Cargando datos del usuario')
+                const response = await getUserDetailAPI(username)
+                setProfileData(await response.data)
+                console.log('Llamando a api para carga de datos de perfil en context')
+            } catch(error){
+                unExpectedErrorHandler("Error inesperado en repuesta de api userDetail!")
+            }
+        }
+    }
     useEffect(()=>{
         console.log('Montando')
         nullSubmitStates()
@@ -33,6 +48,11 @@ export function Profile({updating}){
             setLoading(false)
         }
     }, [])
+    useEffect(()=>{
+        if(userUpdatedSuccesfully){
+            setLoading(false)
+        }
+    }, [userUpdatedSuccesfully])
     useEffect(()=>{
         if (backToHome){
             navigate('/home/')
@@ -59,22 +79,29 @@ export function Profile({updating}){
     const onUpdate = async (data)=>{
         startLoading(true)
         try{
+            // borrar profile context
             const photo = data['photo']
             delete data['photo']
-            data['photo_link'] = profileData.photo_link
-            if (photoChanged){
-                const uploadedImgData           = await postCloudinaryImgAPI(photo)
-                data['photo_link']              = uploadedImgData.data.url // el serializer el backend recibe photo_link, no la foto en si
-            }
-            await updateUserDataAPI(data, profileData.id)
+            data['photo_link'] = photoChanged ? saveCloudinary(photo) : profileData.photo_link
+            const sendingData = data
             data.id = profileData.id
             data.is_active = profileData.is_active
-            setProfileData(data)
+            if (JSON.stringify(profileData) !== JSON.stringify(data)){ // lodash
+                await updateUserDataAPI(sendingData, profileData.id)
+                setProfileData(data)
+                setUserUpdatedSuccesfully(true)
+            } else {
+                handleUnExpectedError("Sin cambios")
+            }
         } catch(error){
             console.log(error)
             handleUnExpectedError("Error inesperado al actualizar datos del usuario!")
         }
     }
+    // eliminar ProfileContext
+    // agregar mensaje de success
+    // modularizar maas
+
 
     if (!userIsAuthenticated()){
         return <UserNotLogged/>
@@ -83,6 +110,7 @@ export function Profile({updating}){
                 <Header username={user.username} msg={headerMsg}/>
                 {unExpectedError && <UnExpectedError message={unExpectedError}/>}
                 {loading && <Loading/>}
+                {userUpdatedSuccesfully && <SuccessUpdating/>}
                 {profileData && (
                     <div className="editing-container">
                         <img href={profileData.photo_link}/>

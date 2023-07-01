@@ -3,7 +3,6 @@ import { Header }                   from "../components/Header";
 import { useContext, useEffect, useState } from "react";
 // api's
 import { createUsuarioAPI }         from "../api/createUsuario.api";
-import { postCloudinaryImgAPI }     from "../api/postCloudinaryImg.api";
 import { checkExistingUserAPI } from "../api/checkExistingUser.api";
 
 // styles
@@ -15,6 +14,7 @@ import { UserForm } from "../components/UserForm";
 import { UnExpectedError } from "../components/UnExpectedError";
 import { Loading } from "../components/Loading";
 import { SubmitStateContext } from "../context/SubmitStateContext";
+import { saveCloudinary } from "../tools/saveCloudinary";
 
 
 // constants
@@ -34,8 +34,7 @@ export function SignUp() {
                 delete data.confirmPwd // el confirmPwd no puede ser enviado al backend
                 delete data.photo
                 try {
-                    // const uploadedImgData           = await postCloudinaryImgAPI(photo)
-                    // data['photo_link']              = uploadedImgData.data.url // el serializer el backend recibe photo_link, no la foto en si
+                    // data['photo_link']              = saveCloudinary(photo) // el serializer el backend recibe photo_link, no la foto en si
                     data['photo_link'] = "(test)"
                     try{
                         const createUserResponse        = await createUsuarioAPI(data)

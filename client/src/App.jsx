@@ -7,7 +7,6 @@ import { AccountActivation } from "./pages/AccountActivation.jsx"
 import { AuthContextProvider } from "./context/AuthContext.jsx"
 import { Profile } from "./pages/Profile.jsx"
 import { SubmitStateContextProvider } from "./context/SubmitStateContext.jsx"
-import { ProfileContextProvider } from "./context/ProfileContext.jsx"
 
 function App() {
   return (
@@ -51,25 +50,21 @@ function App() {
           exact 
           path='/home/profile/'      
           element={
-          <ProfileContextProvider>
             <SubmitStateContextProvider>
               <AuthContextProvider> 
                 <Profile/> 
               </AuthContextProvider>
             </SubmitStateContextProvider>
-          </ProfileContextProvider>
           }/>
         <Route 
           exact 
           path='/home/profile/edit'  
           element={
-          <ProfileContextProvider>
             <SubmitStateContextProvider>
               <AuthContextProvider> 
                 <Profile updating={true}/> 
               </AuthContextProvider>
             </SubmitStateContextProvider>
-          </ProfileContextProvider>
           }/>
       </Routes>
     </BrowserRouter>
