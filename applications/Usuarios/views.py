@@ -3,7 +3,8 @@ from rest_framework.views import (
     APIView,
 )
 from rest_framework.generics import (
-    UpdateAPIView
+    UpdateAPIView,
+    ListAPIView
 )
 from .utils import (
     USER_SHOWABLE_FIELDS,
@@ -20,7 +21,8 @@ from .serializers import (
     ActivateUserSerializer,
     GetUserDetailSerializer,
     UpdateUsuariosSerializer,
-    ChangeUserPwdSerializer
+    ChangeUserPwdSerializer,
+    GetUsersListSerializer
 )
 from rest_framework.response import Response
 from .models import Usuarios
@@ -106,3 +108,6 @@ class ChangeUserPwdAPI(APIView):
         else:
             return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status.HTTP_400_BAD_REQUEST)
 
+class GetUsersListAPI(ListAPIView):
+    queryset = Usuarios.objects.all()
+    serializer_class = GetUsersListSerializer

@@ -17,6 +17,7 @@
 
 
 // Logica: 
+    // todo: usar paginacion
     // todo : agregar buttons para limpiar form
     // todo : cambiar change por set
     // todo: agregar validacion al activar usuario en login para contrasenia
