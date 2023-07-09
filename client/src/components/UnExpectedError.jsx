@@ -5,7 +5,7 @@
 export function UnExpectedError({msg}){
     return (
         <div className="un-expected-error-container">
-            {msg}
+            {msg && msg}
         </div>
     )
 }

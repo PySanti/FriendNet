@@ -11,19 +11,11 @@ import { MsgSendingInput } from "./MsgSendingInput"
  * @param {Object} chatingUser info del usuario con el que se esta chateando
  */
 export function Chat({messages, session_user_id, onMsgSending, chatingUser}){
-    if (!chatingUser){
-        return (
-            <div className="chat-container">
-                Selecciona a un usuario
-            </div>
-        )
-    }
     return (
         <div className="chat-container">
-            {chatingUser && <ChattingUserHeader chatingUser={chatingUser}/>}
-            {!messages && <h3>{"no hay mensajes"}</h3>}
-            {messages && <FormatedMessages messages={messages} session_user_id={session_user_id}/>}
-            <MsgSendingInput onMsgSending={onMsgSending}/>
+            <ChattingUserHeader chatingUser={chatingUser}/>
+            <FormatedMessages messages={messages} session_user_id={session_user_id}/>
+            {chatingUser && <MsgSendingInput onMsgSending={onMsgSending}/>}
         </div>
     )
 }

@@ -7,8 +7,12 @@ import { UserPhoto } from "./UserPhoto";
 export function ChattingUserHeader({chatingUser}){
     return (
         <div className="chatting-user-header">
-            <UserPhoto url={chatingUser.photo_link}/>
-            <h3>{chatingUser.username}</h3>
+            {chatingUser &&
+                <>
+                    <UserPhoto url={chatingUser.photo_link}/>
+                    <h3>{chatingUser.username}</h3>
+                </>
+            }
         </div>
     )
 }
