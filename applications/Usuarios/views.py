@@ -4,7 +4,6 @@ from rest_framework.views import (
 )
 from rest_framework.generics import (
     UpdateAPIView,
-    ListAPIView
 )
 from .utils import (
     USER_SHOWABLE_FIELDS,
@@ -14,7 +13,7 @@ from .utils import (
 from django.contrib.auth.hashers import (
     check_password
 )
-
+from django.http import JsonResponse
 from .serializers import (
     CreateUsuariosSerializer,
     CheckExistingUserSerializer,
@@ -22,10 +21,16 @@ from .serializers import (
     GetUserDetailSerializer,
     UpdateUsuariosSerializer,
     ChangeUserPwdSerializer,
-    GetUsersListSerializer
+    GetUsersListSerializer,
+    GetChatBetweenSerializer,
+    SendMsgSerializer
 )
 from rest_framework.response import Response
 from .models import Usuarios
+from applications.Chats.models import (
+    Chat,
+    Messages
+)
 
 class CreateUsuariosAPI(APIView):
     queryset = Usuarios.objects.all()
@@ -108,6 +113,44 @@ class ChangeUserPwdAPI(APIView):
         else:
             return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status.HTTP_400_BAD_REQUEST)
 
-class GetUsersListAPI(ListAPIView):
-    queryset = Usuarios.objects.all()
+class GetUsersListAPI(APIView):
     serializer_class = GetUsersListSerializer
+    def post(self, request, *args, **kwargs):
+        serialized_data = self.serializer_class(data=request.data)
+        if serialized_data.is_valid():
+            users_list = Usuarios.objects.all().exclude(id=request.data['session_user_id']).values("id", "username", "is_online")
+            return JsonResponse({"users_list": list(users_list)})
+        else:
+            print(serialized_data.errors)
+            return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status.HTTP_400_BAD_REQUEST)
+
+
+class SendMsgAPI(APIView):
+    serializer_class = SendMsgSerializer
+    def post(self, request, *args, **kwargs):
+        serialized_data = self.serializer_class(data=request.data)
+        if serialized_data.is_valid():
+            sender_user = Usuarios.objects.get(id=request.data['sender_id'])
+            receiver_user = Usuarios.objects.get(id=request.data['receiver_id'])
+            new_message = Messages(parent_id=request.data['sender_id'], content=request.data['msg'])
+            new_message.save()
+            Chat.objects.sendMessage(sender_user, receiver_user,new_message)
+            return Response({'success' : "msg_sended"}, status.HTTP_200_OK)
+        else:
+            print(serialized_data.errors)
+            return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status.HTTP_400_BAD_REQUEST)
+
+
+class GetChatBetweenAPI(APIView):
+    serializer_class =  GetChatBetweenSerializer
+    def post(self, request, *args, **kwargs):
+        serialized_data = self.serializer_class(data=request.data)
+        if serialized_data.is_valid():
+            messages_hist = Chat.objects.getMessagesHistorial(request.data['id_1'], request.data['id_2'])
+            if (messages_hist):
+                return JsonResponse({"messages_hist" : list(messages_hist.values())})
+            else:
+                return Response('no_chats_between', status.HTTP_200_OK)
+        else:
+            print(serialized_data.errors)
+            return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status.HTTP_400_BAD_REQUEST)

@@ -44,7 +44,16 @@ class ChangeUserPwdSerializer(serializers.Serializer):
     old_password = serializers.CharField()
     new_password = serializers.CharField()
 
-class GetUsersListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Usuarios
-        fields = ["id", "username", "is_online"]
+class GetUsersListSerializer(serializers.Serializer):
+    session_user_id = serializers.IntegerField()
+
+class GetChatBetweenSerializer(serializers.Serializer):
+    id_1 = serializers.IntegerField()
+    id_2 = serializers.IntegerField()
+
+class SendMsgSerializer(serializers.Serializer):
+    receiver_id = serializers.IntegerField()
+    sender_id = serializers.IntegerField()
+    msg = serializers.CharField()
+
+

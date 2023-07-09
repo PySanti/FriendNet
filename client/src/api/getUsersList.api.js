@@ -4,7 +4,10 @@ import { config } from './baseConfig.api'
 /**
  * Llama a api que retorna lista de usuarios de la pagina
  */
-export async function getUsersListAPI(){
-    return await axios.get(BACKEND_URL + `api/get_user_list/`)
+export async function getUsersListAPI(sessionUserId){
+    const data = {
+        'session_user_id' : sessionUserId
+    }
+    return await axios.post(BACKEND_URL + `api/get_user_list/`, data, config)
 }
 

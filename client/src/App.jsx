@@ -46,7 +46,13 @@ function App() {
         <Route 
           exact 
           path='/home/'              
-          element={<AuthContextProvider> <Home/> </AuthContextProvider>}/>
+          element={
+          <SubmitStateContextProvider>
+            <AuthContextProvider> 
+              <Home/> 
+            </AuthContextProvider>
+          </SubmitStateContextProvider>
+          }/>
         <Route 
           exact 
           path='/home/profile/'      

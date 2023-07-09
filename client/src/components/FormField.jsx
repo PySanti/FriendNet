@@ -11,8 +11,8 @@ import { ReactElement } from "react";
 export function FormField({errors, label, children}){
     return (
         <div className="form-field-container">
-            <InputError msg={errors}/>
-            <Label msg={label}/>
+            {errors && <InputError msg={errors}/>}
+            {label && <Label msg={label}/>}
             {children}
         </div>
     )

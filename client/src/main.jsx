@@ -5,6 +5,7 @@ import './index.css'
 
 export const BACKEND_URL = "http://127.0.0.1:8000/"
 
+export const BASE_MESSAGE_MAX_LENGTH = 200
 export const BASE_USERNAME_MAX_LENGTH = 15
 export const BASE_USERNAME_MIN_LENGTH = 6
 export const BASE_FIRSTNAMES_MAX_LENGTH = 30
