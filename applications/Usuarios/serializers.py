@@ -46,15 +46,3 @@ class ChangeUserPwdSerializer(serializers.Serializer):
 
 class GetUsersListSerializer(serializers.Serializer):
     session_user_id = serializers.IntegerField()
-
-class GetChatBetweenSerializer(serializers.Serializer):
-    id_1 = serializers.IntegerField()
-    id_2 = serializers.IntegerField()
-
-class SendMsgSerializer(serializers.Serializer):
-    receiver_id = serializers.IntegerField()
-    sender_id = serializers.IntegerField()
-    msg = serializers.CharField()
-
-class RemoveNotificationSerializer(serializers.Serializer):
-    notification_id = serializers.IntegerField()

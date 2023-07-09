@@ -8,11 +8,7 @@ from .views import (
     GetUserDetailAPI,
     UpdateUserDataAPI,
     ChangeUserPwdAPI,
-    GetUsersListAPI,
-    GetChatBetweenAPI,
-    SendMsgAPI,
-    GetUserNotificationsAPI,
-    RemoveNotificationAPI
+    GetUsersListAPI
     )
 
 urlpatterns = [
@@ -23,8 +19,5 @@ urlpatterns = [
     path('update_user_data/<int:pk>', UpdateUserDataAPI.as_view()),
     path('change_user_pwd/', ChangeUserPwdAPI.as_view()),
     path('get_user_list/', GetUsersListAPI.as_view()),
-    path('get_chat_between/', GetChatBetweenAPI.as_view()),
-    path('send_msg/', SendMsgAPI.as_view()),
-    path('get_user_notifications/<int:pk>', GetUserNotificationsAPI.as_view()),
-    path('remove_notification/<int:pk>', RemoveNotificationAPI.as_view()),
+
 ] 

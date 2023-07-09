@@ -43,6 +43,7 @@ export function Home() {
         try{
             const response = await getChatBetweenAPI(user.user_id, clicked_user.id)
             if (response.data !== "no_chats_between"){
+                
                 setMessagesHistorial(response.data.messages_hist)
             } else {
                 setMessagesHistorial(null)
