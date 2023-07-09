@@ -1,6 +1,5 @@
 import { InputError } from "./InputError";
 import { Label } from "./Label";
-import { ReactElement } from "react";
 
 /**
  * Componente creado para simplficar codigo de campos de Input

@@ -7,7 +7,7 @@ import { UserButton } from "./UserButton"
  */
 export function FormatedUsersList({usersList, onClickEvent}){
     const list=usersList.map((user)=>{
-        return <UserButton key={user.username}username={user.username} id={user.id} isOnline={user.is_online} onClickFunction={onClickEvent} />
+        return <UserButton key={user.username}user={user}onClickFunction={onClickEvent} />
     })
     return (
     <>

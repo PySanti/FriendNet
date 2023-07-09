@@ -1,15 +1,13 @@
 /**
  * Retorna un userButton
- * @param {String} username
- * @param {String} id
+ * @param {Object} user
  * @param {Function} onClickFunction
- * @param {Boolean} isOnline
  */
-export function UserButton({username, id, onClickFunction, isOnline}){
+export function UserButton({user, onClickFunction}){
     return (
-        <button className="user-button"onClick={()=>onClickFunction(id)}>
-            {username}
-            {isOnline && ", en linea"}
+        <button className="user-button"onClick={()=>onClickFunction(user)}>
+            {user.username}
+            {user.is_online && ", en linea"}
         </button>
     )
 }

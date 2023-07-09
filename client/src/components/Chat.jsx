@@ -1,20 +1,29 @@
 import { FormatedMessages } from "./FormatedMessages"
-import { BASE_MESSAGE_MAX_LENGTH } from "../main"
-import { useForm } from "react-hook-form"
+import { ChattingUserHeader } from "./ChatingUserHeader"
+import { MsgSendingInput } from "./MsgSendingInput"
 
-export function Chat({messages, session_user_id, onMsgSending}){
-    let {register, formState : {errors}, handleSubmit} = useForm()
-    const onSubmit = handleSubmit((data)=>{
-        onMsgSending(data)
-    })
+
+/**
+ * Contenedor unicamente del chat entre el session user
+ * @param {Array} messages lista de mensajes traidos desde la api
+ * @param {Number} session_user_id id del usuario de la sesion
+ * @param {Function} onMsgSending funcion que se llamara cuando se envie un mensaje
+ * @param {Object} chatingUser info del usuario con el que se esta chateando
+ */
+export function Chat({messages, session_user_id, onMsgSending, chatingUser}){
+    if (!chatingUser){
+        return (
+            <div className="chat-container">
+                Selecciona a un usuario
+            </div>
+        )
+    }
     return (
         <div className="chat-container">
+            {chatingUser && <ChattingUserHeader chatingUser={chatingUser}/>}
             {!messages && <h3>{"no hay mensajes"}</h3>}
             {messages && <FormatedMessages messages={messages} session_user_id={session_user_id}/>}
-            <form className="input-container" onSubmit={onSubmit}>
-                <input type="text" maxLength={BASE_MESSAGE_MAX_LENGTH} {...register("msg")}/>
-                <button type="submit">enviar</button>
-            </form>
+            <MsgSendingInput onMsgSending={onMsgSending}/>
         </div>
     )
 }
