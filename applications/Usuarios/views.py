@@ -4,6 +4,7 @@ from rest_framework.views import (
 )
 from rest_framework.generics import (
     UpdateAPIView,
+    DestroyAPIView
 )
 from .utils import (
     USER_SHOWABLE_FIELDS,
@@ -23,7 +24,8 @@ from .serializers import (
     ChangeUserPwdSerializer,
     GetUsersListSerializer,
     GetChatBetweenSerializer,
-    SendMsgSerializer
+    SendMsgSerializer,
+    RemoveNotificationSerializer
 )
 from rest_framework.response import Response
 from .models import Usuarios
@@ -171,3 +173,7 @@ class GetUserNotificationsAPI(APIView):
             return JsonResponse({"notifications" : list(user_notifications.values())})
         except:
             return Response({"error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class RemoveNotificationAPI(DestroyAPIView):
+    serializer_class = RemoveNotificationSerializer
+    queryset = Notifications.objects.all()

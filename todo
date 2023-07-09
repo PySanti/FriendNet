@@ -16,7 +16,9 @@
     // todo: repasar todo lo aprendido en el proyecto, revisando todo el mismo
 
 
-// Logica:  
+// Logica:
+    // agregar eliminacion de notificaciones automatica
+    // mejorar seguridad en el removeNotification
     // mejorar acceso a chat desde notificaciones (potencial busqueda muy lenta)
     // agregar actualizacion de historial de mensajes cuando se envian
     // agregar opciones de modificacion de mensajes

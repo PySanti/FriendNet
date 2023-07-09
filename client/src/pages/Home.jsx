@@ -15,6 +15,7 @@ import { UsersInterface } from "../components/UsersInterface"
 import { getUserNotifications } from "../api/getUserNotifications.api"
 import { Notifications } from "../components/Notifications"
 import { startsWith } from "lodash"
+import { removeNotificationAPI } from "../api/removeNotification.api"
 /**
  * Pagina principal del sitio
  */
@@ -61,7 +62,7 @@ export function Home() {
             handleUnExpectedError('Error inesperado cargando datos de usuarios!')
         }
     }
-    const onNotificationClick = (notificationCode)=>{
+    const onNotificationClick = async (notificationCode, notificationId)=>{
         startLoading()
         if (notificationCode !== "u"){
             let user = undefined
@@ -76,13 +77,18 @@ export function Home() {
             } else {
                 handleUnExpectedError("Error inesperado")
             }
+        } else {
+            setGoToProfile(true)
         }
+        const response = await removeNotificationAPI(notificationId)
     }
     const loadUserNotifications = async ()=>{
         startLoading()
         try{
             const response = await getUserNotifications(user.user_id)
-            setNotifications(response.data.notifications)
+            if (response.data.notifications.length){
+                setNotifications(response.data.notifications)
+            }
         } catch(error){
             handleUnExpectedError('Error inesperado al cargar notificaciones del usuario')
         }
@@ -107,20 +113,20 @@ export function Home() {
         return (
             <>
                 <Header username={user.username}/>
-                {loadingState && <Loader state={loadingState}/>}
-                {unExpectedError && <UnExpectedError msg={unExpectedError}/>}
-                {userList && 
-                    <UsersInterface 
+                <Loader state={loadingState}/>
+                <UnExpectedError msg={unExpectedError}/>
+
+                <UsersInterface 
                         usersList={userList} 
                         onUserButtonClick={onUserButtonClick} 
                         session_user_id={user.user_id} 
                         clickedUser={clickedUser} 
                         messagesHistorial={messagesHistorial} 
                         onMsgSending={onMsgSending}/>
-                }
+
                 <button onClick={logoutUser}>Salir</button>
                 <button onClick={()=>{setGoToProfile(true)}}>Perfil</button>
-                {notifications && <Notifications notificationList={notifications} onNotificationClick={onNotificationClick} />}
+                <Notifications notificationList={notifications} onNotificationClick={onNotificationClick} />
             </>
         )
     }

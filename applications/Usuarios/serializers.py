@@ -56,4 +56,5 @@ class SendMsgSerializer(serializers.Serializer):
     sender_id = serializers.IntegerField()
     msg = serializers.CharField()
 
-
+class RemoveNotificationSerializer(serializers.Serializer):
+    notification_id = serializers.IntegerField()

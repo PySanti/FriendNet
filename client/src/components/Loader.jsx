@@ -4,12 +4,14 @@
  */
 export function Loader({state}){
     return (
-        <>
-            <h2>
-                {state==="failed"&&"Error"}
-                {state==="success"&&"Exito"}
-                {state==="loading"&&"Cargando"}
-            </h2>
-        </>
+        <div className="state-container">
+            {state && 
+                <h2>
+                    {state==="failed"&&"Error"}
+                    {state==="success"&&"Exito"}
+                    {state==="loading"&&"Cargando"}
+                </h2>
+            }
+        </div>
     )
 }
