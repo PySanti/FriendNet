@@ -12,11 +12,15 @@ import { Loader } from "../components/Loader"
 import { UnExpectedError } from "../components/UnExpectedError"
 import { sendMsgAPI } from "../api/sendMsg.api"
 import { UsersInterface } from "../components/UsersInterface"
+import { getUserNotifications } from "../api/getUserNotifications.api"
+import { Notifications } from "../components/Notifications"
+import { startsWith } from "lodash"
 /**
  * Pagina principal del sitio
  */
 export function Home() {
     let {loadingState, unExpectedError, handleUnExpectedError, startLoading, nullSubmitStates, successfullyLoaded} = useContext(SubmitStateContext)
+    let [notifications, setNotifications] = useState(null)
     let [messagesHistorial, setMessagesHistorial] = useState(null)
     let [clickedUser, setClickedUser] = useState(null)
     let [userList, setUserList] = useState(false)
@@ -57,6 +61,32 @@ export function Home() {
             handleUnExpectedError('Error inesperado cargando datos de usuarios!')
         }
     }
+    const onNotificationClick = (notificationCode)=>{
+        startLoading()
+        if (notificationCode !== "u"){
+            let user = undefined
+            userList.forEach(element => {
+                if (element.id == notificationCode){
+                    user= element
+                }
+            });
+            if (user){
+                onUserButtonClick(user)
+                successfullyLoaded()
+            } else {
+                handleUnExpectedError("Error inesperado")
+            }
+        }
+    }
+    const loadUserNotifications = async ()=>{
+        startLoading()
+        try{
+            const response = await getUserNotifications(user.user_id)
+            setNotifications(response.data.notifications)
+        } catch(error){
+            handleUnExpectedError('Error inesperado al cargar notificaciones del usuario')
+        }
+    }
     let [goToProfile, setGoToProfile] = useState(false)
     useEffect(()=>{
         if(goToProfile){
@@ -67,6 +97,7 @@ export function Home() {
         nullSubmitStates()
         if (userIsAuthenticated() && !userList){
             loadUsersList()
+            loadUserNotifications()
         }
     }, [])
 
@@ -89,6 +120,7 @@ export function Home() {
                 }
                 <button onClick={logoutUser}>Salir</button>
                 <button onClick={()=>{setGoToProfile(true)}}>Perfil</button>
+                {notifications && <Notifications notificationList={notifications} onNotificationClick={onNotificationClick} />}
             </>
         )
     }

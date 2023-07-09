@@ -17,6 +17,7 @@
 
 
 // Logica:  
+    // mejorar acceso a chat desde notificaciones (potencial busqueda muy lenta)
     // agregar actualizacion de historial de mensajes cuando se envian
     // agregar opciones de modificacion de mensajes
     // refactorizar codigo de backend almacenando cada view en la app que corresponda

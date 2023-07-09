@@ -29,7 +29,10 @@ from rest_framework.response import Response
 from .models import Usuarios
 from applications.Chats.models import (
     Chat,
-    Messages
+    Messages,
+)
+from applications.Notifications.models import (
+    Notifications
 )
 
 class CreateUsuariosAPI(APIView):
@@ -97,6 +100,10 @@ class ActivateUserAPI(APIView):
 class UpdateUserDataAPI(UpdateAPIView):
     serializer_class = UpdateUsuariosSerializer
     queryset = Usuarios.objects.all()
+    def put(self, *args, **kwargs):
+        user = Usuarios.objects.get(id=kwargs['pk'])
+        Notifications.objects.addNotification("Has actualizado tu perfil",user, "u")
+        return super().put(*args, **kwargs)
 
 class ChangeUserPwdAPI(APIView):
     serializer_class = ChangeUserPwdSerializer
@@ -132,6 +139,7 @@ class SendMsgAPI(APIView):
         if serialized_data.is_valid():
             sender_user = Usuarios.objects.get(id=request.data['sender_id'])
             receiver_user = Usuarios.objects.get(id=request.data['receiver_id'])
+            Notifications.objects.addNotification(f"{sender_user.username} te ha enviado un mensaje", receiver_user, f"{sender_user.id}")
             new_message = Messages(parent_id=request.data['sender_id'], content=request.data['msg'])
             new_message.save()
             Chat.objects.sendMessage(sender_user, receiver_user,new_message)
@@ -154,3 +162,12 @@ class GetChatBetweenAPI(APIView):
         else:
             print(serialized_data.errors)
             return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status.HTTP_400_BAD_REQUEST)
+
+
+class GetUserNotificationsAPI(APIView):
+    def get(self, request, *args, **kwargs):
+        try:
+            user_notifications = Usuarios.objects.get(id=kwargs['pk']).notifications
+            return JsonResponse({"notifications" : list(user_notifications.values())})
+        except:
+            return Response({"error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
