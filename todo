@@ -4,6 +4,7 @@
 
 
 //Produccion:
+    // mejorar seguridad en el removeNotification
     //todo: agrgar documentacion a la api
     // todo: pruebas unitarias
     // TODO: Ecriptar almacenamiento de imagenes en 'user_photos'
@@ -17,8 +18,7 @@
 
 
 // Logica:
-    // agregar eliminacion de notificaciones automatica
-    // mejorar seguridad en el removeNotification
+    // agregar eliminacion de notificaciones manual
     // mejorar acceso a chat desde notificaciones (potencial busqueda muy lenta)
     // agregar actualizacion de historial de mensajes cuando se envian
     // agregar opciones de modificacion de mensajes
