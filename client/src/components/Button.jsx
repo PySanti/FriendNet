@@ -3,7 +3,7 @@ export function Button({msg, onClickFunction, type}){
     return (
         <div className="button-container">
             {type === "submit" &&
-                <button  className="button" type="submit">
+                <button  className="button submit-button" type="submit">
                     {msg}
                 </button>
             }

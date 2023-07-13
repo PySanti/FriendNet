@@ -60,11 +60,11 @@ export function UserForm({userData, onSubmitFunction, login, updating, onPhotoCh
                             <FormField label="Confirma la contraseña" errors={errors.confirmPwd  && errors.confirmPwd.message}>
                                 <input defaultValue="16102005 python"type="password" id="confirmPwd" name="confirmPwd"{...register("confirmPwd", {    validate : (confirmPwd) =>{        if (confirmPwd != watch("password")){            return "Las contraseñas no son iguales"        }    }})}/>
                             </FormField>
-                            <button type="submit">registrar</button>
+                            <Button type="submit" msg="registrar"/>
                         </>
                     }
                     {updating && 
-                        <button type="submit">actualizar</button>
+                        <Button type="submit" msg="actualizar"/>
                     }
                 </Form>
         )

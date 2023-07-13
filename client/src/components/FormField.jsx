@@ -1,6 +1,6 @@
 import { InputError } from "./InputError";
 import { Label } from "./Label";
-
+import "../styles/FormField.css"
 /**
  * Componente creado para simplficar codigo de campos de Input
  * @param {String} errors errores producidos por hook de manejo de errores de formulario
@@ -11,8 +11,10 @@ export function FormField({errors, label, children}){
     return (
         <div className="form-field-container">
             <InputError msg={errors}/>
-            {label && <Label msg={label}/>}
-            {children}
+            <div className="input-pair-container">
+                <Label msg={label}/>
+                {children}
+            </div>
         </div>
     )
 }

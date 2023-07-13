@@ -1,6 +1,7 @@
-.form-container{
+.form-field-container{
     display: flex;
-    flex-direction: column;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
+    width: 100%;
 }

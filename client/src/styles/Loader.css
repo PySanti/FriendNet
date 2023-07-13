@@ -1,10 +1,10 @@
 .state-container{
     width: 100%;
+    text-align: center;
 }
 
 .state-msg{
     padding-top:1rem ;
-    transition: opacity .5s;
 }
 .state-activated{
     padding-top: 0;
