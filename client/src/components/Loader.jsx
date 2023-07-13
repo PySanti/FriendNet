@@ -6,11 +6,8 @@ import "../styles/Loader.css"
 export function Loader({state}){
     return (
         <div className="state-container">
-            {state && 
-                <h2>
-                    {state}
-                </h2>
-            }
+            {state &&      <h2 className="state-msg state-activated">{state}</h2>}
+            {!state &&      <h2 className="state-msg"></h2>}
         </div>
     )
 }

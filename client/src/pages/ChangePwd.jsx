@@ -55,7 +55,7 @@ export function ChangePwd(){
             <>
                 <Header username={user.username} msg="Modificando contraseña"/>
                 <Loader state={loadingState}/>
-                <form onSubmit={changePwd}>
+                <Form onSubmit={changePwd}>
                     <FormField label="Contrasenia actual" errors={errors.old_password && errors.old_password.message}>
                         <input type="password" id="old_password" name="old_password"{...register("old_password", BASE_PASSWORD_CONSTRAINTS)}/>
                     </FormField>
@@ -63,7 +63,7 @@ export function ChangePwd(){
                         <input type="password" id="new_password" name="new_password"{...register("new_password", BASE_PASSWORD_CONSTRAINTS)}/>
                     </FormField>
                     <button type="submit">actualizar</button>
-                </form>
+                </Form>
                 <button onClick={()=>setBackToProfile(true)}>volver</button>
             </>
         )

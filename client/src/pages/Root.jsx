@@ -27,23 +27,25 @@ export function Root() {
     }else{
         return (
             <div className="centered-container">
-                <Header msg="Chatea con quien quieras !"/>
-                <section className="redirect-container">
-                    <div className="signin-container">
-                        <div className="signin-cotainer__title-container">
-                            <h4 className="signin-container__title">
-                                Tienes cuenta? 
-                            </h4>
+                <div className="root-container">
+                    <Header msg="Chatea con quien quieras !"/>
+                    <section className="redirect-container">
+                        <div className="signin-container">
+                            <div className="signin-cotainer__title-container">
+                                <h4 className="signin-container__title">
+                                    Tienes cuenta? 
+                                </h4>
+                            </div>
+                            <Button msg="Logearme" onClickFunction={()=>setGotToLogin(true)}/>
                         </div>
-                        <Button msg="Logearme" onClickFunction={()=>setGotToLogin(true)}/>
-                    </div>
-                    <div className="signup-container">
-                        <h4>
-                            Aun no tienes cuenta? 
-                        </h4>
-                        <Button msg="Registrarme" onClickFunction={()=>setGoToSignUp(true)}/>
-                    </div>
-                </section>
+                        <div className="signup-container">
+                            <h4>
+                                Aun no tienes cuenta? 
+                            </h4>
+                            <Button msg="Registrarme" onClickFunction={()=>setGoToSignUp(true)}/>
+                        </div>
+                    </section>
+                </div>
             </div>
         )
     }
