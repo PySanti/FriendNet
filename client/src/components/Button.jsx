@@ -1,10 +1,18 @@
 import "../styles/Button.css"
-export function Button({msg, onClickFunction}){
+export function Button({msg, onClickFunction, type}){
     return (
         <div className="button-container">
-            <button className="button" onClick={onClickFunction}>
-                {msg}
-            </button>
+            {type === "submit" &&
+                <button  className="button" type="submit">
+                    {msg}
+                </button>
+            }
+            {!type &&
+                <button onClick={onClickFunction} className="button" >
+                    {msg}
+                </button>
+            }
+
         </div>
     )
 

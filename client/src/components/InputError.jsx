@@ -4,7 +4,7 @@
  */
 export function InputError({msg}){
     return (
-        <div className="input-error">
+        <div className="input-error-container">
             {msg}
         </div>
     )

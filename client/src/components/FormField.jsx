@@ -10,7 +10,7 @@ import { Label } from "./Label";
 export function FormField({errors, label, children}){
     return (
         <div className="form-field-container">
-            {errors && <InputError msg={errors}/>}
+            <InputError msg={errors}/>
             {label && <Label msg={label}/>}
             {children}
         </div>
