@@ -11,9 +11,8 @@ import {   useNavigate } from "react-router-dom";
 import { userIsAuthenticated } from "../tools/userIsAuthenticated";
 import { UserLogged } from "./UserLogged";
 import { UserForm } from "../components/UserForm";
-import { UnExpectedError } from "../components/UnExpectedError";
 import { Loader } from "../components/Loader";
-import { SubmitStateContext } from "../context/SubmitStateContext";
+import { LoadingContext } from "../context/LoadingContext";
 import { saveCloudinary } from "../tools/saveCloudinary";
 
 
@@ -24,7 +23,7 @@ import { saveCloudinary } from "../tools/saveCloudinary";
  * Pagina creada para llevar registro de usuario
  */
 export function SignUp() {
-    let {loadingState, unExpectedError, successfullyLoaded, handleUnExpectedError, startLoading, nullSubmitStates} = useContext(SubmitStateContext)
+    let {loadingState, successfullyLoaded, startLoading, setLoadingState} = useContext(LoadingContext)
     let [userData, setUserData]                                 = useState(null);
     const navigate                                              = useNavigate()
     const onSignUp = async (data) =>{
@@ -48,20 +47,20 @@ export function SignUp() {
                         })
                         successfullyLoaded()
                     } catch(error){
-                        handleUnExpectedError("Error inesperado creando usuario!")
+                        setLoadingState("Error inesperado creando usuario!")
                     }
                 } catch(error){
-                    handleUnExpectedError("Error inesperado subiendo imagen de usuario a la nube!")
+                    setLoadingState("Error inesperado subiendo imagen de usuario a la nube!")
                 }
             } else {
-                handleUnExpectedError("Ya existe un usuario con ese Nombre de usuario o Correo electronico!")
+                setLoadingState("Ya existe un usuario con ese Nombre de usuario o Correo electronico!")
             }
         } catch(error){
-            handleUnExpectedError("Error inesperado chequeando existencia de usuario en la base de datos!")
+            setLoadingState("Error inesperado chequeando existencia de usuario en la base de datos!")
         }
 }
     useEffect(()=>{
-        nullSubmitStates()
+        setLoadingState(false)
     }, [])
     useEffect(() => {
         if (userData){
@@ -75,8 +74,7 @@ export function SignUp() {
         return (
             <>
                 <Header msg="Regístrate de una vez!"/>
-                {unExpectedError && <UnExpectedError msg={unExpectedError}/>}
-                {loadingState && <Loader state={loadingState}/>}
+                <Loader state={loadingState}/>
                 <UserForm onSubmitFunction={onSignUp} updating={false} />
             </>
         )

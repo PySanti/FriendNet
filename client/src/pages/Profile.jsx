@@ -5,9 +5,8 @@ import { UserNotLogged } from "./UserNotLogged";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { FormatedUserData } from "../components/FormatedUserData";
-import { UnExpectedError } from "../components/UnExpectedError";
 import { Loader } from "../components/Loader";
-import { SubmitStateContext } from "../context/SubmitStateContext";
+import { LoadingContext} from "../context/LoadingContext";
 import { UserForm } from "../components/UserForm";
 import {updateUserDataAPI} from "../api/updateUserData.api"
 import { saveCloudinary } from "../tools/saveCloudinary";
@@ -28,24 +27,19 @@ export function Profile({updating}){
     let     [photoChanged, setPhotoChanged]                     = useState(false)
     let     [backToProfile, setBackToProfile]                   = useState(false)
     let     [changePwd, setChangePwd]                           = useState(false)
-    let     {
-        loadingState, 
-        unExpectedError, 
-        handleUnExpectedError, 
-        startLoading, 
-        setLoadingState, 
-        nullSubmitStates,
-        successfullyLoaded} = useContext(SubmitStateContext)
+    let     {loadingState, startLoading, setLoadingState, successfullyLoaded} = useContext(LoadingContext)
     const   {user} = useContext(AuthContext)
     const   navigate = useNavigate()
     const   headerMsg = updating? "Editando perfil" : "Viendo perfil"
-    const loadProfileData = async (username,  unExpectedErrorHandler)=>{
+    const loadProfileData = async ()=>{
+        startLoading()
         if (!profileData){
             try{
-                const response = await getUserDetailAPI(username)
+                const response = await getUserDetailAPI(user.username)
                 setProfileData(response.data)
+                successfullyLoaded()
             } catch(error){
-                unExpectedErrorHandler("Error inesperado en repuesta del servidor")
+                setLoadingState("Error inesperado en repuesta del servidor")
             }
         }
     }
@@ -67,19 +61,17 @@ export function Profile({updating}){
                 setProfileData(data)
                 successfullyLoaded()
             } else {
-                handleUnExpectedError("Sin cambios")
+                setLoadingState("Sin cambios")
             }
         } catch(error){
             console.log(error)
-            handleUnExpectedError("Error inesperado al actualizar datos del usuario!")
+            setLoadingState("Error inesperado al actualizar datos del usuario!")
         }
     }
     useEffect(()=>{
-        nullSubmitStates()
+        setLoadingState(false)
         if (userIsAuthenticated()){
-            startLoading()
-            loadProfileData(user.username, handleUnExpectedError)
-            setLoadingState(false)
+            loadProfileData()
         }
     }, [])
     useEffect(()=>{
@@ -95,16 +87,14 @@ export function Profile({updating}){
     }, [backToHome])
     useEffect(()=>{
         if (editProfile){
-            nullSubmitStates()
             navigate('/home/profile/edit')
             setEditProfile(false)
         }
     }, [editProfile])
     useEffect(()=>{
         if(backToProfile){
-            nullSubmitStates()
-            navigate('/home/profile/')
             setBackToProfile(false)
+            navigate('/home/profile/')
         }
     }, [backToProfile])
     // modularizar maas
@@ -115,8 +105,7 @@ export function Profile({updating}){
     } else{
         return (<>
                 <Header username={user.username} msg={headerMsg}/>
-                {unExpectedError        && <UnExpectedError msg={unExpectedError}/>}
-                {loadingState           && <Loader state={loadingState}/>}
+                <Loader state={loadingState}/>
                 {profileData            && (
                     <div className="editing-container">
                         <UserPhoto url={profileData.photo_link} />

@@ -5,21 +5,20 @@ import { userIsAuthenticated } from "../tools/userIsAuthenticated"
 import { UserLogged } from "./UserLogged"
 import { getUserDetailAPI } from "../api/getUserDetailApi.api"
 import { useNavigate } from "react-router-dom"
-import { UnExpectedError } from "../components/UnExpectedError"
 import { UserForm } from "../components/UserForm"
 import { Loader } from "../components/Loader"
-import { SubmitStateContext } from "../context/SubmitStateContext"
-
+import { LoadingContext } from "../context/LoadingContext"
+import "../styles/Login.css"
 
 /**
  * Pagina creada para llevar logeo de usuarios
  */
 export function Login() {
-    let     {loadingState, unExpectedError, handleUnExpectedError, startLoading, nullSubmitStates, successfullyLoaded} = useContext(SubmitStateContext)
-    const   navigate                                                        = useNavigate()
-    const   {loginUser}                                                     = useContext(AuthContext)
-    let     [user, setUser]                                                 = useState(null)
-    let     [userLogged, setUserLogged]                                     = useState(false)
+    let     {loadingState, startLoading,  successfullyLoaded, setLoadingState}  = useContext(LoadingContext)
+    const   navigate                                                            = useNavigate()
+    const   {loginUser}                                                         = useContext(AuthContext)
+    let     [user, setUser]                                                     = useState(null)
+    let     [userLogged, setUserLogged]                                         = useState(false)
 
     const onLogin = async (data)=>{
         // en este punto ya se sabe que el usuario no esta autenticado
@@ -35,23 +34,23 @@ export function Login() {
                     successfullyLoaded()
                 } catch(error){
                     if (error.response.status === 401){
-                        handleUnExpectedError("Usuario o contraseña inválidos !") // en este caso el problema seria el password, no el username
+                        setLoadingState("Usuario o contraseña inválidos !") // en este caso el problema seria el password, no el username
                     } else {
-                        handleUnExpectedError("Error inesperado logeando usuario!")
+                        setLoadingState("Error inesperado logeando usuario!")
                     }
                 }
             }
         } catch(error){
             const errorMsg = error.response.data.error
             if (errorMsg ===  "user_not_exists"){
-                handleUnExpectedError("Usuario o contraseña inválidos !") // en este caso el problema seria el password, no el username
+                setLoadingState("Usuario o contraseña inválidos !") // en este caso el problema seria el password, no el username
             } else {
-                handleUnExpectedError("Error inesperado en repuesta de api userDetail!")
+                setLoadingState("Error inesperado en repuesta de api userDetail!")
             }
         }
     }
     useEffect(()=>{
-        nullSubmitStates()
+        setLoadingState(false)
     }, [])
     useEffect(()=>{
         // Se ejecutara cuando se finalice el proceso de logeo
@@ -77,12 +76,13 @@ export function Login() {
         return <UserLogged/> 
     } else{
         return (
-            <>
-                <Header/>
-                {unExpectedError && <UnExpectedError msg = {unExpectedError}/>}
-                {loadingState && <Loader state={loadingState}/>}
-                <UserForm onSubmitFunction={onLogin}login={true}/>
-            </>
+            <div className="centered-container">
+                <div className="login-container">
+                    <Header msg="Introduce tus credenciales para ingresar"/>
+                    <Loader state={loadingState}/>
+                    <UserForm onSubmitFunction={onLogin}login={true}/>
+                </div>
+            </div>
         )
     }
 }

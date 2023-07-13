@@ -6,7 +6,7 @@ import { SignUp } from "./pages/SignUp.jsx"
 import { AccountActivation } from "./pages/AccountActivation.jsx"
 import { AuthContextProvider } from "./context/AuthContext.jsx"
 import { Profile } from "./pages/Profile.jsx"
-import { SubmitStateContextProvider } from "./context/SubmitStateContext.jsx"
+import {  LoadingContextProvider } from "./context/LoadingContext.jsx"
 import { ChangePwd } from "./pages/ChangePwd.jsx"
 
 function App() {
@@ -21,67 +21,67 @@ function App() {
           exact 
           path="/signup/"            
           element={
-          <SubmitStateContextProvider>
+          <LoadingContextProvider>
             <SignUp />
-          </SubmitStateContextProvider>
+          </LoadingContextProvider>
           }/>
         <Route 
           exact 
           path="/signup/activate/"   
           element={
-          <SubmitStateContextProvider>
+          <LoadingContextProvider>
             <AccountActivation />
-          </SubmitStateContextProvider>
+          </LoadingContextProvider>
           }/>
         <Route 
           exact 
           path="/login/"             
           element={ 
-            <SubmitStateContextProvider>
+            <LoadingContextProvider>
               <AuthContextProvider> 
                 <Login/> 
               </AuthContextProvider>
-            </SubmitStateContextProvider>
+            </LoadingContextProvider>
           }/>
         <Route 
           exact 
           path='/home/'              
           element={
-          <SubmitStateContextProvider>
+          <LoadingContextProvider>
             <AuthContextProvider> 
               <Home/> 
             </AuthContextProvider>
-          </SubmitStateContextProvider>
+          </LoadingContextProvider>
           }/>
         <Route 
           exact 
           path='/home/profile/'      
           element={
-            <SubmitStateContextProvider>
+            <LoadingContextProvider>
               <AuthContextProvider> 
                 <Profile/> 
               </AuthContextProvider>
-            </SubmitStateContextProvider>
+            </LoadingContextProvider>
           }/>
         <Route 
           exact 
           path='/home/profile/edit'  
           element={
-            <SubmitStateContextProvider>
+            <LoadingContextProvider>
               <AuthContextProvider> 
                 <Profile updating={true}/> 
               </AuthContextProvider>
-            </SubmitStateContextProvider>
+            </LoadingContextProvider>
           }/>
         <Route 
           exact 
           path='/home/profile/change_pwd'  
           element={
-            <SubmitStateContextProvider>
+            <LoadingContextProvider>
               <AuthContextProvider> 
                 <ChangePwd/> 
               </AuthContextProvider>
-            </SubmitStateContextProvider>
+            </LoadingContextProvider>
           }/>
       </Routes>
     </BrowserRouter>

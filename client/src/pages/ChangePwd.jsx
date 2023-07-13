@@ -1,15 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { Header } from "../components/Header";
 import { userIsAuthenticated } from "../tools/userIsAuthenticated";
-import { UserLogged } from "./UserLogged";
 import { UserNotLogged } from "./UserNotLogged";
 import { AuthContext } from "../context/AuthContext";
 import { FormField } from "../components/FormField";
 import { useForm } from "react-hook-form";
 import {BASE_PASSWORD_CONSTRAINTS} from "../main"
 import { changeUserPwdAPI } from "../api/changePwd.api";
-import { SubmitStateContext } from "../context/SubmitStateContext";
-import { UnExpectedError } from "../components/UnExpectedError";
+import { LoadingContext } from "../context/LoadingContext";
 import { Loader } from "../components/Loader";
 import { useNavigate } from "react-router-dom";
 
@@ -21,14 +19,7 @@ export function ChangePwd(){
     const {register, handleSubmit, formState : {errors}} = useForm()
     const navigate = useNavigate()
     let   [backToProfile, setBackToProfile] = useState(false)
-    let     {
-        loadingState, 
-        unExpectedError, 
-        handleUnExpectedError, 
-        startLoading, 
-        setLoadingState, 
-        nullSubmitStates,
-        successfullyLoaded} = useContext(SubmitStateContext)
+    let   {loadingState, setLoadingState, successfullyLoaded, startLoading} = useContext(LoadingContext)
     const changePwd = handleSubmit(async (data)=>{
         if (data['old_password'] !== data['new_password']){
             startLoading()
@@ -38,13 +29,13 @@ export function ChangePwd(){
             } catch(error){
                 const errorMsg = error.response.data.error
                 if (errorMsg === 'invalid_pwd'){
-                    handleUnExpectedError('Error, la contraseña actual es invalida!')
+                    setLoadingState('Error, la contraseña actual es invalida!')
                 } else {
-                    handleUnExpectedError('Error inesperado en respuesta de servidor')
+                    setLoadingState('Error inesperado en respuesta de servidor')
                 }
             }
         } else {
-            handleUnExpectedError("No hay cambios")
+            setLoadingState("No hay cambios")
         }
     })
     useEffect(()=>{
@@ -53,7 +44,7 @@ export function ChangePwd(){
         }
     }, [backToProfile])
     useEffect(()=>{
-        nullSubmitStates()
+        setLoadingState(false)
     }, [])
     if (!userIsAuthenticated()){
         return (
@@ -63,8 +54,7 @@ export function ChangePwd(){
         return (
             <>
                 <Header username={user.username} msg="Modificando contraseña"/>
-                {unExpectedError && <UnExpectedError msg={unExpectedError}/>}
-                {loadingState && <Loader state={loadingState}/>}
+                <Loader state={loadingState}/>
                 <form onSubmit={changePwd}>
                     <FormField label="Contrasenia actual" errors={errors.old_password && errors.old_password.message}>
                         <input type="password" id="old_password" name="old_password"{...register("old_password", BASE_PASSWORD_CONSTRAINTS)}/>

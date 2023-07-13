@@ -10,8 +10,7 @@ export function Header({username, msg}) {
             <h1 className="header-title">
                 FriendNet{username && `, ${username}`}
             </h1>
-            {/* {msg && <h2 className="header-msg">{msg}</h2>} */}
-            <h2 className="header-msg">Saludos terricolas</h2>
+            {msg && <h2 className="header-msg">{msg}</h2>}
         </header>
     )
 }

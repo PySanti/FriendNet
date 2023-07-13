@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Header } from "../components/Header"
+import { Button } from "../components/Button"
 
 export function UserNotLogged(){
     const [backToRoot, setBackToRoot] = useState(false)
@@ -11,9 +12,9 @@ export function UserNotLogged(){
         }
     }, [backToRoot])
     return (
-        <>
-        <Header msg="Aun no estas autenticado"/>
-        <button onClick={()=>setBackToRoot(true)}>Logearme</button>
-        </>
+        <div className="centered-container">
+            <Header msg="Aun no estas logeado"/>
+            <Button msg="Logearme" onClickFunction={()=>setBackToRoot(true)}/>
+        </div>
     )
 }

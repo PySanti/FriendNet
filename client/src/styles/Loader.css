@@ -1,0 +1,12 @@
+.error-container{
+    width: 100%;
+    background-color: #f00;
+}
+
+.error-msg{
+    opacity: 0;
+    transition: opacity .5s;
+}
+.error-container >*{
+    opacity: 1;
+}

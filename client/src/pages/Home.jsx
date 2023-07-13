@@ -5,11 +5,10 @@ import { UserNotLogged } from "./UserNotLogged"
 import { Header } from "../components/Header"
 import { useNavigate } from "react-router-dom"
 import { getUsersListAPI } from "../api/getUsersList.api"
-import { SubmitStateContext } from "../context/SubmitStateContext"
+import { LoadingContext } from "../context/LoadingContext"
 import "../styles/home-styles.css"
 import { getChatBetweenAPI } from "../api/getChatBetween.api"
 import { Loader } from "../components/Loader"
-import { UnExpectedError } from "../components/UnExpectedError"
 import { sendMsgAPI } from "../api/sendMsg.api"
 import { UsersInterface } from "../components/UsersInterface"
 import { getUserNotifications } from "../api/getUserNotifications.api"
@@ -19,7 +18,7 @@ import { removeNotificationAPI } from "../api/removeNotification.api"
  * Pagina principal del sitio
  */
 export function Home() {
-    let {loadingState, unExpectedError, handleUnExpectedError, startLoading, nullSubmitStates, successfullyLoaded} = useContext(SubmitStateContext)
+    let {loadingState, setLoadingState,startLoading,  successfullyLoaded} = useContext(LoadingContext)
     let [notifications, setNotifications] = useState(null)
     let [messagesHistorial, setMessagesHistorial] = useState(null)
     let [clickedUser, setClickedUser] = useState(null)
@@ -48,7 +47,7 @@ export function Home() {
             }
             successfullyLoaded()
         } catch(error){
-            handleUnExpectedError('Error inesperado buscando chat!')
+            setLoadingState('Error inesperado buscando chat!')
         }
     }
     const loadUsersList = async ()=>{
@@ -58,7 +57,7 @@ export function Home() {
             setUserList(response.data.users_list)
             successfullyLoaded()
         } catch(error){
-            handleUnExpectedError('Error inesperado cargando datos de usuarios!')
+            setLoadingState('Error inesperado cargando datos de usuarios!')
         }
     }
     const onNotificationClick = async (notificationCode, notificationId)=>{
@@ -74,7 +73,7 @@ export function Home() {
                 onUserButtonClick(user)
                 successfullyLoaded()
             } else {
-                handleUnExpectedError("Error inesperado")
+                setLoadingState("Error inesperado")
             }
         } else {
             setGoToProfile(true)
@@ -88,8 +87,9 @@ export function Home() {
             if (response.data.notifications.length){
                 setNotifications(response.data.notifications)
             }
+            successfullyLoaded()
         } catch(error){
-            handleUnExpectedError('Error inesperado al cargar notificaciones del usuario')
+            setLoadingState('Error inesperado al cargar notificaciones del usuario')
         }
     }
     let [goToProfile, setGoToProfile] = useState(false)
@@ -99,7 +99,7 @@ export function Home() {
         }
     }, [goToProfile])
     useEffect(()=>{
-        nullSubmitStates()
+        setLoadingState(false)
         if (userIsAuthenticated() && !userList){
             loadUsersList()
             loadUserNotifications()
@@ -113,8 +113,6 @@ export function Home() {
             <>
                 <Header username={user.username}/>
                 <Loader state={loadingState}/>
-                <UnExpectedError msg={unExpectedError}/>
-
                 <UsersInterface 
                         usersList={userList} 
                         onUserButtonClick={onUserButtonClick} 
@@ -122,7 +120,6 @@ export function Home() {
                         clickedUser={clickedUser} 
                         messagesHistorial={messagesHistorial} 
                         onMsgSending={onMsgSending}/>
-
                 <button onClick={logoutUser}>Salir</button>
                 <button onClick={()=>{setGoToProfile(true)}}>Perfil</button>
                 <Notifications notificationList={notifications} onNotificationClick={onNotificationClick} />

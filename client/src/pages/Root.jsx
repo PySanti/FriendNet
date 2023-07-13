@@ -27,11 +27,11 @@ export function Root() {
     }else{
         return (
             <div className="centered-container">
-                <Header/>
+                <Header msg="Chatea con quien quieras !"/>
                 <section className="redirect-container">
-                    <div className="login-container">
-                        <div className="login-cotainer__title-container">
-                            <h4 className="login-container">
+                    <div className="signin-container">
+                        <div className="signin-cotainer__title-container">
+                            <h4 className="signin-container__title">
                                 Tienes cuenta? 
                             </h4>
                         </div>

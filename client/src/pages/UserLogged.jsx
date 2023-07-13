@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Header } from "../components/Header"
+import { Button } from "../components/Button"
 
 export function UserLogged(props){
     /**
@@ -14,9 +15,9 @@ export function UserLogged(props){
         }
     }, [backToHome])
     return (
-        <>
+        <div className="centered-container">
             <Header msg="Ya estas autenticado, ve al Home"/>
-            <button onClick={()=>setBackToHome(true)}>Home</button>
-        </>
+            <Button msg="Home" onClickFunction={()=>setBackToHome(true)}/>
+        </div>
     )
 }

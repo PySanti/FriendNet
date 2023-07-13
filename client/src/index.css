@@ -5,7 +5,7 @@
 body{
   --base-background-color : rgb(254,100,100);
   --base-background-gradient : linear-gradient(223deg, rgba(254,100,100,1) 0%, rgba(255,229,63,1) 100%);
-  background-color: #ffffff;
+  background-color: #fae8e8;
   font-family: 'Courier New', Courier, monospace;
 }
 .centered-container{
