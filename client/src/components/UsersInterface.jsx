@@ -1,6 +1,14 @@
 import { Chat } from "./Chat"
 import { FormatedUsersList } from "./FormatedUsersList"
 
+/**
+ *  Interfaz de chat con los usuarios
+ * @param {Array} usersList lista de usuarios de la pagina
+ * @param {Function} onUserButtonClick funcion que se ejecutara cuando se presione un UserButton
+ * @param {Number} session_user_id Id de usuario de la sesion activa
+ * @param {Object} clickedUser Objeto con datos del usuario clicado (puede ser null)
+ * @param {Function} onMsgSending funcion que se enviara cuando se mande un mensaje al clickedUser
+ */
 export function UsersInterface({usersList, onUserButtonClick, session_user_id, clickedUser, messagesHistorial, onMsgSending}){
     return (
         <div className="users-interface-container">

@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
+import './styles/Normalize.css'
+import './styles/fonts.css'
 import './index.css'
 
 export const BACKEND_URL = "http://127.0.0.1:8000/"

@@ -1,0 +1,25 @@
+
+.button{
+    border: none;
+    border-radius: 0px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    height: auto;
+    width: auto;
+    padding: .5rem;
+    color : #0a0a0a;
+    background : var(--base-background-color);
+    background : var(--base-background-gradient);
+    transition-property: outline border;
+    transition-duration: .1s;
+    outline: 0px solid var(--base-background-color);
+}
+
+.button:hover{
+    cursor: pointer;
+    border-bottom-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: 0px;
+    outline: 3px solid var(--base-background-color);
+}

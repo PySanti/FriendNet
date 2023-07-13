@@ -1,3 +1,4 @@
+import "../styles/Header.css"
 /**
  * Cabecera estandar de la pagina
  * @param {String} username nombre de usuario logeado
@@ -5,18 +6,12 @@
  */
 export function Header({username, msg}) {
     return (
-        <header>
-            <h1>
-                Welcome to friendNet{username && `, ${username}`}
+        <header className="header-container">
+            <h1 className="header-title">
+                FriendNet{username && `, ${username}`}
             </h1>
-            <p>
-                Chat with the people you want !
-            </p>
-            {msg && 
-            <h2>
-                {msg}
-            </h2>
-            }
+            {/* {msg && <h2 className="header-msg">{msg}</h2>} */}
+            <h2 className="header-msg">Saludos terricolas</h2>
         </header>
     )
 }

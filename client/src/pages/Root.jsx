@@ -3,6 +3,8 @@ import {Header} from "../components/Header.jsx"
 import { userIsAuthenticated } from "../tools/userIsAuthenticated.js"
 import { UserLogged } from "./UserLogged.jsx"
 import { useNavigate } from "react-router-dom"
+import "../styles/Root.css"
+import { Button } from "../components/Button.jsx"
 /**
  * Pagina de inicio
  */
@@ -24,27 +26,25 @@ export function Root() {
         return <UserLogged/>
     }else{
         return (
-            <>
+            <div className="centered-container">
                 <Header/>
-                <section>
-                    <div>
-                        <h2>
-                            Tienes cuenta? Logeate
-                        </h2>
-                        <button onClick={()=>setGotToLogin(true)}>
-                            Logearme 
-                        </button>
+                <section className="redirect-container">
+                    <div className="login-container">
+                        <div className="login-cotainer__title-container">
+                            <h4 className="login-container">
+                                Tienes cuenta? 
+                            </h4>
+                        </div>
+                        <Button msg="Logearme" onClickFunction={()=>setGotToLogin(true)}/>
                     </div>
-                    <div>
-                        <h2>
-                            Aun no tienes cuenta? Registrate
-                        </h2>
-                        <button onClick={()=>setGoToSignUp(true)}>
-                            Registrarme
-                        </button>
+                    <div className="signup-container">
+                        <h4>
+                            Aun no tienes cuenta? 
+                        </h4>
+                        <Button msg="Registrarme" onClickFunction={()=>setGoToSignUp(true)}/>
                     </div>
                 </section>
-            </>
+            </div>
         )
     }
 }

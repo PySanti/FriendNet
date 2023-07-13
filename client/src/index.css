@@ -1,4 +1,22 @@
+*{
+  font-family: "futura-pt";
+  font-size: 16px;
+}
 body{
-  background-color: #969696;
+  --base-background-color : rgb(254,100,100);
+  --base-background-gradient : linear-gradient(223deg, rgba(254,100,100,1) 0%, rgba(255,229,63,1) 100%);
+  background-color: #ffffff;
   font-family: 'Courier New', Courier, monospace;
+}
+.centered-container{
+  /*
+  * Para pages de poco contenido que deben ser 
+  * renderizados en el centro de la pantalla
+  */
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

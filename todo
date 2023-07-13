@@ -17,7 +17,8 @@
     // todo: repasar todo lo aprendido en el proyecto, revisando todo el mismo
 
 
-// Logica:
+// Logica
+    // agregar mensaje de error cuando el server este caido en login
     // agregar eliminacion de notificaciones manual
     // mejorar acceso a chat desde notificaciones (potencial busqueda muy lenta)
     // agregar actualizacion de historial de mensajes cuando se envian
