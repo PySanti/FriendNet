@@ -18,6 +18,7 @@
 
 
 // Logica
+    // poner capitalize en todos los botones
     // agregar ambos signos de interrogacion y exclamacion
     // agregar mensaje de error cuando el server este caido en login
     // agregar eliminacion de notificaciones manual
