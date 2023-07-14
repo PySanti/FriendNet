@@ -28,7 +28,7 @@ export function UserForm({userData, onSubmitFunction, login, updating, onPhotoCh
                     <FormField  label="Contraseña" errors={errors.password && errors.password.message}>
                         <input type="password"name="password"id="password"{...register("password", BASE_PASSWORD_CONSTRAINTS)}/>
                     </FormField>
-                    <Button msg="acceder" type="submit"/>
+                    <Button msg="Acceder" type="submit"/>
                 </Form>
         )
     } else {
@@ -60,11 +60,11 @@ export function UserForm({userData, onSubmitFunction, login, updating, onPhotoCh
                             <FormField label="Confirma la contraseña" errors={errors.confirmPwd  && errors.confirmPwd.message}>
                                 <input defaultValue="16102005 python"type="password" id="confirmPwd" name="confirmPwd"{...register("confirmPwd", {    validate : (confirmPwd) =>{        if (confirmPwd != watch("password")){            return "Las contraseñas no son iguales"        }    }})}/>
                             </FormField>
-                            <Button type="submit" msg="registrar"/>
+                            <Button type="submit" msg="Registrar"/>
                         </>
                     }
                     {updating && 
-                        <Button type="submit" msg="actualizar"/>
+                        <Button type="submit" msg="Actualizar"/>
                     }
                 </Form>
         )
