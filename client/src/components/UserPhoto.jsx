@@ -6,10 +6,11 @@ import { useState } from "react"
 import "../styles/UserPhoto.css"
 import { FormField } from "./FormField"
 import { Button } from "./Button"
-export function UserPhoto({url, withInput, onPhotoUpdate}){
+export function UserPhoto({url, withInput, onPhotoUpdate, photoFileSetter}){
     let [currentPhoto, setCurrentPhoto] = useState(false)
     const onPhotoChange = (e)=>{
         const file = e.target.files[0];
+        photoFileSetter(e.target.files)
         const reader = new FileReader();
         reader.addEventListener('load', function() {
             setCurrentPhoto(reader.result);

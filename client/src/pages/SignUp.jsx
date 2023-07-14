@@ -37,8 +37,11 @@ export function SignUp() {
                 delete data.confirmPwd // el confirmPwd no puede ser enviado al backend
                 delete data.photo
                 try {
-                    data['photo_link']              = await saveCloudinary(photo) // el serializer el backend recibe photo_link, no la foto en si
-                    // data['photo_link'] = "(test)"
+                    if (photo){
+                        console.log(photo)
+                        data['photo_link']              = await saveCloudinary(photo) // el serializer el backend recibe photo_link, no la foto en si
+                        // data['photo_link'] = "(test)"
+                    }
                     try{
                         const createUserResponse        = await createUsuarioAPI(data)
                         setUserData({

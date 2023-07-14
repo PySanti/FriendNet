@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form"
+import { set, useForm } from "react-hook-form"
 import { FormField } from "./FormField"
 import { BASE_FIRSTNAMES_MAX_LENGTH, BASE_LASTNAMES_MAX_LENGTH, BASE_PASSWORD_CONSTRAINTS, BASE_USERNAME_CONSTRAINTS, BASE_USERNAME_MAX_LENGTH } from "../main"
 import { Form } from "./Form"
@@ -18,7 +18,9 @@ import { useState } from "react"
  */
 export function UserForm({userData, onSubmitFunction, login, updating, onPhotoChange, userPhotoUrl}){
     const {register, handleSubmit, formState: {errors}, watch}  = useForm()
+    let [currentPhotoFile, setCurrentPhotoFile ] = useState(null)
     const onSubmit = handleSubmit((data)=>{
+        data.photo = currentPhotoFile
         onSubmitFunction(data)
     })
 
@@ -68,7 +70,7 @@ export function UserForm({userData, onSubmitFunction, login, updating, onPhotoCh
                             <Button type="submit" msg="Actualizar"/>
                         }
                     </Form>
-                    {updating ?  <UserPhoto url={userPhotoUrl} withInput={true} onPhotoUpdate={onPhotoChange}/> : <UserPhoto  withInput={true}   />}
+                    {updating ?  <UserPhoto url={userPhotoUrl} withInput={true} onPhotoUpdate={onPhotoChange} photoFileSetter={setCurrentPhotoFile}/> : <UserPhoto  withInput={true}  photoFileSetter={setCurrentPhotoFile}/>}
                 </div>
         )
     }
