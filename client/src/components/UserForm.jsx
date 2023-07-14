@@ -5,6 +5,7 @@ import { Form } from "./Form"
 import { Button } from "./Button"
 import "../styles/UserForm.css"
 import { UserPhoto } from "./UserPhoto"
+import { useState } from "react"
 /**
  * Componente creado para SignUp.jsx, EditProfile.jsx y Login.jsx
  * Retorna un formulario con soporte para errores que funcionara
@@ -67,7 +68,7 @@ export function UserForm({userData, onSubmitFunction, login, updating, onPhotoCh
                             <Button type="submit" msg="Actualizar"/>
                         }
                     </Form>
-                    <UserPhoto url={userPhotoUrl} withInput={true}/>
+                    {updating ?  <UserPhoto url={userPhotoUrl} withInput={true} onPhotoUpdate={onPhotoChange}/> : <UserPhoto  withInput={true}   />}
                 </div>
         )
     }

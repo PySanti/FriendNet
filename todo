@@ -19,6 +19,7 @@
 
 
 // Logica
+    // refactorizar usando operadores ternarios en lugar de operador de react donde sea necesario
     // limitar tamanio de imagenes y formato
     // hacer comprobaciones de existencia antes de hacer llamados a componentes para evitar ejecuciones de funciones innecesarias
     // poner capitalize en todos los botones

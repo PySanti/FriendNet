@@ -92,6 +92,9 @@ export function Profile({updating}){
         }
     }, [editProfile])
     useEffect(()=>{
+        console.log('Foto cambiada')
+    }, [photoChanged])
+    useEffect(()=>{
         if(backToProfile){
             setBackToProfile(false)
             navigate('/home/profile/')
@@ -108,7 +111,7 @@ export function Profile({updating}){
                 <Loader state={loadingState}/>
                 {profileData            && (
                     <div className="editing-container">
-                        {updating && <UserForm updating={true}  onSubmitFunction={onUpdate} userData={profileData} onPhotoChange={()=>setPhotoChanged(true)}/> }
+                        {updating && <UserForm updating={true}  onSubmitFunction={onUpdate} userData={profileData} onPhotoChange={()=>setPhotoChanged(true)} userPhotoUrl={profileData.photo_link}/> }
                         {!updating && 
                         <>
                             <UserPhoto url={profileData.photo_link} withInput={false}/>

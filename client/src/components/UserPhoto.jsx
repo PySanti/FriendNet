@@ -6,8 +6,8 @@ import { useState } from "react"
 import "../styles/UserPhoto.css"
 import { FormField } from "./FormField"
 import { Button } from "./Button"
-export function UserPhoto({url, withInput}){
-    let [currentPhoto, setCurrentPhoto] = useState(null)
+export function UserPhoto({url, withInput, onPhotoUpdate}){
+    let [currentPhoto, setCurrentPhoto] = useState(false)
     const onPhotoChange = (e)=>{
         const file = e.target.files[0];
         const reader = new FileReader();
@@ -16,16 +16,18 @@ export function UserPhoto({url, withInput}){
         });
         if (file) {
             reader.readAsDataURL(file);
+            if (onPhotoUpdate){
+                onPhotoUpdate()
+            }
         }
     }
     return (
         <div className="user-photo-container">
-            {!withInput && <img className="user-photo"src={url} alt="Imagen no encontrada!" width="100px" height="100px"></img>}
+            <img className="user-photo"src={currentPhoto ? currentPhoto : (url ? url : null)} alt="Imagen no encontrada!" width="100px" height="100px"></img>
             {withInput && 
                 <>
-                    <img className="user-photo"src={currentPhoto} alt="Imagen no encontrada!" width="100px" height="100px"></img>
                     <div className="user-photo-input-container">
-                        <input  id="photo-input" className="user-photo-input" type="file" accept="" onChange={onPhotoChange}/>
+                        <input  id="photo-input" className="user-photo-input" type="file" accept="" onChange={onPhotoChange} />
                         <Button msg="Seleccionar" onClickFunction={()=>document.getElementById("photo-input").click()}/>
                     </div>
                 </>
