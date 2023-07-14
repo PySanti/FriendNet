@@ -108,21 +108,8 @@ export function Profile({updating}){
                 <Loader state={loadingState}/>
                 {profileData            && (
                     <div className="editing-container">
-                        <UserPhoto url={profileData.photo_link} />
-                        {updating && <UserForm updating={true}  onSubmitFunction={onUpdate} userData={profileData} onPhotoChange={()=>setPhotoChanged(true)}/> }
-                        {!updating && 
-                        <FormatedUserData 
-                        userData={profileData} 
-                        non_showable_attrs={["is_active", "id", "photo_link"]} 
-                        attrs_traductions={
-                            {
-                                "username" : "Nombre de usuario", 
-                                "email" : "Correo electrónico", 
-                                "first_names" : "Nombres",
-                                "last_names" : "Apellidos",
-                                "age" : "Edad",
-                            }
-                            }/>}
+                        {updating && <UserForm updating={true}  onSubmitFunction={onUpdate} userData={profileData} onPhotoChange={()=>setPhotoChanged(true)} userPhotoUrl={profileData.photo_link}/> }
+                        {!updating && <FormatedUserData userData={profileData} non_showable_attrs={["is_active", "id", "photo_link"]} attrs_traductions={    {        "username" : "Nombre de usuario",         "email" : "Correo electrónico",         "first_names" : "Nombres",        "last_names" : "Apellidos",        "age" : "Edad",    }    }/>}
                     </div>
                 )}
                 {!updating &&(

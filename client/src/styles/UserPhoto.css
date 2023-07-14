@@ -1,0 +1,21 @@
+.user-photo-container{
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: var(--base-background-color);
+    width: 20vw;
+    height: 20vh;
+}
+
+.user-photo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+}
