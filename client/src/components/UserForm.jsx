@@ -33,7 +33,7 @@ export function UserForm({userData, onSubmitFunction, login, updating, onPhotoCh
         )
     } else {
         return (
-                <Form onSubmit={onSubmit}> 
+                <Form onSubmitFunction={onSubmit}> 
                     <FormField label="Nombre de usuario" errors={errors.username &&  errors.username.message}>
                         <input defaultValue={userData && userData.username}maxLength={BASE_USERNAME_MAX_LENGTH}type="text" id="username" name="username"{...register("username", BASE_USERNAME_CONSTRAINTS)}/>
                     </FormField>

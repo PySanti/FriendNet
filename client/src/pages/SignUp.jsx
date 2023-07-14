@@ -6,7 +6,6 @@ import { createUsuarioAPI }         from "../api/createUsuario.api";
 import { checkExistingUserAPI } from "../api/checkExistingUser.api";
 
 // styles
-import "../styles/signup-styles.css"
 import {   useNavigate } from "react-router-dom";
 import { userIsAuthenticated } from "../tools/userIsAuthenticated";
 import { UserLogged } from "./UserLogged";
@@ -14,6 +13,8 @@ import { UserForm } from "../components/UserForm";
 import { Loader } from "../components/Loader";
 import { LoadingContext } from "../context/LoadingContext";
 import { saveCloudinary } from "../tools/saveCloudinary";
+
+import "../styles/SignUp.css"
 
 
 // constants
@@ -72,11 +73,13 @@ export function SignUp() {
         return <UserLogged/>
     } else {
         return (
-            <>
-                <Header msg="Regístrate de una vez!"/>
-                <Loader state={loadingState}/>
-                <UserForm onSubmitFunction={onSignUp} updating={false} />
-            </>
+            <div className="centered-container">
+                <div className="signup-page-container">
+                    <Header msg="Regístrate de una vez!"/>
+                    <Loader state={loadingState}/>
+                    <UserForm onSubmitFunction={onSignUp} updating={false} />
+                </div>
+            </div>
         )
     }
 }
