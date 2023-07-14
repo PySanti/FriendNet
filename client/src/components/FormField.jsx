@@ -12,7 +12,7 @@ export function FormField({errors, label, children}){
         <div className="form-field-container">
             <InputError msg={errors}/>
             <div className="input-pair-container">
-                <Label msg={label}/>
+                {label && <Label msg={label}/>}
                 {children}
             </div>
         </div>

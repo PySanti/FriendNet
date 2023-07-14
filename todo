@@ -4,6 +4,7 @@
 
 
 //Produccion:
+    // comprobar funcionamiento en todos los navegadores y con todas las resoluciones
     // mejorar seguridad en el removeNotification
     //todo: agrgar documentacion a la api
     // todo: pruebas unitarias
@@ -18,6 +19,8 @@
 
 
 // Logica
+    // limitar tamanio de imagenes y formato
+    // hacer comprobaciones de existencia antes de hacer llamados a componentes para evitar ejecuciones de funciones innecesarias
     // poner capitalize en todos los botones
     // agregar ambos signos de interrogacion y exclamacion
     // agregar mensaje de error cuando el server este caido en login

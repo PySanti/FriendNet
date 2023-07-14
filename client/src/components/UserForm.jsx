@@ -67,10 +67,7 @@ export function UserForm({userData, onSubmitFunction, login, updating, onPhotoCh
                             <Button type="submit" msg="Actualizar"/>
                         }
                     </Form>
-                    <UserPhoto url={userPhotoUrl}/>
-                    {/* <UserPhoto label="Foto de perfil" errors={errors.photo  && errors.photo.message}>
-                        <input className="user-photo-input"type="file"id="photo" name="photo" onChange={onPhotoChange && onPhotoChange} />
-                    </UserPhoto> */}
+                    <UserPhoto url={userPhotoUrl} withInput={true}/>
                 </div>
         )
     }
