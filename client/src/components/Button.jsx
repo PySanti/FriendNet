@@ -5,14 +5,14 @@ import "../styles/Button.css"
  * @param {Function} onClickFunction
  * @param {Boolean} isSubmit sera true en caso de que sea un button de formulario
  */
-export function Button({msg, onClickFunction, isSubmit}){
+export function Button({buttonText, onClickFunction, isSubmit}){
     const baseClassName = "button "
     return (
         <div className="button-container">
-            {isSubmit ? 
-            <button className={baseClassName+"submit-button"} type="submit">{msg}</button> 
-            : 
-            <button className={baseClassName} onClick={onClickFunction}>{msg}</button>}
+            <button 
+                className={isSubmit ? baseClassName+" submit-button" : baseClassName} 
+                type={isSubmit && "submit"}
+                onClick={!isSubmit && onClickFunction}>{buttonText}</button>
         </div>
     )
 

@@ -26,7 +26,7 @@ export function UserPhoto({url, withInput, photoFileSetter}){
                 <>
                     <div className="user-photo-input-container">
                         <input  id="photo-input" className="user-photo-input" type="file" accept="" onChange={onPhotoChange} />
-                        <Button msg="Seleccionar" onClickFunction={()=>document.getElementById("photo-input").click()}/>
+                        <Button buttonText="Seleccionar" onClickFunction={()=>document.getElementById("photo-input").click()}/>
                     </div>
                 </>
             }

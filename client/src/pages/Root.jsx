@@ -36,13 +36,13 @@ export function Root() {
                                     Tienes cuenta? 
                                 </h4>
                             </div>
-                            <Button msg="Logearme" onClickFunction={()=>setGotToLogin(true)}/>
+                            <Button buttonText="Logearme" onClickFunction={()=>setGotToLogin(true)}/>
                         </div>
                         <div className="signup-container">
                             <h4>
                                 Aun no tienes cuenta? 
                             </h4>
-                            <Button msg="Registrarme" onClickFunction={()=>setGoToSignUp(true)}/>
+                            <Button buttonText="Registrarme" onClickFunction={()=>setGoToSignUp(true)}/>
                         </div>
                     </section>
                 </div>

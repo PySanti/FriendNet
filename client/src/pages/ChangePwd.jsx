@@ -63,9 +63,9 @@ export function ChangePwd(){
                     <FormField label="Contraseña nueva" errors={errors.new_password && errors.new_password.message}>
                         <input type="password" id="new_password" name="new_password"{...register("new_password", BASE_PASSWORD_CONSTRAINTS)}/>
                     </FormField>
-                    <Button  msg="Actualizar" isSubmit/>
+                    <Button  buttonText="Actualizar" isSubmit/>
                 </Form>
-                <Button msg="Volver" onClickFunction={()=>setBackToProfile(true)}/>
+                <Button buttonText="Volver" onClickFunction={()=>setBackToProfile(true)}/>
             </>
         )
     }

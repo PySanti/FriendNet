@@ -15,7 +15,7 @@ export function UserNotLogged(){
         <div className="centered-container">
             <div className="usernot-logged-container">
                 <Header msg="Aun no estas logeado"/>
-                <Button msg="Logearme" onClickFunction={()=>setBackToRoot(true)}/>
+                <Button buttonText="Logearme" onClickFunction={()=>setBackToRoot(true)}/>
             </div>
         </div>
     )

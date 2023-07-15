@@ -19,7 +19,7 @@ export function UserLogged(props){
         <div className="centered-container">
             <div className="user-logged-container">
                 <Header msg="Ya estas autenticado, ve al Home"/>
-                <Button msg="Home" onClickFunction={()=>setBackToHome(true)}/>
+                <Button buttonText="Home" onClickFunction={()=>setBackToHome(true)}/>
             </div>
         </div>
     )

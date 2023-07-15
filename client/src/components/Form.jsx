@@ -10,7 +10,7 @@ export function Form({children, onSubmitFunction, buttonMsg}){
     return (
         <form className="form-container" onSubmit={onSubmitFunction}>
             {children}
-            <Button msg={buttonMsg} isSubmit/>
+            <Button buttonText={buttonMsg} isSubmit/>
         </form>
     )
 }
