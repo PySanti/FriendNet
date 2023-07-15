@@ -2,7 +2,8 @@
  * Contenedor para foto de perfil de usuario
  * @param {String} url 
  * @param {Boolean}  withInput sera true si se desea que el componente contenga una opcion para modificar la foto
- * @param {Function} photoFileSetter se ejecutara cuando se cambie la foto
+ * @param {Function} photoFileSetter se ejecutara cuando se cambie la foto y la misma se le sera enviada por parametro. 
+ * Diseniado para trabajar con states dentro de un formulario
  */
 import { useState } from "react"
 import "../styles/UserPhoto.css"
