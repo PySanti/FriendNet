@@ -2,3 +2,6 @@
     display: flex;
     align-items: center;
 }
+.password-input{
+    letter-spacing: -.2rem;
+}
