@@ -65,7 +65,7 @@ export function UserForm({userData, onSubmitFunction, login, updating, userPhoto
                         </>
                     }
                 </Form>
-                <UserPhoto withInput photoFileSetter={setCurrentPhotoFile} {...updating && {url:userPhotoUrl}}/>
+                <UserPhoto withInput photoFileSetter={setCurrentPhotoFile} url={updating ?  userPhotoUrl : null}/>
             </div>
         )
     }
