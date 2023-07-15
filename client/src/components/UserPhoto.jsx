@@ -1,11 +1,13 @@
 /**
  * Contenedor para foto de perfil de usuario
  * @param {String} url 
+ * @param {Boolean}  withInput sera true si se desea que el componente contenga una opcion para modificar la foto
+ * @param {Function} photoFileSetter se ejecutara cuando se cambie la foto
  */
 import { useState } from "react"
 import "../styles/UserPhoto.css"
-import { FormField } from "./FormField"
 import { Button } from "./Button"
+
 export function UserPhoto({url, withInput, photoFileSetter}){
     let [currentPhoto, setCurrentPhoto] = useState(false)
     const onPhotoChange = (e)=>{
@@ -21,7 +23,7 @@ export function UserPhoto({url, withInput, photoFileSetter}){
     }
     return (
         <div className="user-photo-container">
-            <img className="user-photo"src={currentPhoto ? currentPhoto : (url ? url : null)} alt="Imagen no encontrada!" width="100px" height="100px"></img>
+            <img className="user-photo"src={currentPhoto ? currentPhoto : (url ? url : null)} alt="Imagen no encontrada!" ></img>
             {withInput && 
                 <>
                     <div className="user-photo-input-container">
