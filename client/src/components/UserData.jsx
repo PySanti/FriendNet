@@ -23,10 +23,9 @@ export function UserData({userData, non_showable_attrs, attrs_traductions}){
             )
         }
     }
-    const compList = Object.keys(userData).map(formatingFunction)
     return (
         <div className="user-data-container">
-            {compList}
+            {Object.keys(userData).map(formatingFunction)}
         </div>
     )
 }
