@@ -9,11 +9,10 @@ export function UsersList({usersList, onClickEvent}){
     const formatingFunction = (user)=>{
         return <UserButton key={user.username}user={user}onClickFunction={onClickEvent} />
     }
-    const compList = usersList.map(formatingFunction)
     return (
         <>
             <div className="users-container">
-                {compList}
+                {usersList.map(formatingFunction)}
             </div>
         </>
     )
