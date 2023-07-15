@@ -4,7 +4,7 @@ import { userIsAuthenticated } from "../tools/userIsAuthenticated";
 import { UserNotLogged } from "./UserNotLogged";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { FormatedUserData } from "../components/FormatedUserData";
+import { UserData } from "../components/UserData";
 import { Loader } from "../components/Loader";
 import { LoadingContext} from "../context/LoadingContext";
 import { UserForm } from "../components/UserForm";
@@ -115,7 +115,7 @@ export function Profile({updating}){
                         {!updating && 
                         <>
                             <UserPhoto url={profileData.photo_link} withInput={false}/>
-                            <FormatedUserData 
+                            <UserData 
                             userData={profileData} 
                             non_showable_attrs={["is_active", "id", "photo_link"]} 
                             attrs_traductions={

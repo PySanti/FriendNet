@@ -26,20 +26,19 @@ export function UserForm({userData, onSubmitFunction, login, updating, onPhotoCh
 
     if (login){
         return (
-                <Form onSubmitFunction={onSubmit}>
+                <Form onSubmitFunction={onSubmit} buttonMsg="Acceder">
                     <FormField  label="Nombre de usuario" errors={errors.username && errors.username.message}>
                         <input type="text"name="username"id="username"maxLength={BASE_USERNAME_MAX_LENGTH}{...register("username", BASE_USERNAME_CONSTRAINTS)}/>
                     </FormField>
                     <FormField  label="Contraseña" errors={errors.password && errors.password.message}>
                         <input type="password"name="password"id="password"{...register("password", BASE_PASSWORD_CONSTRAINTS)}/>
                     </FormField>
-                    <Button msg="Acceder" type="submit"/>
                 </Form>
         )
     } else {
         return (
                 <div className="user-form-container">
-                    <Form onSubmitFunction={onSubmit}> 
+                    <Form onSubmitFunction={onSubmit} buttonMsg={updating ? "Actualizar" : "Registrar"}> 
                         <FormField label="Nombre de usuario" errors={errors.username &&  errors.username.message}>
                             <input defaultValue={userData && userData.username}maxLength={BASE_USERNAME_MAX_LENGTH}type="text" id="username" name="username"{...register("username", BASE_USERNAME_CONSTRAINTS)}/>
                         </FormField>
@@ -63,11 +62,7 @@ export function UserForm({userData, onSubmitFunction, login, updating, onPhotoCh
                                 <FormField label="Confirma la contraseña" errors={errors.confirmPwd  && errors.confirmPwd.message}>
                                     <input defaultValue="16102005 python"type="password" id="confirmPwd" name="confirmPwd"{...register("confirmPwd", {    validate : (confirmPwd) =>{        if (confirmPwd != watch("password")){            return "Las contraseñas no son iguales"        }    }})}/>
                                 </FormField>
-                                <Button type="submit" msg="Registrar"/>
                             </>
-                        }
-                        {updating && 
-                            <Button type="submit" msg="Actualizar"/>
                         }
                     </Form>
                     {updating ?  <UserPhoto url={userPhotoUrl} withInput={true} onPhotoUpdate={onPhotoChange} photoFileSetter={setCurrentPhotoFile}/> : <UserPhoto  withInput={true}  photoFileSetter={setCurrentPhotoFile}/>}

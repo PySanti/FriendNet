@@ -1,5 +1,5 @@
 import { Chat } from "./Chat"
-import { FormatedUsersList } from "./FormatedUsersList"
+import { UsersList } from "./UsersList"
 
 /**
  *  Interfaz de chat con los usuarios
@@ -14,7 +14,7 @@ export function UsersInterface({usersList, onUserButtonClick, session_user_id, c
         <div className="users-interface-container">
             {usersList && 
                 <>
-                    <FormatedUsersList usersList={usersList} onClickEvent={onUserButtonClick}/>
+                    <UsersList usersList={usersList} onClickEvent={onUserButtonClick}/>
                     <Chat chatingUser={clickedUser} messages={messagesHistorial} session_user_id={session_user_id} onMsgSending={onMsgSending}/>
                 </>
             }

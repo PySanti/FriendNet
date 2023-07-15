@@ -2,7 +2,7 @@ import { UserPhoto } from "./UserPhoto";
 
 /**
  * Cabecera del chat con datos del usuario
- * @param {Object} chatingUser
+ * @param {Object} chatingUser datos del usuario con el que se esta chateando
  */
 export function ChattingUserHeader({chatingUser}){
     return (
@@ -10,7 +10,9 @@ export function ChattingUserHeader({chatingUser}){
             {chatingUser &&
                 <>
                     <UserPhoto url={chatingUser.photo_link}/>
-                    <h3>{chatingUser.username}</h3>
+                    <div className="chatting-user__username-container">
+                        <h3 className="chatting-user__username">{chatingUser.username}</h3>
+                    </div>
                 </>
             }
         </div>

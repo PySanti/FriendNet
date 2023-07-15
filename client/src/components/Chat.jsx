@@ -1,4 +1,4 @@
-import { FormatedMessages } from "./FormatedMessages"
+import { Messages } from "./Messages"
 import { ChattingUserHeader } from "./ChatingUserHeader"
 import { MsgSendingInput } from "./MsgSendingInput"
 
@@ -13,8 +13,8 @@ import { MsgSendingInput } from "./MsgSendingInput"
 export function Chat({messages, session_user_id, onMsgSending, chatingUser}){
     return (
         <div className="chat-container">
-            <ChattingUserHeader chatingUser={chatingUser}/>
-            <FormatedMessages messages={messages} session_user_id={session_user_id}/>
+            {chatingUser && <ChattingUserHeader chatingUser={chatingUser}/>}
+            <Messages messages={messages} session_user_id={session_user_id}/>
             {chatingUser && <MsgSendingInput onMsgSending={onMsgSending}/>}
         </div>
     )

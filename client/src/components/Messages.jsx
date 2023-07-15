@@ -1,0 +1,20 @@
+/**
+ * Recibe la lista de mensajes y retorna un contenedor HTML renderizable
+ * @param {Array} messages lista de mensajes
+ * @param {Number} session_user_id  id de usuario de sesion
+ */
+export function Messages({messages, session_user_id }){
+    let compList = undefined
+    const formatingFunction = (msg)=>{
+            const margin = session_user_id === msg.parent_id? "flex-end" : "flex-start"
+            return <div style={{"alignSelf" : margin}} key={msg.id}>{msg.content}</div>
+    }
+    if (messages){
+        compList =  messages.map(formatingFunction)
+    }
+    return (
+        <div className="messages-container">
+            {compList ? compList : <h3 className="messages-container__title">Selecciona un usuario</h3>}
+        </div>
+    )
+}

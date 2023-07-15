@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form"
 import { BASE_MESSAGE_MAX_LENGTH } from "../main"
+import { Button } from "./Button"
 
 /**
  * Input creado para el envio de mensajes
@@ -13,7 +14,7 @@ export function MsgSendingInput({onMsgSending}){
     return (
         <form className="input-container" onSubmit={onSubmit}>
             <input type="text" maxLength={BASE_MESSAGE_MAX_LENGTH} {...register("msg")}/>
-            <button type="submit">enviar</button>
+            <Button msg="enviar" isSubmit/>
         </form>
     )
 }

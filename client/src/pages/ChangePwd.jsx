@@ -10,6 +10,7 @@ import { changeUserPwdAPI } from "../api/changePwd.api";
 import { LoadingContext } from "../context/LoadingContext";
 import { Loader } from "../components/Loader";
 import { useNavigate } from "react-router-dom";
+import { Button } from "../components/Button";
 
 /**
  * Componente creado para cambio de contraseña
@@ -62,9 +63,9 @@ export function ChangePwd(){
                     <FormField label="Contraseña nueva" errors={errors.new_password && errors.new_password.message}>
                         <input type="password" id="new_password" name="new_password"{...register("new_password", BASE_PASSWORD_CONSTRAINTS)}/>
                     </FormField>
-                    <button type="submit">actualizar</button>
+                    <Button  msg="Actualizar" isSubmit/>
                 </Form>
-                <button onClick={()=>setBackToProfile(true)}>volver</button>
+                <Button msg="Volver" onClickFunction={()=>setBackToProfile(true)}/>
             </>
         )
     }

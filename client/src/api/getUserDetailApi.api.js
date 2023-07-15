@@ -8,9 +8,6 @@ import { config } from "./baseConfig.api";
  * @returns {Promise} la promesa del servidor
  */
 export async function getUserDetailAPI(username){
-    /**
-     * Recibe nombre de usuario, retorna la informacion "showable" del mismo
-     */
     const data = {
         'username' : username
     }

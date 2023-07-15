@@ -5,16 +5,16 @@ import { UserButton } from "./UserButton"
  * @param {Array} usersList lista de usuarios
  * @param {Function} onClickEvent evento a ejecutar cuando los usersButtons sean presionados
  */
-export function FormatedUsersList({usersList, onClickEvent}){
-    const list=usersList.map((user)=>{
+export function UsersList({usersList, onClickEvent}){
+    const formatingFunction = (user)=>{
         return <UserButton key={user.username}user={user}onClickFunction={onClickEvent} />
-    })
+    }
+    const compList = usersList.map(formatingFunction)
     return (
-    <>
-        <div className="users-container">
-            {list}
-        </div>
-    </>
+        <>
+            <div className="users-container">
+                {compList}
+            </div>
+        </>
     )
-
 }
