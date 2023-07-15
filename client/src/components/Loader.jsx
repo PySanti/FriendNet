@@ -9,14 +9,9 @@ export function Loader({state}){
      * tiene contenido, para que cuando lo empiece a tener, no se vea una 
      * modificacion de espacio en el DOM
      */
-    const cls = "state-msg"
     return (
         <div className="state-container">
-            {state ?
-                <h2 className={cls+" state-activated"}>{state}</h2>
-                :
-                <h2 className={cls}></h2>
-            }
+            <h2 className={"state-msg"+{...state && " state-activated"}}>{state}</h2>
         </div>
     )
 }
