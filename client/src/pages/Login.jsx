@@ -80,7 +80,7 @@ export function Login() {
                 <div className="login-container">
                     <Header msg="Introduce tus credenciales para ingresar"/>
                     <Loader state={loadingState}/>
-                    <UserForm onSubmitFunction={onLogin}login={true}/>
+                    <UserForm onSubmitFunction={onLogin} login />
                 </div>
             </div>
         )

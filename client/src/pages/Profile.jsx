@@ -24,7 +24,6 @@ export function Profile({updating}){
     let [profileData, setProfileData ] = useState(null)
     let     [backToHome, setBackToHome]                         = useState(false)
     let     [editProfile, setEditProfile]                       = useState(false)
-    let     [photoChanged, setPhotoChanged]                     = useState(false)
     let     [backToProfile, setBackToProfile]                   = useState(false)
     let     [changePwd, setChangePwd]                           = useState(false)
     let     {loadingState, startLoading, setLoadingState, successfullyLoaded} = useContext(LoadingContext)
@@ -37,6 +36,7 @@ export function Profile({updating}){
             try{
                 const response = await getUserDetailAPI(user.username)
                 setProfileData(response.data)
+                console.log(response.data)
                 successfullyLoaded()
             } catch(error){
                 setLoadingState("Error inesperado en repuesta del servidor")
@@ -46,11 +46,8 @@ export function Profile({updating}){
     const onUpdate = async (data)=>{
         startLoading()
         try{
-            const photo = data['photo']
+            data['photo_link'] = data['photo'] ? await saveCloudinary(data['photo']) : profileData.photo_link
             delete data['photo']
-            console.log(profileData)
-            data['photo_link'] = photoChanged ? await saveCloudinary(photo) : profileData.photo_link
-            setPhotoChanged(false)
             const sendingData = data
             // se prepara al data para la comparativa
             data.id = profileData.id
@@ -92,9 +89,6 @@ export function Profile({updating}){
         }
     }, [editProfile])
     useEffect(()=>{
-        console.log('Foto cambiada')
-    }, [photoChanged])
-    useEffect(()=>{
         if(backToProfile){
             setBackToProfile(false)
             navigate('/home/profile/')
@@ -111,7 +105,7 @@ export function Profile({updating}){
                 <Loader state={loadingState}/>
                 {profileData            && (
                     <div className="editing-container">
-                        {updating && <UserForm updating={true}  onSubmitFunction={onUpdate} userData={profileData} onPhotoChange={()=>setPhotoChanged(true)} userPhotoUrl={profileData.photo_link}/> }
+                        {updating && <UserForm updating  onSubmitFunction={onUpdate} userData={profileData}  userPhotoUrl={profileData.photo_link}/> }
                         {!updating && 
                         <>
                             <UserPhoto url={profileData.photo_link} withInput={false}/>

@@ -69,7 +69,7 @@ function App() {
           element={
             <LoadingContextProvider>
               <AuthContextProvider> 
-                <Profile updating={true}/> 
+                <Profile updating/> 
               </AuthContextProvider>
             </LoadingContextProvider>
           }/>

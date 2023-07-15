@@ -1,5 +1,5 @@
 /**
- * Retorna un userButton
+ * Retorna un userButton, button a renderizar en la UsersList
  * @param {Object} user
  * @param {Function} onClickFunction
  */

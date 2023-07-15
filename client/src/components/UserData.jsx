@@ -17,7 +17,7 @@ export function UserData({userData, non_showable_attrs, attrs_traductions}){
             return (
                 <>
                     <div key={key} className="user-data-item">
-                        <p>{showKey} : {userData[key]}</p>
+                        <p key={userData[key]}>{showKey} : {userData[key]}</p>
                     </div>
                 </>
             )

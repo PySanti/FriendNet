@@ -6,7 +6,7 @@ import { useState } from "react"
 import "../styles/UserPhoto.css"
 import { FormField } from "./FormField"
 import { Button } from "./Button"
-export function UserPhoto({url, withInput, onPhotoUpdate, photoFileSetter}){
+export function UserPhoto({url, withInput, photoFileSetter}){
     let [currentPhoto, setCurrentPhoto] = useState(false)
     const onPhotoChange = (e)=>{
         const file = e.target.files[0];
@@ -17,9 +17,6 @@ export function UserPhoto({url, withInput, onPhotoUpdate, photoFileSetter}){
         });
         if (file) {
             reader.readAsDataURL(file);
-            if (onPhotoUpdate){
-                onPhotoUpdate()
-            }
         }
     }
     return (

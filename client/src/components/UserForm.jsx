@@ -1,22 +1,22 @@
-import { set, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { FormField } from "./FormField"
 import { BASE_FIRSTNAMES_MAX_LENGTH, BASE_LASTNAMES_MAX_LENGTH, BASE_PASSWORD_CONSTRAINTS, BASE_USERNAME_CONSTRAINTS, BASE_USERNAME_MAX_LENGTH } from "../main"
 import { Form } from "./Form"
-import { Button } from "./Button"
 import "../styles/UserForm.css"
 import { UserPhoto } from "./UserPhoto"
 import { useState } from "react"
+
 /**
- * Componente creado para SignUp.jsx, EditProfile.jsx y Login.jsx
+ * Componente creado para SignUp.jsx, Profile.jsx y Login.jsx
  * Retorna un formulario con soporte para errores que funcionara
  * tanto para actualizar como para registrar, como para logear un usuario
  * @param {Object} userData - Los datos del usuario, para Edit.jsx
  * @param {Function} onSubmitFunction - Funcion que se ejecutara despues de enviar el formulario
  * @param {Boolean} login - Representa si se desea retornar el formulario para login
  * @param {Boolean} updating - Representa se se desea retornar el formulario para update
- * @param {Function} onPhotoChange - Se ejecutara cuando se ingrese una foto en el photoInput
+ * @param {String} userPhotoUrl url de foto de usuario para updating
  */
-export function UserForm({userData, onSubmitFunction, login, updating, onPhotoChange, userPhotoUrl}){
+export function UserForm({userData, onSubmitFunction, login, updating, userPhotoUrl}){
     const {register, handleSubmit, formState: {errors}, watch}  = useForm()
     let [currentPhotoFile, setCurrentPhotoFile ] = useState(null)
     const onSubmit = handleSubmit((data)=>{
@@ -37,36 +37,36 @@ export function UserForm({userData, onSubmitFunction, login, updating, onPhotoCh
         )
     } else {
         return (
-                <div className="user-form-container">
-                    <Form onSubmitFunction={onSubmit} buttonMsg={updating ? "Actualizar" : "Registrar"}> 
-                        <FormField label="Nombre de usuario" errors={errors.username &&  errors.username.message}>
-                            <input defaultValue={userData && userData.username}maxLength={BASE_USERNAME_MAX_LENGTH}type="text" id="username" name="username"{...register("username", BASE_USERNAME_CONSTRAINTS)}/>
-                        </FormField>
-                        <FormField label="Correo electronico" errors={errors.email &&  errors.email.message}>
-                            <input defaultValue={userData && userData.email}type="email" id="email" name="email"{...register("email", {    required:{        value: true,        message : "Por favor, ingresa tu correo electrónico"    },    pattern:{        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,        message : "Por favor, ingresa un correo electrónico valido"    }})}/>
-                        </FormField>
-                        <FormField label="Nombres" errors={errors.first_names  && errors.first_names.message}>
-                            <input defaultValue={userData && userData.first_names}maxLength={BASE_FIRSTNAMES_MAX_LENGTH}type="text" id="first_names" name="first_names"{...register("first_names", {    required:{        value: true,        message : "Por favor, ingresa tu(s) primer(os) nombre(s)"    },    pattern : {        value :/^[^\d]+$/,        message : "Por favor, ingresa un(os) nombre(s) valido(s)"    }})}/> 
-                        </FormField>
-                        <FormField label="Apellidos" errors={errors.last_names  && errors.last_names.message}>
-                            <input defaultValue={userData && userData.last_names}maxLength={BASE_LASTNAMES_MAX_LENGTH}type="text" id="last_names" name="last_names"{...register("last_names", {    required:{        value: true,        message : "Por favor, ingresa tu(s) apellido(s)"    },    pattern : {        value :/^[^\d]+$/,        message : "Por favor, ingresa un(os) apellido(s) valido(s)"    }})}/> 
-                        </FormField>
-                        <FormField label="Edad" errors={errors.age  && errors.age.message}>
-                            <input defaultValue={userData && userData.age}type="number" id="age" name="age"{...register("age", {    required:{        value : true,        message : "Por favor, ingresa tu edad."    },    max : {        value : 120,        message : "Por favor, ingresa una edad valida"    },    min : {        value : 5,        message : "Debes tener al menos 5 años"    },    pattern : {        value : /^-?\d+$/,        message : "Por favor, ingresa una edad valida"    }})}/>
-                        </FormField>
-                        {!updating && 
-                            <>
-                                <FormField label="Contraseña" errors={errors.password && errors.password.message}>
-                                    <input defaultValue="16102005 python"type="password" id="password" name="password"{...register("password", BASE_PASSWORD_CONSTRAINTS)}/>
-                                </FormField>
-                                <FormField label="Confirma la contraseña" errors={errors.confirmPwd  && errors.confirmPwd.message}>
-                                    <input defaultValue="16102005 python"type="password" id="confirmPwd" name="confirmPwd"{...register("confirmPwd", {    validate : (confirmPwd) =>{        if (confirmPwd != watch("password")){            return "Las contraseñas no son iguales"        }    }})}/>
-                                </FormField>
-                            </>
-                        }
-                    </Form>
-                    {updating ?  <UserPhoto url={userPhotoUrl} withInput={true} onPhotoUpdate={onPhotoChange} photoFileSetter={setCurrentPhotoFile}/> : <UserPhoto  withInput={true}  photoFileSetter={setCurrentPhotoFile}/>}
-                </div>
+            <div className="user-form-container">
+                <Form onSubmitFunction={onSubmit} buttonMsg={updating ? "Actualizar" : "Registrar"}> 
+                    <FormField label="Nombre de usuario" errors={errors.username &&  errors.username.message}>
+                        <input defaultValue={userData && userData.username}maxLength={BASE_USERNAME_MAX_LENGTH}type="text" id="username" name="username"{...register("username", BASE_USERNAME_CONSTRAINTS)}/>
+                    </FormField>
+                    <FormField label="Correo electronico" errors={errors.email &&  errors.email.message}>
+                        <input defaultValue={userData && userData.email}type="email" id="email" name="email"{...register("email", {    required:{        value: true,        message : "Por favor, ingresa tu correo electrónico"    },    pattern:{        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,        message : "Por favor, ingresa un correo electrónico valido"    }})}/>
+                    </FormField>
+                    <FormField label="Nombres" errors={errors.first_names  && errors.first_names.message}>
+                        <input defaultValue={userData && userData.first_names}maxLength={BASE_FIRSTNAMES_MAX_LENGTH}type="text" id="first_names" name="first_names"{...register("first_names", {    required:{        value: true,        message : "Por favor, ingresa tu(s) primer(os) nombre(s)"    },    pattern : {        value :/^[^\d]+$/,        message : "Por favor, ingresa un(os) nombre(s) valido(s)"    }})}/> 
+                    </FormField>
+                    <FormField label="Apellidos" errors={errors.last_names  && errors.last_names.message}>
+                        <input defaultValue={userData && userData.last_names}maxLength={BASE_LASTNAMES_MAX_LENGTH}type="text" id="last_names" name="last_names"{...register("last_names", {    required:{        value: true,        message : "Por favor, ingresa tu(s) apellido(s)"    },    pattern : {        value :/^[^\d]+$/,        message : "Por favor, ingresa un(os) apellido(s) valido(s)"    }})}/> 
+                    </FormField>
+                    <FormField label="Edad" errors={errors.age  && errors.age.message}>
+                        <input defaultValue={userData && userData.age}type="number" id="age" name="age"{...register("age", {    required:{        value : true,        message : "Por favor, ingresa tu edad."    },    max : {        value : 120,        message : "Por favor, ingresa una edad valida"    },    min : {        value : 5,        message : "Debes tener al menos 5 años"    },    pattern : {        value : /^-?\d+$/,        message : "Por favor, ingresa una edad valida"    }})}/>
+                    </FormField>
+                    {!updating && 
+                        <>
+                            <FormField label="Contraseña" errors={errors.password && errors.password.message}>
+                                <input defaultValue="16102005 python"type="password" id="password" name="password"{...register("password", BASE_PASSWORD_CONSTRAINTS)}/>
+                            </FormField>
+                            <FormField label="Confirma la contraseña" errors={errors.confirmPwd  && errors.confirmPwd.message}>
+                                <input defaultValue="16102005 python"type="password" id="confirmPwd" name="confirmPwd"{...register("confirmPwd", {    validate : (confirmPwd) =>{        if (confirmPwd != watch("password")){            return "Las contraseñas no son iguales"        }    }})}/>
+                            </FormField>
+                        </>
+                    }
+                </Form>
+                <UserPhoto withInput photoFileSetter={setCurrentPhotoFile} {...updating && {url:userPhotoUrl}}/>
+            </div>
         )
     }
 }
