@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form"
 import { BASE_MESSAGE_MAX_LENGTH } from "../main"
-import { Button } from "./Button"
+import { Form } from "./Form"
 
 /**
  * Input creado para el envio de mensajes
- * @param 
+ * @param  {Function} onMsgSending funcion que se ejecutara cuando se envie un mensaje
  */
 export function MsgSendingInput({onMsgSending}){
     let {register, handleSubmit} = useForm()
@@ -12,9 +12,8 @@ export function MsgSendingInput({onMsgSending}){
         onMsgSending(data)
     })
     return (
-        <form className="input-container" onSubmit={onSubmit}>
+        <Form buttonMsg="Enviar" onSubmitFunction={onSubmit}>
             <input type="text" maxLength={BASE_MESSAGE_MAX_LENGTH} {...register("msg")}/>
-            <Button msg="enviar" isSubmit/>
-        </form>
+        </Form>
     )
 }
