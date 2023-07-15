@@ -25,8 +25,7 @@ export function Login() {
         try{
             startLoading(true)
             let response = await getUserDetailAPI(data.username)
-            const user = response.data
-            setUser(user)
+            setUser(response.data)
             if (user.is_active){
                 try {
                     response = await loginUser(data)

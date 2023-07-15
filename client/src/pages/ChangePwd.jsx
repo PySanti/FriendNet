@@ -11,9 +11,10 @@ import { LoadingContext } from "../context/LoadingContext";
 import { Loader } from "../components/Loader";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
+import { Form } from "../components/Form";
 
 /**
- * Componente creado para cambio de contraseña
+ * Pagina creado para cambio de contraseña
  */
 export function ChangePwd(){
     const {user} = useContext(AuthContext)
@@ -56,14 +57,13 @@ export function ChangePwd(){
             <>
                 <Header username={user.username} msg="Modificando contraseña"/>
                 <Loader state={loadingState}/>
-                <Form onSubmit={changePwd}>
+                <Form onSubmitFunction={changePwd} buttonMsg="Enviar">
                     <FormField label="Contrasenia actual" errors={errors.old_password && errors.old_password.message}>
                         <input type="password" id="old_password" name="old_password"{...register("old_password", BASE_PASSWORD_CONSTRAINTS)}/>
                     </FormField>
                     <FormField label="Contraseña nueva" errors={errors.new_password && errors.new_password.message}>
                         <input type="password" id="new_password" name="new_password"{...register("new_password", BASE_PASSWORD_CONSTRAINTS)}/>
                     </FormField>
-                    <Button  buttonText="Actualizar" isSubmit/>
                 </Form>
                 <Button buttonText="Volver" onClickFunction={()=>setBackToProfile(true)}/>
             </>

@@ -14,6 +14,7 @@ import { UsersInterface } from "../components/UsersInterface"
 import { getUserNotifications } from "../api/getUserNotifications.api"
 import { Notifications } from "../components/Notifications"
 import { removeNotificationAPI } from "../api/removeNotification.api"
+import { Button } from "../components/Button"
 /**
  * Pagina principal del sitio
  */
@@ -120,8 +121,10 @@ export function Home() {
                         clickedUser={clickedUser} 
                         messagesHistorial={messagesHistorial} 
                         onMsgSending={onMsgSending}/>
-                <button onClick={logoutUser}>Salir</button>
-                <button onClick={()=>{setGoToProfile(true)}}>Perfil</button>
+                <div className="buttons-container">
+                    <Button buttonText="Salir" onClickFunction={logoutUser}/>
+                    <Button buttonText="Perfil" onClickFunction={()=>{setGoToProfile(true)}}/>
+                </div>
                 <Notifications notificationList={notifications} onNotificationClick={onNotificationClick} />
             </>
         )

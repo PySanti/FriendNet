@@ -12,7 +12,7 @@ export function Button({buttonText, onClickFunction, isSubmit}){
             <button 
                 className={isSubmit ? baseClassName+" submit-button" : baseClassName} 
                 type={isSubmit && "submit"}
-                onClick={!isSubmit && onClickFunction}>{buttonText}</button>
+                onClick={!isSubmit ? onClickFunction : null}>{buttonText}</button>
         </div>
     )
 

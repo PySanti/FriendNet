@@ -13,6 +13,7 @@ import { saveCloudinary } from "../tools/saveCloudinary";
 import { getUserDetailAPI } from "../api/getUserDetailApi.api";
 import {_}  from "lodash"
 import { UserPhoto } from "../components/UserPhoto";
+import { Button } from "../components/Button";
 
 
 /**
@@ -21,7 +22,7 @@ import { UserPhoto } from "../components/UserPhoto";
  */
 export function Profile({updating}){
     // states
-    let [profileData, setProfileData ] = useState(null)
+    let     [profileData, setProfileData ] = useState(null)
     let     [backToHome, setBackToHome]                         = useState(false)
     let     [editProfile, setEditProfile]                       = useState(false)
     let     [backToProfile, setBackToProfile]                   = useState(false)
@@ -29,7 +30,6 @@ export function Profile({updating}){
     let     {loadingState, startLoading, setLoadingState, successfullyLoaded} = useContext(LoadingContext)
     const   {user} = useContext(AuthContext)
     const   navigate = useNavigate()
-    const   headerMsg = updating? "Editando perfil" : "Viendo perfil"
     const loadProfileData = async ()=>{
         startLoading()
         if (!profileData){
@@ -78,14 +78,14 @@ export function Profile({updating}){
     }, [changePwd])
     useEffect(()=>{
         if (backToHome){
-            navigate('/home/')
             setBackToHome(false)
+            navigate('/home/')
         }
     }, [backToHome])
     useEffect(()=>{
         if (editProfile){
-            navigate('/home/profile/edit')
             setEditProfile(false)
+            navigate('/home/profile/edit')
         }
     }, [editProfile])
     useEffect(()=>{
@@ -101,41 +101,44 @@ export function Profile({updating}){
         return <UserNotLogged/>
     } else{
         return (<>
-                <Header username={user.username} msg={headerMsg}/>
+                <Header username={user.username} msg={updating? "Editando perfil" : "Viendo perfil"}/>
                 <Loader state={loadingState}/>
                 {profileData            && (
                     <div className="editing-container">
-                        {updating && <UserForm updating  onSubmitFunction={onUpdate} userData={profileData}  userPhotoUrl={profileData.photo_link}/> }
-                        {!updating && 
-                        <>
-                            <UserPhoto url={profileData.photo_link} withInput={false}/>
-                            <UserData 
-                            userData={profileData} 
-                            non_showable_attrs={["is_active", "id", "photo_link"]} 
-                            attrs_traductions={
-                                {
-                                    "username" : "Nombre de usuario", 
-                                    "email" : "Correo electrónico", 
-                                    "first_names" : "Nombres",
-                                    "last_names" : "Apellidos",
-                                    "age" : "Edad",
-                                }
-                                }/>
-                        </>}
+                        {updating ? 
+                            <UserForm updating  onSubmitFunction={onUpdate} userData={profileData}  userPhotoUrl={profileData.photo_link}/> 
+                            :
+                            <>
+                                <UserPhoto url={profileData.photo_link} withInput={false}/>
+                                <UserData 
+                                userData={profileData} 
+                                non_showable_attrs={["is_active", "id", "photo_link"]} 
+                                attrs_traductions={
+                                    {
+                                        "username" : "Nombre de usuario", 
+                                        "email" : "Correo electrónico", 
+                                        "first_names" : "Nombres",
+                                        "last_names" : "Apellidos",
+                                        "age" : "Edad",
+                                    }
+                                    }/>
+                            </>
+                        }
                     </div>
                 )}
-                {!updating &&(
-                    <>
-                        <button onClick={()=>setEditProfile(true)}>editar perfil</button>
-                        <button onClick={()=>setBackToHome(true)}>Volver</button>
-                        <button onClick={()=>setChangePwd(true)}>modificar contraseña</button>
-                    </>
-                )}
-                {updating &&(
-                    <>
-                        <button onClick={()=>setBackToProfile(true)}>Volver</button>
-                    </>
-                )}
+                <div className="buttons-section">
+                    {updating ?
+                        <>
+                            <Button buttonText="Volver" onClickFunction={()=>setBackToProfile(true)}/>
+                        </>
+                        :
+                        <>
+                            <Button buttonText="Editar Perfil" onClickFunction={()=>setEditProfile(true)}/>
+                            <Button buttonText="Volver" onClickFunction={()=>setBackToHome(true)}/>
+                            <Button buttonText="Modificar Contraseña" onClickFunction={()=>setChangePwd(true)}/>
+                        </>
+                    }
+                </div>
         </>)
 }}
 
