@@ -13,7 +13,6 @@ import { UserNotLogged } from "./UserNotLogged"
 import { Loader } from "../components/Loader"
 import { Form } from "../components/Form"
 import { LoadingContext } from "../context/LoadingContext"
-import { Button } from "../components/Button"
 
 /**
  * Pagina creada para llevar activacion de cuenta
@@ -31,8 +30,8 @@ export function AccountActivation() {
         console.log(activation_code)
     }
     const onSubmit = handleSubmit(async (data)=>{
+        setLoadingState(true)
         if (Number(data.activation_code) === Number(realActivationCode)){
-            setLoadingState(true)
             try {
                 console.log('activando')
                 await activateUserAPI(props.userId)
@@ -65,15 +64,17 @@ export function AccountActivation() {
         return <UserNotLogged/>
     } else{
         return (
-                <>
-                    <Header msg="Activa tu cuenta antes de continuar"/>
-                    <Loader msg={loadingState}/>
-                    <Form onSubmitFunction={onSubmit} buttonMsg="Enviar">
-                        <FormField label="Codigo " errors={errors.activation_code && errors.activation_code.message}>
-                            <input type="text"maxLength={6}minLength={1}name="activation_code"id="activation_code"{...register("activation_code", {    required : {        value : true,        message : "Por favor ingresa un código de activación"    },    pattern : {        value : /^-?\d+$/,        message : "Por favor, ingresa un codigo valido"    },    minLength : {        value : 6,        message : 'Debes ingresar al menos 6 caracteres',    }    })}/>
-                        </FormField>
-                    </Form>
-                </>
+                <div className='centered-container'>
+                    <div className="account-activation-container">
+                        <Header msg="Activa tu cuenta antes de continuar"/>
+                        <Loader state={loadingState}/>
+                        <Form onSubmitFunction={onSubmit} buttonMsg="Enviar">
+                            <FormField label="Codigo " errors={errors.activation_code && errors.activation_code.message}>
+                                <input type="text"maxLength={6}minLength={1}name="activation_code"id="activation_code"{...register("activation_code", {    required : {        value : true,        message : "Por favor ingresa un código de activación"    },    pattern : {        value : /^-?\d+$/,        message : "Por favor, ingresa un codigo valido"    },    minLength : {        value : 6,        message : 'Debes ingresar al menos 6 caracteres',    }    })}/>
+                            </FormField>
+                        </Form>
+                    </div>
+                </div>
             )
     }
 }
