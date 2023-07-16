@@ -9,7 +9,7 @@ import { checkExistingUserAPI } from "../api/checkExistingUser.api";
 import {   useNavigate } from "react-router-dom";
 import { userIsAuthenticated } from "../tools/userIsAuthenticated";
 import { UserLogged } from "./UserLogged";
-import { UserForm } from "../components/UserForm";
+import { UserInfoForm } from "../components/UserInfoForm";
 import { Loader } from "../components/Loader";
 import { LoadingContext } from "../context/LoadingContext";
 import { saveCloudinary } from "../tools/saveCloudinary";
@@ -37,11 +37,7 @@ export function SignUp() {
                 delete data.confirmPwd // el confirmPwd no puede ser enviado al backend
                 delete data.photo
                 try {
-                    if (photo){
-                        console.log(photo)
-                        data['photo_link']              = await saveCloudinary(photo) // el serializer el backend recibe photo_link, no la foto en si
-                        // data['photo_link'] = "(test)"
-                    }
+                    data['photo_link'] = photo ? await saveCloudinary(photo) : null // el serializer el backend recibe photo_link, no la foto en si
                     try{
                         const createUserResponse        = await createUsuarioAPI(data)
                         setUserData({
@@ -80,7 +76,7 @@ export function SignUp() {
                 <div className="signup-page-container">
                     <Header msg="Regístrate de una vez!"/>
                     <Loader state={loadingState}/>
-                    <UserForm onSubmitFunction={onSignUp} updating={false} />
+                    <UserInfoForm onFormSubmit={onSignUp} />
                 </div>
             </div>
         )

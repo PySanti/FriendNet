@@ -44,6 +44,7 @@ class CreateUsuariosAPI(APIView):
             except:
                 return Response({'error': "error_creating"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
+            print(serializer.error_messages)
             return Response({'error': BASE_SERIALIZER_ERROR_RESPONSE}, status=status.HTTP_400_BAD_REQUEST)
 
 

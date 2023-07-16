@@ -5,10 +5,10 @@ import { userIsAuthenticated } from "../tools/userIsAuthenticated"
 import { UserLogged } from "./UserLogged"
 import { getUserDetailAPI } from "../api/getUserDetailApi.api"
 import { useNavigate } from "react-router-dom"
-import { UserForm } from "../components/UserForm"
 import { Loader } from "../components/Loader"
 import { LoadingContext } from "../context/LoadingContext"
 import "../styles/Login.css"
+import { LoginForm } from "../components/LoginForm"
 
 /**
  * Pagina creada para llevar logeo de usuarios
@@ -79,7 +79,7 @@ export function Login() {
                 <div className="login-container">
                     <Header msg="Introduce tus credenciales para ingresar"/>
                     <Loader state={loadingState}/>
-                    <UserForm onSubmitFunction={onLogin} login />
+                    <LoginForm handleLogin={onLogin}/>
                 </div>
             </div>
         )

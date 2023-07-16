@@ -24,7 +24,7 @@ export function UserPhoto({url, withInput, photoFileSetter}){
     }
     return (
         <div className="user-photo-container">
-            <img className="user-photo"src={currentPhoto ? currentPhoto : (url ? url : null)} alt="Imagen no encontrada!" ></img>
+            <img className="user-photo"src={currentPhoto ? currentPhoto : (url ? url : null)} alt=":(" ></img>
             {withInput && 
                 <>
                     <div className="user-photo-input-container">

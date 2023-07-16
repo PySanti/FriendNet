@@ -7,7 +7,7 @@ import { AuthContext } from "../context/AuthContext";
 import { UserData } from "../components/UserData";
 import { Loader } from "../components/Loader";
 import { LoadingContext} from "../context/LoadingContext";
-import { UserForm } from "../components/UserForm";
+import { UserInfoForm } from "../components/UserInfoForm";
 import {updateUserDataAPI} from "../api/updateUserData.api"
 import { saveCloudinary } from "../tools/saveCloudinary";
 import { getUserDetailAPI } from "../api/getUserDetailApi.api";
@@ -103,10 +103,10 @@ export function Profile({updating}){
         return (<>
                 <Header username={user.username} msg={updating? "Editando perfil" : "Viendo perfil"}/>
                 <Loader state={loadingState}/>
-                {profileData            && (
+                {profileData            && 
                     <div className="editing-container">
                         {updating ? 
-                            <UserForm updating  onSubmitFunction={onUpdate} userData={profileData}  userPhotoUrl={profileData.photo_link}/> 
+                            <UserInfoForm updating  onFormSubmit={onUpdate} userData={profileData}  userPhotoUrl={profileData.photo_link}/> 
                             :
                             <>
                                 <UserPhoto url={profileData.photo_link} withInput={false}/>
@@ -125,7 +125,7 @@ export function Profile({updating}){
                             </>
                         }
                     </div>
-                )}
+                }
                 <div className="buttons-section">
                     {updating ?
                         <>
