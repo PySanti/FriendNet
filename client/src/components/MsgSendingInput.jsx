@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form"
 import { BASE_MESSAGE_MAX_LENGTH } from "../main"
 import { Form } from "./Form"
+import {PropTypes} from "prop-types"
 
 /**
  * Input creado para el envio de mensajes
@@ -16,4 +17,8 @@ export function MsgSendingInput({onMsgSending}){
             <input type="text" maxLength={BASE_MESSAGE_MAX_LENGTH} {...register("msg")}/>
         </Form>
     )
+}
+
+MsgSendingInput.propTypes = {
+    onMsgSending : PropTypes.func
 }

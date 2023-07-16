@@ -1,5 +1,6 @@
 import "../styles/Form.css"
 import { Button } from "./Button"
+import {PropTypes} from "prop-types"
 /**
  * 
  * @param {import("react").ComponentElement} children hijos del formulario
@@ -14,3 +15,11 @@ export function Form({children, onSubmitFunction, buttonMsg}){
         </form>
     )
 }
+
+
+Form.propTypes = {
+    children : PropTypes.object.isRequired,
+    onSubmitFunction : PropTypes.func.isRequired,
+    buttonMsg : PropTypes.string.isRequired
+}
+

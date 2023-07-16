@@ -1,4 +1,5 @@
 import { UserButton } from "./UserButton"
+import {PropTypes} from "prop-types"
 
 /**
  * Recibe la lista de usuarios directa de la api y retorna la lista de elementos jsx
@@ -17,3 +18,10 @@ export function UsersList({usersList, onClickEvent}){
         </>
     )
 }
+
+
+UsersList.propTypes = {
+    usersList : PropTypes.array.isRequired,
+    onClickEvent : PropTypes.func.isRequired
+}
+

@@ -1,4 +1,5 @@
 import { InputError } from "./InputError";
+import {PropTypes} from "prop-types"
 import { Label } from "./Label";
 import "../styles/FormField.css"
 /**
@@ -18,3 +19,11 @@ export function FormField({errors, label, children}){
         </div>
     )
 }
+FormField.propTypes = {
+    errors : PropTypes.string,
+    label : PropTypes.string,
+    children : PropTypes.object.isRequired
+}
+
+
+

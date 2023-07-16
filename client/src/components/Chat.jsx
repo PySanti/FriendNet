@@ -1,6 +1,7 @@
 import { Messages } from "./Messages"
 import { ChattingUserHeader } from "./ChatingUserHeader"
 import { MsgSendingInput } from "./MsgSendingInput"
+import {PropTypes} from "prop-types"
 
 
 /**
@@ -19,3 +20,15 @@ export function Chat({messages, session_user_id, onMsgSending, chatingUser}){
         </div>
     )
 }
+
+Chat.propTypes = {
+    messages : PropTypes.array,
+    session_user_id : PropTypes.number.isRequired,
+    onMsgSending : PropTypes.func.isRequired,
+    chatingUser : PropTypes.object,
+}
+Chat.defaultProps = {
+    messages : undefined,
+    chatingUser : undefined
+}
+

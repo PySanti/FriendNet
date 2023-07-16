@@ -1,5 +1,6 @@
 import { Chat } from "./Chat"
 import { UsersList } from "./UsersList"
+import { PropTypes } from "prop-types"
 
 /**
  *  Interfaz de chat con los usuarios
@@ -20,4 +21,20 @@ export function UsersInterface({usersList, onUserButtonClick, session_user_id, c
             }
         </div>
     ) 
+}
+
+
+UsersInterface.propTypes = {
+    usersList : PropTypes.object,
+    onUserButtonClick : PropTypes.func.isRequired,
+    session_user_id : PropTypes.number.isRequired,
+    clickedUser : PropTypes.object,
+    messagesHistorial : PropTypes.object,
+    onMsgSending : PropTypes.func.isRequired,
+}
+
+UsersInterface.defaultProps ={
+    usersList : undefined,
+    clickedUser : undefined,
+    messagesHistorial : undefined
 }

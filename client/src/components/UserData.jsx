@@ -6,13 +6,14 @@
  * @param {Array} non_showable_attrs lista de atributos de objeto que no se formatearan
  * @param {Object} attrs_traductions objeto con atributo actual(clave) : traduccion (valor)
  */
+import {PropTypes} from "prop-types"
 
-export function UserData({userData, non_showable_attrs, attrs_traductions}){
+export function UserData({userData, nonShowableAttrs, attrsTraductions}){
     const formatingFunction = (key)=>{
-        if (!(non_showable_attrs.includes(key))){
+        if (!(nonShowableAttrs.includes(key))){
             let showKey = key
-            if (Object.keys(attrs_traductions).includes(key)){
-                showKey = attrs_traductions[key]
+            if (Object.keys(attrsTraductions).includes(key)){
+                showKey = attrsTraductions[key]
             }
             return (
                 <>
@@ -30,3 +31,8 @@ export function UserData({userData, non_showable_attrs, attrs_traductions}){
     )
 }
 
+UserData.propTypes = {
+    userData : PropTypes.object.isRequired,
+    nonShowableAttrs : PropTypes.array.isRequired,
+    attrsTraductions : PropTypes.object.isRequired,
+}

@@ -1,4 +1,5 @@
 import { FormField } from "./FormField";
+import {PropTypes} from "prop-types"
 
 /**
  * Componente creado para campos de contrasenia
@@ -14,3 +15,12 @@ export function PasswordField({errors, registerObject, name, label}){
         </FormField>
     )
 }
+
+PasswordField.propTypes = {
+    errors : PropTypes.string.isRequired,
+    name : PropTypes.string.isRequired,
+    label : PropTypes.string.isRequired,
+    registerObject : PropTypes.object.isRequired,
+}
+
+

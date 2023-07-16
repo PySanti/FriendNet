@@ -1,4 +1,5 @@
 import "../styles/Loader.css"
+import {PropTypes} from "prop-types"
 /**
  * Loader creado para mejorar la experiencia de usuario mientras se hace un llamado a api
  * @param {String} state estado de llamada (failed, loading, success)
@@ -15,4 +16,11 @@ export function Loader({state}){
             <h2 className={state ? baseClass + " state-activated" : baseClass}>{state}</h2>
         </div>
     )
+}
+
+Loader.propTypes = {
+    state : PropTypes.string
+}
+Loader.defaultProps = {
+    state : undefined
 }

@@ -42,7 +42,7 @@ export function Root() {
                             <h4>
                                 Aun no tienes cuenta? 
                             </h4>
-                            <Button buttonText="Registrarme" onClickFunction={()=>setGoToSignUp(true)}/>
+                            <Button buttonText="Registrarme" onClickFunction={()=>setGoToSignUp(true)} />
                         </div>
                     </section>
                 </div>

@@ -1,3 +1,4 @@
+import {PropTypes} from "prop-types"
 /**
  * Componente creado para contener las notificaciones del usuarios
  * @param {Array} notificationList lista de notificaciones
@@ -19,4 +20,13 @@ export function Notifications({notificationList, onNotificationClick}){
             </div>
         </div>
     )
+}
+
+Notifications.propTypes = {
+    notificationList : PropTypes.array,
+    onNotificationClick : PropTypes.func.isRequired,
+}
+
+Notifications.defaultProps = {
+    notificationList : undefined,
 }

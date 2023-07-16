@@ -1,4 +1,5 @@
 import {useNavigate } from "react-router-dom";
+import {PropTypes} from "prop-types"
 import { Header } from "../components/Header";
 import { userIsAuthenticated } from "../tools/userIsAuthenticated";
 import { UserNotLogged } from "./UserNotLogged";
@@ -112,8 +113,8 @@ export function Profile({updating}){
                                 <UserPhoto url={profileData.photo_link} withInput={false}/>
                                 <UserData 
                                 userData={profileData} 
-                                non_showable_attrs={["is_active", "id", "photo_link"]} 
-                                attrs_traductions={
+                                nonShowableAttrs={["is_active", "id", "photo_link"]} 
+                                attrsTraductions={
                                     {
                                         "username" : "Nombre de usuario", 
                                         "email" : "Correo electrónico", 
@@ -142,3 +143,9 @@ export function Profile({updating}){
         </>)
 }}
 
+Profile.propTypes = {
+    updating : PropTypes.bool
+}
+Profile.defaultProps = {
+    updating : undefined
+}

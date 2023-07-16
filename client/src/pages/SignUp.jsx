@@ -14,7 +14,6 @@ import { Loader } from "../components/Loader";
 import { LoadingContext } from "../context/LoadingContext";
 import { saveCloudinary } from "../tools/saveCloudinary";
 
-import "../styles/SignUp.css"
 
 
 // constants

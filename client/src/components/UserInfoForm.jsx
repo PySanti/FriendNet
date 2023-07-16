@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form"
+import {PropTypes} from "prop-types"
 import { FormField } from "./FormField"
 import { BASE_FIRSTNAMES_MAX_LENGTH, BASE_LASTNAMES_MAX_LENGTH, BASE_PASSWORD_CONSTRAINTS, BASE_USERNAME_CONSTRAINTS} from "../main"
 import { Form } from "./Form"
@@ -55,4 +56,16 @@ export function UserInfoForm({userData, updating, userPhotoUrl, onFormSubmit}){
             <UserPhoto withInput photoFileSetter={setCurrentPhotoFile} url={updating ?  userPhotoUrl : null}/>
         </div>
     )
+}
+
+UserInfoForm.propTypes = {
+    userData : PropTypes.object,
+    updating : PropTypes.bool,
+    userPhotoUrl : PropTypes.string,
+    onFormSubmit : PropTypes.func.isRequired,
+}
+UserInfoForm.defaultProps = {
+    userData : undefined,
+    updating : undefined,
+    userPhotoUrl : undefined,
 }

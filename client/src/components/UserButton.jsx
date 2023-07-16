@@ -1,3 +1,4 @@
+import {PropTypes} from "prop-types"
 /**
  * Retorna un userButton, button a renderizar en la UsersList
  * @param {Object} user
@@ -10,4 +11,9 @@ export function UserButton({user, onClickFunction}){
             {user.is_online && ", en linea"}
         </button>
     )
+}
+
+UserButton.propTypes = {
+    user : PropTypes.object.isRequired,
+    onClickFunction : PropTypes.func.isRequired,
 }

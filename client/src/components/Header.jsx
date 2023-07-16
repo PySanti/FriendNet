@@ -1,4 +1,5 @@
 import "../styles/Header.css"
+import {PropTypes} from "prop-types"
 /**
  * Cabecera estandar de la pagina
  * @param {String} username nombre de usuario logeado
@@ -14,3 +15,13 @@ export function Header({username, msg}) {
         </header>
     )
 }
+
+
+
+Header.propTypes = {
+    username : PropTypes.string,
+    msg : PropTypes.string
+}
+
+
+

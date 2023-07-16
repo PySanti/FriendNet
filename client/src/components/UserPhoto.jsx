@@ -8,12 +8,15 @@
 import { useState } from "react"
 import "../styles/UserPhoto.css"
 import { Button } from "./Button"
+import {PropTypes} from "prop-types"
 
 export function UserPhoto({url, withInput, photoFileSetter}){
     let [currentPhoto, setCurrentPhoto] = useState(false)
     const onPhotoChange = (e)=>{
         const file = e.target.files[0];
-        photoFileSetter(e.target.files)
+        if (photoFileSetter){
+            photoFileSetter(e.target.files)
+        }
         const reader = new FileReader();
         reader.addEventListener('load', function() {
             setCurrentPhoto(reader.result);
@@ -35,4 +38,16 @@ export function UserPhoto({url, withInput, photoFileSetter}){
             }
         </div>
     )
+}
+
+UserPhoto.propTypes = {
+    url : PropTypes.string,
+    withInput : PropTypes.bool,
+    photoFileSetter : PropTypes.func,
+}
+
+UserPhoto.defaultProps = {
+    url : undefined,
+    withInput : undefined,
+    photoFileSetter : undefined,
 }
