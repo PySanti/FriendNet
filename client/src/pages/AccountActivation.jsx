@@ -29,7 +29,6 @@ export function AccountActivation() {
     const sendMail = async (activation_code)=>{
         // const response = await sendActivationEmailAPI(props.userEmail, props.username, activation_code)
         console.log(activation_code)
-        console.log('enviando correo de activacion')
     }
     const onSubmit = handleSubmit(async (data)=>{
         if (Number(data.activation_code) === Number(realActivationCode)){
