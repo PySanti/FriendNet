@@ -3,7 +3,10 @@ import { PasswordField } from "./PasswordField";
 import { UsernameField } from "./UsernameField";
 import { useForm } from "react-hook-form";
 import { BASE_USERNAME_CONSTRAINTS, BASE_PASSWORD_CONSTRAINTS } from "../main";
-
+/**
+ * Componente creado para el logeo del usuario
+ * @param {Function} handleLogin funcion que sera ejecutada cuando se envie el formulario
+ */
 export function LoginForm({handleLogin}){
     const {register, handleSubmit, formState: {errors}}  = useForm()
     const onSubmit = handleSubmit((data)=>{
