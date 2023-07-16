@@ -6,7 +6,6 @@ import { Header } from "../components/Header"
 import { useNavigate } from "react-router-dom"
 import { getUsersListAPI } from "../api/getUsersList.api"
 import { LoadingContext } from "../context/LoadingContext"
-import "../styles/home-styles.css"
 import { getChatBetweenAPI } from "../api/getChatBetween.api"
 import { Loader } from "../components/Loader"
 import { sendMsgAPI } from "../api/sendMsg.api"
@@ -15,6 +14,7 @@ import { getUserNotifications } from "../api/getUserNotifications.api"
 import { Notifications } from "../components/Notifications"
 import { removeNotificationAPI } from "../api/removeNotification.api"
 import { Button } from "../components/Button"
+import "../styles/Home.css"
 /**
  * Pagina principal del sitio
  */
