@@ -13,7 +13,7 @@ export function MsgSendingInput({onMsgSending}){
         onMsgSending(data)
     })
     return (
-        <Form buttonMsg="Enviar" onSubmitFunction={onSubmit} withSubmitButton>
+        <Form buttonMsg="Enviar" onSubmitFunction={onSubmit}>
             <input type="text" maxLength={BASE_MESSAGE_MAX_LENGTH} {...register("msg")}/>
         </Form>
     )

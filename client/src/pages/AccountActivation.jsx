@@ -68,7 +68,7 @@ export function AccountActivation() {
                     <div className="account-activation-container">
                         <Header msg="Activa tu cuenta antes de continuar"/>
                         <Loader state={loadingState}/>
-                        <Form onSubmitFunction={onSubmit} buttonMsg="Enviar" withSubmitButton>
+                        <Form onSubmitFunction={onSubmit} buttonMsg="Enviar">
                             <FormField label="Codigo " errors={errors.activation_code && errors.activation_code.message}>
                                 <input type="text"maxLength={6}minLength={1}name="activation_code"id="activation_code"{...register("activation_code", {    required : {        value : true,        message : "Por favor ingresa un código de activación"    },    pattern : {        value : /^-?\d+$/,        message : "Por favor, ingresa un codigo valido"    },    minLength : {        value : 6,        message : 'Debes ingresar al menos 6 caracteres',    }    })}/>
                             </FormField>
