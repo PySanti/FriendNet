@@ -13,8 +13,8 @@ export function Form({children, onSubmitFunction, buttonMsg, buttonsList}){
         <form className="form-container" onSubmit={onSubmitFunction}>
             {children}
             <div className="form-container-buttons-container">
-                {buttonsList}
                 <Button buttonText={buttonMsg} isSubmit/>
+                {buttonsList}
             </div>
         </form>
     )
