@@ -11,7 +11,7 @@ export function Button({buttonText, onClickFunction, isSubmit}){
         <div className="button-container">
             <button 
                 className="button"
-                type={isSubmit && "submit"}
+                type={isSubmit ? "submit" : "button"}
                 onClick={!isSubmit ? onClickFunction : null}>{buttonText}</button>
         </div>
     )
