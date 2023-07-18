@@ -24,11 +24,10 @@ export function Form({children, onSubmitFunction, buttonMsg, buttonsList}){
 Form.propTypes = {
     children : PropTypes.array.isRequired,
     onSubmitFunction : PropTypes.func.isRequired,
-    buttonMsg : PropTypes.string,
+    buttonMsg : PropTypes.string.isRequired,
     buttonsList : PropTypes.array
 }
 Form.defaultProps={
-    buttonMsg : undefined,
     buttonsList : undefined
 }
 
