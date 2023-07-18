@@ -1,0 +1,22 @@
+
+.message-sending-form{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    padding: 1rem 0;
+}
+
+.message-sending-input{
+    border-radius: 20px;
+    outline: 1px solid #000;
+    border: none;
+    padding: .3rem;
+}
+.message-sending-input:focus{
+    box-shadow: none;
+}
+.message-sending-input::placeholder{
+    font-size: 18px;
+    text-align: center;
+}
