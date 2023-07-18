@@ -8,6 +8,7 @@ import { UserPhoto } from "./UserPhoto"
 import { useState } from "react"
 import { UsernameField } from "./UsernameField"
 import { PasswordField } from "./PasswordField"
+import "../styles/UserInfoForm.css"
 
 /**
  * Componente creado para los formularios de SignUp y Update,
