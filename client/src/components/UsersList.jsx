@@ -1,5 +1,6 @@
 import { UserButton } from "./UserButton"
 import {PropTypes} from "prop-types"
+import "../styles/UsersList.css"
 
 /**
  * Recibe la lista de usuarios directa de la api y retorna la lista de elementos jsx
@@ -12,7 +13,7 @@ export function UsersList({usersList, onClickEvent}){
     }
     return (
         <>
-            <div className="users-container">
+            <div className="users-list-container">
                 {usersList.map(formatingFunction)}
             </div>
         </>

@@ -1,8 +1,5 @@
 
-.users-container{
-    display: flex;
-    flex-direction: column;
-}
+
 .messages-container{
     display: flex;
     flex-direction: column;
