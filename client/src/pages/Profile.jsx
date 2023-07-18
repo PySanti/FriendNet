@@ -15,6 +15,7 @@ import { getUserDetailAPI } from "../api/getUserDetailApi.api";
 import {_}  from "lodash"
 import { UserPhoto } from "../components/UserPhoto";
 import { Button } from "../components/Button";
+import "../styles/Profile.css"
 
 
 /**
@@ -101,46 +102,50 @@ export function Profile({updating}){
     if (!userIsAuthenticated()){
         return <UserNotLogged/>
     } else{
-        return (<>
-                <Header username={user.username} msg={updating? "Editando perfil" : "Viendo perfil"}/>
-                <Loader state={loadingState}/>
-                {profileData            && 
-                    <div className="editing-container">
-                        {updating ? 
-                            <UserInfoForm updating  onFormSubmit={onUpdate} userData={profileData}  userPhotoUrl={profileData.photo_link}/> 
+        return (
+            <div className="centered-container">
+                <div className="profile-container">
+                    <Header username={user.username} msg={updating? "Editando perfil" : "Viendo perfil"}/>
+                    <Loader state={loadingState}/>
+                    {profileData            && 
+                        <div className="editing-container">
+                            {updating ? 
+                                <UserInfoForm updating  onFormSubmit={onUpdate} userData={profileData}  userPhotoUrl={profileData.photo_link}/> 
+                                :
+                                <>
+                                    <UserData 
+                                    userData={profileData} 
+                                    nonShowableAttrs={["is_active", "id", "photo_link"]} 
+                                    attrsTraductions={
+                                        {
+                                            "username" : "Nombre de usuario", 
+                                            "email" : "Correo electrónico", 
+                                            "first_names" : "Nombres",
+                                            "last_names" : "Apellidos",
+                                            "age" : "Edad",
+                                        }
+                                        }/>
+                                    <UserPhoto url={profileData.photo_link} withInput={false}/>
+                                </>
+                            }
+                        </div>
+                    }
+                    <div className="buttons-section">
+                        {updating ?
+                            <>
+                                <Button buttonText="Volver" onClickFunction={()=>setBackToProfile(true)}/>
+                                <Button buttonText="Actualizar" isSubmit/>
+                            </>
                             :
                             <>
-                                <UserPhoto url={profileData.photo_link} withInput={false}/>
-                                <UserData 
-                                userData={profileData} 
-                                nonShowableAttrs={["is_active", "id", "photo_link"]} 
-                                attrsTraductions={
-                                    {
-                                        "username" : "Nombre de usuario", 
-                                        "email" : "Correo electrónico", 
-                                        "first_names" : "Nombres",
-                                        "last_names" : "Apellidos",
-                                        "age" : "Edad",
-                                    }
-                                    }/>
+                                <Button buttonText="Editar Perfil" onClickFunction={()=>setEditProfile(true)}/>
+                                <Button buttonText="Volver" onClickFunction={()=>setBackToHome(true)}/>
+                                <Button buttonText="Modificar Contraseña" onClickFunction={()=>setChangePwd(true)}/>
                             </>
                         }
                     </div>
-                }
-                <div className="buttons-section">
-                    {updating ?
-                        <>
-                            <Button buttonText="Volver" onClickFunction={()=>setBackToProfile(true)}/>
-                        </>
-                        :
-                        <>
-                            <Button buttonText="Editar Perfil" onClickFunction={()=>setEditProfile(true)}/>
-                            <Button buttonText="Volver" onClickFunction={()=>setBackToHome(true)}/>
-                            <Button buttonText="Modificar Contraseña" onClickFunction={()=>setChangePwd(true)}/>
-                        </>
-                    }
-                </div>
-        </>)
+            </div>
+        </div>)
 }}
 
 Profile.propTypes = {

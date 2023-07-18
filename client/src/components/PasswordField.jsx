@@ -17,10 +17,13 @@ export function PasswordField({errors, registerObject, name, label}){
 }
 
 PasswordField.propTypes = {
-    errors : PropTypes.string.isRequired,
+    errors : PropTypes.string,
     name : PropTypes.string.isRequired,
     label : PropTypes.string.isRequired,
     registerObject : PropTypes.object.isRequired,
 }
 
+PasswordField.defaultValues = {
+    errors : undefined
+}
 

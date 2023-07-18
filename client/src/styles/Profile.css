@@ -1,0 +1,23 @@
+.user-data-container{
+    display: flex;
+    flex-direction: column;
+}
+.profile-container{
+    width: 50vw;
+}
+.buttons-section{
+    padding-top: 1rem;
+    display: flex;
+    justify-content: space-around;
+}
+.editing-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.editing-container > *{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
