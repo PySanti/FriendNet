@@ -22,6 +22,8 @@
 
 
 // Logica
+    // agregar funcionalidad para ver foto de perfil de usuario al presionarla
+    // cachear imagen del usuario para carga mas rapida
     // solucionar problema de home al cargar chat (el header se sale de la pantalla)
     // refactorizar usando operadores ternarios en lugar de operador de react donde sea necesario
     //  Agregar estilos cuando se use el tab en formularios, para buttons e inputs

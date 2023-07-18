@@ -30,3 +30,10 @@
 .user-photo-input{
     display: none;
 }
+.chat-photo{
+    width: 80px;
+    height: inherit;
+}
+.chat-photo > .user-photo{
+    border-radius: 100%;
+}

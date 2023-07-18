@@ -1,5 +1,6 @@
 import { UserPhoto } from "./UserPhoto";
 import {PropTypes} from "prop-types"
+import "../styles/ChattingUserHeader.css"
 
 /**
  * Cabecera del chat con datos del usuario
@@ -7,8 +8,8 @@ import {PropTypes} from "prop-types"
  */
 export function ChattingUserHeader({chatingUser}){
     return (
-        <div className="chatting-user-header">
-            <UserPhoto url={chatingUser.photo_link}/>
+        <div className="chatting-user-header-container">
+            <UserPhoto url={chatingUser.photo_link} chatPhoto/>
             <div className="chatting-user__username-container">
                 <h3 className="chatting-user__username">{chatingUser.username}</h3>
             </div>
