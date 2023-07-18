@@ -4,6 +4,8 @@
  * @param {Number} session_user_id  id de usuario de sesion
  */
 import {PropTypes} from "prop-types"
+import "../styles/Messages.css"
+
 export function Messages({messages, session_user_id }){
     const formatingFunction = (msg)=>{
         const margin = session_user_id === msg.parent_id? "flex-end" : "flex-start"
