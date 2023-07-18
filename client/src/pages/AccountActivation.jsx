@@ -55,7 +55,11 @@ export function AccountActivation() {
         sendMail(activation_code)
         setRealActivationCode(activation_code)
     }, [])
-
+    useEffect(()=>{
+        if (goBack){
+            navigate('/')
+        }
+    }, [goBack])
     useEffect(()=>{
         if (userActivated){
             navigate("/login/")
