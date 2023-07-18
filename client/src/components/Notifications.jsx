@@ -1,4 +1,5 @@
 import {PropTypes} from "prop-types"
+import "../styles/Notifications.css"
 /**
  * Componente creado para contener las notificaciones del usuarios
  * @param {Array} notificationList lista de notificaciones

@@ -2,10 +2,6 @@
 
 
 
-.notification-list{
-    display: flex;
-    flex-direction: column;
-}
 .buttons-container{
     display: flex;
     flex-direction: row;
