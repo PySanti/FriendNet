@@ -115,28 +115,14 @@ export function Profile({updating}){
                                 ]}/> 
                                 :
                                 <>
-                                    <UserData 
-                                    userData={profileData} 
-                                    nonShowableAttrs={["is_active", "id", "photo_link"]} 
-                                    attrsTraductions={
-                                        {
-                                            "username" : "Nombre de usuario", 
-                                            "email" : "Correo electrónico", 
-                                            "first_names" : "Nombres",
-                                            "last_names" : "Apellidos",
-                                            "age" : "Edad",
-                                        }
-                                        }/>
+                                    <UserData userData={profileData} nonShowableAttrs={["is_active", "id", "photo_link"]} attrsTraductions={    {        "username" : "Nombre de usuario",         "email" : "Correo electrónico",         "first_names" : "Nombres",        "last_names" : "Apellidos",        "age" : "Edad",    }    }/>
                                     <UserPhoto url={profileData.photo_link} withInput={false}/>
                                 </>
                             }
                         </div>
                     }
                     <div className="buttons-section">
-                        {updating ?
-                            <>
-                            </>
-                            :
+                        {!updating &&
                             <>
                                 <Button buttonText="Editar Perfil" onClickFunction={()=>setEditProfile(true)}/>
                                 <Button buttonText="Volver" onClickFunction={()=>setBackToHome(true)}/>
