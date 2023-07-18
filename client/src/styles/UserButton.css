@@ -1,0 +1,9 @@
+.user-button{
+    background-color: inherit;
+    border: 1px solid #000;
+    outline: none;
+}
+.user-button:hover{
+    cursor: pointer;
+    border : 1px solid #fff;
+}

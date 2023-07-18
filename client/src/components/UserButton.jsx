@@ -1,4 +1,5 @@
 import {PropTypes} from "prop-types"
+import "../styles/UserButton.css"
 /**
  * Retorna un userButton, button a renderizar en la UsersList
  * @param {Object} user
