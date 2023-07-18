@@ -1,6 +1,7 @@
 import { Chat } from "./Chat"
 import { UsersList } from "./UsersList"
 import { PropTypes } from "prop-types"
+import "../styles/UsersInterface.css"
 
 /**
  *  Interfaz de chat con los usuarios
