@@ -23,7 +23,8 @@
 
 // Logica
     // refactorizar usando operadores ternarios en lugar de operador de react donde sea necesario
-
+    //  Agregar estilos cuando se use el tab en formularios, para buttons e inputs
+    // modificar estilos de los backButtons
     // limitar tamanio de imagenes y formato
     // hacer comprobaciones de existencia antes de hacer llamados a componentes para evitar ejecuciones de funciones innecesarias
     // poner capitalize en todos los botones
