@@ -111,22 +111,24 @@ export function Home() {
         return <UserNotLogged/>
     } else {
         return (
-            <>
-                <Header username={user.username}/>
-                <Loader state={loadingState}/>
-                <UsersInterface 
-                        usersList={userList} 
-                        onUserButtonClick={onUserButtonClick} 
-                        session_user_id={user.user_id} 
-                        clickedUser={clickedUser} 
-                        messagesHistorial={messagesHistorial} 
-                        onMsgSending={onMsgSending}/>
-                <div className="buttons-container">
-                    <Button buttonText="Salir" onClickFunction={logoutUser}/>
-                    <Button buttonText="Perfil" onClickFunction={()=>{setGoToProfile(true)}}/>
+            <div className="centered-container">
+                <div className="home-container">
+                    <Header username={user.username}/>
+                    <div className="buttons-container">
+                        <Button buttonText="Salir" onClickFunction={logoutUser}/>
+                        <Button buttonText="Perfil" onClickFunction={()=>{setGoToProfile(true)}}/>
+                    </div>
+                    <Loader state={loadingState}/>
+                    <UsersInterface 
+                            usersList={userList} 
+                            onUserButtonClick={onUserButtonClick} 
+                            session_user_id={user.user_id} 
+                            clickedUser={clickedUser} 
+                            messagesHistorial={messagesHistorial} 
+                            onMsgSending={onMsgSending}/>
+                    <Notifications notificationList={notifications} onNotificationClick={onNotificationClick} />
                 </div>
-                <Notifications notificationList={notifications} onNotificationClick={onNotificationClick} />
-            </>
+            </div>
         )
     }
 }
