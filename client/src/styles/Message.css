@@ -1,0 +1,18 @@
+.message-content{
+    font-size: 18px;
+}
+.message{
+    margin-top: .3rem;
+    padding: .3rem;
+    border: 1px solid #000;
+    border-radius: 10px;
+    background-color: rgb(209, 209, 209);
+}
+.session-msg{
+    align-self: flex-end;
+    border-bottom-right-radius: 0px;
+}
+.not-session-msg{
+    align-self: flex-start;
+    border-bottom-left-radius: 0px;
+}

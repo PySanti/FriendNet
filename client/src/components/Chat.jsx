@@ -1,4 +1,4 @@
-import { Messages } from "./Messages"
+import { MessagesContainer } from "./MessagesContainer"
 import { ChattingUserHeader } from "./ChatingUserHeader"
 import { MsgSendingInput } from "./MsgSendingInput"
 import {PropTypes} from "prop-types"
@@ -15,7 +15,7 @@ export function Chat({messages, session_user_id, onMsgSending, chatingUser}){
     return (
         <div className="chat-container">
             {chatingUser && <ChattingUserHeader chatingUser={chatingUser}/>}
-            <Messages messages={messages} session_user_id={session_user_id}/>
+            <MessagesContainer messages={messages} session_user_id={session_user_id}/>
             {chatingUser && <MsgSendingInput onMsgSending={onMsgSending}/>}
         </div>
     )
