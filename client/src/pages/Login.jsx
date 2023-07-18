@@ -9,6 +9,7 @@ import { Loader } from "../components/Loader"
 import { LoadingContext } from "../context/LoadingContext"
 import "../styles/Login.css"
 import { LoginForm } from "../components/LoginForm"
+import { Button } from "../components/Button"
 
 /**
  * Pagina creada para llevar logeo de usuarios
@@ -19,6 +20,7 @@ export function Login() {
     const   {loginUser}                                                         = useContext(AuthContext)
     let     [user, setUser]                                                     = useState(null)
     let     [userLogged, setUserLogged]                                         = useState(false)
+    let     [goBack, setGoBack]                                                 =   useState(false)
 
     const onLogin = async (data)=>{
         // en este punto ya se sabe que el usuario no esta autenticado
@@ -57,7 +59,11 @@ export function Login() {
             navigate('/home/')
         }
     }, [userLogged])
-
+    useEffect(()=>{
+        if (goBack){
+            navigate('/')
+        }
+    }, [goBack])
     useEffect(()=>{
         if (user && !user.is_active){
         // Se ejecutara si se detecta que el usuario existe pero esta inactivo
@@ -79,7 +85,9 @@ export function Login() {
                 <div className="login-container">
                     <Header msg="Introduce tus credenciales para ingresar"/>
                     <Loader state={loadingState}/>
-                    <LoginForm handleLogin={onLogin}/>
+                    <LoginForm handleLogin={onLogin} extraButtons={[
+                        <Button key={1} onClickFunction={()=>setGoBack(true)} buttonText="Volver"/>
+                    ]}/>
                 </div>
             </div>
         )

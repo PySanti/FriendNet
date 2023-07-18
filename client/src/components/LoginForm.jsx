@@ -8,14 +8,15 @@ import { Button } from "./Button";
 /**
  * Componente creado para el logeo del usuario
  * @param {Function} handleLogin funcion que sera ejecutada cuando se envie el formulario
+ * @param {Array} extraButtons buttons a renderizar junto al submit button
  */
-export function LoginForm({handleLogin}){
+export function LoginForm({handleLogin, extraButtons}){
     const {register, handleSubmit, formState: {errors}}  = useForm()
     const onSubmit = handleSubmit((data)=>{
         handleLogin(data)
     })
     return (
-        <Form onSubmitFunction={onSubmit} buttonMsg={"Acceder"} > 
+        <Form onSubmitFunction={onSubmit} buttonMsg={"Acceder"} buttonsList={extraButtons} > 
             <UsernameField errors={errors.username && errors.username.message} registerObject={register("username", BASE_USERNAME_CONSTRAINTS)}/>
             <PasswordField label="Contraseña" name="password"  errors={errors.password && errors.password.message} registerObject={register("password", BASE_PASSWORD_CONSTRAINTS)}/>
         </Form>
@@ -23,5 +24,9 @@ export function LoginForm({handleLogin}){
 }
 
 LoginForm.propTypes = {
-    handleLogin : PropTypes.func.isRequired
+    handleLogin : PropTypes.func.isRequired,
+    extraButtons : PropTypes.array,
+}
+LoginForm.defaultProps = {
+    extraButtons : undefined,
 }
