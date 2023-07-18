@@ -12,8 +12,13 @@ import { PasswordField } from "./PasswordField"
 /**
  * Componente creado para los formularios de SignUp y Update,
  * teniendo en cuenta las similitudes entre ambos
+ * @param {Object} userData datos del usuario, se enviaran en caso de que se este actualizando
+ * @param {Boolean} updating representara si se esta actualizando
+ * @param {String} userPhotoUrl imagen del usuario, se enviara si se esta actualizando
+ * @param {Function} onFormSubmit funcion que se ejecutara cuando se envie el formulario
+ * @param {Array} extraButtons arreglo de buttons extra que se quiera agregar al formulario
  */
-export function UserInfoForm({userData, updating, userPhotoUrl, onFormSubmit}){
+export function UserInfoForm({userData, updating, userPhotoUrl, onFormSubmit, extraButtons}){
     let [currentPhotoFile, setCurrentPhotoFile] = useState(null)
     const {register, handleSubmit, formState: {errors}, watch }  = useForm()
     const onSubmit = handleSubmit((data)=>{
@@ -22,7 +27,7 @@ export function UserInfoForm({userData, updating, userPhotoUrl, onFormSubmit}){
     })
     return (
         <div className="user-form-container">
-            <Form onSubmitFunction={onSubmit} buttonMsg={updating ? "Actualizar" : "Registrar"}> 
+            <Form onSubmitFunction={onSubmit} buttonMsg={updating ? "Actualizar" : "Registrar"} buttonsList={extraButtons}> 
                 <>
                     <UsernameField defaultValue={userData && userData.username} errors={errors.username && errors.username.message} registerObject={register("username", BASE_USERNAME_CONSTRAINTS)}/>
                     <FormField label="Correo electronico" errors={errors.email &&  errors.email.message}>
@@ -63,9 +68,11 @@ UserInfoForm.propTypes = {
     updating : PropTypes.bool,
     userPhotoUrl : PropTypes.string,
     onFormSubmit : PropTypes.func.isRequired,
+    extraButtons : PropTypes.array,
 }
 UserInfoForm.defaultProps = {
     userData : undefined,
     updating : undefined,
     userPhotoUrl : undefined,
+    extraButtons : undefined,
 }

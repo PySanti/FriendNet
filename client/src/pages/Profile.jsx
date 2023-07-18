@@ -110,7 +110,9 @@ export function Profile({updating}){
                     {profileData            && 
                         <div className="editing-container">
                             {updating ? 
-                                <UserInfoForm updating  onFormSubmit={onUpdate} userData={profileData}  userPhotoUrl={profileData.photo_link}/> 
+                                <UserInfoForm updating  onFormSubmit={onUpdate} userData={profileData}  userPhotoUrl={profileData.photo_link} extraButtons={[
+                                    <Button key={1} buttonText="Volver" onClickFunction={()=>setBackToProfile(true)}/>
+                                ]}/> 
                                 :
                                 <>
                                     <UserData 
@@ -133,8 +135,6 @@ export function Profile({updating}){
                     <div className="buttons-section">
                         {updating ?
                             <>
-                                <Button buttonText="Volver" onClickFunction={()=>setBackToProfile(true)}/>
-                                <Button buttonText="Actualizar" isSubmit/>
                             </>
                             :
                             <>

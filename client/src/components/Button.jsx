@@ -7,11 +7,10 @@ import {PropTypes} from "prop-types"
  * @param {Boolean} isSubmit sera true en caso de que sea un button de formulario
  */
 export function Button({buttonText, onClickFunction, isSubmit}){
-    const baseClassName = "button "
     return (
         <div className="button-container">
             <button 
-                className={isSubmit ? baseClassName+" submit-button" : baseClassName} 
+                className="button"
                 type={isSubmit && "submit"}
                 onClick={!isSubmit ? onClickFunction : null}>{buttonText}</button>
         </div>

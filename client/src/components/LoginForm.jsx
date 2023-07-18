@@ -4,6 +4,7 @@ import { UsernameField } from "./UsernameField";
 import { useForm } from "react-hook-form";
 import { BASE_USERNAME_CONSTRAINTS, BASE_PASSWORD_CONSTRAINTS } from "../main";
 import {PropTypes} from "prop-types"
+import { Button } from "./Button";
 /**
  * Componente creado para el logeo del usuario
  * @param {Function} handleLogin funcion que sera ejecutada cuando se envie el formulario
@@ -14,7 +15,7 @@ export function LoginForm({handleLogin}){
         handleLogin(data)
     })
     return (
-        <Form onSubmitFunction={onSubmit} buttonMsg={"Acceder"}> 
+        <Form onSubmitFunction={onSubmit} buttonMsg={"Acceder"} > 
             <UsernameField errors={errors.username && errors.username.message} registerObject={register("username", BASE_USERNAME_CONSTRAINTS)}/>
             <PasswordField label="Contraseña" name="password"  errors={errors.password && errors.password.message} registerObject={register("password", BASE_PASSWORD_CONSTRAINTS)}/>
         </Form>

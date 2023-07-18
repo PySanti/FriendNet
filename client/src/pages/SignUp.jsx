@@ -13,6 +13,7 @@ import { UserInfoForm } from "../components/UserInfoForm";
 import { Loader } from "../components/Loader";
 import { LoadingContext } from "../context/LoadingContext";
 import { saveCloudinary } from "../tools/saveCloudinary";
+import { Button } from "../components/Button";
 
 
 
@@ -25,6 +26,7 @@ import { saveCloudinary } from "../tools/saveCloudinary";
 export function SignUp() {
     let {loadingState, successfullyLoaded, startLoading, setLoadingState} = useContext(LoadingContext)
     let [userData, setUserData]                                 = useState(null);
+    let [goBack, setGoBack]                                     =   useState(false)
     const navigate                                              = useNavigate()
     const onSignUp = async (data) =>{
         try{
@@ -61,6 +63,11 @@ export function SignUp() {
     useEffect(()=>{
         setLoadingState(false)
     }, [])
+    useEffect(()=>{
+        if (goBack){
+            navigate('/')
+        }
+    }, [goBack])
     useEffect(() => {
         if (userData){
             navigate('/signup/activate', {state: userData})
@@ -75,7 +82,9 @@ export function SignUp() {
                 <div className="signup-page-container">
                     <Header msg="Regístrate de una vez!"/>
                     <Loader state={loadingState}/>
-                    <UserInfoForm onFormSubmit={onSignUp} />
+                    <UserInfoForm onFormSubmit={onSignUp} extraButtons={[
+                        <Button key={1} buttonText="Volver" onClickFunction={()=>setGoBack(true)}/>,
+                    ]}/>
                 </div>
             </div>
         )

@@ -25,9 +25,3 @@
     outline: 3px solid var(--base-background-color);
 }
 
-.submit-button {
-    margin-top: 1rem ; 
-    /*
-        Esto seria el equivalente a agregar un padding-top al padre
-    */
-}
