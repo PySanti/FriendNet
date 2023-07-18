@@ -13,7 +13,7 @@ export function Loader({state}){
     const baseClass = "state-msg"
     return (
         <div className="state-container">
-            <h2 className={state ? baseClass + " state-activated" : baseClass}>{state}</h2>
+            <h2 className={state ? `${baseClass} state-activated` : baseClass}>{state}</h2>
         </div>
     )
 }

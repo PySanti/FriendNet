@@ -13,7 +13,7 @@ export function InputError({msg}){
     const baseClass = "input-error"
     return (
         <div className="input-error-container">
-            <h2 className={msg ? baseClass+" input-error-activated" : baseClass}>{msg}</h2>
+            <h2 className={msg ? `${baseClass} input-error-activated` : baseClass}>{msg}</h2>
         </div>
     )
 }
