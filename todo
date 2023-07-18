@@ -36,7 +36,7 @@
     // refactorizar codigo de backend almacenando cada view en la app que corresponda
     // todo: implementar mas jsonresponse en el backend, serializers solo para recepcion
     // todo: usar paginacion
-    // todo : agregar buttons para limpiar form
+    // todo : agregar buttons para limpiar form (button type reset)
     // todo : cambiar change por set
     // todo: agregar validacion al activar usuario en login para contrasenia
     // todo: destructurar props en todas partes
