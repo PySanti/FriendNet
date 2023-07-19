@@ -4,7 +4,14 @@ import { Header } from "../components/Header"
 import { Button } from "../components/Button"
 import "../styles/UserLogged.css"
 
-export function UserLogged(){
+
+/**
+ * Componente creado para ser renderizado cuando el usuario
+ * trate de acceder a rutas que exijan Logearse cuando el usuario
+ * ya lo esta
+ * @param {String} username Nombre del usuario logeado
+ */
+export function UserLogged({username}){
     /**
      *  Pagina creada para devolver cuando el usuario ya este autenticado
      */

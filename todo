@@ -16,14 +16,13 @@
 
 // Logica:
     //* facil:
-        // solucionar problemas de keys
+        //  agregar Header a UserLogged.jsx y asociar a una url con el AuthContext
+        // agregar boton para ver previa de contrasenia
         //agrgar documentacion a la api
         // agregar mensaje de error cuando el server este caido en login (revisar error handlers en general)
         // agregar eliminacion de notificaciones manual
         // implementar mas jsonresponse en el backend, serializers solo para recepcion
         // agregar validacion al activar usuario en login para contrasenia
-        //  agregar Header a UserLogged.jsx y asociar a una url con el AuthContext
-        // agregar boton para ver previa de contrasenia
 
     //* medio:
         // cachear datos del usuario para carga mas rapida
