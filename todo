@@ -3,6 +3,7 @@
     ~ Centrarnos en detalles finales del estilo y responsive
 
 // Estilos:
+    // arreglar error de estilo al acceder a chat directamente desde notification
     // agregar overflow hidden al message container
     // modificar Nombres de Documents y icono de la pagina
     // darle estilos personalizados a todo lo que este por default (inputs)
@@ -16,7 +17,7 @@
 
 // Logica:
     //* facil:
-        //  agregar Header a UserLogged.jsx y asociar a una url con el AuthContext
+        // arreglar mensajes de error de warning en los propTypes
         // agregar boton para ver previa de contrasenia
         //agrgar documentacion a la api
         // agregar mensaje de error cuando el server este caido en login (revisar error handlers en general)
