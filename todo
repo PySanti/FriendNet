@@ -22,6 +22,8 @@
 
 
 // Logica
+    // agregar overflow hidden al message container
+    // Mejorar sistema de despacho de notificaciones, para no tener que estar pidiendo datos al servidor constantemente
     // modificar Nombres de Documents y icono de la pagina
     // confirmacion de correo en AccountActivation.jsx (para caso en el que no le haya llegado el correo al usuario)
     //darle estilos personalizados a los inputs

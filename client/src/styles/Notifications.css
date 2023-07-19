@@ -22,7 +22,8 @@
 .notification-list{
     margin-top: .5rem;
     padding: .4rem;
-    height: 20vh;
+    height: auto;
+    max-height: 15vh;
     display: flex;
     top : calc(+ auto 1vh);
     flex-direction: column;
