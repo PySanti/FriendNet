@@ -1,0 +1,23 @@
+
+.individual-notification-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+}
+.individual-notification-container:hover{
+    background-color: #ccc;
+}
+.individual-notification-content{
+    font-size: 20px;
+}
+
+.individual-notification-delete-btn{
+    border: none;
+    background-color: inherit;
+    font-size: 30px;
+    padding: 0 .3rem;
+    cursor: pointer;
+}

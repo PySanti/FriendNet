@@ -11,7 +11,7 @@ import { Loader } from "../components/Loader"
 import { sendMsgAPI } from "../api/sendMsg.api"
 import { UsersInterface } from "../components/UsersInterface"
 import { getUserNotifications } from "../api/getUserNotifications.api"
-import { Notifications } from "../components/Notifications"
+import { NotificationsContainer } from "../components/NotificationsContainer"
 import { removeNotificationAPI } from "../api/removeNotification.api"
 import { Button } from "../components/Button"
 import "../styles/Home.css"
@@ -123,7 +123,7 @@ export function Home() {
                 <div className="home-container">
                     <Header username={user.username}/>
                     <div className="buttons-container">
-                        <Notifications notificationList={notifications} onNotificationClick={onNotificationClick} />
+                        <NotificationsContainer notificationList={notifications} onNotificationClick={onNotificationClick} />
                         <Button buttonText="Salir" onClickFunction={logoutUser}/>
                         <Button buttonText="Perfil" onClickFunction={()=>{setGoToProfile(true)}}/>
                     </div>

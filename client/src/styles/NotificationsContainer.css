@@ -23,7 +23,7 @@
     margin-top: .5rem;
     padding: .4rem;
     height: auto;
-    width: 20vw;
+    width: 30vw;
     max-height: 15vh;
     top : calc(+ auto 1vh);
     flex-direction: column;
@@ -36,11 +36,5 @@
 .notification-list-active{
     opacity: 1;
 }
-.notification{
-    text-align: center;
-    font-size: 20px;
-    cursor: pointer;
-}
-.notification:hover{
-    background-color: #ccc;
-}
+
+
