@@ -19,10 +19,7 @@
 // Logica:
     //* facil:
 
-        // crear funcion /utils/PrepareDataForSending para su uso en el SignUp y el Update
-        // agrgar documentacion a la api
         // agregar mensaje de error cuando el server este caido en login (revisar error handlers en general)
-        // agregar eliminacion de notificaciones manual
         // implementar mas jsonresponse en el backend, serializers solo para recepcion
         // agregar validacion al activar usuario en login para contrasenia
 
@@ -64,7 +61,8 @@
 
 //Produccion:
     // comprobar funcionamiento en todos los navegadores y con todas las resoluciones
-    // : pruebas unitarias
-    // : investigar sobre seguridad para proyectos django
-    // : repasar todo lo aprendido en el proyecto, revisando todo el mismo
+    // pruebas unitarias
+    // investigar sobre seguridad para proyectos django
+    // repasar todo lo aprendido en el proyecto, revisando todo el mismo
+    // agrgar documentacion a la api
 
