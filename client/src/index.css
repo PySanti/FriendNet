@@ -2,6 +2,9 @@
   font-family: "futura-pt";
   font-size: 24px;
 }
+input{
+  margin: 0px .4rem
+}
 body{
   --base-background-color : rgb(254,100,100);
   --base-background-gradient : linear-gradient(223deg, rgba(254,100,100,1) 0%, rgba(255,229,63,1) 100%);
