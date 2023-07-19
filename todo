@@ -1,6 +1,6 @@
 // Pasos generales:
-    ~ Arreglar problemas de logica restantes
-    ~ Centrarnos en detalles finales del estilo y responsive
+    //~ Arreglar problemas de logica restantes
+    //~ Centrarnos en detalles finales del estilo y responsive
 
 // Estilos:
     // terminar previsualizacion de contrasenia
@@ -18,10 +18,8 @@
 
 // Logica:
     //* facil:
-
         // agregar mensaje de error cuando el server este caido en login (revisar error handlers en general)
         // implementar mas jsonresponse en el backend, serializers solo para recepcion
-        // agregar validacion al activar usuario en login para contrasenia
 
     //* medio:
         // mejorar seguridad en el removeNotification
@@ -32,7 +30,7 @@
         // mejorar acceso a chat desde notificaciones (potencial busqueda muy lenta)
         // eliminar imagen antigua de usuario en cloudinary al actualizar perfil
         // buscar otra forma de enviar correos de activacion
-        // setteo de is_online al crear y logear usuario
+        // setteo de is_online al crear y logear usuario y desactivar al deslogaer
         // agregar permission classes en el backedn
         // emplear validate para validaciones en el backend
         // optimizar imagenes de cloudinary, y eliminar las que sean ejemplares 
@@ -51,7 +49,6 @@
         // senial recibida por un web socket haciendo un 'append' a la lista de notificaciones del local Storage
 
         // cachear imagen del usuario
-        // cachear datos del usuario (userData)
 
         // revisar tiempo de vida de token de autenticacion (comportamiento una vez que la sesion este cerrada)
 
