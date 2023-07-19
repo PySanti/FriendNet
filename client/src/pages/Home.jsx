@@ -122,6 +122,7 @@ export function Home() {
                 <div className="home-container">
                     <Header username={user.username}/>
                     <div className="buttons-container">
+                        <Notifications notificationList={notifications} onNotificationClick={onNotificationClick} />
                         <Button buttonText="Salir" onClickFunction={logoutUser}/>
                         <Button buttonText="Perfil" onClickFunction={()=>{setGoToProfile(true)}}/>
                     </div>
@@ -133,7 +134,6 @@ export function Home() {
                             clickedUser={clickedUser} 
                             messagesHistorial={messagesHistorial} 
                             onMsgSending={onMsgSending}/>
-                    <Notifications notificationList={notifications} onNotificationClick={onNotificationClick} />
                 </div>
             </div>
         )

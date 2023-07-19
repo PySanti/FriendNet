@@ -1,5 +1,40 @@
-
-.notification-list{
+.notifications-container{
+    width: auto;
+    height: auto;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.notifications-bell{
+    box-shadow: 0px 0px 10px var(--base-background-color);
+    width: 3vw;
+    height: 3vh;
+    background-color: var(--base-background-color);
+    border-radius: 100%;
+    border: none;
+    transition: background-color .1s;
+}
+.notifications-bell:hover{
+    cursor: pointer;
+    background-color: indianred;
+}
+.notification-list{
+    margin-top: .5rem;
+    padding: .4rem;
+    height: 20vh;
+    display: flex;
+    top : calc(+ auto 1vh);
+    flex-direction: column;
+    top: calc(inherit + 2vh);
+    overflow: scroll;
+    border : 1px solid #000;
+}
+.notification{
+    text-align: center;
+    font-size: 20px;
+    cursor: pointer;
+}
+.notification:hover{
+    background-color: indianred;
 }

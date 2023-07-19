@@ -7,11 +7,14 @@ import "../styles/Notifications.css"
  */
 export function Notifications({notificationList, onNotificationClick}){
     const formatingFunction =(notification)=>{
-        return <button className="notification"onClick={()=>onNotificationClick(notification.code, notification.id)} key={notification.code}>{notification.msg}</button>
+        return <div className="notification"onClick={()=>onNotificationClick(notification.code, notification.id)} key={notification.code}>{notification.msg}</div>
+    }
+    const activateNotifications = ()=>{
+
     }
     return (
         <div className="notifications-container">
-            <h2 className="notifications-title">Notificaciones</h2>
+            <button className="notifications-bell" onClick={activateNotifications}></button>
             <div className="notification-list">
                 {notificationList ?
                     notificationList.map(formatingFunction)
