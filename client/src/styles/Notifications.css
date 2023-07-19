@@ -7,9 +7,8 @@
     justify-content: center;
 }
 .notifications-bell{
-    box-shadow: 0px 0px 10px var(--base-background-color);
-    width: 3vw;
-    height: 3vh;
+    width: 30px;
+    height: 30px;
     background-color: var(--base-background-color);
     border-radius: 100%;
     border: none;
@@ -20,16 +19,22 @@
     background-color: indianred;
 }
 .notification-list{
+    background-color: #eee;
     margin-top: .5rem;
     padding: .4rem;
     height: auto;
+    width: 20vw;
     max-height: 15vh;
-    display: flex;
     top : calc(+ auto 1vh);
     flex-direction: column;
-    top: calc(inherit + 2vh);
+    top: 40vh;
     overflow: scroll;
     border : 1px solid #000;
+    position: absolute;
+    opacity: 0;
+}
+.notification-list-active{
+    opacity: 1;
 }
 .notification{
     text-align: center;
@@ -37,5 +42,5 @@
     cursor: pointer;
 }
 .notification:hover{
-    background-color: indianred;
+    background-color: #ccc;
 }
