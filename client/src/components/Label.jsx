@@ -5,7 +5,7 @@ import {PropTypes} from "prop-types"
  */
 export function Label({msg}){
     return (
-        <label className="form-label">{msg} : </label>
+        <label className="form-label">{msg}</label>
     )
 }
 
