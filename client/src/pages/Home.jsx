@@ -65,6 +65,7 @@ export function Home() {
     }
     const onNotificationClick = async (notificationCode, notificationId)=>{
         startLoading()
+        loadUserNotifications()
         if (notificationCode !== "u"){
             let user = undefined
             userList.forEach(element => {
