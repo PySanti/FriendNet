@@ -22,7 +22,7 @@ export function Form({children, onSubmitFunction, buttonMsg, buttonsList}){
 
 
 Form.propTypes = {
-    children : PropTypes.array.isRequired,
+    children : PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
     onSubmitFunction : PropTypes.func.isRequired,
     buttonMsg : PropTypes.string.isRequired,
     buttonsList : PropTypes.array

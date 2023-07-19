@@ -17,11 +17,9 @@ export function UserData({userData, nonShowableAttrs, attrsTraductions}){
                 showKey = attrsTraductions[key]
             }
             return (
-                <>
-                    <div key={v4()} className="user-data-item">
-                        <p key={v4()}>{showKey} : {userData[key]}</p>
-                    </div>
-                </>
+                <div key={v4()} className="user-data-item">
+                    <p key={v4()}>{showKey} : {userData[key]}</p>
+                </div>
             )
         }
     }

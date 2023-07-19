@@ -39,7 +39,6 @@ export function Profile({updating}){
             try{
                 const response = await getUserDetailAPI(user.username)
                 setProfileData(response.data)
-                console.log(response.data)
                 successfullyLoaded()
             } catch(error){
                 setLoadingState("Error inesperado en repuesta del servidor")

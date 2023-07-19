@@ -22,7 +22,7 @@ export function FormField({errors, label, children}){
 FormField.propTypes = {
     errors : PropTypes.string,
     label : PropTypes.string,
-    children : PropTypes.object.isRequired
+    children : PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired
 }
 
 

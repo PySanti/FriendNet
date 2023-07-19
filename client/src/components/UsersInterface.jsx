@@ -26,11 +26,11 @@ export function UsersInterface({usersList, onUserButtonClick, session_user_id, c
 
 
 UsersInterface.propTypes = {
-    usersList : PropTypes.array,
+    usersList : PropTypes.oneOfType([PropTypes.array, PropTypes.boolean]),
     onUserButtonClick : PropTypes.func.isRequired,
     session_user_id : PropTypes.number.isRequired,
     clickedUser : PropTypes.object,
-    messagesHistorial : PropTypes.object,
+    messagesHistorial : PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
     onMsgSending : PropTypes.func.isRequired,
 }
 
