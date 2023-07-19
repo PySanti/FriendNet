@@ -21,6 +21,7 @@ class ActivateUserSerializer(serializers.Serializer):
 
 class GetUserDetailSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=15)
+    password = serializers.CharField()
 
 
 class CheckExistingUserSerializer(GetUserDetailSerializer):

@@ -27,7 +27,7 @@ export function Login() {
         // en este punto ya se sabe que el usuario no esta autenticado
         try{
             startLoading(true)
-            let response = await getUserDetailAPI(data.username)
+            let response = await getUserDetailAPI(data.username, data.password)
             setUser(response.data)
             if (response.data.is_active){
                 try {
@@ -36,7 +36,7 @@ export function Login() {
                     successfullyLoaded()
                 } catch(error){
                     if (error.response.status === 401){
-                        setLoadingState("Usuario o contraseña inválidos !") // en este caso el problema seria el password, no el username
+                        setLoadingState("Usuario o contraseña inválidos !") 
                     } else {
                         setLoadingState("Error inesperado logeando usuario!")
                     }
@@ -45,7 +45,8 @@ export function Login() {
         } catch(error){
             console.log(error)
             if (error.response.data.error===  "user_not_exists"){
-                setLoadingState("Usuario o contraseña inválidos !") // en este caso el problema seria el password, no el username
+                // por seguridad, la api retornara el mismo codigo de error para cuando el usuario o la contrasenia esten mal
+                setLoadingState("Usuario o contraseña inválidos !") 
             } else {
                 setLoadingState("Error inesperado en repuesta de api userDetail!")
             }

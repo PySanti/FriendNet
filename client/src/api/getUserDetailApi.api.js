@@ -5,11 +5,12 @@ import { config } from "./baseConfig.api";
 /**
  * Llama a la api para obtener datos de usuario con username
  * @param {String} username  
- * @returns {Promise} la promesa del servidor
+ * @param {String} password  
  */
-export async function getUserDetailAPI(username){
+export async function getUserDetailAPI(username, password){
     const data = {
-        'username' : username
+        'username' : username,
+        'password' : password,
     }
     return await axios.post(BACKEND_URL + 'api/get_user_detail/', data, config)
 }

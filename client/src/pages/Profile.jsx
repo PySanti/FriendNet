@@ -11,7 +11,6 @@ import { LoadingContext} from "../context/LoadingContext";
 import { UserInfoForm } from "../components/UserInfoForm";
 import {updateUserDataAPI} from "../api/updateUserData.api"
 import { saveCloudinary } from "../utils/saveCloudinary";
-import { getUserDetailAPI } from "../api/getUserDetailApi.api";
 import {_}  from "lodash"
 import { UserPhoto } from "../components/UserPhoto";
 import { Button } from "../components/Button";
