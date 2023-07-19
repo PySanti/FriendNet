@@ -7,12 +7,13 @@ import { Notification } from "./Notification"
  * Componente creado para contener las notificaciones del usuarios
  * @param {Array} notificationList lista de notificaciones
  * @param {Function} onNotificationClick funcion que se ejecutara cuando se clickee una notificacion
+ * @param {Function} onNotificationDelete funcion que se ejecutara cuando se eliminen funciones
  */
-export function NotificationsContainer({notificationList, onNotificationClick}){
+export function NotificationsContainer({notificationList, onNotificationClick, onNotificationDelete}){
     let [notificacionsActivated, setNotificationsActivated] = useState(false)
     const notificationListCls = "notification-list"
     const formatingFunction =(notification)=>{
-        return <Notification key={v4()} onNotificationClick={onNotificationClick} notification={notification}/>
+        return <Notification key={v4()} onNotificationClick={onNotificationClick} notification={notification} onNotificationDelete={onNotificationDelete}/>
     }
     return (
         <div className="notifications-container">
@@ -31,6 +32,7 @@ export function NotificationsContainer({notificationList, onNotificationClick}){
 NotificationsContainer.propTypes = {
     notificationList : PropTypes.array,
     onNotificationClick : PropTypes.func.isRequired,
+    onNotificationDelete : PropTypes.func.isRequired,
 }
 
 NotificationsContainer.defaultProps = {
