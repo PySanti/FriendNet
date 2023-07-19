@@ -9,7 +9,6 @@ import {PropTypes} from "prop-types"
  * @param {Array} buttonsList sera una lista de buttons que se deseen renderizar junto al submit button
  */
 export function Form({children, onSubmitFunction, buttonMsg, buttonsList}){
-    console.log(buttonsList)
     return (
         <form className="form-container" onSubmit={onSubmitFunction}>
             {children}

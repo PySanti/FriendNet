@@ -19,7 +19,6 @@
 // Logica:
     //* facil:
         // arreglar mensajes de error de warning en los propTypes
-        // agregar boton para ver previa de contrasenia
         // agrgar documentacion a la api
         // agregar mensaje de error cuando el server este caido en login (revisar error handlers en general)
         // agregar eliminacion de notificaciones manual
