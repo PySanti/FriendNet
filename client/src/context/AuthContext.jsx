@@ -2,7 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import { loginUserAPI } from "../api/loginUser.api";
 import jwt_decode from "jwt-decode";
 import { refreshTokenAPI } from "../api/refreshToken.api";
-import { userIsAuthenticated } from "../tools/userIsAuthenticated";
+import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 
 
 export const AuthContext = createContext()

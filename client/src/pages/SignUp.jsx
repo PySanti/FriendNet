@@ -7,12 +7,12 @@ import { checkExistingUserAPI } from "../api/checkExistingUser.api";
 
 // styles
 import {   useNavigate } from "react-router-dom";
-import { userIsAuthenticated } from "../tools/userIsAuthenticated";
+import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { UserLogged } from "./UserLogged";
 import { UserInfoForm } from "../components/UserInfoForm";
 import { Loader } from "../components/Loader";
 import { LoadingContext } from "../context/LoadingContext";
-import { saveCloudinary } from "../tools/saveCloudinary";
+import { saveCloudinary } from "../utils/saveCloudinary";
 import { Button } from "../components/Button";
 import { v4 } from "uuid";
 

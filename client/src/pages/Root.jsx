@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import {Header} from "../components/Header.jsx"
-import { userIsAuthenticated } from "../tools/userIsAuthenticated.js"
+import { userIsAuthenticated } from "../utils/userIsAuthenticated.js"
 import { UserLogged } from "./UserLogged.jsx"
 import { useNavigate } from "react-router-dom"
 import "../styles/Root.css"

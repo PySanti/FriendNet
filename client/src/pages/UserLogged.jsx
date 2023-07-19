@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { Header } from "../components/Header"
 import { Button } from "../components/Button"
 import "../styles/UserLogged.css"
-import { getUsernameFromLocalStorage } from "../tools/getUsernameFormLocalStorage"
+import { getUsernameFromLocalStorage } from "../utils/getUsernameFormLocalStorage"
 
 
 /**

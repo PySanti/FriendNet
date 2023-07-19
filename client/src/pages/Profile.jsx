@@ -1,7 +1,7 @@
 import {useNavigate } from "react-router-dom";
 import {PropTypes} from "prop-types"
 import { Header } from "../components/Header";
-import { userIsAuthenticated } from "../tools/userIsAuthenticated";
+import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { UserNotLogged } from "./UserNotLogged";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
@@ -10,13 +10,15 @@ import { Loader } from "../components/Loader";
 import { LoadingContext} from "../context/LoadingContext";
 import { UserInfoForm } from "../components/UserInfoForm";
 import {updateUserDataAPI} from "../api/updateUserData.api"
-import { saveCloudinary } from "../tools/saveCloudinary";
+import { saveCloudinary } from "../utils/saveCloudinary";
 import { getUserDetailAPI } from "../api/getUserDetailApi.api";
 import {_}  from "lodash"
 import { UserPhoto } from "../components/UserPhoto";
 import { Button } from "../components/Button";
 import "../styles/Profile.css"
 import { v4 } from "uuid";
+import { saveUserDataInLocalStorage } from "../utils/saveUserDataInLocalStorage";
+import { getUserDataFromLocalStorage } from "../utils/getUserDataFromLocalStorage";
 
 
 /**
@@ -36,14 +38,20 @@ export function Profile({updating}){
     const loadProfileData = async ()=>{
         startLoading()
         if (!profileData){
-            try{
-                const response = await getUserDetailAPI(user.username)
-                setProfileData(response.data)
-                successfullyLoaded()
-            } catch(error){
-                setLoadingState("Error inesperado en repuesta del servidor")
+            if (!localStorage.getItem('userData')){
+                try{
+                    const response = await getUserDetailAPI(user.username)
+                    setProfileData(response.data)
+                    saveUserDataInLocalStorage(response.data)
+                    successfullyLoaded()
+                } catch(error){
+                    setLoadingState("Error inesperado en repuesta del servidor")
+                }
+            } else {
+                setProfileData(getUserDataFromLocalStorage())
+                setLoadingState('Datos cargados desde el local storage')
             }
-        }
+        } 
     }
     const onUpdate = async (data)=>{
         startLoading()
@@ -58,6 +66,7 @@ export function Profile({updating}){
             if (!_.isEqual(profileData, data)){ // lodash
                 await updateUserDataAPI(sendingData, profileData.id)
                 setProfileData(data)
+                saveUserDataInLocalStorage(data)
                 successfullyLoaded()
             } else {
                 setLoadingState("Sin cambios")

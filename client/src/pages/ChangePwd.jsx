@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Header } from "../components/Header";
-import { userIsAuthenticated } from "../tools/userIsAuthenticated";
+import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { UserNotLogged } from "./UserNotLogged";
 import { AuthContext } from "../context/AuthContext";
 import { FormField } from "../components/FormField";

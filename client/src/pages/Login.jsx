@@ -1,7 +1,7 @@
 import { Header } from "../components/Header"
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../context/AuthContext"
-import { userIsAuthenticated } from "../tools/userIsAuthenticated"
+import { userIsAuthenticated } from "../utils/userIsAuthenticated"
 import { UserLogged } from "./UserLogged"
 import { getUserDetailAPI } from "../api/getUserDetailApi.api"
 import { useNavigate } from "react-router-dom"
@@ -11,7 +11,7 @@ import "../styles/Login.css"
 import { LoginForm } from "../components/LoginForm"
 import { Button } from "../components/Button"
 import { v4 } from "uuid"
-
+import { saveUserDataInLocalStorage } from "../utils/saveUserDataInLocalStorage"
 /**
  * Pagina creada para llevar logeo de usuarios
  */
@@ -66,14 +66,17 @@ export function Login() {
         }
     }, [goBack])
     useEffect(()=>{
-        if (user && !user.is_active){
-        // Se ejecutara si se detecta que el usuario existe pero esta inactivo
-            const props = {
-                'userId' : user.id,
-                'username' : user.username,
-                'userEmail' : user.email
+        if (user){
+            saveUserDataInLocalStorage(user)
+            if (!user.is_active){
+            // Se ejecutara si se detecta que el usuario existe pero esta inactivo
+                const props = {
+                    'userId' : user.id,
+                    'username' : user.username,
+                    'userEmail' : user.email
+                }
+                navigate('/signup/activate', {state: props})
             }
-            navigate('/signup/activate', {state: props})
         }
     }, [user])
 
