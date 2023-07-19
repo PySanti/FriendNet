@@ -24,4 +24,8 @@
     border-top-right-radius: 0px;
     outline: 3px solid var(--base-background-color);
 }
+.button-container{
+    display: flex;
+    justify-content: center;
+}
 

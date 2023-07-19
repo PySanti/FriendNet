@@ -1,5 +1,6 @@
 import { FormField } from "./FormField";
 import {PropTypes} from "prop-types"
+import "../styles/PasswordField.css"
 
 /**
  * Componente creado para campos de contrasenia
@@ -12,6 +13,7 @@ export function PasswordField({errors, registerObject, name, label}){
     return (
         <FormField label={label} errors={errors}>
             <input className="password-input" type="password" name={name} {...registerObject}/>
+            <button className="password-visualization" type="button"/>
         </FormField>
     )
 }
