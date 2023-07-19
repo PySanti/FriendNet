@@ -16,8 +16,8 @@
 
 // Logica:
     //* facil:
-        //agrgar documentacion a la api
         // solucionar problemas de keys
+        //agrgar documentacion a la api
         // agregar mensaje de error cuando el server este caido en login (revisar error handlers en general)
         // agregar eliminacion de notificaciones manual
         // implementar mas jsonresponse en el backend, serializers solo para recepcion

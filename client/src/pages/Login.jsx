@@ -10,6 +10,7 @@ import { LoadingContext } from "../context/LoadingContext"
 import "../styles/Login.css"
 import { LoginForm } from "../components/LoginForm"
 import { Button } from "../components/Button"
+import { v4 } from "uuid"
 
 /**
  * Pagina creada para llevar logeo de usuarios
@@ -86,7 +87,7 @@ export function Login() {
                     <Header msg="Introduce tus credenciales para ingresar"/>
                     <Loader state={loadingState}/>
                     <LoginForm handleLogin={onLogin} extraButtons={[
-                        <Button key={1} onClickFunction={()=>setGoBack(true)} buttonText="Volver"/>
+                        <Button key={v4()} onClickFunction={()=>setGoBack(true)} buttonText="Volver"/>
                     ]}/>
                 </div>
             </div>

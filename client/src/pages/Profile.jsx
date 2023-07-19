@@ -16,6 +16,7 @@ import {_}  from "lodash"
 import { UserPhoto } from "../components/UserPhoto";
 import { Button } from "../components/Button";
 import "../styles/Profile.css"
+import { v4 } from "uuid";
 
 
 /**
@@ -111,7 +112,7 @@ export function Profile({updating}){
                         <div className="editing-container">
                             {updating ? 
                                 <UserInfoForm updating  onFormSubmit={onUpdate} userData={profileData}  userPhotoUrl={profileData.photo_link} extraButtons={[
-                                    <Button key={1} buttonText="Volver" onClickFunction={()=>setBackToProfile(true)}/>
+                                    <Button key={v4()} buttonText="Volver" onClickFunction={()=>setBackToProfile(true)}/>
                                 ]}/> 
                                 :
                                 <>

@@ -7,6 +7,7 @@
  * @param {Object} attrs_traductions objeto con atributo actual(clave) : traduccion (valor)
  */
 import {PropTypes} from "prop-types"
+import { v4 } from "uuid"
 
 export function UserData({userData, nonShowableAttrs, attrsTraductions}){
     const formatingFunction = (key)=>{
@@ -17,8 +18,8 @@ export function UserData({userData, nonShowableAttrs, attrsTraductions}){
             }
             return (
                 <>
-                    <div key={key} className="user-data-item">
-                        <p key={userData[key]}>{showKey} : {userData[key]}</p>
+                    <div key={v4()} className="user-data-item">
+                        <p key={v4()}>{showKey} : {userData[key]}</p>
                     </div>
                 </>
             )

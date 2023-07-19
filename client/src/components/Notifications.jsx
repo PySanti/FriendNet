@@ -1,6 +1,7 @@
 import {PropTypes} from "prop-types"
 import "../styles/Notifications.css"
 import { useEffect, useState } from "react"
+import { v4 } from "uuid"
 /**
  * Componente creado para contener las notificaciones del usuarios
  * @param {Array} notificationList lista de notificaciones
@@ -10,7 +11,7 @@ export function Notifications({notificationList, onNotificationClick}){
     let [notificacionsActivated, setNotificationsActivated] = useState(false)
     const notificationListCls = "notification-list"
     const formatingFunction =(notification)=>{
-        return <div key={notification.id}className="notification"onClick={()=>onNotificationClick(notification.code, notification.id)} key={notification.code}>{notification.msg}</div>
+        return <div key={v4()} className="notification"onClick={()=>onNotificationClick(notification.code, notification.id)} >{notification.msg}</div>
     }
     useEffect(()=>{
         console.log(notificacionsActivated)

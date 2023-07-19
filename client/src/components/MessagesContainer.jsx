@@ -6,11 +6,12 @@
 import {PropTypes} from "prop-types"
 import { Message } from "./Message"
 import "../styles/MessagesContainer.css"
+import { v4 } from "uuid"
 
 
 export function MessagesContainer({messages, session_user_id }){
     const formatingFunction = (msg)=>{
-        return <Message key={msg.id} content={msg.content} session_user_msg={session_user_id === msg.parent_id}/>
+        return <Message key={v4()} content={msg.content} session_user_msg={session_user_id === msg.parent_id}/>
     }
     return (
         <div className="messages-container">

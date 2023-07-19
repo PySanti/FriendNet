@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
 import { Form } from "../components/Form";
 import { PasswordField } from "../components/PasswordField";
+import { v4 } from "uuid";
 
 /**
  * Pagina creado para cambio de contraseña
@@ -60,7 +61,7 @@ export function ChangePwd(){
                     <Header username={user.username} msg="Modificando contraseña"/>
                     <Loader state={loadingState}/>
                     <Form onSubmitFunction={changePwd} buttonMsg="Enviar" buttonsList={[
-                        <Button key={1} buttonText="Volver" onClickFunction={()=>setBackToProfile(true)}/>
+                        <Button key={v4()} buttonText="Volver" onClickFunction={()=>setBackToProfile(true)}/>
                     ]}>
                         <PasswordField label="Contrasenia actual" errors={errors.old_password && errors.old_password.message} name="old_password" registerObject={register("old_password", BASE_PASSWORD_CONSTRAINTS)}/>
                         <PasswordField label="Nueva contraseña" errors={errors.new_password && errors.new_password.message} name="new_password" registerObject={register("new_password", BASE_PASSWORD_CONSTRAINTS)}/>

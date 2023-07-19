@@ -14,6 +14,7 @@ import { Loader } from "../components/Loader";
 import { LoadingContext } from "../context/LoadingContext";
 import { saveCloudinary } from "../tools/saveCloudinary";
 import { Button } from "../components/Button";
+import { v4 } from "uuid";
 
 
 
@@ -83,7 +84,7 @@ export function SignUp() {
                     <Header msg="Regístrate de una vez!"/>
                     <Loader state={loadingState}/>
                     <UserInfoForm onFormSubmit={onSignUp} extraButtons={[
-                        <Button key={1} buttonText="Volver" onClickFunction={()=>setGoBack(true)}/>,
+                        <Button key={v4()} buttonText="Volver" onClickFunction={()=>setGoBack(true)}/>,
                     ]}/>
                 </div>
             </div>

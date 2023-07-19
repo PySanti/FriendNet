@@ -14,6 +14,7 @@ import { Loader } from "../components/Loader"
 import { Form } from "../components/Form"
 import { LoadingContext } from "../context/LoadingContext"
 import { Button } from "../components/Button"
+import { v4 } from "uuid"
 
 /**
  * Pagina creada para llevar activacion de cuenta
@@ -76,7 +77,7 @@ export function AccountActivation() {
                         <Header msg="Activa tu cuenta antes de continuar"/>
                         <Loader state={loadingState}/>
                         <Form onSubmitFunction={onSubmit} buttonMsg="Enviar" buttonsList={[
-                            <Button key={1} buttonText="Volver" onClickFunction={()=>setGoBack(true)} />
+                            <Button key={v4()} buttonText="Volver" onClickFunction={()=>setGoBack(true)} />
                         ]}>
                             <FormField label="Codigo " errors={errors.activation_code && errors.activation_code.message}>
                                 <input type="text"maxLength={6}minLength={1}name="activation_code"id="activation_code"{...register("activation_code", {    required : {        value : true,        message : "Por favor ingresa un código de activación"    },    pattern : {        value : /^-?\d+$/,        message : "Por favor, ingresa un codigo valido"    },    minLength : {        value : 6,        message : 'Debes ingresar al menos 6 caracteres',    }    })}/>

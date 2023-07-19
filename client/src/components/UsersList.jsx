@@ -1,6 +1,7 @@
 import { UserButton } from "./UserButton"
 import {PropTypes} from "prop-types"
 import "../styles/UsersList.css"
+import { v4 } from "uuid"
 
 /**
  * Recibe la lista de usuarios directa de la api y retorna la lista de elementos jsx
@@ -9,7 +10,7 @@ import "../styles/UsersList.css"
  */
 export function UsersList({usersList, onClickEvent}){
     const formatingFunction = (user)=>{
-        return <UserButton key={user.username}user={user}onClickFunction={onClickEvent} />
+        return <UserButton key={v4()}user={user}onClickFunction={onClickEvent} />
     }
     return (
         <>
