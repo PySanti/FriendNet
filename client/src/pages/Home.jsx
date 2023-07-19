@@ -50,6 +50,12 @@ export function Home() {
             setLoadingState('Error inesperado buscando chat!')
         }
     }
+    const onNotificationDelete = async (notificationId)=>{
+        startLoading()
+        await removeNotificationAPI(notificationId)
+        await loadUserNotifications()
+        successfullyLoaded()
+    }
     const onUserButtonClick = async (clicked_user)=>{
         setClickedUser(clicked_user)
     }
@@ -65,7 +71,6 @@ export function Home() {
     }
     const onNotificationClick = async (notificationCode, notificationId)=>{
         startLoading()
-        loadUserNotifications()
         if (notificationCode !== "u"){
             let user = undefined
             userList.forEach(element => {
@@ -83,6 +88,7 @@ export function Home() {
             setGoToProfile(true)
         }
         const response = await removeNotificationAPI(notificationId)
+        loadUserNotifications()
     }
     const loadUserNotifications = async ()=>{
         startLoading()
@@ -123,7 +129,7 @@ export function Home() {
                 <div className="home-container">
                     <Header username={user.username}/>
                     <div className="buttons-container">
-                        <NotificationsContainer notificationList={notifications} onNotificationClick={onNotificationClick} />
+                        <NotificationsContainer notificationList={notifications} onNotificationClick={onNotificationClick} onNotificationDelete={onNotificationDelete} />
                         <Button buttonText="Salir" onClickFunction={logoutUser}/>
                         <Button buttonText="Perfil" onClickFunction={()=>{setGoToProfile(true)}}/>
                     </div>

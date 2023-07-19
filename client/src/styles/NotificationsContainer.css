@@ -23,7 +23,7 @@
     margin-top: .5rem;
     padding: .4rem;
     height: auto;
-    width: 30vw;
+    width: 20vw;
     max-height: 15vh;
     top : calc(+ auto 1vh);
     flex-direction: column;
@@ -36,5 +36,7 @@
 .notification-list-active{
     opacity: 1;
 }
-
+.no-notifications{
+    text-align: center;
+}
 

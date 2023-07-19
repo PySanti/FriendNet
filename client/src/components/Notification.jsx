@@ -9,11 +9,11 @@ import "../styles/Notification.css"
 
 export function Notification({onNotificationClick, notification, onNotificationDelete}){
     return (
-        <div className="individual-notification-container"onClick={()=>onNotificationClick(notification.code, notification.id)} >
-            <h4 className="individual-notification-content">
+        <div className="individual-notification-container" >
+            <h4 className="individual-notification-content"onClick={()=>onNotificationClick(notification.code, notification.id)}>
                 {notification.msg}
             </h4>
-            <button className="individual-notification-delete-btn" onClick={()=>onNotificationDelete(notification.code,notification.id)}>x</button>
+            <button className="individual-notification-delete-btn" onClick={()=>onNotificationDelete(notification.id)}>x</button>
         </div>
     )
 }
