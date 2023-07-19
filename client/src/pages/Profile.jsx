@@ -38,18 +38,11 @@ export function Profile({updating}){
     const loadProfileData = async ()=>{
         startLoading()
         if (!profileData){
-            if (!localStorage.getItem('userData')){
-                try{
-                    const response = await getUserDetailAPI(user.username)
-                    setProfileData(response.data)
-                    saveUserDataInLocalStorage(response.data)
-                    successfullyLoaded()
-                } catch(error){
-                    setLoadingState("Error inesperado en repuesta del servidor")
-                }
-            } else {
+            try{
                 setProfileData(getUserDataFromLocalStorage())
-                setLoadingState('Datos cargados desde el local storage')
+                successfullyLoaded()
+            } catch(error){
+                setLoadingState("Error inesperado al cargar datos del usuario desde el Local Storage")
             }
         } 
     }
@@ -72,7 +65,6 @@ export function Profile({updating}){
                 setLoadingState("Sin cambios")
             }
         } catch(error){
-            console.log(error)
             setLoadingState("Error inesperado al actualizar datos del usuario!")
         }
     }

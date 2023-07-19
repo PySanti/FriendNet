@@ -18,6 +18,13 @@
 
 // Logica:
     //* facil:
+
+        // agregar validacion en el Login para recibir datos del usuario desde el servidor : cualquier persona con solo 
+        // saber el nombre de usuario y el correo, ya podria tener en su almacenamiento local los datos del usuario. Agregar
+        // que la api reciba ademas password y compruebe la coincidencia antes de retornar los datos
+
+        // Revisar secuencia de acciones en el Login.jsx
+        // crear funcion /utils/PrepareDataForSending para su uso en el SignUp y el Update
         // agrgar documentacion a la api
         // agregar mensaje de error cuando el server este caido en login (revisar error handlers en general)
         // agregar eliminacion de notificaciones manual

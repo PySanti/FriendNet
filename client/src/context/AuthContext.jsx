@@ -3,6 +3,7 @@ import { loginUserAPI } from "../api/loginUser.api";
 import jwt_decode from "jwt-decode";
 import { refreshTokenAPI } from "../api/refreshToken.api";
 import { userIsAuthenticated } from "../utils/userIsAuthenticated";
+import { removeUserDataFromLocalStorage } from "../utils/removeUserDataFromLocalStorage";
 
 
 export const AuthContext = createContext()
@@ -34,6 +35,7 @@ export function AuthContextProvider({children}){
         return response
     }
     const logoutUser =()=>{
+        removeUserDataFromLocalStorage()
         updateContextData(null)
     }
 
