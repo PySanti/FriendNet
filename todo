@@ -25,7 +25,6 @@
         // agregar validacion al activar usuario en login para contrasenia
 
     //* medio:
-        // cachear datos del usuario para carga mas rapida
         // mejorar seguridad en el removeNotification
         //  Limitar tamanio de las imagenes y formato
         //  hacer que cuando los usuarios sean eliminados, se elimine tambien su imagen de la DB 
@@ -39,10 +38,23 @@
         // emplear validate para validaciones en el backend
         // optimizar imagenes de cloudinary, y eliminar las que sean ejemplares 
         //  agregar filtrado de usuarios en home
+        // agregar globo de mensaje nuevo en chats no leidos
+
 
     //* dificil
         // usar paginacion
         // encriptar formularios de react
+        // usar webSockets para mensajes
+        // user webSockets para actualizacion de notificaciones
+
+        // cambiar sistema de uso de notificaciones, de modo que, cuando se soliciten las notificaciones al server, estas se eliminen 
+        // automaticamente, la repuesta se almacenara en el LocalStorage, y cada vez que se reciba una notificacion nueva sera por una 
+        // senial recibida por un web socket haciendo un 'append' a la lista de notificaciones del local Storage
+
+        // cachear imagen del usuario
+        // cachear datos del usuario (userData)
+
+        // revisar tiempo de vida de token de autenticacion (comportamiento una vez que la sesion este cerrada)
 
 
 

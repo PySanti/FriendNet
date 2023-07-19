@@ -50,9 +50,10 @@ export function Home() {
             setLoadingState('Error inesperado buscando chat!')
         }
     }
-    const onNotificationDelete = async (notificationId)=>{
+    const onNotificationDelete = async (notification)=>{
         startLoading()
-        await removeNotificationAPI(notificationId)
+        notifications.pop(notification)
+        await removeNotificationAPI(notification.id)
         await loadUserNotifications()
         successfullyLoaded()
     }

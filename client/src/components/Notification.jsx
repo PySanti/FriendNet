@@ -13,7 +13,7 @@ export function Notification({onNotificationClick, notification, onNotificationD
             <h4 className="individual-notification-content"onClick={()=>onNotificationClick(notification.code, notification.id)}>
                 {notification.msg}
             </h4>
-            <button className="individual-notification-delete-btn" onClick={()=>onNotificationDelete(notification.id)}>x</button>
+            <button className="individual-notification-delete-btn" onClick={()=>onNotificationDelete(notification)}>x</button>
         </div>
     )
 }
