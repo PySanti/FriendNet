@@ -26,7 +26,7 @@ export function UsersInterface({usersList, onUserButtonClick, session_user_id, c
 
 
 UsersInterface.propTypes = {
-    usersList : PropTypes.object,
+    usersList : PropTypes.array,
     onUserButtonClick : PropTypes.func.isRequired,
     session_user_id : PropTypes.number.isRequired,
     clickedUser : PropTypes.object,

@@ -22,6 +22,8 @@
 
 
 // Logica
+    // modificar Nombres de Documents y icono de la pagina
+    // confirmacion de correo en AccountActivation.jsx (para caso en el que no le haya llegado el correo al usuario)
     //darle estilos personalizados a los inputs
     // darle estilos personalizados a todo lo que este por default
     // agregar funcionalidad para ver foto de perfil de usuario al presionarla

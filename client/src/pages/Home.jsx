@@ -29,18 +29,17 @@ export function Home() {
     const onMsgSending = async (data)=>{
         startLoading()
         try {
-            console.log('enviando mensaje')
             const response = await sendMsgAPI(clickedUser.id, user.user_id, data.msg)
             successfullyLoaded()
+            loadMessages()
         } catch(error){
             console.log(error)
         }
     }
-    const onUserButtonClick = async (clicked_user)=>{
-        setClickedUser(clicked_user)
+    const loadMessages = async ()=>{
         startLoading()
         try{
-            const response = await getChatBetweenAPI(user.user_id, clicked_user.id)
+            const response = await getChatBetweenAPI(user.user_id, clickedUser.id)
             if (response.data !== "no_chats_between"){
                 setMessagesHistorial(response.data.messages_hist)
             } else {
@@ -50,6 +49,9 @@ export function Home() {
         } catch(error){
             setLoadingState('Error inesperado buscando chat!')
         }
+    }
+    const onUserButtonClick = async (clicked_user)=>{
+        setClickedUser(clicked_user)
     }
     const loadUsersList = async ()=>{
         try{
@@ -106,6 +108,11 @@ export function Home() {
             loadUserNotifications()
         }
     }, [])
+    useEffect(()=>{
+        if (clickedUser){
+            loadMessages()
+        }
+    }, [clickedUser])
 
     if (!userIsAuthenticated()){
         return <UserNotLogged/>
