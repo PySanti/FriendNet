@@ -1,6 +1,7 @@
 import { FormField } from "./FormField";
 import {PropTypes} from "prop-types"
 import "../styles/PasswordField.css"
+import { useState } from "react";
 
 /**
  * Componente creado para campos de contrasenia
@@ -10,10 +11,14 @@ import "../styles/PasswordField.css"
  * @param {String} label
  */
 export function PasswordField({errors, registerObject, name, label}){
+    let [previsualizationActivated, setPrevisualizationActivated] = useState(false)
+    const onPwdPrevisualizationClick = ()=>{
+        setPrevisualizationActivated(previsualizationActivated ? false : true)
+    }
     return (
         <FormField label={label} errors={errors}>
-            <input className="password-input" type="password" name={name} {...registerObject}/>
-            <button className="password-visualization" type="button"/>
+            <input className="password-input" type={previsualizationActivated ? "text" : "password"} name={name} {...registerObject}/>
+            <button className="password-visualization" type="button" onClick={onPwdPrevisualizationClick}/>
         </FormField>
     )
 }

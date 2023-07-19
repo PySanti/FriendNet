@@ -3,6 +3,7 @@
     ~ Centrarnos en detalles finales del estilo y responsive
 
 // Estilos:
+    // terminar previsualizacion de contrasenia
     // arreglar error de estilo al acceder a chat directamente desde notification
     // agregar overflow hidden al message container
     // modificar Nombres de Documents y icono de la pagina
