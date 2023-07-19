@@ -1,90 +1,57 @@
 // Pasos generales:
-    ~ Terminar estilos "basicos"
-    ~ Hacer un responsive "basico"
     ~ Arreglar problemas de logica restantes
-    ~ Centrarnos en detalles finales del estilo
+    ~ Centrarnos en detalles finales del estilo y responsive
+
+// Estilos:
+    // agregar overflow hidden al message container
+    // modificar Nombres de Documents y icono de la pagina
+    // darle estilos personalizados a todo lo que este por default (inputs)
+    //  Agregar estilos cuando se use el tab en formularios, para buttons e inputs
+    // solucionar problema de home al cargar chat (el header se sale de la pantalla)
+    // modificar estilos de los backButtons
+    // hacer comprobaciones de existencia antes de hacer llamados a componentes para evitar ejecuciones de funciones innecesarias
+    // agregar ambos signos de interrogacion y exclamacion
+    // agregar animcion bien arrecha en la palabra FriendNet del home unloged
+    // agregar modo obscuro y claro
+
+// Logica:
+    //* facil:
+        //agrgar documentacion a la api
+        // solucionar problemas de keys
+        // agregar mensaje de error cuando el server este caido en login (revisar error handlers en general)
+        // agregar eliminacion de notificaciones manual
+        // implementar mas jsonresponse en el backend, serializers solo para recepcion
+        // agregar validacion al activar usuario en login para contrasenia
+        //  agregar Header a UserLogged.jsx y asociar a una url con el AuthContext
+        // agregar boton para ver previa de contrasenia
+
+    //* medio:
+        // cachear datos del usuario para carga mas rapida
+        // mejorar seguridad en el removeNotification
+        //  Limitar tamanio de las imagenes y formato
+        //  hacer que cuando los usuarios sean eliminados, se elimine tambien su imagen de la DB 
+        // Mejorar sistema de despacho de notificaciones, para no tener que estar pidiendo datos al servidor constantemente
+        // confirmacion de correo en AccountActivation.jsx (para caso en el que no le haya llegado el correo al usuario)
+        // mejorar acceso a chat desde notificaciones (potencial busqueda muy lenta)
+        // eliminar imagen antigua de usuario en cloudinary al actualizar perfil
+        // buscar otra forma de enviar correos de activacion
+        // setteo de is_online al crear y logear usuario
+        // agregar permission classes en el backedn
+        // emplear validate para validaciones en el backend
+        // optimizar imagenes de cloudinary, y eliminar las que sean ejemplares 
+        //  agregar filtrado de usuarios en home
+
+    //* dificil
+        // usar paginacion
+        // encriptar formularios de react
+
+
 
 
 
 //Produccion:
     // comprobar funcionamiento en todos los navegadores y con todas las resoluciones
-    // mejorar seguridad en el removeNotification
-    //todo: agrgar documentacion a la api
-    // todo: pruebas unitarias
-    // TODO: Ecriptar almacenamiento de imagenes en 'user_photos'
-    // TODO: Limitar tamanio de las imagenes para produccion (seguridad)
-    // TODO: investigar sobre seguridad para proyectos django
-    // TODO: hacer que cuando los usuarios sean eliminados, se elimine tambien su imagen de la DB 
-    // todo: arreglar errores de acceso a views directamente por url a traves de metodos como:
-            //todo: ~ urls encriptadas
-            //todo: ~ ocultamiento de urls
-    // todo: repasar todo lo aprendido en el proyecto, revisando todo el mismo
+    // : pruebas unitarias
+    // : investigar sobre seguridad para proyectos django
+    // : repasar todo lo aprendido en el proyecto, revisando todo el mismo
 
-
-// Logica
-    // solucionar problemas de keys
-    // agregar overflow hidden al message container
-    // Mejorar sistema de despacho de notificaciones, para no tener que estar pidiendo datos al servidor constantemente
-    // modificar Nombres de Documents y icono de la pagina
-    // confirmacion de correo en AccountActivation.jsx (para caso en el que no le haya llegado el correo al usuario)
-    //darle estilos personalizados a los inputs
-    // darle estilos personalizados a todo lo que este por default
-    // agregar funcionalidad para ver foto de perfil de usuario al presionarla
-    // cachear imagen del usuario para carga mas rapida
-    // solucionar problema de home al cargar chat (el header se sale de la pantalla)
-    // refactorizar usando operadores ternarios en lugar de operador de react donde sea necesario
-    //  Agregar estilos cuando se use el tab en formularios, para buttons e inputs
-    // modificar estilos de los backButtons
-    // limitar tamanio de imagenes y formato
-    // hacer comprobaciones de existencia antes de hacer llamados a componentes para evitar ejecuciones de funciones innecesarias
-    // poner capitalize en todos los botones
-    // agregar ambos signos de interrogacion y exclamacion
-    // agregar mensaje de error cuando el server este caido en login
-    // agregar eliminacion de notificaciones manual
-    // mejorar acceso a chat desde notificaciones (potencial busqueda muy lenta)
-    // agregar actualizacion de historial de mensajes cuando se envian
-    // agregar opciones de modificacion de mensajes
-    // refactorizar codigo de backend almacenando cada view en la app que corresponda
-    // todo: implementar mas jsonresponse en el backend, serializers solo para recepcion
-    // todo: usar paginacion
-    // todo : agregar buttons para limpiar form (button type reset)
-    // todo : cambiar change por set
-    // todo: agregar validacion al activar usuario en login para contrasenia
-    // todo: destructurar props en todas partes
-    // todo : agregar success state en el edit
-    // todo: eliminar imagen antigua de usuario en cloudinary al actualizar perfil
-    // todo : agregar Header a UserLogged.jsx y asociar a una url con el AuthContext
-    // todo: agregar loader cuando se suban los datos en el SignUp.jsx
-    // todo: hacer un img preview
-    // todo: modularizar todo lo que se pueda, reducir grandes pages en pequenios componentes
-    // todo : modularizar Profile.jsx y EditProfile.jsx (mucho codigo repitiente)
-    // todo : crear un userDataContext para Profile.jsx y EditProfile.jsx
-    // todo : agregar logica para carga de datos con spinner como en profile 
-    en todo lo que requiera renderizado de datos desde el backend
-    // todo : acomodar key props
-    // todo: modular mas los comps 
-    // todo : revisar quota de emailjs
-    // todo : recordar modificacion de is_online al crear usuario
-    // todo : agregar permission classes en el backedn
-    // todo: agregar props validation
-    // todo: emplear validate para validaciones
-    // todo : agregar mas soporte para errores en todos lados 
-    // todo : optimizar codigo usando gpt
-    // todo: utilizar estrategias de cacheo para evitar llamadas inncesarias 
-    // todo: documentar componentes de react
-    // todo: optimizar imagenes de cloudinary, y eliminar las que sean ejemplares 
-    // todo : encriptar formularios de react
-    // todo: depurar todo el codigo inutil del backend
-    // todo: agregar boton para ver previa de contrasenia
-    //  todo: agregar traducciones
-    //  todo: agregar filtrado de usuarios en home
-    //  todo: cuando se pseudo-termine la parte logica, borrar la base de datos y debugear toda el proyecto desde 0
-
-
-// Estaticos:
-    // todo: agregar loader mientras se registra el usuario
-    // todo : mejorar estilos de emailjs
-    // todo: eliminar marca de agua de emailjs
-    // todo: agregar animcion bien arrecha en la palabra FriendNet del home unloged
-    // todo: recordar responsive
-    // todo: agregar modo obscuro y claro
