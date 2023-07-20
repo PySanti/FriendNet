@@ -29,11 +29,11 @@ export function Home() {
     const onMsgSending = async (data)=>{
         startLoading()
         try {
-            const response = await sendMsgAPI(clickedUser.id, user.user_id, data.msg)
+            await sendMsgAPI(clickedUser.id, user.user_id, data.msg)
             successfullyLoaded()
             loadMessages()
         } catch(error){
-            console.log(error)
+            setLoadingState('Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
         }
     }
     const loadMessages = async ()=>{
@@ -52,10 +52,13 @@ export function Home() {
     }
     const onNotificationDelete = async (notification)=>{
         startLoading()
-        notifications.pop(notification)
-        await removeNotificationAPI(notification.id)
-        await loadUserNotifications()
-        successfullyLoaded()
+        try {
+            await removeNotificationAPI(notification.id)
+            await loadUserNotifications()
+            successfullyLoaded()
+        } catch(error){
+            setLoadingState('Error inesperado actualizando notificaciones')
+        }
     }
     const onUserButtonClick = async (clicked_user)=>{
         setClickedUser(clicked_user)
@@ -87,9 +90,16 @@ export function Home() {
             }
         } else {
             setGoToProfile(true)
+            successfullyLoaded()
         }
-        const response = await removeNotificationAPI(notificationId)
-        loadUserNotifications()
+        startLoading()
+        try{
+            await removeNotificationAPI(notificationId)
+            await loadUserNotifications()
+            successfullyLoaded()
+        } catch(error) {
+            setLoadingState('Error inesperado al actualizar notificaciones!')
+        }
     }
     const loadUserNotifications = async ()=>{
         startLoading()
@@ -100,7 +110,7 @@ export function Home() {
             }
             successfullyLoaded()
         } catch(error){
-            setLoadingState('Error inesperado al cargar notificaciones del usuario')
+            setLoadingState('Error inesperado al cargar notificaciones')
         }
     }
     let [goToProfile, setGoToProfile] = useState(false)

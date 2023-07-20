@@ -43,12 +43,11 @@ export function Login() {
                 }
             }
         } catch(error){
-            console.log(error)
             if (error.response.data.error===  "user_not_exists"){
                 // por seguridad, la api retornara el mismo codigo de error para cuando el usuario o la contrasenia esten mal
                 setLoadingState("Usuario o contraseña inválidos !") 
             } else {
-                setLoadingState("Error inesperado en repuesta de api userDetail!")
+                setLoadingState("Error inesperado en respuesta de servidor, esta caido !")
             }
         }
     }

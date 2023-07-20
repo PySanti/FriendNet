@@ -28,11 +28,10 @@ export function ChangePwd(){
         if (data['old_password'] !== data['new_password']){
             startLoading()
             try{
-                const response = await changeUserPwdAPI(user.username, data.old_password, data.new_password)
+                await changeUserPwdAPI(user.username, data.old_password, data.new_password)
                 successfullyLoaded()
             } catch(error){
-                const errorMsg = error.response.data.error
-                if (errorMsg === 'invalid_pwd'){
+                if (error.response.data.error === 'invalid_pwd'){
                     setLoadingState('Error, la contraseña actual es invalida!')
                 } else {
                     setLoadingState('Error inesperado en respuesta de servidor')

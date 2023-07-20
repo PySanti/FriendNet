@@ -20,7 +20,7 @@ import { v4 } from "uuid"
  * Pagina creada para llevar activacion de cuenta
  */
 export function AccountActivation() {
-    let {loadingState, setLoadingState, successfullyLoaded} = useContext(LoadingContext)
+    let {loadingState, setLoadingState, successfullyLoaded, startLoading} = useContext(LoadingContext)
     let [userActivated, setUserActivated]               = useState(false)
     let [realActivationCode, setRealActivationCode]     = useState(null)
     let [goBack, setGoBack]                             = useState(false )
@@ -33,11 +33,9 @@ export function AccountActivation() {
         console.log(activation_code)
     }
     const onSubmit = handleSubmit(async (data)=>{
-        console.log('Hola')
-        setLoadingState(true)
+        startLoading()
         if (Number(data.activation_code) === Number(realActivationCode)){
             try {
-                console.log('activando')
                 await activateUserAPI(props.userId)
                 setUserActivated(true)
                 successfullyLoaded()

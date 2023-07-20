@@ -33,7 +33,7 @@ export function SignUp() {
         try{
             startLoading()
             const checkUserResponse = await checkExistingUserAPI(data['username'], data['email'])
-            if (checkUserResponse.data.existing === "true"){
+            if (checkUserResponse.data.existing !== "true"){
                 const photo = data['photo']
                 delete data.confirmPwd // el confirmPwd no puede ser enviado al backend
                 delete data.photo
