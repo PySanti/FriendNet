@@ -71,11 +71,11 @@ class UsuariosManager(BaseUserManager):
             Recibe un usuario y retorna la lista de notificaciones del usuario formateadas
         """
         notifications_list = []
-        delete_list = []
         for  i in user.notifications.all():
             notifications_list.append({ 'msg' : i.msg, 'code' : i.code})
-            delete_list.append(i)
         # bulk delete de la delete_list
+        user.notifications.all().delete()
+        user.save()
         return notifications_list
     def getCleanedUserData(self, user):
         USERS_TRADUCTION_ATTRS = {
