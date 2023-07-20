@@ -70,7 +70,7 @@ class GetUserDetailAPI(APIView):
                 user=user[0]
                 if check_password(request.data['password'], user.password):
                     user = {i[0]:i[1] for i in user.__dict__.items() if i[0] in USER_SHOWABLE_FIELDS}
-                    return Response(user, status.HTTP_200_OK)
+                    return JsonResponse({'user' : user})
                 else:
                     return Response({'error' : 'user_not_exists'}, status.HTTP_400_BAD_REQUEST)
             else:

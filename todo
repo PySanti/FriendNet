@@ -18,7 +18,6 @@
 
 // Logica:
     //* facil:
-        // agregar mensaje de error cuando el server este caido en login (revisar error handlers en general)
         // implementar mas jsonresponse en el backend, serializers solo para recepcion
 
     //* medio:

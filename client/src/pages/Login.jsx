@@ -28,8 +28,8 @@ export function Login() {
         try{
             startLoading(true)
             let response = await getUserDetailAPI(data.username, data.password)
-            setUser(response.data)
-            if (response.data.is_active){
+            setUser(response.data.user)
+            if (response.data.user.is_active){
                 try {
                     response = await loginUser(data)
                     setUserLogged(true)

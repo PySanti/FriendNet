@@ -32,7 +32,6 @@ class GetChatBetweenAPI(APIView):
             else:
                 return Response('no_chats_between', status.HTTP_200_OK)
         else:
-            print(serialized_data.errors)
             return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status.HTTP_400_BAD_REQUEST)
 
 
