@@ -19,7 +19,7 @@ export function NotificationsContainer({notificationList, onNotificationClick, o
         <div className="notifications-container">
             <button className="notifications-bell" onClick={()=>{setNotificationsActivated(notificacionsActivated ? false : true)}}></button>
             <div className={notificacionsActivated ? `${notificationListCls} ${notificationListCls}-active` : notificationListCls}>
-                {notificationList ?
+                {(notificationList && notificationList.length > 0) ?
                     notificationList.map(formatingFunction)
                     :
                     <h5 className="no-notifications">No tienes notificaciones</h5>

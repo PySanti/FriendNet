@@ -69,6 +69,9 @@ class GetUserDetailAPI(APIView):
             if user:
                 user=user[0]
                 if check_password(request.data['password'], user.password):
+                    # Se enviaran las notificaciones al frontend al principio de la sesion
+                    # para cachearlos en el Local Storage. De Este modo evitaremos
+                    # llamadas al backend cada vez que queramos revisarlas
                     user_notifications = Usuarios.objects.dispatchUserNotifications(user)
                     user = {i[0]:i[1] for i in user.__dict__.items() if i[0] in USER_SHOWABLE_FIELDS}
                     user['notifications'] = user_notifications

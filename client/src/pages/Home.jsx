@@ -10,11 +10,12 @@ import { getChatBetweenAPI } from "../api/getChatBetween.api"
 import { Loader } from "../components/Loader"
 import { sendMsgAPI } from "../api/sendMsg.api"
 import { UsersInterface } from "../components/UsersInterface"
-import { getUserNotifications } from "../api/getUserNotifications.api"
 import { NotificationsContainer } from "../components/NotificationsContainer"
-import { removeNotificationAPI } from "../api/removeNotification.api"
 import { Button } from "../components/Button"
 import "../styles/Home.css"
+import { getNotificationsFromLocalStorage } from "../utils/getNotificationsFromLocalStorage"
+import { removeNotificationFromLocalStorage } from "../utils/removeNotificationFromLocalStorage"
+import { getUserFromList } from "../utils/getUserFromList"
 /**
  * Pagina principal del sitio
  */
@@ -50,17 +51,10 @@ export function Home() {
             setLoadingState('Error inesperado buscando chat!')
         }
     }
-    const onNotificationDelete = async (notification)=>{
-        startLoading()
-        try {
-            await removeNotificationAPI(notification.id)
-            await loadUserNotifications()
-            successfullyLoaded()
-        } catch(error){
-            setLoadingState('Error inesperado actualizando notificaciones')
-        }
+    const onNotificationDelete = (notification)=>{
+        setNotifications(removeNotificationFromLocalStorage(notification))
     }
-    const onUserButtonClick = async (clicked_user)=>{
+    const onUserButtonClick = (clicked_user)=>{
         setClickedUser(clicked_user)
     }
     const loadUsersList = async ()=>{
@@ -73,45 +67,25 @@ export function Home() {
             setLoadingState('Error inesperado cargando datos de usuarios!')
         }
     }
-    const onNotificationClick = async (notificationCode, notificationId)=>{
+    const onNotificationClick = (notification)=>{
         startLoading()
-        if (notificationCode !== "u"){
-            let user = undefined
-            userList.forEach(element => {
-                if (element.id == notificationCode){
-                    user= element
-                }
-            });
+        if (notification.code !== "u"){
+            startLoading()
+            const user = getUserFromList(userList, notification.code)
             if (user){
                 onUserButtonClick(user)
                 successfullyLoaded()
             } else {
-                setLoadingState("Error inesperado")
+                setLoadingState('Tuvimos problemas para encontrar a ese usuario :(')
             }
         } else {
             setGoToProfile(true)
             successfullyLoaded()
         }
-        startLoading()
-        try{
-            await removeNotificationAPI(notificationId)
-            await loadUserNotifications()
-            successfullyLoaded()
-        } catch(error) {
-            setLoadingState('Error inesperado al actualizar notificaciones!')
-        }
+        setNotifications(removeNotificationFromLocalStorage(notification))
     }
-    const loadUserNotifications = async ()=>{
-        startLoading()
-        try{
-            const response = await getUserNotifications(user.user_id)
-            if (response.data.notifications.length){
-                setNotifications(response.data.notifications)
-            }
-            successfullyLoaded()
-        } catch(error){
-            setLoadingState('Error inesperado al cargar notificaciones')
-        }
+    const loadUserNotifications = ()=>{
+        setNotifications(getNotificationsFromLocalStorage())
     }
     let [goToProfile, setGoToProfile] = useState(false)
     useEffect(()=>{

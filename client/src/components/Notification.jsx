@@ -10,7 +10,7 @@ import "../styles/Notification.css"
 export function Notification({onNotificationClick, notification, onNotificationDelete}){
     return (
         <div className="individual-notification-container" >
-            <h4 className="individual-notification-content"onClick={()=>onNotificationClick(notification.code, notification.id)}>
+            <h4 className="individual-notification-content"onClick={()=>onNotificationClick(notification)}>
                 {notification.msg}
             </h4>
             <button className="individual-notification-delete-btn" onClick={()=>onNotificationDelete(notification)}>x</button>

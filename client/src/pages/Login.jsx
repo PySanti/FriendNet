@@ -29,10 +29,15 @@ export function Login() {
         try{
             startLoading(true)
             let response = await getUserDetailAPI(data.username, data.password)
-            setUser(response.data.user)
-            if (response.data.user.is_active){
+            const userDetail = response.data.user
+            setUser(userDetail)
+            if (userDetail.is_active){
                 try {
                     response = await loginUser(data)
+                    const notifications = userDetail.notifications
+                    delete userDetail.notifications
+                    saveNotificationsInLocalStorage(notifications)
+                    saveUserDataInLocalStorage(userDetail)
                     setUserLogged(true)
                     successfullyLoaded()
                 } catch(error){
@@ -68,10 +73,6 @@ export function Login() {
     }, [goBack])
     useEffect(()=>{
         if (user){
-            const notifications = user.notifications
-            delete user.notifications
-            saveNotificationsInLocalStorage(notifications)
-            saveUserDataInLocalStorage(user)
             if (!user.is_active){
             // Se ejecutara si se detecta que el usuario existe pero esta inactivo
                 const props = {
