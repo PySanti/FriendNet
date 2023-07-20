@@ -28,8 +28,9 @@
         
         // eliminar uso de Loader en lugares en donde no se haga un llamado a api (dependiendo del caso)
         // eliminar apis que no se usen
-        // pensar si hacer una api llamada saveUnReadenNotifications, la cual retorne al backend las notificaciones que no hayan sido leidas en la sesion actual
+        // hacer solucion al problema de notificaciones sin leer, teniendo en cuenta que el usuario puede cerrar la ventana sin ejecutarse codigo de finalizacion
         // agregar globo de mensaje nuevo en chats no leidos (usar notification.code)
+        // agregar el clearLocalStorage cuando el usuario cierre la ventana
     //* medio:
         //  Limitar tamanio de las imagenes y formato
         // confirmacion de correo en AccountActivation.jsx (para caso en el que no le haya llegado el correo al usuario)
