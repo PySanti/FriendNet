@@ -12,6 +12,7 @@ import { LoginForm } from "../components/LoginForm"
 import { Button } from "../components/Button"
 import { v4 } from "uuid"
 import { saveUserDataInLocalStorage } from "../utils/saveUserDataInLocalStorage"
+import { saveNotificationsInLocalStorage } from "../utils/saveNotificationsInLocalStorage"
 /**
  * Pagina creada para llevar logeo de usuarios
  */
@@ -67,6 +68,9 @@ export function Login() {
     }, [goBack])
     useEffect(()=>{
         if (user){
+            const notifications = user.notifications
+            delete user.notifications
+            saveNotificationsInLocalStorage(notifications)
             saveUserDataInLocalStorage(user)
             if (!user.is_active){
             // Se ejecutara si se detecta que el usuario existe pero esta inactivo

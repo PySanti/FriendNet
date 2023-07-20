@@ -10,7 +10,7 @@ USER_SHOWABLE_FIELDS = [
     "photo_link",
     # los siguientes campos no son realmente showable, simplemente son requeridos para escalabilidad
     "is_active",
-    "id"
+    "id",
 ]
 
 BASE_SERIALIZER_ERROR_RESPONSE = "serializer_error"

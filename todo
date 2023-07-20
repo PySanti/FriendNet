@@ -18,8 +18,10 @@
 
 // Logica:
     //* facil:
-        // implementar mas jsonresponse en el backend, serializers solo para recepcion
-
+        // refactorizar codigo de backend:
+            // revisar vistas
+            // revisar documentaciones
+            // eliminar cosas que no se usen
     //* medio:
         // mejorar seguridad en el removeNotification
         //  Limitar tamanio de las imagenes y formato

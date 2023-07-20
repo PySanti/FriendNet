@@ -2,9 +2,7 @@ from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth import login
 from django.utils.timezone import  now
 from django.contrib.auth.hashers import check_password
-from .tools import (
-    getFormatedDateDiff,
-)
+
 
 class UsuariosManager(BaseUserManager):
     def _create_user(self, username, password, email, is_staff, is_superuser, **kwargs):
@@ -68,16 +66,17 @@ class UsuariosManager(BaseUserManager):
             return None
         else:
             return chat[0]
-    def getParsedNotifications(self,user):
+    def dispatchUserNotifications(self,user):
         """
-            Recibe un usuario y retorna la lista de notificaciones del usuario
-            en forma de tuplas:
-                n[0] : mensaje
-                n[1] : datetime de envio
-                n[2] : codigo de notificacion
+            Recibe un usuario y retorna la lista de notificaciones del usuario formateadas
         """
-
-        return [ (i.msg, getFormatedDateDiff(now(), i.receive_time), i.code) for  i in user.notifications.all()]
+        notifications_list = []
+        delete_list = []
+        for  i in user.notifications.all():
+            notifications_list.append({ 'msg' : i.msg, 'code' : i.code})
+            delete_list.append(i)
+        # bulk delete de la delete_list
+        return notifications_list
     def getCleanedUserData(self, user):
         USERS_TRADUCTION_ATTRS = {
             'username' : 'Usuario',

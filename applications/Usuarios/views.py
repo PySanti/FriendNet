@@ -69,7 +69,9 @@ class GetUserDetailAPI(APIView):
             if user:
                 user=user[0]
                 if check_password(request.data['password'], user.password):
+                    user_notifications = Usuarios.objects.dispatchUserNotifications(user)
                     user = {i[0]:i[1] for i in user.__dict__.items() if i[0] in USER_SHOWABLE_FIELDS}
+                    user['notifications'] = user_notifications
                     return JsonResponse({'user' : user})
                 else:
                     return Response({'error' : 'user_not_exists'}, status.HTTP_400_BAD_REQUEST)
