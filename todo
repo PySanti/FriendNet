@@ -23,17 +23,16 @@
             // revisar vistas
             // revisar documentaciones
             // eliminar cosas que no se usen
-
-        // eliminar async de todas las funciones que ya no sean asincronas
+        
+        // hacer un refactor para eliminar potencial codigo que no se use en archivos relacionados con los ultimos cambios
+        
         // eliminar uso de Loader en lugares en donde no se haga un llamado a api (dependiendo del caso)
         // eliminar apis que no se usen
+        // pensar si hacer una api llamada saveUnReadenNotifications, la cual retorne al backend las notificaciones que no hayan sido leidas en la sesion actual
+        // agregar globo de mensaje nuevo en chats no leidos (usar notification.code)
     //* medio:
-        // mejorar seguridad en el removeNotification
         //  Limitar tamanio de las imagenes y formato
-        //  hacer que cuando los usuarios sean eliminados, se elimine tambien su imagen de la DB 
-        // Mejorar sistema de despacho de notificaciones, para no tener que estar pidiendo datos al servidor constantemente
         // confirmacion de correo en AccountActivation.jsx (para caso en el que no le haya llegado el correo al usuario)
-        // mejorar acceso a chat desde notificaciones (potencial busqueda muy lenta)
         // eliminar imagen antigua de usuario en cloudinary al actualizar perfil
         // buscar otra forma de enviar correos de activacion
         // setteo de is_online al crear y logear usuario y desactivar al deslogaer
@@ -41,7 +40,7 @@
         // emplear validate para validaciones en el backend
         // optimizar imagenes de cloudinary, y eliminar las que sean ejemplares 
         //  agregar filtrado de usuarios en home
-        // agregar globo de mensaje nuevo en chats no leidos
+        // hacer que, cuando el usuario ingresa a un chat, se eliminen notificaciones del mismo si las hay
 
 
     //* dificil

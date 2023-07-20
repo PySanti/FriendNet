@@ -34,7 +34,7 @@ export function Profile({updating}){
     let     {loadingState, startLoading, setLoadingState, successfullyLoaded} = useContext(LoadingContext)
     const   {user} = useContext(AuthContext)
     const   navigate = useNavigate()
-    const loadProfileData = async ()=>{
+    const loadProfileData = ()=>{
         startLoading()
         if (!profileData){
             try{
