@@ -3,6 +3,7 @@
     //~ Centrarnos en detalles finales del estilo y responsive
 
 // Estilos:
+    // dar estilos a los globes
     // terminar previsualizacion de contrasenia
     // arreglar error de estilo al acceder a chat directamente desde notification
     // agregar overflow hidden al message container

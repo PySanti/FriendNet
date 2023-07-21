@@ -10,13 +10,14 @@ import "../styles/UsersInterface.css"
  * @param {Number} session_user_id Id de usuario de la sesion activa
  * @param {Object} clickedUser Objeto con datos del usuario clicado (puede ser null)
  * @param {Function} onMsgSending funcion que se enviara cuando se mande un mensaje al clickedUser
+ * @param {Array} chatGlobeList lista de ids de los usuarios con globe en la usersList
  */
-export function UsersInterface({usersList, onUserButtonClick, session_user_id, clickedUser, messagesHistorial, onMsgSending}){
+export function UsersInterface({usersList, onUserButtonClick, session_user_id, clickedUser, messagesHistorial, onMsgSending, chatGlobeList}){
     return (
         <div className="users-interface-container">
             {usersList && 
                 <>
-                    <UsersList usersList={usersList} onClickEvent={onUserButtonClick}/>
+                    <UsersList usersList={usersList} onClickEvent={onUserButtonClick} chatGlobeList={chatGlobeList}/>
                     <Chat chatingUser={clickedUser} messages={messagesHistorial} session_user_id={session_user_id} onMsgSending={onMsgSending}/>
                 </>
             }
@@ -32,10 +33,12 @@ UsersInterface.propTypes = {
     clickedUser : PropTypes.object,
     messagesHistorial : PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
     onMsgSending : PropTypes.func.isRequired,
+    chatGlobeList : PropTypes.array
 }
 
 UsersInterface.defaultProps ={
     usersList : undefined,
     clickedUser : undefined,
-    messagesHistorial : undefined
+    messagesHistorial : undefined,
+    chatGlobeList : undefined
 }

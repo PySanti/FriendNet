@@ -16,6 +16,7 @@ import "../styles/Home.css"
 import { getNotificationsFromLocalStorage } from "../utils/getNotificationsFromLocalStorage"
 import { removeNotificationFromLocalStorage } from "../utils/removeNotificationFromLocalStorage"
 import { getUserFromList } from "../utils/getUserFromList"
+import { getChatGlobesList } from "../utils/getChatGlobesList"
 /**
  * Pagina principal del sitio
  */
@@ -25,6 +26,7 @@ export function Home() {
     let [messagesHistorial, setMessagesHistorial] = useState(null)
     let [clickedUser, setClickedUser] = useState(null)
     let [userList, setUserList] = useState(false)
+    let [chatGlobeList, setChatGlobeList] = useState(null)
     const {user, logoutUser} = useContext(AuthContext)
     const navigate = useNavigate()
     const onMsgSending = async (data)=>{
@@ -85,7 +87,9 @@ export function Home() {
         setNotifications(removeNotificationFromLocalStorage(notification))
     }
     const loadUserNotifications = ()=>{
-        setNotifications(getNotificationsFromLocalStorage())
+        const notifications = getNotificationsFromLocalStorage()
+        setNotifications(notifications)
+        setChatGlobeList(getChatGlobesList(notifications))
     }
     let [goToProfile, setGoToProfile] = useState(false)
     useEffect(()=>{
@@ -125,6 +129,7 @@ export function Home() {
                             session_user_id={user.user_id} 
                             clickedUser={clickedUser} 
                             messagesHistorial={messagesHistorial} 
+                            chatGlobeList={chatGlobeList}
                             onMsgSending={onMsgSending}/>
                 </div>
             </div>
