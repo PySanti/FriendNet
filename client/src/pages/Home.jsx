@@ -17,6 +17,8 @@ import { getNotificationsFromLocalStorage } from "../utils/getNotificationsFromL
 import { removeNotificationFromLocalStorage } from "../utils/removeNotificationFromLocalStorage"
 import { getUserFromList } from "../utils/getUserFromList"
 import { getChatGlobesList } from "../utils/getChatGlobesList"
+import { removeRelatedNotifications } from "../utils/removeRelatedNotifications"
+import { saveNotificationsInLocalStorage } from "../utils/saveNotificationsInLocalStorage"
 /**
  * Pagina principal del sitio
  */
@@ -57,20 +59,13 @@ export function Home() {
         setNotifications(removeNotificationFromLocalStorage(notification))
     }
     const onUserButtonClick = (clicked_user)=>{
-        let chat_notification = undefined
-        notifications.forEach(element => {
-            if (element.code == clicked_user.id){
-                chat_notification = element
-            }
-        });
-        if(chat_notification){
-            console.log('notificacion encontrada')
-            notifications.pop(chat_notification)
-            setNotifications(removeNotificationFromLocalStorage(chat_notification))
-            setChatGlobeList(getChatGlobesList(notifications))
+        const updatedNotifications = removeRelatedNotifications(clicked_user.id, notifications)
+        if(updatedNotifications){
+            saveNotificationsInLocalStorage(updatedNotifications)
+            setNotifications(updatedNotifications)
+            setChatGlobeList(getChatGlobesList(updatedNotifications))
         }
         setClickedUser(clicked_user)
-
     }
     const loadUsersList = async ()=>{
         try{
@@ -85,7 +80,6 @@ export function Home() {
     const onNotificationClick = (notification)=>{
         startLoading()
         if (notification.code !== "u"){
-            startLoading()
             const user = getUserFromList(userList, notification.code)
             if (user){
                 onUserButtonClick(user)
@@ -97,7 +91,6 @@ export function Home() {
             setGoToProfile(true)
             successfullyLoaded()
         }
-        setNotifications(removeNotificationFromLocalStorage(notification))
     }
     const loadUserNotifications = ()=>{
         const notifications = getNotificationsFromLocalStorage()
