@@ -20,8 +20,7 @@
 
 // Logica:
     //* facil:
-        // agregar globo de mensaje nuevo en chats no leidos (usar notification.code)
-        // hacer que, cuando el usuario ingresa a un chat, se eliminen notificaciones del mismo si las hay
+        // depurar, refactorizar y testear codigo relacionado con globes y eliminacion de notificacion por ingreso a chat
 
         // refactorizar codigo de backend:
             // revisar vistas
