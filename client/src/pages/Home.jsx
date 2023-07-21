@@ -57,7 +57,20 @@ export function Home() {
         setNotifications(removeNotificationFromLocalStorage(notification))
     }
     const onUserButtonClick = (clicked_user)=>{
+        let chat_notification = undefined
+        notifications.forEach(element => {
+            if (element.code == clicked_user.id){
+                chat_notification = element
+            }
+        });
+        if(chat_notification){
+            console.log('notificacion encontrada')
+            notifications.pop(chat_notification)
+            setNotifications(removeNotificationFromLocalStorage(chat_notification))
+            setChatGlobeList(getChatGlobesList(notifications))
+        }
         setClickedUser(clicked_user)
+
     }
     const loadUsersList = async ()=>{
         try{
