@@ -129,7 +129,7 @@ class GetUsersListAPI(APIView):
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
-            users_list = Usuarios.objects.all().exclude(id=request.data['session_user_id']).values("id", "username", "is_online", "photo_link")
+            users_list = Usuarios.objects.filter(is_active=True).exclude(id=request.data['session_user_id']).values("id", "username", "is_online", "photo_link")
             return JsonResponse({"users_list": list(users_list)})
         else:
             print(serialized_data.errors)
