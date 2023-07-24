@@ -6,7 +6,6 @@ from rest_framework.generics import (
     UpdateAPIView,
 )
 from .utils import (
-    USER_SHOWABLE_FIELDS,
     BASE_SERIALIZER_ERROR_RESPONSE,
     USERS_LIST_ATTRS
 )
@@ -32,8 +31,6 @@ from .models import Usuarios
 class CreateUsuariosAPI(APIView):
     queryset = Usuarios.objects.all()
     serializer_class = CreateUsuariosSerializer
-    def __init__(self, **kwargs) -> None:
-        super().__init__(**kwargs)
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
@@ -43,10 +40,7 @@ class CreateUsuariosAPI(APIView):
             except:
                 return Response({'error': "error_creating"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
-            print(serializer.error_messages)
             return Response({'error': BASE_SERIALIZER_ERROR_RESPONSE}, status=status.HTTP_400_BAD_REQUEST)
-
-
 class CheckExistingUserAPI(APIView):
     serializer_class = CheckExistingUserSerializer
     def post(self, request, *args, **kwargs):
@@ -58,7 +52,6 @@ class CheckExistingUserAPI(APIView):
                 return Response({'existing' : 'false'}, status.HTTP_200_OK)
         else:
             return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status.HTTP_400_BAD_REQUEST)
-
 class GetUserDetailAPI(APIView):
     serializer_class = GetUserDetailSerializer
     def post(self, request, *args, **kwargs):
@@ -71,9 +64,8 @@ class GetUserDetailAPI(APIView):
                     # Se enviaran las notificaciones al frontend al principio de la sesion
                     # para cachearlos en el Local Storage. De Este modo evitaremos
                     # llamadas al backend cada vez que queramos revisarlas
-                    user_notifications = Usuarios.objects.dispatchUserNotifications(user)
-                    user = {i[0]:i[1] for i in user.__dict__.items() if i[0] in USER_SHOWABLE_FIELDS}
-                    user['notifications'] = user_notifications
+                    user = Usuarios.objects.getFormatedUserData(user)
+                    Usuarios.objects.deleteAllNotifications(user)
                     return JsonResponse({'user' : user})
                 else:
                     return Response({'error' : 'user_not_exists'}, status.HTTP_400_BAD_REQUEST)
@@ -81,29 +73,21 @@ class GetUserDetailAPI(APIView):
                 return Response({'error' : 'user_not_exists'}, status.HTTP_400_BAD_REQUEST)
         else:
             return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status=status.HTTP_400_BAD_REQUEST)
-
-
 class ActivateUserAPI(APIView):
     serializer_class = ActivateUserSerializer
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if (serialized_data.is_valid()):
             try:
-                user = Usuarios.objects.get(id=request.data['user_id'])
-                user.is_active = True
-                user.save()
+                Usuarios.objects.activateUser(Usuarios.objects.get(id=request.data['user_id']))
                 return Response({'success' : 'user_activated'}, status.HTTP_200_OK)
             except:
                 return Response({'error' : 'error_activating_user'}, status.HTTP_500_INTERNAL_SERVER_ERROR) 
         else:
-            print(serialized_data.errors)
             return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status.HTTP_400_BAD_REQUEST)
-
-
 class UpdateUserDataAPI(UpdateAPIView):
     serializer_class = UpdateUsuariosSerializer
     queryset = Usuarios.objects.all()
-
 class ChangeUserPwdAPI(APIView):
     serializer_class = ChangeUserPwdSerializer
     def post(self, request, *args, **kwargs):
@@ -111,14 +95,12 @@ class ChangeUserPwdAPI(APIView):
         if serialized_data.is_valid():
             user = Usuarios.objects.get(username=request.data['username'])
             if check_password(request.data['old_password'], user.password):
-                user.set_password(request.data['new_password'])
-                user.save()
+                Usuarios.objects.changePassword(user, request.data['new_password'])
                 return Response({'success' : 'pwd_setted'}, status.HTTP_200_OK)
             else:
                 return Response({'error' : 'invalid_pwd'}, status.HTTP_400_BAD_REQUEST)
         else:
             return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status.HTTP_400_BAD_REQUEST)
-
 class GetUsersListAPI(APIView):
     serializer_class = GetUsersListSerializer
     def post(self, request, *args, **kwargs):
@@ -127,7 +109,6 @@ class GetUsersListAPI(APIView):
             users_list = Usuarios.objects.filter(is_active=True).exclude(id=request.data['session_user_id']).values(*USERS_LIST_ATTRS)
             return JsonResponse({"users_list": list(users_list)})
         else:
-            print(serialized_data.errors)
             return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status.HTTP_400_BAD_REQUEST)
 
 

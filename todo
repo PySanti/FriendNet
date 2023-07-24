@@ -20,7 +20,6 @@
 
 // Logica:
     //* facil:
-        // repasar todo el codigo relacionado con notificaciones y refactorizar
         // refactorizar codigo de backend:
             // revisar vistas
             // revisar documentaciones
@@ -31,6 +30,7 @@
         // eliminar uso de Loader en lugares en donde no se haga un llamado a api (dependiendo del caso)
         // eliminar apis que no se usen
         // agregar el clearLocalStorage cuando el usuario cierre la ventana
+        // Agregar usuarios con uppercase en first_names y last_names en la base de datos de usuarios
 
     //* medio:
         //  Limitar tamanio de las imagenes y formato
