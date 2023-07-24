@@ -29,7 +29,7 @@ class GetMessagesHistorialAPI(APIView):
             if (messages_hist):
                 return JsonResponse({"messages_hist" : list(messages_hist.values())})
             else:
-                return Response('no_chats_between', status.HTTP_200_OK)
+                return Response('no_messages_between', status.HTTP_200_OK)
         else:
             return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status.HTTP_400_BAD_REQUEST)
 class SendMsgAPI(APIView):

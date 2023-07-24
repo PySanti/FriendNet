@@ -55,7 +55,7 @@ export function Home() {
         startLoading()
         try{
             const response = await getMessagesHistorialAPI(user.user_id, clickedUser.id)
-            if (response.data !== "no_chats_between"){
+            if (response.data !== "no_messages_between"){
                 setMessagesHistorial(response.data.messages_hist)
             } else {
                 setMessagesHistorial(null)

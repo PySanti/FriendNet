@@ -20,7 +20,6 @@
 
 // Logica:
     //* facil:
-        // testear todo el codigo de mensajes y chats
         // agregar el clearLocalStorage cuando el usuario cierre la ventana
 
     //* medio:

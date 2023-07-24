@@ -21,6 +21,6 @@ UserButton.propTypes = {
     onClickFunction : PropTypes.func.isRequired,
     withGlobe : PropTypes.bool,
 }
-UserButton.propTypes = {
+UserButton.defaultProps = {
     withGlobe : undefined
 }
