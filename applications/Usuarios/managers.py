@@ -2,8 +2,9 @@ from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth import login
 from django.utils.timezone import  now
 from django.contrib.auth.hashers import check_password
-
-
+from .utils import (
+    USERS_LIST_ATTRS
+)
 class UsuariosManager(BaseUserManager):
     def _create_user(self, username, password, email, is_staff, is_superuser, **kwargs):
         # BUG : Agregar usuarios con uppercase en first_names y last_names
@@ -68,11 +69,17 @@ class UsuariosManager(BaseUserManager):
             return chat[0]
     def dispatchUserNotifications(self,user):
         """
-            Recibe un usuario y retorna la lista de notificaciones del usuario formateadas
+            Recibe un usuario y retorna la lista de notificaciones del usuario formateadas y las elimina
         """
+        senders_ids = []
         notifications_list = []
         for  i in user.notifications.all():
-            notifications_list.append({ 'msg' : i.msg, 'code' : i.code})
+            if i.sender_user_id not in senders_ids:
+                senders_ids.append(i.sender_user_id)
+            notifications_list.append({ 'msg' : i.msg, 'sender_user' : i.sender_user_id})
+        senders_users = {i.id:i for i in self.filter(id__in=senders_ids).values(*USERS_LIST_ATTRS)}
+        for i in notifications_list:
+            i.sender_user=senders_users[i.sender_user]
         # bulk delete de la delete_list
         user.notifications.all().delete()
         user.save()

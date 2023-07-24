@@ -14,7 +14,6 @@ from rest_framework.response import Response
 from django.http import JsonResponse
 from rest_framework import status
 from applications.Usuarios.utils import (
-    USER_SHOWABLE_FIELDS,
     BASE_SERIALIZER_ERROR_RESPONSE
 )
 from applications.Usuarios.models import Usuarios
@@ -44,7 +43,7 @@ class SendMsgAPI(APIView):
         if serialized_data.is_valid():
             sender_user = Usuarios.objects.get(id=request.data['sender_id'])
             receiver_user = Usuarios.objects.get(id=request.data['receiver_id'])
-            Notifications.objects.addNotification(f"{sender_user.username} te ha enviado un mensaje", receiver_user, f"{sender_user.id}")
+            Notifications.objects.addNotification(f"{sender_user.username} te ha enviado un mensaje", receiver_user, sender_user)
             new_message = Messages(parent_id=request.data['sender_id'], content=request.data['msg'])
             new_message.save()
             Chat.objects.sendMessage(sender_user, receiver_user,new_message)

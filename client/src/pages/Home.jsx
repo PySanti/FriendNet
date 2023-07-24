@@ -82,17 +82,12 @@ export function Home() {
     }
     const onNotificationClick = (notification)=>{
         startLoading()
-        if (notification.code !== "u"){
-            const user = getUserFromList(userList, notification.code)
-            if (user){
-                onUserButtonClick(user)
-                successfullyLoaded()
-            } else {
-                setLoadingState('Tuvimos problemas para encontrar a ese usuario :(')
-            }
-        } else {
-            setGoToProfile(true)
+        const user = getUserFromList(userList, notification.code)
+        if (user){
+            onUserButtonClick(user)
             successfullyLoaded()
+        } else {
+            setLoadingState('Tuvimos problemas para encontrar a ese usuario :(')
         }
     }
     const loadUserNotifications = ()=>{

@@ -1,6 +1,9 @@
 from rest_framework.views import exception_handler
 from datetime import datetime
 
+# atributos que tendran los usuarios del users_list
+USERS_LIST_ATTRS = ["id", "username", "is_online", "photo_link"]
+
 USER_SHOWABLE_FIELDS = [
     "username",
     "email",

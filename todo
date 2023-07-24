@@ -20,7 +20,9 @@
 
 // Logica:
     //* facil:
-        // depurar, refactorizar y testear codigo relacionado con globes y eliminacion de notificacion por ingreso a chat
+        // testear dispatchUsersNotifications
+        // Buscar eliminar funcion getUserFromList, eliminando las notificaciones de tipo "u", y haciendo que cada notificacion
+        // cargue con el usuario duenio
 
         // refactorizar codigo de backend:
             // revisar vistas

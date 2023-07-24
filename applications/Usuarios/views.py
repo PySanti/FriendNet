@@ -7,7 +7,8 @@ from rest_framework.generics import (
 )
 from .utils import (
     USER_SHOWABLE_FIELDS,
-    BASE_SERIALIZER_ERROR_RESPONSE
+    BASE_SERIALIZER_ERROR_RESPONSE,
+    USERS_LIST_ATTRS
 )
 
 from django.contrib.auth.hashers import (
@@ -104,10 +105,6 @@ class ActivateUserAPI(APIView):
 class UpdateUserDataAPI(UpdateAPIView):
     serializer_class = UpdateUsuariosSerializer
     queryset = Usuarios.objects.all()
-    def put(self, *args, **kwargs):
-        user = Usuarios.objects.get(id=kwargs['pk'])
-        Notifications.objects.addNotification("Has actualizado tu perfil",user, "u")
-        return super().put(*args, **kwargs)
 
 class ChangeUserPwdAPI(APIView):
     serializer_class = ChangeUserPwdSerializer
@@ -129,7 +126,7 @@ class GetUsersListAPI(APIView):
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
-            users_list = Usuarios.objects.filter(is_active=True).exclude(id=request.data['session_user_id']).values("id", "username", "is_online", "photo_link")
+            users_list = Usuarios.objects.filter(is_active=True).exclude(id=request.data['session_user_id']).values(*USERS_LIST_ATTRS)
             return JsonResponse({"users_list": list(users_list)})
         else:
             print(serialized_data.errors)
