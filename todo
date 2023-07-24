@@ -31,6 +31,7 @@
         // eliminar apis que no se usen
         // agregar el clearLocalStorage cuando el usuario cierre la ventana
         // Agregar usuarios con uppercase en first_names y last_names en la base de datos de usuarios
+        // modificar codigo de backend para que los chats se almacenen con los usuarios en si y no con ids
 
     //* medio:
         //  Limitar tamanio de las imagenes y formato

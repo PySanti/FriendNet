@@ -1,12 +1,6 @@
 from django.db.models import manager
 
 
-class MessagesManager(manager.Manager):
-    def CreateMessage(self, parent_id, msg):
-        """
-            Crea un objecto mensaje y lo retorna mensaje 
-        """
-        return self.create(parent_id=parent_id, content=msg)
 class ChatsManager(manager.Manager):
     def _chatBetween(self, id_1, id_2):
         """
