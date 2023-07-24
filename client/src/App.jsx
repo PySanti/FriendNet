@@ -8,6 +8,7 @@ import { AuthContextProvider } from "./context/AuthContext.jsx"
 import { Profile } from "./pages/Profile.jsx"
 import {  LoadingContextProvider } from "./context/LoadingContext.jsx"
 import { ChangePwd } from "./pages/ChangePwd.jsx"
+import { ChangeEmailForActivation } from "./pages/ChangeEmailForActivation.jsx"
 
 function App() {
   return (
@@ -32,6 +33,14 @@ function App() {
           <LoadingContextProvider>
             <AccountActivation />
           </LoadingContextProvider>
+          }/>
+        <Route 
+          exact 
+          path='/signup/activate/change_email'  
+          element={
+            <LoadingContextProvider>
+                <ChangeEmailForActivation/> 
+            </LoadingContextProvider>
           }/>
         <Route 
           exact 
@@ -83,6 +92,7 @@ function App() {
               </AuthContextProvider>
             </LoadingContextProvider>
           }/>
+
       </Routes>
     </BrowserRouter>
   )
