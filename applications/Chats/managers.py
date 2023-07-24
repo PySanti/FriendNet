@@ -7,15 +7,26 @@ class ChatsManager(manager.Manager):
             Busca el chat entre el usuario con id_1 y id_2, en caso de no existir
             retorna None
         """
-        chat = self.filter(users_id__contains=id_1).filter(users_id__contains=id_2)
+        chat = self.filter(users__id=id_1).filter(users__id=id_2)
         return chat[0] if chat else None
+    def createChat(self, user_1, user_2):
+        """
+            Recibe dos usuarios y crea un chat entre ellos
+        """
+        new_chat = self.model()
+        new_chat.users.add(user_1)
+        new_chat.users.add(user_2)
+        new_chat.save()
+        return new_chat
+
     def sendMessage(self, sender_user, receiver_user, new_message):
         """
             Envia un mensaje de un usuario a otro
         """
         chat_between = self._chatBetween(sender_user.id, receiver_user.id)
         if not chat_between:
-            chat_between = self.create(users_id=f"{sender_user.id},{receiver_user.id}")
+            chat_between = self.createChat(sender_user, receiver_user)
+
         chat_between.messages.add(new_message)
         chat_between.save()
     def getMessagesHistorial(self, session_user_id, chat_user_id):
@@ -25,3 +36,9 @@ class ChatsManager(manager.Manager):
         """
         chat = self._chatBetween(session_user_id, chat_user_id)
         return chat.messages.all() if chat else None
+
+
+class MessagesManager(manager.Manager):
+    def createMessage(self, parent, content):
+        new_message = self.create(parent=parent, content=content)
+        return new_message
