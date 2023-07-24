@@ -21,7 +21,6 @@
 // Logica:
     //* facil:
         // testear todo el codigo de mensajes y chats
-        // solucionar problema de chatBetween
         // agregar el clearLocalStorage cuando el usuario cierre la ventana
 
     //* medio:

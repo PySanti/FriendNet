@@ -12,9 +12,18 @@ class Messages(models.Model):
     content = models.CharField(max_length=200)
     #manager
     objects = MessagesManager()
+    def __str__(self) -> str:
+        return f"""
+        {self.parent.username} : {self.content}
+        """
 
 class Chats(models.Model):
     users = models.ManyToManyField(Usuarios)
     messages = models.ManyToManyField(Messages)
     # manager
     objects = ChatsManager() 
+    def __str__(self) -> str:
+        users = self.users.all()
+        return f"""
+        {users[0].username} - {users[1].username}
+        """

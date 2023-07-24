@@ -64,9 +64,9 @@ class GetUserDetailAPI(APIView):
                     # Se enviaran las notificaciones al frontend al principio de la sesion
                     # para cachearlos en el Local Storage. De Este modo evitaremos
                     # llamadas al backend cada vez que queramos revisarlas
-                    user = Usuarios.objects.getFormatedUserData(user)
+                    formated_user_data = Usuarios.objects.getFormatedUserData(user)
                     Usuarios.objects.deleteAllNotifications(user)
-                    return JsonResponse({'user' : user})
+                    return JsonResponse({'user' : formated_user_data})
                 else:
                     return Response({'error' : 'user_not_exists'}, status.HTTP_400_BAD_REQUEST)
             else:

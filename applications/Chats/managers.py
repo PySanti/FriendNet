@@ -13,7 +13,7 @@ class ChatsManager(manager.Manager):
         """
             Recibe dos usuarios y crea un chat entre ellos
         """
-        new_chat = self.model()
+        new_chat = self.create()
         new_chat.users.add(user_1)
         new_chat.users.add(user_2)
         new_chat.save()
