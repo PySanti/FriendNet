@@ -21,7 +21,8 @@ from .serializers import (
     GetUserDetailSerializer,
     UpdateUsuariosSerializer,
     ChangeUserPwdSerializer,
-    GetUsersListSerializer
+    GetUsersListSerializer,
+    DisconnectUserSerializer
 )
 from rest_framework.response import Response
 from .models import Usuarios
@@ -40,7 +41,7 @@ class CreateUsuariosAPI(APIView):
             except:
                 return Response({'error': "error_creating"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
-            return Response({'error': BASE_SERIALIZER_ERROR_RESPONSE}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status=status.HTTP_400_BAD_REQUEST)
 class CheckExistingUserAPI(APIView):
     serializer_class = CheckExistingUserSerializer
     def post(self, request, *args, **kwargs):
@@ -51,7 +52,7 @@ class CheckExistingUserAPI(APIView):
             else:
                 return Response({'existing' : 'false'}, status.HTTP_200_OK)
         else:
-            return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status.HTTP_400_BAD_REQUEST)
+            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
 class GetUserDetailAPI(APIView):
     serializer_class = GetUserDetailSerializer
     def post(self, request, *args, **kwargs):
@@ -72,7 +73,7 @@ class GetUserDetailAPI(APIView):
             else:
                 return Response({'error' : 'user_not_exists'}, status.HTTP_400_BAD_REQUEST)
         else:
-            return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status=status.HTTP_400_BAD_REQUEST)
 class ActivateUserAPI(APIView):
     serializer_class = ActivateUserSerializer
     def post(self, request, *args, **kwargs):
@@ -84,7 +85,7 @@ class ActivateUserAPI(APIView):
             except:
                 return Response({'error' : 'error_activating_user'}, status.HTTP_500_INTERNAL_SERVER_ERROR) 
         else:
-            return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status.HTTP_400_BAD_REQUEST)
+            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
 class UpdateUserDataAPI(UpdateAPIView):
     serializer_class = UpdateUsuariosSerializer
     queryset = Usuarios.objects.all()
@@ -100,7 +101,7 @@ class ChangeUserPwdAPI(APIView):
             else:
                 return Response({'error' : 'invalid_pwd'}, status.HTTP_400_BAD_REQUEST)
         else:
-            return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status.HTTP_400_BAD_REQUEST)
+            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
 class GetUsersListAPI(APIView):
     serializer_class = GetUsersListSerializer
     def post(self, request, *args, **kwargs):
@@ -109,6 +110,16 @@ class GetUsersListAPI(APIView):
             users_list = Usuarios.objects.filter(is_active=True).exclude(id=request.data['session_user_id']).values(*USERS_LIST_ATTRS)
             return JsonResponse({"users_list": list(users_list)})
         else:
-            return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status.HTTP_400_BAD_REQUEST)
+            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
 
 
+class DisconnectUserAPI(APIView):
+    serializer_class = DisconnectUserSerializer
+    def post(self, request, *args, **kwargs):
+        serialized_data = self.serializer_class(data=request.data)
+        if serialized_data.is_valid():
+            user = Usuarios.objects.get(id=request.data['session_user_id'])
+            Usuarios.objects.setUserConection(user, False)
+            return Response({'success' : 'user_disconected'}, status.HTTP_200_OK)
+        else:
+            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)

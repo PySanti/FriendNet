@@ -16,7 +16,7 @@ USER_SHOWABLE_FIELDS = [
     "id",
 ]
 
-BASE_SERIALIZER_ERROR_RESPONSE = "serializer_error"
+BASE_SERIALIZER_ERROR_RESPONSE = {'error' : "serializer_error"}
 
 def custom_exception_handler(exc, context):
     """

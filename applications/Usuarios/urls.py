@@ -8,7 +8,8 @@ from .views import (
     GetUserDetailAPI,
     UpdateUserDataAPI,
     ChangeUserPwdAPI,
-    GetUsersListAPI
+    GetUsersListAPI,
+    DisconnectUserAPI
     )
 
 urlpatterns = [
@@ -19,5 +20,5 @@ urlpatterns = [
     path('update_user_data/<int:pk>', UpdateUserDataAPI.as_view()),
     path('change_user_pwd/', ChangeUserPwdAPI.as_view()),
     path('get_user_list/', GetUsersListAPI.as_view()),
-
+    path('disconnect_user/', DisconnectUserAPI.as_view()),
 ] 

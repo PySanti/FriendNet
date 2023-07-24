@@ -17,10 +17,10 @@
     // agregar animcion bien arrecha en la palabra FriendNet del home unloged
     // agregar modo obscuro y claro
     // agregar mensajes de error mas carismaticos pero a la vez serios
+    // buscar logos para la aplicacion
 
 // Logica:
     //* medio:
-        // setteo de is_online al crear y logear usuario y desactivar al deslogaer
         //  Limitar tamanio de las imagenes y formato
         // confirmacion de correo en AccountActivation.jsx (para caso en el que no le haya llegado el correo al usuario)
         // eliminar imagen antigua de usuario en cloudinary al actualizar perfil
