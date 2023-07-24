@@ -20,7 +20,7 @@
 
 // Logica:
     //* facil:
-
+        // repasar todo el codigo relacionado con notificaciones y refactorizar
         // refactorizar codigo de backend:
             // revisar vistas
             // revisar documentaciones
@@ -30,9 +30,7 @@
         
         // eliminar uso de Loader en lugares en donde no se haga un llamado a api (dependiendo del caso)
         // eliminar apis que no se usen
-        // hacer solucion al problema de notificaciones sin leer, teniendo en cuenta que el usuario puede cerrar la ventana sin ejecutarse codigo de finalizacion
         // agregar el clearLocalStorage cuando el usuario cierre la ventana
-        // eliminar notificaciones por actualizacion de perfil y todo su rastro
 
     //* medio:
         //  Limitar tamanio de las imagenes y formato

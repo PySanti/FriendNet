@@ -67,9 +67,22 @@ class UsuariosManager(BaseUserManager):
             return None
         else:
             return chat[0]
+    def deleteAllNotifications(self, user):
+        """
+            Recibe un usuario y elimina todas sus notificaciones
+        """
+        user.notifications.all().delete()
+        user.save()
     def dispatchUserNotifications(self,user):
         """
             Recibe un usuario y retorna la lista de notificaciones del usuario formateadas y las elimina
+        """
+        notifications_list = self.getFormatedNotifications(user)
+        self.deleteAllNotifications(user)
+        return notifications_list
+    def getFormatedNotifications(self, user):
+        """
+            Recibe el usuario y retorna la lista de notificaciones del usuario formateada
         """
         senders_ids = []
         notifications_list = []
@@ -81,9 +94,8 @@ class UsuariosManager(BaseUserManager):
         senders_users = {i['id']:i for i in self.filter(id__in=senders_ids).values(*USERS_LIST_ATTRS)}
         for i in notifications_list:
             i['sender_user']=senders_users[i['sender_user']]
-        user.notifications.all().delete()
-        user.save()
         return notifications_list
+
     def getCleanedUserData(self, user):
         USERS_TRADUCTION_ATTRS = {
             'username' : 'Usuario',

@@ -12,9 +12,8 @@ class NotificationsManager(manager.Manager):
             Agrega una nueva notificacion al field notifications
             del receiver user
         """
-        if (not self.hasNotification(receiver_user, sender_user)):
-            newNotification = self.create(msg=msg, sender_user_id=sender_user.id)
-            receiver_user.notifications.add(newNotification)
-            receiver_user.save()
+        newNotification = self.create(msg=msg, sender_user_id=sender_user.id)
+        receiver_user.notifications.add(newNotification)
+        receiver_user.save()
 
 
