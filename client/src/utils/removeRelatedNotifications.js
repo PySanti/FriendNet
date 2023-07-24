@@ -6,7 +6,7 @@
 export function removeRelatedNotifications(clickedUserId, notificationsList){
     let relatedNotificacionsIndex = []
     for (let i = notificationsList.length-1; i !== -1 ; i--){
-        if (notificationsList[i].code == clickedUserId){
+        if (notificationsList[i].sender_user.id == clickedUserId){
             relatedNotificacionsIndex.push(i)
         }
     }

@@ -15,7 +15,6 @@ import { Button } from "../components/Button"
 import "../styles/Home.css"
 import { getNotificationsFromLocalStorage } from "../utils/getNotificationsFromLocalStorage"
 import { removeNotificationFromLocalStorage } from "../utils/removeNotificationFromLocalStorage"
-import { getUserFromList } from "../utils/getUserFromList"
 import { getChatGlobesList } from "../utils/getChatGlobesList"
 import { removeRelatedNotifications } from "../utils/removeRelatedNotifications"
 import { saveNotificationsInLocalStorage } from "../utils/saveNotificationsInLocalStorage"
@@ -81,14 +80,7 @@ export function Home() {
         setClickedUser(clicked_user)
     }
     const onNotificationClick = (notification)=>{
-        startLoading()
-        const user = getUserFromList(userList, notification.code)
-        if (user){
-            onUserButtonClick(user)
-            successfullyLoaded()
-        } else {
-            setLoadingState('Tuvimos problemas para encontrar a ese usuario :(')
-        }
+        onUserButtonClick(notification.sender_user)
     }
     const loadUserNotifications = ()=>{
         const notifications = getNotificationsFromLocalStorage()

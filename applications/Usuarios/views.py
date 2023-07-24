@@ -27,9 +27,7 @@ from .serializers import (
 from rest_framework.response import Response
 from .models import Usuarios
 
-from applications.Notifications.models import (
-    Notifications
-)
+
 
 class CreateUsuariosAPI(APIView):
     queryset = Usuarios.objects.all()

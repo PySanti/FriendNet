@@ -5,8 +5,8 @@
 export function getChatGlobesList(notifications){
     const globesList =[]
     notifications.forEach(element => {
-        if (element.code !== "u" && !(globesList.includes(Number(element.code)))){
-            globesList.push(Number(element.code))
+        if (!(globesList.includes(Number(element.sender_user.id)))){
+            globesList.push(Number(element.sender_user.id))
         }
     });
     return globesList

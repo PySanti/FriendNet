@@ -77,10 +77,10 @@ class UsuariosManager(BaseUserManager):
             if i.sender_user_id not in senders_ids:
                 senders_ids.append(i.sender_user_id)
             notifications_list.append({ 'msg' : i.msg, 'sender_user' : i.sender_user_id})
-        senders_users = {i.id:i for i in self.filter(id__in=senders_ids).values(*USERS_LIST_ATTRS)}
+        # recordar que hacemos la solicitud de esta manera, para evitar hacer una solicitud por cada iteracion del bucle
+        senders_users = {i['id']:i for i in self.filter(id__in=senders_ids).values(*USERS_LIST_ATTRS)}
         for i in notifications_list:
-            i.sender_user=senders_users[i.sender_user]
-        # bulk delete de la delete_list
+            i['sender_user']=senders_users[i['sender_user']]
         user.notifications.all().delete()
         user.save()
         return notifications_list
