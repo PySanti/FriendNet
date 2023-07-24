@@ -6,7 +6,7 @@ from .managers import NotificationsManager
 class Notifications(models.Model):
     # recordar que en este punto, no usamos ForeignKey directamente, ya que esto causaria un "circular import"
     sender_user_id = models.SmallIntegerField(null=False)
-    msg = models.CharField(max_length=50)
+    msg = models.CharField(max_length=46)
     objects = NotificationsManager()
 
     def __str__(self) -> str:

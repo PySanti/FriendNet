@@ -20,15 +20,6 @@
 
 // Logica:
     //* facil:
-        // refactorizar codigo de backend:
-            // revisar vistas
-            // revisar documentaciones
-            // eliminar cosas que no se usen
-        
-        // hacer un refactor para eliminar potencial codigo que no se use en archivos relacionados con los ultimos cambios
-        
-        // eliminar uso de Loader en lugares en donde no se haga un llamado a api (dependiendo del caso)
-        // eliminar apis que no se usen
         // agregar el clearLocalStorage cuando el usuario cierre la ventana
         // Agregar usuarios con uppercase en first_names y last_names en la base de datos de usuarios
         // modificar codigo de backend para que los chats se almacenen con los usuarios en si y no con ids
