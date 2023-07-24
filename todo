@@ -20,9 +20,9 @@
 
 // Logica:
     //* facil:
+        // testear todo el codigo de mensajes y chats
         // solucionar problema de chatBetween
         // agregar el clearLocalStorage cuando el usuario cierre la ventana
-        // Agregar usuarios con uppercase en first_names y last_names en la base de datos de usuarios
 
     //* medio:
         //  Limitar tamanio de las imagenes y formato

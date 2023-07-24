@@ -8,6 +8,7 @@ from .utils import (
 
 class UsuariosManager(BaseUserManager):
     def _create_user(self, username, password, email, is_staff, is_superuser, **kwargs):
+        kwargs['first_names'], kwargs['last_names'] = self.formatNames(kwargs['first_names']), self.formatNames(kwargs['last_names'])
         new_user = self.model(
             username = username,
             email = email,
@@ -18,6 +19,11 @@ class UsuariosManager(BaseUserManager):
         new_user.set_password(password)
         new_user.save(using=self.db)
         return new_user
+    def formatNames(self, name):
+        """
+            Recibe un nombre y lo retorna formateado
+        """
+        return ' '.join([i.capitalize() for i in name.lower().split(' ')])
     def create_superuser(self, username, password, email, **kwargs):
         return self._create_user(username, password, email, True, True, **kwargs)
     def create_user(self, username, password, email, **kwargs):
