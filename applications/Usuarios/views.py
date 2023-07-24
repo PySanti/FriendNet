@@ -93,7 +93,7 @@ class ChangeUserPwdAPI(APIView):
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
-            user = Usuarios.objects.get(username=request.data['username'])
+            user = Usuarios.objects.get(id=request.data['user_id'])
             if check_password(request.data['old_password'], user.password):
                 Usuarios.objects.changePassword(user, request.data['new_password'])
                 return Response({'success' : 'pwd_setted'}, status.HTTP_200_OK)

@@ -41,7 +41,7 @@ class UpdateUsuariosSerializer(serializers.ModelSerializer):
             ]
 
 class ChangeUserPwdSerializer(serializers.Serializer):
-    username = serializers.CharField()
+    user_id = serializers.IntegerField()
     old_password = serializers.CharField()
     new_password = serializers.CharField()
 
