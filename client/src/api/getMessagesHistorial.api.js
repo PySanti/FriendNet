@@ -9,11 +9,11 @@ import { config } from "./baseConfig.api";
  * @param {String} id2
  */
 
-export async function getChatBetweenAPI(id1, id2){
+export async function getMessagesHistorialAPI(id1, id2){
     const data = {
         "id_1" :id1,
         "id_2" :id2,
     }
-    return await axios.post(BACKEND_URL+"api/get_chat_between/",data, config)
+    return await axios.post(BACKEND_URL+"api/get_messages_historial/",data, config)
 }
 

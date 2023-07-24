@@ -2,11 +2,11 @@ from django.urls import (
     path
 )
 from .views import (
-    GetChatBetweenAPI,
+    GetMessagesHistorialAPI,
     SendMsgAPI
 )
 
 urlpatterns = [
-    path('get_chat_between/', GetChatBetweenAPI.as_view()),
+    path('get_messages_historial/', GetMessagesHistorialAPI.as_view()),
     path('send_msg/', SendMsgAPI.as_view()),
 ] 

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-class GetChatBetweenSerializer(serializers.Serializer):
+class GetMessagesHistorialSerializer(serializers.Serializer):
     id_1 = serializers.IntegerField()
     id_2 = serializers.IntegerField()
 

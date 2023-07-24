@@ -3,7 +3,7 @@ from rest_framework.views import (
     APIView,
 )
 from .serializers import (
-    GetChatBetweenSerializer,
+    GetMessagesHistorialSerializer,
     SendMsgSerializer
 )
 from .models import (
@@ -20,8 +20,8 @@ from applications.Usuarios.models import Usuarios
 from applications.Notifications.models import Notifications
 # Create your views here.
 
-class GetChatBetweenAPI(APIView):
-    serializer_class =  GetChatBetweenSerializer
+class GetMessagesHistorialAPI(APIView):
+    serializer_class =  GetMessagesHistorialSerializer
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():

@@ -6,7 +6,7 @@ import { Header } from "../components/Header"
 import { useNavigate } from "react-router-dom"
 import { getUsersListAPI } from "../api/getUsersList.api"
 import { LoadingContext } from "../context/LoadingContext"
-import { getChatBetweenAPI } from "../api/getChatBetween.api"
+import { getMessagesHistorialAPI } from "../api/getMessagesHistorial.api"
 import { Loader } from "../components/Loader"
 import { sendMsgAPI } from "../api/sendMsg.api"
 import { UsersInterface } from "../components/UsersInterface"
@@ -54,7 +54,7 @@ export function Home() {
     const loadMessages = async ()=>{
         startLoading()
         try{
-            const response = await getChatBetweenAPI(user.user_id, clickedUser.id)
+            const response = await getMessagesHistorialAPI(user.user_id, clickedUser.id)
             if (response.data !== "no_chats_between"){
                 setMessagesHistorial(response.data.messages_hist)
             } else {
