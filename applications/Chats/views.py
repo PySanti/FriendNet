@@ -32,6 +32,7 @@ class GetMessagesHistorialAPI(APIView):
                 return Response('no_messages_between', status.HTTP_200_OK)
         else:
             return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status.HTTP_400_BAD_REQUEST)
+
 class SendMsgAPI(APIView):
     serializer_class = SendMsgSerializer
     def post(self, request, *args, **kwargs):

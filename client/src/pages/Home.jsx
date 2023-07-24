@@ -109,7 +109,7 @@ export function Home() {
         return <UserNotLogged/>
     } else {
         return (
-            <div className="centered-container">
+            <div className="centered-container" >
                 <div className="home-container">
                     <Header username={user.username}/>
                     <div className="buttons-container">

@@ -19,16 +19,13 @@
     // agregar mensajes de error mas carismaticos pero a la vez serios
 
 // Logica:
-    //* facil:
-        // agregar el clearLocalStorage cuando el usuario cierre la ventana
-
     //* medio:
+        // setteo de is_online al crear y logear usuario y desactivar al deslogaer
         //  Limitar tamanio de las imagenes y formato
         // confirmacion de correo en AccountActivation.jsx (para caso en el que no le haya llegado el correo al usuario)
         // eliminar imagen antigua de usuario en cloudinary al actualizar perfil
         // buscar otra forma de enviar correos de activacion
-        // setteo de is_online al crear y logear usuario y desactivar al deslogaer
-        // agregar permission classes en el backedn
+        // agregar permission classes en el backedn y buscar que el usuario siempre se deslogee cuando se salga de la pagina
         // emplear validate para validaciones en el backend
         // optimizar imagenes de cloudinary, y eliminar las que sean ejemplares 
         //  agregar filtrado de usuarios en home

@@ -19,6 +19,12 @@ class UsuariosManager(BaseUserManager):
         new_user.set_password(password)
         new_user.save(using=self.db)
         return new_user
+    def connectUser(self, user):
+        """
+            Settea el atributo is_online a True del user
+        """
+        user.is_online = True
+        user.save()
     def formatNames(self, name):
         """
             Recibe un nombre y lo retorna formateado
