@@ -1,5 +1,5 @@
 /**
- * Revisa la lista de notificaciones, y en caso de que alguna notificacion este relacionada con el usuario clickedUser, las elimina y retorna true
+ * Revisa la lista de notificaciones, y en caso de que alguna notificacion este relacionada con el usuario clickedUser, las elimina y retorna la lista actualizada
  * en caso contrario false
  */
 

@@ -27,7 +27,7 @@ export function Login() {
     const onLogin = async (data)=>{
         // en este punto ya se sabe que el usuario no esta autenticado
         try{
-            startLoading(true)
+            startLoading()
             let response = await getUserDetailAPI(data.username, data.password)
             const userDetail = response.data.user
             setUser(userDetail)

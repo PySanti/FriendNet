@@ -29,14 +29,25 @@ export function Home() {
     let [clickedUser, setClickedUser] = useState(null)
     let [userList, setUserList] = useState(false)
     let [chatGlobeList, setChatGlobeList] = useState(null)
+    let [goToProfile, setGoToProfile] = useState(false)
     const {user, logoutUser} = useContext(AuthContext)
     const navigate = useNavigate()
+    const loadUsersList = async ()=>{
+        startLoading()
+        try{
+            const response = await getUsersListAPI(user.user_id)
+            setUserList(response.data.users_list)
+            successfullyLoaded()
+        } catch(error){
+            setLoadingState('Error inesperado cargando datos de usuarios!')
+        }
+    }
     const onMsgSending = async (data)=>{
         startLoading()
         try {
             await sendMsgAPI(clickedUser.id, user.user_id, data.msg)
             successfullyLoaded()
-            loadMessages()
+            await loadMessages()
         } catch(error){
             setLoadingState('Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
         }
@@ -56,7 +67,9 @@ export function Home() {
         }
     }
     const onNotificationDelete = (notification)=>{
-        setNotifications(removeNotificationFromLocalStorage(notification))
+        const updatedNotifications = removeNotificationFromLocalStorage(notification)
+        setNotifications(updatedNotifications)
+        setChatGlobeList(getChatGlobesList(updatedNotifications))
     }
     const onUserButtonClick = (clicked_user)=>{
         const updatedNotifications = removeRelatedNotifications(clicked_user.id, notifications)
@@ -66,16 +79,6 @@ export function Home() {
             setChatGlobeList(getChatGlobesList(updatedNotifications))
         }
         setClickedUser(clicked_user)
-    }
-    const loadUsersList = async ()=>{
-        try{
-            startLoading()
-            const response = await getUsersListAPI(user.user_id)
-            setUserList(response.data.users_list)
-            successfullyLoaded()
-        } catch(error){
-            setLoadingState('Error inesperado cargando datos de usuarios!')
-        }
     }
     const onNotificationClick = (notification)=>{
         startLoading()
@@ -97,7 +100,6 @@ export function Home() {
         setNotifications(notifications)
         setChatGlobeList(getChatGlobesList(notifications))
     }
-    let [goToProfile, setGoToProfile] = useState(false)
     useEffect(()=>{
         if(goToProfile){
             navigate("/home/profile/")
