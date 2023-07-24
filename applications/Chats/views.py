@@ -43,7 +43,7 @@ class SendMsgAPI(APIView):
         if serialized_data.is_valid():
             sender_user = Usuarios.objects.get(id=request.data['sender_id'])
             receiver_user = Usuarios.objects.get(id=request.data['receiver_id'])
-            Notifications.objects.addNotification(f"{sender_user.username} te ha enviado un mensaje", receiver_user, sender_user)
+            Notifications.objects.addNotification(f"Tienes mensajes nuevos de {sender_user.username}", receiver_user, sender_user)
             new_message = Messages(parent_id=request.data['sender_id'], content=request.data['msg'])
             new_message.save()
             Chat.objects.sendMessage(sender_user, receiver_user,new_message)

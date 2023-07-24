@@ -20,9 +20,6 @@
 
 // Logica:
     //* facil:
-        // testear dispatchUsersNotifications
-        // Buscar eliminar funcion getUserFromList, eliminando las notificaciones de tipo "u", y haciendo que cada notificacion
-        // cargue con el usuario duenio
 
         // refactorizar codigo de backend:
             // revisar vistas
@@ -47,6 +44,7 @@
         // emplear validate para validaciones en el backend
         // optimizar imagenes de cloudinary, y eliminar las que sean ejemplares 
         //  agregar filtrado de usuarios en home
+        // mejorar sistema de envio de mensajes para mayor velocidad
 
 
     //* dificil
