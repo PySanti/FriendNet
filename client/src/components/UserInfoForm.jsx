@@ -1,13 +1,14 @@
 import { useForm } from "react-hook-form"
 import {PropTypes} from "prop-types"
 import { FormField } from "./FormField"
-import { BASE_FIRSTNAMES_MAX_LENGTH, BASE_LASTNAMES_MAX_LENGTH, BASE_PASSWORD_CONSTRAINTS, BASE_USERNAME_CONSTRAINTS} from "../main"
+import { BASE_EMAIL_CONSTRAINTS, BASE_FIRSTNAMES_MAX_LENGTH, BASE_LASTNAMES_MAX_LENGTH, BASE_PASSWORD_CONSTRAINTS, BASE_USERNAME_CONSTRAINTS} from "../main"
 import { Form } from "./Form"
 import "../styles/UserInfoForm.css"
 import { UserPhoto } from "./UserPhoto"
 import { useState } from "react"
 import { UsernameField } from "./UsernameField"
 import { PasswordField } from "./PasswordField"
+import { EmailField } from "./EmailField"
 
 /**
  * Componente creado para los formularios de SignUp y Update,
@@ -30,6 +31,7 @@ export function UserInfoForm({userData, updating, userPhotoUrl, onFormSubmit, ex
             <Form onSubmitFunction={onSubmit} buttonMsg={updating ? "Actualizar" : "Registrar"} buttonsList={extraButtons}> 
                 <>
                     <UsernameField defaultValue={userData && userData.username} errors={errors.username && errors.username.message} registerObject={register("username", BASE_USERNAME_CONSTRAINTS)}/>
+                    <EmailField defaultValue={userData && userData.email} errors={errors.email && errors.email.message} registerObject={register("email", BASE_EMAIL_CONSTRAINTS)} label="Correo Electrónico"/>
                     <FormField label="Correo electronico" errors={errors.email &&  errors.email.message}>
                         <input defaultValue={userData && userData.email}type="email" id="email" name="email"{...register("email", {    required:{        value: true,        message : "Por favor, ingresa tu correo electrónico"    },    pattern:{        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,        message : "Por favor, ingresa un correo electrónico valido"    }})}/>
                     </FormField>

@@ -13,6 +13,13 @@ export const BASE_USERNAME_MIN_LENGTH = 6
 export const BASE_FIRSTNAMES_MAX_LENGTH = 30
 export const BASE_LASTNAMES_MAX_LENGTH = 30
 export const BASE_PASSWORD_MIN_LENGTH = 10
+export const BASE_EMAIL_CONSTRAINTS =  {    
+    required:{        
+        value: true,        
+        message : "Por favor, ingresa tu correo electrónico"    },    
+    pattern:{        
+        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,        
+        message : "Por favor, ingresa un correo electrónico valido"    }}
 export const BASE_USERNAME_CONSTRAINTS = {
     required: {
         value : true,

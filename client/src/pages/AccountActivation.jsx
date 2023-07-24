@@ -67,7 +67,7 @@ export function AccountActivation() {
     }, [userActivated])
     useEffect(()=>{
         if (goChangeEmail){
-            navigate('/signup/activate/change_email')
+            navigate('/signup/activate/change_email', {state : props})
         }
     }, [goChangeEmail])
     if (userIsAuthenticated()){ // comprobaciones para cuando se ejecute la url directamente 
