@@ -18,6 +18,7 @@ import "../styles/Profile.css"
 import { v4 } from "uuid";
 import { saveUserDataInLocalStorage } from "../utils/saveUserDataInLocalStorage";
 import { getUserDataFromLocalStorage } from "../utils/getUserDataFromLocalStorage";
+import { checkImageFormat } from "../utils/checkImageFormat";
 
 
 /**
@@ -48,20 +49,32 @@ export function Profile({updating}){
     const onUpdate = async (data)=>{
         startLoading()
         try{
-            data['photo_link'] = data['photo'] ? await saveCloudinary(data['photo']) : profileData.photo_link
-            delete data['photo']
-            const sendingData = data
-            // se prepara al data para la comparativa
-            data.id = profileData.id
-            data.is_active = profileData.is_active
-            data.age = Number(data.age)
-            if (!_.isEqual(profileData, data)){ // lodash
-                await updateUserDataAPI(sendingData, profileData.id)
-                setProfileData(data)
-                saveUserDataInLocalStorage(data)
-                successfullyLoaded()
+            let imageCheckerResponse = true
+            if (data['photo']){
+                imageCheckerResponse = checkImageFormat(data['photo'][0])
+                if (imageCheckerResponse === true){
+                    data['photo_link'] =  await saveCloudinary(data['photo']) 
+                } else{
+                    setLoadingState(imageCheckerResponse)
+                }
             } else {
-                setLoadingState("Sin cambios")
+                data['photo_link'] = profileData.photo_link
+            }
+            if (imageCheckerResponse===true){ // si cambiaste la imagen y se subio correctamente o no cambiaste la imagen
+                delete data['photo']
+                const sendingData = data
+                // se prepara al data para la comparativa
+                data.id = profileData.id
+                data.is_active = profileData.is_active
+                data.age = Number(data.age)
+                if (!_.isEqual(profileData, data)){ // lodash
+                    await updateUserDataAPI(sendingData, profileData.id)
+                    setProfileData(data)
+                    saveUserDataInLocalStorage(data)
+                    successfullyLoaded()
+                } else {
+                    setLoadingState("Sin cambios")
+                }
             }
         } catch(error){
             setLoadingState("Error inesperado al actualizar datos del usuario!")

@@ -31,7 +31,6 @@ export function ChangeEmailForActivation(){
                 successfullyLoaded()
                 setEmailChanged(true)
             } catch(error){
-                console.log(error)
                 setLoadingState('Error inesperado al actualizar el correo electrónico !')
             }
         } else {

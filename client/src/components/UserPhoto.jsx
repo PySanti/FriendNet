@@ -33,7 +33,7 @@ export function UserPhoto({url, withInput, photoFileSetter, chatPhoto}){
             {withInput && 
                 <>
                     <div className="user-photo-input-container">
-                        <input  id="photo-input" className="user-photo-input" type="file" accept="" onChange={onPhotoChange} />
+                        <input  id="photo-input" className="user-photo-input" type="file"  onChange={onPhotoChange} />
                         <Button buttonText="Seleccionar" onClickFunction={()=>document.getElementById("photo-input").click()}/>
                     </div>
                 </>

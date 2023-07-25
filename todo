@@ -22,6 +22,11 @@
 
 // Logica:
     //* medio:
+        // refactorizar codigo de submit en signup y profile
+        // implementar revision de imagenes en todos los puntos en donde se ingrese
+        // refactorizar codigo de checkeo de imagen en el signup y profile
+        // una vez implementado checkeo "local" de imagenes, buscar optimizacion en cloudinary
+
         //  Limitar tamanio de las imagenes y formato
         // eliminar imagen antigua de usuario en cloudinary al actualizar perfil
         // buscar otra forma de enviar correos de activacion
@@ -37,16 +42,9 @@
         // encriptar formularios de react
         // usar webSockets para mensajes
         // user webSockets para actualizacion de notificaciones
-
-        // cambiar sistema de uso de notificaciones, de modo que, cuando se soliciten las notificaciones al server, estas se eliminen 
-        // automaticamente, la repuesta se almacenara en el LocalStorage, y cada vez que se reciba una notificacion nueva sera por una 
-        // senial recibida por un web socket haciendo un 'append' a la lista de notificaciones del local Storage
-
         // cachear imagen del usuario
-
         // revisar tiempo de vida de token de autenticacion (comportamiento una vez que la sesion este cerrada)
-
-
+        // testear todas las funcionalidades de la aplicacion y hacer respectivos refactors
 
 
 
