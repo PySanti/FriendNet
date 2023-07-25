@@ -19,6 +19,7 @@ import { v4 } from "uuid";
 import { saveUserDataInLocalStorage } from "../utils/saveUserDataInLocalStorage";
 import { getUserDataFromLocalStorage } from "../utils/getUserDataFromLocalStorage";
 import { checkImageFormat } from "../utils/checkImageFormat";
+import { prepareDataForSending } from "../utils/prepareDataForSending";
 
 
 /**
@@ -49,21 +50,10 @@ export function Profile({updating}){
     const onUpdate = async (data)=>{
         startLoading()
         try{
-            let imageCheckerResponse = true
-            if (data['photo']){
-                imageCheckerResponse = checkImageFormat(data['photo'][0])
-                if (imageCheckerResponse === true){
-                    data['photo_link'] =  await saveCloudinary(data['photo']) 
-                } else{
-                    setLoadingState(imageCheckerResponse)
-                }
-            } else {
-                data['photo_link'] = profileData.photo_link
-            }
-            if (imageCheckerResponse===true){ // si cambiaste la imagen y se subio correctamente o no cambiaste la imagen
-                delete data['photo']
+            const preparingDataResponse = await prepareDataForSending(data, "updating", profileData.photo_link)
+            if (preparingDataResponse === true){ 
                 const sendingData = data
-                // se prepara al data para la comparativa
+                // se prepara al data para la comparativa  
                 data.id = profileData.id
                 data.is_active = profileData.is_active
                 data.age = Number(data.age)
@@ -75,6 +65,8 @@ export function Profile({updating}){
                 } else {
                     setLoadingState("Sin cambios")
                 }
+            } else {
+                setLoadingState(preparingDataResponse)
             }
         } catch(error){
             setLoadingState("Error inesperado al actualizar datos del usuario!")

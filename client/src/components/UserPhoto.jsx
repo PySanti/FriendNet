@@ -10,21 +10,29 @@ import { useState } from "react"
 import "../styles/UserPhoto.css"
 import { Button } from "./Button"
 import {PropTypes} from "prop-types"
+import { checkImageFormat } from "../utils/checkImageFormat"
 
 export function UserPhoto({url, withInput, photoFileSetter, chatPhoto}){
     let [currentPhoto, setCurrentPhoto] = useState(false)
+    let [errorMsg, setErrorMsg]         = useState(null)
     const containerClsName = "user-photo-container"
     const onPhotoChange = (e)=>{
         const file = e.target.files[0];
-        if (photoFileSetter){
-            photoFileSetter(e.target.files)
-        }
-        const reader = new FileReader();
-        reader.addEventListener('load', function() {
-            setCurrentPhoto(reader.result);
-        });
-        if (file) {
-            reader.readAsDataURL(file);
+        const imageCheckerResponse = checkImageFormat(file)
+        if (imageCheckerResponse === true){
+            setErrorMsg(null)
+            if (photoFileSetter){
+                photoFileSetter(e.target.files)
+            }
+            const reader = new FileReader();
+            reader.addEventListener('load', function() {
+                setCurrentPhoto(reader.result);
+            });
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        } else {
+            setErrorMsg(imageCheckerResponse)
         }
     }
     return (
@@ -32,6 +40,9 @@ export function UserPhoto({url, withInput, photoFileSetter, chatPhoto}){
             <img className="user-photo"src={currentPhoto ? currentPhoto : (url ? url : null)} alt=":(" ></img>
             {withInput && 
                 <>
+                    <div className="img-input-error-msg-container">
+                        <h3 className="img-input-error-msg">{errorMsg}</h3>
+                    </div>
                     <div className="user-photo-input-container">
                         <input  id="photo-input" className="user-photo-input" type="file"  onChange={onPhotoChange} />
                         <Button buttonText="Seleccionar" onClickFunction={()=>document.getElementById("photo-input").click()}/>

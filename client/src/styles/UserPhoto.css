@@ -6,7 +6,7 @@
     text-align: center;
     flex-direction: column;
     width: 10vw;
-    height: 30vh;
+    height: 40vh;
 
 }
 
@@ -36,4 +36,7 @@
 }
 .chat-photo > .user-photo{
     border-radius: 100%;
+}
+.img-input-error-msg{
+    font-size: 15px;
 }
