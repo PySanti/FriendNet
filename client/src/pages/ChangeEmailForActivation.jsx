@@ -28,8 +28,8 @@ export function ChangeEmailForActivation(){
             props.userEmail = data.email
             try{
                 await updateUserDataAPI(data, props.userId)
-                setEmailChanged(true)
                 successfullyLoaded()
+                setEmailChanged(true)
             } catch(error){
                 console.log(error)
                 setLoadingState('Error inesperado al actualizar el correo electrónico !')

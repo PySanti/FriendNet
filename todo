@@ -23,7 +23,6 @@
 // Logica:
     //* medio:
         //  Limitar tamanio de las imagenes y formato
-        // confirmacion de correo en AccountActivation.jsx (para caso en el que no le haya llegado el correo al usuario)
         // eliminar imagen antigua de usuario en cloudinary al actualizar perfil
         // buscar otra forma de enviar correos de activacion
         // agregar permission classes en el backedn y buscar que el usuario siempre se deslogee cuando se salga de la pagina
