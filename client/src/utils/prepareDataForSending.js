@@ -1,4 +1,5 @@
-import { removeCloudinary } from "./removeCloudinary";
+import { getImagePublicId } from "./getImagePublicId";
+import {  removeCloudinaryAPI } from "../api/removeCloudinary.api";
 import { saveCloudinary } from "./saveCloudinary";
 /**
  * Recibira un objeto con los datos recibidos en SignUp.jsx y Profile.jsx y lo retornara "preparado"
@@ -17,7 +18,7 @@ export async function prepareDataForSending(data, type, defaultPhotoLink){
     }
     if (data['photo']){
         if (type==="updating"){
-            await removeCloudinary(defaultPhotoLink)
+            // await removeCloudinaryAPI(getImagePublicId(defaultPhotoLink))
         }
         data['photo_link'] =  await saveCloudinary(data['photo']) 
     } else {
