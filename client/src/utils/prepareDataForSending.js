@@ -1,4 +1,5 @@
-import { saveCloudinary } from "../utils/saveCloudinary";
+import { removeCloudinary } from "./removeCloudinary";
+import { saveCloudinary } from "./saveCloudinary";
 /**
  * Recibira un objeto con los datos recibidos en SignUp.jsx y Profile.jsx y lo retornara "preparado"
  * para su envio. Esta funcion modificara el objeto data por referencia, retornara true en caso de que
@@ -15,6 +16,9 @@ export async function prepareDataForSending(data, type, defaultPhotoLink){
         delete data.confirmPwd // el confirmPwd no puede ser enviado al backend
     }
     if (data['photo']){
+        if (type==="updating"){
+            await removeCloudinary(defaultPhotoLink)
+        }
         data['photo_link'] =  await saveCloudinary(data['photo']) 
     } else {
         data['photo_link'] = defaultPhotoLink

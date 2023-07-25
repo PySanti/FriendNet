@@ -10,7 +10,6 @@ import { Loader } from "../components/Loader";
 import { LoadingContext} from "../context/LoadingContext";
 import { UserInfoForm } from "../components/UserInfoForm";
 import {updateUserDataAPI} from "../api/updateUserData.api"
-import { saveCloudinary } from "../utils/saveCloudinary";
 import {_}  from "lodash"
 import { UserPhoto } from "../components/UserPhoto";
 import { Button } from "../components/Button";
@@ -18,7 +17,6 @@ import "../styles/Profile.css"
 import { v4 } from "uuid";
 import { saveUserDataInLocalStorage } from "../utils/saveUserDataInLocalStorage";
 import { getUserDataFromLocalStorage } from "../utils/getUserDataFromLocalStorage";
-import { checkImageFormat } from "../utils/checkImageFormat";
 import { prepareDataForSending } from "../utils/prepareDataForSending";
 
 

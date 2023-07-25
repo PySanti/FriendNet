@@ -5,6 +5,6 @@ import { postCloudinaryImgAPI } from "../api/postCloudinaryImg.api";
  * @param {File} photo 
  */
 export async function saveCloudinary(photo){
-    const uploadedImgData           = await postCloudinaryImgAPI(photo)
+    const uploadedImgData    = await postCloudinaryImgAPI(photo)
     return uploadedImgData.data.url
 }

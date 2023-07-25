@@ -22,11 +22,9 @@
 
 // Logica:
     //* medio:
-        // refactorizar codigo de submit en signup y profile
-        // refactorizar/testear/depurar codigo de checkeo de imagen en el signup y profile
-        // una vez implementado checkeo "local" de imagenes, buscar optimizacion en cloudinary
-
         // eliminar imagen antigua de usuario en cloudinary al actualizar perfil
+        // optimizacion de imagenes en cloudinary
+
         // buscar otra forma de enviar correos de activacion
         // agregar permission classes en el backedn y buscar que el usuario siempre se deslogee cuando se salga de la pagina
         // emplear validate para validaciones en el backend
