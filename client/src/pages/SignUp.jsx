@@ -12,10 +12,9 @@ import { UserLogged } from "./UserLogged";
 import { UserInfoForm } from "../components/UserInfoForm";
 import { Loader } from "../components/Loader";
 import { LoadingContext } from "../context/LoadingContext";
-import { saveCloudinary } from "../utils/saveCloudinary";
 import { Button } from "../components/Button";
 import { v4 } from "uuid";
-import { checkImageFormat } from "../utils/checkImageFormat";
+import { prepareDataForSending } from "../utils/prepareDataForSending";
 
 
 
@@ -36,20 +35,8 @@ export function SignUp() {
             const checkUserResponse = await checkExistingUserAPI(data['username'], data['email'])
             if (checkUserResponse.data.existing !== "true"){
                 try {
-                    let imageCheckerResponse = true
-                    if (data['photo']){
-                        imageCheckerResponse = checkImageFormat(data['photo'][0])
-                        if (imageCheckerResponse === true){
-                            data['photo_link'] =  await saveCloudinary(data['photo']) 
-                        } else{
-                            setLoadingState(imageCheckerResponse)
-                        }
-                    } else {
-                        data['photo_link'] = null
-                    }
-                    if (imageCheckerResponse){
-                        delete data.confirmPwd // el confirmPwd no puede ser enviado al backend
-                        delete data.photo
+                    const preparingResponse = prepareDataForSending(data, "register")
+                    if (preparingResponse === true){
                         try{
                             const createUserResponse        = await createUsuarioAPI(data)
                             setUserData({
@@ -61,6 +48,8 @@ export function SignUp() {
                         } catch(error){
                             setLoadingState("Error inesperado creando usuario!")
                         }
+                    } else {
+                        setLoadingState(preparingResponse)
                     }
                 } catch(error){
                     setLoadingState("Error inesperado subiendo imagen de usuario a la nube!")
