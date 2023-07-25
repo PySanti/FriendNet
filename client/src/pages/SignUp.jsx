@@ -35,7 +35,7 @@ export function SignUp() {
             const checkUserResponse = await checkExistingUserAPI(data['username'], data['email'])
             if (checkUserResponse.data.existing !== "true"){
                 try {
-                    const preparingResponse = await prepareDataForSending(data, "register")
+                    const preparingResponse = await prepareDataForSending(data, "register", null)
                     if (preparingResponse === true){
                         try{
                             const createUserResponse        = await createUsuarioAPI(data)

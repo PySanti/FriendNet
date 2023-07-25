@@ -8,7 +8,7 @@ import { saveCloudinary } from "../utils/saveCloudinary";
  * estas paginas
  * @param {Object} data 
  * @param {String} type tipo de envio que se esta realizando 
- * @param {String} defaultPhotoLink opcional : para casos en los que se este actualizando y no se haya cambiado la imagen, en photo_link se asignara este valor
+ * @param {String} defaultPhotoLink valor que se le dara al photo_link en caso de que data['photo'] sea null
  */
 export async function prepareDataForSending(data, type, defaultPhotoLink){
     if (type === "register"){

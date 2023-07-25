@@ -5,7 +5,7 @@ import { BASE_EMAIL_CONSTRAINTS, BASE_FIRSTNAMES_MAX_LENGTH, BASE_LASTNAMES_MAX_
 import { Form } from "./Form"
 import "../styles/UserInfoForm.css"
 import { UserPhoto } from "./UserPhoto"
-import { useState } from "react"
+import {  useState } from "react"
 import { UsernameField } from "./UsernameField"
 import { PasswordField } from "./PasswordField"
 import { EmailField } from "./EmailField"

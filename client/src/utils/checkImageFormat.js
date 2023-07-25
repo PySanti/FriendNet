@@ -5,10 +5,10 @@
 export function checkImageFormat(image){
     const imageFormat = image.type.split('/')[1]
     if (!["jpg","jpeg", "png"].includes(imageFormat)){
-        return "Error, formato de archivo no soportado !"
+        return "Formato de archivo no soportado !"
     } else {
         if (image.size/1000 > 500){
-            return "Error, el peso de la imagen debe ser inferior a 500kb !"
+            return "El peso de la imagen debe ser inferior a 500kb !"
         } else {
             return true
         }
