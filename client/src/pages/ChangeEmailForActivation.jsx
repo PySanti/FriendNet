@@ -13,27 +13,36 @@ import { Loader } from "../components/Loader";
 import { UserNotLogged } from "./UserNotLogged";
 import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { UserLogged } from "./UserLogged";
+import { updateUserDataAPI } from "../api/updateUserData.api";
 
 export function ChangeEmailForActivation(){
-    const props                                         = useLocation().state
-    const   navigate                                    = useNavigate()
     let {loadingState, setLoadingState, successfullyLoaded, startLoading} = useContext(LoadingContext)
     let [goBack, setGoBack]                             = useState(false )
+    let [emailChanged, setEmailChanged]                 = useState(false )
+    const props                                         = useLocation().state
+    const  navigate                                     = useNavigate()
     const {register, handleSubmit, formState:{errors}}  = useForm()
     const onSubmit = handleSubmit(async (data)=>{
         startLoading()
         if (data.email !== props.userEmail){
             props.userEmail = data.email
-            successfullyLoaded()
+            try{
+                await updateUserDataAPI(data, props.userId)
+                setEmailChanged(true)
+                successfullyLoaded()
+            } catch(error){
+                console.log(error)
+                setLoadingState('Error inesperado al actualizar el correo electrónico !')
+            }
         } else {
             setLoadingState('No hay cambios !')
         }
     })
     useEffect(()=>{
-        if (goBack){
+        if (goBack || emailChanged){
             navigate('/signup/activate', {state: props})
         }
-    }, [goBack])
+    }, [goBack, emailChanged])
     if (userIsAuthenticated()){
         return <UserLogged/>
     } else if (!props){

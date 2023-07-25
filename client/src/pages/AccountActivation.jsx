@@ -78,9 +78,9 @@ export function AccountActivation() {
         return (
                 <div className='centered-container'>
                     <div className="account-activation-container">
-                        <Header msg={`Correo enviado a ${props.userEmail}`}/>
+                        <Header msg={`Correo de activación enviado a ${props.userEmail}`}/>
                         <Loader state={loadingState}/>
-                        <Form onSubmitFunction={onSubmit} buttonMsg="Enviar" buttonsList={[
+                        <Form onSubmitFunction={onSubmit} buttonMsg="Activar" buttonsList={[
                             <Button key={v4()} buttonText="Volver" onClickFunction={()=>setGoBack(true)} />,
                             <Button key={v4()} buttonText="Cambiar correo" onClickFunction={()=>setGoChangeEmail(true)} />
                         ]}>
