@@ -17,7 +17,6 @@ import "../styles/Profile.css"
 import { v4 } from "uuid";
 import { saveUserDataInLocalStorage } from "../utils/saveUserDataInLocalStorage";
 import { getUserDataFromLocalStorage } from "../utils/getUserDataFromLocalStorage";
-import { prepareDataForSending } from "../utils/prepareDataForSending";
 
 
 /**
@@ -48,23 +47,19 @@ export function Profile({updating}){
     const onUpdate = async (data)=>{
         startLoading()
         try{
-            const preparingDataResponse = await prepareDataForSending(data, "updating", profileData.photo_link)
-            if (preparingDataResponse === true){ 
-                const sendingData = data
-                // se prepara al data para la comparativa  
-                data.id = profileData.id
-                data.is_active = profileData.is_active
-                data.age = Number(data.age)
-                if (!_.isEqual(profileData, data)){ // lodash
-                    await updateUserDataAPI(sendingData, profileData.id)
-                    setProfileData(data)
-                    saveUserDataInLocalStorage(data)
-                    successfullyLoaded()
-                } else {
-                    setLoadingState("Sin cambios")
-                }
+            data.photo = data.photo[0]
+            const sendingData = data
+            // se prepara al data para la comparativa  
+            data.id = profileData.id
+            data.is_active = profileData.is_active
+            data.age = Number(data.age)
+            if (!_.isEqual(profileData, data)){ // lodash
+                await updateUserDataAPI(sendingData, profileData.id)
+                setProfileData(data)
+                saveUserDataInLocalStorage(data)
+                successfullyLoaded()
             } else {
-                setLoadingState(preparingDataResponse)
+                setLoadingState("Sin cambios")
             }
         } catch(error){
             setLoadingState("Error inesperado al actualizar datos del usuario!")

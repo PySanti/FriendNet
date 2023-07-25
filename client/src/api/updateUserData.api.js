@@ -9,5 +9,6 @@ import { BACKEND_URL } from '../main'
  * @returns {Promise} la promesa del servidor
  */
 export async function updateUserDataAPI(data, userId){
+    config.headers = {'Content-Type': 'multipart/form-data'}
     return await axios.put(BACKEND_URL + `api/update_user_data/${userId}`,data, config)
 }

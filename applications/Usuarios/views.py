@@ -86,9 +86,14 @@ class ActivateUserAPI(APIView):
                 return Response({'error' : 'error_activating_user'}, status.HTTP_500_INTERNAL_SERVER_ERROR) 
         else:
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
-class UpdateUserDataAPI(UpdateAPIView):
+
+class UpdateUserDataAPI(APIView):
     serializer_class = UpdateUsuariosSerializer
     queryset = Usuarios.objects.all()
+    def put(self, request, *args, **kwargs):
+        print(request.data)
+        return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
+
 class ChangeUserPwdAPI(APIView):
     serializer_class = ChangeUserPwdSerializer
     def post(self, request, *args, **kwargs):

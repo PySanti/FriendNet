@@ -24,7 +24,7 @@
     //* medio:
         // hacer el envio de imagenes a cloudinary desde el backend para evitar comprometer datos confidenciales
         // implementar uso de credenciales para el uso de cloudinary por seguridad (signatures)
-        // eliminar imagen antigua de usuario en cloudinary al actualizar perfil
+        // renombrarb imagen de usuario en cloudinary al actualizar perfil
         // optimizacion de imagenes en cloudinary
 
         // buscar otra forma de enviar correos de activacion

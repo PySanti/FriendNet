@@ -14,7 +14,6 @@ import { Loader } from "../components/Loader";
 import { LoadingContext } from "../context/LoadingContext";
 import { Button } from "../components/Button";
 import { v4 } from "uuid";
-import { prepareDataForSending } from "../utils/prepareDataForSending";
 
 
 
