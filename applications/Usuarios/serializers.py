@@ -19,7 +19,8 @@ class ActivateUserSerializer(serializers.Serializer):
 class GetUserDetailSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=15)
     password = serializers.CharField()
-class CheckExistingUserSerializer(GetUserDetailSerializer):
+class CheckExistingUserSerializer(serializers.Serializer):
+    username = serializers.CharField(max_length=15)
     email = serializers.EmailField()
 class UpdateUsuariosSerializer(serializers.ModelSerializer):
     username = serializers.CharField(required=False)

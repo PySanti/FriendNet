@@ -32,9 +32,6 @@ export function UserInfoForm({userData, updating, userPhotoUrl, onFormSubmit, ex
                 <>
                     <UsernameField defaultValue={userData && userData.username} errors={errors.username && errors.username.message} registerObject={register("username", BASE_USERNAME_CONSTRAINTS)}/>
                     <EmailField defaultValue={userData && userData.email} errors={errors.email && errors.email.message} registerObject={register("email", BASE_EMAIL_CONSTRAINTS)} label="Correo Electrónico"/>
-                    <FormField label="Correo electronico" errors={errors.email &&  errors.email.message}>
-                        <input defaultValue={userData && userData.email}type="email" id="email" name="email"{...register("email", {    required:{        value: true,        message : "Por favor, ingresa tu correo electrónico"    },    pattern:{        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,        message : "Por favor, ingresa un correo electrónico valido"    }})}/>
-                    </FormField>
                     <FormField label="Nombres" errors={errors.first_names  && errors.first_names.message}>
                         <input defaultValue={userData && userData.first_names}maxLength={BASE_FIRSTNAMES_MAX_LENGTH}type="text" id="first_names" name="first_names"{...register("first_names", {    required:{        value: true,        message : "Por favor, ingresa tu(s) primer(os) nombre(s)"    },    pattern : {        value :/^[^\d]+$/,        message : "Por favor, ingresa un(os) nombre(s) valido(s)"    }})}/> 
                     </FormField>
