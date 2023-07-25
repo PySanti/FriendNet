@@ -23,11 +23,9 @@
 // Logica:
     //* medio:
         // refactorizar codigo de submit en signup y profile
-        // implementar revision de imagenes en todos los puntos en donde se ingrese
-        // refactorizar codigo de checkeo de imagen en el signup y profile
+        // refactorizar/testear/depurar codigo de checkeo de imagen en el signup y profile
         // una vez implementado checkeo "local" de imagenes, buscar optimizacion en cloudinary
 
-        //  Limitar tamanio de las imagenes y formato
         // eliminar imagen antigua de usuario en cloudinary al actualizar perfil
         // buscar otra forma de enviar correos de activacion
         // agregar permission classes en el backedn y buscar que el usuario siempre se deslogee cuando se salga de la pagina
