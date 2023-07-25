@@ -15,6 +15,7 @@ import { LoadingContext } from "../context/LoadingContext";
 import { saveCloudinary } from "../utils/saveCloudinary";
 import { Button } from "../components/Button";
 import { v4 } from "uuid";
+import { checkImageFormat } from "../utils/checkImageFormat";
 
 
 
@@ -34,21 +35,32 @@ export function SignUp() {
             startLoading()
             const checkUserResponse = await checkExistingUserAPI(data['username'], data['email'])
             if (checkUserResponse.data.existing !== "true"){
-                const photo = data['photo']
-                delete data.confirmPwd // el confirmPwd no puede ser enviado al backend
-                delete data.photo
                 try {
-                    data['photo_link'] = photo ? await saveCloudinary(photo) : null // el serializer el backend recibe photo_link, no la foto en si
-                    try{
-                        const createUserResponse        = await createUsuarioAPI(data)
-                        setUserData({
-                            'userId' : createUserResponse.data.new_user_id,
-                            'username' : data.username,
-                            'userEmail' : data.email,
-                        })
-                        successfullyLoaded()
-                    } catch(error){
-                        setLoadingState("Error inesperado creando usuario!")
+                    let imageCheckerResponse = true
+                    if (data['photo']){
+                        imageCheckerResponse = checkImageFormat(data['photo'][0])
+                        if (imageCheckerResponse === true){
+                            data['photo_link'] =  await saveCloudinary(data['photo']) 
+                        } else{
+                            setLoadingState(imageCheckerResponse)
+                        }
+                    } else {
+                        data['photo_link'] = null
+                    }
+                    if (imageCheckerResponse){
+                        delete data.confirmPwd // el confirmPwd no puede ser enviado al backend
+                        delete data.photo
+                        try{
+                            const createUserResponse        = await createUsuarioAPI(data)
+                            setUserData({
+                                'userId' : createUserResponse.data.new_user_id,
+                                'username' : data.username,
+                                'userEmail' : data.email,
+                            })
+                            successfullyLoaded()
+                        } catch(error){
+                            setLoadingState("Error inesperado creando usuario!")
+                        }
                     }
                 } catch(error){
                     setLoadingState("Error inesperado subiendo imagen de usuario a la nube!")
