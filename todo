@@ -24,13 +24,14 @@
     //* medio:
         // eliminar imagen antigua de usuario en cloudinary al actualizar perfil
         // optimizacion de imagenes en cloudinary
-
         // buscar otra forma de enviar correos de activacion
         // agregar permission classes en el backedn y buscar que el usuario siempre se deslogee cuando se salga de la pagina
         // emplear validate para validaciones en el backend
         // optimizar imagenes de cloudinary, y eliminar las que sean ejemplares 
         //  agregar filtrado de usuarios en home
         // mejorar sistema de envio de mensajes para mayor velocidad (cacheo de mensajes con websockets como con notificaciones)
+        // encriptar datos privados de cloduinary en las peticiones
+        // solucionar problema de refresco de tokens
 
 
     //* dificil
