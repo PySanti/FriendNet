@@ -22,6 +22,7 @@
 
 // Logica:
     // facil:
+        // refactorizar consulta a secrets.json en api's de cloudinary
         // agregar mensajes de error personalizados para cloudinary
         // agregar documenetaciones a las nuevas funciones del backend
         // arreglar error donde, en los formularios, aun cuando las contrasenias ya son iguales, sigue diciendo que no

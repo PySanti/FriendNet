@@ -59,7 +59,7 @@ export function UserPhoto({photoFile, withInput, chatPhoto, photoFileSetter}){
 }
 
 UserPhoto.propTypes = {
-    photoFile : PropTypes.string.isRequired,
+    photoFile : PropTypes.string,
     withInput : PropTypes.bool,
     photoFileSetter : PropTypes.func,
     chatPhoto : PropTypes.bool,

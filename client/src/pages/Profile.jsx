@@ -55,9 +55,9 @@ export function Profile({updating}){
                     // en este caso el usuario no habria cambiado nada
                     data.photo = data.photo[0]
                 }
-            } else {
+            } else if (profileData.photo_link){
                 // en este caso, el usuario habria eliminado su foto
-                console.log('El usuario ha eliminado su foto')
+                data.image_delete = true
             }
             const sendingData = {...data}
             if (dataIsDiferent(data, profileData)){ // lodash
@@ -69,8 +69,11 @@ export function Profile({updating}){
                 setLoadingState("Sin cambios")
             }
         } catch(error){
-            console.log(error)
-            setLoadingState("Error inesperado al actualizar datos del usuario!")
+            if (error.response.data === "cloudinary_error"){
+                setLoadingState("Error subiendo la imagen a la nube!")
+            } else {
+                setLoadingState("Error inesperado al actualizar datos del usuario!")
+            }
         }
     }
     useEffect(()=>{
