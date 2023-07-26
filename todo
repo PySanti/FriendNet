@@ -25,6 +25,7 @@
         // agregar documenetaciones a las nuevas funciones del backend
         // arreglar error donde, en los formularios, aun cuando las contrasenias ya son iguales, sigue diciendo que no
         // refactorizar la distribucion de los archivos, meter applications en FriendNet
+        // refactorizar codigo relacionado con ultimos cambios (imagenes)
 
     //* medio:
         // hacer el envio de imagenes a cloudinary desde el backend para evitar comprometer datos confidenciales

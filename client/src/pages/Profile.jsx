@@ -47,6 +47,18 @@ export function Profile({updating}){
     const onUpdate = async (data)=>{
         startLoading()
         try{
+            if (data.photo){
+                if (data.photo === profileData.photo_link){
+                    // en este caso el usuario no habria cambiado nada
+                    data.photo = null
+                } else {
+                    // en este caso el usuario no habria cambiado nada
+                    data.photo = data.photo[0]
+                }
+            } else {
+                // en este caso, el usuario habria eliminado su foto
+                console.log('El usuario ha eliminado su foto')
+            }
             const sendingData = {...data}
             if (dataIsDiferent(data, profileData)){ // lodash
                 const updateUserResponse = await updateUserDataAPI(sendingData, profileData.id)
@@ -57,6 +69,7 @@ export function Profile({updating}){
                 setLoadingState("Sin cambios")
             }
         } catch(error){
+            console.log(error)
             setLoadingState("Error inesperado al actualizar datos del usuario!")
         }
     }
@@ -109,7 +122,7 @@ export function Profile({updating}){
                                 :
                                 <>
                                     <UserData userData={profileData} nonShowableAttrs={["is_active", "id", "photo_link"]} attrsTraductions={    {        "username" : "Nombre de usuario",         "email" : "Correo electrónico",         "first_names" : "Nombres",        "last_names" : "Apellidos",        "age" : "Edad",    }    }/>
-                                    <UserPhoto url={profileData.photo_link} withInput={false}/>
+                                    <UserPhoto photoFile={profileData.photo_link} withInput={false}/>
                                 </>
                             }
                         </div>

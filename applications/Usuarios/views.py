@@ -56,16 +56,19 @@ class UpdateUserDataAPI(APIView):
         if serializer.is_valid():
             user = Usuarios.objects.get(id=kwargs['pk'])
             serialized_data = serializer.data.copy()
-            serialized_data = set_photo_link(
-                sended_data=serialized_data, 
-                view_type="updating", 
-                photo_file=request.FILES['photo'] if 'photo' in serialized_data else None,
-                current_photo_link=user.photo_link)
             try:
-                updated_user = Usuarios.objects.updateUser(user, serialized_data)
-                return JsonResponse({'user_data_updated' : {i[0]:i[1] for i in updated_user.__dict__.items() if i[0] in USER_SHOWABLE_FIELDS}}, status=status.HTTP_200_OK)
+                serialized_data = set_photo_link(
+                    sended_data=serialized_data, 
+                    view_type="updating", 
+                    photo_file=request.FILES['photo'] if 'photo' in serialized_data else None,
+                    current_photo_link=user.photo_link)
+                try:
+                    updated_user = Usuarios.objects.updateUser(user, serialized_data)
+                    return JsonResponse({'user_data_updated' : {i[0]:i[1] for i in updated_user.__dict__.items() if i[0] in USER_SHOWABLE_FIELDS}}, status=status.HTTP_200_OK)
+                except:
+                    return Response({'error': "error_updating"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             except:
-                return Response({'error': "error_updating"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                return Response({'error': "cloudinary_error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status=status.HTTP_400_BAD_REQUEST)
 class CheckExistingUserAPI(APIView):

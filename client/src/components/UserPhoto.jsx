@@ -1,37 +1,34 @@
 /**
  * Contenedor para foto de perfil de usuario
- * @param {String} url 
+ * @param {String} photoFile sera la foto que se desea renderizar por defecto 
  * @param {Boolean}  withInput sera true si se desea que el componente contenga una opcion para modificar la foto
  * @param {Function} photoFileSetter se ejecutara cuando se cambie la foto y la misma se le sera enviada por parametro. 
  * @param {Boolean} chatPhoto sera true cuando sea una imagen para renderizar en el chat, de este modo le cambiaremos los estilos
  * Diseniado para trabajar con states dentro de un formulario
  */
-import { useEffect, useState } from "react"
+import {  useState } from "react"
 import "../styles/UserPhoto.css"
 import { Button } from "./Button"
 import {PropTypes} from "prop-types"
 import { checkImageFormat } from "../utils/checkImageFormat"
 
-export function UserPhoto({url, withInput, photoFileSetter, chatPhoto}){
-    let [currentPhoto, setCurrentPhoto] = useState(false)
+export function UserPhoto({photoFile, withInput, chatPhoto, photoFileSetter}){
     let [errorMsg, setErrorMsg]         = useState(null)
-    let [defaultPhoto, setDefaultPhoto] = useState(null)
+    let [currentPhotoName, setCurrentPhotoName] = useState(null)
     const containerClsName = "user-photo-container"
     const deleteCurrentPhoto = ()=>{
-        setCurrentPhoto(null)
-        setDefaultPhoto(null)
+        photoFileSetter(null)
+        setCurrentPhotoName(null)
     }
     const onPhotoChange = (e)=>{
         const file = e.target.files[0];
         const imageCheckerResponse = checkImageFormat(file)
         if (imageCheckerResponse === true){
+            photoFileSetter(e.target.files)
             setErrorMsg(null)
-            if (photoFileSetter){
-                photoFileSetter(e.target.files)
-            }
             const reader = new FileReader();
             reader.addEventListener('load', function() {
-                setCurrentPhoto(reader.result);
+                setCurrentPhotoName(reader.result)
             });
             if (file) {
                 reader.readAsDataURL(file);
@@ -40,14 +37,11 @@ export function UserPhoto({url, withInput, photoFileSetter, chatPhoto}){
             setErrorMsg(imageCheckerResponse)
         }
     }
-    useEffect(()=>{
-        if (url){
-            setDefaultPhoto(url)
-        }
-    }, [])
+
+
     return (
         <div className={chatPhoto ? `${containerClsName} chat-photo` : containerClsName}>
-            <img className="user-photo"src={currentPhoto ? currentPhoto : (defaultPhoto ? defaultPhoto : null)} alt=":(" ></img>
+            <img className="user-photo"src={currentPhotoName ? currentPhotoName : (photoFile ? photoFile :  null)} alt=":(" ></img>
             {withInput && 
                 <>
                     <div className="img-input-error-msg-container">
@@ -65,14 +59,13 @@ export function UserPhoto({url, withInput, photoFileSetter, chatPhoto}){
 }
 
 UserPhoto.propTypes = {
-    url : PropTypes.string,
+    photoFile : PropTypes.string.isRequired,
     withInput : PropTypes.bool,
     photoFileSetter : PropTypes.func,
     chatPhoto : PropTypes.bool,
 }
 
 UserPhoto.defaultProps = {
-    url : undefined,
     withInput : undefined,
     photoFileSetter : undefined,
     chatPhoto : undefined,

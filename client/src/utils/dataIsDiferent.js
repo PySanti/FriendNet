@@ -12,7 +12,5 @@ export function dataIsDiferent(formData, profileData){
     formData.is_active      = profileData.is_active
     formData.photo_link     = formData.photo ? true : profileData.photo_link
     delete formData.photo
-    console.log(formData)
-    console.log(profileData)
     return !_.isEqual(profileData, formData)
 }

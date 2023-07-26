@@ -20,12 +20,11 @@ import { EmailField } from "./EmailField"
  * @param {Array} extraButtons arreglo de buttons extra que se quiera agregar al formulario
  */
 export function UserInfoForm({userData, updating, userPhotoUrl, onFormSubmit, extraButtons}){
-    let [currentPhotoFile, setCurrentPhotoFile] = useState(null)
+    let [currentPhotoFile, setCurrentPhotoFile] = useState(userPhotoUrl ? userPhotoUrl : null)
     const {register, handleSubmit, formState: {errors}, watch }  = useForm()
     const onSubmit = handleSubmit((data)=>{
         data.age = Number(data.age) // las edades se manejan como text fields para que su checkeo sea mas facil
-        data.photo = currentPhotoFile ? currentPhotoFile[0] : null// currentPhotoFile o es null o es una imagen que ya esta validada
-        setCurrentPhotoFile(null) // esto generara que si no cambias la imagen, el data['photo']  sea null
+        data.photo = currentPhotoFile // currentPhotoFile o es null o es una imagen que ya esta validada o es la misma imagen que el usuario ya tenia
         onFormSubmit(data)
     })
     return (
@@ -59,7 +58,7 @@ export function UserInfoForm({userData, updating, userPhotoUrl, onFormSubmit, ex
                     }
                 </>
             </Form>
-            <UserPhoto withInput photoFileSetter={setCurrentPhotoFile} url={updating ?  userPhotoUrl : null}/>
+            <UserPhoto withInput photoFile={currentPhotoFile} photoFileSetter={setCurrentPhotoFile} url={updating ?  userPhotoUrl : null}/>
         </div>
     )
 }

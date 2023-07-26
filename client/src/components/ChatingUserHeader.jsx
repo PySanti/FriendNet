@@ -9,7 +9,7 @@ import "../styles/ChattingUserHeader.css"
 export function ChattingUserHeader({chatingUser}){
     return (
         <div className="chatting-user-header-container">
-            <UserPhoto url={chatingUser.photo_link} chatPhoto/>
+            <UserPhoto photoFile={chatingUser.photo_link} chatPhoto/>
             <div className="chatting-user__username-container">
                 <h3 className="chatting-user__username">{chatingUser.username}</h3>
             </div>
