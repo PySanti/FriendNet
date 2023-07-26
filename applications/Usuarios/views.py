@@ -34,7 +34,6 @@ class CreateUsuariosAPI(APIView):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             serialized_data = serializer.data.copy()
-            print(serialized_data)
             serialized_data = set_photo_link(serialized_data, "creating")
             try:
                 new_user = Usuarios.objects.create_user(**serialized_data)
@@ -51,14 +50,12 @@ class UpdateUserDataAPI(APIView):
     def put(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
+            user = Usuarios.objects.get(id=kwargs['pk'])
             serialized_data = serializer.data.copy()
-            serialized_data = set_photo_link(serialized_data, "updating")
-            required_attrs = USER_SHOWABLE_FIELDS.copy()
-            required_attrs.remove("id")
-            required_attrs.remove("is_active")
+            serialized_data = set_photo_link(serialized_data, "updating", user.photo_link)
             try:
-                updated_user = Usuarios.objects.updateUser(kwargs['pk'], serialized_data)
-                return JsonResponse({'user_data_updated' : {i[0]:i[1] for i in updated_user.__dict__.items() if i[0] in required_attrs}}, status=status.HTTP_200_OK)
+                updated_user = Usuarios.objects.updateUser(user, serialized_data)
+                return JsonResponse({'user_data_updated' : {i[0]:i[1] for i in updated_user.__dict__.items() if i[0] in USER_SHOWABLE_FIELDS}}, status=status.HTTP_200_OK)
             except:
                 return Response({'error': "error_updating"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:

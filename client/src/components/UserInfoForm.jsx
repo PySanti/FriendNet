@@ -23,6 +23,7 @@ export function UserInfoForm({userData, updating, userPhotoUrl, onFormSubmit, ex
     let [currentPhotoFile, setCurrentPhotoFile] = useState(null)
     const {register, handleSubmit, formState: {errors}, watch }  = useForm()
     const onSubmit = handleSubmit((data)=>{
+        data.age = Number(data.age) // las edades se manejan como text fields para que su checkeo sea mas facil
         data.photo = currentPhotoFile ? currentPhotoFile[0] : null// currentPhotoFile o es null o es una imagen que ya esta validada
         setCurrentPhotoFile(null) // esto generara que si no cambias la imagen, el data['photo']  sea null
         onFormSubmit(data)

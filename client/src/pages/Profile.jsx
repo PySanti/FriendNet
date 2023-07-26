@@ -10,13 +10,13 @@ import { Loader } from "../components/Loader";
 import { LoadingContext} from "../context/LoadingContext";
 import { UserInfoForm } from "../components/UserInfoForm";
 import {updateUserDataAPI} from "../api/updateUserData.api"
-import {_}  from "lodash"
 import { UserPhoto } from "../components/UserPhoto";
 import { Button } from "../components/Button";
 import "../styles/Profile.css"
 import { v4 } from "uuid";
 import { saveUserDataInLocalStorage } from "../utils/saveUserDataInLocalStorage";
 import { getUserDataFromLocalStorage } from "../utils/getUserDataFromLocalStorage";
+import { dataIsDiferent } from "../utils/dataIsDiferent";
 
 
 /**
@@ -48,11 +48,7 @@ export function Profile({updating}){
         startLoading()
         try{
             const sendingData = {...data}
-            // se prepara al data para la comparativa  
-            data.id = profileData.id
-            data.is_active = profileData.is_active
-            data.age = Number(data.age)
-            if (!_.isEqual(profileData, data)){ // lodash
+            if (dataIsDiferent(data, profileData)){ // lodash
                 const updateUserResponse = await updateUserDataAPI(sendingData, profileData.id)
                 setProfileData(updateUserResponse.data.user_data_updated)
                 saveUserDataInLocalStorage(updateUserResponse.data.user_data_updated)
