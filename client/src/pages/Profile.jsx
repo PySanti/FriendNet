@@ -47,15 +47,15 @@ export function Profile({updating}){
     const onUpdate = async (data)=>{
         startLoading()
         try{
-            const sendingData = data
+            const sendingData = {...data}
             // se prepara al data para la comparativa  
             data.id = profileData.id
             data.is_active = profileData.is_active
             data.age = Number(data.age)
             if (!_.isEqual(profileData, data)){ // lodash
-                await updateUserDataAPI(sendingData, profileData.id)
-                setProfileData(data)
-                saveUserDataInLocalStorage(data)
+                const updateUserResponse = await updateUserDataAPI(sendingData, profileData.id)
+                setProfileData(updateUserResponse.data.user_data_updated)
+                saveUserDataInLocalStorage(updateUserResponse.data.user_data_updated)
                 successfullyLoaded()
             } else {
                 setLoadingState("Sin cambios")

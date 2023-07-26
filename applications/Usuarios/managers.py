@@ -100,3 +100,4 @@ class UsuariosManager(BaseUserManager):
         user.age            = new_data['age']
         user.photo_link     = new_data['photo_link']
         user.save()
+        return user

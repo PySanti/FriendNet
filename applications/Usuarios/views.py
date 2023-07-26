@@ -6,6 +6,7 @@ from .utils.set_photo_link import set_photo_link
 from .utils.constants import (
     BASE_SERIALIZER_ERROR_RESPONSE,
     USERS_LIST_ATTRS,
+    USER_SHOWABLE_FIELDS
 )
 
 from django.contrib.auth.hashers import (
@@ -30,12 +31,12 @@ class CreateUsuariosAPI(APIView):
     queryset = Usuarios.objects.all()
     serializer_class = CreateUsuariosSerializer
     def post(self, request, *args, **kwargs):
-        sended_data ={i[0]:i[1] for i in request.data.items()}
-        serializer = self.serializer_class(data=sended_data)
+        serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
-            sended_data = set_photo_link(sended_data, "creating")
+            serialized_data = serializer.data.copy()
+            serialized_data = set_photo_link(serialized_data, "creating")
             try:
-                new_user = Usuarios.objects.create_user(**sended_data)
+                new_user = Usuarios.objects.create_user(**serialized_data)
                 return Response({'new_user_id' : new_user.id}, status=status.HTTP_201_CREATED)
             except:
                 return Response({'error': "error_creating"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -47,13 +48,16 @@ class UpdateUserDataAPI(APIView):
     serializer_class = UpdateUsuariosSerializer
     queryset = Usuarios.objects.all()
     def put(self, request, *args, **kwargs):
-        sended_data ={i[0]:i[1] for i in request.data.items()}
-        serializer = self.serializer_class(data=sended_data)
+        serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
-            sended_data = set_photo_link(sended_data, "updating")
+            serialized_data = serializer.data.copy()
+            serialized_data = set_photo_link(serialized_data, "updating")
+            required_attrs = USER_SHOWABLE_FIELDS.copy()
+            required_attrs.remove("id")
+            required_attrs.remove("is_active")
             try:
-                Usuarios.objects.updateUser(sended_data['id'], sended_data)
-                return Response({'updated' : 'true'}, status=status.HTTP_200_OK)
+                updated_user = Usuarios.objects.updateUser(kwargs['pk'], serialized_data)
+                return JsonResponse({'user_data_updated' : {i[0]:i[1] for i in updated_user.__dict__.items() if i[0] in required_attrs}}, status=status.HTTP_200_OK)
             except:
                 return Response({'error': "error_updating"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:

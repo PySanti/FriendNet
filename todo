@@ -21,6 +21,9 @@
     // revisar y mejorar mensajes de buttons
 
 // Logica:
+    // facil:
+        // arreglar error donde, en los formularios, aun cuando las contrasenias ya son iguales, sigue diciendo que no
+
     //* medio:
         // hacer el envio de imagenes a cloudinary desde el backend para evitar comprometer datos confidenciales
         // implementar uso de credenciales para el uso de cloudinary por seguridad (signatures)

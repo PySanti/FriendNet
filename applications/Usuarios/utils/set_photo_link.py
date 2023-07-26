@@ -7,10 +7,11 @@ def set_photo_link(sended_data, view_type):
         un atributo 'photo', en caso de que lo haya, settea el photo_link del
         sended_data en la url de cloudinary de la photo ... 
     """
-    if 'photo[]' not in sended_data :
+    if 'photo' not in sended_data :
+        print('No se recibio imagen')
         sended_data['photo_link'] = None
     else:
         print('Imagen enviada')
-        sended_data['photo_link'] =  save_image_cloudinary(sended_data['photo[]']) if view_type == "creating" else overwrite_image_cloudinary('photo')
-        del sended_data['photo[]']
+        sended_data['photo_link'] =  save_image_cloudinary(sended_data['photo']) if view_type == "creating" else overwrite_image_cloudinary(sended_data['photo'])
+        del sended_data['photo']
     return sended_data

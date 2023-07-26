@@ -22,7 +22,7 @@ class UpdateUsuariosSerializer(serializers.Serializer):
     first_names = serializers.CharField(required=False)
     last_names = serializers.CharField(required=False)
     age = serializers.IntegerField(required=False)
-    photo = serializers.FileField(required=False)
+    photo = serializers.ImageField(max_length=None, use_url=None, required=False)
 
 
 

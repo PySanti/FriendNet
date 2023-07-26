@@ -18,7 +18,3 @@ DATABASES = {
 }
 SECRET_KEY = SECRETS['KEY']
 # exception Handling 
-REST_FRAMEWORK = {
-    'EXCEPTION_HANDLER': 'applications.Usuarios.utils.custom_exception_handler.custom_exception_handler'
-}
-
