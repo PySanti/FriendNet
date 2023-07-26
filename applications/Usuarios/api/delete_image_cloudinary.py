@@ -7,8 +7,10 @@ def delete_image_cloudinary(publicid):
         Elimina la imagen con publicid de cloudinary 
     """
     secrets = load_cloudinary_secrets()
-    response = cloudinary.uploader.destroy(public_id=publicid, 
-        api_key=secrets["CLOUDINARY__API_KEY"],
-        api_secret=secrets["CLOUDINARY__API_SECRET"],
-        cloud_name=secrets["CLOUDINARY__CLOUD_NAME"])
+    response = cloudinary.uploader.destroy(
+        public_id   =   publicid, 
+        api_key     =   secrets["CLOUDINARY__API_KEY"],
+        api_secret  =   secrets["CLOUDINARY__API_SECRET"],
+        cloud_name  =   secrets["CLOUDINARY__CLOUD_NAME"]
+    )
     return response

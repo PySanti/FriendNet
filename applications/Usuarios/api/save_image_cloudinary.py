@@ -14,24 +14,25 @@ def save_image_cloudinary(image, overwriting=False, current_publicid=None ):
         'crop': 'limit',  # Recorta la imagen para ajustarla a los límites de tamaño especificados
     }
     if not overwriting:
-        response = cloudinary.uploader.upload(image, 
-            api_key=secrets["CLOUDINARY__API_KEY"],
-            api_secret=secrets["CLOUDINARY__API_SECRET"],
-            cloud_name=secrets["CLOUDINARY__CLOUD_NAME"],
-            # optimization
-            quality=QUALITY_PARAMS['quality'],
-            crop=QUALITY_PARAMS['crop'],
+        response = cloudinary.uploader.upload(
+            image, 
+            api_key     =   secrets["CLOUDINARY__API_KEY"],
+            api_secret  =   secrets["CLOUDINARY__API_SECRET"],
+            cloud_name  =   secrets["CLOUDINARY__CLOUD_NAME"],
+            quality     =   QUALITY_PARAMS['quality'],
+            crop        =   QUALITY_PARAMS['crop'],
         )
     else:
-        response = cloudinary.uploader.upload(image, 
-            api_key=secrets["CLOUDINARY__API_KEY"],
-            api_secret=secrets["CLOUDINARY__API_SECRET"],
-            cloud_name=secrets["CLOUDINARY__CLOUD_NAME"], 
-            public_id=current_publicid,
-            overwrite=True,
+        response = cloudinary.uploader.upload(
+            image, 
+            api_key     =   secrets["CLOUDINARY__API_KEY"],
+            api_secret  =   secrets["CLOUDINARY__API_SECRET"],
+            cloud_name  =   secrets["CLOUDINARY__CLOUD_NAME"], 
+            public_id   =   current_publicid,
+            overwrite   =   True,
             # optimization
-            quality=QUALITY_PARAMS['quality'],
-            crop=QUALITY_PARAMS['crop'],
+            quality     =   QUALITY_PARAMS['quality'],
+            crop        =   QUALITY_PARAMS['crop'],
             )
     return response['url']
 
