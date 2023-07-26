@@ -22,12 +22,14 @@
 
 // Logica:
     // facil:
+        // solucionar error de actualizacion de imagen infinita en profile
         // refactorizar consulta a secrets.json en api's de cloudinary
         // agregar mensajes de error personalizados para cloudinary
         // agregar documenetaciones a las nuevas funciones del backend
         // arreglar error donde, en los formularios, aun cuando las contrasenias ya son iguales, sigue diciendo que no
         // refactorizar la distribucion de los archivos, meter applications en FriendNet
-        // refactorizar/repasar/testear codigo relacionado con ultimos cambios (imagenes)
+
+        // refactorizar/repasar/testear codigo relacionado con manejo de imagenes
 
     //* medio:
         // optimizacion de imagenes en cloudinary
@@ -44,6 +46,7 @@
 
 
     //* dificil
+        // hacer que si el usuario cambia algun dato del perfil, se cambien los estilos del boton de actualizacion
         // usar paginacion
         // encriptar formularios de react
         // usar webSockets para mensajes

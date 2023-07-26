@@ -69,7 +69,7 @@ export function Profile({updating}){
                 setLoadingState("Sin cambios")
             }
         } catch(error){
-            if (error.response.data === "cloudinary_error"){
+            if (error.response.data.error === "cloudinary_error"){
                 setLoadingState("Error subiendo la imagen a la nube!")
             } else {
                 setLoadingState("Error inesperado al actualizar datos del usuario!")
