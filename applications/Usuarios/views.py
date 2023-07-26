@@ -47,7 +47,6 @@ class CreateUsuariosAPI(APIView):
         else:
             print(serializer.error_messages)
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status=status.HTTP_400_BAD_REQUEST)
-
 class UpdateUserDataAPI(APIView):
     serializer_class = UpdateUsuariosSerializer
     queryset = Usuarios.objects.all()
@@ -137,8 +136,6 @@ class GetUsersListAPI(APIView):
             return JsonResponse({"users_list": list(users_list)})
         else:
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
-
-
 class DisconnectUserAPI(APIView):
     serializer_class = DisconnectUserSerializer
     def post(self, request, *args, **kwargs):

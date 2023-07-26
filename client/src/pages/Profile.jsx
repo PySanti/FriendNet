@@ -47,15 +47,7 @@ export function Profile({updating}){
     const onUpdate = async (data)=>{
         startLoading()
         try{
-            if (data.photo){
-                if (data.photo === profileData.photo_link){
-                    // en este caso el usuario no habria cambiado nada
-                    data.photo = null
-                } else {
-                    // en este caso el usuario no habria cambiado nada
-                    data.photo = data.photo[0]
-                }
-            } else if (profileData.photo_link){
+            if (!data.photo && profileData.photo_link){
                 // en este caso, el usuario habria eliminado su foto
                 data.image_delete = true
             }
@@ -70,7 +62,7 @@ export function Profile({updating}){
             }
         } catch(error){
             if (error.response.data.error === "cloudinary_error"){
-                setLoadingState("Error subiendo la imagen a la nube!")
+                setLoadingState("Error con la nube!")
             } else {
                 setLoadingState("Error inesperado al actualizar datos del usuario!")
             }

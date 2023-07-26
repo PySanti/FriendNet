@@ -16,7 +16,6 @@ def set_photo_link(sended_data, view_type, photo_file=None, current_photo_link=N
                 sended_data['photo_link'] = None
                 delete_image_cloudinary(get_publicid(current_photo_link))
     else:
-        print('Imagen enviada')
         if view_type == "creating":
             sended_data['photo_link'] =  save_image_cloudinary(photo_file) 
         else: 

@@ -10,7 +10,15 @@ import {_} from "lodash"
 export function dataIsDiferent(formData, profileData){
     formData.id             = profileData.id
     formData.is_active      = profileData.is_active
-    formData.photo_link     = formData.photo ? true : profileData.photo_link
+    if (formData.photo){
+        if (formData.photo === profileData.photo_link){
+            // en este caso el usuario no habria cambiado nada
+            formData.photo_link = formData.photo
+        } else {
+            // en este caso el usuario no habria cambiado nada
+            formData.photo_link = formData.photo[0]
+        }
+    }
     delete formData.photo
     return !_.isEqual(profileData, formData)
 }

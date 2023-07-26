@@ -22,6 +22,8 @@
 
 // Logica:
     // facil:
+        // refactorizar/repasar/testear codigo relacionado con manejo de imagenes
+
         // solucionar error de actualizacion de imagen infinita en profile
         // refactorizar consulta a secrets.json en api's de cloudinary
         // agregar mensajes de error personalizados para cloudinary
@@ -29,10 +31,8 @@
         // arreglar error donde, en los formularios, aun cuando las contrasenias ya son iguales, sigue diciendo que no
         // refactorizar la distribucion de los archivos, meter applications en FriendNet
 
-        // refactorizar/repasar/testear codigo relacionado con manejo de imagenes
 
     //* medio:
-        // optimizacion de imagenes en cloudinary
 
         // buscar otra forma de enviar correos de activacion
         // agregar permission classes en el backedn y buscar que el usuario siempre se deslogee cuando se salga de la pagina
