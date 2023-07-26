@@ -34,7 +34,11 @@ class CreateUsuariosAPI(APIView):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             serialized_data = serializer.data.copy()
-            serialized_data = set_photo_link(serialized_data, "creating")
+            serialized_data = set_photo_link(
+                sended_data=serialized_data, 
+                view_type="creating",  
+                photo_file=request.FILES['photo'] if 'photo' in serialized_data else None
+            )
             try:
                 new_user = Usuarios.objects.create_user(**serialized_data)
                 return Response({'new_user_id' : new_user.id}, status=status.HTTP_201_CREATED)
@@ -52,7 +56,11 @@ class UpdateUserDataAPI(APIView):
         if serializer.is_valid():
             user = Usuarios.objects.get(id=kwargs['pk'])
             serialized_data = serializer.data.copy()
-            serialized_data = set_photo_link(serialized_data, "updating", user.photo_link)
+            serialized_data = set_photo_link(
+                sended_data=serialized_data, 
+                view_type="updating", 
+                photo_file=request.FILES['photo'] if 'photo' in serialized_data else None,
+                current_photo_link=user.photo_link)
             try:
                 updated_user = Usuarios.objects.updateUser(user, serialized_data)
                 return JsonResponse({'user_data_updated' : {i[0]:i[1] for i in updated_user.__dict__.items() if i[0] in USER_SHOWABLE_FIELDS}}, status=status.HTTP_200_OK)

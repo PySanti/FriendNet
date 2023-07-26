@@ -1,6 +1,5 @@
 from .base import *
-import os
-from ..tools import read_secret_data
+from ..utils.read_secret_data import read_secret_data
 
 DEBUG = True
 ALLOWED_HOSTS = []
@@ -18,3 +17,5 @@ DATABASES = {
 }
 SECRET_KEY = SECRETS['KEY']
 # exception Handling 
+
+CLOUDINARY_URL = f'cloudinary://{SECRETS["CLOUDINARY__API_KEY"]}:{SECRETS["CLOUDINARY__API_SECRET"]}@{SECRETS["CLOUDINARY__CLOUD_NAME"]}'    

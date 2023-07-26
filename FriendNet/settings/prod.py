@@ -1,5 +1,5 @@
 from .base import *
-from ..tools import read_secret_data
+from ..utils.read_secret_data import read_secret_data
 
 DEBUG = False
 ALLOWED_HOSTS = []
