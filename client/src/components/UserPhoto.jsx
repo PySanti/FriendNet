@@ -24,7 +24,7 @@ export function UserPhoto({photoFile, withInput, chatPhoto, photoFileSetter}){
         const file = e.target.files[0];
         const imageCheckerResponse = checkImageFormat(file)
         if (imageCheckerResponse === true){
-            photoFileSetter(e.target.files)
+            photoFileSetter(file)
             setErrorMsg(null)
             const reader = new FileReader();
             reader.addEventListener('load', function() {
