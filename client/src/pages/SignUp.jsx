@@ -44,7 +44,11 @@ export function SignUp() {
                         })
                         successfullyLoaded()
                     } catch(error){
-                        setLoadingState("Error inesperado creando usuario!")
+                        if (error.response.data.error === "cloudinary_error"){
+                            setLoadingState("Error con la nube!")
+                        } else {
+                            setLoadingState("Error inesperado al actualizar datos del usuario!")
+                        }
                     }
                 } catch(error){
                     setLoadingState("Error inesperado subiendo imagen de usuario a la nube!")
