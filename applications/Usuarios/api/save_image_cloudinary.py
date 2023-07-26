@@ -19,7 +19,6 @@ def save_image_cloudinary(image, overwriting=False, current_publicid=None ):
     with open(f'{BASE_DIR}/secrets.json','r') as f:
         secrets = load(f)
     if not overwriting:
-        print('Registrando imagen')
         response = cloudinary.uploader.upload(image, 
             api_key=secrets["CLOUDINARY__API_KEY"],
             api_secret=secrets["CLOUDINARY__API_SECRET"],
@@ -29,7 +28,6 @@ def save_image_cloudinary(image, overwriting=False, current_publicid=None ):
             crop=QUALITY_PARAMS['crop'],
         )
     else:
-        print('Sobreescribiendo imagen')
         response = cloudinary.uploader.upload(image, 
             api_key=secrets["CLOUDINARY__API_KEY"],
             api_secret=secrets["CLOUDINARY__API_SECRET"],

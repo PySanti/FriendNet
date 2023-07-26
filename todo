@@ -41,7 +41,7 @@
         //  agregar filtrado de usuarios en home
         // mejorar sistema de envio de mensajes para mayor velocidad (cacheo de mensajes con websockets como con notificaciones)
         // encriptar datos privados de cloduinary en las peticiones
-        // solucionar problema de refresco de tokens
+        // solucionar problema de refresco de tokens (los errrores que salen de vez que cuando del authcontext)
         // agregar opcion para eliminar imagen de perfil
 
 
