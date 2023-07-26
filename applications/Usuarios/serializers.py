@@ -3,12 +3,18 @@ from .models import Usuarios
 
 
 class CreateUsuariosSerializer(serializers.ModelSerializer):
-    username = serializers.CharField()
-    email = serializers.EmailField()
-    first_names = serializers.CharField()
-    last_names = serializers.CharField()
-    age = serializers.IntegerField()
-    photo = serializers.FileField()
+    photo = serializers.FileField(required=False)
+    class Meta:
+        model = Usuarios
+        fields = [
+            "username",
+            "email",
+            "first_names",
+            "last_names",
+            "age",
+            "password",
+            "photo"
+        ]
 
 class UpdateUsuariosSerializer(serializers.Serializer):
     username = serializers.CharField(required=False)

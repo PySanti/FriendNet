@@ -34,21 +34,17 @@ export function SignUp() {
             const checkUserResponse = await checkExistingUserAPI(data['username'], data['email'])
             if (checkUserResponse.data.existing !== "true"){
                 try {
-                    const preparingResponse = await prepareDataForSending(data, "register", null)
-                    if (preparingResponse === true){
-                        try{
-                            const createUserResponse        = await createUsuarioAPI(data)
-                            setUserData({
-                                'userId' : createUserResponse.data.new_user_id,
-                                'username' : data.username,
-                                'userEmail' : data.email,
-                            })
-                            successfullyLoaded()
-                        } catch(error){
-                            setLoadingState("Error inesperado creando usuario!")
-                        }
-                    } else {
-                        setLoadingState(preparingResponse)
+                    delete data.confirmPwd
+                    try{
+                        const createUserResponse        = await createUsuarioAPI(data)
+                        setUserData({
+                            'userId' : createUserResponse.data.new_user_id,
+                            'username' : data.username,
+                            'userEmail' : data.email,
+                        })
+                        successfullyLoaded()
+                    } catch(error){
+                        setLoadingState("Error inesperado creando usuario!")
                     }
                 } catch(error){
                     setLoadingState("Error inesperado subiendo imagen de usuario a la nube!")

@@ -27,3 +27,9 @@ def custom_exception_handler(exc, context):
     if response is not None:
         response.data['time'] = datetime.now()
     return response
+
+def saveImageInCloudinary(image):
+    """
+        Almacena la imagen en cloudinary y retorna la url de la misma
+    """
+    return "prueba"

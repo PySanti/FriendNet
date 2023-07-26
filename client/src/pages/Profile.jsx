@@ -47,7 +47,7 @@ export function Profile({updating}){
     const onUpdate = async (data)=>{
         startLoading()
         try{
-            data.photo = data.photo[0]
+            data.photo = data.photo ? data.photo[0] : null
             const sendingData = data
             // se prepara al data para la comparativa  
             data.id = profileData.id

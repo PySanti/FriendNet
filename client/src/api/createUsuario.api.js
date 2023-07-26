@@ -8,5 +8,6 @@ import { config } from './baseConfig.api'
  * @returns {Promise} la promesa del servidor
  */
 export async function createUsuarioAPI(data){
+    config.headers = {'Content-Type': 'multipart/form-data'}
     return await axios.post(BACKEND_URL+"api/create/",data, config)
 }

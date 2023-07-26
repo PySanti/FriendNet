@@ -7,7 +7,8 @@ from rest_framework.generics import (
 )
 from .utils import (
     BASE_SERIALIZER_ERROR_RESPONSE,
-    USERS_LIST_ATTRS
+    USERS_LIST_ATTRS,
+    saveImageInCloudinary
 )
 
 from django.contrib.auth.hashers import (
@@ -33,14 +34,22 @@ class CreateUsuariosAPI(APIView):
     queryset = Usuarios.objects.all()
     serializer_class = CreateUsuariosSerializer
     def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data)
+        sended_data ={i[0]:i[1] for i in request.data.items()}
+        serializer = self.serializer_class(data=sended_data)
         if serializer.is_valid():
+            if 'photo[]' not in sended_data :
+                sended_data['photo_link'] = None
+            else:
+                print('Imagen enviada')
+                sended_data['photo_link'] =  saveImageInCloudinary(sended_data['photo[]'])
+                del sended_data['photo[]']
             try:
-                new_user = Usuarios.objects.create_user(**request.data)
+                new_user = Usuarios.objects.create_user(**sended_data)
                 return Response({'new_user_id' : new_user.id}, status=status.HTTP_201_CREATED)
             except:
                 return Response({'error': "error_creating"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
+            print(serializer.error_messages)
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status=status.HTTP_400_BAD_REQUEST)
 class CheckExistingUserAPI(APIView):
     serializer_class = CheckExistingUserSerializer
