@@ -1,5 +1,5 @@
 from ..api.save_image_cloudinary import save_image_cloudinary
-from ..api.overwrite_image_cloudinary import overwrite_image_cloudinary
+from ..utils.get_publicid import get_publicid 
 
 def set_photo_link(sended_data, view_type, photo_file=None, current_photo_link=None):
     """
@@ -14,6 +14,16 @@ def set_photo_link(sended_data, view_type, photo_file=None, current_photo_link=N
         print('Imagen enviada')
         # recordar que a la hora de actualizar, en caso de que el usuario no tenga una imagen
         # todavia, se haria un save en lugar de un overwrite
-        sended_data['photo_link'] =  save_image_cloudinary(photo_file) if view_type == "creating" else (overwrite_image_cloudinary(photo_file) if current_photo_link is not None else save_image_cloudinary(photo_file))
+        if view_type == "creating":
+            sended_data['photo_link'] =  save_image_cloudinary(photo_file) 
+        else: 
+            if current_photo_link is None:
+                sended_data['photo_link'] = save_image_cloudinary(photo_file)
+            else:
+                sended_data['photo_link'] = save_image_cloudinary(
+                    image=photo_file, 
+                    updating=True,
+                    current_publicid=get_publicid(current_photo_link)
+                    )
         del sended_data['photo']
     return sended_data
