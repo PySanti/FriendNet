@@ -7,19 +7,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 
 
 
-def save_image_cloudinary(image, updating=False, current_publicid=None ):
+def save_image_cloudinary(image, overwriting=False, current_publicid=None ):
     """
-        Almacena la imagen en cloudinary y retorna la url de la misma
+        Almacena la imagen en cloudinary o la sobreescribe y retorna la url de la misma
     """
     secrets = {}
     with open(f'{BASE_DIR}/secrets.json','r') as f:
         secrets = load(f)
-    if not updating:
+    if not overwriting:
+        print('Registrando imagen')
         response = cloudinary.uploader.upload(image, 
             api_key=secrets["CLOUDINARY__API_KEY"],
             api_secret=secrets["CLOUDINARY__API_SECRET"],
             cloud_name=secrets["CLOUDINARY__CLOUD_NAME"])
     else:
+        print('Sobreescribiendo imagen')
         response = cloudinary.uploader.upload(image, 
             api_key=secrets["CLOUDINARY__API_KEY"],
             api_secret=secrets["CLOUDINARY__API_SECRET"],
