@@ -2,13 +2,10 @@ from rest_framework import status
 from rest_framework.views import (
     APIView,
 )
-from rest_framework.generics import (
-    UpdateAPIView,
-)
-from .utils import (
+from .utils.set_photo_link import set_photo_link
+from .utils.constants import (
     BASE_SERIALIZER_ERROR_RESPONSE,
     USERS_LIST_ATTRS,
-    saveImageInCloudinary
 )
 
 from django.contrib.auth.hashers import (
@@ -29,7 +26,6 @@ from rest_framework.response import Response
 from .models import Usuarios
 
 
-
 class CreateUsuariosAPI(APIView):
     queryset = Usuarios.objects.all()
     serializer_class = CreateUsuariosSerializer
@@ -37,12 +33,7 @@ class CreateUsuariosAPI(APIView):
         sended_data ={i[0]:i[1] for i in request.data.items()}
         serializer = self.serializer_class(data=sended_data)
         if serializer.is_valid():
-            if 'photo[]' not in sended_data :
-                sended_data['photo_link'] = None
-            else:
-                print('Imagen enviada')
-                sended_data['photo_link'] =  saveImageInCloudinary(sended_data['photo[]'])
-                del sended_data['photo[]']
+            sended_data = set_photo_link(sended_data, "creating")
             try:
                 new_user = Usuarios.objects.create_user(**sended_data)
                 return Response({'new_user_id' : new_user.id}, status=status.HTTP_201_CREATED)
@@ -51,6 +42,26 @@ class CreateUsuariosAPI(APIView):
         else:
             print(serializer.error_messages)
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status=status.HTTP_400_BAD_REQUEST)
+
+class UpdateUserDataAPI(APIView):
+    serializer_class = UpdateUsuariosSerializer
+    queryset = Usuarios.objects.all()
+    def put(self, request, *args, **kwargs):
+        sended_data ={i[0]:i[1] for i in request.data.items()}
+        serializer = self.serializer_class(data=sended_data)
+        if serializer.is_valid():
+            sended_data = set_photo_link(sended_data, "updating")
+            try:
+                Usuarios.objects.updateUser(sended_data['id'], sended_data)
+                return Response({'updated' : 'true'}, status=status.HTTP_200_OK)
+            except:
+                return Response({'error': "error_updating"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        else:
+            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
 class CheckExistingUserAPI(APIView):
     serializer_class = CheckExistingUserSerializer
     def post(self, request, *args, **kwargs):
@@ -95,14 +106,6 @@ class ActivateUserAPI(APIView):
                 return Response({'error' : 'error_activating_user'}, status.HTTP_500_INTERNAL_SERVER_ERROR) 
         else:
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
-
-class UpdateUserDataAPI(APIView):
-    serializer_class = UpdateUsuariosSerializer
-    queryset = Usuarios.objects.all()
-    def put(self, request, *args, **kwargs):
-        print(request.data)
-        return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
-
 class ChangeUserPwdAPI(APIView):
     serializer_class = ChangeUserPwdSerializer
     def post(self, request, *args, **kwargs):

@@ -35,6 +35,7 @@
         // mejorar sistema de envio de mensajes para mayor velocidad (cacheo de mensajes con websockets como con notificaciones)
         // encriptar datos privados de cloduinary en las peticiones
         // solucionar problema de refresco de tokens
+        // agregar opcion para eliminar imagen de perfil
 
 
     //* dificil

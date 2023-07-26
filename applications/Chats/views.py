@@ -13,7 +13,7 @@ from .models import (
 from rest_framework.response import Response 
 from django.http import JsonResponse
 from rest_framework import status
-from applications.Usuarios.utils import (
+from applications.Usuarios.utils.constants import (
     BASE_SERIALIZER_ERROR_RESPONSE
 )
 from applications.Usuarios.models import Usuarios

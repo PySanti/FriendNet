@@ -23,7 +23,7 @@ export function UserInfoForm({userData, updating, userPhotoUrl, onFormSubmit, ex
     let [currentPhotoFile, setCurrentPhotoFile] = useState(null)
     const {register, handleSubmit, formState: {errors}, watch }  = useForm()
     const onSubmit = handleSubmit((data)=>{
-        data.photo = currentPhotoFile // currentPhotoFile o es null o es una imagen que ya esta validada
+        data.photo = currentPhotoFile ? currentPhotoFile[0] : null// currentPhotoFile o es null o es una imagen que ya esta validada
         setCurrentPhotoFile(null) // esto generara que si no cambias la imagen, el data['photo']  sea null
         onFormSubmit(data)
     })

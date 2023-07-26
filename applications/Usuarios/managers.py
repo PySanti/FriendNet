@@ -2,7 +2,7 @@ from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth import login
 from django.utils.timezone import  now
 from django.contrib.auth.hashers import check_password
-from .utils import (
+from .utils.constants import (
     USERS_LIST_ATTRS,
     USER_SHOWABLE_FIELDS)
 
@@ -87,3 +87,16 @@ class UsuariosManager(BaseUserManager):
             Retorna true en caso de que exista algun usuario con username o email
         """
         return (self.filter(username=username)) or (self.filter(email=email))
+    def updateUser(self, userId, new_data):
+        """
+            Recibe el id de un usuario y sus nuevos datos y lo actualiza
+        """
+        # recordar que se deberia comprobar si el usuario realmente esta cambiando algo desde el frontend
+        user = self.get(id=userId)
+        user.username       = new_data['username']
+        user.email          = new_data['email']
+        user.first_names    = new_data['first_names']
+        user.last_names     = new_data['last_names']
+        user.age            = new_data['age']
+        user.photo_link     = new_data['photo_link']
+        user.save()
