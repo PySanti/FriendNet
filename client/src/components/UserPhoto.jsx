@@ -6,7 +6,7 @@
  * @param {Boolean} chatPhoto sera true cuando sea una imagen para renderizar en el chat, de este modo le cambiaremos los estilos
  * Diseniado para trabajar con states dentro de un formulario
  */
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import "../styles/UserPhoto.css"
 import { Button } from "./Button"
 import {PropTypes} from "prop-types"
@@ -15,7 +15,12 @@ import { checkImageFormat } from "../utils/checkImageFormat"
 export function UserPhoto({url, withInput, photoFileSetter, chatPhoto}){
     let [currentPhoto, setCurrentPhoto] = useState(false)
     let [errorMsg, setErrorMsg]         = useState(null)
+    let [defaultPhoto, setDefaultPhoto] = useState(null)
     const containerClsName = "user-photo-container"
+    const deleteCurrentPhoto = ()=>{
+        setCurrentPhoto(null)
+        setDefaultPhoto(null)
+    }
     const onPhotoChange = (e)=>{
         const file = e.target.files[0];
         const imageCheckerResponse = checkImageFormat(file)
@@ -35,9 +40,14 @@ export function UserPhoto({url, withInput, photoFileSetter, chatPhoto}){
             setErrorMsg(imageCheckerResponse)
         }
     }
+    useEffect(()=>{
+        if (url){
+            setDefaultPhoto(url)
+        }
+    }, [])
     return (
         <div className={chatPhoto ? `${containerClsName} chat-photo` : containerClsName}>
-            <img className="user-photo"src={currentPhoto ? currentPhoto : (url ? url : null)} alt=":(" ></img>
+            <img className="user-photo"src={currentPhoto ? currentPhoto : (defaultPhoto ? defaultPhoto : null)} alt=":(" ></img>
             {withInput && 
                 <>
                     <div className="img-input-error-msg-container">
@@ -46,6 +56,7 @@ export function UserPhoto({url, withInput, photoFileSetter, chatPhoto}){
                     <div className="user-photo-input-container">
                         <input  id="photo-input" className="user-photo-input" type="file"  onChange={onPhotoChange} />
                         <Button buttonText="Seleccionar" onClickFunction={()=>document.getElementById("photo-input").click()}/>
+                        <Button buttonText="Borrar" onClickFunction={deleteCurrentPhoto}/>
                     </div>
                 </>
             }
