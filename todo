@@ -22,15 +22,13 @@
 
 // Logica:
     // facil:
+        // agregar mensajes de error personalizados para cloudinary
         // agregar documenetaciones a las nuevas funciones del backend
         // arreglar error donde, en los formularios, aun cuando las contrasenias ya son iguales, sigue diciendo que no
         // refactorizar la distribucion de los archivos, meter applications en FriendNet
-        // refactorizar codigo relacionado con ultimos cambios (imagenes)
+        // refactorizar/repasar/testear codigo relacionado con ultimos cambios (imagenes)
 
     //* medio:
-        // hacer el envio de imagenes a cloudinary desde el backend para evitar comprometer datos confidenciales
-        // implementar uso de credenciales para el uso de cloudinary por seguridad (signatures)
-        // renombrarb imagen de usuario en cloudinary al actualizar perfil
         // optimizacion de imagenes en cloudinary
 
         // buscar otra forma de enviar correos de activacion
