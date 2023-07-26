@@ -3,7 +3,7 @@ from .models import Usuarios
 
 
 class CreateUsuariosSerializer(serializers.ModelSerializer):
-    photo = serializers.FileField(required=False)
+    photo = serializers.ImageField(max_length=None, use_url=None, required=False)
     class Meta:
         model = Usuarios
         fields = [

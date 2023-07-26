@@ -34,6 +34,7 @@ class CreateUsuariosAPI(APIView):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             serialized_data = serializer.data.copy()
+            print(serialized_data)
             serialized_data = set_photo_link(serialized_data, "creating")
             try:
                 new_user = Usuarios.objects.create_user(**serialized_data)
@@ -62,10 +63,6 @@ class UpdateUserDataAPI(APIView):
                 return Response({'error': "error_updating"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status=status.HTTP_400_BAD_REQUEST)
-
-
-
-
 class CheckExistingUserAPI(APIView):
     serializer_class = CheckExistingUserSerializer
     def post(self, request, *args, **kwargs):
