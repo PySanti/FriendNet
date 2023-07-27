@@ -22,8 +22,6 @@
 
 // Logica:
     // facil:
-        // modificar sistema de comprobacion de igualdad en update para mayor escalabilidad
-        // refactorizar/repasar/testear codigo relacionado con manejo de imagenes
 
         // arreglar error donde, en los formularios, aun cuando las contrasenias ya son iguales, sigue diciendo que no
         // refactorizar la distribucion de los archivos, meter applications en FriendNet

@@ -58,7 +58,6 @@ class UpdateUserDataAPI(APIView):
         if serializer.is_valid():
             user = Usuarios.objects.get(id=kwargs['pk'])
             serialized_data = serializer.data.copy()
-            print(serialized_data)
             try:
                 serialized_data = set_photo_link(
                     sended_data=serialized_data, 

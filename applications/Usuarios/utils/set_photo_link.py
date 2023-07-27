@@ -4,7 +4,7 @@ from ..utils.get_publicid import get_publicid
 
 def set_photo_link(sended_data, view_type, photo_file=None, current_photo_link=None):
     """
-        Genera el campo photo_link a partir de la imagen recibida desde el frontend
+        Genera el campo 'photo_link' a partir del campo 'photo' del formulario enviado desde el frontend
     """
     if not sended_data['photo']:
         if (view_type == "creating"):

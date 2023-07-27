@@ -29,9 +29,7 @@ class UpdateUsuariosSerializer(serializers.Serializer):
         data = self.context['request']
         if ('photo' not in data):
             return None
-        elif isinstance(data['photo'], InMemoryUploadedFile):
-            return data['photo']
-        elif isinstance(data['photo'], str):
+        elif isinstance(data['photo'], InMemoryUploadedFile) or (isinstance(data['photo'], str)):
             return data['photo']
 
 

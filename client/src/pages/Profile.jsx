@@ -47,6 +47,7 @@ export function Profile({updating}){
     const onUpdate = async (data)=>{
         startLoading()
         try{
+            // el data.photo siempre sera: null, url de imagen actual, un archivo
             const sendingData = {...data}
             if (dataIsDiferent(data, profileData)){ // lodash
                 const updateUserResponse = await updateUserDataAPI(sendingData, profileData.id)
