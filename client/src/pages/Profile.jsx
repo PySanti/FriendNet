@@ -47,15 +47,8 @@ export function Profile({updating}){
     const onUpdate = async (data)=>{
         startLoading()
         try{
-            if (!data.photo && profileData.photo_link){
-                // en este caso, el usuario habria eliminado su foto
-                data.image_delete = true
-            }
             const sendingData = {...data}
             if (dataIsDiferent(data, profileData)){ // lodash
-                if (sendingData.photo && sendingData.photo === profileData.photo_link){
-                    sendingData.photo = null
-                }
                 const updateUserResponse = await updateUserDataAPI(sendingData, profileData.id)
                 setProfileData(updateUserResponse.data.user_data_updated)
                 saveUserDataInLocalStorage(updateUserResponse.data.user_data_updated)

@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Usuarios
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
 
 class CreateUsuariosSerializer(serializers.ModelSerializer):
@@ -22,8 +23,16 @@ class UpdateUsuariosSerializer(serializers.Serializer):
     first_names = serializers.CharField(required=False)
     last_names = serializers.CharField(required=False)
     age = serializers.IntegerField(required=False)
-    photo = serializers.ImageField(max_length=None, use_url=None, required=False)
-    image_delete = serializers.BooleanField(required=False)
+    photo = serializers.SerializerMethodField('get_photo')
+
+    def get_photo(self, obj):
+        data = self.context['request']
+        if ('photo' not in data):
+            return None
+        elif isinstance(data['photo'], InMemoryUploadedFile):
+            return data['photo']
+        elif isinstance(data['photo'], str):
+            return data['photo']
 
 
 

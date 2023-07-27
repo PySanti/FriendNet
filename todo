@@ -27,6 +27,7 @@
 
         // arreglar error donde, en los formularios, aun cuando las contrasenias ya son iguales, sigue diciendo que no
         // refactorizar la distribucion de los archivos, meter applications en FriendNet
+        // hacer que cuando se elimine un usuario de la base de detos, se elimine su imagen de cloudinary
 
 
     //* medio:
@@ -60,4 +61,5 @@
     // investigar sobre seguridad para proyectos django
     // repasar todo lo aprendido en el proyecto, revisando todo el mismo
     // agrgar documentacion a la api
+    // estudiar mas a fondo los serializers
 
