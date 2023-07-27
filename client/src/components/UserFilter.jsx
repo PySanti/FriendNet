@@ -11,13 +11,17 @@ import { useEffect, useState } from "react"
  * @param {Function} usersListSetter 
  */
 export function UserFilter({session_user_id, usersListSetter}){
-    let [currentUserkeyword, setCurrentUserkeyword] = useState(null)
+    let [currentUserkeyword, setCurrentUserkeyword] = useState("")
+    let [userList, setUsersList] = useState([])
     const updateUsersList = async ()=>{
         const response = await getUsersListAPI(session_user_id, currentUserkeyword.length > 0 ? currentUserkeyword: undefined)
         usersListSetter(response.data.users_list)
+        setUsersList(response.data.users_list)
     }
     const onLetterInput = (e)=>{
-        setCurrentUserkeyword(e.target.value)
+        if (!(e.target.value.length > currentUserkeyword.length && userList.length === 0)){
+            setCurrentUserkeyword(e.target.value)
+        }
     }
     useEffect(()=>{
         console.log('Actualizando lista de usuarios')
