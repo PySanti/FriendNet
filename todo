@@ -3,6 +3,7 @@
     //~ Centrarnos en detalles finales del estilo y responsive
 
 // Estilos:
+    // crear modo obscuro
     // arreglar problemas de espacio con mensajes de error en formularios
     // mejorar estilos de visualizacion de user-photo big
     // dar estilos a los globes
