@@ -71,13 +71,17 @@ export function UserPhoto({photoFile, withInput, chatPhoto, photoFileSetter}){
 }
 
 UserPhoto.propTypes = {
-    photoFile : PropTypes.string.object,
+    photoFile : PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.string,
+    ]) ,
     withInput : PropTypes.bool,
     photoFileSetter : PropTypes.func,
     chatPhoto : PropTypes.bool,
 }
 
 UserPhoto.defaultProps = {
+    photoFile : undefined,
     withInput : undefined,
     photoFileSetter : undefined,
     chatPhoto : undefined,

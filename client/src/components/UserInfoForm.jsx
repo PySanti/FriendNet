@@ -27,6 +27,19 @@ export function UserInfoForm({userData, updating, userPhotoUrl, onFormSubmit, ex
         data.photo = currentPhotoFile // currentPhotoFile o es null o es una imagen que ya esta validada o es la misma imagen que el usuario ya tenia
         onFormSubmit(data)
     })
+    const passwordChecking = (type)=>{
+        return (password)=>{
+            if (password != watch(type === "password" ? "confirmPwd" : "password")){            
+                return "Las contraseñas no son iguales"        
+            } else {
+                if (type === "password"){
+                    errors.confirmPwd = null
+                } else{
+                    errors.password = null
+                }
+            } 
+        }
+    }
     useEffect(()=>{
         console.log('El usuario ha cambiado su imagen en el server')
         // de esta manera, se deberia actualizar el estado cada vez que cambie la url del usuario
@@ -53,12 +66,12 @@ export function UserInfoForm({userData, updating, userPhotoUrl, onFormSubmit, ex
                                 label="Contraseña" 
                                 name="password" 
                                 errors={errors.password && errors.password.message} 
-                                registerObject={register("password", BASE_PASSWORD_CONSTRAINTS)}/>
+                                registerObject={register("password", {...BASE_PASSWORD_CONSTRAINTS, validate : passwordChecking("password")})}/>
                             <PasswordField 
                                 label="Confirmar Contraseña" 
                                 name="confirmPwd" 
                                 errors={errors.confirmPwd  && errors.confirmPwd.message} 
-                                registerObject={register("confirmPwd", {    validate : (confirmPwd) =>{        if (confirmPwd != watch("password")){            return "Las contraseñas no son iguales"        }    }})}/>
+                                registerObject={register("confirmPwd", {...BASE_PASSWORD_CONSTRAINTS, validate : passwordChecking("confirmPwd")})}/>
                         </>
                     }
                 </>
