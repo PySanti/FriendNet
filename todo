@@ -23,10 +23,6 @@
     // revisar y mejorar mensajes de buttons
 
 // Logica:
-    // facil:
-
-        // refactorizar la distribucion de los archivos, meter applications en FriendNet
-
 
     //* medio:
         // buscar otra forma de enviar correos de activacion
@@ -56,4 +52,5 @@
     // repasar todo lo aprendido en el proyecto, revisando todo el mismo
     // agrgar documentacion a la api
     // estudiar mas a fondo los serializers
+    // refactorizar la distribucion de los archivos, meter applications en FriendNet
 
