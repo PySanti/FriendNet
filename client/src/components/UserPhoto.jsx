@@ -15,6 +15,7 @@ import { checkImageFormat } from "../utils/checkImageFormat"
 export function UserPhoto({photoFile, withInput, chatPhoto, photoFileSetter}){
     let [errorMsg, setErrorMsg]         = useState(null)
     let [currentPhotoName, setCurrentPhotoName] = useState(null)
+    let [bigPhotoActivated, setBigPhotoActivated] = useState(false)
     const containerClsName = "user-photo-container"
     const deleteCurrentPhoto = ()=>{
         photoFileSetter(null)
@@ -41,7 +42,18 @@ export function UserPhoto({photoFile, withInput, chatPhoto, photoFileSetter}){
 
     return (
         <div className={chatPhoto ? `${containerClsName} chat-photo` : containerClsName}>
-            <img className="user-photo"src={currentPhotoName ? currentPhotoName : (photoFile ? photoFile :  null)} alt=":(" ></img>
+            <img 
+                className="user-photo"
+                src={currentPhotoName ? currentPhotoName : (photoFile ? photoFile :  null)} 
+                alt=":(" 
+                onClick={()=>setBigPhotoActivated(true)}
+            />
+            <img 
+                className={bigPhotoActivated ? `user-photo big-user-photo big-user-photo__activated` : `user-photo big-user-photo`}
+                src={currentPhotoName ? currentPhotoName : (photoFile ? photoFile :  null)} 
+                alt=":(" 
+                onClick={()=>setBigPhotoActivated(false)}
+            />
             {withInput && 
                 <>
                     <div className="img-input-error-msg-container">
