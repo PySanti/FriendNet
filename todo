@@ -2,6 +2,7 @@
     //~ Arreglar problemas de logica restantes (Fase 3)
     //~ Centrarnos en detalles finales del estilo y responsive (Fase 4)
     //~ Realizar un periodo de prueba exaustivo y reunir todos los fallos, nuevas features que queramos agregar, etc ... (Fase 5)
+    //~ Realizar otro periodo de prueba pero con la aplicacion montada y revisar todos los detalles posibles (Fase Final)
 
 // Estilos:
     // asignar loaders en todos los puntos en los que se hagan solicitudes
@@ -31,7 +32,6 @@
 // Logica:
 
     //* medio:
-        //  agregar filtrado de usuarios en home
 
         // buscar otra forma de enviar correos de activacion
         // agregar permission classes en el backedn y buscar que el usuario siempre se deslogee cuando se salga de la pagina

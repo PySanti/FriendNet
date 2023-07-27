@@ -1,5 +1,4 @@
 import { getUsersListAPI } from "../api/getUsersList.api"
-import { useForm } from "react-hook-form"
 import {PropTypes} from "prop-types"
 import { useEffect, useState } from "react"
 
