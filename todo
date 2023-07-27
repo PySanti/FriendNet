@@ -25,7 +25,7 @@
     // facil:
         // arreglar error donde, en los formularios, aun cuando las contrasenias ya son iguales, sigue diciendo que no
         // refactorizar la distribucion de los archivos, meter applications en FriendNet
-        // hacer que cuando se elimine un usuario de la base de detos, se elimine su imagen de cloudinary
+        // refactorizar coincidencias entre CreateUsuariosAPI y UpdateUsuariosAPI
 
 
     //* medio:

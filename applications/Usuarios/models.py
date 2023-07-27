@@ -32,12 +32,3 @@ class Usuarios(AbstractBaseUser, PermissionsMixin):
         verbose_name = 'Usuario'
         verbose_name_plural = 'Usuarios'
 
-    def delete(self, *args, **kwargs):
-        print('Saludos')
-        print(kwargs)
-        print(args)
-        return super().delete(*args, **kwargs)
-
-
-
-
