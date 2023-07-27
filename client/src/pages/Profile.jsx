@@ -53,6 +53,9 @@ export function Profile({updating}){
             }
             const sendingData = {...data}
             if (dataIsDiferent(data, profileData)){ // lodash
+                if (sendingData.photo && sendingData.photo === profileData.photo_link){
+                    sendingData.photo = null
+                }
                 const updateUserResponse = await updateUserDataAPI(sendingData, profileData.id)
                 setProfileData(updateUserResponse.data.user_data_updated)
                 saveUserDataInLocalStorage(updateUserResponse.data.user_data_updated)

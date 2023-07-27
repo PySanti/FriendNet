@@ -48,7 +48,6 @@ class CreateUsuariosAPI(APIView):
             except:
                 return Response({'error': "cloudinary_error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
-            print(serializer.error_messages)
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status=status.HTTP_400_BAD_REQUEST)
 class UpdateUserDataAPI(APIView):
     serializer_class = UpdateUsuariosSerializer
