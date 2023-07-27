@@ -34,16 +34,19 @@ class CreateUsuariosAPI(APIView):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             serialized_data = serializer.data.copy()
-            serialized_data = set_photo_link(
-                sended_data=serialized_data, 
-                view_type="creating",  
-                photo_file=request.FILES['photo'] if 'photo' in serialized_data else None
-            )
             try:
-                new_user = Usuarios.objects.create_user(**serialized_data)
-                return Response({'new_user_id' : new_user.id}, status=status.HTTP_201_CREATED)
+                serialized_data = set_photo_link(
+                    sended_data=serialized_data, 
+                    view_type="creating",  
+                    photo_file=request.FILES['photo'] if 'photo' in serialized_data else None
+                )
+                try:
+                    new_user = Usuarios.objects.create_user(**serialized_data)
+                    return Response({'new_user_id' : new_user.id}, status=status.HTTP_201_CREATED)
+                except:
+                    return Response({'error': "error_creating"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             except:
-                return Response({'error': "error_creating"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                return Response({'error': "cloudinary_error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
             print(serializer.error_messages)
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status=status.HTTP_400_BAD_REQUEST)
