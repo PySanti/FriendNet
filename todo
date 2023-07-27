@@ -22,23 +22,19 @@
 
 // Logica:
     // facil:
-
         // arreglar error donde, en los formularios, aun cuando las contrasenias ya son iguales, sigue diciendo que no
         // refactorizar la distribucion de los archivos, meter applications en FriendNet
         // hacer que cuando se elimine un usuario de la base de detos, se elimine su imagen de cloudinary
 
 
     //* medio:
-
+        // hacer que., cuando se de click en el user photo, esta se agrande para mejor visualizacion
         // buscar otra forma de enviar correos de activacion
         // agregar permission classes en el backedn y buscar que el usuario siempre se deslogee cuando se salga de la pagina
         // emplear validate para validaciones en el backend
-        // optimizar imagenes de cloudinary, y eliminar las que sean ejemplares 
         //  agregar filtrado de usuarios en home
         // mejorar sistema de envio de mensajes para mayor velocidad (cacheo de mensajes con websockets como con notificaciones)
-        // encriptar datos privados de cloduinary en las peticiones
         // solucionar problema de refresco de tokens (los errrores que salen de vez que cuando del authcontext)
-        // agregar opcion para eliminar imagen de perfil
 
 
     //* dificil
