@@ -5,7 +5,7 @@ import { BASE_EMAIL_CONSTRAINTS, BASE_FIRSTNAMES_MAX_LENGTH, BASE_LASTNAMES_MAX_
 import { Form } from "./Form"
 import "../styles/UserInfoForm.css"
 import { UserPhoto } from "./UserPhoto"
-import {  useState } from "react"
+import {  useEffect, useState } from "react"
 import { UsernameField } from "./UsernameField"
 import { PasswordField } from "./PasswordField"
 import { EmailField } from "./EmailField"
@@ -27,6 +27,9 @@ export function UserInfoForm({userData, updating, userPhotoUrl, onFormSubmit, ex
         data.photo = currentPhotoFile // currentPhotoFile o es null o es una imagen que ya esta validada o es la misma imagen que el usuario ya tenia
         onFormSubmit(data)
     })
+    useEffect(()=>{
+        setCurrentPhotoFile(userPhotoUrl ? userPhotoUrl : null)
+    }, [userPhotoUrl])
     return (
         <div className="user-form-container">
             <Form onSubmitFunction={onSubmit} buttonMsg={updating ? "Actualizar" : "Registrar"} buttonsList={extraButtons}> 
