@@ -31,14 +31,16 @@ class CreateUsuariosAPI(APIView):
     queryset = Usuarios.objects.all()
     serializer_class = CreateUsuariosSerializer
     def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data)
+        # enviamos al serializer los datos para hacer las comprobaciones de la imagen
+        serializer = self.serializer_class(data=request.data, context={'request' : request.data})
         if serializer.is_valid():
             serialized_data = serializer.data.copy()
+            print(serialized_data)
             try:
                 serialized_data = set_photo_link(
                     sended_data=serialized_data, 
                     view_type="creating",  
-                    photo_file=request.FILES['photo'] if 'photo' in serialized_data else None
+                    photo_file=request.FILES['photo'] if ('photo' in request.FILES) else None,
                 )
                 try:
                     new_user = Usuarios.objects.create_user(**serialized_data)

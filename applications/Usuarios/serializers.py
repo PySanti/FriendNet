@@ -4,7 +4,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 
 
 class CreateUsuariosSerializer(serializers.ModelSerializer):
-    photo = serializers.ImageField(max_length=None, use_url=None, required=False)
+    photo = serializers.SerializerMethodField('get_photo')
     class Meta:
         model = Usuarios
         fields = [
@@ -16,6 +16,14 @@ class CreateUsuariosSerializer(serializers.ModelSerializer):
             "password",
             "photo"
         ]
+    def get_photo(self, obj):
+        data = self.context['request']
+        if ('photo' not in data):
+            return None
+        elif isinstance(data['photo'], InMemoryUploadedFile) or (isinstance(data['photo'], str)):
+            return data['photo']
+
+
 
 class UpdateUsuariosSerializer(serializers.Serializer):
     username = serializers.CharField(required=False)

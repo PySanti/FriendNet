@@ -3,6 +3,7 @@
     //~ Centrarnos en detalles finales del estilo y responsive
 
 // Estilos:
+    // mejorar estilos de visualizacion de user-photo big
     // dar estilos a los globes
     // terminar previsualizacion de contrasenia
     // arreglar error de estilo al acceder a chat directamente desde notification
@@ -28,7 +29,6 @@
 
 
     //* medio:
-        // hacer que., cuando se de click en el user photo, esta se agrande para mejor visualizacion
         // buscar otra forma de enviar correos de activacion
         // agregar permission classes en el backedn y buscar que el usuario siempre se deslogee cuando se salga de la pagina
         // emplear validate para validaciones en el backend
