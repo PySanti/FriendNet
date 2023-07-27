@@ -20,7 +20,13 @@ export function UsersList({usersList, onClickEvent, chatGlobeList, usersListSett
         <>
             <div className="users-list-container">
                 <UserFilter usersListSetter={usersListSetter} session_user_id={session_user_id}/>
-                {usersList.map(formatingFunction)}
+                {usersList.length > 0 ? 
+                    usersList.map(formatingFunction)
+                    :
+                    <div className="no-users-msg">
+                        No se han encontrado usuarios
+                    </div>
+                }
             </div>
         </>
     )

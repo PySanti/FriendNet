@@ -1,6 +1,7 @@
 // Pasos generales:
-    //~ Arreglar problemas de logica restantes
-    //~ Centrarnos en detalles finales del estilo y responsive
+    //~ Arreglar problemas de logica restantes (Fase 3)
+    //~ Centrarnos en detalles finales del estilo y responsive (Fase 4)
+    //~ Realizar un periodo de prueba exaustivo y reunir todos los fallos, nuevas features que queramos agregar, etc ... (Fase 5)
 
 // Estilos:
     // asignar loaders en todos los puntos en los que se hagan solicitudes
@@ -25,6 +26,7 @@
     // revisar y mejorar mensajes de buttons
     // tener muy en cuenta la portabilidad de la app con los estilos
     // crear modo obscuro
+    // darle estilos a mensaje de error en el usersList
 
 // Logica:
 
