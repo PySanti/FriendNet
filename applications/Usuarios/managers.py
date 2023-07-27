@@ -67,7 +67,10 @@ class UsuariosManager(BaseUserManager):
         # recordar que hacemos la solicitud de esta manera, para evitar hacer una solicitud por cada iteracion del bucle
         senders_users = {i['id']:i for i in self.filter(id__in=senders_ids).values(*USERS_LIST_ATTRS)}
         for i in notifications_list:
-            i['sender_user']=senders_users[i['sender_user']]
+            if i['sender_user'] in senders_users:
+                i['sender_user']=senders_users[i['sender_user']]
+            else:
+                notifications_list.pop(notifications_list.index(i))
         return notifications_list
     def getFormatedUserData(self, user):
         """
