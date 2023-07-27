@@ -22,8 +22,6 @@
 
 // Logica:
     // facil:
-        // solucionar error de actualizacion de imagen infinita
-        // solucionar problema de actualizacion de datos que no sean imagenes
         // modificar sistema de comprobacion de igualdad en update para mayor escalabilidad
         // refactorizar/repasar/testear codigo relacionado con manejo de imagenes
 
