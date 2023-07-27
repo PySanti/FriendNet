@@ -3,7 +3,6 @@
     //~ Centrarnos en detalles finales del estilo y responsive
 
 // Estilos:
-    // crear modo obscuro
     // arreglar problemas de espacio con mensajes de error en formularios
     // mejorar estilos de visualizacion de user-photo big
     // dar estilos a los globes
@@ -22,6 +21,8 @@
     // agregar mensajes de error mas carismaticos pero a la vez serios
     // buscar logos para la aplicacion
     // revisar y mejorar mensajes de buttons
+    // tener muy en cuenta la portabilidad de la app con los estilos
+    // crear modo obscuro
 
 // Logica:
 
