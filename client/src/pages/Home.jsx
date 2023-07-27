@@ -125,7 +125,9 @@ export function Home() {
                             clickedUser={clickedUser} 
                             messagesHistorial={messagesHistorial} 
                             chatGlobeList={chatGlobeList}
-                            onMsgSending={onMsgSending}/>
+                            onMsgSending={onMsgSending}
+                            usersListSetter={setUserList}
+                            />
                 </div>
             </div>
         )

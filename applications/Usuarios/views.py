@@ -136,8 +136,10 @@ class GetUsersListAPI(APIView):
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
-            users_list = Usuarios.objects.filter(is_active=True).exclude(id=request.data['session_user_id']).values(*USERS_LIST_ATTRS)
-            return JsonResponse({"users_list": list(users_list)})
+            users_list = Usuarios.objects.filter(is_active=True).exclude(id=request.data['session_user_id'])
+            if 'user_keyword' in serialized_data.data:
+                users_list = users_list.filter(username__icontains=serialized_data.data['user_keyword'])
+            return JsonResponse({"users_list": list(users_list.values(*USERS_LIST_ATTRS))})
         else:
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
 class DisconnectUserAPI(APIView):

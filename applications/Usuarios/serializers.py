@@ -51,5 +51,6 @@ class ChangeUserPwdSerializer(serializers.Serializer):
     new_password = serializers.CharField()
 class GetUsersListSerializer(serializers.Serializer):
     session_user_id = serializers.IntegerField()
+    user_keyword = serializers.CharField(required=False)
 class DisconnectUserSerializer(GetUsersListSerializer):
     pass

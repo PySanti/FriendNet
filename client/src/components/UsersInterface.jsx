@@ -11,13 +11,14 @@ import "../styles/UsersInterface.css"
  * @param {Object} clickedUser Objeto con datos del usuario clicado (puede ser null)
  * @param {Function} onMsgSending funcion que se enviara cuando se mande un mensaje al clickedUser
  * @param {Array} chatGlobeList lista de ids de los usuarios con globe en la usersList
+ * @param {Function} usersListSetter setter de lista de usuarios a usar con filtro
  */
-export function UsersInterface({usersList, onUserButtonClick, session_user_id, clickedUser, messagesHistorial, onMsgSending, chatGlobeList}){
+export function UsersInterface({usersList, onUserButtonClick, session_user_id, clickedUser, messagesHistorial, onMsgSending, chatGlobeList, usersListSetter}){
     return (
         <div className="users-interface-container">
             {usersList && 
                 <>
-                    <UsersList usersList={usersList} onClickEvent={onUserButtonClick} chatGlobeList={chatGlobeList}/>
+                    <UsersList usersList={usersList} onClickEvent={onUserButtonClick} chatGlobeList={chatGlobeList} usersListSetter={usersListSetter} session_user_id={session_user_id}/>
                     <Chat chatingUser={clickedUser} messages={messagesHistorial} session_user_id={session_user_id} onMsgSending={onMsgSending}/>
                 </>
             }
@@ -33,7 +34,8 @@ UsersInterface.propTypes = {
     clickedUser : PropTypes.object,
     messagesHistorial : PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
     onMsgSending : PropTypes.func.isRequired,
-    chatGlobeList : PropTypes.array
+    chatGlobeList : PropTypes.array,
+    usersListSetter : PropTypes.func.isRequired,
 }
 
 UsersInterface.defaultProps ={
