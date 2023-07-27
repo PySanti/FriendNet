@@ -3,7 +3,7 @@ from .models import Usuarios
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
 
-class CreateUsuariosSerializer(serializers.ModelSerializer):
+class BaseUsuariosSerializers(serializers.ModelSerializer):
     photo = serializers.SerializerMethodField('get_photo')
     class Meta:
         model = Usuarios
@@ -23,22 +23,16 @@ class CreateUsuariosSerializer(serializers.ModelSerializer):
         elif isinstance(data['photo'], InMemoryUploadedFile) or (isinstance(data['photo'], str)):
             return data['photo']
 
+class CreateUsuariosSerializer(BaseUsuariosSerializers):
+    pass
 
-
-class UpdateUsuariosSerializer(serializers.Serializer):
+class UpdateUsuariosSerializer(BaseUsuariosSerializers):
     username = serializers.CharField(required=False)
     email = serializers.EmailField(required=False)
     first_names = serializers.CharField(required=False)
     last_names = serializers.CharField(required=False)
     age = serializers.IntegerField(required=False)
-    photo = serializers.SerializerMethodField('get_photo')
-
-    def get_photo(self, obj):
-        data = self.context['request']
-        if ('photo' not in data):
-            return None
-        elif isinstance(data['photo'], InMemoryUploadedFile) or (isinstance(data['photo'], str)):
-            return data['photo']
+    password = serializers.CharField(required=False) # este campo nunca se usara
 
 
 

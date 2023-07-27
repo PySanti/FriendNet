@@ -35,7 +35,6 @@ class CreateUsuariosAPI(APIView):
         serializer = self.serializer_class(data=request.data, context={'request' : request.data})
         if serializer.is_valid():
             serialized_data = serializer.data.copy()
-            print(serialized_data)
             try:
                 serialized_data = set_photo_link(
                     sended_data=serialized_data, 

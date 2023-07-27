@@ -24,9 +24,8 @@
 
 // Logica:
     // facil:
-        // arreglar error donde, en los formularios, aun cuando las contrasenias ya son iguales, sigue diciendo que no
+
         // refactorizar la distribucion de los archivos, meter applications en FriendNet
-        // refactorizar coincidencias entre CreateUsuariosAPI y UpdateUsuariosAPI
 
 
     //* medio:
