@@ -10,7 +10,7 @@ def save_image_cloudinary(image, overwriting=False, current_publicid=None ):
     """
     secrets = load_cloudinary_secrets()
     QUALITY_PARAMS = {
-        'quality': 'auto:best',  # Ajusta la calidad de la imagen al nivel óptimo para su tamaño y contenido
+        'quality': 'auto',  # Ajusta la calidad de la imagen al nivel óptimo para su tamaño y contenido
         'crop': 'limit',  # Recorta la imagen para ajustarla a los límites de tamaño especificados
     }
     if not overwriting:

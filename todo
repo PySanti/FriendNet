@@ -32,7 +32,7 @@
 // Logica:
 
     //* medio:
-
+        // poner configuracion en cloudinary para solo admitir uploads seguras
         // buscar otra forma de enviar correos de activacion
         // agregar permission classes en el backedn y buscar que el usuario siempre se deslogee cuando se salga de la pagina
         // emplear validate para validaciones en el backend
