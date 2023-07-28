@@ -30,7 +30,8 @@
     // darle estilos a mensaje de error en el usersList
 
 // Logica:
-
+    // * facil:
+        // para carga de imagenes mas rapida en io's usar formato heic al cargar imagenes
     //* medio:
         // poner configuracion en cloudinary para solo admitir uploads seguras
         // buscar otra forma de enviar correos de activacion

@@ -12,14 +12,14 @@ import { Button } from "./Button"
 import {PropTypes} from "prop-types"
 import { checkImageFormat } from "../utils/checkImageFormat"
 import { isLink } from "../utils/isLink"
-import {AdvancedImage} from '@cloudinary/react';
+import {AdvancedImage,  lazyload, accessibility, responsive, placeholder} from '@cloudinary/react';
 import {Cloudinary} from "@cloudinary/url-gen";
 
 // Import required actions.
-import { scale} from "@cloudinary/url-gen/actions/resize";
 import { getPublicId } from "../utils/getPublicId"
-import { quality } from "@cloudinary/url-gen/actions/delivery"
-import { auto } from "@cloudinary/url-gen/qualifiers/quality"
+import { quality, format } from "@cloudinary/url-gen/actions/delivery"
+import { auto, autoBest } from "@cloudinary/url-gen/qualifiers/quality"
+import { limitFit } from "@cloudinary/url-gen/actions/resize"
 
 
 export function UserPhoto({photoFile, withInput, chatPhoto, photoFileSetter}){
@@ -28,23 +28,17 @@ export function UserPhoto({photoFile, withInput, chatPhoto, photoFileSetter}){
     let [cloud, setCloud]  =    useState(false)
     let [bigPhotoActivated, setBigPhotoActivated] = useState(false)
     const containerClsName = "user-photo-container"
-    const getCloud = ()=>{
-        return new Cloudinary({
-            cloud: {
-                cloudName: 'dwcabo8hs'
-            }
-        })
-    }
     const getFormatedImage = (cloud)=>{
         const myImage = cloud.image(getPublicId(getCurrentPhoto()))
         myImage
-            .resize(scale().width(80))
-            .delivery(quality(auto()))
+            .resize(limitFit().width(400))
+            .delivery(quality(autoBest()))
+            .delivery(format(auto()))
         return myImage
     }
     const getAdvancedImage = ()=>{
         if (!cloud){
-            let cloud = getCloud()
+            let cloud = new Cloudinary({cloud: {cloudName: 'dwcabo8hs'}})
             setCloud(cloud)
             return getFormatedImage(cloud)
         } else {
@@ -80,7 +74,21 @@ export function UserPhoto({photoFile, withInput, chatPhoto, photoFileSetter}){
         <div className={chatPhoto ? `${containerClsName} chat-photo` : containerClsName}>
             {
                 isLink(getCurrentPhoto()) ?
-                    <AdvancedImage className="user-photo" cldImg={getAdvancedImage()}/>
+                <>
+                    <AdvancedImage  
+                        onClick={()=>setBigPhotoActivated(true)} 
+                        className="user-photo" 
+                        cldImg={getAdvancedImage()}
+                        plugins={[lazyload(), placeholder({'mode' : 'blur'})]}
+                    />
+                    <AdvancedImage 
+                        onClick={()=>setBigPhotoActivated(false)} 
+                        className={bigPhotoActivated ? 
+                        `user-photo big-user-photo big-user-photo__activated` : `user-photo big-user-photo`} 
+                        cldImg={getAdvancedImage()}
+                        plugins={[lazyload(),   placeholder({'mode' : 'blur'})]}
+                        />
+                </>
                 :
                 <>
                     <img 
