@@ -12,7 +12,7 @@ import { Button } from "./Button"
 import {PropTypes} from "prop-types"
 import { checkImageFormat } from "../utils/checkImageFormat"
 import { isLink } from "../utils/isLink"
-import {AdvancedImage,  lazyload, accessibility, responsive, placeholder} from '@cloudinary/react';
+import {AdvancedImage,  lazyload, placeholder} from '@cloudinary/react';
 import {Cloudinary} from "@cloudinary/url-gen";
 
 // Import required actions.
@@ -23,27 +23,45 @@ import { limitFit } from "@cloudinary/url-gen/actions/resize"
 
 
 export function UserPhoto({photoFile, withInput, chatPhoto, photoFileSetter}){
-    let [errorMsg, setErrorMsg]         = useState(null)
-    let [currentPhotoName, setCurrentPhotoName] = useState(null)
-    let [cloud, setCloud]  =    useState(false)
-    let [bigPhotoActivated, setBigPhotoActivated] = useState(false)
+    let [errorMsg, setErrorMsg]                     = useState(null)
+    let [currentPhotoName, setCurrentPhotoName]     = useState(null)
+    let [cloud]                                     = useState(new Cloudinary({cloud: {cloudName: 'dwcabo8hs'}}))
+    let [bigPhotoActivated, setBigPhotoActivated]   = useState(false)
     const containerClsName = "user-photo-container"
-    const getFormatedImage = (cloud)=>{
+    const smallImgClsName = "user-photo"
+    const bigImgClsName = ()=>{
+        return bigPhotoActivated ? `${smallImgClsName} big-user-photo big-user-photo__activated` : `${smallImgClsName} big-user-photo`
+    }
+    const imgProps = (format,type)=>{
+        const baseProps = {
+            onClick     : onImgClick(type),
+            className   : type === "small" ? smallImgClsName : bigImgClsName(),
+        }
+        if (format === "advanced"){
+            return {
+                ...baseProps,
+                cldImg      : getFormatedImage(),
+                plugins     : [lazyload({rootMargin: '10px 20px 10px 30px', threshold: 0.25}), placeholder({'mode' : 'blur'})]
+            }
+        } else if (format==="simple"){
+            return {
+                ...baseProps,
+                src         :getCurrentPhoto(),
+                alt         :":(" 
+            }
+        }
+        
+    }
+    const onImgClick = (type)=>{
+        return ()=>setBigPhotoActivated(type === "small" ? true : false)
+    }
+    const getFormatedImage = ()=>{
         const myImage = cloud.image(getPublicId(getCurrentPhoto()))
         myImage
             .resize(limitFit().width(400))
             .delivery(quality(autoBest()))
             .delivery(format(auto()))
         return myImage
-    }
-    const getAdvancedImage = ()=>{
-        if (!cloud){
-            let cloud = new Cloudinary({cloud: {cloudName: 'dwcabo8hs'}})
-            setCloud(cloud)
-            return getFormatedImage(cloud)
-        } else {
-            return getFormatedImage(cloud)
-        } 
     }
     const getCurrentPhoto = ()=>{
         return currentPhotoName ? currentPhotoName : (photoFile ? photoFile :  null)
@@ -74,38 +92,16 @@ export function UserPhoto({photoFile, withInput, chatPhoto, photoFileSetter}){
         <div className={chatPhoto ? `${containerClsName} chat-photo` : containerClsName}>
             {
                 isLink(getCurrentPhoto()) ?
-                <>
-                    <AdvancedImage  
-                        onClick={()=>setBigPhotoActivated(true)} 
-                        className="user-photo" 
-                        cldImg={getAdvancedImage()}
-                        plugins={[lazyload(), placeholder({'mode' : 'blur'})]}
-                    />
-                    <AdvancedImage 
-                        onClick={()=>setBigPhotoActivated(false)} 
-                        className={bigPhotoActivated ? 
-                        `user-photo big-user-photo big-user-photo__activated` : `user-photo big-user-photo`} 
-                        cldImg={getAdvancedImage()}
-                        plugins={[lazyload(),   placeholder({'mode' : 'blur'})]}
-                        />
-                </>
-                :
-                <>
-                    <img 
-                        className="user-photo"
-                        src={getCurrentPhoto()} 
-                        alt=":(" 
-                        onClick={()=>setBigPhotoActivated(true)}
-                    />
-                    <img 
-                        className={bigPhotoActivated ? `user-photo big-user-photo big-user-photo__activated` : `user-photo big-user-photo`}
-                        src={getCurrentPhoto()} 
-                        alt=":(" 
-                        onClick={()=>setBigPhotoActivated(false)}
-                    />
-                </>
+                    <>
+                        <AdvancedImage  {...imgProps("advanced","small")}/>
+                        <AdvancedImage  {...imgProps("advanced","big")}/>
+                    </>
+                    :
+                    <>
+                        <img    {...imgProps("simple","small")} />
+                        <img    {...imgProps("simple","big")} />
+                    </>
             }
-
             {withInput && 
                 <>
                     <div className="img-input-error-msg-container">
