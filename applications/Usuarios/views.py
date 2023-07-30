@@ -8,7 +8,7 @@ from .utils.constants import (
     USERS_LIST_ATTRS,
     USER_SHOWABLE_FIELDS
 )
-
+from django.core.mail import send_mail
 from django.contrib.auth.hashers import (
     check_password
 )
@@ -158,7 +158,12 @@ class SendActivationEmailAPI(APIView):
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if (serialized_data.is_valid()):
-            print(serialized_data.data)
+            send_mail(
+                subject         =   "Activa tu cuenta", 
+                message         =   f"Codigo : {serialized_data.data['activation_code']}", 
+                from_email      =   "friendnetcorp@gmail.com", 
+                recipient_list  =   [serialized_data.data['user_email']])
+
             return Response({"email_sended" : True}, status.HTTP_200_OK)
         else:
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)

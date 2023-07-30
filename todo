@@ -33,6 +33,7 @@
     // tener muy en cuenta la portabilidad de la app con los estilos
     // crear modo obscuro
     // darle estilos a mensaje de error en el usersList
+    // mejorar estilos de correo de activacion
 
 // Logica:
     // * facil:
