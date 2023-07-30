@@ -11,21 +11,14 @@ import "../styles/UserPhoto.css"
 import { Button } from "./Button"
 import {PropTypes} from "prop-types"
 import { checkImageFormat } from "../utils/checkImageFormat"
-import { isLink } from "../utils/isLink"
+import { isFormatedImage } from "../utils/isFormatedImage"
 import {AdvancedImage,  lazyload, placeholder} from '@cloudinary/react';
-import {Cloudinary} from "@cloudinary/url-gen";
 
 // Import required actions.
-import { getPublicId } from "../utils/getPublicId"
-import { quality, format } from "@cloudinary/url-gen/actions/delivery"
-import { auto, autoBest } from "@cloudinary/url-gen/qualifiers/quality"
-import { limitFit } from "@cloudinary/url-gen/actions/resize"
-
 
 export function UserPhoto({photoFile, withInput, chatPhoto, photoFileSetter}){
     let [errorMsg, setErrorMsg]                     = useState(null)
     let [currentPhotoName, setCurrentPhotoName]     = useState(null)
-    let [cloud]                                     = useState(new Cloudinary({cloud: {cloudName: 'dwcabo8hs', url: {cdn_subdomain: false, useRootPath: true, shorten: true, secure: true} }}))
 
     let [bigPhotoActivated, setBigPhotoActivated]   = useState(false)
     const containerClsName = "user-photo-container"
@@ -41,7 +34,7 @@ export function UserPhoto({photoFile, withInput, chatPhoto, photoFileSetter}){
         if (format === "advanced"){
             return {
                 ...baseProps,
-                cldImg      : getFormatedImage(),
+                cldImg      : photoFile,
                 plugins     : [lazyload({rootMargin: '10px 20px 10px 30px', threshold: 0.25}), placeholder({'mode' : 'blur'})]
             }
         } else if (format==="simple"){
@@ -59,17 +52,7 @@ export function UserPhoto({photoFile, withInput, chatPhoto, photoFileSetter}){
     const getCurrentPhoto = ()=>{
         return currentPhotoName ? currentPhotoName : (photoFile ? photoFile :  null)
     }
-    const getFormatedImage = ()=>{
-        console.log('llamadno')
-        const myImage = cloud.image(getPublicId(getCurrentPhoto()))
-        console.log(myImage.toURL())
-        myImage
-            .resize(limitFit().width(400))
-            .delivery(quality(autoBest()))
-            .delivery(format(auto()))
-        console.log(myImage.toURL())
-        return myImage
-    }
+
 
     const deleteCurrentPhoto = ()=>{
         photoFileSetter(null)
@@ -96,7 +79,7 @@ export function UserPhoto({photoFile, withInput, chatPhoto, photoFileSetter}){
     return (
         <div className={chatPhoto ? `${containerClsName} chat-photo` : containerClsName}>
             {
-                isLink(getCurrentPhoto()) ?
+                isFormatedImage(getCurrentPhoto()) ?
                     <>
                         <AdvancedImage  {...imgProps("advanced","small")}/>
                         <AdvancedImage  {...imgProps("advanced","big")}/>
