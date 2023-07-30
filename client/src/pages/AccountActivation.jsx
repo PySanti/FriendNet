@@ -15,6 +15,7 @@ import { Form } from "../components/Form";
 import { LoadingContext } from "../context/LoadingContext";
 import { Button } from "../components/Button";
 import { v4 } from "uuid";
+import {sendActivationEmailAPI} from "../api/sendActivationEmail.api"
 
 /**
  * Pagina creada para llevar activacion de cuenta
@@ -33,9 +34,8 @@ export function AccountActivation() {
         handleSubmit,
         formState: { errors },
     } = useForm();
-
     const sendMail = async (activation_code) => {
-        // const response = await sendActivationEmailAPI(props.userEmail, props.username, activation_code)
+        const response = await sendActivationEmailAPI(props.userEmail, props.username, activation_code)
         console.log(activation_code);
     };
     const onSubmit = handleSubmit(async (data) => {

@@ -39,6 +39,8 @@
         // para carga de imagenes mas rapida en io's usar formato heic al cargar imagenes
         // solucionar problema de llamado masivo de getFormatedImage
         // solucionar problema de no actualizacion de imagenes
+        // solucionar problema de actualizaacion de correo en activacion
+        // solucionar problema de photo_link required en admin
 
     //* medio:
         // buscar otra forma de enviar correos de activacion
@@ -62,6 +64,7 @@
 
 
 //Produccion:
+    // encriptar datos en smtpjs
     // comprobar funcionamiento en todos los navegadores y con todas las resoluciones
     // pruebas unitarias
     // investigar sobre seguridad para proyectos django
