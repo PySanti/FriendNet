@@ -6,7 +6,7 @@
  * @param {Boolean} chatPhoto sera true cuando sea una imagen para renderizar en el chat, de este modo le cambiaremos los estilos
  * Diseniado para trabajar con states dentro de un formulario
  */
-import {useState } from "react"
+import { useState } from "react"
 import "../styles/UserPhoto.css"
 import { Button } from "./Button"
 import {PropTypes} from "prop-types"
@@ -25,7 +25,8 @@ import { limitFit } from "@cloudinary/url-gen/actions/resize"
 export function UserPhoto({photoFile, withInput, chatPhoto, photoFileSetter}){
     let [errorMsg, setErrorMsg]                     = useState(null)
     let [currentPhotoName, setCurrentPhotoName]     = useState(null)
-    let [cloud]                                     = useState(new Cloudinary({cloud: {cloudName: 'dwcabo8hs'}}))
+    let [cloud]                                     = useState(new Cloudinary({cloud: {cloudName: 'dwcabo8hs', url: {cdn_subdomain: false, useRootPath: true, shorten: true, secure: true} }}))
+
     let [bigPhotoActivated, setBigPhotoActivated]   = useState(false)
     const containerClsName = "user-photo-container"
     const smallImgClsName = "user-photo"
@@ -55,17 +56,21 @@ export function UserPhoto({photoFile, withInput, chatPhoto, photoFileSetter}){
     const onImgClick = (type)=>{
         return ()=>setBigPhotoActivated(type === "small" ? true : false)
     }
+    const getCurrentPhoto = ()=>{
+        return currentPhotoName ? currentPhotoName : (photoFile ? photoFile :  null)
+    }
     const getFormatedImage = ()=>{
+        console.log('llamadno')
         const myImage = cloud.image(getPublicId(getCurrentPhoto()))
+        console.log(myImage.toURL())
         myImage
             .resize(limitFit().width(400))
             .delivery(quality(autoBest()))
             .delivery(format(auto()))
+        console.log(myImage.toURL())
         return myImage
     }
-    const getCurrentPhoto = ()=>{
-        return currentPhotoName ? currentPhotoName : (photoFile ? photoFile :  null)
-    }
+
     const deleteCurrentPhoto = ()=>{
         photoFileSetter(null)
         setCurrentPhotoName(null)

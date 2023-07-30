@@ -1,8 +1,13 @@
 // Pasos generales:
     //~ Arreglar problemas de logica restantes (Fase 3)
+
     //~ Centrarnos en detalles finales del estilo y responsive (Fase 4)
-    //~ Realizar un periodo de prueba exaustivo y reunir todos los fallos, nuevas features que queramos agregar, etc ... (Fase 5)
+
+    //~ Realizar un periodo de prueba exaustivo y reunir todos los fallos, nuevas features que queramos agregar, etc ... 
+    Para realizar un buen testing, eliminar toda la cache del navegador(Fase 5)
+
     //~ Realizar otro periodo de prueba pero con la aplicacion montada y revisar todos los detalles posibles (Fase Final)
+    
 
 // Estilos:
     // asignar loaders en todos los puntos en los que se hagan solicitudes
@@ -32,6 +37,9 @@
 // Logica:
     // * facil:
         // para carga de imagenes mas rapida en io's usar formato heic al cargar imagenes
+        // solucionar bug de carga constante de imagenes en getFormatedImaged
+        // solucionar problema de no actualizacion de imagenes
+
     //* medio:
         // poner configuracion en cloudinary para solo admitir uploads seguras
         // buscar otra forma de enviar correos de activacion
