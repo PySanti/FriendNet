@@ -21,7 +21,8 @@ from .serializers import (
     UpdateUsuariosSerializer,
     ChangeUserPwdSerializer,
     GetUsersListSerializer,
-    DisconnectUserSerializer
+    DisconnectUserSerializer,
+    SendActivationEmailSerializer
 )
 from rest_framework.response import Response
 from .models import Usuarios
@@ -150,5 +151,14 @@ class DisconnectUserAPI(APIView):
             user = Usuarios.objects.get(id=request.data['session_user_id'])
             Usuarios.objects.setUserConection(user, False)
             return Response({'success' : 'user_disconected'}, status.HTTP_200_OK)
+        else:
+            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
+class SendActivationEmailAPI(APIView):
+    serializer_class = SendActivationEmailSerializer
+    def post(self, request, *args, **kwargs):
+        serialized_data = self.serializer_class(data=request.data)
+        if (serialized_data.is_valid()):
+            print(serialized_data.data)
+            return Response({"email_sended" : True}, status.HTTP_200_OK)
         else:
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)

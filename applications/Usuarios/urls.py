@@ -9,7 +9,8 @@ from .views import (
     UpdateUserDataAPI,
     ChangeUserPwdAPI,
     GetUsersListAPI,
-    DisconnectUserAPI
+    DisconnectUserAPI,
+    SendActivationEmailAPI
     )
 
 urlpatterns = [
@@ -21,4 +22,5 @@ urlpatterns = [
     path('change_user_pwd/', ChangeUserPwdAPI.as_view()),
     path('get_user_list/', GetUsersListAPI.as_view()),
     path('disconnect_user/', DisconnectUserAPI.as_view()),
+    path('send_activation_email/', SendActivationEmailAPI.as_view()),
 ] 

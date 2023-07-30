@@ -54,3 +54,8 @@ class GetUsersListSerializer(serializers.Serializer):
     user_keyword = serializers.CharField(required=False)
 class DisconnectUserSerializer(GetUsersListSerializer):
     pass
+
+class SendActivationEmailSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    user_email = serializers.EmailField()
+    activation_code = serializers.IntegerField()
