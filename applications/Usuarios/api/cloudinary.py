@@ -13,10 +13,7 @@ signature = cloudinary.utils.api_sign_request(
     {"upload_preset": secrets["CLOUDINARY__UPLOAD_PRESET"]}, 
     secrets["CLOUDINARY__API_SECRET"]
 )
-QUALITY_PARAMS = {
-    'quality': 'auto',  # Ajusta la calidad de la imagen al nivel óptimo para su tamaño y contenido
-    'crop': 'limit',  # Recorta la imagen para ajustarla a los límites de tamaño especificados
-}
+
 
 def save_image_cloudinary(image, overwriting=False, current_publicid=None ):
     """
@@ -26,8 +23,6 @@ def save_image_cloudinary(image, overwriting=False, current_publicid=None ):
     if not overwriting:
         response = cloudinary.uploader.upload(
             image, 
-            quality         =   QUALITY_PARAMS['quality'],
-            crop            =   QUALITY_PARAMS['crop'],
             signature       = signature
         )
     else:
@@ -35,12 +30,14 @@ def save_image_cloudinary(image, overwriting=False, current_publicid=None ):
             image, 
             public_id   =   current_publicid,
             overwrite   =   True,
-            signature = signature,
-            # optimization
-            quality     =   QUALITY_PARAMS['quality'],
-            crop        =   QUALITY_PARAMS['crop'],
+            signature   = signature,
             )
-    return response['url']
+
+    return cloudinary.CloudinaryImage(response['public_id']).build_url(
+        crop = "limit",
+        quality = "auto:best",
+        width = 400
+    )
 
 
 def delete_image_cloudinary(publicid):
