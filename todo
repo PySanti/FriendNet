@@ -37,7 +37,7 @@
 // Logica:
     // * facil:
         // para carga de imagenes mas rapida en io's usar formato heic al cargar imagenes
-        // solucionar bug de carga masiva de imagenes para los chating user
+        // solucionar problema de llamado masivo de getFormatedImage
         // solucionar problema de no actualizacion de imagenes
 
     //* medio:

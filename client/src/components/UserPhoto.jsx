@@ -23,6 +23,7 @@ export function UserPhoto({
     photoFileSetter,
 }) {
     let [errorMsg, setErrorMsg] = useState(null);
+    let [formatedImage] = useState(isLink(photoFile) ? getFormatedImage(photoFile) : null)
     let [currentPhotoName, setCurrentPhotoName] = useState(null);
     let [bigPhotoActivated, setBigPhotoActivated] = useState(false);
     const containerClsName = "user-photo-container";
@@ -40,7 +41,7 @@ export function UserPhoto({
         if (format === "advanced") {
             return {
                 ...baseProps,
-                cldImg: getFormatedImage(photoFile),
+                cldImg: formatedImage,
                 plugins: [
                     lazyload({
                         rootMargin: "10px 20px 10px 30px",
