@@ -6,6 +6,10 @@ import { limitFit } from "@cloudinary/url-gen/actions/resize"
 
 
 
+/**
+ * Recibe la url de una imagen de cloudinary y la retorna formateada para su renderizado
+ * @param {String} photo_url 
+ */
 export function getFormatedImage(photo_url){
     const cloud = new Cloudinary({cloud: {cloudName: 'dwcabo8hs', url: {cdn_subdomain: false, useRootPath: true, shorten: true, secure: true} }})
     console.log('llamadno')

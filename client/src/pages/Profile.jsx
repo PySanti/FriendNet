@@ -17,6 +17,7 @@ import { v4 } from "uuid";
 import { saveUserDataInLocalStorage } from "../utils/saveUserDataInLocalStorage";
 import { getUserDataFromLocalStorage } from "../utils/getUserDataFromLocalStorage";
 import { dataIsDiferent } from "../utils/dataIsDiferent";
+import { getFormatedImage } from "../utils/getFormatedImage";
 
 
 /**
@@ -108,13 +109,15 @@ export function Profile({updating}){
                     {profileData            && 
                         <div className="editing-container">
                             {updating ? 
-                                <UserInfoForm updating  onFormSubmit={onUpdate} userData={profileData}  userPhotoUrl={profileData.photo_link} extraButtons={[
-                                    <Button key={v4()} buttonText="Volver" onClickFunction={()=>setBackToProfile(true)}/>
-                                ]}/> 
+                                <>
+                                    <UserInfoForm updating  onFormSubmit={onUpdate} userData={profileData}  userPhotoUrl={profileData.photo_link} extraButtons={[
+                                        <Button key={v4()} buttonText="Volver" onClickFunction={()=>setBackToProfile(true)}/>
+                                    ]}/> 
+                                </>
                                 :
                                 <>
                                     <UserData userData={profileData} nonShowableAttrs={["is_active", "id", "photo_link"]} attrsTraductions={    {        "username" : "Nombre de usuario",         "email" : "Correo electrónico",         "first_names" : "Nombres",        "last_names" : "Apellidos",        "age" : "Edad",    }    }/>
-                                    <UserPhoto photoFile={profileData.photo_link} withInput={false}/>
+                                    <UserPhoto photoFile={profileData.photo_link } withInput={false}/>
                                 </>
                             }
                         </div>
