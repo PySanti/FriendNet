@@ -11,9 +11,6 @@ import "../styles/UserPhoto.css";
 import { Button } from "./Button";
 import { PropTypes } from "prop-types";
 import { checkImageFormat } from "../utils/checkImageFormat";
-import { isLink } from "../utils/isLink";
-import { AdvancedImage, lazyload, placeholder } from "@cloudinary/react";
-import {getFormatedImage} from "../utils/getFormatedImage.js"
 // Import required actions.
 
 export function UserPhoto({
@@ -23,7 +20,6 @@ export function UserPhoto({
     photoFileSetter,
 }) {
     let [errorMsg, setErrorMsg] = useState(null);
-    let [formatedImage] = useState(isLink(photoFile) ? getFormatedImage(photoFile) : null)
     let [currentPhotoName, setCurrentPhotoName] = useState(null);
     let [bigPhotoActivated, setBigPhotoActivated] = useState(false);
     const containerClsName = "user-photo-container";
@@ -33,30 +29,16 @@ export function UserPhoto({
             ? `${smallImgClsName} big-user-photo big-user-photo__activated`
             : `${smallImgClsName} big-user-photo`;
     };
-    const imgProps = (format, type) => {
+    const imgProps = (type) => {
         const baseProps = {
             onClick: onImgClick(type),
             className: type === "small" ? smallImgClsName : bigImgClsName(),
         };
-        if (format === "advanced") {
-            return {
-                ...baseProps,
-                cldImg: formatedImage,
-                plugins: [
-                    lazyload({
-                        rootMargin: "10px 20px 10px 30px",
-                        threshold: 0.25,
-                    }),
-                    placeholder({ mode: "blur" }),
-                ],
-            };
-        } else if (format === "simple") {
-            return {
-                ...baseProps,
-                src: getCurrentPhoto(),
-                alt: ":(",
-            };
-        }
+        return {
+            ...baseProps,
+            src: getCurrentPhoto(),
+            alt: ":(",
+        };
     };
     const onImgClick = (type) => {
         return () => setBigPhotoActivated(type === "small" ? true : false);
@@ -89,17 +71,8 @@ export function UserPhoto({
 
     return (
         <div className={    chatPhoto ? `${containerClsName} chat-photo` : containerClsName}>
-            {isLink(getCurrentPhoto()) ? (
-                <>
-                    <AdvancedImage {...imgProps("advanced", "small")} />
-                    <AdvancedImage {...imgProps("advanced", "big")} />
-                </>
-            ) : (
-                <>
-                    <img {...imgProps("simple", "small")} />
-                    <img {...imgProps("simple", "big")} />
-                </>
-            )}
+                <img {...imgProps("small")} />
+                <img {...imgProps("big")} />
             {withInput && (
                 <>
                     <div className="img-input-error-msg-container">
