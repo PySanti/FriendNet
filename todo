@@ -36,6 +36,7 @@
 
 // Logica:
     // * facil:
+        // refactor para repasar ultimos cambios y eliminar codigo inutil
         // implementar envio de correos desde el backend
         // bajar las imagenes de cloudinary desde backend y pasar al front?
         // para carga de imagenes mas rapida en io's usar formato heic al cargar imagenes
