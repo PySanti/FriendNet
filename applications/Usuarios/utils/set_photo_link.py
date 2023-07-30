@@ -1,5 +1,7 @@
-from ..api.save_image_cloudinary import save_image_cloudinary
-from ..api.delete_image_cloudinary import delete_image_cloudinary
+from ..api.cloudinary import (
+    save_image_cloudinary,
+    delete_image_cloudinary
+)
 from ..utils.get_publicid import get_publicid 
 
 def set_photo_link(sended_data, view_type, photo_file=None, current_photo_link=None):

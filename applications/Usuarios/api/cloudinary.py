@@ -6,18 +6,18 @@ secrets = load_cloudinary_secrets()
 cloudinary.config(
     cloud_name  =   secrets["CLOUDINARY__CLOUD_NAME"],
     api_key     =   secrets["CLOUDINARY__API_KEY"],
-    api_secret  =   secrets["CLOUDINARY__API_SECRET"]
+    api_secret  =   secrets["CLOUDINARY__API_SECRET"],
+    secure      = True
 )
-
 signature = cloudinary.utils.api_sign_request(
     {"upload_preset": secrets["CLOUDINARY__UPLOAD_PRESET"]}, 
     secrets["CLOUDINARY__API_SECRET"]
 )
-
 QUALITY_PARAMS = {
     'quality': 'auto',  # Ajusta la calidad de la imagen al nivel óptimo para su tamaño y contenido
     'crop': 'limit',  # Recorta la imagen para ajustarla a los límites de tamaño especificados
 }
+
 def save_image_cloudinary(image, overwriting=False, current_publicid=None ):
     """
         Almacena la imagen en cloudinary o la sobreescribe y retorna la url de la misma
@@ -28,7 +28,7 @@ def save_image_cloudinary(image, overwriting=False, current_publicid=None ):
             image, 
             quality         =   QUALITY_PARAMS['quality'],
             crop            =   QUALITY_PARAMS['crop'],
-            signature = signature
+            signature       = signature
         )
     else:
         response = cloudinary.uploader.upload(
@@ -42,3 +42,13 @@ def save_image_cloudinary(image, overwriting=False, current_publicid=None ):
             )
     return response['url']
 
+
+def delete_image_cloudinary(publicid):
+    """
+        Elimina la imagen con publicid de cloudinary 
+    """
+    response = cloudinary.uploader.destroy(
+        public_id   =   publicid, 
+        signature   = signature
+    )
+    return response

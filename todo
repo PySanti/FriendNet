@@ -37,6 +37,7 @@
 
 // Logica:
     // * facil:
+        // implementar mensajes de error para servidor caido en todas las llamadas a apis
         // refactor para repasar ultimos cambios y eliminar codigo inutil
         // implementar envio de correos desde el backend
         // bajar las imagenes de cloudinary desde backend y pasar al front?
