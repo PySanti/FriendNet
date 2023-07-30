@@ -36,6 +36,8 @@
 
 // Logica:
     // * facil:
+        // implementar envio de correos desde el backend
+        // bajar las imagenes de cloudinary desde backend y pasar al front?
         // para carga de imagenes mas rapida en io's usar formato heic al cargar imagenes
         // solucionar problema de llamado masivo de getFormatedImage
         // solucionar problema de no actualizacion de imagenes
@@ -43,7 +45,6 @@
         // solucionar problema de photo_link required en admin
 
     //* medio:
-        // buscar otra forma de enviar correos de activacion
         // agregar permission classes en el backedn y buscar que el usuario siempre se deslogee cuando se salga de la pagina
         // emplear validate para validaciones en el backend
         // mejorar sistema de envio de mensajes para mayor velocidad (cacheo de mensajes con websockets como con notificaciones)

@@ -1,6 +1,4 @@
 {
-    "USERNAME" : "friendnetcorp@gmail.com",
-    "PASSWORD" : "7EC43EA62161C1DF090299B318F2555FA867",
-    "SERVER" : "smtp.elasticemail.com",
-    "PORT" : "2525"
+    "SECURE_TOKEN":"40a2189e-c033-47e3-a56f-e55b399ed462",
+    "SENDER_EMAIL" : "friendnetcorp@gmail.com"
 }
