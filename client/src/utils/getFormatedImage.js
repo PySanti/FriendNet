@@ -13,7 +13,9 @@ import { limitFit } from "@cloudinary/url-gen/actions/resize"
 export function getFormatedImage(photo_url){
     const cloud = new Cloudinary({cloud: {cloudName: 'dwcabo8hs', url: {cdn_subdomain: false, useRootPath: true, shorten: true, secure: true} }})
     console.log('llamadno')
-    const myImage = cloud.image(getPublicId(photo_url))
+    const p1 = getPublicId(photo_url)
+    console.log(p1)
+    const myImage = cloud.image(p1)
     myImage
         .resize(limitFit().width(400))
         .delivery(quality(autoBest()))

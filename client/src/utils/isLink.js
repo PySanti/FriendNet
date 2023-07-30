@@ -3,5 +3,7 @@
  * @param {String} str 
  */
 export function isLink(str){
-    return (str) && (typeof str === "string") && (str.split('/')[0].includes('http'))
+    const f = (str) && (typeof str === "string") && (str.split('/')[0].includes('http'))
+    console.log(f ? 'Es un link' : 'No es un link')
+    return f
 }

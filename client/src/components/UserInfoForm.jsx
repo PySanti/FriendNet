@@ -15,7 +15,6 @@ import { useEffect, useState } from "react";
 import { UsernameField } from "./UsernameField";
 import { PasswordField } from "./PasswordField";
 import { EmailField } from "./EmailField";
-import { getFormatedImage } from "../utils/getFormatedImage";
 
 /**
  * Componente creado para los formularios de SignUp y Update,
@@ -211,9 +210,7 @@ export function UserInfoForm({
             </Form>
             <UserPhoto
                 withInput
-                photoFile={
-                    currentPhotoFile ? getFormatedImage(currentPhotoFile) : null
-                }
+                photoFile={currentPhotoFile}
                 photoFileSetter={setCurrentPhotoFile}
             />
         </div>

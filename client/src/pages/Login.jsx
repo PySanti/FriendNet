@@ -13,7 +13,6 @@ import { Button } from "../components/Button"
 import { v4 } from "uuid"
 import { saveUserDataInLocalStorage } from "../utils/saveUserDataInLocalStorage"
 import { saveNotificationsInLocalStorage } from "../utils/saveNotificationsInLocalStorage"
-import { getFormatedImage } from "../utils/getFormatedImage"
 /**
  * Pagina creada para llevar logeo de usuarios
  */

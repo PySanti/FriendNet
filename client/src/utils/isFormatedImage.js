@@ -4,7 +4,6 @@
  */
 export function isFormatedImage(image){
     const f = (image) && (typeof image === "object") && (image.cloudName)
-    console.log(image)
-    console.log(f ? "es una imagen formatedad" : "es una imagen normal")
+    console.log(f ? 'Es una imagen formateada' : "Es una imagen normal")
     return f
 }

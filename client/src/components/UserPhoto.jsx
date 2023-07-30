@@ -11,9 +11,9 @@ import "../styles/UserPhoto.css";
 import { Button } from "./Button";
 import { PropTypes } from "prop-types";
 import { checkImageFormat } from "../utils/checkImageFormat";
-import { isFormatedImage } from "../utils/isFormatedImage";
+import { isLink } from "../utils/isLink";
 import { AdvancedImage, lazyload, placeholder } from "@cloudinary/react";
-
+import {getFormatedImage} from "../utils/getFormatedImage.js"
 // Import required actions.
 
 export function UserPhoto({
@@ -24,7 +24,6 @@ export function UserPhoto({
 }) {
     let [errorMsg, setErrorMsg] = useState(null);
     let [currentPhotoName, setCurrentPhotoName] = useState(null);
-
     let [bigPhotoActivated, setBigPhotoActivated] = useState(false);
     const containerClsName = "user-photo-container";
     const smallImgClsName = "user-photo";
@@ -41,7 +40,7 @@ export function UserPhoto({
         if (format === "advanced") {
             return {
                 ...baseProps,
-                cldImg: photoFile,
+                cldImg: getFormatedImage(photoFile),
                 plugins: [
                     lazyload({
                         rootMargin: "10px 20px 10px 30px",
@@ -62,11 +61,7 @@ export function UserPhoto({
         return () => setBigPhotoActivated(type === "small" ? true : false);
     };
     const getCurrentPhoto = () => {
-        return currentPhotoName
-            ? currentPhotoName
-            : photoFile
-            ? photoFile
-            : null;
+        return currentPhotoName? currentPhotoName: photoFile? photoFile: null;
     };
 
     const deleteCurrentPhoto = () => {
@@ -92,12 +87,8 @@ export function UserPhoto({
     };
 
     return (
-        <div
-            className={
-                chatPhoto ? `${containerClsName} chat-photo` : containerClsName
-            }
-        >
-            {isFormatedImage(getCurrentPhoto()) ? (
+        <div className={    chatPhoto ? `${containerClsName} chat-photo` : containerClsName}>
+            {isLink(getCurrentPhoto()) ? (
                 <>
                     <AdvancedImage {...imgProps("advanced", "small")} />
                     <AdvancedImage {...imgProps("advanced", "big")} />
