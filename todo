@@ -37,6 +37,8 @@
 
 // Logica:
     // * facil:
+        // mejorar definitivamente urls para carga de imagenes instantanea
+
         // meter todas las constantes almacenadas en el main en un archivos separado en el utils
 
         // implementar mensajes de error para servidor caido en todas las llamadas a apis

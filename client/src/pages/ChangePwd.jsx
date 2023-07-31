@@ -3,9 +3,8 @@ import { Header } from "../components/Header";
 import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { UserNotLogged } from "./UserNotLogged";
 import { AuthContext } from "../context/AuthContext";
-import { FormField } from "../components/FormField";
 import { useForm } from "react-hook-form";
-import {BASE_PASSWORD_CONSTRAINTS} from "../main"
+import {BASE_PASSWORD_CONSTRAINTS} from "../utils/constants"
 import { changeUserPwdAPI } from "../api/changePwd.api";
 import { LoadingContext } from "../context/LoadingContext";
 import { Loader } from "../components/Loader";
