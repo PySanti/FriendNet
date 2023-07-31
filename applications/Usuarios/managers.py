@@ -89,7 +89,7 @@ class UsuariosManager(BaseUserManager):
         """
             Retorna true en caso de que exista algun usuario con username o email
         """
-        return (username and self.filter(username=username)) or (email and self.filter(email=email))
+        return True if ((username and self.filter(username=username)) or (email and self.filter(email=email))) else False
     def updateUser(self, user, new_data):
         """
             Recibe el id de un usuario y sus nuevos datos y lo actualiza

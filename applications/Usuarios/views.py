@@ -97,7 +97,7 @@ class CheckExistingUserAPI(APIView):
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
-            if Usuarios.objects.userExists(request.data['username'], request.data['email']):
+            if Usuarios.objects.userExists(username=request.data['username'], email=request.data['email']):
                 return Response({'existing' : 'true'}, status.HTTP_200_OK)
             else:
                 return Response({'existing' : 'false'}, status.HTTP_200_OK)
@@ -108,14 +108,14 @@ class GetUserDetailAPI(APIView):
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
-            if Usuarios.objects.userExists(request.data['username']) and (check_password(request.data['password'], user.password)):
-                # Se enviaran las notificaciones al frontend al principio de la sesion
-                # para cachearlos en el Local Storage. De Este modo evitaremos
-                # llamadas al backend cada vez que queramos revisarlas
+            if Usuarios.objects.userExists(request.data['username']):
                 user = Usuarios.objects.get(username=request.data['username'])
-                formated_user_data = Usuarios.objects.getFormatedUserData(user)
-                Usuarios.objects.deleteAllNotifications(user)
-                return JsonResponse({'user' : formated_user_data})
+                if (check_password(request.data['password'], user.password)):
+                    formated_user_data = Usuarios.objects.getFormatedUserData(user)
+                    Usuarios.objects.deleteAllNotifications(user)
+                    return JsonResponse({'user' : formated_user_data})
+                else:
+                    return Response({'error' : 'user_not_exists'}, status.HTTP_400_BAD_REQUEST)
             else:
                 return Response({'error' : 'user_not_exists'}, status.HTTP_400_BAD_REQUEST)
         else:
