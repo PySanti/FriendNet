@@ -13,40 +13,23 @@ import { PropTypes } from "prop-types";
 import { checkImageFormat } from "../utils/checkImageFormat";
 // Import required actions.
 
-export function UserPhoto({
-    photoFile,
-    withInput,
-    chatPhoto,
-    photoFileSetter,
-}) {
+export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
     let [errorMsg, setErrorMsg] = useState(null);
     let [currentPhotoName, setCurrentPhotoName] = useState(null);
     let [bigPhotoActivated, setBigPhotoActivated] = useState(false);
     const containerClsName = "user-photo-container";
     const smallImgClsName = "user-photo";
     const bigImgClsName = () => {
-        return bigPhotoActivated
-            ? `${smallImgClsName} big-user-photo big-user-photo__activated`
-            : `${smallImgClsName} big-user-photo`;
+        return bigPhotoActivated? `${smallImgClsName} big-user-photo big-user-photo__activated`: `${smallImgClsName} big-user-photo`;
     };
     const imgProps = (type) => {
-        const baseProps = {
-            onClick: onImgClick(type),
-            className: type === "small" ? smallImgClsName : bigImgClsName(),
-        };
         return {
-            ...baseProps,
-            src: getCurrentPhoto(),
+            onClick: ()=>setBigPhotoActivated(type === "small" ? true : false),
+            className: type === "small" ? smallImgClsName : bigImgClsName(),
+            src: currentPhotoName? currentPhotoName: photoFile? photoFile: null,
             alt: ":(",
         };
     };
-    const onImgClick = (type) => {
-        return () => setBigPhotoActivated(type === "small" ? true : false);
-    };
-    const getCurrentPhoto = () => {
-        return currentPhotoName? currentPhotoName: photoFile? photoFile: null;
-    };
-
     const deleteCurrentPhoto = () => {
         photoFileSetter(null);
         setCurrentPhotoName(null);
@@ -71,8 +54,10 @@ export function UserPhoto({
 
     return (
         <div className={    chatPhoto ? `${containerClsName} chat-photo` : containerClsName}>
+            <div className="user-photo-smaller-container">
                 <img {...imgProps("small")} />
                 <img {...imgProps("big")} />
+            </div>
             {withInput && (
                 <>
                     <div className="img-input-error-msg-container">

@@ -37,14 +37,8 @@
 
 // Logica:
     // * facil:
-        // refactorizar implementacion de cloudinary en backend
         // implementar mensajes de error para servidor caido en todas las llamadas a apis
-        // refactor para repasar ultimos cambios y eliminar codigo inutil
-        // implementar envio de correos desde el backend
-        // bajar las imagenes de cloudinary desde backend y pasar al front?
         // para carga de imagenes mas rapida en io's usar formato heic al cargar imagenes
-        // solucionar problema de llamado masivo de getFormatedImage
-        // solucionar problema de no actualizacion de imagenes
         // solucionar problema de actualizaacion de correo en activacion
         // solucionar problema de photo_link required en admin
 

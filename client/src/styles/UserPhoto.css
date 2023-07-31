@@ -9,7 +9,9 @@
     height: 40vh;
 
 }
-
+.user-photo-smaller-container{
+    height: 100%;
+}
 .user-photo{
     border-radius: 50px;
     width: 100%;
