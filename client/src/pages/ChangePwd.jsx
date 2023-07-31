@@ -13,6 +13,7 @@ import { Button } from "../components/Button";
 import { Form } from "../components/Form";
 import { PasswordField } from "../components/PasswordField";
 import { v4 } from "uuid";
+import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
 
 /**
  * Pagina creado para cambio de contraseña
@@ -30,7 +31,9 @@ export function ChangePwd(){
                 await changeUserPwdAPI(user.user_id, data.old_password, data.new_password)
                 successfullyLoaded()
             } catch(error){
-                if (error.response.data.error === 'invalid_pwd'){
+                if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
+                    setLoadingState(BASE_FALLEN_SERVER_LOG)
+                } else if (error.response.data.error === 'invalid_pwd'){
                     setLoadingState('Error, la contraseña actual es invalida!')
                 } else {
                     setLoadingState('Error inesperado en respuesta de servidor')

@@ -16,6 +16,7 @@ import { LoadingContext } from "../context/LoadingContext";
 import { Button } from "../components/Button";
 import { v4 } from "uuid";
 import {sendActivationEmailAPI} from "../api/sendActivationEmail.api"
+import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
 
 /**
  * Pagina creada para llevar activacion de cuenta
@@ -46,9 +47,11 @@ export function AccountActivation() {
                 setUserActivated(true);
                 successfullyLoaded();
             } catch (error) {
-                setLoadingState(
-                    "Error inesperado en el servidor al activar usuario!"
-                );
+                if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
+                    setLoadingState(BASE_FALLEN_SERVER_LOG);
+                } else {
+                    setLoadingState("Error inesperado en el servidor al activar usuario!");
+                }
             }
         } else {
             setLoadingState("Codigo invalido!");

@@ -17,6 +17,7 @@ import { v4 } from "uuid";
 import { saveUserDataInLocalStorage } from "../utils/saveUserDataInLocalStorage";
 import { getUserDataFromLocalStorage } from "../utils/getUserDataFromLocalStorage";
 import { dataIsDiferent } from "../utils/dataIsDiferent";
+import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
 
 /**
  * Pagina creada para llevar perfil de usuario, tanto para
@@ -66,7 +67,9 @@ export function Profile({ updating }) {
                 setLoadingState("Sin cambios");
             }
         } catch (error) {
-            if (error.response.data.error === "cloudinary_error") {
+            if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
+                setLoadingState(BASE_FALLEN_SERVER_LOG)
+            } else if (error.response.data.error === "cloudinary_error") {
                 setLoadingState("Error con la nube!");
             } else {
                 setLoadingState(

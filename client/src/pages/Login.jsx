@@ -13,7 +13,7 @@ import { Button } from "../components/Button"
 import { v4 } from "uuid"
 import { saveUserDataInLocalStorage } from "../utils/saveUserDataInLocalStorage"
 import { saveNotificationsInLocalStorage } from "../utils/saveNotificationsInLocalStorage"
-import {BASE_FALLEN_SERVER_ERROR_MSG} from "../utils/constants"
+import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
 /**
  * Pagina creada para llevar logeo de usuarios
  */
@@ -51,7 +51,7 @@ export function Login() {
             }
         } catch(error){
             if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
-                setLoadingState("Red caida !")
+                setLoadingState(BASE_FALLEN_SERVER_LOG)
             }
             if (error.response.data.error===  "user_not_exists"){
                 // por seguridad, la api retornara el mismo codigo de error para cuando el usuario o la contrasenia esten mal

@@ -18,6 +18,7 @@ import { removeNotificationFromLocalStorage } from "../utils/removeNotificationF
 import { getChatGlobesList } from "../utils/getChatGlobesList"
 import { removeRelatedNotifications } from "../utils/removeRelatedNotifications"
 import { saveNotificationsInLocalStorage } from "../utils/saveNotificationsInLocalStorage"
+import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
 /**
  * Pagina principal del sitio
  */
@@ -38,7 +39,11 @@ export function Home() {
             setUserList(response.data.users_list)
             successfullyLoaded()
         } catch(error){
-            setLoadingState('Error inesperado cargando datos de usuarios!')
+            if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
+                setLoadingState(BASE_FALLEN_SERVER_LOG)
+            } else {
+                setLoadingState('Error inesperado cargando datos de usuarios!')
+            }
         }
     }
     const onMsgSending = async (data)=>{
@@ -48,7 +53,11 @@ export function Home() {
             successfullyLoaded()
             await loadMessages()
         } catch(error){
-            setLoadingState('Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
+            if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
+                setLoadingState(BASE_FALLEN_SERVER_LOG)
+            } else {
+                setLoadingState('Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
+            }
         }
     }
     const loadMessages = async ()=>{
@@ -62,7 +71,7 @@ export function Home() {
             }
             successfullyLoaded()
         } catch(error){
-            setLoadingState('Error inesperado buscando chat!')
+            setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado buscando chat!')
         }
     }
     const onNotificationDelete = (notification)=>{

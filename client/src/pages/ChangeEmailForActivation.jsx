@@ -15,6 +15,8 @@ import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { UserLogged } from "./UserLogged";
 import { updateUserDataAPI } from "../api/updateUserData.api";
 
+import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
+
 export function ChangeEmailForActivation(){
     let {loadingState, setLoadingState, successfullyLoaded, startLoading} = useContext(LoadingContext)
     let [goBack, setGoBack]                             = useState(false )
@@ -31,7 +33,11 @@ export function ChangeEmailForActivation(){
                 successfullyLoaded()
                 setEmailChanged(true)
             } catch(error){
-                setLoadingState('Error inesperado al actualizar el correo electrónico !')
+                if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
+                    setLoadingState(BASE_FALLEN_SERVER_LOG)
+                } else {
+                    setLoadingState('Error inesperado al actualizar el correo electrónico !')
+                }
             }
         } else {
             setLoadingState('No hay cambios !')
