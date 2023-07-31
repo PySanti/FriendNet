@@ -14,6 +14,12 @@ signature = cloudinary.utils.api_sign_request(
     secrets["CLOUDINARY__API_SECRET"]
 )
 
+QUALITY = {
+    'width' : 250,
+    'height' : 500,
+    'quality' : 'auto:best',
+    'format' : 'jpg'
+}
 
 def save_image_cloudinary(image, overwriting=False, current_publicid=None ):
     """
@@ -23,7 +29,11 @@ def save_image_cloudinary(image, overwriting=False, current_publicid=None ):
     if not overwriting:
         response = cloudinary.uploader.upload(
             image, 
-            signature       = signature
+            signature       = signature,
+            #optimization
+            quality = QUALITY['quality'],
+            width   = QUALITY['width'],
+            height  = QUALITY['height'],
         )
     else:
         response = cloudinary.uploader.upload(
@@ -31,12 +41,17 @@ def save_image_cloudinary(image, overwriting=False, current_publicid=None ):
             public_id   =   current_publicid,
             overwrite   =   True,
             signature   = signature,
+            #optimization
+            quality = QUALITY['quality'],
+            width   = QUALITY['width'],
+            height  = QUALITY['height'],
             )
 
     return cloudinary.CloudinaryImage(response['public_id']).build_url(
-        crop = "limit",
-        quality = "auto:best",
-        width = 400
+        quality = QUALITY['quality'],
+        width   = QUALITY['width'],
+        height  = QUALITY['height'],
+        format  = QUALITY['format']
     )
 
 

@@ -37,8 +37,9 @@
 
 // Logica:
     // * facil:
-        // mejorar definitivamente urls para carga de imagenes instantanea
+        // mejorar definitivamente urls para carga de imagenes instantanea (hacer optimizacion de subida y bajada)
         // soluciona error de no cambio de imagenes por actualizacion
+        // solucionar error de actualizacion infinita
 
     //* medio:
         // agregar permission classes en el backedn y buscar que el usuario siempre se deslogee cuando se salga de la pagina

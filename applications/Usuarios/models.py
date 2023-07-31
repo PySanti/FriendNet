@@ -19,7 +19,7 @@ class Usuarios(AbstractBaseUser, PermissionsMixin):
     first_names     = models.CharField(max_length=30)
     last_names      = models.CharField(max_length=30)
     age             = models.PositiveSmallIntegerField()
-    photo_link      = models.CharField(max_length=99, null=True)
+    photo_link      = models.CharField(max_length=120, null=True)
     is_online       = models.BooleanField(default=False)
     is_active       = models.BooleanField(default=False)
     notifications   = models.ManyToManyField(Notifications, blank=True)
