@@ -2,6 +2,9 @@ from rest_framework import serializers
 from .models import Usuarios
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
+class ChangeEmailForActivationSerializer(serializers.Serializer):
+    user_id = serializers.IntegerField()
+    new_email = serializers.EmailField()
 
 class BaseUsuariosSerializers(serializers.ModelSerializer):
     photo = serializers.SerializerMethodField('get_photo')

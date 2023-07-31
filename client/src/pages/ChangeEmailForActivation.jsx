@@ -13,7 +13,7 @@ import { Loader } from "../components/Loader";
 import { UserNotLogged } from "./UserNotLogged";
 import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { UserLogged } from "./UserLogged";
-import { updateUserDataAPI } from "../api/updateUserData.api";
+import { changeEmailForActivationAPI } from "../api/changeEmailForActivation.api";
 
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
 
@@ -29,7 +29,7 @@ export function ChangeEmailForActivation(){
         if (data.email !== props.userEmail){
             props.userEmail = data.email
             try{
-                await updateUserDataAPI(data, props.userId)
+                await changeEmailForActivationAPI(props.userId, data.email)
                 successfullyLoaded()
                 setEmailChanged(true)
             } catch(error){

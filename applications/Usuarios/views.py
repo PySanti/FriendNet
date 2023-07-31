@@ -22,7 +22,8 @@ from .serializers import (
     ChangeUserPwdSerializer,
     GetUsersListSerializer,
     DisconnectUserSerializer,
-    SendActivationEmailSerializer
+    SendActivationEmailSerializer,
+    ChangeEmailForActivationSerializer
 )
 from rest_framework.response import Response
 from .models import Usuarios
@@ -51,6 +52,17 @@ class CreateUsuariosAPI(APIView):
                 return Response({'error': "cloudinary_error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status=status.HTTP_400_BAD_REQUEST)
+
+class ChangeEmailForActivationAPI(APIView):
+    serializer_class = ChangeEmailForActivationSerializer
+    def post(self, request, *args, **kwargs):
+        serialized_data = self.serializer_class(data=request.data)
+        if serialized_data.is_valid():
+            print(serialized_data.data)
+            return Response({'recived' : 'yes'}, status.HTTP_200_OK)
+        else:
+            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
+
 class UpdateUserDataAPI(APIView):
     serializer_class = UpdateUsuariosSerializer
     queryset = Usuarios.objects.all()
