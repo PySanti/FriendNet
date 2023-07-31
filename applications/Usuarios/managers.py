@@ -85,11 +85,11 @@ class UsuariosManager(BaseUserManager):
         """
         user.set_password(new_password)
         user.save()
-    def userExists(self, username, email=None):
+    def userExists(self, username=None, email=None):
         """
             Retorna true en caso de que exista algun usuario con username o email
         """
-        return (self.filter(username=username)) or (self.filter(email=email))
+        return (username and self.filter(username=username)) or (email and self.filter(email=email))
     def updateUser(self, user, new_data):
         """
             Recibe el id de un usuario y sus nuevos datos y lo actualiza

@@ -36,7 +36,7 @@ export function AccountActivation() {
         formState: { errors },
     } = useForm();
     const sendMail = async (activation_code) => {
-        // await sendActivationEmailAPI(props.userEmail, props.username, activation_code)
+        await sendActivationEmailAPI(props.userEmail, props.username, activation_code)
         console.log(activation_code);
     };
     const onSubmit = handleSubmit(async (data) => {

@@ -59,10 +59,10 @@ class ChangeEmailForActivationAPI(APIView):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
             serialized_data = serialized_data.data
-            user = Usuarios.objects.get(id=serialized_data['user_id'])
-            if (Usuarios.objects.userExists(username=user.username, email=serialized_data['new_email'])):
+            if (Usuarios.objects.userExists(email=serialized_data['new_email'])):
                 return Response({'error' : 'email_exists'}, status.HTTP_400_BAD_REQUEST)
             else:
+                user = Usuarios.objects.get(id=serialized_data['user_id'])
                 Usuarios.objects.setEmail(user, serialized_data['new_email'])
                 return Response({'success' : 'email_setted'}, status.HTTP_200_OK)
         else:
@@ -108,18 +108,14 @@ class GetUserDetailAPI(APIView):
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
-            user = Usuarios.objects.userExists(request.data['username'])
-            if user:
-                user=user[0]
-                if check_password(request.data['password'], user.password):
-                    # Se enviaran las notificaciones al frontend al principio de la sesion
-                    # para cachearlos en el Local Storage. De Este modo evitaremos
-                    # llamadas al backend cada vez que queramos revisarlas
-                    formated_user_data = Usuarios.objects.getFormatedUserData(user)
-                    Usuarios.objects.deleteAllNotifications(user)
-                    return JsonResponse({'user' : formated_user_data})
-                else:
-                    return Response({'error' : 'user_not_exists'}, status.HTTP_400_BAD_REQUEST)
+            if Usuarios.objects.userExists(request.data['username']) and (check_password(request.data['password'], user.password)):
+                # Se enviaran las notificaciones al frontend al principio de la sesion
+                # para cachearlos en el Local Storage. De Este modo evitaremos
+                # llamadas al backend cada vez que queramos revisarlas
+                user = Usuarios.objects.get(username=request.data['username'])
+                formated_user_data = Usuarios.objects.getFormatedUserData(user)
+                Usuarios.objects.deleteAllNotifications(user)
+                return JsonResponse({'user' : formated_user_data})
             else:
                 return Response({'error' : 'user_not_exists'}, status.HTTP_400_BAD_REQUEST)
         else:
