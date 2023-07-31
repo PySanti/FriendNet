@@ -37,9 +37,8 @@
 
 // Logica:
     // * facil:
+        // testear sistema de changeemailforactivation
         // mejorar definitivamente urls para carga de imagenes instantanea
-        // solucionar problema de actualizaacion de correo en activacion
-        // solucionar problema de photo_link required en admin
 
     //* medio:
         // agregar permission classes en el backedn y buscar que el usuario siempre se deslogee cuando se salga de la pagina

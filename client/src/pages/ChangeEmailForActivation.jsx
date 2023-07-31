@@ -27,13 +27,17 @@ export function ChangeEmailForActivation(){
     const onSubmit = handleSubmit(async (data)=>{
         startLoading()
         if (data.email !== props.userEmail){
-            props.userEmail = data.email
             try{
                 await changeEmailForActivationAPI(props.userId, data.email)
                 successfullyLoaded()
+                props.userEmail = data.email
                 setEmailChanged(true)
             } catch(error){
-                setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado al actualizar el correo electrónico !')
+                if (error.message === BASE_FALLEN_SERVER_ERROR_MSG ){
+                    setLoadingState(BASE_FALLEN_SERVER_LOG)
+                } else {
+                    setLoadingState(error.response.data.error==="email_exists" ? "Error, ese email ya fue registrado !" : "Error inesperado al modificar email !")
+                }
             }
         } else {
             setLoadingState('No hay cambios !')

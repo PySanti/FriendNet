@@ -103,3 +103,9 @@ class UsuariosManager(BaseUserManager):
         user.photo_link     = new_data['photo_link']
         user.save()
         return user
+    def setEmail(self, user, new_email):
+        """
+            Recibe al usuario y modifica su email con new_email
+        """
+        user.email = new_email
+        user.save()
