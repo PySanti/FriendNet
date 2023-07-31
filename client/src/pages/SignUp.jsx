@@ -58,11 +58,7 @@ export function SignUp() {
                 setLoadingState("Ya existe un usuario con ese Nombre de usuario o Correo electronico!")
             }
         } catch(error){
-            if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
-                setLoadingState(BASE_FALLEN_SERVER_LOG)
-            } else {
-                setLoadingState("Error inesperado chequeando existencia de usuario en la base de datos!")
-            }
+            setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : "Error inesperado chequeando existencia de usuario en la base de datos!")
         }
 }
     useEffect(()=>{

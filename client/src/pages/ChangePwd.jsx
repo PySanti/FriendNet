@@ -33,11 +33,9 @@ export function ChangePwd(){
             } catch(error){
                 if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
                     setLoadingState(BASE_FALLEN_SERVER_LOG)
-                } else if (error.response.data.error === 'invalid_pwd'){
-                    setLoadingState('Error, la contraseña actual es invalida!')
                 } else {
-                    setLoadingState('Error inesperado en respuesta de servidor')
-                }
+                    setLoadingState(error.response.data.error === 'invalid_pwd' ? "Error, la contraseña actual es invalida !" : 'Error inesperado en respuesta de servidor')
+                } 
             }
         } else {
             setLoadingState("No hay cambios")

@@ -42,22 +42,15 @@ export function Login() {
                     setUserLogged(true)
                     successfullyLoaded()
                 } catch(error){
-                    if (error.response.status === 401){
-                        setLoadingState("Usuario o contraseña inválidos !") 
-                    } else {
-                        setLoadingState("Error inesperado logeando usuario!")
-                    }
+                    setLoadingState(error.response.status === 401 ? "Usuario o contraseña inválidos !" : "Error inesperado logeando usuario!") 
                 }
             }
         } catch(error){
             if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
                 setLoadingState(BASE_FALLEN_SERVER_LOG)
-            }
-            if (error.response.data.error===  "user_not_exists"){
-                // por seguridad, la api retornara el mismo codigo de error para cuando el usuario o la contrasenia esten mal
-                setLoadingState("Usuario o contraseña inválidos !") 
             } else {
-                setLoadingState("Error inesperado en respuesta de servidor, esta caido !")
+                // por seguridad, la api retornara el mismo codigo de error para cuando el usuario o la contrasenia esten mal
+                setLoadingState(error.response.data.error===  "user_not_exists" ? "Usuario o contraseña inválidos !" : "Error inesperado en respuesta de servidor, esta caido !") 
             }
         }
     }

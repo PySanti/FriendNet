@@ -39,11 +39,7 @@ export function Home() {
             setUserList(response.data.users_list)
             successfullyLoaded()
         } catch(error){
-            if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
-                setLoadingState(BASE_FALLEN_SERVER_LOG)
-            } else {
-                setLoadingState('Error inesperado cargando datos de usuarios!')
-            }
+            setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado cargando datos de usuarios!')
         }
     }
     const onMsgSending = async (data)=>{
@@ -53,11 +49,7 @@ export function Home() {
             successfullyLoaded()
             await loadMessages()
         } catch(error){
-            if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
-                setLoadingState(BASE_FALLEN_SERVER_LOG)
-            } else {
-                setLoadingState('Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
-            }
+            setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
         }
     }
     const loadMessages = async ()=>{
