@@ -37,9 +37,12 @@
 
 // Logica:
     // * facil:
+        // meter todas las constantes almacenadas en el main en un archivos separado en el utils
+
         // implementar mensajes de error para servidor caido en todas las llamadas a apis
-        // para carga de imagenes mas rapida en io's usar formato heic al cargar imagenes
+
         // solucionar problema de actualizaacion de correo en activacion
+
         // solucionar problema de photo_link required en admin
 
     //* medio:
@@ -71,4 +74,5 @@
     // agrgar documentacion a la api
     // estudiar mas a fondo los serializers
     // refactorizar la distribucion de los archivos, meter applications en FriendNet
+    // para carga de imagenes mas rapida en io's usar formato heic al cargar imagenes
 

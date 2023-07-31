@@ -6,7 +6,7 @@ import "./styles/fonts.css";
 import "./index.css";
 
 export const BACKEND_URL = "http://127.0.0.1:8000/";
-
+export const BASE_FALLEN_SERVER_ERROR_MSG = "Network Error"
 export const BASE_MESSAGE_MAX_LENGTH = 200;
 export const BASE_USERNAME_MAX_LENGTH = 15;
 export const BASE_USERNAME_MIN_LENGTH = 6;
