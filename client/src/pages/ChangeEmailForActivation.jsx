@@ -7,7 +7,7 @@ import { Button } from "../components/Button";
 import { v4 } from "uuid";
 import { useForm } from "react-hook-form";
 import { EmailField } from "../components/EmailField";
-import { BASE_EMAIL_CONSTRAINTS } from "../main";
+import { BASE_EMAIL_CONSTRAINTS } from "../utils/constants";
 import { Form } from "../components/Form";
 import { Loader } from "../components/Loader";
 import { UserNotLogged } from "./UserNotLogged";

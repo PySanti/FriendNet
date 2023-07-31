@@ -1,6 +1,6 @@
 import { config } from './baseConfig.api'
 import axios from 'axios'
-import { BACKEND_URL } from '../main'
+import { BACKEND_URL } from '../utils/constants'
 
 /**
  *  LLama a api de actualizacion de datos

@@ -1,7 +1,6 @@
 import axios from 'axios'
-import { BACKEND_URL } from '../main'
+import { BACKEND_URL } from '../utils/constants'
 import { config } from './baseConfig.api'
-import PropTypes from "prop-types"
 /**
  * Llama a la api para activar un usuario
  * @param {Number} id id del usuario a activar

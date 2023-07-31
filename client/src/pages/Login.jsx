@@ -13,7 +13,7 @@ import { Button } from "../components/Button"
 import { v4 } from "uuid"
 import { saveUserDataInLocalStorage } from "../utils/saveUserDataInLocalStorage"
 import { saveNotificationsInLocalStorage } from "../utils/saveNotificationsInLocalStorage"
-import {BASE_FALLEN_SERVER_ERROR_MSG} from "../main"
+import {BASE_FALLEN_SERVER_ERROR_MSG} from "../utils/constants"
 /**
  * Pagina creada para llevar logeo de usuarios
  */

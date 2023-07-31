@@ -2,7 +2,7 @@ import { Form } from "./Form";
 import { PasswordField } from "./PasswordField";
 import { UsernameField } from "./UsernameField";
 import { useForm } from "react-hook-form";
-import { BASE_USERNAME_CONSTRAINTS, BASE_PASSWORD_CONSTRAINTS } from "../main";
+import { BASE_USERNAME_CONSTRAINTS, BASE_PASSWORD_CONSTRAINTS } from "../utils/constants";
 import {PropTypes} from "prop-types"
 import { Button } from "./Button";
 /**

@@ -1,5 +1,5 @@
 import { FormField } from "./FormField";
-import { BASE_USERNAME_MAX_LENGTH } from "../main";
+import { BASE_USERNAME_MAX_LENGTH } from "../utils/constants";
 import {PropTypes} from "prop-types"
 /**
  * Componente creado para campos de nombre de usuario

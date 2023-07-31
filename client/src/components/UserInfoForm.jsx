@@ -7,7 +7,7 @@ import {
     BASE_LASTNAMES_MAX_LENGTH,
     BASE_PASSWORD_CONSTRAINTS,
     BASE_USERNAME_CONSTRAINTS,
-} from "../main";
+} from "../utils/constants.js";
 import { Form } from "./Form";
 import "../styles/UserInfoForm.css";
 import { UserPhoto } from "./UserPhoto";

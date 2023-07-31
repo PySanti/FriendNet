@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form"
-import { BASE_MESSAGE_MAX_LENGTH } from "../main"
+import { BASE_MESSAGE_MAX_LENGTH } from "../utils/constants"
 import {PropTypes} from "prop-types"
 import "../styles/MessageSendingInput.css"
 
