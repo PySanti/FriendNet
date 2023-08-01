@@ -50,6 +50,7 @@ export function Profile({ updating }) {
     const onUpdate = async (data) => {
         startLoading();
         try {
+            console.log(data)
             // el data.photo siempre sera: null, url de imagen actual, un archivo
             const sendingData = { ...data };
             if (dataIsDiferent(data, profileData)) {
@@ -58,6 +59,7 @@ export function Profile({ updating }) {
                     sendingData,
                     profileData.id
                 );
+                profileData.photo_link = updateUserResponse.data.user_data_updated.photo_link
                 setProfileData(updateUserResponse.data.user_data_updated);
                 saveUserDataInLocalStorage(
                     updateUserResponse.data.user_data_updated

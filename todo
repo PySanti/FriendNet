@@ -39,7 +39,7 @@
     // * facil:
         // mejorar definitivamente urls para carga de imagenes instantanea (hacer optimizacion de subida y bajada)
         // soluciona error de no cambio de imagenes por actualizacion
-        // solucionar error de actualizacion infinita
+        // mejorar el comportamiento de algunos componentes a traves de mayor modularizacion
 
     //* medio:
         // agregar permission classes en el backedn y buscar que el usuario siempre se deslogee cuando se salga de la pagina

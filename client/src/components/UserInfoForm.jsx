@@ -21,18 +21,16 @@ import { EmailField } from "./EmailField";
  * teniendo en cuenta las similitudes entre ambos
  * @param {Object} userData datos del usuario, se enviaran en caso de que se este actualizando
  * @param {Boolean} updating representara si se esta actualizando
- * @param {String} userPhotoUrl imagen del usuario, se enviara si se esta actualizando
  * @param {Function} onFormSubmit funcion que se ejecutara cuando se envie el formulario
  * @param {Array} extraButtons arreglo de buttons extra que se quiera agregar al formulario
  */
 export function UserInfoForm({
     userData,
     updating,
-    userPhotoUrl,
     onFormSubmit,
     extraButtons,
 }) {
-    let [currentPhotoFile, setCurrentPhotoFile] = useState(userPhotoUrl);
+    let [currentPhotoFile, setCurrentPhotoFile] = useState(userData.photo_link);
     const {
         register,
         handleSubmit,
@@ -63,8 +61,8 @@ export function UserInfoForm({
     useEffect(() => {
         console.log("El usuario ha cambiado su imagen en el server");
         // de esta manera, se deberia actualizar el estado cada vez que cambie la url del usuario
-        setCurrentPhotoFile(userPhotoUrl ? userPhotoUrl : null);
-    }, [userPhotoUrl]);
+        setCurrentPhotoFile(userData.photo_link);
+    }, [userData]);
     return (
         <div className="user-form-container">
             <Form
@@ -220,13 +218,11 @@ export function UserInfoForm({
 UserInfoForm.propTypes = {
     userData: PropTypes.object,
     updating: PropTypes.bool,
-    userPhotoUrl: PropTypes.string,
     onFormSubmit: PropTypes.func.isRequired,
     extraButtons: PropTypes.array,
 };
 UserInfoForm.defaultProps = {
     userData: undefined,
     updating: undefined,
-    userPhotoUrl: undefined,
     extraButtons: undefined,
 };
