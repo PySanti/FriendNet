@@ -2,6 +2,8 @@ from ..api.cloudinary import (
     save_image_cloudinary,
     delete_image_cloudinary
 )
+
+import traceback
 from ..utils.get_publicid import get_publicid 
 
 def set_photo_link(sended_data, view_type, photo_file=None, current_photo_link=None):
@@ -22,10 +24,13 @@ def set_photo_link(sended_data, view_type, photo_file=None, current_photo_link=N
         elif (view_type == "updating"): 
             if sended_data['photo'] != current_photo_link:
                 if (current_photo_link):
-                    sended_data['photo_link'] = save_image_cloudinary(
-                        image=photo_file, 
-                        overwriting=True,
-                        current_publicid=get_publicid(current_photo_link))
+                    try:
+                        sended_data['photo_link'] = save_image_cloudinary(
+                            image=photo_file, 
+                            overwriting=True,
+                            current_publicid=get_publicid(current_photo_link))
+                    except Exception:
+                        traceback.print_exc()
                 else:
                     sended_data['photo_link'] = save_image_cloudinary(image=photo_file)
             else:
