@@ -95,6 +95,7 @@ class UsuariosManager(BaseUserManager):
             Recibe el id de un usuario y sus nuevos datos y lo actualiza
         """
         # recordar que se deberia comprobar si el usuario realmente esta cambiando algo desde el frontend
+        new_data['first_names'], new_data['last_names'] = self.formatNames(new_data['first_names']), self.formatNames(new_data['last_names'])
         user.username       = new_data['username']
         user.email          = new_data['email']
         user.first_names    = new_data['first_names']

@@ -40,7 +40,6 @@
         // mejorar definitivamente urls para carga de imagenes instantanea (hacer optimizacion de subida y bajada)
         // soluciona error de no cambio de imagenes por actualizacion
         // mejorar el comportamiento de algunos componentes a traves de mayor modularizacion
-        // hacer que, en el backend al actualizar nombres, por defecto se formateen
 
     //* medio:
         // agregar permission classes en el backedn y buscar que el usuario siempre se deslogee cuando se salga de la pagina
