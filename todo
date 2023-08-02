@@ -1,12 +1,11 @@
 // Pasos generales:
-    //~ Arreglar problemas de logica restantes (Fase 3)
+    // Fase 3: Arreglar problemas de logica restantes 
+    // Fase 4: Centrarnos en detalles finales del estilo y responsive 
 
-    //~ Centrarnos en detalles finales del estilo y responsive (Fase 4)
+    // Fase 5: Realizar un periodo de prueba exaustivo y reunir todos los fallos, nuevas features que queramos agregar, etc ... 
+    // Para realizar un buen testing, eliminar toda la cache del navegador
 
-    //~ Realizar un periodo de prueba exaustivo y reunir todos los fallos, nuevas features que queramos agregar, etc ... 
-    Para realizar un buen testing, eliminar toda la cache del navegador(Fase 5)
-
-    //~ Realizar otro periodo de prueba pero con la aplicacion montada y revisar todos los detalles posibles (Fase Final)
+    // Fase 6: Realizar otro periodo de prueba pero con la aplicacion montada y revisar todos los detalles posibles 
 
 
 // fase 3:
@@ -18,16 +17,13 @@
         // emplear validate para validaciones en el backend
         // mejorar sistema de envio de mensajes para mayor velocidad (cacheo de mensajes con websockets como con notificaciones)
         // solucionar problema de refresco de tokens (los errrores que salen de vez que cuando del authcontext)
-        // implementar renderizado optimo de las userImage
 
 
     //* dificil
-        // hacer que si el usuario cambia algun dato del perfil, se cambien los estilos del boton de actualizacion
         // usar paginacion
         // encriptar formularios de react
         // usar webSockets para mensajes
         // user webSockets para actualizacion de notificaciones
-        // cachear imagen del usuario
         // revisar tiempo de vida de token de autenticacion (comportamiento una vez que la sesion este cerrada)
         // testear todas las funcionalidades de la aplicacion y hacer respectivos refactors
 
@@ -59,6 +55,7 @@
     // darle estilos a mensaje de error en el usersList
     // mejorar estilos de correo de activacion
     // hacer que la bigger-img del userPhoto tenga object-fit : contain
+    // hacer que si el usuario cambia algun dato del perfil, se cambien los estilos del boton de actualizacion
 
 // Fase 5:
     // centrarnos en testear bien las imagenes (calidad, tiempos de carga, portabilidad )
