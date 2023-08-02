@@ -18,6 +18,7 @@ import { UsernameField } from "./UsernameField";
 import { PasswordField } from "./PasswordField";
 import { EmailField } from "./EmailField";
 import { FirstNamesField } from "./FirstNamesField";
+import { LastNamesField } from "./LastNamesField";
 
 /**
  * Componente creado para los formularios de SignUp y Update,
@@ -73,16 +74,7 @@ export function UserInfoForm({
                     <UsernameField defaultValue={userData ? userData.username : "juanca"}   errors={errors.username && errors.username.message} registerObject={register(    "username",    BASE_USERNAME_CONSTRAINTS)}/>
                     <EmailField defaultValue={userData ? userData.email : "juanca@gmail.com"}   errors={errors.email && errors.email.message}   registerObject={register(    "email",    BASE_EMAIL_CONSTRAINTS)}/>
                     <FirstNamesField defaultValue={userData ? userData.first_names : "Juan Carlos"}   errors={errors.first_names && errors.first_names.message}   registerObject={register(    "first_names",    BASE_NAMES_CONSTRAINTS("nombre"))}/>
-                    <FormField label="Apellidos"errors={errors.last_names && errors.last_names.message}>
-                        <input
-                            defaultValue={userData ? userData.last_names: "Garcia Marquez"}
-                            maxLength={BASE_LASTNAMES_MAX_LENGTH}
-                            type="text"
-                            id="last_names"
-                            name="last_names"
-                            {...register("last_names", BASE_NAMES_CONSTRAINTS('apellido'))}
-                        />
-                    </FormField>
+                    <LastNamesField defaultValue={userData ? userData.last_names : "Garcia Marquez"}   errors={errors.last_names && errors.last_names.message}   registerObject={register(    "last_names",    BASE_NAMES_CONSTRAINTS("apellido"))}/>
                     <FormField label="Edad" errors={errors.age && errors.age.message} >
                         <input
                             defaultValue={userData ? userData.age : 18}
