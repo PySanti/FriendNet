@@ -7,14 +7,13 @@ import {PropTypes} from "prop-types"
  * @param {String} defaultValue
  */
 export function EmailField({errors, registerObject, defaultValue}){
-    console.log(registerObject)
     return (
         <FormField label="Correo electrónico" errors={errors}>
             <input 
-                defaultValue={defaultValue ? defaultValue : null} 
-                type="text"
-                name={registerObject.name}
-                id={registerObject.name}
+                defaultValue    =   {defaultValue} 
+                type            =   "text"
+                name            =   {registerObject.name}
+                id              =   {registerObject.name}
                 {...registerObject}/>
         </FormField>
     )

@@ -1,14 +1,11 @@
 import { useForm } from "react-hook-form";
 import { PropTypes } from "prop-types";
-import { FormField } from "./FormField";
 import {
     BASE_EMAIL_CONSTRAINTS,
-    BASE_FIRSTNAMES_MAX_LENGTH,
-    BASE_LASTNAMES_MAX_LENGTH,
     BASE_PASSWORD_CONSTRAINTS,
     BASE_USERNAME_CONSTRAINTS,
     BASE_NAMES_CONSTRAINTS,
-    BASE_AGE_CONSTRAINS
+    BASE_AGE_CONSTRAINTS
 } from "../utils/constants.js";
 import { Form } from "./Form";
 import "../styles/UserInfoForm.css";
@@ -63,7 +60,7 @@ export function UserInfoForm({ userData, updating, onFormSubmit, extraButtons, }
                     <EmailField         defaultValue={userData ? userData.email : "juanca@gmail.com"}       errors={errors.email && errors.email.message}               registerObject={register(    "email",    BASE_EMAIL_CONSTRAINTS)}/>
                     <FirstNamesField    defaultValue={userData ? userData.first_names : "Juan Carlos"}      errors={errors.first_names && errors.first_names.message}   registerObject={register(    "first_names",    BASE_NAMES_CONSTRAINTS("nombre"))}/>
                     <LastNamesField     defaultValue={userData ? userData.last_names : "Garcia Marquez"}    errors={errors.last_names && errors.last_names.message}     registerObject={register(    "last_names",    BASE_NAMES_CONSTRAINTS("apellido"))}/>
-                    <AgeField           defaultValue={userData ? userData.age : "18"}                       errors={errors.age && errors.age.message}                   registerObject={register(    "age",    BASE_AGE_CONSTRAINS)}/>
+                    <AgeField           defaultValue={userData ? userData.age : "18"}                       errors={errors.age && errors.age.message}                   registerObject={register(    "age",    BASE_AGE_CONSTRAINTS)}/>
                     {!updating && (
                         <>
                             <PasswordField label="Contraseña"           name="password"     errors={errors.password && errors.password.message } registerObject={register("password", {     ...BASE_PASSWORD_CONSTRAINTS, validate: passwordChecking("password"), })}/>

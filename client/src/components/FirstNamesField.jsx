@@ -12,11 +12,11 @@ export function FirstNamesField({defaultValue, registerObject, errors}){
     return (
         <FormField label="Nombres"  errors={errors}>
             <input
-                defaultValue={defaultValue}
-                maxLength={BASE_FIRSTNAMES_MAX_LENGTH}
-                type="text"
-                id={registerObject.name}
-                name={registerObject.name}
+                defaultValue    =   {defaultValue}
+                maxLength       =   {BASE_FIRSTNAMES_MAX_LENGTH}
+                type            =   "text"
+                id              =   {registerObject.name}
+                name            =   {registerObject.name}
                 {...registerObject}
             />
         </FormField>

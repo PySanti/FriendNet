@@ -11,10 +11,10 @@ export function AgeField({defaultValue, registerObject, errors}){
     return (
         <FormField label="Edad"  errors={errors}>
             <input
-                defaultValue={defaultValue}
-                type="text"
-                id={registerObject.name}
-                name={registerObject.name}
+                defaultValue    =   {defaultValue}
+                type            =   "text"
+                id              =   {registerObject.name}
+                name            =   {registerObject.name}
                 {...registerObject}
             />
         </FormField>
@@ -24,7 +24,7 @@ export function AgeField({defaultValue, registerObject, errors}){
 AgeField.propTypes = {
     registerObject : PropTypes.object.isRequired,
     errors : PropTypes.string,
-    defaultValue : PropTypes.string
+    defaultValue : PropTypes.number
 }
 
 AgeField.defaultProps = {

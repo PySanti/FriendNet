@@ -19,7 +19,7 @@ export const BASE_NAMES_CONSTRAINTS = (name_type)=>{
         }
     }
 }
-export const BASE_AGE_CONSTRAINS = {
+export const BASE_AGE_CONSTRAINTS = {
     required: {
         value: true,
         message: "Por favor, ingresa tu edad.",
