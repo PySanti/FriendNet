@@ -13,4 +13,4 @@ USER_SHOWABLE_FIELDS = [
 ]
 
 BASE_SERIALIZER_ERROR_RESPONSE = {'error' : "serializer_error"}
-
+BASE_IMAGES_WIDTH = 400

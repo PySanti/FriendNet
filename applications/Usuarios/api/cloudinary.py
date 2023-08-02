@@ -2,6 +2,7 @@ import cloudinary
 import cloudinary.uploader
 from ..utils.load_cloudinary_secrets import load_cloudinary_secrets
 from ..utils.get_image_size import get_image_size
+from ..utils.constants import BASE_IMAGES_WIDTH
 import copy
 
 
@@ -18,43 +19,35 @@ signature = cloudinary.utils.api_sign_request(
     secrets["CLOUDINARY__API_SECRET"]
 )
 
-QUALITY = {
-    'width' : 400,
-    'quality' : 'auto:best',
-    'format' : 'jpg'
-}
+
 
 def save_image_cloudinary(image, overwriting=False, current_publicid=None ):
     """
         Almacena la imagen en cloudinary o la sobreescribe y retorna la url de la misma
     """
-    image_size = get_image_size(copy.deepcopy(image.file), QUALITY['width'])
-    print(image_size)
+    image_size = get_image_size(copy.deepcopy(image.file), BASE_IMAGES_WIDTH)
+    QUALITY = {
+        'width' : image_size[0],
+        'height' : image_size[1],
+        'quality' : 'auto:best',
+    }
+    BASE_IMAGE_UPLOADING_ARGS = {
+        'file' : image,
+        'signature' : signature,
+    }
     if not overwriting:
-        response = cloudinary.uploader.upload(
-            image, 
-            signature       = signature,
-            #optimization
-            quality = QUALITY['quality'],
-            width   = image_size[0],
-            height   = image_size[1],
-        )
+        response = cloudinary.uploader.upload(**BASE_IMAGE_UPLOADING_ARGS,**QUALITY)
     else:
         response = cloudinary.uploader.upload(
-            image, 
             public_id   =   current_publicid,
-            overwrite   =   True,
-            signature   = signature,
-            #optimization
-            quality = QUALITY['quality'],
-            width   = image_size[0],
-            height   = image_size[1],
-            )
+            overwrite   =   True, 
+            **BASE_IMAGE_UPLOADING_ARGS,
+            **QUALITY
+        )
+
     return cloudinary.CloudinaryImage(response['public_id']).build_url(
-        quality = QUALITY['quality'],
-        width   = image_size[0],
-        height   = image_size[1],
-        format  = QUALITY['format']
+        format  = 'jpg',
+        **QUALITY
     )
 
 
