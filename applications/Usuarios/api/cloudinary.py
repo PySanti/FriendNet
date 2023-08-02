@@ -44,9 +44,9 @@ def save_image_cloudinary(image, overwriting=False, current_publicid=None ):
             **BASE_IMAGE_UPLOADING_ARGS,
             **QUALITY
         )
-
     return cloudinary.CloudinaryImage(response['public_id']).build_url(
-        format  = 'jpg',
+        format      =   'jpg',
+        version     =   response['version'],
         **QUALITY
     )
 
