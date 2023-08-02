@@ -31,6 +31,7 @@ class GetMessagesHistorialAPI(APIView):
             else:
                 return Response('no_messages_between', status.HTTP_200_OK)
         else:
+            print(serialized_data._errors)
             return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status.HTTP_400_BAD_REQUEST)
 
 class SendMsgAPI(APIView):
@@ -46,4 +47,5 @@ class SendMsgAPI(APIView):
             Chats.objects.sendMessage(sender_user, receiver_user,new_message)
             return Response({'success' : "msg_sended"}, status.HTTP_200_OK)
         else:
+            print(serialized_data._errors)
             return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status.HTTP_400_BAD_REQUEST)

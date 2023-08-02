@@ -26,6 +26,10 @@ class BaseUsuariosSerializers(serializers.ModelSerializer):
         elif isinstance(data['photo'], InMemoryUploadedFile) or (isinstance(data['photo'], str)):
             return data['photo']
 
+
+
+
+
 class CreateUsuariosSerializer(BaseUsuariosSerializers):
     pass
 

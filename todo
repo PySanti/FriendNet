@@ -9,12 +9,8 @@
 
 
 // fase 3:
-    // * facil:
-        // Refactorizar y testear userinfoform
-
     //* medio:
         // agregar permission classes en el backedn y buscar que el usuario siempre se deslogee cuando se salga de la pagina
-        // emplear validate para validaciones en el backend
         // mejorar sistema de envio de mensajes para mayor velocidad (cacheo de mensajes con websockets como con notificaciones)
         // solucionar problema de refresco de tokens (los errrores que salen de vez que cuando del authcontext)
 
@@ -30,6 +26,7 @@
 
 
 // Fase 4:
+    // hacer que, cuando se active el bigger-img, el fondo se ponga opaco
     // asignar loaders en todos los puntos en los que se hagan solicitudes
     // asignar un loader mientras las imagenes no cargan
     // arreglar problemas de espacio con mensajes de error en formularios

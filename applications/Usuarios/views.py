@@ -76,7 +76,7 @@ class UpdateUserDataAPI(APIView):
         serializer = self.serializer_class(data=request.data, context={'request' : request.data})
         if serializer.is_valid():
             user = Usuarios.objects.get(id=kwargs['pk'])
-            serialized_data = serializer.data.copy()
+            serialized_data = serializer.data
             try:
                 serialized_data = set_photo_link(
                     sended_data=serialized_data, 
@@ -91,6 +91,7 @@ class UpdateUserDataAPI(APIView):
             except:
                 return Response({'error': "cloudinary_error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
+            print(serializer._errors)
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status=status.HTTP_400_BAD_REQUEST)
 class CheckExistingUserAPI(APIView):
     serializer_class = CheckExistingUserSerializer
@@ -102,6 +103,7 @@ class CheckExistingUserAPI(APIView):
             else:
                 return Response({'existing' : 'false'}, status.HTTP_200_OK)
         else:
+            print(serialized_data._errors)
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
 class GetUserDetailAPI(APIView):
     serializer_class = GetUserDetailSerializer
@@ -119,6 +121,7 @@ class GetUserDetailAPI(APIView):
             else:
                 return Response({'error' : 'user_not_exists'}, status.HTTP_400_BAD_REQUEST)
         else:
+            print(serialized_data._errors)
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status=status.HTTP_400_BAD_REQUEST)
 class ActivateUserAPI(APIView):
     serializer_class = ActivateUserSerializer
@@ -131,6 +134,7 @@ class ActivateUserAPI(APIView):
             except:
                 return Response({'error' : 'error_activating_user'}, status.HTTP_500_INTERNAL_SERVER_ERROR) 
         else:
+            print(serialized_data._errors)
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
 class ChangeUserPwdAPI(APIView):
     serializer_class = ChangeUserPwdSerializer
@@ -144,6 +148,7 @@ class ChangeUserPwdAPI(APIView):
             else:
                 return Response({'error' : 'invalid_pwd'}, status.HTTP_400_BAD_REQUEST)
         else:
+            print(serialized_data._errors)
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
 class GetUsersListAPI(APIView):
     serializer_class = GetUsersListSerializer
@@ -155,6 +160,7 @@ class GetUsersListAPI(APIView):
                 users_list = users_list.filter(username__icontains=serialized_data.data['user_keyword'])
             return JsonResponse({"users_list": list(users_list.values(*USERS_LIST_ATTRS))})
         else:
+            print(serialized_data._errors)
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
 class DisconnectUserAPI(APIView):
     serializer_class = DisconnectUserSerializer
@@ -165,6 +171,7 @@ class DisconnectUserAPI(APIView):
             Usuarios.objects.setUserConection(user, False)
             return Response({'success' : 'user_disconected'}, status.HTTP_200_OK)
         else:
+            print(serialized_data._errors)
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
 class SendActivationEmailAPI(APIView):
     serializer_class = SendActivationEmailSerializer
@@ -179,4 +186,5 @@ class SendActivationEmailAPI(APIView):
 
             return Response({"email_sended" : True}, status.HTTP_200_OK)
         else:
+            print(serialized_data._errors)
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
