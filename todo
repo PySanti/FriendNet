@@ -7,9 +7,33 @@
     Para realizar un buen testing, eliminar toda la cache del navegador(Fase 5)
 
     //~ Realizar otro periodo de prueba pero con la aplicacion montada y revisar todos los detalles posibles (Fase Final)
-    
 
-// Estilos:
+
+// fase 3:
+    // * facil:
+        // mejorar el comportamiento de algunos componentes a traves de mayor modularizacion
+
+    //* medio:
+        // agregar permission classes en el backedn y buscar que el usuario siempre se deslogee cuando se salga de la pagina
+        // emplear validate para validaciones en el backend
+        // mejorar sistema de envio de mensajes para mayor velocidad (cacheo de mensajes con websockets como con notificaciones)
+        // solucionar problema de refresco de tokens (los errrores que salen de vez que cuando del authcontext)
+        // implementar renderizado optimo de las userImage
+
+
+    //* dificil
+        // hacer que si el usuario cambia algun dato del perfil, se cambien los estilos del boton de actualizacion
+        // usar paginacion
+        // encriptar formularios de react
+        // usar webSockets para mensajes
+        // user webSockets para actualizacion de notificaciones
+        // cachear imagen del usuario
+        // revisar tiempo de vida de token de autenticacion (comportamiento una vez que la sesion este cerrada)
+        // testear todas las funcionalidades de la aplicacion y hacer respectivos refactors
+
+
+
+// Fase 4:
     // asignar loaders en todos los puntos en los que se hagan solicitudes
     // asignar un loader mientras las imagenes no cargan
     // arreglar problemas de espacio con mensajes de error en formularios
@@ -36,33 +60,14 @@
     // mejorar estilos de correo de activacion
     // hacer que la bigger-img del userPhoto tenga object-fit : contain
 
-// Logica:
-    // * facil:
-        // mejorar el comportamiento de algunos componentes a traves de mayor modularizacion
-
-        // soluciona error de no cambio de imagenes por actualizacion
-
-    //* medio:
-        // agregar permission classes en el backedn y buscar que el usuario siempre se deslogee cuando se salga de la pagina
-        // emplear validate para validaciones en el backend
-        // mejorar sistema de envio de mensajes para mayor velocidad (cacheo de mensajes con websockets como con notificaciones)
-        // solucionar problema de refresco de tokens (los errrores que salen de vez que cuando del authcontext)
-        // implementar renderizado optimo de las userImage
-
-
-    //* dificil
-        // hacer que si el usuario cambia algun dato del perfil, se cambien los estilos del boton de actualizacion
-        // usar paginacion
-        // encriptar formularios de react
-        // usar webSockets para mensajes
-        // user webSockets para actualizacion de notificaciones
-        // cachear imagen del usuario
-        // revisar tiempo de vida de token de autenticacion (comportamiento una vez que la sesion este cerrada)
-        // testear todas las funcionalidades de la aplicacion y hacer respectivos refactors
+// Fase 5:
+    // centrarnos en testear bien las imagenes (calidad, tiempos de carga, portabilidad )
+    // testear bien UserFilter y buscar mas maneras de optimizar
 
 
 
 //Produccion:
+    // centrarnos en testear bien las imagenes
     // encriptar datos en smtpjs
     // comprobar funcionamiento en todos los navegadores y con todas las resoluciones
     // pruebas unitarias
