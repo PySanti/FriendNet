@@ -34,10 +34,11 @@
     // crear modo obscuro
     // darle estilos a mensaje de error en el usersList
     // mejorar estilos de correo de activacion
+    // hacer que la bigger-img del userPhoto tenga object-fit : contain
 
 // Logica:
     // * facil:
-        // mejorar definitivamente urls para carga de imagenes instantanea (hacer optimizacion de subida y bajada)
+
         // mejorar el comportamiento de algunos componentes a traves de mayor modularizacion
 
         // soluciona error de no cambio de imagenes por actualizacion

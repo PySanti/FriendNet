@@ -2,6 +2,9 @@ import cloudinary
 import cloudinary.uploader
 from ..utils.load_cloudinary_secrets import load_cloudinary_secrets
 from ..utils.get_image_size import get_image_size
+import copy
+
+
 
 secrets = load_cloudinary_secrets()
 cloudinary.config(
@@ -19,13 +22,13 @@ QUALITY = {
     'width' : 400,
     'quality' : 'auto:best',
     'format' : 'jpg'
-    }
+}
 
 def save_image_cloudinary(image, overwriting=False, current_publicid=None ):
     """
         Almacena la imagen en cloudinary o la sobreescribe y retorna la url de la misma
     """
-    image_size = get_image_size(image.file, QUALITY['width'])
+    image_size = get_image_size(copy.deepcopy(image.file), QUALITY['width'])
     print(image_size)
     if not overwriting:
         response = cloudinary.uploader.upload(
