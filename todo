@@ -10,6 +10,9 @@
 
 // fase 3:
     //* medio:
+        // agregar invalidacion de caracteres especiales para nombres y appelidos
+        // solucionar problema de actualizacion infinita para caracteres especiales en los nombres y apellidos
+
         // agregar permission classes en el backedn y buscar que el usuario siempre se deslogee cuando se salga de la pagina
         // mejorar sistema de envio de mensajes para mayor velocidad (cacheo de mensajes con websockets como con notificaciones)
         // solucionar problema de refresco de tokens (los errrores que salen de vez que cuando del authcontext)
