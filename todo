@@ -10,7 +10,7 @@
 
 // fase 3:
     // * facil:
-        // mejorar el comportamiento de algunos componentes a traves de mayor modularizacion
+        // Refactorizar y testear userinfoform
 
     //* medio:
         // agregar permission classes en el backedn y buscar que el usuario siempre se deslogee cuando se salga de la pagina
