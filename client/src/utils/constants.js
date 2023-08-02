@@ -38,8 +38,8 @@ export const BASE_AGE_CONSTRAINS = {
         message:
             "Por favor, ingresa una edad valida",
     },
-    }
 }
+
 
 export const BASE_EMAIL_CONSTRAINTS = {
     required: {

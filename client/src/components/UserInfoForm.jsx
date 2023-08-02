@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import { UsernameField } from "./UsernameField";
 import { PasswordField } from "./PasswordField";
 import { EmailField } from "./EmailField";
+import { FirstNamesField } from "./FirstNamesField";
 
 /**
  * Componente creado para los formularios de SignUp y Update,
@@ -32,7 +33,7 @@ export function UserInfoForm({
     onFormSubmit,
     extraButtons,
 }) {
-    let [currentPhotoFile, setCurrentPhotoFile] = useState(userData.photo_link);
+    let [currentPhotoFile, setCurrentPhotoFile] = useState(userData ? userData.photo_link : null);
     const {
         register,
         handleSubmit,
@@ -63,24 +64,15 @@ export function UserInfoForm({
     useEffect(() => {
         console.log("El usuario ha cambiado su imagen en el server");
         // de esta manera, se deberia actualizar el estado cada vez que cambie la url del usuario
-        setCurrentPhotoFile(userData.photo_link);
+        setCurrentPhotoFile(userData ? userData.photo_link : null);
     }, [userData]);
     return (
         <div className="user-form-container">
             <Form onSubmitFunction={onSubmit}buttonMsg={updating ? "Actualizar" : "Registrar"}buttonsList={extraButtons}>
                 <>
-                    <UsernameField defaultValue={userData ? userData.username : "juanca"}errors={errors.username && errors.username.message}registerObject={register(    "username",    BASE_USERNAME_CONSTRAINTS)}/>
-                    <EmailField defaultValue={    userData ? userData.email : "juanca@gmail.com"}errors={errors.email && errors.email.message}registerObject={register(    "email",    BASE_EMAIL_CONSTRAINTS)}label="Correo Electrónico"/>
-                    <FormField label="Nombres"    errors={        errors.first_names && errors.first_names.message    }>
-                        <input
-                            defaultValue={userData ? userData.first_names : "Juan Carlos"}
-                            maxLength={BASE_FIRSTNAMES_MAX_LENGTH}
-                            type="text"
-                            id="first_names"
-                            name="first_names"
-                            {...register("first_names", BASE_NAMES_CONSTRAINTS('nombre'))}
-                        />
-                    </FormField>
+                    <UsernameField defaultValue={userData ? userData.username : "juanca"}   errors={errors.username && errors.username.message} registerObject={register(    "username",    BASE_USERNAME_CONSTRAINTS)}/>
+                    <EmailField defaultValue={userData ? userData.email : "juanca@gmail.com"}   errors={errors.email && errors.email.message}   registerObject={register(    "email",    BASE_EMAIL_CONSTRAINTS)}/>
+                    <FirstNamesField defaultValue={userData ? userData.first_names : "Juan Carlos"}   errors={errors.first_names && errors.first_names.message}   registerObject={register(    "first_names",    BASE_NAMES_CONSTRAINTS("nombre"))}/>
                     <FormField label="Apellidos"errors={errors.last_names && errors.last_names.message}>
                         <input
                             defaultValue={userData ? userData.last_names: "Garcia Marquez"}

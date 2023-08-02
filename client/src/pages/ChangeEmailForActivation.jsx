@@ -61,7 +61,7 @@ export function ChangeEmailForActivation(){
                     <Form onSubmitFunction={onSubmit} buttonMsg="Cambiar" buttonsList={[
                         <Button key={v4()} buttonText="Volver" onClickFunction={()=>setGoBack(true)} />,
                     ]}>
-                        <EmailField defaultValue={props.userEmail} errors={errors.email && errors.email.message} registerObject={register("email", BASE_EMAIL_CONSTRAINTS)} label="Correo Electrónico"/>
+                        <EmailField defaultValue={props.userEmail} errors={errors.email && errors.email.message} registerObject={register("email", BASE_EMAIL_CONSTRAINTS)}/>
                     </Form>
                 </div>
             </div>
