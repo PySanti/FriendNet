@@ -19,6 +19,7 @@ import { PasswordField } from "./PasswordField";
 import { EmailField } from "./EmailField";
 import { FirstNamesField } from "./FirstNamesField";
 import { LastNamesField } from "./LastNamesField";
+import { AgeField } from "./AgeField";
 
 /**
  * Componente creado para los formularios de SignUp y Update,
@@ -28,19 +29,9 @@ import { LastNamesField } from "./LastNamesField";
  * @param {Function} onFormSubmit funcion que se ejecutara cuando se envie el formulario
  * @param {Array} extraButtons arreglo de buttons extra que se quiera agregar al formulario
  */
-export function UserInfoForm({
-    userData,
-    updating,
-    onFormSubmit,
-    extraButtons,
-}) {
+export function UserInfoForm({ userData, updating, onFormSubmit, extraButtons, }) {
     let [currentPhotoFile, setCurrentPhotoFile] = useState(userData ? userData.photo_link : null);
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-        watch,
-    } = useForm();
+    const { register, handleSubmit, formState: { errors }, watch} = useForm();
     const onSubmit = handleSubmit((data) => {
         data.age = Number(data.age); // las edades se manejan como text fields para que su checkeo sea mas facil
         data.photo = currentPhotoFile; // currentPhotoFile o es null o es una imagen que ya esta validada o es la misma imagen que el usuario ya tenia
@@ -48,10 +39,7 @@ export function UserInfoForm({
     });
     const passwordChecking = (type) => {
         return (password) => {
-            if (
-                password !=
-                watch(type === "password" ? "confirmPwd" : "password")
-            ) {
+            if (password != watch(type === "password" ? "confirmPwd" : "password")) {
                 return "Las contraseñas no son iguales";
             } else {
                 if (type === "password") {
@@ -71,44 +59,15 @@ export function UserInfoForm({
         <div className="user-form-container">
             <Form onSubmitFunction={onSubmit}buttonMsg={updating ? "Actualizar" : "Registrar"}buttonsList={extraButtons}>
                 <>
-                    <UsernameField defaultValue={userData ? userData.username : "juanca"}   errors={errors.username && errors.username.message} registerObject={register(    "username",    BASE_USERNAME_CONSTRAINTS)}/>
-                    <EmailField defaultValue={userData ? userData.email : "juanca@gmail.com"}   errors={errors.email && errors.email.message}   registerObject={register(    "email",    BASE_EMAIL_CONSTRAINTS)}/>
-                    <FirstNamesField defaultValue={userData ? userData.first_names : "Juan Carlos"}   errors={errors.first_names && errors.first_names.message}   registerObject={register(    "first_names",    BASE_NAMES_CONSTRAINTS("nombre"))}/>
-                    <LastNamesField defaultValue={userData ? userData.last_names : "Garcia Marquez"}   errors={errors.last_names && errors.last_names.message}   registerObject={register(    "last_names",    BASE_NAMES_CONSTRAINTS("apellido"))}/>
-                    <FormField label="Edad" errors={errors.age && errors.age.message} >
-                        <input
-                            defaultValue={userData ? userData.age : 18}
-                            type="number"
-                            id="age"
-                            name="age"
-                            {...register("age", BASE_AGE_CONSTRAINS)}
-                        />
-                    </FormField>
+                    <UsernameField      defaultValue={userData ? userData.username : "juanca"}              errors={errors.username && errors.username.message}         registerObject={register(    "username",    BASE_USERNAME_CONSTRAINTS)}/>
+                    <EmailField         defaultValue={userData ? userData.email : "juanca@gmail.com"}       errors={errors.email && errors.email.message}               registerObject={register(    "email",    BASE_EMAIL_CONSTRAINTS)}/>
+                    <FirstNamesField    defaultValue={userData ? userData.first_names : "Juan Carlos"}      errors={errors.first_names && errors.first_names.message}   registerObject={register(    "first_names",    BASE_NAMES_CONSTRAINTS("nombre"))}/>
+                    <LastNamesField     defaultValue={userData ? userData.last_names : "Garcia Marquez"}    errors={errors.last_names && errors.last_names.message}     registerObject={register(    "last_names",    BASE_NAMES_CONSTRAINTS("apellido"))}/>
+                    <AgeField           defaultValue={userData ? userData.age : "18"}                       errors={errors.age && errors.age.message}                   registerObject={register(    "age",    BASE_AGE_CONSTRAINS)}/>
                     {!updating && (
                         <>
-                            <PasswordField
-                                label="Contraseña"
-                                name="password"
-                                errors={
-                                    errors.password && errors.password.message
-                                }
-                                registerObject={register("password", {
-                                    ...BASE_PASSWORD_CONSTRAINTS,
-                                    validate: passwordChecking("password"),
-                                })}
-                            />
-                            <PasswordField
-                                label="Confirmar Contraseña"
-                                name="confirmPwd"
-                                errors={
-                                    errors.confirmPwd &&
-                                    errors.confirmPwd.message
-                                }
-                                registerObject={register("confirmPwd", {
-                                    ...BASE_PASSWORD_CONSTRAINTS,
-                                    validate: passwordChecking("confirmPwd"),
-                                })}
-                            />
+                            <PasswordField label="Contraseña"           name="password"     errors={errors.password && errors.password.message } registerObject={register("password", {     ...BASE_PASSWORD_CONSTRAINTS, validate: passwordChecking("password"), })}/>
+                            <PasswordField label="Confirmar Contraseña" name="confirmPwd"   errors={errors.confirmPwd && errors.confirmPwd.message } registerObject={register("confirmPwd", {     ...BASE_PASSWORD_CONSTRAINTS, validate: passwordChecking("confirmPwd"), })} />
                         </>
                     )}
                 </>
@@ -124,6 +83,7 @@ UserInfoForm.propTypes = {
     onFormSubmit: PropTypes.func.isRequired,
     extraButtons: PropTypes.array,
 };
+
 UserInfoForm.defaultProps = {
     userData: undefined,
     updating: undefined,
