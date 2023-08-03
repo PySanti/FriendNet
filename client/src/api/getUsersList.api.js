@@ -6,9 +6,8 @@ import { config } from './baseConfig.api'
  * @param {Number} sessionUserId Id de usuario de sesion activa
  * @param {Number} userKeyword palabra clave del usuario que se este buscando
  */
-export async function getUsersListAPI(sessionUserId, userKeyword, accessToken){
+export async function getUsersListAPI(userKeyword, accessToken){
     const data = {
-        'session_user_id' : sessionUserId,
         'user_keyword' : userKeyword
     }
     config.headers = {

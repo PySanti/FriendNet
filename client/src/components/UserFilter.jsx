@@ -14,7 +14,7 @@ export function UserFilter({session_user_id, usersListSetter, accessToken}){
     let [currentUserkeyword, setCurrentUserkeyword] = useState("")
     let [userList, setUsersList] = useState([])
     const updateUsersList = async ()=>{
-        const response = await getUsersListAPI(session_user_id, currentUserkeyword.length > 0 ? currentUserkeyword: undefined, accessToken)
+        const response = await getUsersListAPI(currentUserkeyword.length > 0 ? currentUserkeyword: undefined, accessToken)
         usersListSetter(response.data.users_list)
         setUsersList(response.data.users_list)
     }

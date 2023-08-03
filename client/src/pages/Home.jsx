@@ -35,7 +35,7 @@ export function Home() {
     const loadUsersList = async ()=>{
         startLoading()
         try{
-            const response = await getUsersListAPI(user.user_id, undefined,authToken.access)
+            const response = await getUsersListAPI(undefined, authToken.access)
             setUserList(response.data.users_list)
             successfullyLoaded()
         } catch(error){
