@@ -49,7 +49,7 @@ class SendMsgAPI(APIView):
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
-            sender_user = Usuarios.objects.get(id=request.data['sender_id'])
+            sender_user = request.user
             receiver_user = Usuarios.objects.get(id=request.data['receiver_id'])
             if (not Notifications.objects.hasNotification(receiver_user, sender_user)):
                 Notifications.objects.addNotification(f"Tienes mensajes nuevos de {sender_user.username}", receiver_user, sender_user)

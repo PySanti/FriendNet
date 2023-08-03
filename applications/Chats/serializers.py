@@ -5,6 +5,5 @@ class GetMessagesHistorialSerializer(serializers.Serializer):
 
 class SendMsgSerializer(serializers.Serializer):
     receiver_id = serializers.IntegerField()
-    sender_id = serializers.IntegerField()
     msg = serializers.CharField()
 

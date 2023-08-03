@@ -45,7 +45,7 @@ export function Home() {
     const onMsgSending = async (data)=>{
         startLoading()
         try {
-            await sendMsgAPI(clickedUser.id, user.user_id, data.msg)
+            await sendMsgAPI(clickedUser.id, data.msg, authToken.access)
             successfullyLoaded()
             await loadMessages()
         } catch(error){
