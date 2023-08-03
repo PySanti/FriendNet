@@ -28,7 +28,7 @@ export function ChangePwd(){
         if (data['old_password'] !== data['new_password']){
             startLoading()
             try{
-                await changeUserPwdAPI(user.user_id, data.old_password, data.new_password, authToken.access)
+                await changeUserPwdAPI(data.old_password, data.new_password, authToken.access)
                 successfullyLoaded()
             } catch(error){
                 if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){

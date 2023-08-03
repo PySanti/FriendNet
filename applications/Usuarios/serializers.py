@@ -47,7 +47,6 @@ class CheckExistingUserSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=15)
     email = serializers.EmailField()
 class ChangeUserPwdSerializer(serializers.Serializer):
-    user_id = serializers.IntegerField()
     old_password = serializers.CharField()
     new_password = serializers.CharField()
 class GetUsersListSerializer(serializers.Serializer):
