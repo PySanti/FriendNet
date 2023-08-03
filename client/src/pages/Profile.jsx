@@ -53,7 +53,7 @@ export function Profile({ updating }) {
             const sendingData = { ...data };
             if (dataIsDiferent(data, profileData)) {
                 // lodash
-                const updateUserResponse = await updateUserDataAPI( sendingData, profileData.id, authToken.access);
+                const updateUserResponse = await updateUserDataAPI( sendingData, authToken.access);
                 profileData.photo_link = updateUserResponse.data.user_data_updated.photo_link
                 setProfileData(updateUserResponse.data.user_data_updated);
                 saveUserDataInLocalStorage(

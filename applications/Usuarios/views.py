@@ -155,7 +155,7 @@ class UpdateUserDataAPI(APIView):
         # enviamos al serializer los datos para hacer las comprobaciones de la imagen
         serializer = self.serializer_class(data=request.data, context={'request' : request.data})
         if serializer.is_valid():
-            user = Usuarios.objects.get(id=kwargs['pk'])
+            user = request.user
             serialized_data = serializer.data
             try:
                 serialized_data = set_photo_link(
