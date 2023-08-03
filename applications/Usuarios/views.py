@@ -28,7 +28,6 @@ from .serializers import (
     UpdateUsuariosSerializer,
     ChangeUserPwdSerializer,
     GetUsersListSerializer,
-    DisconnectUserSerializer,
     SendActivationEmailSerializer,
     ChangeEmailForActivationSerializer
 )
@@ -209,15 +208,8 @@ class GetUsersListAPI(APIView):
 
 
 class DisconnectUserAPI(APIView):
-    serializer_class        = DisconnectUserSerializer
     authentication_classes  = [JWTAuthentication]
     permission_classes      = [IsAuthenticated]
     def post(self, request, *args, **kwargs):
-        serialized_data = self.serializer_class(data=request.data)
-        if serialized_data.is_valid():
-            user = Usuarios.objects.get(id=request.data['session_user_id'])
-            Usuarios.objects.setUserConection(user, False)
-            return Response({'success' : 'user_disconected'}, status.HTTP_200_OK)
-        else:
-            print(serialized_data._errors)
-            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
+        Usuarios.objects.setUserConection(request.user, False)
+        return Response({'success' : 'user_disconected'}, status.HTTP_200_OK)

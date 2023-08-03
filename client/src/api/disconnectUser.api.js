@@ -5,13 +5,10 @@ import { config } from './baseConfig.api'
  * Llama a la api para desconectar al usuario con user_id
  * @param {String} user_id
  */
-export async function disconnectUserAPI(user_id, accessToken){
-    const data = {
-        'session_user_id':user_id
-    }
+export async function disconnectUserAPI(accessToken){
     config.headers = {
         "Authorization" : `Bearer ${accessToken}`
     }
-    return await axios.post(BACKEND_URL+"api/disconnect_user/",data, config)
+    return await axios.post(BACKEND_URL+"api/disconnect_user/", {}, config)
 }
 

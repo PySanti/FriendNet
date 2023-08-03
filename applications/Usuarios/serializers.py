@@ -51,9 +51,6 @@ class ChangeUserPwdSerializer(serializers.Serializer):
     new_password = serializers.CharField()
 class GetUsersListSerializer(serializers.Serializer):
     user_keyword = serializers.CharField(required=False)
-class DisconnectUserSerializer(GetUsersListSerializer):
-    pass
-
 class SendActivationEmailSerializer(serializers.Serializer):
     username = serializers.CharField()
     user_email = serializers.EmailField()
