@@ -10,7 +10,6 @@
 
 // fase 3:
     //* medio:
-        // Eliminar todo rastro de nombres en la aplicacion y edad
         // agregar inicio de sesion por correo electronico
 
         // agregar permission classes en el backedn y buscar que el usuario siempre se deslogee cuando se salga de la pagina
