@@ -10,7 +10,7 @@ export async function disconnectUserAPI(user_id, accessToken){
         'session_user_id':user_id
     }
     config.headers = {
-        "Authentication" : `Bearer ${accessToken}`
+        "Authorization" : `Bearer ${accessToken}`
     }
     return await axios.post(BACKEND_URL+"api/disconnect_user/",data, config)
 }

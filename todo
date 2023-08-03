@@ -10,7 +10,6 @@
 
 // fase 3:
     //* medio:
-        // error de red caida?
         // testear comportamiento de todas las vistas en relacion a los permission classes
         // revistar seguridad de vista changeEmailForActivation
         // revisar tiempo de vida de token de autenticacion (comportamiento una vez que la sesion este cerrada)
@@ -21,6 +20,7 @@
 
         // cachear mensajes para mayor velocidad de envio
         // revisar llamadas a api's innecesarias en un uso comun de la aplicacion
+        
 
 
     //* dificil
