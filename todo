@@ -10,7 +10,8 @@
 
 // fase 3:
     //* medio:
-        // testear seguridad de todas las vistas con permission clasess
+        // error de red caida?
+        // testear comportamiento de todas las vistas en relacion a los permission classes
         // revistar seguridad de vista changeEmailForActivation
         // revisar tiempo de vida de token de autenticacion (comportamiento una vez que la sesion este cerrada)
         // solucionar problema de refresco de tokens (los errrores que salen de vez que cuando del authcontext)
