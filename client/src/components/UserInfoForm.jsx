@@ -24,7 +24,6 @@ export function UserInfoForm({ userData, updating, onFormSubmit, extraButtons, }
     let [currentPhotoFile, setCurrentPhotoFile] = useState(userData ? userData.photo_link : null);
     const { register, handleSubmit, formState: { errors }, watch} = useForm();
     const onSubmit = handleSubmit((data) => {
-        data.age = Number(data.age); // las edades se manejan como text fields para que su checkeo sea mas facil
         data.photo = currentPhotoFile; // currentPhotoFile o es null o es una imagen que ya esta validada o es la misma imagen que el usuario ya tenia
         onFormSubmit(data);
     });
