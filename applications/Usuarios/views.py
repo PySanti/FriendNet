@@ -2,7 +2,10 @@ from rest_framework import status
 from rest_framework.views import (
     APIView,
 )
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import (
+    IsAuthenticated,
+    AllowAny
+)
 from .utils.set_photo_link import set_photo_link
 from .utils.constants import (
     BASE_SERIALIZER_ERROR_RESPONSE,
@@ -35,6 +38,7 @@ from .models import Usuarios
 class CreateUsuariosAPI(APIView):
     queryset = Usuarios.objects.all()
     serializer_class = CreateUsuariosSerializer
+    permission_classes = [AllowAny]
     def post(self, request, *args, **kwargs):
         # enviamos al serializer los datos para hacer las comprobaciones de la imagen
         serializer = self.serializer_class(data=request.data, context={'request' : request.data})
@@ -57,6 +61,7 @@ class CreateUsuariosAPI(APIView):
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status=status.HTTP_400_BAD_REQUEST)
 class ChangeEmailForActivationAPI(APIView):
     serializer_class = ChangeEmailForActivationSerializer
+    permission_classes = [AllowAny]
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
@@ -71,6 +76,7 @@ class ChangeEmailForActivationAPI(APIView):
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
 class CheckExistingUserAPI(APIView):
     serializer_class = CheckExistingUserSerializer
+    permission_classes = [AllowAny]
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
@@ -83,7 +89,7 @@ class CheckExistingUserAPI(APIView):
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
 class GetUserDetailAPI(APIView):
     serializer_class = GetUserDetailSerializer
-    permission_classes = []
+    permission_classes = [AllowAny]
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
@@ -102,6 +108,7 @@ class GetUserDetailAPI(APIView):
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status=status.HTTP_400_BAD_REQUEST)
 class ActivateUserAPI(APIView):
     serializer_class = ActivateUserSerializer
+    permission_classes = [AllowAny]
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if (serialized_data.is_valid()):
@@ -115,6 +122,7 @@ class ActivateUserAPI(APIView):
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
 class SendActivationEmailAPI(APIView):
     serializer_class = SendActivationEmailSerializer
+    permission_classes = [AllowAny]
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if (serialized_data.is_valid()):
@@ -134,7 +142,7 @@ class SendActivationEmailAPI(APIView):
 class UpdateUserDataAPI(APIView):
     serializer_class = UpdateUsuariosSerializer
     queryset = Usuarios.objects.all()
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     def put(self, request, *args, **kwargs):
         # enviamos al serializer los datos para hacer las comprobaciones de la imagen
         serializer = self.serializer_class(data=request.data, context={'request' : request.data})
@@ -160,6 +168,7 @@ class UpdateUserDataAPI(APIView):
 
 class ChangeUserPwdAPI(APIView):
     serializer_class = ChangeUserPwdSerializer
+    permission_classes = [IsAuthenticated]
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
@@ -175,6 +184,7 @@ class ChangeUserPwdAPI(APIView):
 
 class GetUsersListAPI(APIView):
     serializer_class = GetUsersListSerializer
+    permission_classes = [IsAuthenticated]
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
@@ -189,6 +199,7 @@ class GetUsersListAPI(APIView):
 
 class DisconnectUserAPI(APIView):
     serializer_class = DisconnectUserSerializer
+    permission_classes = [IsAuthenticated]
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():

@@ -2,6 +2,9 @@ from django.shortcuts import render
 from rest_framework.views import (
     APIView,
 )
+from rest_framework.permissions import (
+    IsAuthenticated
+)
 from .serializers import (
     GetMessagesHistorialSerializer,
     SendMsgSerializer
@@ -22,6 +25,7 @@ from applications.Notifications.models import Notifications
 
 class GetMessagesHistorialAPI(APIView):
     serializer_class =  GetMessagesHistorialSerializer
+    permission_classes = [IsAuthenticated]
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
@@ -36,6 +40,7 @@ class GetMessagesHistorialAPI(APIView):
 
 class SendMsgAPI(APIView):
     serializer_class = SendMsgSerializer
+    permission_classes = [IsAuthenticated]
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
