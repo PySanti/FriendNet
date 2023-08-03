@@ -33,7 +33,7 @@ class GetMessagesHistorialAPI(APIView):
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
-            messages_hist = Chats.objects.getMessagesHistorial(request.data['id_1'], request.data['id_2'])
+            messages_hist = Chats.objects.getMessagesHistorial(request.user.id, request.data['receiver_id'])
             if (messages_hist):
                 return JsonResponse({"messages_hist" : list(messages_hist.values())})
             else:

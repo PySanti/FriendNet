@@ -9,10 +9,12 @@ import { config } from "./baseConfig.api";
  * @param {String} id2
  */
 
-export async function getMessagesHistorialAPI(id1, id2){
+export async function getMessagesHistorialAPI(receiver_id, accessToken){
     const data = {
-        "id_1" :id1,
-        "id_2" :id2,
+        "receiver_id" :receiver_id,
+    }
+    config.headers = {
+        "Authorization" : `Bearer ${accessToken}`
     }
     return await axios.post(BACKEND_URL+"api/get_messages_historial/",data, config)
 }

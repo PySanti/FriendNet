@@ -55,7 +55,7 @@ export function Home() {
     const loadMessages = async ()=>{
         startLoading()
         try{
-            const response = await getMessagesHistorialAPI(user.user_id, clickedUser.id)
+            const response = await getMessagesHistorialAPI(clickedUser.id, authToken.access)
             if (response.data !== "no_messages_between"){
                 setMessagesHistorial(response.data.messages_hist)
             } else {

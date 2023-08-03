@@ -206,7 +206,6 @@ class GetUsersListAPI(APIView):
             print(serialized_data._errors)
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
 
-
 class DisconnectUserAPI(APIView):
     authentication_classes  = [JWTAuthentication]
     permission_classes      = [IsAuthenticated]

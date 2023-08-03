@@ -1,8 +1,7 @@
 from rest_framework import serializers
 
 class GetMessagesHistorialSerializer(serializers.Serializer):
-    id_1 = serializers.IntegerField()
-    id_2 = serializers.IntegerField()
+    receiver_id = serializers.IntegerField()
 
 class SendMsgSerializer(serializers.Serializer):
     receiver_id = serializers.IntegerField()
