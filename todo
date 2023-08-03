@@ -10,7 +10,10 @@
 
 // fase 3:
     //* medio:
-        // revistar seguridad de vista changeEmailForActivation
+        // revisar vistas que hayan recibido cambios por vulnerabilidad california y repasar codigo
+        // revisar posibles vulnerabilidades en : SendActivationEmail, ActivateUser, ChangeEmailForActivation
+
+
         // revisar tiempo de vida de token de autenticacion (comportamiento una vez que la sesion este cerrada)
         // solucionar problema de refresco de tokens (los errrores que salen de vez que cuando del authcontext)
         // eliminar uso de condicionales para validar serializers, en su lugar, usar raise_exception=True
@@ -63,6 +66,7 @@
 // Fase 5:
     // centrarnos en testear bien las imagenes (calidad, tiempos de carga, portabilidad )
     // testear bien UserFilter y buscar mas maneras de optimizar
+    // revisar bien la seguridad de las apis, parte sumamente importante. Buscar vulnerabilidad california
 
 
 
