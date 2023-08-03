@@ -35,7 +35,7 @@ export function AuthContextProvider({children}){
         return response
     }
     const logoutUser =()=>{
-        disconnectUserAPI(user.user_id)
+        disconnectUserAPI(user.user_id, authToken.access)
         localStorage.clear()
         updateContextData(null)
     }
