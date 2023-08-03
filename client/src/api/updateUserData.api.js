@@ -8,7 +8,11 @@ import { BACKEND_URL } from '../utils/constants'
  * @param {String} userId id de usuario a actualizar  
  * @returns {Promise} la promesa del servidor
  */
-export async function updateUserDataAPI(data, userId){
-    config.headers = {'Content-Type': 'multipart/form-data'}
+export async function updateUserDataAPI(data, userId, accessToken){
+    console.log(accessToken)
+    config.headers = {
+        'Content-Type': 'multipart/form-data',
+        'Authorization' : `Bearer ${accessToken.access}`
+    }
     return await axios.put(BACKEND_URL + `api/update_user_data/${userId}`,data, config)
 }

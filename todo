@@ -10,8 +10,10 @@
 
 // fase 3:
     //* medio:
-        // agregar permission classes en el backedn
+        // agregar permission classes en el backedn para mayor seguridad
+        // revisar tiempo de vida de token de autenticacion (comportamiento una vez que la sesion este cerrada)
 
+        // eliminar uso de condicionales para validar serializers, en su lugar, usar raise_exception=True
         // mejorar sistema de envio de mensajes para mayor velocidad (cacheo de mensajes con websockets como con notificaciones)
         // solucionar problema de refresco de tokens (los errrores que salen de vez que cuando del authcontext)
 
@@ -21,7 +23,6 @@
         // encriptar formularios de react
         // usar webSockets para mensajes
         // user webSockets para actualizacion de notificaciones
-        // revisar tiempo de vida de token de autenticacion (comportamiento una vez que la sesion este cerrada)
         // testear todas las funcionalidades de la aplicacion y hacer respectivos refactors
 
 

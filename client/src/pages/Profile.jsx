@@ -32,7 +32,7 @@ export function Profile({ updating }) {
     let [changePwd, setChangePwd] = useState(false);
     let { loadingState, startLoading, setLoadingState, successfullyLoaded } =
         useContext(LoadingContext);
-    const { user } = useContext(AuthContext);
+    const { user, authToken } = useContext(AuthContext);
     const navigate = useNavigate();
     const loadProfileData = () => {
         startLoading();
@@ -55,10 +55,8 @@ export function Profile({ updating }) {
             const sendingData = { ...data };
             if (dataIsDiferent(data, profileData)) {
                 // lodash
-                const updateUserResponse = await updateUserDataAPI(
-                    sendingData,
-                    profileData.id
-                );
+                console.log(user)
+                const updateUserResponse = await updateUserDataAPI( sendingData, profileData.id, authToken);
                 profileData.photo_link = updateUserResponse.data.user_data_updated.photo_link
                 setProfileData(updateUserResponse.data.user_data_updated);
                 saveUserDataInLocalStorage(

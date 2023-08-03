@@ -2,6 +2,7 @@ from rest_framework import status
 from rest_framework.views import (
     APIView,
 )
+from rest_framework.permissions import IsAuthenticated
 from .utils.set_photo_link import set_photo_link
 from .utils.constants import (
     BASE_SERIALIZER_ERROR_RESPONSE,
@@ -29,6 +30,8 @@ from rest_framework.response import Response
 from .models import Usuarios
 
 
+# non - secured api's
+
 class CreateUsuariosAPI(APIView):
     queryset = Usuarios.objects.all()
     serializer_class = CreateUsuariosSerializer
@@ -52,7 +55,6 @@ class CreateUsuariosAPI(APIView):
                 return Response({'error': "cloudinary_error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status=status.HTTP_400_BAD_REQUEST)
-
 class ChangeEmailForActivationAPI(APIView):
     serializer_class = ChangeEmailForActivationSerializer
     def post(self, request, *args, **kwargs):
@@ -67,32 +69,6 @@ class ChangeEmailForActivationAPI(APIView):
                 return Response({'success' : 'email_setted'}, status.HTTP_200_OK)
         else:
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
-
-class UpdateUserDataAPI(APIView):
-    serializer_class = UpdateUsuariosSerializer
-    queryset = Usuarios.objects.all()
-    def put(self, request, *args, **kwargs):
-        # enviamos al serializer los datos para hacer las comprobaciones de la imagen
-        serializer = self.serializer_class(data=request.data, context={'request' : request.data})
-        if serializer.is_valid():
-            user = Usuarios.objects.get(id=kwargs['pk'])
-            serialized_data = serializer.data
-            try:
-                serialized_data = set_photo_link(
-                    sended_data=serialized_data, 
-                    view_type="updating", 
-                    photo_file=request.FILES['photo'] if ('photo' in request.FILES) else None,
-                    current_photo_link=user.photo_link)
-                try:
-                    updated_user = Usuarios.objects.updateUser(user, serialized_data)
-                    return JsonResponse({'user_data_updated' : {i[0]:i[1] for i in updated_user.__dict__.items() if i[0] in USER_SHOWABLE_FIELDS}}, status=status.HTTP_200_OK)
-                except:
-                    return Response({'error': "error_updating"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-            except:
-                return Response({'error': "cloudinary_error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        else:
-            print(serializer._errors)
-            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status=status.HTTP_400_BAD_REQUEST)
 class CheckExistingUserAPI(APIView):
     serializer_class = CheckExistingUserSerializer
     def post(self, request, *args, **kwargs):
@@ -107,6 +83,7 @@ class CheckExistingUserAPI(APIView):
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
 class GetUserDetailAPI(APIView):
     serializer_class = GetUserDetailSerializer
+    permission_classes = []
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
@@ -136,6 +113,51 @@ class ActivateUserAPI(APIView):
         else:
             print(serialized_data._errors)
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
+class SendActivationEmailAPI(APIView):
+    serializer_class = SendActivationEmailSerializer
+    def post(self, request, *args, **kwargs):
+        serialized_data = self.serializer_class(data=request.data)
+        if (serialized_data.is_valid()):
+            send_mail(
+                subject         =   "Activa tu cuenta", 
+                message         =   f"Codigo : {serialized_data.data['activation_code']}", 
+                from_email      =   "friendnetcorp@gmail.com", 
+                recipient_list  =   [serialized_data.data['user_email']])
+
+            return Response({"email_sended" : True}, status.HTTP_200_OK)
+        else:
+            print(serialized_data._errors)
+            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
+
+#  secured api's
+
+class UpdateUserDataAPI(APIView):
+    serializer_class = UpdateUsuariosSerializer
+    queryset = Usuarios.objects.all()
+    # permission_classes = [IsAuthenticated]
+    def put(self, request, *args, **kwargs):
+        # enviamos al serializer los datos para hacer las comprobaciones de la imagen
+        serializer = self.serializer_class(data=request.data, context={'request' : request.data})
+        if serializer.is_valid():
+            user = Usuarios.objects.get(id=kwargs['pk'])
+            serialized_data = serializer.data
+            try:
+                serialized_data = set_photo_link(
+                    sended_data=serialized_data, 
+                    view_type="updating", 
+                    photo_file=request.FILES['photo'] if ('photo' in request.FILES) else None,
+                    current_photo_link=user.photo_link)
+                try:
+                    updated_user = Usuarios.objects.updateUser(user, serialized_data)
+                    return JsonResponse({'user_data_updated' : {i[0]:i[1] for i in updated_user.__dict__.items() if i[0] in USER_SHOWABLE_FIELDS}}, status=status.HTTP_200_OK)
+                except:
+                    return Response({'error': "error_updating"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            except:
+                return Response({'error': "cloudinary_error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        else:
+            print(serializer._errors)
+            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status=status.HTTP_400_BAD_REQUEST)
+
 class ChangeUserPwdAPI(APIView):
     serializer_class = ChangeUserPwdSerializer
     def post(self, request, *args, **kwargs):
@@ -150,6 +172,7 @@ class ChangeUserPwdAPI(APIView):
         else:
             print(serialized_data._errors)
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
+
 class GetUsersListAPI(APIView):
     serializer_class = GetUsersListSerializer
     def post(self, request, *args, **kwargs):
@@ -162,6 +185,8 @@ class GetUsersListAPI(APIView):
         else:
             print(serialized_data._errors)
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
+
+
 class DisconnectUserAPI(APIView):
     serializer_class = DisconnectUserSerializer
     def post(self, request, *args, **kwargs):
@@ -170,21 +195,6 @@ class DisconnectUserAPI(APIView):
             user = Usuarios.objects.get(id=request.data['session_user_id'])
             Usuarios.objects.setUserConection(user, False)
             return Response({'success' : 'user_disconected'}, status.HTTP_200_OK)
-        else:
-            print(serialized_data._errors)
-            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
-class SendActivationEmailAPI(APIView):
-    serializer_class = SendActivationEmailSerializer
-    def post(self, request, *args, **kwargs):
-        serialized_data = self.serializer_class(data=request.data)
-        if (serialized_data.is_valid()):
-            send_mail(
-                subject         =   "Activa tu cuenta", 
-                message         =   f"Codigo : {serialized_data.data['activation_code']}", 
-                from_email      =   "friendnetcorp@gmail.com", 
-                recipient_list  =   [serialized_data.data['user_email']])
-
-            return Response({"email_sended" : True}, status.HTTP_200_OK)
         else:
             print(serialized_data._errors)
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)

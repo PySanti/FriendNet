@@ -61,6 +61,7 @@ export function AuthContextProvider({children}){
         }
     }, [authToken])
     const contextData = {
+        authToken : authToken,
         user : user,
         loginUser : loginUser,
         logoutUser : logoutUser,
