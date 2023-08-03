@@ -8,7 +8,6 @@ from .utils.constants import (
 
 class UsuariosManager(BaseUserManager):
     def _create_user(self, username, password, email, is_staff, is_superuser, **kwargs):
-        kwargs['first_names'], kwargs['last_names'] = self.formatNames(kwargs['first_names']), self.formatNames(kwargs['last_names'])
         new_user = self.model(
             username = username,
             email = email,
@@ -95,12 +94,8 @@ class UsuariosManager(BaseUserManager):
             Recibe el id de un usuario y sus nuevos datos y lo actualiza
         """
         # recordar que se deberia comprobar si el usuario realmente esta cambiando algo desde el frontend
-        new_data['first_names'], new_data['last_names'] = self.formatNames(new_data['first_names']), self.formatNames(new_data['last_names'])
         user.username       = new_data['username']
         user.email          = new_data['email']
-        user.first_names    = new_data['first_names']
-        user.last_names     = new_data['last_names']
-        user.age            = new_data['age']
         user.photo_link     = new_data['photo_link']
         user.save()
         return user

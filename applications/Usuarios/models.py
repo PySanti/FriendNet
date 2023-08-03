@@ -13,12 +13,9 @@ class Usuarios(AbstractBaseUser, PermissionsMixin):
     username        = models.CharField(max_length=15, unique=True)
     email           = models.EmailField(unique=True)
     is_staff        = models.BooleanField()
-    REQUIRED_FIELDS = ['email', 'first_names', 'last_names', 'age']
+    REQUIRED_FIELDS = ['email']
     USERNAME_FIELD  = 'username'
     #* NEW ATTRS
-    first_names     = models.CharField(max_length=30)
-    last_names      = models.CharField(max_length=30)
-    age             = models.PositiveSmallIntegerField()
     photo_link      = models.CharField(max_length=120, null=True)
     is_online       = models.BooleanField(default=False)
     is_active       = models.BooleanField(default=False)

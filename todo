@@ -10,8 +10,8 @@
 
 // fase 3:
     //* medio:
-        // agregar invalidacion de caracteres especiales para nombres y appelidos
-        // solucionar problema de actualizacion infinita para caracteres especiales en los nombres y apellidos
+        // Eliminar todo rastro de nombres en la aplicacion y edad
+        // agregar inicio de sesion por correo electronico
 
         // agregar permission classes en el backedn y buscar que el usuario siempre se deslogee cuando se salga de la pagina
         // mejorar sistema de envio de mensajes para mayor velocidad (cacheo de mensajes con websockets como con notificaciones)

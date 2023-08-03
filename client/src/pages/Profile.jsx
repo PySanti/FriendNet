@@ -150,9 +150,6 @@ export function Profile({ updating }) {
                                         attrsTraductions={{
                                             username: "Nombre de usuario",
                                             email: "Correo electrónico",
-                                            first_names: "Nombres",
-                                            last_names: "Apellidos",
-                                            age: "Edad",
                                         }}
                                     />
                                     <UserPhoto

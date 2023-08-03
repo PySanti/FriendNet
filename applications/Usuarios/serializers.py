@@ -13,9 +13,6 @@ class BaseUsuariosSerializers(serializers.ModelSerializer):
         fields = [
             "username",
             "email",
-            "first_names",
-            "last_names",
-            "age",
             "password",
             "photo"
         ]
@@ -36,9 +33,6 @@ class CreateUsuariosSerializer(BaseUsuariosSerializers):
 class UpdateUsuariosSerializer(BaseUsuariosSerializers):
     username = serializers.CharField(required=False)
     email = serializers.EmailField(required=False)
-    first_names = serializers.CharField(required=False)
-    last_names = serializers.CharField(required=False)
-    age = serializers.IntegerField(required=False)
     password = serializers.CharField(required=False) # este campo nunca se usara
 
 
