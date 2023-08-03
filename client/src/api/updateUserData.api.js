@@ -12,7 +12,7 @@ export async function updateUserDataAPI(data, userId, accessToken){
     console.log(accessToken)
     config.headers = {
         'Content-Type': 'multipart/form-data',
-        'Authorization' : `Bearer ${accessToken.access}`
+        'Authorization' : `Bearer ${accessToken}`
     }
     return await axios.put(BACKEND_URL + `api/update_user_data/${userId}`,data, config)
 }

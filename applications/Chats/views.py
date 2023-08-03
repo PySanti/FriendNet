@@ -2,6 +2,9 @@ from django.shortcuts import render
 from rest_framework.views import (
     APIView,
 )
+from rest_framework_simplejwt.authentication import (
+    JWTAuthentication
+)
 from rest_framework.permissions import (
     IsAuthenticated
 )
@@ -24,8 +27,9 @@ from applications.Notifications.models import Notifications
 # Create your views here.
 
 class GetMessagesHistorialAPI(APIView):
-    serializer_class =  GetMessagesHistorialSerializer
-    permission_classes = [IsAuthenticated]
+    serializer_class        =  GetMessagesHistorialSerializer
+    authentication_classes  = [JWTAuthentication]
+    permission_classes      = [IsAuthenticated]
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
@@ -39,8 +43,9 @@ class GetMessagesHistorialAPI(APIView):
             return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status.HTTP_400_BAD_REQUEST)
 
 class SendMsgAPI(APIView):
-    serializer_class = SendMsgSerializer
-    permission_classes = [IsAuthenticated]
+    serializer_class        = SendMsgSerializer
+    authentication_classes  = [JWTAuthentication]
+    permission_classes      = [IsAuthenticated]
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():

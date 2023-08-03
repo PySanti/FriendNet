@@ -10,12 +10,15 @@
 
 // fase 3:
     //* medio:
-        // agregar permission classes en el backedn para mayor seguridad
+        // testear seguridad de todas las vistas con permission clasess
+        // revistar seguridad de vista changeEmailForActivation
         // revisar tiempo de vida de token de autenticacion (comportamiento una vez que la sesion este cerrada)
-
-        // eliminar uso de condicionales para validar serializers, en su lugar, usar raise_exception=True
-        // mejorar sistema de envio de mensajes para mayor velocidad (cacheo de mensajes con websockets como con notificaciones)
         // solucionar problema de refresco de tokens (los errrores que salen de vez que cuando del authcontext)
+        // eliminar uso de condicionales para validar serializers, en su lugar, usar raise_exception=True
+        // refactorizar UserInterface y UserList: demasiados parametros
+        // UserFilter actualizando lista de usuarios innecesariamente al inicio de su rendering
+
+        // cachear mensajes para mayor velocidad de envio
 
 
     //* dificil

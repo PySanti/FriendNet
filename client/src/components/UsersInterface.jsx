@@ -12,13 +12,14 @@ import "../styles/UsersInterface.css"
  * @param {Function} onMsgSending funcion que se enviara cuando se mande un mensaje al clickedUser
  * @param {Array} chatGlobeList lista de ids de los usuarios con globe en la usersList
  * @param {Function} usersListSetter setter de lista de usuarios a usar con filtro
+ * @param {String} accessToken 
  */
-export function UsersInterface({usersList, onUserButtonClick, session_user_id, clickedUser, messagesHistorial, onMsgSending, chatGlobeList, usersListSetter}){
+export function UsersInterface({usersList, onUserButtonClick, session_user_id, clickedUser, messagesHistorial, onMsgSending, chatGlobeList, usersListSetter, accessToken}){
     return (
         <div className="users-interface-container">
             {usersList && 
                 <>
-                    <UsersList usersList={usersList} onClickEvent={onUserButtonClick} chatGlobeList={chatGlobeList} usersListSetter={usersListSetter} session_user_id={session_user_id}/>
+                    <UsersList usersList={usersList} onClickEvent={onUserButtonClick} chatGlobeList={chatGlobeList} usersListSetter={usersListSetter} session_user_id={session_user_id} accessToken={accessToken}/>
                     <Chat chatingUser={clickedUser} messages={messagesHistorial} session_user_id={session_user_id} onMsgSending={onMsgSending}/>
                 </>
             }

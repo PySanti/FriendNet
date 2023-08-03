@@ -30,8 +30,7 @@ export function Profile({ updating }) {
     let [editProfile, setEditProfile] = useState(false);
     let [backToProfile, setBackToProfile] = useState(false);
     let [changePwd, setChangePwd] = useState(false);
-    let { loadingState, startLoading, setLoadingState, successfullyLoaded } =
-        useContext(LoadingContext);
+    let { loadingState, startLoading, setLoadingState, successfullyLoaded } =useContext(LoadingContext);
     const { user, authToken } = useContext(AuthContext);
     const navigate = useNavigate();
     const loadProfileData = () => {
@@ -50,13 +49,11 @@ export function Profile({ updating }) {
     const onUpdate = async (data) => {
         startLoading();
         try {
-            console.log(data)
             // el data.photo siempre sera: null, url de imagen actual, un archivo
             const sendingData = { ...data };
             if (dataIsDiferent(data, profileData)) {
                 // lodash
-                console.log(user)
-                const updateUserResponse = await updateUserDataAPI( sendingData, profileData.id, authToken);
+                const updateUserResponse = await updateUserDataAPI( sendingData, profileData.id, authToken.access);
                 profileData.photo_link = updateUserResponse.data.user_data_updated.photo_link
                 setProfileData(updateUserResponse.data.user_data_updated);
                 saveUserDataInLocalStorage(

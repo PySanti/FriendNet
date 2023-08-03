@@ -19,7 +19,7 @@ import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/con
  * Pagina creado para cambio de contraseña
  */
 export function ChangePwd(){
-    const {user} = useContext(AuthContext)
+    const {user, authToken} = useContext(AuthContext)
     const {register, handleSubmit, formState : {errors}} = useForm()
     const navigate = useNavigate()
     let   [backToProfile, setBackToProfile] = useState(false)
@@ -28,7 +28,7 @@ export function ChangePwd(){
         if (data['old_password'] !== data['new_password']){
             startLoading()
             try{
-                await changeUserPwdAPI(user.user_id, data.old_password, data.new_password)
+                await changeUserPwdAPI(user.user_id, data.old_password, data.new_password, authToken.access)
                 successfullyLoaded()
             } catch(error){
                 if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){

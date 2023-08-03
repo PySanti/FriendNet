@@ -30,12 +30,12 @@ export function Home() {
     let [userList, setUserList] = useState(false)
     let [chatGlobeList, setChatGlobeList] = useState(null)
     let [goToProfile, setGoToProfile] = useState(false)
-    const {user, logoutUser} = useContext(AuthContext)
+    const {user, logoutUser, authToken} = useContext(AuthContext)
     const navigate = useNavigate()
     const loadUsersList = async ()=>{
         startLoading()
         try{
-            const response = await getUsersListAPI(user.user_id)
+            const response = await getUsersListAPI(user.user_id, undefined,authToken.access)
             setUserList(response.data.users_list)
             successfullyLoaded()
         } catch(error){
@@ -128,6 +128,7 @@ export function Home() {
                             chatGlobeList={chatGlobeList}
                             onMsgSending={onMsgSending}
                             usersListSetter={setUserList}
+                            accessToken = {authToken.access}
                             />
                 </div>
             </div>

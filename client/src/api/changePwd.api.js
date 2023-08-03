@@ -9,11 +9,14 @@ import { config } from "./baseConfig.api";
  * @param {String} old_password  
  * @param {String} new_password  
  */
-export async function changeUserPwdAPI(user_id, old_password, new_password){
+export async function changeUserPwdAPI(user_id, old_password, new_password, accessToken){
     const data = {
         'user_id' : user_id,
         'old_password' : old_password,
         'new_password' : new_password
+    }
+    config.headers = {
+        'Authorization' : `Bearer ${accessToken}`
     }
     return await axios.post(BACKEND_URL + 'api/change_user_pwd/', data, config)
 }
