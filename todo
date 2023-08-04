@@ -10,7 +10,6 @@
 
 // fase 3:
     //* medio:
-        // revisar vistas que hayan recibido cambios por vulnerabilidad california y repasar codigo
         // revisar posibles vulnerabilidades en : SendActivationEmail, ActivateUser, ChangeEmailForActivation
 
 
@@ -19,6 +18,7 @@
         // eliminar uso de condicionales para validar serializers, en su lugar, usar raise_exception=True
         // refactorizar UserInterface y UserList: demasiados parametros
         // UserFilter y Home, muchos llamados al get_user_list
+        // modificar tambien datos de user en el authContext cuando se actualice el usuario
 
         // cachear mensajes para mayor velocidad de envio
         // revisar llamadas a api's innecesarias en un uso comun de la aplicacion
