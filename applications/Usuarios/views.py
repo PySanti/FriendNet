@@ -37,6 +37,20 @@ from .models import Usuarios
 
 # non - secured api's
 
+class CheckExistingUserAPI(APIView):
+    serializer_class        = CheckExistingUserSerializer
+    authentication_classes  = []
+    permission_classes      = [AllowAny]
+    def post(self, request, *args, **kwargs):
+        serialized_data = self.serializer_class(data=request.data)
+        if serialized_data.is_valid():
+            if Usuarios.objects.userExists(username=request.data['username'], email=request.data['email']):
+                return Response({'existing' : 'true'}, status.HTTP_200_OK)
+            else:
+                return Response({'existing' : 'false'}, status.HTTP_200_OK)
+        else:
+            print(serialized_data._errors)
+            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
 class CreateUsuariosAPI(APIView):
     serializer_class        = CreateUsuariosSerializer
     authentication_classes  = []
@@ -61,36 +75,6 @@ class CreateUsuariosAPI(APIView):
                 return Response({'error': "cloudinary_error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status=status.HTTP_400_BAD_REQUEST)
-class ChangeEmailForActivationAPI(APIView):
-    serializer_class        = ChangeEmailForActivationSerializer
-    authentication_classes  = []
-    permission_classes      = [AllowAny]
-    def post(self, request, *args, **kwargs):
-        serialized_data = self.serializer_class(data=request.data)
-        if serialized_data.is_valid():
-            serialized_data = serialized_data.data
-            if (Usuarios.objects.userExists(email=serialized_data['new_email'])):
-                return Response({'error' : 'email_exists'}, status.HTTP_400_BAD_REQUEST)
-            else:
-                user = Usuarios.objects.get(id=serialized_data['user_id'])
-                Usuarios.objects.setEmail(user, serialized_data['new_email'])
-                return Response({'success' : 'email_setted'}, status.HTTP_200_OK)
-        else:
-            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
-class CheckExistingUserAPI(APIView):
-    serializer_class        = CheckExistingUserSerializer
-    authentication_classes  = []
-    permission_classes      = [AllowAny]
-    def post(self, request, *args, **kwargs):
-        serialized_data = self.serializer_class(data=request.data)
-        if serialized_data.is_valid():
-            if Usuarios.objects.userExists(username=request.data['username'], email=request.data['email']):
-                return Response({'existing' : 'true'}, status.HTTP_200_OK)
-            else:
-                return Response({'existing' : 'false'}, status.HTTP_200_OK)
-        else:
-            print(serialized_data._errors)
-            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
 class GetUserDetailAPI(APIView):
     serializer_class = GetUserDetailSerializer
     authentication_classes  = []
@@ -111,6 +95,24 @@ class GetUserDetailAPI(APIView):
         else:
             print(serialized_data._errors)
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ChangeEmailForActivationAPI(APIView):
+    serializer_class        = ChangeEmailForActivationSerializer
+    authentication_classes  = []
+    permission_classes      = [AllowAny]
+    def post(self, request, *args, **kwargs):
+        serialized_data = self.serializer_class(data=request.data)
+        if serialized_data.is_valid():
+            serialized_data = serialized_data.data
+            if (Usuarios.objects.userExists(email=serialized_data['new_email'])):
+                return Response({'error' : 'email_exists'}, status.HTTP_400_BAD_REQUEST)
+            else:
+                user = Usuarios.objects.get(id=serialized_data['user_id'])
+                Usuarios.objects.setEmail(user, serialized_data['new_email'])
+                return Response({'success' : 'email_setted'}, status.HTTP_200_OK)
+        else:
+            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
 class ActivateUserAPI(APIView):
     serializer_class        = ActivateUserSerializer
     authentication_classes  = []

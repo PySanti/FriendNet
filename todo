@@ -10,8 +10,6 @@
 
 // fase 3:
     //* medio:
-        // revisar posibles vulnerabilidades en : SendActivationEmail, ActivateUser, ChangeEmailForActivation
-
 
         // revisar tiempo de vida de token de autenticacion (comportamiento una vez que la sesion este cerrada)
         // solucionar problema de refresco de tokens (los errrores que salen de vez que cuando del authcontext)
@@ -30,6 +28,10 @@
         // encriptar formularios de react
         // usar webSockets para mensajes
         // user webSockets para actualizacion de notificaciones
+
+        // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
+        // ActivateUser, ChangeEmailForActivation, GetUserDetail
+
         // testear todas las funcionalidades de la aplicacion y hacer respectivos refactors
 
 
@@ -66,7 +68,7 @@
 // Fase 5:
     // centrarnos en testear bien las imagenes (calidad, tiempos de carga, portabilidad )
     // testear bien UserFilter y buscar mas maneras de optimizar
-    // revisar bien la seguridad de las apis, parte sumamente importante. Buscar vulnerabilidad california
+    // revisar bien la seguridad de las apis, parte sumamente importante. Buscar vulnerabilidad california (usar postman)
 
 
 
