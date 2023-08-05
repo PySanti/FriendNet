@@ -18,6 +18,7 @@ import { removeNotificationFromLocalStorage } from "../utils/removeNotificationF
 import { getChatGlobesList } from "../utils/getChatGlobesList"
 import { removeRelatedNotifications } from "../utils/removeRelatedNotifications"
 import { saveNotificationsInLocalStorage } from "../utils/saveNotificationsInLocalStorage"
+import {verifyJWTAPI} from "../api/verifyJWT.api"
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, UNAUTHORIZED_STATUS_CODE} from "../utils/constants"
 /**
  * Pagina principal del sitio
@@ -35,15 +36,11 @@ export function Home() {
     const loadUsersList = async ()=>{
         startLoading()
         try{
-            const response = await getUsersListAPI(undefined, authToken.access)
+            let response = await getUsersListAPI(undefined, authToken.access)
             setUserList(response.data.users_list)
             successfullyLoaded()
         } catch(error){
-            if (error.response.status === UNAUTHORIZED_STATUS_CODE){
-                await refreshToken()
-            } else {
-                setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado cargando datos de usuarios!')
-            }
+            setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado cargando datos de usuarios!')
         }
     }
     const onMsgSending = async (data)=>{
