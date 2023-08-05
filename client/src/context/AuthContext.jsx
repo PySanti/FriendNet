@@ -41,12 +41,12 @@ export function AuthContextProvider({children}){
     }
 
     const refreshToken = async ()=>{
+        console.log('Refrescando token')
         try {
             const response = await refreshTokenAPI(authToken.refresh)
-            if (response.status === 200){
-                updateContextData(response.data)
-            }
+            updateContextData(response.data)
         } catch(error) {
+            // comprobar si el token esta caducado, en ese caso, enviar al usuario a logearse
             console.error('Error inesperado al refrescar tokens')
         }
     }
@@ -55,12 +55,13 @@ export function AuthContextProvider({children}){
         if (userIsAuthenticated()){ // hacemos esto para que el token se actualice justo cuando el usuario carga la pagina
             let intervalId = setInterval(async ()=>{
                 console.log('Refrescando token')
-                await refreshToken()
+                // await refreshToken()
             }, refreshTime)
             return ()=>clearInterval(intervalId) //* al retornar una funcion, hacemos que esta se ejecute cuando elcomponente se vuelva a montar
         }
     }, [authToken])
     const contextData = {
+        refreshToken : refreshToken,
         authToken : authToken,
         user : user,
         loginUser : loginUser,

@@ -18,7 +18,7 @@ import { removeNotificationFromLocalStorage } from "../utils/removeNotificationF
 import { getChatGlobesList } from "../utils/getChatGlobesList"
 import { removeRelatedNotifications } from "../utils/removeRelatedNotifications"
 import { saveNotificationsInLocalStorage } from "../utils/saveNotificationsInLocalStorage"
-import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
+import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, UNAUTHORIZED_STATUS_CODE} from "../utils/constants"
 /**
  * Pagina principal del sitio
  */
@@ -30,7 +30,7 @@ export function Home() {
     let [userList, setUserList] = useState(false)
     let [chatGlobeList, setChatGlobeList] = useState(null)
     let [goToProfile, setGoToProfile] = useState(false)
-    const {user, logoutUser, authToken} = useContext(AuthContext)
+    const {user, logoutUser, authToken, refreshToken} = useContext(AuthContext)
     const navigate = useNavigate()
     const loadUsersList = async ()=>{
         startLoading()
@@ -39,7 +39,11 @@ export function Home() {
             setUserList(response.data.users_list)
             successfullyLoaded()
         } catch(error){
-            setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado cargando datos de usuarios!')
+            if (error.response.status === UNAUTHORIZED_STATUS_CODE){
+                await refreshToken()
+            } else {
+                setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado cargando datos de usuarios!')
+            }
         }
     }
     const onMsgSending = async (data)=>{
