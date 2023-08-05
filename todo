@@ -10,7 +10,11 @@
 
 // fase 3:
     //* medio:
-        // revisar tiempo de vida de token de autenticacion (comportamiento una vez que la sesion este cerrada)
+        // hacer que, cuando se consuma alguna secured api, se compruebe si la respuesta del servidor es negativa por
+        // el lifetime del token de acceso, en ese caso, refrescarlo con la funcion del authContext. 
+
+        // Agregar soporte en el authContext, para que, si la respuesta del server es negativa al refrescar token, enviar al usuario a logearse
+
         // solucionar problema de refresco de tokens (los errrores que salen de vez que cuando del authcontext)
         // eliminar uso de condicionales para validar serializers, en su lugar, usar raise_exception=True
         // refactorizar UserInterface y UserList: demasiados parametros
@@ -29,7 +33,8 @@
         // user webSockets para actualizacion de notificaciones
 
         // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
-        // ActivateUser, ChangeEmailForActivation, GetUserDetail
+        // ActivateUser, ChangeEmailForActivation, GetUserDetail 
+
 
         // testear todas las funcionalidades de la aplicacion y hacer respectivos refactors
 
@@ -67,6 +72,7 @@
 // Fase 5:
     // centrarnos en testear bien las imagenes (calidad, tiempos de carga, portabilidad )
     // testear bien UserFilter y buscar mas maneras de optimizar
+    // revisar soporte para refresco automatico de token de acceso y refresco en todas las secured api's
     // revisar bien la seguridad de las apis, parte sumamente importante. Buscar vulnerabilidad california (usar postman)
 
 
