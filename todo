@@ -10,6 +10,8 @@
 
 // fase 3:
     //* medio:
+        // repasar funcionamiento teorico de las JWT y el porque debemos realizar los dos requerimientos de abajo
+
         // hacer que, cuando se consuma alguna secured api, usar el verifyTokenApi para comprobar
         // el lifetime del token de acceso. En caso de que ya no sea valido el token, refrescarlo
 
