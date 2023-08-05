@@ -10,7 +10,6 @@
 
 // fase 3:
     //* medio:
-
         // revisar tiempo de vida de token de autenticacion (comportamiento una vez que la sesion este cerrada)
         // solucionar problema de refresco de tokens (los errrores que salen de vez que cuando del authcontext)
         // eliminar uso de condicionales para validar serializers, en su lugar, usar raise_exception=True
