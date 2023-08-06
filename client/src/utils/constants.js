@@ -1,4 +1,5 @@
 export const BASE_FALLEN_SERVER_LOG = "Red caída !"
+export const BASE_JWT_ERROR_LOG = "Error inesperado validando JWT !"
 export const BACKEND_URL = "http://127.0.0.1:8000/";
 export const BASE_FALLEN_SERVER_ERROR_MSG = "Network Error"
 export const UNAUTHORIZED_STATUS_CODE = 401

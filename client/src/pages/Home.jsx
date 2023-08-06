@@ -20,7 +20,7 @@ import { getChatGlobesList } from "../utils/getChatGlobesList"
 import { removeRelatedNotifications } from "../utils/removeRelatedNotifications"
 import { saveNotificationsInLocalStorage } from "../utils/saveNotificationsInLocalStorage"
 import { validateJWT } from "../utils/validateJWT"
-import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
+import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_JWT_ERROR_LOG} from "../utils/constants"
 /**
  * Pagina principal del sitio
  */
@@ -46,7 +46,7 @@ export function Home() {
                 setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado cargando datos de usuarios!')
             }
         } else {
-            setLoadingState('Error inesperado validando JWT del usuario !')
+            setLoadingState(BASE_JWT_ERROR_LOG)
         }
     }
     const onMsgSending = async (data)=>{

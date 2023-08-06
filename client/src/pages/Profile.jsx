@@ -17,8 +17,9 @@ import { v4 } from "uuid";
 import { saveUserDataInLocalStorage } from "../utils/saveUserDataInLocalStorage";
 import { getUserDataFromLocalStorage } from "../utils/getUserDataFromLocalStorage";
 import { dataIsDiferent } from "../utils/dataIsDiferent";
-import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
+import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_JWT_ERROR_LOG} from "../utils/constants"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
+import { validateJWT } from "../utils/validateJWT"
 
 /**
  * Pagina creada para llevar perfil de usuario, tanto para
@@ -32,7 +33,7 @@ export function Profile({ updating }) {
     let [backToProfile, setBackToProfile] = useState(false);
     let [changePwd, setChangePwd] = useState(false);
     let { loadingState, startLoading, setLoadingState, successfullyLoaded } =useContext(LoadingContext);
-    const { user } = useContext(AuthContext);
+    const { user, refreshToken } = useContext(AuthContext);
     const navigate = useNavigate();
     const loadProfileData = () => {
         startLoading();
@@ -49,25 +50,30 @@ export function Profile({ updating }) {
     };
     const onUpdate = async (data) => {
         startLoading();
-        try {
-            // el data.photo siempre sera: null, url de imagen actual, un archivo
-            const sendingData = { ...data };
-            if (dataIsDiferent(data, profileData)) {
-                // lodash
-                const updateUserResponse = await updateUserDataAPI( sendingData, getJWTFromLocalStorage().access);
-                profileData.photo_link = updateUserResponse.data.user_data_updated.photo_link
-                setProfileData(updateUserResponse.data.user_data_updated);
-                saveUserDataInLocalStorage(updateUserResponse.data.user_data_updated);
-                successfullyLoaded();
-            } else {
-                setLoadingState("Sin cambios");
+        const successValidating = await validateJWT(refreshToken)
+        if (successValidating){
+            try {
+                // el data.photo siempre sera: null, url de imagen actual, un archivo
+                const sendingData = { ...data };
+                if (dataIsDiferent(data, profileData)) {
+                    // lodash
+                    const updateUserResponse = await updateUserDataAPI( sendingData, getJWTFromLocalStorage().access);
+                    profileData.photo_link = updateUserResponse.data.user_data_updated.photo_link
+                    setProfileData(updateUserResponse.data.user_data_updated);
+                    saveUserDataInLocalStorage(updateUserResponse.data.user_data_updated);
+                    successfullyLoaded();
+                } else {
+                    setLoadingState("Sin cambios");
+                }
+            } catch (error) {
+                if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
+                    setLoadingState(BASE_FALLEN_SERVER_LOG)
+                } else {
+                    setLoadingState(error.response.data.error === "cloudinary_error" ? "Error con la nube!" : "Error inesperado al actualizar datos del usuario!");
+                }
             }
-        } catch (error) {
-            if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
-                setLoadingState(BASE_FALLEN_SERVER_LOG)
-            } else {
-                setLoadingState(error.response.data.error === "cloudinary_error" ? "Error con la nube!" : "Error inesperado al actualizar datos del usuario!");
-            }
+        } else {
+            setLoadingState(BASE_JWT_ERROR_LOG)
         }
     };
     useEffect(() => {
