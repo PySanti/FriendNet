@@ -1,6 +1,5 @@
 import { Header } from "../components/Header"
 import { useContext, useEffect, useState } from "react"
-import { AuthContext } from "../context/AuthContext"
 import { userIsAuthenticated } from "../utils/userIsAuthenticated"
 import { UserLogged } from "./UserLogged"
 import { getUserDetailAPI } from "../api/getUserDetailApi.api"
@@ -20,7 +19,6 @@ import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/con
 export function Login() {
     let     {loadingState, startLoading,  successfullyLoaded, setLoadingState}  = useContext(LoadingContext)
     const   navigate                                                            = useNavigate()
-    const   {loginUser}                                                         = useContext(AuthContext)
     let     [user, setUser]                                                     = useState(null)
     let     [userLogged, setUserLogged]                                         = useState(false)
     let     [goBack, setGoBack]                                                 =   useState(false)

@@ -22,23 +22,20 @@ import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/con
  * Pagina creada para llevar activacion de cuenta
  */
 export function AccountActivation() {
-    let { loadingState, setLoadingState, successfullyLoaded, startLoading } =
-        useContext(LoadingContext);
+    let { loadingState, setLoadingState, successfullyLoaded, startLoading } =useContext(LoadingContext);
     let [userActivated, setUserActivated] = useState(false);
     let [realActivationCode, setRealActivationCode] = useState(null);
     let [goBack, setGoBack] = useState(false);
     let [goChangeEmail, setGoChangeEmail] = useState(false);
     const props = useLocation().state;
     const navigate = useNavigate();
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm();
+    const { register, handleSubmit, formState: { errors }} = useForm();
+
     const sendMail = async (activation_code) => {
         // await sendActivationEmailAPI(props.userEmail, props.username, activation_code)
         console.log(activation_code);
     };
+
     const onSubmit = handleSubmit(async (data) => {
         startLoading();
         if (Number(data.activation_code) === Number(realActivationCode)) {

@@ -4,7 +4,6 @@ import { Login } from "./pages/Login.jsx"
 import { Root } from "./pages/Root.jsx"
 import { SignUp } from "./pages/SignUp.jsx"
 import { AccountActivation } from "./pages/AccountActivation.jsx"
-import { AuthContextProvider } from "./context/AuthContext.jsx"
 import { Profile } from "./pages/Profile.jsx"
 import {  LoadingContextProvider } from "./context/LoadingContext.jsx"
 import { ChangePwd } from "./pages/ChangePwd.jsx"
@@ -39,7 +38,7 @@ function App() {
           path='/signup/activate/change_email'  
           element={
             <LoadingContextProvider>
-                <ChangeEmailForActivation/> 
+              <ChangeEmailForActivation/> 
             </LoadingContextProvider>
           }/>
         <Route 
@@ -47,9 +46,7 @@ function App() {
           path="/login/"             
           element={ 
             <LoadingContextProvider>
-              <AuthContextProvider> 
-                <Login/> 
-              </AuthContextProvider>
+              <Login/> 
             </LoadingContextProvider>
           }/>
         <Route 
@@ -57,9 +54,7 @@ function App() {
           path='/home/'              
           element={
           <LoadingContextProvider>
-            <AuthContextProvider> 
-              <Home/> 
-            </AuthContextProvider>
+            <Home/> 
           </LoadingContextProvider>
           }/>
         <Route 
@@ -67,9 +62,7 @@ function App() {
           path='/home/profile/'      
           element={
             <LoadingContextProvider>
-              <AuthContextProvider> 
-                <Profile/> 
-              </AuthContextProvider>
+              <Profile/> 
             </LoadingContextProvider>
           }/>
         <Route 
@@ -77,9 +70,7 @@ function App() {
           path='/home/profile/edit'  
           element={
             <LoadingContextProvider>
-              <AuthContextProvider> 
-                <Profile updating/> 
-              </AuthContextProvider>
+              <Profile updating/> 
             </LoadingContextProvider>
           }/>
         <Route 
@@ -87,9 +78,7 @@ function App() {
           path='/home/profile/change_pwd'  
           element={
             <LoadingContextProvider>
-              <AuthContextProvider> 
-                <ChangePwd/> 
-              </AuthContextProvider>
+              <ChangePwd/> 
             </LoadingContextProvider>
           }/>
 

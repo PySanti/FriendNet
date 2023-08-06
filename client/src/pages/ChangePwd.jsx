@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { Header } from "../components/Header";
 import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { UserNotLogged } from "./UserNotLogged";
-import { AuthContext } from "../context/AuthContext";
 import { useForm } from "react-hook-form";
 import {BASE_PASSWORD_CONSTRAINTS} from "../utils/constants"
 import { changeUserPwdAPI } from "../api/changePwd.api";
@@ -16,18 +15,20 @@ import { v4 } from "uuid";
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_JWT_ERROR_LOG} from "../utils/constants"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import { validateJWT } from "../utils/validateJWT"
+import {refreshToken} from "../utils/refreshToken"
+import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 
 /**
  * Pagina creado para cambio de contraseña
  */
 export function ChangePwd(){
-    const {user, refreshToken} = useContext(AuthContext)
     const {register, handleSubmit, formState : {errors}} = useForm()
     const navigate = useNavigate()
     let   [backToProfile, setBackToProfile] = useState(false)
     let   {loadingState, setLoadingState, successfullyLoaded, startLoading} = useContext(LoadingContext)
+    let   [user] = useState(getUserDataFromLocalStorage())
     const changePwd = handleSubmit(async (data)=>{
-        const successValidating = validateJWT(refreshToken)
+        const successValidating = validateJWT()
         if (successValidating){
             if (data['old_password'] !== data['new_password']){
                 startLoading()

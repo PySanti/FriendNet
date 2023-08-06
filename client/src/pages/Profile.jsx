@@ -4,7 +4,6 @@ import { Header } from "../components/Header";
 import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { UserNotLogged } from "./UserNotLogged";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
 import { UserData } from "../components/UserData";
 import { Loader } from "../components/Loader";
 import { LoadingContext } from "../context/LoadingContext";
@@ -27,30 +26,16 @@ import { validateJWT } from "../utils/validateJWT"
  */
 export function Profile({ updating }) {
     // states
-    let [profileData, setProfileData] = useState(null);
+    let [profileData, setProfileData] = useState(getUserDataFromLocalStorage());
     let [backToHome, setBackToHome] = useState(false);
     let [editProfile, setEditProfile] = useState(false);
     let [backToProfile, setBackToProfile] = useState(false);
     let [changePwd, setChangePwd] = useState(false);
     let { loadingState, startLoading, setLoadingState, successfullyLoaded } =useContext(LoadingContext);
-    const { user, refreshToken } = useContext(AuthContext);
     const navigate = useNavigate();
-    const loadProfileData = () => {
-        startLoading();
-        if (!profileData) {
-            try {
-                setProfileData(getUserDataFromLocalStorage());
-                successfullyLoaded();
-            } catch (error) {
-                setLoadingState(
-                    "Error inesperado al cargar datos del usuario desde el Local Storage"
-                );
-            }
-        }
-    };
     const onUpdate = async (data) => {
         startLoading();
-        const successValidating = await validateJWT(refreshToken)
+        const successValidating = await validateJWT()
         if (successValidating){
             try {
                 // el data.photo siempre sera: null, url de imagen actual, un archivo
@@ -76,12 +61,6 @@ export function Profile({ updating }) {
             setLoadingState(BASE_JWT_ERROR_LOG)
         }
     };
-    useEffect(() => {
-        setLoadingState(false);
-        if (userIsAuthenticated()) {
-            loadProfileData();
-        }
-    }, []);
     useEffect(() => {
         if (changePwd) {
             navigate("/home/profile/change_pwd");
@@ -114,7 +93,7 @@ export function Profile({ updating }) {
             <div className="centered-container">
                 <div className="profile-container">
                     <Header
-                        username={user.username}
+                        username={profileData.username}
                         msg={updating ? "Editando perfil" : "Viendo perfil"}
                     />
                     <Loader state={loadingState} />

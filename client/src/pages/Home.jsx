@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react"
-import { AuthContext } from "../context/AuthContext"
 import { userIsAuthenticated } from "../utils/userIsAuthenticated"
 import { UserNotLogged } from "./UserNotLogged"
 import { Header } from "../components/Header"
@@ -21,6 +20,8 @@ import { removeRelatedNotifications } from "../utils/removeRelatedNotifications"
 import { saveNotificationsInLocalStorage } from "../utils/saveNotificationsInLocalStorage"
 import { validateJWT } from "../utils/validateJWT"
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_JWT_ERROR_LOG} from "../utils/constants"
+import {logoutUser} from "../utils/logoutUser"
+import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 /**
  * Pagina principal del sitio
  */
@@ -31,13 +32,13 @@ export function Home() {
     let [clickedUser, setClickedUser] = useState(null)
     let [userList, setUserList] = useState(false)
     let [chatGlobeList, setChatGlobeList] = useState(null)
+    let [user] = useState(getUserDataFromLocalStorage())
     let [goToProfile, setGoToProfile] = useState(false)
-    const {user, logoutUser, refreshToken} = useContext(AuthContext)
     const navigate = useNavigate()
     const loadUsersList = async ()=>{
         startLoading()
         try{
-            let response = await getUsersListAPI(undefined, user.user_id)
+            let response = await getUsersListAPI(undefined, user.id)
             setUserList(response.data.users_list)
             successfullyLoaded()
         } catch(error){
@@ -46,7 +47,7 @@ export function Home() {
     }
     const onMsgSending = async (data)=>{
         startLoading()
-        const successValidating = await validateJWT(refreshToken)
+        const successValidating = await validateJWT()
         if (successValidating){
             try {
                 await sendMsgAPI(clickedUser.id, data.msg, getJWTFromLocalStorage().access)
@@ -61,7 +62,7 @@ export function Home() {
     }
     const loadMessages = async ()=>{
         startLoading()
-        const successValidating = await validateJWT(refreshToken)
+        const successValidating = await validateJWT()
         if (successValidating){
             try{
                 const response = await getMessagesHistorialAPI(clickedUser.id, getJWTFromLocalStorage().access)
@@ -80,7 +81,7 @@ export function Home() {
     }
     const onLogout = async ()=>{
         startLoading()
-        const successValidating = await validateJWT(refreshToken)
+        const successValidating = await validateJWT()
         if (successValidating){ 
             await logoutUser()
             successfullyLoaded()
@@ -144,7 +145,7 @@ export function Home() {
                     <UsersInterface 
                             usersList={userList} 
                             onUserButtonClick={onUserButtonClick} 
-                            sessionUserId={user.user_id} 
+                            sessionUserId={user.id} 
                             clickedUser={clickedUser} 
                             messagesHistorial={messagesHistorial} 
                             chatGlobeList={chatGlobeList}
