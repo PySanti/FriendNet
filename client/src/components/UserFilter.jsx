@@ -7,13 +7,13 @@ import { useEffect, useState } from "react"
 /**
  * Filtro de busqueda de usuarios en el UsersInterface -> UsersList
  * @param {Function} usersListSetter 
- * @param {String} accessToken token de acceso del usuario para hacer las consultas a la api 
+ * @param {String} sessionUserId 
  */
-export function UserFilter({usersListSetter, accessToken}){
+export function UserFilter({usersListSetter, sessionUserId}){
     let [currentUserkeyword, setCurrentUserkeyword] = useState("")
     let [userList, setUsersList] = useState([])
     const updateUsersList = async ()=>{
-        const response = await getUsersListAPI(currentUserkeyword.length > 0 ? currentUserkeyword: undefined, accessToken)
+        const response = await getUsersListAPI(currentUserkeyword.length > 0 ? currentUserkeyword: undefined, sessionUserId)
         usersListSetter(response.data.users_list)
         setUsersList(response.data.users_list)
     }
@@ -32,5 +32,5 @@ export function UserFilter({usersListSetter, accessToken}){
 }
 UserFilter.propTypes = {
     usersListSetter  : PropTypes.func.isRequired,
-    accessToken : PropTypes.string.isRequired
+    sessionUserId : PropTypes.number.isRequired
 }

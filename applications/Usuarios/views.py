@@ -97,6 +97,23 @@ class GetUserDetailAPI(APIView):
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status=status.HTTP_400_BAD_REQUEST)
 
 
+
+class GetUsersListAPI(APIView):
+    serializer_class        = GetUsersListSerializer
+    authentication_classes  = []
+    permission_classes      = [AllowAny]
+    def post(self, request, *args, **kwargs):
+        serialized_data = self.serializer_class(data=request.data)
+        if serialized_data.is_valid():
+            user = Usuarios.objects.get(id=serialized_data.data['session_user_id'])
+            users_list = Usuarios.objects.filter(is_active=True).exclude(id=user.id)
+            if 'user_keyword' in serialized_data.data:
+                users_list = users_list.filter(username__icontains=serialized_data.data['user_keyword'])
+            return JsonResponse({"users_list": list(users_list.values(*USERS_LIST_ATTRS))})
+        else:
+            print(serialized_data._errors)
+            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
+
 class ChangeEmailForActivationAPI(APIView):
     serializer_class        = ChangeEmailForActivationSerializer
     authentication_classes  = []
@@ -192,21 +209,6 @@ class ChangeUserPwdAPI(APIView):
             print(serialized_data._errors)
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
 
-class GetUsersListAPI(APIView):
-    serializer_class        = GetUsersListSerializer
-    authentication_classes  = []
-    permission_classes      = [AllowAny]
-    def post(self, request, *args, **kwargs):
-        serialized_data = self.serializer_class(data=request.data)
-        if serialized_data.is_valid():
-            user = Usuarios.objects.get(id=serialized_data.data['session_user_id'])
-            users_list = Usuarios.objects.filter(is_active=True).exclude(id=user.id)
-            if 'user_keyword' in serialized_data.data:
-                users_list = users_list.filter(username__icontains=serialized_data.data['user_keyword'])
-            return JsonResponse({"users_list": list(users_list.values(*USERS_LIST_ATTRS))})
-        else:
-            print(serialized_data._errors)
-            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
 
 class DisconnectUserAPI(APIView):
     authentication_classes  = [JWTAuthentication]

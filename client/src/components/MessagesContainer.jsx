@@ -1,17 +1,18 @@
-/**
- * Recibe la lista de mensajes y retorna un contenedor HTML renderizable
- * @param {Array} messages lista de mensajes
- * @param {Number} session_user_id  id de usuario de sesion
- */
+
 import {PropTypes} from "prop-types"
 import { Message } from "./Message"
 import "../styles/MessagesContainer.css"
 import { v4 } from "uuid"
 
 
-export function MessagesContainer({messages, session_user_id }){
+/**
+ * Recibe la lista de mensajes y retorna un contenedor HTML renderizable
+ * @param {Array} messages lista de mensajes
+ * @param {Number} sessionUserId  id de usuario de sesion
+ */
+export function MessagesContainer({messages, sessionUserId }){
     const formatingFunction = (msg)=>{
-        return <Message key={v4()} content={msg.content} session_user_msg={session_user_id === msg.parent_id}/>
+        return <Message key={v4()} content={msg.content} session_user_msg={sessionUserId === msg.parent_id}/>
     }
     return (
         <div className="messages-container">
@@ -26,7 +27,7 @@ export function MessagesContainer({messages, session_user_id }){
 
 MessagesContainer.propTypes = {
     messages : PropTypes.array,
-    session_user_id : PropTypes.number 
+    sessionUserId : PropTypes.number 
 }
 MessagesContainer.defaultProps = {
     messages : undefined

@@ -20,6 +20,8 @@
 
         // refactorizar todas las funciones de la app, buscando que solo se encarguen de 1 tarea
 
+        // Cambiar nombres de variables con _
+
         // solucionar problema de refresco de tokens (los errrores que salen de vez que cuando del authcontext)
         // eliminar uso de condicionales para validar serializers, en su lugar, usar raise_exception=True
         // refactorizar UserInterface y UserList: demasiados parametros

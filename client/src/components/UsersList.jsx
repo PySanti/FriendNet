@@ -10,16 +10,16 @@ import { UserFilter } from "./UserFilter"
  * @param {Function} onClickEvent evento a ejecutar cuando los usersButtons sean presionados
  * @param {Array} chatGlobeList lista de ids de los usuarios con globe en la usersList
  * @param {Function} usersListSetter setter de lista de usuarios a usar con filtro
- * @param {String} accessToken token de acceso de usuario
+ * @param {String} sessionUserId 
  */
-export function UsersList({usersList, onClickEvent, chatGlobeList, usersListSetter, accessToken}){
+export function UsersList({usersList, onClickEvent, chatGlobeList, usersListSetter, sessionUserId}){
     const formatingFunction = (user)=>{
         return <UserButton key={v4()}user={user}onClickFunction={onClickEvent} withGlobe={chatGlobeList.includes(user.id)} />
     }
     return (
         <>
             <div className="users-list-container">
-                <UserFilter usersListSetter={usersListSetter} accessToken={accessToken}/>
+                <UserFilter usersListSetter={usersListSetter} sessionUserId={sessionUserId}/>
                 {usersList.length > 0 ? 
                     usersList.map(formatingFunction)
                     :
@@ -38,7 +38,7 @@ UsersList.propTypes = {
     onClickEvent : PropTypes.func.isRequired,
     chatGlobeList : PropTypes.array,
     usersListSetter : PropTypes.func.isRequired,
-    accessToken : PropTypes.string.isRequired
+    sessionUserId : PropTypes.number.isRequired
 }
 UsersList.defaultProps = {
     chatGlobeList : undefined,

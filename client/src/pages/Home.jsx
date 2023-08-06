@@ -32,21 +32,16 @@ export function Home() {
     let [userList, setUserList] = useState(false)
     let [chatGlobeList, setChatGlobeList] = useState(null)
     let [goToProfile, setGoToProfile] = useState(false)
-    const {user, logoutUser, refreshToken} = useContext(AuthContext)
+    const {user, logoutUser} = useContext(AuthContext)
     const navigate = useNavigate()
     const loadUsersList = async ()=>{
         startLoading()
-        const successValidating = await validateJWT(refreshToken)
-        if (successValidating){
-            try{
-                let response = await getUsersListAPI(undefined, getJWTFromLocalStorage().access)
-                setUserList(response.data.users_list)
-                successfullyLoaded()
-            } catch(error){
-                setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado cargando datos de usuarios!')
-            }
-        } else {
-            setLoadingState(BASE_JWT_ERROR_LOG)
+        try{
+            let response = await getUsersListAPI(undefined, user.user_id)
+            setUserList(response.data.users_list)
+            successfullyLoaded()
+        } catch(error){
+            setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado cargando datos de usuarios!')
         }
     }
     const onMsgSending = async (data)=>{
@@ -129,7 +124,7 @@ export function Home() {
                     <UsersInterface 
                             usersList={userList} 
                             onUserButtonClick={onUserButtonClick} 
-                            session_user_id={user.user_id} 
+                            sessionUserId={user.user_id} 
                             clickedUser={clickedUser} 
                             messagesHistorial={messagesHistorial} 
                             chatGlobeList={chatGlobeList}
