@@ -19,7 +19,7 @@ export function UsersInterface({usersList, onUserButtonClick, session_user_id, c
         <div className="users-interface-container">
             {usersList && 
                 <>
-                    <UsersList usersList={usersList} onClickEvent={onUserButtonClick} chatGlobeList={chatGlobeList} usersListSetter={usersListSetter} session_user_id={session_user_id} accessToken={accessToken}/>
+                    <UsersList usersList={usersList} onClickEvent={onUserButtonClick} chatGlobeList={chatGlobeList} usersListSetter={usersListSetter} accessToken={accessToken}/>
                     <Chat chatingUser={clickedUser} messages={messagesHistorial} session_user_id={session_user_id} onMsgSending={onMsgSending}/>
                 </>
             }
@@ -37,6 +37,7 @@ UsersInterface.propTypes = {
     onMsgSending : PropTypes.func.isRequired,
     chatGlobeList : PropTypes.array,
     usersListSetter : PropTypes.func.isRequired,
+    accessToken : PropTypes.string.isRequired
 }
 
 UsersInterface.defaultProps ={
