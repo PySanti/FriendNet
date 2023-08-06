@@ -56,16 +56,21 @@ export function Home() {
     }
     const loadMessages = async ()=>{
         startLoading()
-        try{
-            const response = await getMessagesHistorialAPI(clickedUser.id, getJWTFromLocalStorage().access)
-            if (response.data !== "no_messages_between"){
-                setMessagesHistorial(response.data.messages_hist)
-            } else {
-                setMessagesHistorial(null)
+        const successValidating = await validateJWT(refreshToken)
+        if (successValidating){
+            try{
+                const response = await getMessagesHistorialAPI(clickedUser.id, getJWTFromLocalStorage().access)
+                if (response.data !== "no_messages_between"){
+                    setMessagesHistorial(response.data.messages_hist)
+                } else {
+                    setMessagesHistorial(null)
+                }
+                successfullyLoaded()
+            } catch(error){
+                setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado buscando chat!')
             }
-            successfullyLoaded()
-        } catch(error){
-            setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado buscando chat!')
+        } else {
+            setLoadingState(BASE_JWT_ERROR_LOG)
         }
     }
     const onLogout = async ()=>{
