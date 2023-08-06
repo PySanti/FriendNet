@@ -11,9 +11,12 @@ import { getJWTFromLocalStorage } from "../utils/getJWTFromLocalStorage"
 export async function validateJWT(refreshTokenFunc){
     try{
         await verifyJWTAPI(getJWTFromLocalStorage().access)
+        console.log('Token valido')
     } catch(error){
         if (error.response.status === UNAUTHORIZED_STATUS_CODE){
+            console.log('Token expirado')
             await refreshTokenFunc()
+            console.log('Token refrescado con exito')
         } else {
             return false
         }

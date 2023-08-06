@@ -36,7 +36,7 @@ export function Home() {
     const navigate = useNavigate()
     const loadUsersList = async ()=>{
         startLoading()
-        const successValidating = validateJWT(refreshToken)
+        const successValidating = await validateJWT(refreshToken)
         if (successValidating){
             try{
                 let response = await getUsersListAPI(undefined, getJWTFromLocalStorage().access)
