@@ -54,16 +54,7 @@ export function AuthContextProvider({children}){
             }
         }
     }
-    useEffect(() => {
-        const refreshTime = 1000 * 60 * 9
-        if (userIsAuthenticated()){ // hacemos esto para que el token se actualice justo cuando el usuario carga la pagina
-            let intervalId = setInterval(async ()=>{
-                console.log('Refrescando token')
-                // await refreshToken()
-            }, refreshTime)
-            return ()=>clearInterval(intervalId) //* al retornar una funcion, hacemos que esta se ejecute cuando elcomponente se vuelva a montar
-        }
-    }, [authToken])
+
     const contextData = {
         refreshToken : refreshToken,
         user : user,
