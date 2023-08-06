@@ -13,6 +13,7 @@ import { v4 } from "uuid"
 import { saveUserDataInLocalStorage } from "../utils/saveUserDataInLocalStorage"
 import { saveNotificationsInLocalStorage } from "../utils/saveNotificationsInLocalStorage"
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
+import {loginUser} from "../utils/loginUser"
 /**
  * Pagina creada para llevar logeo de usuarios
  */

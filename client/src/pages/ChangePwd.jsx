@@ -15,7 +15,6 @@ import { v4 } from "uuid";
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_JWT_ERROR_LOG} from "../utils/constants"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import { validateJWT } from "../utils/validateJWT"
-import {refreshToken} from "../utils/refreshToken"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 
 /**
