@@ -10,11 +10,10 @@
 
 // fase 3:
     //* medio:
-        // Agregar soporte en el authContext, para que, si la respuesta del server es negativa al refrescar token, enviar al usuario a logearse
-
         // depurar codigo de timer de refresco en authToken : no sirve para na
-
         // modularizar codigo del authContext o tratar de eliminar todo ese context
+
+        // Finalizar soporte para redireccion a login cuando el refresh token este caducado
 
         // refactorizar todas las funciones de la app, buscando que solo se encarguen de 1 tarea
 
