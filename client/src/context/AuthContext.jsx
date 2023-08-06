@@ -62,7 +62,6 @@ export function AuthContextProvider({children}){
     }, [authToken])
     const contextData = {
         refreshToken : refreshToken,
-        authToken : authToken,
         user : user,
         loginUser : loginUser,
         logoutUser : logoutUser,

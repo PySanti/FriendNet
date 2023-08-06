@@ -18,6 +18,7 @@ import { saveUserDataInLocalStorage } from "../utils/saveUserDataInLocalStorage"
 import { getUserDataFromLocalStorage } from "../utils/getUserDataFromLocalStorage";
 import { dataIsDiferent } from "../utils/dataIsDiferent";
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
+import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 
 /**
  * Pagina creada para llevar perfil de usuario, tanto para
@@ -31,7 +32,7 @@ export function Profile({ updating }) {
     let [backToProfile, setBackToProfile] = useState(false);
     let [changePwd, setChangePwd] = useState(false);
     let { loadingState, startLoading, setLoadingState, successfullyLoaded } =useContext(LoadingContext);
-    const { user, authToken } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const navigate = useNavigate();
     const loadProfileData = () => {
         startLoading();
@@ -53,12 +54,10 @@ export function Profile({ updating }) {
             const sendingData = { ...data };
             if (dataIsDiferent(data, profileData)) {
                 // lodash
-                const updateUserResponse = await updateUserDataAPI( sendingData, authToken.access);
+                const updateUserResponse = await updateUserDataAPI( sendingData, getJWTFromLocalStorage().access);
                 profileData.photo_link = updateUserResponse.data.user_data_updated.photo_link
                 setProfileData(updateUserResponse.data.user_data_updated);
-                saveUserDataInLocalStorage(
-                    updateUserResponse.data.user_data_updated
-                );
+                saveUserDataInLocalStorage(updateUserResponse.data.user_data_updated);
                 successfullyLoaded();
             } else {
                 setLoadingState("Sin cambios");

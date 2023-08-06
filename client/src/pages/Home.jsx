@@ -15,11 +15,12 @@ import { Button } from "../components/Button"
 import "../styles/Home.css"
 import { getNotificationsFromLocalStorage } from "../utils/getNotificationsFromLocalStorage"
 import { removeNotificationFromLocalStorage } from "../utils/removeNotificationFromLocalStorage"
+import { getJWTFromLocalStorage } from "../utils/getJWTFromLocalStorage"
 import { getChatGlobesList } from "../utils/getChatGlobesList"
 import { removeRelatedNotifications } from "../utils/removeRelatedNotifications"
 import { saveNotificationsInLocalStorage } from "../utils/saveNotificationsInLocalStorage"
-import {verifyJWTAPI} from "../api/verifyJWT.api"
-import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, UNAUTHORIZED_STATUS_CODE} from "../utils/constants"
+import { validateJWT } from "../utils/validateJWT"
+import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
 /**
  * Pagina principal del sitio
  */
@@ -31,22 +32,27 @@ export function Home() {
     let [userList, setUserList] = useState(false)
     let [chatGlobeList, setChatGlobeList] = useState(null)
     let [goToProfile, setGoToProfile] = useState(false)
-    const {user, logoutUser, authToken, refreshToken} = useContext(AuthContext)
+    const {user, logoutUser, refreshToken} = useContext(AuthContext)
     const navigate = useNavigate()
     const loadUsersList = async ()=>{
         startLoading()
-        try{
-            let response = await getUsersListAPI(undefined, authToken.access)
-            setUserList(response.data.users_list)
-            successfullyLoaded()
-        } catch(error){
-            setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado cargando datos de usuarios!')
+        const successValidating = validateJWT(refreshToken)
+        if (successValidating){
+            try{
+                let response = await getUsersListAPI(undefined, getJWTFromLocalStorage().access)
+                setUserList(response.data.users_list)
+                successfullyLoaded()
+            } catch(error){
+                setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado cargando datos de usuarios!')
+            }
+        } else {
+            setLoadingState('Error inesperado validando JWT del usuario !')
         }
     }
     const onMsgSending = async (data)=>{
         startLoading()
         try {
-            await sendMsgAPI(clickedUser.id, data.msg, authToken.access)
+            await sendMsgAPI(clickedUser.id, data.msg, getJWTFromLocalStorage().access)
             successfullyLoaded()
             await loadMessages()
         } catch(error){
@@ -56,7 +62,7 @@ export function Home() {
     const loadMessages = async ()=>{
         startLoading()
         try{
-            const response = await getMessagesHistorialAPI(clickedUser.id, authToken.access)
+            const response = await getMessagesHistorialAPI(clickedUser.id, getJWTFromLocalStorage().access)
             if (response.data !== "no_messages_between"){
                 setMessagesHistorial(response.data.messages_hist)
             } else {
@@ -129,7 +135,7 @@ export function Home() {
                             chatGlobeList={chatGlobeList}
                             onMsgSending={onMsgSending}
                             usersListSetter={setUserList}
-                            accessToken = {authToken.access}
+                            accessToken = {getJWTFromLocalStorage().access}
                             />
                 </div>
             </div>

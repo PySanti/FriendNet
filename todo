@@ -10,12 +10,15 @@
 
 // fase 3:
     //* medio:
-        // repasar funcionamiento teorico de las JWT y el porque debemos realizar los dos requerimientos de abajo
 
         // hacer que, cuando se consuma alguna secured api, usar el verifyTokenApi para comprobar
         // el lifetime del token de acceso. En caso de que ya no sea valido el token, refrescarlo
 
         // Agregar soporte en el authContext, para que, si la respuesta del server es negativa al refrescar token, enviar al usuario a logearse
+
+        // depurar codigo de timer de refresco en authToken : no sirve para na
+
+        // refactorizar todas las funciones de la app, buscando que solo se encarguen de 1 tarea
 
         // solucionar problema de refresco de tokens (los errrores que salen de vez que cuando del authcontext)
         // eliminar uso de condicionales para validar serializers, en su lugar, usar raise_exception=True

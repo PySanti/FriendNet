@@ -14,12 +14,13 @@ import { Form } from "../components/Form";
 import { PasswordField } from "../components/PasswordField";
 import { v4 } from "uuid";
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
+import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 
 /**
  * Pagina creado para cambio de contraseña
  */
 export function ChangePwd(){
-    const {user, authToken} = useContext(AuthContext)
+    const {user} = useContext(AuthContext)
     const {register, handleSubmit, formState : {errors}} = useForm()
     const navigate = useNavigate()
     let   [backToProfile, setBackToProfile] = useState(false)
@@ -28,7 +29,7 @@ export function ChangePwd(){
         if (data['old_password'] !== data['new_password']){
             startLoading()
             try{
-                await changeUserPwdAPI(data.old_password, data.new_password, authToken.access)
+                await changeUserPwdAPI(data.old_password, data.new_password, getJWTFromLocalStorage().access)
                 successfullyLoaded()
             } catch(error){
                 if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
