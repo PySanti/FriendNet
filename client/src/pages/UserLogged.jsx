@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { Header } from "../components/Header"
 import { Button } from "../components/Button"
 import "../styles/UserLogged.css"
-import { getUsernameFromLocalStorage } from "../utils/getUsernameFromLocalStorage"
+import { getUserDataFromLocalStorage } from "../utils/getUserDataFromLocalStorage"
 
 
 /**
@@ -26,7 +26,7 @@ export function UserLogged(){
     return (
         <div className="centered-container">
             <div className="user-logged-container">
-                <Header username={getUsernameFromLocalStorage()} msg="Ya estas autenticado, ve al Home"/>
+                <Header username={getUserDataFromLocalStorage().username} msg="Ya estas autenticado, ve al Home"/>
                 <Button buttonText="Home" onClickFunction={()=>setBackToHome(true)}/>
             </div>
         </div>
