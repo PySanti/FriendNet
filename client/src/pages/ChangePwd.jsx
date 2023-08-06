@@ -13,33 +13,39 @@ import { Button } from "../components/Button";
 import { Form } from "../components/Form";
 import { PasswordField } from "../components/PasswordField";
 import { v4 } from "uuid";
-import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
+import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_JWT_ERROR_LOG} from "../utils/constants"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
+import { validateJWT } from "../utils/validateJWT"
 
 /**
  * Pagina creado para cambio de contraseña
  */
 export function ChangePwd(){
-    const {user} = useContext(AuthContext)
+    const {user, refreshToken} = useContext(AuthContext)
     const {register, handleSubmit, formState : {errors}} = useForm()
     const navigate = useNavigate()
     let   [backToProfile, setBackToProfile] = useState(false)
     let   {loadingState, setLoadingState, successfullyLoaded, startLoading} = useContext(LoadingContext)
     const changePwd = handleSubmit(async (data)=>{
-        if (data['old_password'] !== data['new_password']){
-            startLoading()
-            try{
-                await changeUserPwdAPI(data.old_password, data.new_password, getJWTFromLocalStorage().access)
-                successfullyLoaded()
-            } catch(error){
-                if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
-                    setLoadingState(BASE_FALLEN_SERVER_LOG)
-                } else {
-                    setLoadingState(error.response.data.error === 'invalid_pwd' ? "Error, la contraseña actual es invalida !" : 'Error inesperado en respuesta de servidor')
-                } 
+        const successValidating = validateJWT(refreshToken)
+        if (successValidating){
+            if (data['old_password'] !== data['new_password']){
+                startLoading()
+                try{
+                    await changeUserPwdAPI(data.old_password, data.new_password, getJWTFromLocalStorage().access)
+                    successfullyLoaded()
+                } catch(error){
+                    if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
+                        setLoadingState(BASE_FALLEN_SERVER_LOG)
+                    } else {
+                        setLoadingState(error.response.data.error === 'invalid_pwd' ? "Error, la contraseña actual es invalida !" : 'Error inesperado en respuesta de servidor')
+                    } 
+                }
+            } else {
+                setLoadingState("No hay cambios")
             }
         } else {
-            setLoadingState("No hay cambios")
+            setLoadingState(BASE_JWT_ERROR_LOG)
         }
     })
     useEffect(()=>{
