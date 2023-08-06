@@ -4,7 +4,7 @@ import jwt_decode from "jwt-decode";
 import { refreshTokenAPI } from "../api/refreshToken.api";
 import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { disconnectUserAPI } from "../api/disconnectUser.api";
-
+import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 
 export const AuthContext = createContext()
 
@@ -34,8 +34,8 @@ export function AuthContextProvider({children}){
         }
         return response
     }
-    const logoutUser = ()=>{
-        disconnectUserAPI( authToken.access)
+    const logoutUser = async ()=>{
+        await disconnectUserAPI(getJWTFromLocalStorage().access)
         localStorage.clear()
         updateContextData(null)
     }

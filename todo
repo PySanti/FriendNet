@@ -18,6 +18,8 @@
 
         // depurar codigo de timer de refresco en authToken : no sirve para na
 
+        // modularizar codigo del authContext o tratar de eliminar todo ese context
+
         // refactorizar todas las funciones de la app, buscando que solo se encarguen de 1 tarea
 
         // Cambiar nombres de variables con _

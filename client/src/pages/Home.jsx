@@ -32,7 +32,7 @@ export function Home() {
     let [userList, setUserList] = useState(false)
     let [chatGlobeList, setChatGlobeList] = useState(null)
     let [goToProfile, setGoToProfile] = useState(false)
-    const {user, logoutUser} = useContext(AuthContext)
+    const {user, logoutUser, refreshToken} = useContext(AuthContext)
     const navigate = useNavigate()
     const loadUsersList = async ()=>{
         startLoading()
@@ -66,6 +66,16 @@ export function Home() {
             successfullyLoaded()
         } catch(error){
             setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado buscando chat!')
+        }
+    }
+    const onLogout = async ()=>{
+        startLoading()
+        const successValidating = await validateJWT(refreshToken)
+        if (successValidating){ 
+            await logoutUser()
+            successfullyLoaded()
+        } else {
+            setLoadingState(BASE_JWT_ERROR_LOG)
         }
     }
     const onNotificationDelete = (notification)=>{
@@ -117,7 +127,7 @@ export function Home() {
                     <Header username={user.username}/>
                     <div className="buttons-container">
                         <NotificationsContainer notificationList={notifications} onNotificationClick={onNotificationClick} onNotificationDelete={onNotificationDelete} />
-                        <Button buttonText="Salir" onClickFunction={logoutUser}/>
+                        <Button buttonText="Salir" onClickFunction={onLogout}/>
                         <Button buttonText="Perfil" onClickFunction={()=>{setGoToProfile(true)}}/>
                     </div>
                     <Loader state={loadingState}/>
