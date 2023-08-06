@@ -46,12 +46,17 @@ export function Home() {
     }
     const onMsgSending = async (data)=>{
         startLoading()
-        try {
-            await sendMsgAPI(clickedUser.id, data.msg, getJWTFromLocalStorage().access)
-            successfullyLoaded()
-            await loadMessages()
-        } catch(error){
-            setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
+        const successValidating = await validateJWT(refreshToken)
+        if (successValidating){
+            try {
+                await sendMsgAPI(clickedUser.id, data.msg, getJWTFromLocalStorage().access)
+                successfullyLoaded()
+                await loadMessages()
+            } catch(error){
+                setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
+            }
+        } else {
+            setLoadingState(BASE_JWT_ERROR_LOG)
         }
     }
     const loadMessages = async ()=>{
