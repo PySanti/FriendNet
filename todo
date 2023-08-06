@@ -10,22 +10,19 @@
 
 // fase 3:
     //* medio:
-        // revisar y refactorizar todo el client buscando rastros de authContext
+        // refactorizar toda la aplicacion buscando:
+            ~ Repasar ultimos cambios
+            ~ Rastro de authContext
+            ~ Funcionalidades inutiles
+            ~ Cambiar sistema de UserInterface
+            ~ Reducir codigo
+            ~ Hacer que las funciones solo se encarguen de realizar 1 tarea
+            ~ Cambiar nombres de variables con _
+            ~ eliminar uso de condicionales para validar serializers, en su lugar, usar raise_exception=True
 
         // Finalizar soporte para redireccion a login cuando el refresh token este caducado
-
-        // refactorizar todas las funciones de la app, buscando que solo se encarguen de 1 tarea
-
-        // Cambiar nombres de variables con _
-
-        // solucionar problema de refresco de tokens (los errrores que salen de vez que cuando del authcontext)
-        // eliminar uso de condicionales para validar serializers, en su lugar, usar raise_exception=True
-        // refactorizar UserInterface y UserList: demasiados parametros
-        // UserFilter y Home, muchos llamados al get_user_list
-        // modificar tambien datos de user en el authContext cuando se actualice el usuario
-
         // cachear mensajes para mayor velocidad de envio
-        // revisar llamadas a api's innecesarias en un uso comun de la aplicacion
+        // revisar llamadas a api's innecesarias en un uso comun de la aplicacion (get_users_list)
         
 
 
