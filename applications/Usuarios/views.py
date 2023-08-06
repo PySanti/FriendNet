@@ -96,8 +96,6 @@ class GetUserDetailAPI(APIView):
             print(serialized_data._errors)
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status=status.HTTP_400_BAD_REQUEST)
 
-
-
 class GetUsersListAPI(APIView):
     serializer_class        = GetUsersListSerializer
     authentication_classes  = []

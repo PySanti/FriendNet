@@ -10,10 +10,6 @@
 
 // fase 3:
     //* medio:
-
-        // hacer que, cuando se consuma alguna secured api, usar el verifyTokenApi para comprobar
-        // el lifetime del token de acceso. En caso de que ya no sea valido el token, refrescarlo
-
         // Agregar soporte en el authContext, para que, si la respuesta del server es negativa al refrescar token, enviar al usuario a logearse
 
         // depurar codigo de timer de refresco en authToken : no sirve para na
