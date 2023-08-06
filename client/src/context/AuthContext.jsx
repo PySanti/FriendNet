@@ -4,7 +4,9 @@ import jwt_decode from "jwt-decode";
 import { refreshTokenAPI } from "../api/refreshToken.api";
 import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { disconnectUserAPI } from "../api/disconnectUser.api";
+import {UNAUTHORIZED_STATUS_CODE} from "../utils/constants"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
+import { useNavigate } from "react-router-dom"
 
 export const AuthContext = createContext()
 
@@ -17,6 +19,7 @@ export function AuthContextProvider({children}){
     // se comprueba que las credenciales del usuario no esten ya en el localStorage para
     // evitar que siempre que se recargue el context, se anulen nuevamente las variables que lo conforman
     let [authToken, setAuthToken]   = useState(()=>userStorageData ? JSON.parse(userStorageData) : null)
+    const   navigate                = useNavigate()
     let [user, setUser]             = useState(()=>userStorageData ? jwt_decode(JSON.parse(userStorageData).access) : null)
     const updateContextData=(data)=>{
         setAuthToken(data) // context
@@ -46,8 +49,9 @@ export function AuthContextProvider({children}){
             const response = await refreshTokenAPI(authToken.refresh)
             updateContextData(response.data)
         } catch(error) {
-            // comprobar si el token esta caducado, en ese caso, enviar al usuario a logearse
-            console.error('Error inesperado al refrescar tokens')
+            if (error.response.status === UNAUTHORIZED_STATUS_CODE){
+                navigate('/')
+            }
         }
     }
     useEffect(() => {
