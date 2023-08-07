@@ -1,5 +1,4 @@
 USERS_LIST_ATTRS = ["id", "username", "is_online", "photo_link"]
-
 USER_SHOWABLE_FIELDS = [
     "username",
     "email",

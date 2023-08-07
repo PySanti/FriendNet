@@ -37,6 +37,10 @@ export function Home() {
     let [user] = useState(getUserDataFromLocalStorage())
     let [goToProfile, setGoToProfile] = useState(false)
     const navigate = useNavigate()
+    const addMessage = (new_msg)=>{
+        messagesHistorial.push(new_msg)
+        setMessagesHistorial(messagesHistorial)
+    }
     const loadUsersList = async ()=>{
         startLoading()
         try{
@@ -53,9 +57,8 @@ export function Home() {
         if (successValidating === true){
             try {
                 const response = await sendMsgAPI(clickedUser.id, data.msg, getJWTFromLocalStorage().access)
-                console.log(response.data.sended_msg)
+                addMessage(response.data.sended_msg)
                 successfullyLoaded()
-                await loadMessages()
             } catch(error){
                 setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
             }
