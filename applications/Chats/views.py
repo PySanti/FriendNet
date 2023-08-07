@@ -54,13 +54,16 @@ class SendMsgAPI(APIView):
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
-            sender_user = request.user
-            receiver_user = Usuarios.objects.get(id=request.data['receiver_id'])
-            if (not Notifications.objects.hasNotification(receiver_user, sender_user)):
-                Notifications.objects.addNotification(f"Tienes mensajes nuevos de {sender_user.username}", receiver_user, sender_user)
-            new_message = Messages.objects.createMessage(parent=sender_user, content=request.data['msg'])
-            Chats.objects.sendMessage(sender_user, receiver_user,new_message)
-            return JsonResponse({'sended_msg' : Messages.objects.filter(id=new_message.id).values()[0]}, status=status.HTTP_200_OK)
+            try:
+                sender_user = request.user
+                receiver_user = Usuarios.objects.get(id=request.data['receiver_id'])
+                if (not Notifications.objects.hasNotification(receiver_user, sender_user)):
+                    Notifications.objects.addNotification(f"Tienes mensajes nuevos de {sender_user.username}", receiver_user, sender_user)
+                new_message = Messages.objects.createMessage(parent=sender_user, content=request.data['msg'])
+                Chats.objects.sendMessage(sender_user, receiver_user,new_message)
+                return JsonResponse({'sended_msg' : Messages.objects.filter(id=new_message.id).values()[0]}, status=status.HTTP_200_OK)
+            except Exception:
+                return Response(BASE_UNEXPECTED_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
         else:
             print(serialized_data._errors)
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
