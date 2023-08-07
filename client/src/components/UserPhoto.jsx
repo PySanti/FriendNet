@@ -11,7 +11,6 @@ import "../styles/UserPhoto.css";
 import { Button } from "./Button";
 import { PropTypes } from "prop-types";
 import { checkImageFormat } from "../utils/checkImageFormat";
-// Import required actions.
 
 export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
     let [errorMsg, setErrorMsg] = useState(null);
@@ -64,22 +63,9 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
                         <h3 className="img-input-error-msg">{errorMsg}</h3>
                     </div>
                     <div className="user-photo-input-container">
-                        <input
-                            id="photo-input"
-                            className="user-photo-input"
-                            type="file"
-                            onChange={onPhotoChange}
-                        />
-                        <Button
-                            buttonText="Seleccionar"
-                            onClickFunction={() =>
-                                document.getElementById("photo-input").click()
-                            }
-                        />
-                        <Button
-                            buttonText="Borrar"
-                            onClickFunction={deleteCurrentPhoto}
-                        />
+                        <input id="photo-input" className="user-photo-input" type="file" onChange={onPhotoChange}/>
+                        <Button buttonText="Seleccionar" onClickFunction={() => document.getElementById("photo-input").click() }/>
+                        <Button buttonText="Borrar" onClickFunction={deleteCurrentPhoto} />
                     </div>
                 </>
             )}

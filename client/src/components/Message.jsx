@@ -1,10 +1,11 @@
+import "../styles/Message.css"
+import {PropTypes} from "prop-types"
+
 /**
  *  Componente creado para mensajes individuales 
  * @param {String} content contenido del mensaje
  * @param {Boolean} sessionUserMsg sera true en caso de que sea un mensaje enviado por el dueño de la sesión
  */
-import "../styles/Message.css"
-import {PropTypes} from "prop-types"
 export function Message({content, sessionUserMsg}){
     const messageCls = "message"
     return (

@@ -5,10 +5,9 @@ import { BACKEND_URL } from '../utils/constants'
 /**
  *  LLama a api de actualizacion de datos
  * @param {Object} data nuevos datos del usuario  
- * @returns {Promise} la promesa del servidor
+ * @param {String} accessToken 
  */
 export async function updateUserDataAPI(data, accessToken){
-    console.log(accessToken)
     config.headers = {
         'Content-Type': 'multipart/form-data',
         'Authorization' : `Bearer ${accessToken}`

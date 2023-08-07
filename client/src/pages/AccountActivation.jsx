@@ -5,18 +5,18 @@ import { useForm } from "react-hook-form";
 import { useContext, useEffect, useState } from "react";
 // api's
 import { activateUserAPI } from "../api/activateUser.api";
-import { FormField } from "../components/FormField";
 import { generateActivationCode } from "../utils/generateActivationCode";
 import { userIsAuthenticated } from "../utils/userIsAuthenticated";
+import { sendMail } from "../utils/sendMail";
 import { UserLogged } from "./UserLogged";
 import { UserNotLogged } from "./UserNotLogged";
 import { Loader } from "../components/Loader";
+import { ActivationCodeField } from "../components/ActivationCodeField";
 import { Form } from "../components/Form";
 import { LoadingContext } from "../context/LoadingContext";
 import { Button } from "../components/Button";
 import { v4 } from "uuid";
-import {sendActivationEmailAPI} from "../api/sendActivationEmail.api"
-import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
+import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_ACTIVATION_CODE_CONSTRAINTS} from "../utils/constants"
 
 /**
  * Pagina creada para llevar activacion de cuenta
@@ -30,12 +30,6 @@ export function AccountActivation() {
     const props = useLocation().state;
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }} = useForm();
-
-    const sendMail = async (activationCode) => {
-        // await sendActivationEmailAPI(props.userEmail, props.username, activationCode)
-        console.log(activationCode);
-    };
-
     const onSubmit = handleSubmit(async (data) => {
         startLoading();
         if (Number(data.activation_code) === Number(realActivationCode)) {
@@ -54,7 +48,7 @@ export function AccountActivation() {
         setLoadingState(false);
         // se enviara el correo de activacion la primera vez que se monte el componente
         const activationCode = generateActivationCode();
-        sendMail(activationCode);
+        sendMail(activationCode, props.userEmail, props.username);
         setRealActivationCode(activationCode);
     }, []);
     useEffect(() => {
@@ -81,58 +75,10 @@ export function AccountActivation() {
         return (
             <div className="centered-container">
                 <div className="account-activation-container">
-                    <Header
-                        msg={`Correo de activación enviado a ${props.userEmail}`}
-                    />
+                    <Header username={props.username} msg={`Correo de activación enviado a ${props.userEmail}`}/>
                     <Loader state={loadingState} />
-                    <Form
-                        onSubmitFunction={onSubmit}
-                        buttonMsg="Activar"
-                        buttonsList={[
-                            <Button
-                                key={v4()}
-                                buttonText="Volver"
-                                onClickFunction={() => setGoBack(true)}
-                            />,
-                            <Button
-                                key={v4()}
-                                buttonText="Cambiar correo"
-                                onClickFunction={() => setGoChangeEmail(true)}
-                            />,
-                        ]}
-                    >
-                        <FormField
-                            label="Codigo "
-                            errors={
-                                errors.activationCode &&
-                                errors.activationCode.message
-                            }
-                        >
-                            <input
-                                type="text"
-                                maxLength={6}
-                                minLength={1}
-                                name="activationCode"
-                                id="activationCode"
-                                {...register("activationCode", {
-                                    required: {
-                                        value: true,
-                                        message:
-                                            "Por favor ingresa un código de activación",
-                                    },
-                                    pattern: {
-                                        value: /^-?\d+$/,
-                                        message:
-                                            "Por favor, ingresa un codigo valido",
-                                    },
-                                    minLength: {
-                                        value: 6,
-                                        message:
-                                            "Debes ingresar al menos 6 caracteres",
-                                    },
-                                })}
-                            />
-                        </FormField>
+                    <Form onSubmitFunction={onSubmit} buttonMsg="Activar" buttonsList={[<Button key={v4()} buttonText="Volver" onClickFunction={() => setGoBack(true)} />,<Button key={v4()} buttonText="Cambiar correo" onClickFunction={() => setGoChangeEmail(true)}/>]}>
+                        <ActivationCodeField errors={errors.activationCode && errors.activationCode.message} registerObject={register("activationCode", BASE_ACTIVATION_CODE_CONSTRAINTS)}/>
                     </Form>
                 </div>
             </div>

@@ -3,6 +3,7 @@ import "../styles/NotificationsContainer.css"
 import {  useState } from "react"
 import { v4 } from "uuid"
 import { Notification } from "./Notification"
+
 /**
  * Componente creado para contener las notificaciones del usuarios
  * @param {Array} notificationList lista de notificaciones

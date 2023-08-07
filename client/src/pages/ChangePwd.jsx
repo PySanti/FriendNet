@@ -69,8 +69,8 @@ export function ChangePwd(){
                     <Form onSubmitFunction={changePwd} buttonMsg="Enviar" buttonsList={[
                         <Button key={v4()} buttonText="Volver" onClickFunction={()=>setBackToProfile(true)}/>
                     ]}>
-                        <PasswordField label="Contrasenia actual" errors={errors.oldPwd && errors.oldPwd.message} name="oldPwd" registerObject={register("oldPwd", BASE_PASSWORD_CONSTRAINTS)}/>
-                        <PasswordField label="Nueva contraseña" errors={errors.newPwd && errors.newPwd.message} name="newPwd" registerObject={register("newPwd", BASE_PASSWORD_CONSTRAINTS)}/>
+                        <PasswordField label="Contrasenia actual" errors={errors.oldPwd && errors.oldPwd.message} registerObject={register("oldPwd", BASE_PASSWORD_CONSTRAINTS)}/>
+                        <PasswordField label="Nueva contraseña" errors={errors.newPwd && errors.newPwd.message} registerObject={register("newPwd", BASE_PASSWORD_CONSTRAINTS)}/>
                     </Form>
                 </div>
             </div>

@@ -22,6 +22,10 @@ Header.propTypes = {
     username : PropTypes.string,
     msg : PropTypes.string
 }
+Header.defaultProps = {
+    username : undefined,
+    msg : undefined
+}
 
 
 

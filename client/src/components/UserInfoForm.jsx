@@ -20,7 +20,7 @@ import { EmailField } from "./EmailField";
  * @param {Function} onFormSubmit funcion que se ejecutara cuando se envie el formulario
  * @param {Array} extraButtons arreglo de buttons extra que se quiera agregar al formulario
  */
-export function UserInfoForm({ userData, updating, onFormSubmit, extraButtons, }) {
+export function UserInfoForm({ userData, updating, onFormSubmit, extraButtons}) {
     let [currentPhotoFile, setCurrentPhotoFile] = useState(userData ? userData.photo_link : null);
     const { register, handleSubmit, formState: { errors }, watch} = useForm();
     const onSubmit = handleSubmit((data) => {
@@ -53,8 +53,8 @@ export function UserInfoForm({ userData, updating, onFormSubmit, extraButtons, }
                     <EmailField         defaultValue={userData ? userData.email : "juanca@gmail.com"}       errors={errors.email && errors.email.message}               registerObject={register(    "email",    BASE_EMAIL_CONSTRAINTS)}/>
                     {!updating && (
                         <>
-                            <PasswordField label="Contraseña"           name="password"     errors={errors.password && errors.password.message } registerObject={register("password", {     ...BASE_PASSWORD_CONSTRAINTS, validate: passwordChecking("password"), })}/>
-                            <PasswordField label="Confirmar Contraseña" name="confirmPwd"   errors={errors.confirmPwd && errors.confirmPwd.message } registerObject={register("confirmPwd", {     ...BASE_PASSWORD_CONSTRAINTS, validate: passwordChecking("confirmPwd"), })} />
+                            <PasswordField label="Contraseña"           errors={errors.password && errors.password.message } registerObject={register("password", {     ...BASE_PASSWORD_CONSTRAINTS, validate: passwordChecking("password"), })}/>
+                            <PasswordField label="Confirmar Contraseña" errors={errors.confirmPwd && errors.confirmPwd.message } registerObject={register("confirmPwd", {     ...BASE_PASSWORD_CONSTRAINTS, validate: passwordChecking("confirmPwd"), })} />
                         </>
                     )}
                 </>

@@ -19,6 +19,9 @@ export function Loader({state}){
 }
 
 
+Loader.propTypes = {
+    state : PropTypes.string
+}
 Loader.defaultProps = {
     state : undefined
 }

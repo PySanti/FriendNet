@@ -8,6 +8,23 @@ export const BASE_MESSAGE_MAX_LENGTH = 200;
 export const BASE_USERNAME_MAX_LENGTH = 15;
 export const BASE_USERNAME_MIN_LENGTH = 6;
 export const BASE_PASSWORD_MIN_LENGTH = 10;
+export const BASE_ACTIVATION_CODE_CONSTRAINTS = {
+    required: {
+        value: true,
+        message:
+            "Por favor ingresa un código de activación",
+    },
+    pattern: {
+        value: /^-?\d+$/,
+        message:
+            "Por favor, ingresa un codigo valido",
+    },
+    minLength: {
+        value: 6,
+        message:
+            "Debes ingresar al menos 6 caracteres",
+    },
+}
 
 
 export const BASE_EMAIL_CONSTRAINTS = {

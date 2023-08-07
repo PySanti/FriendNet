@@ -17,7 +17,7 @@ export function LoginForm({handleLogin, extraButtons}){
     return (
         <Form onSubmitFunction={onSubmit} buttonMsg={"Acceder"} buttonsList={extraButtons} > 
             <UsernameField errors={errors.username && errors.username.message} registerObject={register("username", BASE_USERNAME_CONSTRAINTS)}/>
-            <PasswordField label="Contraseña" name="password"  errors={errors.password && errors.password.message} registerObject={register("password", BASE_PASSWORD_CONSTRAINTS)}/>
+            <PasswordField label="Contraseña"  errors={errors.password && errors.password.message} registerObject={register("password", BASE_PASSWORD_CONSTRAINTS)}/>
         </Form>
     )
 }

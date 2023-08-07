@@ -1,3 +1,6 @@
+import {PropTypes} from "prop-types"
+import { v4 } from "uuid"
+
 /**
  * Componente creado para ser usado en conjunto con api getUserDetail
  * Toma los elementos de props.userData y retorna una lista de 
@@ -6,9 +9,6 @@
  * @param {Array} nonShowableAttrs lista de atributos de objeto que no se formatearan
  * @param {Object} attrsTraductions objeto con atributo actual(clave) : traduccion (valor)
  */
-import {PropTypes} from "prop-types"
-import { v4 } from "uuid"
-
 export function UserData({userData, nonShowableAttrs, attrsTraductions}){
     const formatingFunction = (key)=>{
         if (!(nonShowableAttrs.includes(key))){

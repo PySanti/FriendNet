@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 
 
 /**
- * Filtro de busqueda de usuarios en el UsersInterface -> UsersList
+ * Filtro de busqueda de usuarios
  * @param {Function} usersListSetter 
  * @param {String} sessionUserId 
  */

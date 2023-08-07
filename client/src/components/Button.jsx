@@ -9,10 +9,9 @@ import {PropTypes} from "prop-types"
 export function Button({buttonText, onClickFunction, isSubmit}){
     return (
         <div className="button-container">
-            <button 
-                className="button"
-                type={isSubmit ? "submit" : "button"}
-                onClick={!isSubmit ? onClickFunction : null}>{buttonText}</button>
+            <button  className="button" type={isSubmit ? "submit" : "button"} onClick={!isSubmit ? onClickFunction : null}>
+                {buttonText}
+            </button>
         </div>
     )
 }

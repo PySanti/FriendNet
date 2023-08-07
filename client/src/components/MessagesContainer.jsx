@@ -27,7 +27,7 @@ export function MessagesContainer({messages, sessionUserId }){
 
 MessagesContainer.propTypes = {
     messages : PropTypes.array,
-    sessionUserId : PropTypes.number 
+    sessionUserId : PropTypes.number.isRequired 
 }
 MessagesContainer.defaultProps = {
     messages : undefined
