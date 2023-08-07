@@ -80,7 +80,7 @@ export function Home() {
         startLoading()
         const successValidating = await validateJWT()
         if (successValidating){ 
-            await logoutUser()
+            await logoutUser(true)
             successfullyLoaded()
         } else {
             setLoadingState(BASE_JWT_ERROR_LOG)
