@@ -52,7 +52,8 @@ export function Home() {
         const successValidating = await validateJWT()
         if (successValidating === true){
             try {
-                await sendMsgAPI(clickedUser.id, data.msg, getJWTFromLocalStorage().access)
+                const response = await sendMsgAPI(clickedUser.id, data.msg, getJWTFromLocalStorage().access)
+                console.log(response.data.sended_msg)
                 successfullyLoaded()
                 await loadMessages()
             } catch(error){
@@ -73,7 +74,6 @@ export function Home() {
             try{
                 const response = await getMessagesHistorialAPI(clickedUser.id, getJWTFromLocalStorage().access)
                 setMessagesHistorial(response.data !== "no_messages_between" ? response.data.messages_hist : null)
-                console.log(response.data.messages_hist)
                 successfullyLoaded()
             } catch(error){
                 setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado buscando chat!')

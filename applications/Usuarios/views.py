@@ -87,7 +87,7 @@ class GetUserDetailAPI(APIView):
                 if (check_password(request.data['password'], user.password)):
                     formated_user_data = Usuarios.objects.getFormatedUserData(user)
                     Usuarios.objects.deleteAllNotifications(user)
-                    return JsonResponse({'user' : formated_user_data})
+                    return JsonResponse({'user' : formated_user_data}, status=status.HTTP_200_OK)
                 else:
                     return Response({'error' : 'user_not_exists'}, status.HTTP_400_BAD_REQUEST)
             else:
@@ -106,7 +106,7 @@ class GetUsersListAPI(APIView):
             users_list = Usuarios.objects.filter(is_active=True).exclude(id=serialized_data.data['session_user_id'])
             if 'user_keyword' in serialized_data.data:
                 users_list = users_list.filter(username__icontains=serialized_data.data['user_keyword'])
-            return JsonResponse({"users_list": list(users_list.values(*USERS_LIST_ATTRS))})
+            return JsonResponse({"users_list": list(users_list.values(*USERS_LIST_ATTRS))}, status=status.HTTP_200_OK)
         else:
             print(serialized_data._errors)
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)

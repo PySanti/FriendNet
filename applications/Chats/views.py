@@ -36,7 +36,7 @@ class GetMessagesHistorialAPI(APIView):
             # request.user = sender_user
             messages_hist = Chats.objects.getMessagesHistorial(request.user.id, request.data['receiver_id'])
             if (messages_hist):
-                return JsonResponse({"messages_hist" : list(messages_hist.values())})
+                return JsonResponse({"messages_hist" : list(messages_hist.values())}, status=status.HTTP_200_OK)
             else:
                 return Response('no_messages_between', status.HTTP_200_OK)
         else:
@@ -56,7 +56,7 @@ class SendMsgAPI(APIView):
                 Notifications.objects.addNotification(f"Tienes mensajes nuevos de {sender_user.username}", receiver_user, sender_user)
             new_message = Messages.objects.createMessage(parent=sender_user, content=request.data['msg'])
             Chats.objects.sendMessage(sender_user, receiver_user,new_message)
-            return Response({'success' : "msg_sended"}, status.HTTP_200_OK)
+            return JsonResponse({'sended_msg' : {i[0]:i[1] for i in new_message.__dict__.items() if i[0] in ["parent_id", "content", "id"]}}, status=status.HTTP_200_OK)
         else:
             print(serialized_data._errors)
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
