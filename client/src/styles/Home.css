@@ -6,3 +6,12 @@
 .buttons-container > *{
     padding : 0rem 1rem;
 }
+.users-interface-container{
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+}
+.users-interface-container > *{
+    border : 1px solid #000;
+    width:  80%;
+}

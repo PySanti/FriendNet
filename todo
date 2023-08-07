@@ -11,7 +11,6 @@
 // fase 3:
     //* medio:
         // refactorizar toda la aplicacion buscando:
-            ~ Funcionalidades inutiles
             ~ Cambiar sistema de UserInterface
             ~ Reducir codigo
             ~ Hacer que las funciones solo se encarguen de realizar 1 tarea

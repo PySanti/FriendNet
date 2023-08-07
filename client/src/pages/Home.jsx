@@ -8,8 +8,9 @@ import { LoadingContext } from "../context/LoadingContext"
 import { getMessagesHistorialAPI } from "../api/getMessagesHistorial.api"
 import { Loader } from "../components/Loader"
 import { sendMsgAPI } from "../api/sendMsg.api"
-import { UsersInterface } from "../components/UsersInterface"
 import { NotificationsContainer } from "../components/NotificationsContainer"
+import { UsersList } from "../components/UsersList"
+import { Chat } from "../components/Chat"
 import { Button } from "../components/Button"
 import "../styles/Home.css"
 import { getNotificationsFromLocalStorage } from "../utils/getNotificationsFromLocalStorage"
@@ -142,17 +143,23 @@ export function Home() {
                         <Button buttonText="Perfil" onClickFunction={()=>{setGoToProfile(true)}}/>
                     </div>
                     <Loader state={loadingState}/>
-                    <UsersInterface 
-                            usersList={userList} 
-                            onUserButtonClick={onUserButtonClick} 
-                            sessionUserId={user.id} 
-                            clickedUser={clickedUser} 
-                            messagesHistorial={messagesHistorial} 
-                            chatGlobeList={chatGlobeList}
-                            onMsgSending={onMsgSending}
-                            usersListSetter={setUserList}
-                            accessToken = {getJWTFromLocalStorage().access}
-                            />
+                    <div className="users-interface-container">
+                        {userList && 
+                            <>
+                                <UsersList 
+                                    usersList={userList} 
+                                    onClickEvent={onUserButtonClick} 
+                                    chatGlobeList={chatGlobeList} 
+                                    usersListSetter={setUserList} 
+                                    sessionUserId={user.id}/>
+                                <Chat 
+                                    chatingUser={clickedUser} 
+                                    messages={messagesHistorial} 
+                                    sessionUserId={user.id} 
+                                    onMsgSending={onMsgSending}/>
+                            </>
+                        }
+                    </div>
                 </div>
             </div>
         )
