@@ -15,13 +15,14 @@
     //* dificil
         // usar paginacion
         // encriptar formularios de react
+        // agregar mas mensajes de error al realizar acciones en el backend usando try-except (al enviar email por ejemplo)
+
+
         // usar webSockets para mensajes
         // user webSockets para actualizacion de notificaciones
-        // agregar mas mensajes de error al realizar acciones en el backend usando try-except (al enviar email por ejemplo)
 
         // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
         // ActivateUser, ChangeEmailForActivation, GetUserDetail 
-
 
         // testear todas las funcionalidades de la aplicacion y hacer respectivos refactors
 
