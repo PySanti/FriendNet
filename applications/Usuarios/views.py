@@ -45,10 +45,13 @@ class CheckExistingUserAPI(APIView):
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
-            if Usuarios.objects.userExists(username=request.data['username'], email=request.data['email']):
-                return Response({'existing' : 'true'}, status.HTTP_200_OK)
-            else:
-                return Response({'existing' : 'false'}, status.HTTP_200_OK)
+            try:
+                if Usuarios.objects.userExists(username=request.data['username'], email=request.data['email']):
+                    return Response({'existing' : 'true'}, status.HTTP_200_OK)
+                else:
+                    return Response({'existing' : 'false'}, status.HTTP_200_OK)
+            except Exception:
+                return BASE_UNEXPECTED_ERROR_RESPONSE
         else:
             print(serialized_data._errors)
             return BASE_SERIALIZER_ERROR_RESPONSE
@@ -83,16 +86,19 @@ class GetUserDetailAPI(APIView):
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
-            if Usuarios.objects.userExists(request.data['username']):
-                user = Usuarios.objects.get(username=request.data['username'])
-                if (check_password(request.data['password'], user.password)):
-                    formated_user_data = Usuarios.objects.getFormatedUserData(user)
-                    Usuarios.objects.deleteAllNotifications(user)
-                    return JsonResponse({'user' : formated_user_data}, status=status.HTTP_200_OK)
+            try:
+                if Usuarios.objects.userExists(request.data['username']):
+                    user = Usuarios.objects.get(username=request.data['username'])
+                    if (check_password(request.data['password'], user.password)):
+                        formated_user_data = Usuarios.objects.getFormatedUserData(user)
+                        Usuarios.objects.deleteAllNotifications(user)
+                        return JsonResponse({'user' : formated_user_data}, status=status.HTTP_200_OK)
+                    else:
+                        return Response({'error' : 'user_not_exists'}, status.HTTP_400_BAD_REQUEST)
                 else:
                     return Response({'error' : 'user_not_exists'}, status.HTTP_400_BAD_REQUEST)
-            else:
-                return Response({'error' : 'user_not_exists'}, status.HTTP_400_BAD_REQUEST)
+            except Exception:
+                return BASE_UNEXPECTED_ERROR_RESPONSE
         else:
             print(serialized_data._errors)
             return BASE_SERIALIZER_ERROR_RESPONSE
@@ -104,10 +110,13 @@ class GetUsersListAPI(APIView):
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
-            users_list = Usuarios.objects.filter(is_active=True).exclude(id=serialized_data.data['session_user_id'])
-            if 'user_keyword' in serialized_data.data:
-                users_list = users_list.filter(username__icontains=serialized_data.data['user_keyword'])
-            return JsonResponse({"users_list": list(users_list.values(*USERS_LIST_ATTRS))}, status=status.HTTP_200_OK)
+            try:
+                users_list = Usuarios.objects.filter(is_active=True).exclude(id=serialized_data.data['session_user_id'])
+                if 'user_keyword' in serialized_data.data:
+                    users_list = users_list.filter(username__icontains=serialized_data.data['user_keyword'])
+                return JsonResponse({"users_list": list(users_list.values(*USERS_LIST_ATTRS))}, status=status.HTTP_200_OK)
+            except Exception:
+                return BASE_UNEXPECTED_ERROR_RESPONSE
         else:
             print(serialized_data._errors)
             return BASE_SERIALIZER_ERROR_RESPONSE
@@ -119,13 +128,16 @@ class ChangeEmailForActivationAPI(APIView):
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
-            serialized_data = serialized_data.data
-            if (Usuarios.objects.userExists(email=serialized_data['new_email'])):
-                return Response({'error' : 'email_exists'}, status.HTTP_400_BAD_REQUEST)
-            else:
-                user = Usuarios.objects.get(id=serialized_data['user_id'])
-                Usuarios.objects.setEmail(user, serialized_data['new_email'])
-                return Response({'success' : 'email_setted'}, status.HTTP_200_OK)
+            try:
+                serialized_data = serialized_data.data
+                if (Usuarios.objects.userExists(email=serialized_data['new_email'])):
+                    return Response({'error' : 'email_exists'}, status.HTTP_400_BAD_REQUEST)
+                else:
+                    user = Usuarios.objects.get(id=serialized_data['user_id'])
+                    Usuarios.objects.setEmail(user, serialized_data['new_email'])
+                    return Response({'success' : 'email_setted'}, status.HTTP_200_OK)
+            except Exception:
+                return BASE_UNEXPECTED_ERROR_RESPONSE
         else:
             return BASE_SERIALIZER_ERROR_RESPONSE
 class ActivateUserAPI(APIView):
@@ -139,7 +151,7 @@ class ActivateUserAPI(APIView):
                 Usuarios.objects.activateUser(Usuarios.objects.get(id=request.data['user_id']))
                 return Response({'success' : 'user_activated'}, status.HTTP_200_OK)
             except:
-                return Response({'error' : 'error_activating_user'}, status.HTTP_500_INTERNAL_SERVER_ERROR) 
+                return BASE_UNEXPECTED_ERROR_RESPONSE
         else:
             print(serialized_data._errors)
             return BASE_SERIALIZER_ERROR_RESPONSE
@@ -150,13 +162,15 @@ class SendActivationEmailAPI(APIView):
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if (serialized_data.is_valid()):
-            send_mail(
-                subject         =   "Activa tu cuenta", 
-                message         =   f"Codigo : {serialized_data.data['activation_code']}", 
-                from_email      =   "friendnetcorp@gmail.com", 
-                recipient_list  =   [serialized_data.data['user_email']])
-
-            return Response({"email_sended" : True}, status.HTTP_200_OK)
+            try:
+                send_mail(
+                    subject         =   "Activa tu cuenta", 
+                    message         =   f"Codigo : {serialized_data.data['activation_code']}", 
+                    from_email      =   "friendnetcorp@gmail.com", 
+                    recipient_list  =   [serialized_data.data['user_email']])
+                return Response({"email_sended" : True}, status.HTTP_200_OK)
+            except Exception:
+                return BASE_UNEXPECTED_ERROR_RESPONSE
         else:
             print(serialized_data._errors)
             return BASE_SERIALIZER_ERROR_RESPONSE
@@ -197,12 +211,15 @@ class ChangeUserPwdAPI(APIView):
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
-            user = request.user
-            if check_password(request.data['old_password'], user.password):
-                Usuarios.objects.changePassword(user, request.data['new_password'])
-                return Response({'success' : 'pwd_setted'}, status.HTTP_200_OK)
-            else:
-                return Response({'error' : 'invalid_pwd'}, status.HTTP_400_BAD_REQUEST)
+            try:
+                user = request.user
+                if check_password(request.data['old_password'], user.password):
+                    Usuarios.objects.changePassword(user, request.data['new_password'])
+                    return Response({'success' : 'pwd_setted'}, status.HTTP_200_OK)
+                else:
+                    return Response({'error' : 'invalid_pwd'}, status.HTTP_400_BAD_REQUEST)
+            except Exception:
+                return BASE_UNEXPECTED_ERROR_RESPONSE
         else:
             print(serialized_data._errors)
             return BASE_SERIALIZER_ERROR_RESPONSE
@@ -212,5 +229,8 @@ class DisconnectUserAPI(APIView):
     authentication_classes  = [JWTAuthentication]
     permission_classes      = [IsAuthenticated]
     def post(self, request, *args, **kwargs):
-        Usuarios.objects.setUserConection(request.user, False)
-        return Response({'success' : 'user_disconected'}, status.HTTP_200_OK)
+        try:
+            Usuarios.objects.setUserConection(request.user, False)
+            return Response({'success' : 'user_disconected'}, status.HTTP_200_OK)
+        except Exception:
+            return BASE_UNEXPECTED_ERROR_RESPONSE
