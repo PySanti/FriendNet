@@ -11,7 +11,6 @@
 // fase 3:
     //* medio:
         // refactorizar toda la aplicacion buscando:
-            ~ Cambiar sistema de UserInterface
             ~ Reducir codigo
             ~ Hacer que las funciones solo se encarguen de realizar 1 tarea
 
@@ -27,6 +26,7 @@
         // encriptar formularios de react
         // usar webSockets para mensajes
         // user webSockets para actualizacion de notificaciones
+        // agregar mas mensajes de error al realizar acciones en el backend usando try-except
 
         // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
         // ActivateUser, ChangeEmailForActivation, GetUserDetail 

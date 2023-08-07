@@ -2,9 +2,6 @@ from rest_framework import serializers
 from .models import Usuarios
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
-class ChangeEmailForActivationSerializer(serializers.Serializer):
-    user_id = serializers.IntegerField()
-    new_email = serializers.EmailField()
 
 class BaseUsuariosSerializers(serializers.ModelSerializer):
     photo = serializers.SerializerMethodField('get_photo')
@@ -13,7 +10,6 @@ class BaseUsuariosSerializers(serializers.ModelSerializer):
         fields = [
             "username",
             "email",
-            "password",
             "photo"
         ]
     def get_photo(self, obj):
@@ -23,35 +19,38 @@ class BaseUsuariosSerializers(serializers.ModelSerializer):
         elif isinstance(data['photo'], InMemoryUploadedFile) or (isinstance(data['photo'], str)):
             return data['photo']
 
-
-
-
-
 class CreateUsuariosSerializer(BaseUsuariosSerializers):
-    pass
+    password = serializers.CharField(required=True) 
 
 class UpdateUsuariosSerializer(BaseUsuariosSerializers):
     username = serializers.CharField(required=False)
     email = serializers.EmailField(required=False)
-    password = serializers.CharField(required=False) # este campo nunca se usara
 
 
 
+class ChangeEmailForActivationSerializer(serializers.Serializer):
+    user_id = serializers.IntegerField()
+    new_email = serializers.EmailField()
 
 class ActivateUserSerializer(serializers.Serializer):
     user_id=serializers.IntegerField()
+
 class GetUserDetailSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=15)
     password = serializers.CharField()
+
 class CheckExistingUserSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=15)
     email = serializers.EmailField()
+
 class ChangeUserPwdSerializer(serializers.Serializer):
     old_password = serializers.CharField()
     new_password = serializers.CharField()
+
 class GetUsersListSerializer(serializers.Serializer):
     session_user_id = serializers.IntegerField()
     user_keyword = serializers.CharField(required=False)
+
 class SendActivationEmailSerializer(serializers.Serializer):
     username = serializers.CharField()
     user_email = serializers.EmailField()

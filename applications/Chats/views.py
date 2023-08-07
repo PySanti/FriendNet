@@ -33,6 +33,7 @@ class GetMessagesHistorialAPI(APIView):
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
+            # request.user = sender_user
             messages_hist = Chats.objects.getMessagesHistorial(request.user.id, request.data['receiver_id'])
             if (messages_hist):
                 return JsonResponse({"messages_hist" : list(messages_hist.values())})
@@ -40,7 +41,7 @@ class GetMessagesHistorialAPI(APIView):
                 return Response('no_messages_between', status.HTTP_200_OK)
         else:
             print(serialized_data._errors)
-            return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status.HTTP_400_BAD_REQUEST)
+            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
 
 class SendMsgAPI(APIView):
     serializer_class        = SendMsgSerializer
@@ -58,4 +59,4 @@ class SendMsgAPI(APIView):
             return Response({'success' : "msg_sended"}, status.HTTP_200_OK)
         else:
             print(serialized_data._errors)
-            return Response({'error' : BASE_SERIALIZER_ERROR_RESPONSE}, status.HTTP_400_BAD_REQUEST)
+            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)

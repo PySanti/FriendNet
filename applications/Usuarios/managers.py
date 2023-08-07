@@ -18,21 +18,16 @@ class UsuariosManager(BaseUserManager):
         new_user.set_password(password)
         new_user.save(using=self.db)
         return new_user
+    def create_superuser(self, username, password, email, **kwargs):
+        return self._create_user(username, password, email, True, True, **kwargs)
+    def create_user(self, username, password, email, **kwargs):
+        return self._create_user(username, password, email, False, False, **kwargs)
     def setUserConection(self, user, conection):
         """
             Settea el atributo is_online del user a conection
         """
         user.is_online = conection
         user.save()
-    def formatNames(self, name):
-        """
-            Recibe un nombre y lo retorna formateado
-        """
-        return ' '.join([i.capitalize() for i in name.lower().split(' ')])
-    def create_superuser(self, username, password, email, **kwargs):
-        return self._create_user(username, password, email, True, True, **kwargs)
-    def create_user(self, username, password, email, **kwargs):
-        return self._create_user(username, password, email, False, False, **kwargs)
     def activateUser(self, user):
         """
             Realiza las funciones necesarias para activar por completo
@@ -46,13 +41,6 @@ class UsuariosManager(BaseUserManager):
         """
         user.notifications.all().delete()
         user.save()
-    def dispatchUserNotifications(self,user):
-        """
-            Recibe un usuario y retorna la lista de notificaciones del usuario formateadas y las elimina
-        """
-        notifications_list = self.getFormatedNotifications(user)
-        self.deleteAllNotifications(user)
-        return notifications_list
     def getFormatedNotifications(self, user):
         """
             Recibe el usuario y retorna la lista de notificaciones del usuario formateada
