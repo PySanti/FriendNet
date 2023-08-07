@@ -7,6 +7,6 @@ USER_SHOWABLE_FIELDS = [
     "is_active",
     "id",
 ]
-
+BASE_UNEXPECTED_ERROR_RESPONSE = "unexpected_error"
 BASE_SERIALIZER_ERROR_RESPONSE = {'error' : "serializer_error"}
 BASE_IMAGES_WIDTH = 400

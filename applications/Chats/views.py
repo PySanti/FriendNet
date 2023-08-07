@@ -20,7 +20,8 @@ from rest_framework.response import Response
 from django.http import JsonResponse
 from rest_framework import status
 from applications.Usuarios.utils.constants import (
-    BASE_SERIALIZER_ERROR_RESPONSE
+    BASE_SERIALIZER_ERROR_RESPONSE,
+    BASE_UNEXPECTED_ERROR_RESPONSE
 )
 from applications.Usuarios.models import Usuarios
 from applications.Notifications.models import Notifications
@@ -34,11 +35,14 @@ class GetMessagesHistorialAPI(APIView):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
             # request.user = sender_user
-            messages_hist = Chats.objects.getMessagesHistorial(request.user.id, request.data['receiver_id'])
-            if (messages_hist):
-                return JsonResponse({"messages_hist" : list(messages_hist.values())}, status=status.HTTP_200_OK)
-            else:
-                return Response('no_messages_between', status.HTTP_200_OK)
+            try:
+                messages_hist = Chats.objects.getMessagesHistorial(request.user.id, request.data['receiver_id'])
+                if (messages_hist):
+                    return JsonResponse({"messages_hist" : list(messages_hist.values())}, status=status.HTTP_200_OK)
+                else:
+                    return Response('no_messages_between', status.HTTP_200_OK)
+            except Exception:
+                return Response(BASE_UNEXPECTED_ERROR_RESPONSE, status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
             print(serialized_data._errors)
             return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
