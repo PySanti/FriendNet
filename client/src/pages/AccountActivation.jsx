@@ -32,7 +32,7 @@ export function AccountActivation() {
     const { register, handleSubmit, formState: { errors }} = useForm();
     const onSubmit = handleSubmit(async (data) => {
         startLoading();
-        if (Number(data.activation_code) === Number(realActivationCode)) {
+        if (Number(data.activationCode) === Number(realActivationCode)) {
             try {
                 await activateUserAPI(props.userId);
                 setUserActivated(true);
