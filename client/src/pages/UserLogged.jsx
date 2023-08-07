@@ -6,16 +6,8 @@ import "../styles/UserLogged.css"
 import { getUserDataFromLocalStorage } from "../utils/getUserDataFromLocalStorage"
 
 
-/**
- * Componente creado para ser renderizado cuando el usuario
- * trate de acceder a rutas que exijan Logearse cuando el usuario
- * ya lo esta
- * @param {String} username Nombre del usuario logeado
- */
+
 export function UserLogged(){
-    /**
-     *  Pagina creada para devolver cuando el usuario ya este autenticado
-     */
     const [backToHome, setBackToHome] = useState(false)
     const navigate = useNavigate()
     useEffect(()=>{

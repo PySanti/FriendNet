@@ -17,13 +17,6 @@ import { v4 } from "uuid";
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
 
 
-
-// constants
-
-
-/**
- * Pagina creada para llevar registro de usuario
- */
 export function SignUp() {
     let {loadingState, successfullyLoaded, startLoading, setLoadingState} = useContext(LoadingContext)
     let [userData, setUserData]                                 = useState(null);
@@ -83,9 +76,7 @@ export function SignUp() {
                 <div className="signup-page-container">
                     <Header msg="Regístrate de una vez!"/>
                     <Loader state={loadingState}/>
-                    <UserInfoForm onFormSubmit={onSignUp} extraButtons={[
-                        <Button key={v4()} buttonText="Volver" onClickFunction={()=>setGoBack(true)}/>,
-                    ]}/>
+                    <UserInfoForm onFormSubmit={onSignUp} extraButtons={[<Button key={v4()} buttonText="Volver" onClickFunction={()=>setGoBack(true)}/>,]}/>
                 </div>
             </div>
         )
