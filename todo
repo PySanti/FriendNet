@@ -10,8 +10,6 @@
 
 // fase 3:
     //* medio:
-        // Testear toda la app buscando errores post refactor 
-        // testear sistema de refresco de tokens al maximo
 
         // revisar llamadas a api's innecesarias en un uso comun de la aplicacion (get_users_list)
         // implementar try-catch-finally para mejor manejo de errores

@@ -28,9 +28,9 @@ export function ChangePwd(){
     let   {loadingState, setLoadingState, successfullyLoaded, startLoading} = useContext(LoadingContext)
     let   [user] = useState(getUserDataFromLocalStorage())
     const changePwd = handleSubmit(async (data)=>{
-        const successValidating = validateJWT() 
-        if (successValidating === true){
-            if (data['oldPwd'] !== data['newPwd']){
+        if (data['oldPwd'] !== data['newPwd']){
+            const successValidating = await validateJWT() 
+            if (successValidating === true){
                 startLoading()
                 try{
                     await changeUserPwdAPI(data.oldPwd, data.newPwd, getJWTFromLocalStorage().access)
@@ -42,15 +42,15 @@ export function ChangePwd(){
                         setLoadingState(error.response.data.error === 'invalid_pwd' ? "Error, la contraseña actual es invalida !" : 'Error inesperado en respuesta de servidor')
                     } 
                 }
-            } else {
-                setLoadingState("No hay cambios")
+            } else   {
+                if (successValidating === BASE_LOGIN_REQUIRED_ERROR_MSG){
+                    redirectExpiredUser(navigate)
+                } else {
+                    setLoadingState(BASE_JWT_ERROR_LOG)
+                }
             }
         } else {
-            if (successValidating === BASE_LOGIN_REQUIRED_ERROR_MSG){
-                redirectExpiredUser(navigate)
-            } else {
-                setLoadingState(BASE_JWT_ERROR_LOG)
-            }
+            setLoadingState("No hay cambios")
         }
     })
     useEffect(()=>{
