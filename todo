@@ -10,17 +10,13 @@
 
 // fase 3:
     //* medio:
-        // refactorizar toda la aplicacion buscando:
-            ~ Reducir codigo
-            ~ Hacer que las funciones solo se encarguen de realizar 1 tarea
+        // Testear toda la app buscando errores post refactor 
+        // testear sistema de refresco de tokens al maximo
 
-        // Testear toda la app buscando errores post refactor
-        // Finalizar soporte para redireccion a login cuando el refresh token este caducado
-        // cachear mensajes para mayor velocidad de envio
         // revisar llamadas a api's innecesarias en un uso comun de la aplicacion (get_users_list)
         // implementar try-catch-finally para mejor manejo de errores
-        
 
+        // cachear mensajes para mayor velocidad de envio
 
     //* dificil
         // usar paginacion
