@@ -28,11 +28,11 @@ import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
  */
 export function Home() {
     let {loadingState, setLoadingState,startLoading,  successfullyLoaded} = useContext(LoadingContext)
-    let [notifications, setNotifications] = useState(null)
+    let [notifications, setNotifications] = useState(getNotificationsFromLocalStorage())
+    let [chatGlobeList, setChatGlobeList] = useState(getChatGlobesList(notifications))
     let [messagesHistorial, setMessagesHistorial] = useState(null)
     let [clickedUser, setClickedUser] = useState(null)
     let [userList, setUserList] = useState(false)
-    let [chatGlobeList, setChatGlobeList] = useState(null)
     let [user] = useState(getUserDataFromLocalStorage())
     let [goToProfile, setGoToProfile] = useState(false)
     const navigate = useNavigate()
@@ -67,11 +67,7 @@ export function Home() {
         if (successValidating){
             try{
                 const response = await getMessagesHistorialAPI(clickedUser.id, getJWTFromLocalStorage().access)
-                if (response.data !== "no_messages_between"){
-                    setMessagesHistorial(response.data.messages_hist)
-                } else {
-                    setMessagesHistorial(null)
-                }
+                setMessagesHistorial(response.data !== "no_messages_between" ? response.data.messages_hist : null)
                 successfullyLoaded()
             } catch(error){
                 setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado buscando chat!')
@@ -104,14 +100,8 @@ export function Home() {
         }
         setClickedUser(clickedUser)
     }
-    const onNotificationClick = (notification)=>{
-        onUserButtonClick(notification.sender_user)
-    }
-    const loadUserNotifications = ()=>{
-        const notifications = getNotificationsFromLocalStorage()
-        setNotifications(notifications)
-        setChatGlobeList(getChatGlobesList(notifications))
-    }
+
+
     useEffect(()=>{
         if(goToProfile){
             navigate("/home/profile/")
@@ -121,7 +111,6 @@ export function Home() {
         setLoadingState(false)
         if (userIsAuthenticated() && !userList){
             loadUsersList()
-            loadUserNotifications()
         }
     }, [])
     useEffect(()=>{
@@ -136,9 +125,9 @@ export function Home() {
         return (
             <div className="centered-container">
                 <div className="home-container">
-                    <Header username={user.username}/>
+                    <Header username={user.username} msg="En el home"/>
                     <div className="buttons-container">
-                        <NotificationsContainer notificationList={notifications} onNotificationClick={onNotificationClick} onNotificationDelete={onNotificationDelete} />
+                        <NotificationsContainer notificationList={notifications} onNotificationClick={(notification)=>onUserButtonClick(notification.sender_user)} onNotificationDelete={onNotificationDelete} />
                         <Button buttonText="Salir" onClickFunction={onLogout}/>
                         <Button buttonText="Perfil" onClickFunction={()=>{setGoToProfile(true)}}/>
                     </div>
@@ -146,17 +135,8 @@ export function Home() {
                     <div className="users-interface-container">
                         {userList && 
                             <>
-                                <UsersList 
-                                    usersList={userList} 
-                                    onClickEvent={onUserButtonClick} 
-                                    chatGlobeList={chatGlobeList} 
-                                    usersListSetter={setUserList} 
-                                    sessionUserId={user.id}/>
-                                <Chat 
-                                    chatingUser={clickedUser} 
-                                    messages={messagesHistorial} 
-                                    sessionUserId={user.id} 
-                                    onMsgSending={onMsgSending}/>
+                                <UsersList  usersList={userList}  onClickEvent={onUserButtonClick}  chatGlobeList={chatGlobeList}  usersListSetter={setUserList}  sessionUserId={user.id}/>
+                                <Chat chatingUser={clickedUser} messages={messagesHistorial} sessionUserId={user.id} onMsgSending={onMsgSending}/>
                             </>
                         }
                     </div>

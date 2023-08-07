@@ -41,7 +41,7 @@ export function Login() {
                     setUserLogged(true)
                     successfullyLoaded()
                 } catch(error){
-                    setLoadingState(error.response.status === 401 ? "Usuario o contraseña inválidos !" : "Error inesperado logeando usuario!") 
+                    setLoadingState("Error inesperado logeando usuario!") 
                 }
             }
         } catch(error){
@@ -90,9 +90,7 @@ export function Login() {
                 <div className="login-container">
                     <Header msg="Introduce tus credenciales para ingresar"/>
                     <Loader state={loadingState}/>
-                    <LoginForm handleLogin={onLogin} extraButtons={[
-                        <Button key={v4()} onClickFunction={()=>setGoBack(true)} buttonText="Volver"/>
-                    ]}/>
+                    <LoginForm handleLogin={onLogin} extraButtons={[<Button key={v4()} onClickFunction={()=>setGoBack(true)} buttonText="Volver"/>]}/>
                 </div>
             </div>
         )

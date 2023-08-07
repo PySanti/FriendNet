@@ -26,7 +26,7 @@
         // encriptar formularios de react
         // usar webSockets para mensajes
         // user webSockets para actualizacion de notificaciones
-        // agregar mas mensajes de error al realizar acciones en el backend usando try-except
+        // agregar mas mensajes de error al realizar acciones en el backend usando try-except (al enviar email por ejemplo)
 
         // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
         // ActivateUser, ChangeEmailForActivation, GetUserDetail 

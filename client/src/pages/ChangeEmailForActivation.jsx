@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-
 import { Header } from "../components/Header";
 import { LoadingContext } from "../context/LoadingContext";
 import {  useLocation, useNavigate} from "react-router-dom";
@@ -14,7 +13,6 @@ import { UserNotLogged } from "./UserNotLogged";
 import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { UserLogged } from "./UserLogged";
 import { changeEmailForActivationAPI } from "../api/changeEmailForActivation.api";
-
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
 
 export function ChangeEmailForActivation(){
@@ -56,11 +54,9 @@ export function ChangeEmailForActivation(){
         return (
             <div className="centered-container">
                 <div className="change-email-container">
-                    <Header msg="Cambiando correo para activación"/>
+                    <Header username={props.username} msg="Cambiando correo para activación"/>
                     <Loader state={loadingState}/>
-                    <Form onSubmitFunction={onSubmit} buttonMsg="Cambiar" buttonsList={[
-                        <Button key={v4()} buttonText="Volver" onClickFunction={()=>setGoBack(true)} />,
-                    ]}>
+                    <Form onSubmitFunction={onSubmit} buttonMsg="Cambiar" buttonsList={[<Button key={v4()} buttonText="Volver" onClickFunction={()=>setGoBack(true)} />]}>
                         <EmailField defaultValue={props.userEmail} errors={errors.email && errors.email.message} registerObject={register("email", BASE_EMAIL_CONSTRAINTS)}/>
                     </Form>
                 </div>
