@@ -4,6 +4,7 @@ import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { UserNotLogged } from "./UserNotLogged";
 import { useForm } from "react-hook-form";
 import {BASE_PASSWORD_CONSTRAINTS, BASE_LOGIN_REQUIRED_ERROR_MSG} from "../utils/constants"
+import {redirectExpiredUser} from "../utils/redirectExpiredUser"
 import { changeUserPwdAPI } from "../api/changePwd.api";
 import { LoadingContext } from "../context/LoadingContext";
 import { Loader } from "../components/Loader";
@@ -46,7 +47,7 @@ export function ChangePwd(){
             }
         } else {
             if (successValidating === BASE_LOGIN_REQUIRED_ERROR_MSG){
-                // borrar datos del localStorage y redirijir a root
+                redirectExpiredUser(navigate)
             } else {
                 setLoadingState(BASE_JWT_ERROR_LOG)
             }
