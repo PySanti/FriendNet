@@ -19,7 +19,7 @@ export function UsersList({usersList, onClickEvent, chatGlobeList, usersListSett
     return (
         <>
             <div className="users-list-container">
-                <UserFilter usersListSetter={usersListSetter} sessionUserId={sessionUserId}/>
+                <UserFilter usersListSetter={usersListSetter} sessionUserId={sessionUserId} initialUsersList={usersList}/>
                 {usersList.length > 0 ? 
                     usersList.map(formatingFunction)
                     :
