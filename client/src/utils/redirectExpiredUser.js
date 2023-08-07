@@ -3,6 +3,6 @@
  * @param {Func} navigateFunc funcion navigate del hook useNavigate
  */
 export function redirectExpiredUser(navigateFunc){
-    navigateFunc('/')
+    navigateFunc('/login/')
     localStorage.clear()
 }
