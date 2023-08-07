@@ -10,10 +10,7 @@
 
 // fase 3:
     //* medio:
-
-        // revisar llamadas a api's innecesarias en un uso comun de la aplicacion (get_users_list)
         // implementar try-catch-finally para mejor manejo de errores
-
         // cachear mensajes para mayor velocidad de envio
 
     //* dificil
