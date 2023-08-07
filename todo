@@ -11,8 +11,6 @@
 // fase 3:
     //* medio:
         // refactorizar toda la aplicacion buscando:
-            ~ Repasar ultimos cambios
-            ~ Rastro de authContext
             ~ Funcionalidades inutiles
             ~ Cambiar sistema de UserInterface
             ~ Reducir codigo
