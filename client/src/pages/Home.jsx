@@ -50,7 +50,7 @@ export function Home() {
     const onMsgSending = async (data)=>{
         startLoading()
         const successValidating = await validateJWT()
-        if (successValidating){
+        if (successValidating === true){
             try {
                 await sendMsgAPI(clickedUser.id, data.msg, getJWTFromLocalStorage().access)
                 successfullyLoaded()
@@ -69,7 +69,7 @@ export function Home() {
     const loadMessages = async ()=>{
         startLoading()
         const successValidating = await validateJWT()
-        if (successValidating){
+        if (successValidating === true){
             try{
                 const response = await getMessagesHistorialAPI(clickedUser.id, getJWTFromLocalStorage().access)
                 setMessagesHistorial(response.data !== "no_messages_between" ? response.data.messages_hist : null)
@@ -88,7 +88,7 @@ export function Home() {
     const onLogout = async ()=>{
         startLoading()
         const successValidating = await validateJWT()
-        if (successValidating){ 
+        if (successValidating === true){ 
             await logoutUser(true)
             successfullyLoaded()
         } else {

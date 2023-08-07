@@ -40,7 +40,7 @@ export function Profile({ updating }) {
         const sendingData = { ...data };
         if (dataIsDiferent(data, profileData)) { // lodash
             const successValidating = await validateJWT()
-            if (successValidating){
+            if (successValidating === true){
                 let updateUserResponse = undefined
                 try {
                     updateUserResponse = await updateUserDataAPI( sendingData, getJWTFromLocalStorage().access);

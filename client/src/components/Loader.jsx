@@ -20,7 +20,7 @@ export function Loader({state}){
 
 
 Loader.propTypes = {
-    state : PropTypes.string
+    state : PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
 }
 Loader.defaultProps = {
     state : undefined

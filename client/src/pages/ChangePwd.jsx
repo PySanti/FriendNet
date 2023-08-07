@@ -29,7 +29,7 @@ export function ChangePwd(){
     let   [user] = useState(getUserDataFromLocalStorage())
     const changePwd = handleSubmit(async (data)=>{
         const successValidating = validateJWT() 
-        if (successValidating){
+        if (successValidating === true){
             if (data['oldPwd'] !== data['newPwd']){
                 startLoading()
                 try{
