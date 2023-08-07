@@ -3,7 +3,7 @@ import { Header } from "../components/Header";
 import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { UserNotLogged } from "./UserNotLogged";
 import { useForm } from "react-hook-form";
-import {BASE_PASSWORD_CONSTRAINTS} from "../utils/constants"
+import {BASE_PASSWORD_CONSTRAINTS, BASE_LOGIN_REQUIRED_ERROR_MSG} from "../utils/constants"
 import { changeUserPwdAPI } from "../api/changePwd.api";
 import { LoadingContext } from "../context/LoadingContext";
 import { Loader } from "../components/Loader";
@@ -27,7 +27,7 @@ export function ChangePwd(){
     let   {loadingState, setLoadingState, successfullyLoaded, startLoading} = useContext(LoadingContext)
     let   [user] = useState(getUserDataFromLocalStorage())
     const changePwd = handleSubmit(async (data)=>{
-        const successValidating = validateJWT()
+        const successValidating = validateJWT() 
         if (successValidating){
             if (data['oldPwd'] !== data['newPwd']){
                 startLoading()
@@ -45,7 +45,11 @@ export function ChangePwd(){
                 setLoadingState("No hay cambios")
             }
         } else {
-            setLoadingState(BASE_JWT_ERROR_LOG)
+            if (successValidating === BASE_LOGIN_REQUIRED_ERROR_MSG){
+                // borrar datos del localStorage y redirijir a root
+            } else {
+                setLoadingState(BASE_JWT_ERROR_LOG)
+            }
         }
     })
     useEffect(()=>{

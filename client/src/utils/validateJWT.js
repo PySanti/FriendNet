@@ -6,7 +6,10 @@ import {refreshToken} from "../utils/refreshToken"
 /**
  * Llama a api para verificacion de JWT, en caso de ser invalido el JWT lo refresca.
  * 
- * En caso de que no haya ningun error, retornara true, en caso contrario, false
+ * Retornara:
+ *  true : En caso de que todo este bien
+ *  BASE_LOGIN_REQUIRED_ERROR_MSG : En caso de que haya que logear nuevamente al usuario
+ *  "unexpected_error" : En caso de que haya algun error inesperado
  * @param {Function} refreshTokenFunc
  */
 export async function validateJWT(){
@@ -16,10 +19,9 @@ export async function validateJWT(){
     } catch(error){
         if (error.response.status === UNAUTHORIZED_STATUS_CODE){
             console.log('Token expirado')
-            await refreshToken()
-            console.log('Token refrescado con exito')
+            return await refreshToken()
         } else {
-            return false
+            return "unexpected_error"
         }
     }
     return true

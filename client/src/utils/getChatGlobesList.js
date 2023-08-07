@@ -5,9 +5,11 @@
 export function getChatGlobesList(notifications){
     const globesList =[]
     if (notifications){
+        let numberId = undefined
         notifications.forEach(element => {
-            if (!(globesList.includes(Number(element.sender_user.id)))){
-                globesList.push(Number(element.sender_user.id))
+            numberId = Number(element.sender_user.id)
+            if (!(globesList.includes(numberId))){
+                globesList.push(numberId)
             }
         });
     }
