@@ -35,18 +35,20 @@ export function Profile({ updating }) {
     const navigate = useNavigate();
     const onUpdate = async (data) => {
         startLoading();
-        const successValidating = await validateJWT()
-        if (successValidating){
             try {
                 // el data.photo siempre sera: null, url de imagen actual, un archivo
                 const sendingData = { ...data };
-                if (dataIsDiferent(data, profileData)) {
-                    // lodash
-                    const updateUserResponse = await updateUserDataAPI( sendingData, getJWTFromLocalStorage().access);
-                    profileData.photo_link = updateUserResponse.data.user_data_updated.photo_link
-                    setProfileData(updateUserResponse.data.user_data_updated);
-                    saveUserDataInLocalStorage(updateUserResponse.data.user_data_updated);
-                    successfullyLoaded();
+                if (dataIsDiferent(data, profileData)) { // lodash
+                    const successValidating = await validateJWT()
+                    if (successValidating){
+                        const updateUserResponse = await updateUserDataAPI( sendingData, getJWTFromLocalStorage().access);
+                        profileData.photo_link = updateUserResponse.data.user_data_updated.photo_link
+                        setProfileData(updateUserResponse.data.user_data_updated);
+                        saveUserDataInLocalStorage(updateUserResponse.data.user_data_updated);
+                        successfullyLoaded();
+                    } else {
+                        setLoadingState(BASE_JWT_ERROR_LOG)
+                    }
                 } else {
                     setLoadingState("Sin cambios");
                 }
@@ -57,9 +59,7 @@ export function Profile({ updating }) {
                     setLoadingState(error.response.data.error === "cloudinary_error" ? "Error con la nube!" : "Error inesperado al actualizar datos del usuario!");
                 }
             }
-        } else {
-            setLoadingState(BASE_JWT_ERROR_LOG)
-        }
+
     };
     useEffect(() => {
         if (changePwd) {

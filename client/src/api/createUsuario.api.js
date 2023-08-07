@@ -5,7 +5,6 @@ import { config } from './baseConfig.api'
 /**
  * Llama a la api para crear usuario en servidor
  * @param {Object} data datos del usuario a registrar  
- * @returns {Promise} la promesa del servidor
  */
 export async function createUsuarioAPI(data){
     config.headers = {'Content-Type': 'multipart/form-data'}

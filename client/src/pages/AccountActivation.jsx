@@ -31,9 +31,9 @@ export function AccountActivation() {
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }} = useForm();
 
-    const sendMail = async (activation_code) => {
-        // await sendActivationEmailAPI(props.userEmail, props.username, activation_code)
-        console.log(activation_code);
+    const sendMail = async (activationCode) => {
+        // await sendActivationEmailAPI(props.userEmail, props.username, activationCode)
+        console.log(activationCode);
     };
 
     const onSubmit = handleSubmit(async (data) => {
@@ -53,9 +53,9 @@ export function AccountActivation() {
     useEffect(() => {
         setLoadingState(false);
         // se enviara el correo de activacion la primera vez que se monte el componente
-        const activation_code = generateActivationCode();
-        sendMail(activation_code);
-        setRealActivationCode(activation_code);
+        const activationCode = generateActivationCode();
+        sendMail(activationCode);
+        setRealActivationCode(activationCode);
     }, []);
     useEffect(() => {
         if (goBack) {
@@ -104,17 +104,17 @@ export function AccountActivation() {
                         <FormField
                             label="Codigo "
                             errors={
-                                errors.activation_code &&
-                                errors.activation_code.message
+                                errors.activationCode &&
+                                errors.activationCode.message
                             }
                         >
                             <input
                                 type="text"
                                 maxLength={6}
                                 minLength={1}
-                                name="activation_code"
-                                id="activation_code"
-                                {...register("activation_code", {
+                                name="activationCode"
+                                id="activationCode"
+                                {...register("activationCode", {
                                     required: {
                                         value: true,
                                         message:

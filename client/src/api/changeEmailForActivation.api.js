@@ -5,13 +5,13 @@ import { config } from "./baseConfig.api";
 
 /**
  * Llama a la api para cambiar email del usuario
- * @param {Number} user_id
- * @param {String} user_email
+ * @param {Number} userId
+ * @param {String} userEmail
  */
-export async function changeEmailForActivationAPI(user_id, user_email){
+export async function changeEmailForActivationAPI(userId, userEmail){
     const data = {
-        'user_id' : user_id,
-        'new_email' : user_email
+        'user_id' : userId,
+        'new_email' : userEmail
     }
     return await axios.post(BACKEND_URL + 'api/change_email_for_activation/', data, config)
 }

@@ -1,4 +1,5 @@
-import JWT_LOCALSTORAGE_NAME from "../utils/constants"
+import {JWT_LOCALSTORAGE_NAME} from "../utils/constants"
+
 /**
  * 
  * Retorna true en caso de que el usuario este autenticado

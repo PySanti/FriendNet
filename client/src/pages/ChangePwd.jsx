@@ -29,10 +29,10 @@ export function ChangePwd(){
     const changePwd = handleSubmit(async (data)=>{
         const successValidating = validateJWT()
         if (successValidating){
-            if (data['old_password'] !== data['new_password']){
+            if (data['oldPwd'] !== data['newPwd']){
                 startLoading()
                 try{
-                    await changeUserPwdAPI(data.old_password, data.new_password, getJWTFromLocalStorage().access)
+                    await changeUserPwdAPI(data.oldPwd, data.newPwd, getJWTFromLocalStorage().access)
                     successfullyLoaded()
                 } catch(error){
                     if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
@@ -69,8 +69,8 @@ export function ChangePwd(){
                     <Form onSubmitFunction={changePwd} buttonMsg="Enviar" buttonsList={[
                         <Button key={v4()} buttonText="Volver" onClickFunction={()=>setBackToProfile(true)}/>
                     ]}>
-                        <PasswordField label="Contrasenia actual" errors={errors.old_password && errors.old_password.message} name="old_password" registerObject={register("old_password", BASE_PASSWORD_CONSTRAINTS)}/>
-                        <PasswordField label="Nueva contraseña" errors={errors.new_password && errors.new_password.message} name="new_password" registerObject={register("new_password", BASE_PASSWORD_CONSTRAINTS)}/>
+                        <PasswordField label="Contrasenia actual" errors={errors.oldPwd && errors.oldPwd.message} name="oldPwd" registerObject={register("oldPwd", BASE_PASSWORD_CONSTRAINTS)}/>
+                        <PasswordField label="Nueva contraseña" errors={errors.newPwd && errors.newPwd.message} name="newPwd" registerObject={register("newPwd", BASE_PASSWORD_CONSTRAINTS)}/>
                     </Form>
                 </div>
             </div>

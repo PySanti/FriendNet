@@ -12,7 +12,7 @@ import { v4 } from "uuid"
  */
 export function MessagesContainer({messages, sessionUserId }){
     const formatingFunction = (msg)=>{
-        return <Message key={v4()} content={msg.content} session_user_msg={sessionUserId === msg.parent_id}/>
+        return <Message key={v4()} content={msg.content} sessionUserMsg={sessionUserId === msg.parent_id}/>
     }
     return (
         <div className="messages-container">

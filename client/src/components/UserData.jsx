@@ -3,8 +3,8 @@
  * Toma los elementos de props.userData y retorna una lista de 
  * <p>'s con los atributos formateados
  * @param {Object} userData datos de usuario a formatear
- * @param {Array} non_showable_attrs lista de atributos de objeto que no se formatearan
- * @param {Object} attrs_traductions objeto con atributo actual(clave) : traduccion (valor)
+ * @param {Array} nonShowableAttrs lista de atributos de objeto que no se formatearan
+ * @param {Object} attrsTraductions objeto con atributo actual(clave) : traduccion (valor)
  */
 import {PropTypes} from "prop-types"
 import { v4 } from "uuid"

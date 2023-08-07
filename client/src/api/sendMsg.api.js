@@ -3,13 +3,13 @@ import { BACKEND_URL } from '../utils/constants'
 import { config } from './baseConfig.api'
 /**
  * Envia un mensaje desde sender_user hasta receiver_user
- * @param {Number} sender_id 
- * @param {Number} receiver_id
+ * @param {String} accessToken 
+ * @param {Number} receiverId
  * @param {String} msg
  */
-export async function sendMsgAPI(receiver_id, msg, accessToken){
+export async function sendMsgAPI(receiverId, msg, accessToken){
     const data =     {
-        "receiver_id" : receiver_id,
+        "receiver_id" : receiverId,
         "msg" : msg
     }
     config.headers = {

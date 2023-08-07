@@ -5,14 +5,14 @@ import { config } from "./baseConfig.api";
 
 /**
  * Llama a la api para cambiar old_password por new_password en username
- * @param {Number} user_id
- * @param {String} old_password  
- * @param {String} new_password  
+ * @param {String} oldPwd  
+ * @param {String} newPwd  
+ * @param {Number} accessToken
  */
-export async function changeUserPwdAPI( old_password, new_password, accessToken){
+export async function changeUserPwdAPI( oldPwd, newPwd, accessToken){
     const data = {
-        'old_password' : old_password,
-        'new_password' : new_password
+        'old_password' : oldPwd,
+        'new_password' : newPwd
     }
     config.headers = {
         'Authorization' : `Bearer ${accessToken}`

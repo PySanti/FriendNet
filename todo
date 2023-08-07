@@ -17,9 +17,8 @@
             ~ Cambiar sistema de UserInterface
             ~ Reducir codigo
             ~ Hacer que las funciones solo se encarguen de realizar 1 tarea
-            ~ Cambiar nombres de variables con _
-            ~ eliminar uso de condicionales para validar serializers, en su lugar, usar raise_exception=True
 
+        // Testear toda la app buscando errores post refactor
         // Finalizar soporte para redireccion a login cuando el refresh token este caducado
         // cachear mensajes para mayor velocidad de envio
         // revisar llamadas a api's innecesarias en un uso comun de la aplicacion (get_users_list)

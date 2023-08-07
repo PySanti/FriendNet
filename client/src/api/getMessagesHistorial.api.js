@@ -5,13 +5,13 @@ import { config } from "./baseConfig.api";
 
 /**
  * Llama a la api para recibir chat entre id1 y id2 (historial de mensajes)
- * @param {String} id1    
- * @param {String} id2
+ * @param {String} receiverId    
+ * @param {String} accessToken
  */
 
-export async function getMessagesHistorialAPI(receiver_id, accessToken){
+export async function getMessagesHistorialAPI(receiverId, accessToken){
     const data = {
-        "receiver_id" :receiver_id,
+        "receiver_id" :receiverId,
     }
     config.headers = {
         "Authorization" : `Bearer ${accessToken}`
