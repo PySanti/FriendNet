@@ -35,31 +35,32 @@ export function Profile({ updating }) {
     const navigate = useNavigate();
     const onUpdate = async (data) => {
         startLoading();
-            try {
-                // el data.photo siempre sera: null, url de imagen actual, un archivo
-                const sendingData = { ...data };
-                if (dataIsDiferent(data, profileData)) { // lodash
-                    const successValidating = await validateJWT()
-                    if (successValidating){
-                        const updateUserResponse = await updateUserDataAPI( sendingData, getJWTFromLocalStorage().access);
-                        profileData.photo_link = updateUserResponse.data.user_data_updated.photo_link
-                        setProfileData(updateUserResponse.data.user_data_updated);
-                        saveUserDataInLocalStorage(updateUserResponse.data.user_data_updated);
-                        successfullyLoaded();
+        // el data.photo siempre sera: null, url de imagen actual, un archivo
+        const sendingData = { ...data };
+        if (dataIsDiferent(data, profileData)) { // lodash
+            const successValidating = await validateJWT()
+            if (successValidating){
+                let updateUserResponse = undefined
+                try {
+                    updateUserResponse = await updateUserDataAPI( sendingData, getJWTFromLocalStorage().access);
+                } catch (error) {
+                    if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
+                        setLoadingState(BASE_FALLEN_SERVER_LOG)
                     } else {
-                        setLoadingState(BASE_JWT_ERROR_LOG)
+                        setLoadingState(error.response.data.error === "cloudinary_error" ? "Error con la nube!" : "Error inesperado al actualizar datos del usuario!");
                     }
-                } else {
-                    setLoadingState("Sin cambios");
+                } finally {
+                    profileData.photo_link = updateUserResponse.data.user_data_updated.photo_link
+                    setProfileData(updateUserResponse.data.user_data_updated);
+                    saveUserDataInLocalStorage(updateUserResponse.data.user_data_updated);
+                    successfullyLoaded();
                 }
-            } catch (error) {
-                if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
-                    setLoadingState(BASE_FALLEN_SERVER_LOG)
-                } else {
-                    setLoadingState(error.response.data.error === "cloudinary_error" ? "Error con la nube!" : "Error inesperado al actualizar datos del usuario!");
-                }
+            } else {
+                setLoadingState(BASE_JWT_ERROR_LOG)
             }
-
+        } else {
+            setLoadingState("Sin cambios");
+        }
     };
     useEffect(() => {
         if (changePwd) {
@@ -84,7 +85,6 @@ export function Profile({ updating }) {
             navigate("/home/profile/");
         }
     }, [backToProfile]);
-    // modularizar maas
 
     if (!userIsAuthenticated()) {
         return <UserNotLogged />;
@@ -92,70 +92,22 @@ export function Profile({ updating }) {
         return (
             <div className="centered-container">
                 <div className="profile-container">
-                    <Header
-                        username={profileData.username}
-                        msg={updating ? "Editando perfil" : "Viendo perfil"}
-                    />
-                    <Loader state={loadingState} />
-                    {profileData && (
-                        <div className="editing-container">
-                            {updating ? (
-                                <>
-                                    <UserInfoForm
-                                        updating
-                                        onFormSubmit={onUpdate}
-                                        userData={profileData}
-                                        userPhotoUrl={profileData.photo_link}
-                                        extraButtons={[
-                                            <Button
-                                                key={v4()}
-                                                buttonText="Volver"
-                                                onClickFunction={() =>
-                                                    setBackToProfile(true)
-                                                }
-                                            />,
-                                        ]}
-                                    />
-                                </>
-                            ) : (
-                                <>
-                                    <UserData
-                                        userData={profileData}
-                                        nonShowableAttrs={[
-                                            "is_active",
-                                            "id",
-                                            "photo_link",
-                                        ]}
-                                        attrsTraductions={{
-                                            username: "Nombre de usuario",
-                                            email: "Correo electrónico",
-                                        }}
-                                    />
-                                    <UserPhoto
-                                        photoFile={profileData.photo_link}
-                                        withInput={false}
-                                    />
-                                </>
-                            )}
-                        </div>
-                    )}
-                    <div className="buttons-section">
-                        {!updating && (
+                    <Header username={profileData.username} msg={updating ? "Editando perfil" : "Viendo perfil"} />
+                    <Loader state={loadingState}/>
+                    <div className="editing-container">
+                        {updating ? 
+                            <UserInfoForm updating onFormSubmit={onUpdate} userData={profileData} userPhotoUrl={profileData.photo_link} extraButtons={[<Button key={v4()} buttonText="Volver" onClickFunction={() => setBackToProfile(true) }/>,]}/>
+                            : 
                             <>
-                                <Button
-                                    buttonText="Editar Perfil"
-                                    onClickFunction={() => setEditProfile(true)}
-                                />
-                                <Button
-                                    buttonText="Volver"
-                                    onClickFunction={() => setBackToHome(true)}
-                                />
-                                <Button
-                                    buttonText="Modificar Contraseña"
-                                    onClickFunction={() => setChangePwd(true)}
-                                />
+                                <UserData userData={profileData} nonShowableAttrs={["is_active","id","photo_link",]} attrsTraductions={{username: "Nombre de usuario",email: "Correo electrónico"}} />
+                                <UserPhoto photoFile={profileData.photo_link} withInput={false} />
+                                <div className="buttons-section">
+                                    <Button buttonText="Editar Perfil" onClickFunction={() => setEditProfile(true)} />
+                                    <Button buttonText="Volver" onClickFunction={() => setBackToHome(true)} />
+                                    <Button buttonText="Modificar Contraseña" onClickFunction={() => setChangePwd(true)} />
+                                </div>
                             </>
-                        )}
+                        }
                     </div>
                 </div>
             </div>
