@@ -16,7 +16,8 @@ import { v4 } from "uuid";
 import { saveUserDataInLocalStorage } from "../utils/saveUserDataInLocalStorage";
 import { getUserDataFromLocalStorage } from "../utils/getUserDataFromLocalStorage";
 import { dataIsDiferent } from "../utils/dataIsDiferent";
-import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_JWT_ERROR_LOG} from "../utils/constants"
+import {redirectExpiredUser} from "../utils/redirectExpiredUser"
+import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_JWT_ERROR_LOG, BASE_LOGIN_REQUIRED_ERROR_MSG} from "../utils/constants"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import { validateJWT } from "../utils/validateJWT"
 
@@ -56,7 +57,11 @@ export function Profile({ updating }) {
                     successfullyLoaded();
                 }
             } else {
-                setLoadingState(BASE_JWT_ERROR_LOG)
+                if (successValidating === BASE_LOGIN_REQUIRED_ERROR_MSG){
+                    redirectExpiredUser(navigate)
+                } else {
+                    setLoadingState(BASE_JWT_ERROR_LOG)
+                }
             }
         } else {
             setLoadingState("Sin cambios");

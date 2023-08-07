@@ -13,6 +13,7 @@ import { UsersList } from "../components/UsersList"
 import { Chat } from "../components/Chat"
 import { Button } from "../components/Button"
 import "../styles/Home.css"
+import {redirectExpiredUser} from "../utils/redirectExpiredUser"
 import { getNotificationsFromLocalStorage } from "../utils/getNotificationsFromLocalStorage"
 import { removeNotificationFromLocalStorage } from "../utils/removeNotificationFromLocalStorage"
 import { getJWTFromLocalStorage } from "../utils/getJWTFromLocalStorage"
@@ -20,7 +21,7 @@ import { getChatGlobesList } from "../utils/getChatGlobesList"
 import { removeRelatedNotifications } from "../utils/removeRelatedNotifications"
 import { saveNotificationsInLocalStorage } from "../utils/saveNotificationsInLocalStorage"
 import { validateJWT } from "../utils/validateJWT"
-import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_JWT_ERROR_LOG} from "../utils/constants"
+import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_JWT_ERROR_LOG, BASE_LOGIN_REQUIRED_ERROR_MSG} from "../utils/constants"
 import {logoutUser} from "../utils/logoutUser"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 /**
@@ -58,7 +59,11 @@ export function Home() {
                 setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
             }
         } else {
-            setLoadingState(BASE_JWT_ERROR_LOG)
+            if (successValidating === BASE_LOGIN_REQUIRED_ERROR_MSG){
+                redirectExpiredUser(navigate)
+            } else {
+                setLoadingState(BASE_JWT_ERROR_LOG)
+            }
         }
     }
     const loadMessages = async ()=>{
@@ -73,7 +78,11 @@ export function Home() {
                 setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado buscando chat!')
             }
         } else {
-            setLoadingState(BASE_JWT_ERROR_LOG)
+            if (successValidating === BASE_LOGIN_REQUIRED_ERROR_MSG){
+                redirectExpiredUser(navigate)
+            } else {
+                setLoadingState(BASE_JWT_ERROR_LOG)
+            }
         }
     }
     const onLogout = async ()=>{
@@ -83,7 +92,11 @@ export function Home() {
             await logoutUser(true)
             successfullyLoaded()
         } else {
-            setLoadingState(BASE_JWT_ERROR_LOG)
+            if (successValidating === BASE_LOGIN_REQUIRED_ERROR_MSG){
+                redirectExpiredUser(navigate)
+            } else {
+                setLoadingState(BASE_JWT_ERROR_LOG)
+            }
         }
     }
     const onNotificationDelete = (notification)=>{
