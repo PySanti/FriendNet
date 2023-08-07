@@ -13,8 +13,6 @@
     //* dificil
         // usar paginacion
         // encriptar formularios de react
-        // agregar mas mensajes de error al realizar acciones en el backend usando try-except (al enviar email por ejemplo)
-        // revisar que siempre se envie un estatus en la respuesta del servidor
 
 
         // usar webSockets para mensajes
