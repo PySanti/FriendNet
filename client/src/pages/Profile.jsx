@@ -44,18 +44,17 @@ export function Profile({ updating }) {
                 let updateUserResponse = undefined
                 try {
                     updateUserResponse = await updateUserDataAPI( sendingData, getJWTFromLocalStorage().access);
+                    profileData.photo_link = updateUserResponse.data.user_data_updated.photo_link
+                    setProfileData(updateUserResponse.data.user_data_updated);
+                    saveUserDataInLocalStorage(updateUserResponse.data.user_data_updated);
+                    successfullyLoaded();
                 } catch (error) {
                     if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
                         setLoadingState(BASE_FALLEN_SERVER_LOG)
                     } else {
                         setLoadingState(error.response.data.error === "cloudinary_error" ? "Error con la nube!" : "Error inesperado al actualizar datos del usuario!");
                     }
-                } finally {
-                    profileData.photo_link = updateUserResponse.data.user_data_updated.photo_link
-                    setProfileData(updateUserResponse.data.user_data_updated);
-                    saveUserDataInLocalStorage(updateUserResponse.data.user_data_updated);
-                    successfullyLoaded();
-                }
+                } 
             } else {
                 if (successValidating === BASE_LOGIN_REQUIRED_ERROR_MSG){
                     redirectExpiredUser(navigate)
