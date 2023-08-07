@@ -13,7 +13,8 @@ from .utils.set_photo_link import set_photo_link
 from .utils.constants import (
     BASE_SERIALIZER_ERROR_RESPONSE,
     USERS_LIST_ATTRS,
-    USER_SHOWABLE_FIELDS
+    USER_SHOWABLE_FIELDS,
+    BASE_UNEXPECTED_ERROR_RESPONSE
 )
 from django.core.mail import send_mail
 from django.contrib.auth.hashers import (
@@ -50,7 +51,7 @@ class CheckExistingUserAPI(APIView):
                 return Response({'existing' : 'false'}, status.HTTP_200_OK)
         else:
             print(serialized_data._errors)
-            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
+            return BASE_SERIALIZER_ERROR_RESPONSE
 class CreateUsuariosAPI(APIView):
     serializer_class        = CreateUsuariosSerializer
     authentication_classes  = []
@@ -74,7 +75,7 @@ class CreateUsuariosAPI(APIView):
             except:
                 return Response({'error': "cloudinary_error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
-            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status=status.HTTP_400_BAD_REQUEST)
+            return BASE_SERIALIZER_ERROR_RESPONSE
 class GetUserDetailAPI(APIView):
     serializer_class = GetUserDetailSerializer
     authentication_classes  = []
@@ -94,7 +95,7 @@ class GetUserDetailAPI(APIView):
                 return Response({'error' : 'user_not_exists'}, status.HTTP_400_BAD_REQUEST)
         else:
             print(serialized_data._errors)
-            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status=status.HTTP_400_BAD_REQUEST)
+            return BASE_SERIALIZER_ERROR_RESPONSE
 
 class GetUsersListAPI(APIView):
     serializer_class        = GetUsersListSerializer
@@ -109,7 +110,7 @@ class GetUsersListAPI(APIView):
             return JsonResponse({"users_list": list(users_list.values(*USERS_LIST_ATTRS))}, status=status.HTTP_200_OK)
         else:
             print(serialized_data._errors)
-            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
+            return BASE_SERIALIZER_ERROR_RESPONSE
 
 class ChangeEmailForActivationAPI(APIView):
     serializer_class        = ChangeEmailForActivationSerializer
@@ -126,7 +127,7 @@ class ChangeEmailForActivationAPI(APIView):
                 Usuarios.objects.setEmail(user, serialized_data['new_email'])
                 return Response({'success' : 'email_setted'}, status.HTTP_200_OK)
         else:
-            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
+            return BASE_SERIALIZER_ERROR_RESPONSE
 class ActivateUserAPI(APIView):
     serializer_class        = ActivateUserSerializer
     authentication_classes  = []
@@ -141,7 +142,7 @@ class ActivateUserAPI(APIView):
                 return Response({'error' : 'error_activating_user'}, status.HTTP_500_INTERNAL_SERVER_ERROR) 
         else:
             print(serialized_data._errors)
-            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
+            return BASE_SERIALIZER_ERROR_RESPONSE
 class SendActivationEmailAPI(APIView):
     serializer_class        = SendActivationEmailSerializer
     authentication_classes  = []
@@ -158,7 +159,7 @@ class SendActivationEmailAPI(APIView):
             return Response({"email_sended" : True}, status.HTTP_200_OK)
         else:
             print(serialized_data._errors)
-            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
+            return BASE_SERIALIZER_ERROR_RESPONSE
 
 #  secured api's
 
@@ -187,7 +188,7 @@ class UpdateUserDataAPI(APIView):
                 return Response({'error': "cloudinary_error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
             print(serializer._errors)
-            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status=status.HTTP_400_BAD_REQUEST)
+            return BASE_SERIALIZER_ERROR_RESPONSE
 
 class ChangeUserPwdAPI(APIView):
     serializer_class        = ChangeUserPwdSerializer
@@ -204,7 +205,7 @@ class ChangeUserPwdAPI(APIView):
                 return Response({'error' : 'invalid_pwd'}, status.HTTP_400_BAD_REQUEST)
         else:
             print(serialized_data._errors)
-            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
+            return BASE_SERIALIZER_ERROR_RESPONSE
 
 
 class DisconnectUserAPI(APIView):

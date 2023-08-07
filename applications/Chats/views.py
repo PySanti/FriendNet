@@ -42,10 +42,10 @@ class GetMessagesHistorialAPI(APIView):
                 else:
                     return Response('no_messages_between', status.HTTP_200_OK)
             except Exception:
-                return Response(BASE_UNEXPECTED_ERROR_RESPONSE, status.HTTP_500_INTERNAL_SERVER_ERROR)
+                return BASE_UNEXPECTED_ERROR_RESPONSE
         else:
             print(serialized_data._errors)
-            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
+            return BASE_SERIALIZER_ERROR_RESPONSE
 
 class SendMsgAPI(APIView):
     serializer_class        = SendMsgSerializer
@@ -63,7 +63,7 @@ class SendMsgAPI(APIView):
                 Chats.objects.sendMessage(sender_user, receiver_user,new_message)
                 return JsonResponse({'sended_msg' : Messages.objects.filter(id=new_message.id).values()[0]}, status=status.HTTP_200_OK)
             except Exception:
-                return Response(BASE_UNEXPECTED_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
+                return BASE_UNEXPECTED_ERROR_RESPONSE
         else:
             print(serialized_data._errors)
-            return Response(BASE_SERIALIZER_ERROR_RESPONSE, status.HTTP_400_BAD_REQUEST)
+            return BASE_SERIALIZER_ERROR_RESPONSE
