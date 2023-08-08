@@ -12,7 +12,6 @@
 
     //* dificil
         // usar paginacion
-        // implementar https para myor seguridad
 
 
         // usar webSockets para mensajes
@@ -76,4 +75,5 @@
     // estudiar mas a fondo los serializers
     // refactorizar la distribucion de los archivos, meter applications en FriendNet
     // para carga de imagenes mas rapida en io's usar formato heic al cargar imagenes
+    // implementar https para myor seguridad
 
