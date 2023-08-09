@@ -11,11 +11,10 @@
 // fase 3:
 
     //* dificil
-        // usar paginacion
+        // implementar paginacion en el backend
 
-
-        // usar webSockets para mensajes
-        // user webSockets para actualizacion de notificaciones
+        // implementar websockets para mensajes
+        // implementar webSockets para actualizacion de notificaciones
 
         // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
         // ActivateUser, ChangeEmailForActivation, GetUserDetail 
