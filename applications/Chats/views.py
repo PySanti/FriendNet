@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from applications.Usuarios.pagination import BasePaginationClass
 from rest_framework.views import (
     APIView,
 )
@@ -29,7 +28,6 @@ from applications.Notifications.models import Notifications
 # Create your views here.
 
 class GetMessagesHistorialAPI(APIView):
-    pagination_class        =  BasePaginationClass
     serializer_class        =  GetMessagesHistorialSerializer
     authentication_classes  = [JWTAuthentication]
     permission_classes      = [IsAuthenticated]
