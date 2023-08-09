@@ -11,6 +11,7 @@
 // fase 3:
 
     //* dificil
+        // implementar folders de cloudinary
         // implementar paginacion en el backend
 
         // implementar websockets para mensajes
