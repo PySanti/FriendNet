@@ -10,7 +10,8 @@ class BaseUsuariosSerializers(serializers.ModelSerializer):
         fields = [
             "username",
             "email",
-            "photo"
+            "photo",
+            "password"
         ]
     def get_photo(self, obj):
         data = self.context['request']
@@ -25,6 +26,7 @@ class CreateUsuariosSerializer(BaseUsuariosSerializers):
 class UpdateUsuariosSerializer(BaseUsuariosSerializers):
     username = serializers.CharField(required=False)
     email = serializers.EmailField(required=False)
+    password = serializers.CharField(required=False)
 
 
 

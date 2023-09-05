@@ -41,7 +41,7 @@ export function SignUp() {
                         if (error.response.data.error === "cloudinary_error"){
                             setLoadingState("Error con la nube!")
                         } else {
-                            setLoadingState("Error inesperado al actualizar datos del usuario!")
+                            setLoadingState("Error inesperado al registrar datos del usuario!")
                         }
                     }
                 } catch(error){
