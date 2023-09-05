@@ -11,6 +11,9 @@
 // fase 3:
     // mejorar sistema de serializers de creacion y actualizacion en el campo "password"
 
+    // revisar problema que se genera cuando hay algun error en alguna consulta que genera que no se pueda volver a hacer una solicitud hasta 
+    // actualizar la pagina
+
     // implementar paginacion en el backend
 
     // implementar websockets para mensajes
