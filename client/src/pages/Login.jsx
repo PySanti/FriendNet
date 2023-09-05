@@ -38,8 +38,8 @@ export function Login() {
                     delete userDetail.notifications
                     saveNotificationsInLocalStorage(notifications)
                     saveUserDataInLocalStorage(userDetail)
-                    setUserLogged(true)
                     successfullyLoaded()
+                    setUserLogged(true)
                 } catch(error){
                     setLoadingState("Error inesperado logeando usuario!") 
                 }
@@ -68,16 +68,14 @@ export function Login() {
         }
     }, [goBack])
     useEffect(()=>{
-        if (user){
-            if (!user.is_active){
+        if (user && !user.is_active){
             // Se ejecutara si se detecta que el usuario existe pero esta inactivo
-                const props = {
-                    'userId' : user.id,
-                    'username' : user.username,
-                    'userEmail' : user.email
-                }
-                navigate('/signup/activate', {state: props})
+            const props = {
+                'userId' : user.id,
+                'username' : user.username,
+                'userEmail' : user.email
             }
+            navigate('/signup/activate', {state: props})
         }
     }, [user])
 

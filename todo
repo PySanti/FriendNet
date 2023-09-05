@@ -9,20 +9,20 @@
 
 
 // fase 3:
+    // Hacer cuenta de cloudinary con email de friendnet y realizar cambios necesarios para implementacion
+    // implementar folders de cloudinary
 
-    //* dificil
-        // implementar folders de cloudinary
-        // implementar paginacion en el backend
+    // implementar paginacion en el backend
 
-        // implementar websockets para mensajes
-        // implementar webSockets para actualizacion de notificaciones
+    // implementar websockets para mensajes
+    // implementar webSockets para actualizacion de notificaciones
 
-        // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
-        // ActivateUser, ChangeEmailForActivation, GetUserDetail 
+    // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
+    // ActivateUser, ChangeEmailForActivation, GetUserDetail 
 
-        // testear todas las funcionalidades de la aplicacion y hacer respectivos refactors
+    // testear todas las funcionalidades de la aplicacion y hacer respectivos refactors
 
-        // mejorar velocidad de envio de mensajes
+    // mejorar velocidad de envio de mensajes
 
 
 
