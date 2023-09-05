@@ -9,8 +9,8 @@
 
 
 // fase 3:
-    // Hacer cuenta de cloudinary con email de friendnet y realizar cambios necesarios para implementacion
     // implementar folders de cloudinary
+    // mejorar sistema de serializers de creacion y actualizacion en el campo "password"
 
     // implementar paginacion en el backend
 
