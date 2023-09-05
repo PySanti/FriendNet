@@ -9,7 +9,6 @@
 
 
 // fase 3:
-    // implementar folders de cloudinary
     // mejorar sistema de serializers de creacion y actualizacion en el campo "password"
 
     // implementar paginacion en el backend
