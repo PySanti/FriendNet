@@ -3,16 +3,10 @@ from .models import Usuarios
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
 
-class BaseUsuariosSerializers(serializers.ModelSerializer):
+class BaseUsuariosSerializers(serializers.Serializer):
+    username = serializers.CharField(required=True)
+    email = serializers.EmailField(required=True)
     photo = serializers.SerializerMethodField('get_photo')
-    class Meta:
-        model = Usuarios
-        fields = [
-            "username",
-            "email",
-            "photo",
-            "password"
-        ]
     def get_photo(self, obj):
         data = self.context['request']
         if ('photo' not in data):
@@ -26,7 +20,6 @@ class CreateUsuariosSerializer(BaseUsuariosSerializers):
 class UpdateUsuariosSerializer(BaseUsuariosSerializers):
     username = serializers.CharField(required=False)
     email = serializers.EmailField(required=False)
-    password = serializers.CharField(required=False)
 
 
 
