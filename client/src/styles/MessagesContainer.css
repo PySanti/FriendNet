@@ -1,5 +1,5 @@
 .messages-container{
-    height: auto;
+    height: 30vh;
     overflow: scroll;
     display: flex;
     flex-direction: column;

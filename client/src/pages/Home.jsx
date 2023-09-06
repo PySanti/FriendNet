@@ -108,14 +108,16 @@ export function Home() {
         setNotifications(updatedNotifications)
         setChatGlobeList(getChatGlobesList(updatedNotifications))
     }
-    const onUserButtonClick = (clickedUser)=>{
-        const updatedNotifications = removeRelatedNotifications(clickedUser.id, notifications)
-        if(updatedNotifications){
-            saveNotificationsInLocalStorage(updatedNotifications)
-            setNotifications(updatedNotifications)
-            setChatGlobeList(getChatGlobesList(updatedNotifications))
+    const onUserButtonClick = (newClickedUser)=>{
+        if (!clickedUser || newClickedUser.id !== clickedUser.id){
+            const updatedNotifications = removeRelatedNotifications(newClickedUser.id, notifications)
+            if(updatedNotifications){
+                saveNotificationsInLocalStorage(updatedNotifications)
+                setNotifications(updatedNotifications)
+                setChatGlobeList(getChatGlobesList(updatedNotifications))
+            }
+            setClickedUser(newClickedUser)
         }
-        setClickedUser(clickedUser)
     }
 
 
