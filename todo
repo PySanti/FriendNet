@@ -9,8 +9,6 @@
 
 
 // fase 3:
-    // revisar problema que se genera cuando hay algun error en alguna consulta que genera que no se pueda volver a hacer una solicitud hasta 
-    // actualizar la pagina
 
     // implementar paginacion en el backend
 
@@ -23,6 +21,11 @@
     // testear todas las funcionalidades de la aplicacion y hacer respectivos refactors
 
     // mejorar velocidad de envio de mensajes
+
+    // revisar problema que se genera cuando hay algun error en alguna consulta que genera que no se pueda volver a hacer una solicitud hasta 
+    // actualizar la pagina (SignUp)
+
+
 
 
 
