@@ -17,7 +17,7 @@ export function UserFilter({initialUsersList, usersListSetter, sessionUserId}){
     let [filterInitializer, setFilterInitializer] = useState(false) 
     const updateUsersList = async ()=>{
         console.log('Actualizando lista de usuarios desde userFilter')
-        const response = await getUsersListAPI(currentUserkeyword.length > 0 ? currentUserkeyword: undefined, sessionUserId)
+        const response = await getUsersListAPI(currentUserkeyword.length > 0 ? currentUserkeyword: undefined, sessionUserId, 1)
         usersListSetter(response.data.users_list)
         setUsersList(response.data.users_list)
     }
