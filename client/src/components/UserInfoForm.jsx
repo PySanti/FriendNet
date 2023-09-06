@@ -32,10 +32,10 @@ export function UserInfoForm({ userData, updating, onFormSubmit, extraButtons}) 
             if (password != watch(type === "password" ? "confirmPwd" : "password")) {
                 return "Las contraseñas no son iguales";
             } else {
-                if (type === "password") {
-                    errors.confirmPwd = null;
-                } else {
-                    errors.password = null;
+                if (type === "password" && errors.confirmPwd) {
+                    errors.confirmPwd.message= null;
+                } else if (type === "confirmPwd" && errors.password){
+                    errors.password.message= null;
                 }
             }
         };

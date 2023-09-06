@@ -9,7 +9,7 @@
 
 
 // fase 3:
-
+    // agregar manejo cuando el usuario trata de actualizar su nombre o correo al de alguien que tiene el mismo
     // implementar paginacion en el backend
 
     // implementar websockets para mensajes
@@ -22,9 +22,6 @@
 
     // mejorar velocidad de envio de mensajes
 
-    // revisar problema que se genera cuando hay algun error en alguna consulta que genera que no se pueda volver a hacer una solicitud hasta 
-    // actualizar la pagina (SignUp)
-    
     // revisar comportamiento extranio de botones en el home
 
 
