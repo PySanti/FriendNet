@@ -9,7 +9,7 @@
 
 
 // fase 3:
-    // agregar manejo cuando el usuario trata de actualizar su nombre o correo al de alguien que tiene el mismo
+
     // implementar paginacion en el backend
 
     // implementar websockets para mensajes

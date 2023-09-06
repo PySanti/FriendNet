@@ -193,6 +193,8 @@ class UpdateUserDataAPI(APIView):
         if serializer.is_valid():
             user = request.user
             serialized_data = serializer.data
+            if ((serialized_data['username'] != user.username) and (Usuarios.objects.userExists(username=serialized_data['username']))) or (serialized_data['email'] != user.email) and (Usuarios.objects.userExists(email=serialized_data['email'])):
+                return Response({'error' : 'username_or_email_taken'}, status.HTTP_400_BAD_REQUEST)
             try:
                 serialized_data = set_photo_link(
                     sended_data=serialized_data, 

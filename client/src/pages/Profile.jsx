@@ -52,7 +52,11 @@ export function Profile({ updating }) {
                     if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
                         setLoadingState(BASE_FALLEN_SERVER_LOG)
                     } else {
-                        setLoadingState(error.response.data.error === "cloudinary_error" ? "Error con la nube!" : "Error inesperado al actualizar datos del usuario!");
+                        if (error.response.data.error === "cloudinary_error"){
+                            setLoadingState("Error con la nube!");
+                        } else {
+                            setLoadingState(error.response.data.error === "username_or_email_taken" ? "El usuario o el email ya están tomados !" : "Error inesperado al actualizar datos del usuario !");
+                        }
                     }
                 } 
             } else {
