@@ -24,6 +24,8 @@
 
     // revisar problema que se genera cuando hay algun error en alguna consulta que genera que no se pueda volver a hacer una solicitud hasta 
     // actualizar la pagina (SignUp)
+    
+    // revisar comportamiento extranio de botones en el home
 
 
 
