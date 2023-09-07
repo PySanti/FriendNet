@@ -9,9 +9,10 @@
 
 
 // fase 3:
-    // testear, repasar y mejorar sistema de carga automatica de lista de usuarios
 
     // hacer que funcione el userFilter nuevamente
+
+    // revisar problemas de rendimiento de red en el userList
 
     // hacer que, las funciones asincronas que se llaman dentro de useEffects, sean llamadas dentro de funciones autoCall
 

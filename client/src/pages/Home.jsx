@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react"
+
 import { userIsAuthenticated } from "../utils/userIsAuthenticated"
 import { UserNotLogged } from "./UserNotLogged"
 import { Header } from "../components/Header"
@@ -34,6 +35,9 @@ export function Home() {
     let [messagesHistorial, setMessagesHistorial] = useState([])
     let [clickedUser, setClickedUser] = useState(null)
 
+    // userFilter
+    let [userKeyword, setUserKeyword] = useState(undefined)
+
     // pagination
     let [gottaUpdateUserList, setGottaUpdateUserList]           = useState(false)
     let [userListPage, setUserListPage]                         = useState(1)
@@ -59,9 +63,10 @@ export function Home() {
         setMessagesHistorial(messagesHistorial)
     }
     const loadUsersList = async ()=>{
+        console.log('CArgando lista de usuarios')
         startLoading()
         try{
-            let response = await getUsersListAPI(undefined, user.id, userListPage)
+            let response = await getUsersListAPI(userKeyword, user.id, userListPage)
             updateUserList(response.data.users_list)
             setUserListPage(userListPage+1)
             successfullyLoaded()
@@ -155,10 +160,13 @@ export function Home() {
         }
     }, [goToProfile])
     useEffect(()=>{
-        setLoadingState(false)
-        if (userIsAuthenticated() && !userList){
-            loadUsersList()
+        async function initializeUserList(){
+            setLoadingState(false)
+            if (userIsAuthenticated() && !userList){
+                await loadUsersList()
+            }
         }
+        initializeUserList()
     }, [])
     useEffect(()=>{
         if (clickedUser){
@@ -178,6 +186,17 @@ export function Home() {
             updateList()
         }
     }, [gottaUpdateUserList])
+    useEffect(()=>{
+        if (userKeyword){
+            console.log('UserKeyword')
+            console.log(userKeyword)
+            setUserList(false)
+            setUserListPage(1)
+            setNoMorePages(false)
+            setUserListLoaderActivated(true)
+            setGottaUpdateUserList(true)
+        }
+    }, [userKeyword])
     if (!userIsAuthenticated()){
         return <UserNotLogged/>
     } else {
@@ -194,7 +213,15 @@ export function Home() {
                     <div className="users-interface-container">
                         {userList && 
                             <>
-                                <UsersList  usersList={userList}  onClickEvent={onUserButtonClick}  chatGlobeList={chatGlobeList}  usersListSetter={setUserList}  sessionUserId={user.id} gottaUpdateListSetter={setGottaUpdateUserList} loaderActivated={userListLoaderActivated}/>
+                                <UsersList  
+                                usersList={userList}  
+                                onClickEvent={onUserButtonClick}  
+                                chatGlobeList={chatGlobeList}  
+                                gottaUpdateListSetter={setGottaUpdateUserList} 
+                                loaderActivated={userListLoaderActivated} 
+                                userKeyword={userKeyword}
+                                userKeywordSetter={setUserKeyword}
+                                />
                                 <Chat chatingUser={clickedUser} messages={messagesHistorial} sessionUserId={user.id} onMsgSending={onMsgSending}/>
                             </>
                         }
