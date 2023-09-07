@@ -150,12 +150,15 @@ export function Home() {
         }
     }, [clickedUser])
     useEffect(()=>{
-        if (gottaUpdateUserList){
-            console.log('Se requiere actualizar la lista de usuarios')
-            setUserListPage(userListPage+1)
-            loadUsersList()
-            setGottaUpdateUserList(false)
+        async function updateUsers(){
+            if (gottaUpdateUserList){
+                console.log('Se requiere actualizar la lista de usuarios')
+                setUserListPage(userListPage+1)
+                await loadUsersList()
+                setGottaUpdateUserList(false)
+            }
         }
+        updateUsers()
     }, [gottaUpdateUserList])
     if (!userIsAuthenticated()){
         return <UserNotLogged/>
