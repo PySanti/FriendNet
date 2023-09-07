@@ -171,6 +171,7 @@ export function Home() {
                 loadUsersList()
             } else {
                 console.log('No hay mas usuarios')
+                setUserListLoaderActivated(false)
             }
             setGottaUpdateUserList(false)
         }
@@ -191,7 +192,7 @@ export function Home() {
                     <div className="users-interface-container">
                         {userList && 
                             <>
-                                <UsersList  usersList={userList}  onClickEvent={onUserButtonClick}  chatGlobeList={chatGlobeList}  usersListSetter={setUserList}  sessionUserId={user.id} gottaUpdateListSetter={setGottaUpdateUserList}/>
+                                <UsersList  usersList={userList}  onClickEvent={onUserButtonClick}  chatGlobeList={chatGlobeList}  usersListSetter={setUserList}  sessionUserId={user.id} gottaUpdateListSetter={setGottaUpdateUserList} loaderActivated={userListLoaderActivated}/>
                                 <Chat chatingUser={clickedUser} messages={messagesHistorial} sessionUserId={user.id} onMsgSending={onMsgSending}/>
                             </>
                         }

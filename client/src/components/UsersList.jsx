@@ -12,8 +12,9 @@ import { UserFilter } from "./UserFilter"
  * @param {Function} usersListSetter setter de lista de usuarios a usar con filtro
  * @param {String} sessionUserId 
  * @param {Function} gottaUpdateListSetter setter para avisar cuando sea necesario actualizar lista de usuarios
+ * @param {Boolean} loaderActivated booleano que indicara si es necesario renderizar loader para carga de usuarios de la lista
  */
-export function UsersList({usersList, onClickEvent, chatGlobeList, usersListSetter, sessionUserId, gottaUpdateListSetter }){
+export function UsersList({usersList, onClickEvent, chatGlobeList, usersListSetter, sessionUserId, gottaUpdateListSetter, loaderActivated }){
     const formatingFunction = (user)=>{
         return <UserButton key={v4()}user={user}onClickFunction={onClickEvent} withGlobe={chatGlobeList.includes(user.id)} />
     }
@@ -34,6 +35,9 @@ export function UsersList({usersList, onClickEvent, chatGlobeList, usersListSett
                         No se han encontrado usuarios
                     </div>
                 }
+                {loaderActivated &&
+                    "Cargando ..."
+                }
             </div>
         </>
     )
@@ -46,7 +50,9 @@ UsersList.propTypes = {
     chatGlobeList : PropTypes.array,
     usersListSetter : PropTypes.func.isRequired,
     sessionUserId : PropTypes.number.isRequired,
-    gottaUpdateListSetter : PropTypes.func.isRequired
+    gottaUpdateListSetter : PropTypes.func.isRequired,
+    loaderActivated : PropTypes.bool.isRequired,
+
 }
 UsersList.defaultProps = {
     chatGlobeList : undefined,

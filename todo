@@ -9,11 +9,11 @@
 
 
 // fase 3:
+    // testear, repasar y mejorar sistema de carga automatica de lista de usuarios
+
     // hacer que, las funciones asincronas que se llaman dentro de useEffects, sean llamadas dentro de funciones autoCall
 
-    // testear y mejorar sistema de carga automatica de lista de usuarios
 
-    // implementar loader basico en lista de usuarios
     // eliminar uso de states en variables normales
 
     // implementar paginacion para mensajes
@@ -63,6 +63,7 @@
     // hacer que la bigger-img del userPhoto tenga object-fit : contain
     // hacer que si el usuario cambia algun dato del perfil, se cambien los estilos del boton de actualizacion
     // darle un espacio en el DOM Por defecto al input-error del UserPhoto
+    // darle estilos al loader del usersList
 
 // Fase 5:
     // centrarnos en testear bien las imagenes (calidad, tiempos de carga, portabilidad )
