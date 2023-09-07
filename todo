@@ -10,11 +10,13 @@
 
 // fase 3:
     // hacer que, las funciones asincronas que se llaman dentro de useEffects, sean llamadas dentro de funciones autoCall
-    // testear y mejorar sistema de carga automatica de lista de usuarios
-    // agregar soporte para cuando no hay mas usuarios y se desea seguir cargando
-    // implementar loader basico en lista de usuarios
 
-    // implementar paginacion en el backend
+    // testear y mejorar sistema de carga automatica de lista de usuarios
+
+    // implementar loader basico en lista de usuarios
+    // eliminar uso de states en variables normales
+
+    // implementar paginacion para mensajes
 
     // implementar websockets para mensajes
     // implementar webSockets para actualizacion de notificaciones

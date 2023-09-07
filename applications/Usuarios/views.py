@@ -14,7 +14,8 @@ from .utils.constants import (
     BASE_SERIALIZER_ERROR_RESPONSE,
     USERS_LIST_ATTRS,
     USER_SHOWABLE_FIELDS,
-    BASE_UNEXPECTED_ERROR_RESPONSE
+    BASE_UNEXPECTED_ERROR_RESPONSE,
+    BASE_NO_MORE_PAGES_RESPONSE
 )
 from django.core.mail import send_mail
 from django.contrib.auth.hashers import (
@@ -120,8 +121,11 @@ class GetUsersListAPI(APIView):
                 if 'user_keyword' in serialized_data.data:
                     users_list = users_list.filter(username__icontains=serialized_data.data['user_keyword'])
 
-                # pagination
-                result_page = self.pagination_class().paginate_queryset(users_list.values(*USERS_LIST_ATTRS), request)
+                try:
+                    # pagination
+                    result_page = self.pagination_class().paginate_queryset(users_list.values(*USERS_LIST_ATTRS), request)
+                except Exception:
+                    return BASE_NO_MORE_PAGES_RESPONSE
 
                 return JsonResponse({"users_list": result_page}, status=status.HTTP_200_OK)
             except Exception:

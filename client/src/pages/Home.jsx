@@ -31,12 +31,14 @@ export function Home() {
     let {loadingState, setLoadingState,startLoading,  successfullyLoaded} = useContext(LoadingContext)
     let [notifications, setNotifications] = useState(getNotificationsFromLocalStorage())
     let [chatGlobeList, setChatGlobeList] = useState(getChatGlobesList(notifications))
-    let [messagesHistorial, setMessagesHistorial] = useState(null)
+    let [messagesHistorial, setMessagesHistorial] = useState([])
+    let [userListLoaderActivated, setUserListLoaderActivated] = useState(false)
     let [userListPage, setUserListPage] = useState(1)
+    let [noMorePages, setNoMorePages] = useState(false)
     let [clickedUser, setClickedUser] = useState(null)
     let [gottaUpdateUserList, setGottaUpdateUserList] = useState(false)
     let [userList, setUserList] = useState(false)
-    let [user] = useState(getUserDataFromLocalStorage())
+    const user = getUserDataFromLocalStorage()
     let [goToProfile, setGoToProfile] = useState(false)
     const navigate = useNavigate()
     const updateUserList = (newUsers)=>{
@@ -56,11 +58,23 @@ export function Home() {
     const loadUsersList = async ()=>{
         startLoading()
         try{
+            setUserListLoaderActivated(true)
             let response = await getUsersListAPI(undefined, user.id, userListPage)
             updateUserList(response.data.users_list)
+            setUserListLoaderActivated(false)
+            setUserListPage(userListPage+1)
             successfullyLoaded()
         } catch(error){
-            setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado cargando datos de usuarios!')
+            if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
+                setLoadingState(BASE_FALLEN_SERVER_LOG)
+            } else {
+                if (error.response.data.error=== "no_more_pages"){
+                    setNoMorePages(true)
+                    successfullyLoaded()
+                } else {
+                    setLoadingState('Error inesperado cargando datos de usuarios!')
+                }
+            }
         }
     }
     const onMsgSending = async (data)=>{
@@ -88,7 +102,7 @@ export function Home() {
         if (successValidating === true){
             try{
                 const response = await getMessagesHistorialAPI(clickedUser.id, getJWTFromLocalStorage().access)
-                setMessagesHistorial(response.data !== "no_messages_between" ? response.data.messages_hist : null)
+                setMessagesHistorial(response.data !== "no_messages_between" ? response.data.messages_hist : [])
                 successfullyLoaded()
             } catch(error){
                 setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado buscando chat!')
@@ -150,15 +164,16 @@ export function Home() {
         }
     }, [clickedUser])
     useEffect(()=>{
-        async function updateUsers(){
-            if (gottaUpdateUserList){
-                console.log('Se requiere actualizar la lista de usuarios')
-                setUserListPage(userListPage+1)
-                await loadUsersList()
-                setGottaUpdateUserList(false)
+        console.log('Flag 0')
+        if (gottaUpdateUserList){
+            console.log('Flag 1')
+            if (!noMorePages){
+                loadUsersList()
+            } else {
+                console.log('No hay mas usuarios')
             }
+            setGottaUpdateUserList(false)
         }
-        updateUsers()
     }, [gottaUpdateUserList])
     if (!userIsAuthenticated()){
         return <UserNotLogged/>
