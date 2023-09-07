@@ -11,14 +11,21 @@ import { UserFilter } from "./UserFilter"
  * @param {Array} chatGlobeList lista de ids de los usuarios con globe en la usersList
  * @param {Function} usersListSetter setter de lista de usuarios a usar con filtro
  * @param {String} sessionUserId 
+ * @param {Function} gottaUpdateListSetter setter para avisar cuando sea necesario actualizar lista de usuarios
  */
-export function UsersList({usersList, onClickEvent, chatGlobeList, usersListSetter, sessionUserId}){
+export function UsersList({usersList, onClickEvent, chatGlobeList, usersListSetter, sessionUserId, gottaUpdateListSetter }){
     const formatingFunction = (user)=>{
         return <UserButton key={v4()}user={user}onClickFunction={onClickEvent} withGlobe={chatGlobeList.includes(user.id)} />
     }
+    const scrollDetector = (e)=>{
+        if (e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight){
+            console.log('Se llego al final de la lista!')
+            gottaUpdateListSetter(true)
+        }
+    }
     return (
         <>
-            <div className="users-list-container">
+            <div className="users-list-container" onScroll={scrollDetector}>
                 <UserFilter usersListSetter={usersListSetter} sessionUserId={sessionUserId} initialUsersList={usersList}/>
                 {usersList.length > 0 ? 
                     usersList.map(formatingFunction)
@@ -38,11 +45,11 @@ UsersList.propTypes = {
     onClickEvent : PropTypes.func.isRequired,
     chatGlobeList : PropTypes.array,
     usersListSetter : PropTypes.func.isRequired,
-    sessionUserId : PropTypes.number.isRequired
+    sessionUserId : PropTypes.number.isRequired,
+    gottaUpdateListSetter : PropTypes.func.isRequired
 }
 UsersList.defaultProps = {
     chatGlobeList : undefined,
 }
-
 
 

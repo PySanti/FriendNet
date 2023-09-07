@@ -32,11 +32,23 @@ export function Home() {
     let [notifications, setNotifications] = useState(getNotificationsFromLocalStorage())
     let [chatGlobeList, setChatGlobeList] = useState(getChatGlobesList(notifications))
     let [messagesHistorial, setMessagesHistorial] = useState(null)
+    let [userListPage, setUserListPage] = useState(1)
     let [clickedUser, setClickedUser] = useState(null)
+    let [gottaUpdateUserList, setGottaUpdateUserList] = useState(false)
     let [userList, setUserList] = useState(false)
     let [user] = useState(getUserDataFromLocalStorage())
     let [goToProfile, setGoToProfile] = useState(false)
     const navigate = useNavigate()
+    const updateUserList = (newUsers)=>{
+        if (!userList){
+            userList = newUsers
+        } else {
+            newUsers.forEach(element => {
+                userList.push(element)
+            });
+        }
+        setUserList(userList)
+    }
     const addMessage = (new_msg)=>{
         messagesHistorial.push(new_msg)
         setMessagesHistorial(messagesHistorial)
@@ -44,8 +56,8 @@ export function Home() {
     const loadUsersList = async ()=>{
         startLoading()
         try{
-            let response = await getUsersListAPI(undefined, user.id, 1)
-            setUserList(response.data.users_list)
+            let response = await getUsersListAPI(undefined, user.id, userListPage)
+            updateUserList(response.data.users_list)
             successfullyLoaded()
         } catch(error){
             setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado cargando datos de usuarios!')
@@ -137,7 +149,14 @@ export function Home() {
             loadMessages()
         }
     }, [clickedUser])
-
+    useEffect(()=>{
+        if (gottaUpdateUserList){
+            console.log('Se requiere actualizar la lista de usuarios')
+            setUserListPage(userListPage+1)
+            loadUsersList()
+            setGottaUpdateUserList(false)
+        }
+    }, [gottaUpdateUserList])
     if (!userIsAuthenticated()){
         return <UserNotLogged/>
     } else {
@@ -154,7 +173,7 @@ export function Home() {
                     <div className="users-interface-container">
                         {userList && 
                             <>
-                                <UsersList  usersList={userList}  onClickEvent={onUserButtonClick}  chatGlobeList={chatGlobeList}  usersListSetter={setUserList}  sessionUserId={user.id}/>
+                                <UsersList  usersList={userList}  onClickEvent={onUserButtonClick}  chatGlobeList={chatGlobeList}  usersListSetter={setUserList}  sessionUserId={user.id} gottaUpdateListSetter={setGottaUpdateUserList}/>
                                 <Chat chatingUser={clickedUser} messages={messagesHistorial} sessionUserId={user.id} onMsgSending={onMsgSending}/>
                             </>
                         }

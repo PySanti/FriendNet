@@ -77,4 +77,5 @@
     // refactorizar la distribucion de los archivos, meter applications en FriendNet
     // para carga de imagenes mas rapida en io's usar formato heic al cargar imagenes
     // implementar https para myor seguridad
+    // una vez que el proyecto este completamente terminado, eliminar todos los logs del front y back
 
