@@ -120,7 +120,6 @@ class GetUsersListAPI(APIView):
                 users_list = Usuarios.objects.filter(is_active=True).exclude(id=serialized_data.data['session_user_id'])
                 if 'user_keyword' in serialized_data.data:
                     users_list = users_list.filter(username__icontains=serialized_data.data['user_keyword'])
-
                 try:
                     # pagination
                     result_page = self.pagination_class().paginate_queryset(users_list.values(*USERS_LIST_ATTRS), request)

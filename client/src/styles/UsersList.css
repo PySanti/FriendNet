@@ -1,5 +1,5 @@
 .users-list-container{
-    height: 30vh;
+    height: 50vh;
     overflow: scroll;
     display: flex;
     flex-direction: column;

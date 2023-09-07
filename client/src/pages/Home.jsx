@@ -32,12 +32,15 @@ export function Home() {
     let [notifications, setNotifications] = useState(getNotificationsFromLocalStorage())
     let [chatGlobeList, setChatGlobeList] = useState(getChatGlobesList(notifications))
     let [messagesHistorial, setMessagesHistorial] = useState([])
-    let [userListLoaderActivated, setUserListLoaderActivated] = useState(false)
-    let [userListPage, setUserListPage] = useState(1)
-    let [noMorePages, setNoMorePages] = useState(false)
     let [clickedUser, setClickedUser] = useState(null)
-    let [gottaUpdateUserList, setGottaUpdateUserList] = useState(false)
-    let [userList, setUserList] = useState(false)
+
+    // pagination
+    let [gottaUpdateUserList, setGottaUpdateUserList]           = useState(false)
+    let [userListPage, setUserListPage]                         = useState(1)
+    let [noMorePages, setNoMorePages]                           = useState(false)
+    let [userListLoaderActivated, setUserListLoaderActivated]   = useState(true)
+    let [userList, setUserList]                                 = useState(false)
+
     const user = getUserDataFromLocalStorage()
     let [goToProfile, setGoToProfile] = useState(false)
     const navigate = useNavigate()
@@ -58,10 +61,8 @@ export function Home() {
     const loadUsersList = async ()=>{
         startLoading()
         try{
-            setUserListLoaderActivated(true)
             let response = await getUsersListAPI(undefined, user.id, userListPage)
             updateUserList(response.data.users_list)
-            setUserListLoaderActivated(false)
             setUserListPage(userListPage+1)
             successfullyLoaded()
         } catch(error){
@@ -70,6 +71,7 @@ export function Home() {
             } else {
                 if (error.response.data.error=== "no_more_pages"){
                     setNoMorePages(true)
+                    setUserListLoaderActivated(false)
                     successfullyLoaded()
                 } else {
                     setLoadingState('Error inesperado cargando datos de usuarios!')
@@ -164,16 +166,16 @@ export function Home() {
         }
     }, [clickedUser])
     useEffect(()=>{
-        console.log('Flag 0')
         if (gottaUpdateUserList){
-            console.log('Flag 1')
-            if (!noMorePages){
-                loadUsersList()
-            } else {
-                console.log('No hay mas usuarios')
-                setUserListLoaderActivated(false)
+            const updateList = async ()=>{
+                if (!noMorePages){
+                    await loadUsersList()
+                } else {
+                    console.log('No hay mas usuarios')
+                }
+                setGottaUpdateUserList(false)
             }
-            setGottaUpdateUserList(false)
+            updateList()
         }
     }, [gottaUpdateUserList])
     if (!userIsAuthenticated()){
