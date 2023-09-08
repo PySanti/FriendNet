@@ -15,29 +15,32 @@ import { UserFilter } from "./UserFilter"
  * @param {Function} userKeywordSetter state setter de palabra clave actual para userFilter
  */
 export function UsersList({usersList, onClickEvent, chatGlobeList, gottaUpdateListSetter, loaderActivated, userKeyword, userKeywordSetter }){
+    const loaderClassName = "users-list-loader"
     const formatingFunction = (user)=>{
         return <UserButton key={v4()}user={user}onClickFunction={onClickEvent} withGlobe={chatGlobeList.includes(user.id)} />
     }
     const scrollDetector = (e)=>{
-        if (e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight){
+        if (e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight/1.01){
             console.log('Se llego al final de la lista!')
             gottaUpdateListSetter(true)
-        }
+        } 
     }
     return (
         <>
-            <div className="users-list-container" onScroll={scrollDetector}>
+            <div className="users-list">
                 <UserFilter userList={usersList} userKeyword={userKeyword} userKeywordSetter={userKeywordSetter} />
                 {usersList.length > 0 ? 
-                    usersList.map(formatingFunction)
+                    <div className="users-list-container"  onScroll={scrollDetector}>
+                        {usersList.map(formatingFunction)}
+                    </div>
                     :
                     <div className="no-users-msg">
                         No se han encontrado usuarios
                     </div>
                 }
-                {loaderActivated &&
-                    "Cargando ..."
-                }
+                <div className={loaderActivated ? loaderClassName+"__activated" : loaderClassName}>
+                    {loaderActivated && "Cargando ..."}
+                </div>
             </div>
         </>
     )

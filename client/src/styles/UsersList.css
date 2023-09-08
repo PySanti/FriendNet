@@ -1,6 +1,19 @@
-.users-list-container{
+.users-list{
     height: 50vh;
+    display: flex;
+    flex-direction: column;
+
+}
+.users-list-container{
+    height: inherit;
     overflow: scroll;
     display: flex;
     flex-direction: column;
+}
+.users-list-loader{
+    padding-top:1rem ;
+}
+.users-list-loader__activated{
+    padding-top:0;
+    font-size: 1rem;
 }

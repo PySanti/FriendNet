@@ -1,4 +1,5 @@
 import {PropTypes} from "prop-types"
+import "../styles/UserFilter.css"
 
 
 
@@ -16,7 +17,9 @@ export function UserFilter({userList, userKeyword, userKeywordSetter}){
         }
     }
     return (
-        <input placeholder="Busca a un usuario" className="users-filter-input" type="text" onChange={onLetterInput}/>
+        <div className="user-filter-container">
+            <input placeholder="Busca a un usuario" className="users-filter-input" type="text" onChange={onLetterInput}/>
+        </div>
     )
 }
 UserFilter.propTypes = {

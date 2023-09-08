@@ -63,11 +63,12 @@ export function Home() {
         setMessagesHistorial(messagesHistorial)
     }
     const loadUsersList = async ()=>{
-        console.log('CArgando lista de usuarios')
         startLoading()
         try{
+            setUserListLoaderActivated(true)
             let response = await getUsersListAPI(userKeyword, user.id, userListPage)
             updateUserList(response.data.users_list)
+            setUserListLoaderActivated(false)
             setUserListPage(userListPage+1)
             successfullyLoaded()
         } catch(error){
@@ -175,11 +176,10 @@ export function Home() {
     }, [clickedUser])
     useEffect(()=>{
         if (gottaUpdateUserList){
+            console.log('Se requiere actualizar la lista de usuarios')
             const updateList = async ()=>{
                 if (!noMorePages){
                     await loadUsersList()
-                } else {
-                    console.log('No hay mas usuarios')
                 }
                 setGottaUpdateUserList(false)
             }
