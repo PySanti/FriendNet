@@ -43,20 +43,17 @@ export function Home() {
     let [userListPage, setUserListPage]                         = useState(1)
     let [noMorePages, setNoMorePages]                           = useState(false)
     let [userListLoaderActivated, setUserListLoaderActivated]   = useState(true)
-    let [userList, setUserList]                                 = useState(false)
+    let [userList, setUserList]                                 = useState([])
 
     const user = getUserDataFromLocalStorage()
     let [goToProfile, setGoToProfile] = useState(false)
     const navigate = useNavigate()
     const updateUserList = (newUsers)=>{
-        if (!userList){
-            userList = newUsers
+        if (userListPage === 1){
+            setUserList(newUsers)
         } else {
-            newUsers.forEach(element => {
-                userList.push(element)
-            });
+            setUserList(userList.concat(newUsers))
         }
-        setUserList(userList)
     }
     const addMessage = (new_msg)=>{
         messagesHistorial.push(new_msg)
@@ -66,7 +63,7 @@ export function Home() {
         startLoading()
         try{
             setUserListLoaderActivated(true)
-            let response = await getUsersListAPI(userKeyword, user.id, userListPage)
+            let response = await getUsersListAPI(!userKeyword || userKeyword.length === 0 ? undefined : userKeyword, user.id, userListPage)
             updateUserList(response.data.users_list)
             setUserListLoaderActivated(false)
             setUserListPage(userListPage+1)
@@ -163,7 +160,7 @@ export function Home() {
     useEffect(()=>{
         async function initializeUserList(){
             setLoadingState(false)
-            if (userIsAuthenticated() && !userList){
+            if (userIsAuthenticated() && userList.length === 0){
                 await loadUsersList()
             }
         }
@@ -187,13 +184,11 @@ export function Home() {
         }
     }, [gottaUpdateUserList])
     useEffect(()=>{
-        if (userKeyword){
+        if (userKeyword !== undefined){
             console.log('UserKeyword')
             console.log(userKeyword)
-            setUserList(false)
             setUserListPage(1)
             setNoMorePages(false)
-            setUserListLoaderActivated(true)
             setGottaUpdateUserList(true)
         }
     }, [userKeyword])
@@ -211,20 +206,16 @@ export function Home() {
                     </div>
                     <Loader state={loadingState}/>
                     <div className="users-interface-container">
-                        {userList && 
-                            <>
-                                <UsersList  
-                                usersList={userList}  
-                                onClickEvent={onUserButtonClick}  
-                                chatGlobeList={chatGlobeList}  
-                                gottaUpdateListSetter={setGottaUpdateUserList} 
-                                loaderActivated={userListLoaderActivated} 
-                                userKeyword={userKeyword}
-                                userKeywordSetter={setUserKeyword}
-                                />
-                                <Chat chatingUser={clickedUser} messages={messagesHistorial} sessionUserId={user.id} onMsgSending={onMsgSending}/>
-                            </>
-                        }
+                        <UsersList  
+                        usersList={userList}  
+                        onClickEvent={onUserButtonClick}  
+                        chatGlobeList={chatGlobeList}  
+                        gottaUpdateListSetter={setGottaUpdateUserList} 
+                        loaderActivated={userListLoaderActivated} 
+                        userKeyword={userKeyword}
+                        userKeywordSetter={setUserKeyword}
+                        />
+                        <Chat chatingUser={clickedUser} messages={messagesHistorial} sessionUserId={user.id} onMsgSending={onMsgSending}/>
                     </div>
                 </div>
             </div>
