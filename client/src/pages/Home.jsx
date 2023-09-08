@@ -38,12 +38,18 @@ export function Home() {
     // userFilter
     let [userKeyword, setUserKeyword] = useState(undefined)
 
-    // pagination
+    // userList pagination
     let [gottaUpdateUserList, setGottaUpdateUserList]           = useState(false)
     let userListPage                                            = useRef(1)
     let [noMorePages, setNoMorePages]                           = useState(false)
     let [userListLoaderActivated, setUserListLoaderActivated]   = useState(true)
     let [userList, setUserList]                                 = useState([])
+    
+    // messages pagination
+    let [gottaUpdateMessagesHistorial, setGottaUpdateMessagesHistorial]           = useState(false)
+    let messagesHistorialPage = useRef(1)
+
+
 
     const user = getUserDataFromLocalStorage()
     let [goToProfile, setGoToProfile] = useState(false)
@@ -105,7 +111,7 @@ export function Home() {
         const successValidating = await validateJWT()
         if (successValidating === true){
             try{
-                const response = await getMessagesHistorialAPI(clickedUser.id, getJWTFromLocalStorage().access, 1)
+                const response = await getMessagesHistorialAPI(clickedUser.id, getJWTFromLocalStorage().access, messagesHistorialPage.current)
                 setMessagesHistorial(response.data !== "no_messages_between" ? response.data.messages_hist : [])
                 console.log(response.data.messages_hist)
                 successfullyLoaded()
@@ -141,6 +147,7 @@ export function Home() {
     }
     const onUserButtonClick = (newClickedUser)=>{
         if (!clickedUser || newClickedUser.id !== clickedUser.id){
+            messagesHistorialPage.current = 1
             const updatedNotifications = removeRelatedNotifications(newClickedUser.id, notifications)
             if(updatedNotifications){
                 saveNotificationsInLocalStorage(updatedNotifications)
@@ -194,6 +201,12 @@ export function Home() {
             updateList()
         }
     }, [userKeyword])
+    useEffect(()=>{
+        if (gottaUpdateMessagesHistorial){
+            console.log('Se requiere actualizar la lista de mensajes')
+            setGottaUpdateMessagesHistorial(false)
+        }
+    }, [gottaUpdateMessagesHistorial])
     if (!userIsAuthenticated()){
         return <UserNotLogged/>
     } else {
@@ -209,15 +222,20 @@ export function Home() {
                     <Loader state={loadingState}/>
                     <div className="users-interface-container">
                         <UsersList  
-                        usersList={userList}  
-                        onClickEvent={onUserButtonClick}  
-                        chatGlobeList={chatGlobeList}  
-                        gottaUpdateListSetter={setGottaUpdateUserList} 
-                        loaderActivated={userListLoaderActivated} 
-                        userKeyword={userKeyword}
-                        userKeywordSetter={setUserKeyword}
+                            usersList={userList}  
+                            onClickEvent={onUserButtonClick}  
+                            chatGlobeList={chatGlobeList}  
+                            gottaUpdateListSetter={setGottaUpdateUserList} 
+                            loaderActivated={userListLoaderActivated} 
+                            userKeyword={userKeyword}
+                            userKeywordSetter={setUserKeyword}
                         />
-                        <Chat chatingUser={clickedUser} messages={messagesHistorial} sessionUserId={user.id} onMsgSending={onMsgSending}/>
+                        <Chat 
+                            chatingUser={clickedUser} 
+                            messages={messagesHistorial} 
+                            sessionUserId={user.id} 
+                            onMsgSending={onMsgSending} 
+                            messagesUpdatingSetter={setGottaUpdateMessagesHistorial}/>
                     </div>
                 </div>
             </div>

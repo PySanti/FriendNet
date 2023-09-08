@@ -3,6 +3,7 @@ import {PropTypes} from "prop-types"
 import "../styles/UsersList.css"
 import { v4 } from "uuid"
 import { UserFilter } from "./UserFilter"
+import {bottomOfContainer} from "../utils/bottomOfContainer"
 
 /**
  * Recibe la lista de usuarios directa de la api y retorna la lista de elementos jsx
@@ -20,7 +21,7 @@ export function UsersList({usersList, onClickEvent, chatGlobeList, gottaUpdateLi
         return <UserButton key={v4()}user={user}onClickFunction={onClickEvent} withGlobe={chatGlobeList.includes(user.id)} />
     }
     const scrollDetector = (e)=>{
-        if (e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight){
+        if (bottomOfContainer(e)){
             console.log('Se llego al final de la lista!')
             gottaUpdateListSetter(true)
         } 

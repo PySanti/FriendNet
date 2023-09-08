@@ -72,6 +72,7 @@
     // hacer que si el usuario cambia algun dato del perfil, se cambien los estilos del boton de actualizacion
     // darle un espacio en el DOM Por defecto al input-error del UserPhoto
     // darle estilos al loader del usersList
+    // agrear codigo en caso de que no se haya seleccionado ningun chatingUser en el componente Chat, algo asi como "Selecciona un usuario para chatear"
 
 // Fase 5:
     // centrarnos en testear bien las imagenes (calidad, tiempos de carga, portabilidad )

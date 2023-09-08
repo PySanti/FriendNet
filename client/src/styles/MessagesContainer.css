@@ -1,6 +1,5 @@
 .messages-container{
     height: 30vh;
-    overflow: scroll;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,6 +7,11 @@
     padding: .5rem;
     border-bottom: 1px solid #000;
     border-bottom: 1px solid #000;
+}
+.messages-list-container{
+    height: auto;
+    width: auto;
+    overflow: scroll;
 }
 .messages-container__title{
     text-align: center;
