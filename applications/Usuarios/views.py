@@ -1,3 +1,5 @@
+from django.db.models import Case, When
+from django.db import models
 from rest_framework import status
 from rest_framework.views import (
     APIView,
@@ -95,7 +97,7 @@ class GetUserDetailAPI(APIView):
                     user = Usuarios.objects.get(username=request.data['username'])
                     if (check_password(request.data['password'], user.password)):
                         formated_user_data = Usuarios.objects.getFormatedUserData(user)
-                        Usuarios.objects.deleteAllNotifications(user)
+                        # Usuarios.objects.deleteAllNotifications(user)
                         return JsonResponse({'user' : formated_user_data}, status=status.HTTP_200_OK)
                     else:
                         return Response({'error' : 'user_not_exists'}, status.HTTP_400_BAD_REQUEST)
@@ -117,9 +119,19 @@ class GetUsersListAPI(APIView):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
             try:
+                session_user = Usuarios.objects.get(id=serialized_data.data['session_user_id'])
+                senders_notifications_ids = [a['sender_user_id'] for a in list(session_user.notifications.values('sender_user_id'))]
                 users_list = Usuarios.objects.filter(is_active=True).exclude(id=serialized_data.data['session_user_id'])
                 if 'user_keyword' in serialized_data.data:
                     users_list = users_list.filter(username__icontains=serialized_data.data['user_keyword'])
+                
+                users_list = users_list.annotate(
+                    orden=Case(
+                        When(id__in=senders_notifications_ids, then=0),
+                        default=1,
+                        output_field=models.IntegerField(),
+                    )
+                ).order_by('orden')
                 try:
                     # pagination
                     result_page = self.pagination_class().paginate_queryset(users_list.values(*USERS_LIST_ATTRS), request)

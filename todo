@@ -9,8 +9,6 @@
 
 
 // fase 3:
-    // hacer que la api de GetUsersList retorne primero los usuarios con mensajes relacionados
-
     // implementar paginacion en notificaciones
 
     // hacer que, las funciones asincronas que se llaman dentro de useEffects, sean llamadas dentro de funciones autoCall (modularizar esas funciones para evitar declaracion multiple)
@@ -27,6 +25,8 @@
 
     // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
     // ActivateUser, ChangeEmailForActivation, GetUserDetail 
+
+    // agregar seguridad a GetUsersList : como esta ahora, cualquiera puede saber quien a escrito a quien
 
     // mejorar sistema de notificaciones, el que tenemos es horrible
 
@@ -98,4 +98,5 @@
     // para carga de imagenes mas rapida en io's usar formato heic al cargar imagenes
     // implementar https para myor seguridad
     // una vez que el proyecto este completamente terminado, eliminar todos los logs del front y back
+    // a la hora de montar el proyecto en produccion, investigar bien como funciona todo el proceso de montado de backend's
 
