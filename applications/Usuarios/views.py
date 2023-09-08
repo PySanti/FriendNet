@@ -124,14 +124,23 @@ class GetUsersListAPI(APIView):
                 users_list = Usuarios.objects.filter(is_active=True).exclude(id=serialized_data.data['session_user_id'])
                 if 'user_keyword' in serialized_data.data:
                     users_list = users_list.filter(username__icontains=serialized_data.data['user_keyword'])
-                
-                users_list = users_list.annotate(
-                    orden=Case(
+                users_list = users_list.order_by(
+                    Case(
                         When(id__in=senders_notifications_ids, then=0),
-                        default=1,
+                        When(is_online=True, then=1),
+                        default=2,
                         output_field=models.IntegerField(),
                     )
-                ).order_by('orden')
+                )
+
+                # users_list = users_list.annotate(
+                #     messages_senders_users=Case(
+                #         When(id__in=senders_notifications_ids, then=0),
+                #         default=1,
+                #         output_field=models.IntegerField(),
+                #     )
+                # ).order_by('messages_senders_users')
+
                 try:
                     # pagination
                     result_page = self.pagination_class().paginate_queryset(users_list.values(*USERS_LIST_ATTRS), request)
