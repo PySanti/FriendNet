@@ -185,11 +185,13 @@ export function Home() {
     }, [gottaUpdateUserList])
     useEffect(()=>{
         if (userKeyword !== undefined){
-            console.log('UserKeyword')
-            console.log(userKeyword)
-            setUserListPage(1)
-            setNoMorePages(false)
-            setGottaUpdateUserList(true)
+            const updateList = async ()=>{
+                setUserListPage(1)
+                console.log(`Actualizando lista de usuarios con ${userKeyword} y pagina ${userListPage}`)
+                setNoMorePages(false)
+                await loadUsersList()
+            }
+            updateList()
         }
     }, [userKeyword])
     if (!userIsAuthenticated()){
