@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useState, useRef } from "react"
 
 import { userIsAuthenticated } from "../utils/userIsAuthenticated"
 import { UserNotLogged } from "./UserNotLogged"
@@ -40,7 +40,7 @@ export function Home() {
 
     // pagination
     let [gottaUpdateUserList, setGottaUpdateUserList]           = useState(false)
-    let [userListPage, setUserListPage]                         = useState(1)
+    let userListPage                                            = useRef(1)
     let [noMorePages, setNoMorePages]                           = useState(false)
     let [userListLoaderActivated, setUserListLoaderActivated]   = useState(true)
     let [userList, setUserList]                                 = useState([])
@@ -49,7 +49,7 @@ export function Home() {
     let [goToProfile, setGoToProfile] = useState(false)
     const navigate = useNavigate()
     const updateUserList = (newUsers)=>{
-        if (userListPage === 1){
+        if (userListPage.current === 1){
             setUserList(newUsers)
         } else {
             setUserList(userList.concat(newUsers))
@@ -63,10 +63,10 @@ export function Home() {
         startLoading()
         try{
             setUserListLoaderActivated(true)
-            let response = await getUsersListAPI(!userKeyword || userKeyword.length === 0 ? undefined : userKeyword, user.id, userListPage)
+            let response = await getUsersListAPI(!userKeyword || userKeyword.length === 0 ? undefined : userKeyword, user.id, userListPage.current)
             updateUserList(response.data.users_list)
             setUserListLoaderActivated(false)
-            setUserListPage(userListPage+1)
+            userListPage.current += 1
             successfullyLoaded()
         } catch(error){
             if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
@@ -186,8 +186,8 @@ export function Home() {
     useEffect(()=>{
         if (userKeyword !== undefined){
             const updateList = async ()=>{
-                setUserListPage(1)
-                console.log(`Actualizando lista de usuarios con ${userKeyword} y pagina ${userListPage}`)
+                userListPage.current = 1
+                console.log(`Actualizando lista de usuarios con ${userKeyword} y pagina ${userListPage.current}`)
                 setNoMorePages(false)
                 await loadUsersList()
             }

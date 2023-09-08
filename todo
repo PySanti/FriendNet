@@ -17,7 +17,7 @@
     // hacer que, las funciones asincronas que se llaman dentro de useEffects, sean llamadas dentro de funciones autoCall
 
 
-    // eliminar uso de states en variables normales
+    // eliminar uso de states en variables normales y usar useRef
 
     // implementar paginacion para mensajes
 
@@ -32,6 +32,8 @@
     // mejorar velocidad de envio de mensajes
 
     // revisar comportamiento extranio de botones en el home
+
+    // repasar todo el codigo de la aplicacion y refactorizar y modularizar lo maximo posible
 
 
 
