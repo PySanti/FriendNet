@@ -23,7 +23,7 @@ export function MessagesContainer({messages, sessionUserId, messagesUpdatingSett
     }
     return (
         <div className="messages-container">
-            {messages ?  
+            {messages.length !== 0 ?  
                 <div className="messages-list-container" onScroll={scrollHandler}>
                     {messages.map(formatingFunction)}
                 </div>

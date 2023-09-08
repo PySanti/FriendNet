@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from applications.Usuarios.utils.constants import BASE_NO_MORE_PAGES_RESPONSE
 from rest_framework.views import (
     APIView,
 )
@@ -43,8 +44,11 @@ class GetMessagesHistorialAPI(APIView):
             try:
                 messages_hist = Chats.objects.getMessagesHistorial(request.user.id, request.data['receiver_id'])
                 if (messages_hist):
-                    messages_hist = self.pagination_class().paginate_queryset(messages_hist.values(), request)
-                    return JsonResponse({"messages_hist" : messages_hist}, status=status.HTTP_200_OK)
+                    try:
+                        messages_hist = self.pagination_class().paginate_queryset(messages_hist.values(), request)
+                        return JsonResponse({"messages_hist" : messages_hist}, status=status.HTTP_200_OK)
+                    except Exception:
+                        return BASE_NO_MORE_PAGES_RESPONSE
                 else:
                     return Response('no_messages_between', status.HTTP_200_OK)
             except Exception:

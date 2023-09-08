@@ -9,6 +9,10 @@
 
 
 // fase 3:
+    // hacer que la api de GetMessagesHistorial retorne el historial de mensajes del mas reciente al mas antiguo
+
+    // hacer que la api de GetUsersList retorne primero los usuarios con mensajes relacionados
+
     // implementar paginacion para mensajes
 
     // implementar paginacion en notificaciones
@@ -27,6 +31,8 @@
 
     // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
     // ActivateUser, ChangeEmailForActivation, GetUserDetail 
+
+    // mejorar sistema de notificaciones, el que tenemos es horrible
 
 
     // mejorar velocidad de envio de mensajes

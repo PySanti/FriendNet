@@ -41,19 +41,27 @@ export function Home() {
     // userList pagination
     let [gottaUpdateUserList, setGottaUpdateUserList]           = useState(false)
     let userListPage                                            = useRef(1)
-    let [noMorePages, setNoMorePages]                           = useState(false)
+    let [noMoreUsers, setNoMoreUsers]                           = useState(false)
     let [userListLoaderActivated, setUserListLoaderActivated]   = useState(true)
     let [userList, setUserList]                                 = useState([])
     
     // messages pagination
     let [gottaUpdateMessagesHistorial, setGottaUpdateMessagesHistorial]           = useState(false)
     let messagesHistorialPage = useRef(1)
+    let noMoreMessages = useRef(false)
 
 
 
     const user = getUserDataFromLocalStorage()
     let [goToProfile, setGoToProfile] = useState(false)
     const navigate = useNavigate()
+    const updateMessagesHistorial = (newMessages) =>{
+        if (messagesHistorialPage.current === 1){
+            setMessagesHistorial(newMessages)
+        } else {
+            setMessagesHistorial(messagesHistorial.concat(newMessages))
+        }
+    }
     const updateUserList = (newUsers)=>{
         if (userListPage.current === 1){
             setUserList(newUsers)
@@ -78,7 +86,7 @@ export function Home() {
                 setLoadingState(BASE_FALLEN_SERVER_LOG)
             } else {
                 if (error.response.data.error=== "no_more_pages"){
-                    setNoMorePages(true)
+                    setNoMoreUsers(true)
                     setUserListLoaderActivated(false)
                     successfullyLoaded()
                 } else {
@@ -112,11 +120,20 @@ export function Home() {
         if (successValidating === true){
             try{
                 const response = await getMessagesHistorialAPI(clickedUser.id, getJWTFromLocalStorage().access, messagesHistorialPage.current)
-                setMessagesHistorial(response.data !== "no_messages_between" ? response.data.messages_hist : [])
+                updateMessagesHistorial(response.data !== "no_messages_between" ? response.data.messages_hist : [])
                 console.log(response.data.messages_hist)
                 successfullyLoaded()
             } catch(error){
-                setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado buscando chat!')
+                if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
+                    setLoadingState(BASE_FALLEN_SERVER_LOG)
+                } else {
+                    if (error.response.data.error === "no_more_pages"){
+                        noMoreMessages.current = true
+                        successfullyLoaded()
+                    } else {
+                        setLoadingState('Error inesperado buscando chat!')
+                    }
+                }
             }
         } else {
             if (successValidating === BASE_LOGIN_REQUIRED_ERROR_MSG){
@@ -148,6 +165,7 @@ export function Home() {
     const onUserButtonClick = (newClickedUser)=>{
         if (!clickedUser || newClickedUser.id !== clickedUser.id){
             messagesHistorialPage.current = 1
+            noMoreMessages.current = false
             const updatedNotifications = removeRelatedNotifications(newClickedUser.id, notifications)
             if(updatedNotifications){
                 saveNotificationsInLocalStorage(updatedNotifications)
@@ -182,7 +200,7 @@ export function Home() {
     useEffect(()=>{
         if (gottaUpdateUserList){
             const updateList = async ()=>{
-                if (!noMorePages){
+                if (!noMoreUsers){
                     await loadUsersList()
                     userListPage.current += 1
                 }
@@ -195,16 +213,24 @@ export function Home() {
         if (userKeyword !== undefined){ // si userKeyword esta inicializado ...
             const updateList = async ()=>{
                 userListPage.current = 1
-                setNoMorePages(false)
+                setNoMoreUsers(false)
                 await loadUsersList()
             }
             updateList()
         }
     }, [userKeyword])
     useEffect(()=>{
-        if (gottaUpdateMessagesHistorial){
-            console.log('Se requiere actualizar la lista de mensajes')
-            setGottaUpdateMessagesHistorial(false)
+        if (gottaUpdateMessagesHistorial ){
+            const updateMessages = async ()=>{
+                messagesHistorialPage.current += 1
+                setGottaUpdateMessagesHistorial(false)
+                if (!noMoreMessages.current){
+                    await loadMessages()
+                } else {
+                    console.log('No hay mas mensajes pana')
+                }
+            }
+            updateMessages()
         }
     }, [gottaUpdateMessagesHistorial])
     if (!userIsAuthenticated()){
