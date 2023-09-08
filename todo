@@ -9,9 +9,6 @@
 
 
 // fase 3:
-
-    // hacer que la api de GetMessagesHistorial retorne el historial de mensajes del mas reciente al mas antiguo
-
     // hacer que la api de GetUsersList retorne primero los usuarios con mensajes relacionados
 
     // implementar paginacion en notificaciones
