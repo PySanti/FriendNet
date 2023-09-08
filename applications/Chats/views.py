@@ -19,6 +19,9 @@ from .models import (
 from rest_framework.response import Response 
 from django.http import JsonResponse
 from rest_framework import status
+from .paginators import (
+    MessagesPaginationClass
+)
 from applications.Usuarios.utils.constants import (
     BASE_SERIALIZER_ERROR_RESPONSE,
     BASE_UNEXPECTED_ERROR_RESPONSE
@@ -31,6 +34,8 @@ class GetMessagesHistorialAPI(APIView):
     serializer_class        =  GetMessagesHistorialSerializer
     authentication_classes  = [JWTAuthentication]
     permission_classes      = [IsAuthenticated]
+    pagination_class        = MessagesPaginationClass
+
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
@@ -38,7 +43,8 @@ class GetMessagesHistorialAPI(APIView):
             try:
                 messages_hist = Chats.objects.getMessagesHistorial(request.user.id, request.data['receiver_id'])
                 if (messages_hist):
-                    return JsonResponse({"messages_hist" : list(messages_hist.values())}, status=status.HTTP_200_OK)
+                    messages_hist = self.pagination_class().paginate_queryset(messages_hist.values(), request)
+                    return JsonResponse({"messages_hist" : messages_hist}, status=status.HTTP_200_OK)
                 else:
                     return Response('no_messages_between', status.HTTP_200_OK)
             except Exception:
