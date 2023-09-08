@@ -66,7 +66,6 @@ export function Home() {
             let response = await getUsersListAPI(!userKeyword || userKeyword.length === 0 ? undefined : userKeyword, user.id, userListPage.current)
             updateUserList(response.data.users_list)
             setUserListLoaderActivated(false)
-            userListPage.current += 1
             successfullyLoaded()
         } catch(error){
             if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
@@ -173,10 +172,10 @@ export function Home() {
     }, [clickedUser])
     useEffect(()=>{
         if (gottaUpdateUserList){
-            console.log('Se requiere actualizar la lista de usuarios')
             const updateList = async ()=>{
                 if (!noMorePages){
                     await loadUsersList()
+                    userListPage.current += 1
                 }
                 setGottaUpdateUserList(false)
             }
@@ -187,7 +186,6 @@ export function Home() {
         if (userKeyword !== undefined){
             const updateList = async ()=>{
                 userListPage.current = 1
-                console.log(`Actualizando lista de usuarios con ${userKeyword} y pagina ${userListPage.current}`)
                 setNoMorePages(false)
                 await loadUsersList()
             }

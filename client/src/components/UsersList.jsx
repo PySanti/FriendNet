@@ -20,7 +20,7 @@ export function UsersList({usersList, onClickEvent, chatGlobeList, gottaUpdateLi
         return <UserButton key={v4()}user={user}onClickFunction={onClickEvent} withGlobe={chatGlobeList.includes(user.id)} />
     }
     const scrollDetector = (e)=>{
-        if (e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight/1.01){
+        if (e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight){
             console.log('Se llego al final de la lista!')
             gottaUpdateListSetter(true)
         } 

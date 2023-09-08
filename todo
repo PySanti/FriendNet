@@ -21,6 +21,8 @@
 
     // implementar paginacion para mensajes
 
+    // hacer que, cuando se use userIsAuthenticated se compruebe ademas la validez del token
+
     // implementar websockets para mensajes
     // implementar webSockets para actualizacion de notificaciones
 
