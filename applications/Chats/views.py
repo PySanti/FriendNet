@@ -45,7 +45,7 @@ class GetMessagesHistorialAPI(APIView):
                 messages_hist = Chats.objects.getMessagesHistorial(request.user.id, request.data['receiver_id'])
                 if (messages_hist):
                     try:
-                        messages_hist = self.pagination_class().paginate_queryset(messages_hist.values(), request)
+                        messages_hist = self.pagination_class().paginate_queryset(messages_hist.values(), request)[::-1]
                         return JsonResponse({"messages_hist" : messages_hist}, status=status.HTTP_200_OK)
                     except Exception:
                         return BASE_NO_MORE_PAGES_RESPONSE

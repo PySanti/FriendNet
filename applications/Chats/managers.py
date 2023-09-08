@@ -35,7 +35,7 @@ class ChatsManager(manager.Manager):
             y chat_user en caso de existir, en caso contrario, retorna None
         """
         chat = self._chatBetween(session_user_id, chat_user_id)
-        return chat.messages.all() if chat else None
+        return chat.messages.all().order_by('-id') if chat else None
 
 
 class MessagesManager(manager.Manager):

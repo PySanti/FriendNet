@@ -9,11 +9,10 @@
 
 
 // fase 3:
+
     // hacer que la api de GetMessagesHistorial retorne el historial de mensajes del mas reciente al mas antiguo
 
     // hacer que la api de GetUsersList retorne primero los usuarios con mensajes relacionados
-
-    // implementar paginacion para mensajes
 
     // implementar paginacion en notificaciones
 
@@ -39,7 +38,7 @@
 
     // revisar comportamiento extranio de botones en el home
 
-    // revisar problemas de rendimiento de red en el userList
+    // revisar problemas de rendimiento de red en el userList y getMessagesHistorial (muy lento)
 
     // testear todas las funcionalidades de la aplicacion y hacer respectivos refactors
 
@@ -79,6 +78,7 @@
     // darle un espacio en el DOM Por defecto al input-error del UserPhoto
     // darle estilos al loader del usersList
     // agrear codigo en caso de que no se haya seleccionado ningun chatingUser en el componente Chat, algo asi como "Selecciona un usuario para chatear"
+    // arreglar errror que sucede cuando el usuario recarga la lista de mensajes hacia arriba
 
 // Fase 5:
     // centrarnos en testear bien las imagenes (calidad, tiempos de carga, portabilidad )

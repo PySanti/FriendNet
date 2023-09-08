@@ -59,7 +59,8 @@ export function Home() {
         if (messagesHistorialPage.current === 1){
             setMessagesHistorial(newMessages)
         } else {
-            setMessagesHistorial(messagesHistorial.concat(newMessages))
+            messagesHistorial.unshift(...newMessages)
+            setMessagesHistorial(messagesHistorial)
         }
     }
     const updateUserList = (newUsers)=>{
