@@ -9,19 +9,16 @@
 
 
 // fase 3:
+    // implementar paginacion para mensajes
 
-    // hacer que funcione el userFilter nuevamente
-
-    // revisar problemas de rendimiento de red en el userList
-
-    // hacer que, las funciones asincronas que se llaman dentro de useEffects, sean llamadas dentro de funciones autoCall
-
+    // hacer que, las funciones asincronas que se llaman dentro de useEffects, sean llamadas dentro de funciones autoCall (modularizar esas funciones para evitar declaracion multiple)
 
     // eliminar uso de states en variables normales y usar useRef
 
-    // implementar paginacion para mensajes
-
     // hacer que, cuando se use userIsAuthenticated se compruebe ademas la validez del token
+
+    // repasar todo el codigo de la aplicacion y refactorizar y modularizar lo maximo posible
+
 
     // implementar websockets para mensajes
     // implementar webSockets para actualizacion de notificaciones
@@ -29,13 +26,15 @@
     // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
     // ActivateUser, ChangeEmailForActivation, GetUserDetail 
 
-    // testear todas las funcionalidades de la aplicacion y hacer respectivos refactors
 
     // mejorar velocidad de envio de mensajes
 
     // revisar comportamiento extranio de botones en el home
 
-    // repasar todo el codigo de la aplicacion y refactorizar y modularizar lo maximo posible
+    // revisar problemas de rendimiento de red en el userList
+
+    // testear todas las funcionalidades de la aplicacion y hacer respectivos refactors
+
 
 
 

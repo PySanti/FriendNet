@@ -161,6 +161,7 @@ export function Home() {
             setLoadingState(false)
             if (userIsAuthenticated() && userList.length === 0){
                 await loadUsersList()
+                userListPage.current = 2
             }
         }
         initializeUserList()
@@ -183,7 +184,7 @@ export function Home() {
         }
     }, [gottaUpdateUserList])
     useEffect(()=>{
-        if (userKeyword !== undefined){
+        if (userKeyword !== undefined){ // si userKeyword esta inicializado ...
             const updateList = async ()=>{
                 userListPage.current = 1
                 setNoMorePages(false)
