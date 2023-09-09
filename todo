@@ -12,14 +12,12 @@
 
     // revisar sistema de userPhoto y posible uso de useRef con el
 
-    // hacer que, cuando se use userIsAuthenticated se compruebe ademas la validez del token
 
     // repasar todo el codigo de la aplicacion y refactorizar y modularizar lo maximo posible
 
 
     // revisar sistema de uso de userKeyword, cada vez que se cambia esa vriable se vuelve a renderizar el componente
 
-    // revisar sistema de redirectExpiredUser : es necesario pasar la funcion por parametro?
 
 
 
