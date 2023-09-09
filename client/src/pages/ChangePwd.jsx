@@ -25,7 +25,6 @@ export function ChangePwd(){
     const {register, handleSubmit, formState : {errors}} = useForm()
     const navigate = useNavigate()
     const   user = getUserDataFromLocalStorage()
-    let   [backToProfile, setBackToProfile] = useState(false)
     let   {loadingState, setLoadingState, successfullyLoaded, startLoading} = useContext(LoadingContext)
     const changePwd = handleSubmit(async (data)=>{
         if (data['oldPwd'] !== data['newPwd']){
@@ -53,11 +52,7 @@ export function ChangePwd(){
             setLoadingState("No hay cambios")
         }
     })
-    useEffect(()=>{
-        if(backToProfile){
-            navigate('/home/profile/')
-        }
-    }, [backToProfile])
+
     useEffect(()=>{
         setLoadingState(false)
     }, [])
@@ -71,7 +66,7 @@ export function ChangePwd(){
                 <div className="change-pwd-container">
                     <Header username={user.username} msg="Modificando contraseña"/>
                     <Loader state={loadingState}/>
-                    <Form onSubmitFunction={changePwd} buttonMsg="Enviar" buttonsList={[<Button key={v4()} buttonText="Volver" onClickFunction={()=>setBackToProfile(true)}/>]}>
+                    <Form onSubmitFunction={changePwd} buttonMsg="Enviar" buttonsList={[<Button key={v4()} buttonText="Volver" onClickFunction={()=>{navigate('/home/profile')}}/>]}>
                         <PasswordField label="Contrasenia actual" errors={errors.oldPwd && errors.oldPwd.message} registerObject={register("oldPwd", BASE_PASSWORD_CONSTRAINTS)}/>
                         <PasswordField label="Nueva contraseña" errors={errors.newPwd && errors.newPwd.message} registerObject={register("newPwd", BASE_PASSWORD_CONSTRAINTS)}/>
                     </Form>

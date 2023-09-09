@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react"
 import {Header} from "../components/Header.jsx"
 import { userIsAuthenticated } from "../utils/userIsAuthenticated.js"
 import { UserLogged } from "./UserLogged.jsx"
@@ -9,19 +8,7 @@ import { Button } from "../components/Button.jsx"
  * Pagina de inicio
  */
 export function Root() {
-    const [goToLogin, setGotToLogin] = useState(false)
-    const [goToSignUp, setGoToSignUp] = useState(false)
     const navigate = useNavigate()
-    useEffect(()=>{
-        if (goToLogin){
-            navigate('/login/')
-        }
-    }, [goToLogin])
-    useEffect(()=>{
-        if (goToSignUp){
-            navigate('/signup/')
-        }
-    }, [goToSignUp])
     if (userIsAuthenticated()){
         return <UserLogged/>
     }else{
@@ -36,13 +23,13 @@ export function Root() {
                                     Tienes cuenta? 
                                 </h4>
                             </div>
-                            <Button buttonText="Logearme" onClickFunction={()=>setGotToLogin(true)}/>
+                            <Button buttonText="Logearme" onClickFunction={()=>{navigate('/login/')}}/>
                         </div>
                         <div className="signup-container">
                             <h4>
                                 Aun no tienes cuenta? 
                             </h4>
-                            <Button buttonText="Registrarme" onClickFunction={()=>setGoToSignUp(true)} />
+                            <Button buttonText="Registrarme" onClickFunction={()=>{navigate('/signup/')}} />
                         </div>
                     </section>
                 </div>

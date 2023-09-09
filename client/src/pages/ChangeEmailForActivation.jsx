@@ -17,8 +17,6 @@ import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/con
 
 export function ChangeEmailForActivation(){
     let {loadingState, setLoadingState, successfullyLoaded, startLoading} = useContext(LoadingContext)
-    let [goBack, setGoBack]                             = useState(false )
-    let [emailChanged, setEmailChanged]                 = useState(false )
     const props                                         = useLocation().state
     const  navigate                                     = useNavigate()
     const {register, handleSubmit, formState:{errors}}  = useForm()
@@ -29,7 +27,7 @@ export function ChangeEmailForActivation(){
                 await changeEmailForActivationAPI(props.userId, data.email)
                 successfullyLoaded()
                 props.userEmail = data.email
-                setEmailChanged(true)
+                navigate('/signup/activate', {state: props})
             } catch(error){
                 if (error.message === BASE_FALLEN_SERVER_ERROR_MSG ){
                     setLoadingState(BASE_FALLEN_SERVER_LOG)
@@ -41,11 +39,6 @@ export function ChangeEmailForActivation(){
             setLoadingState('No hay cambios !')
         }
     })
-    useEffect(()=>{
-        if (goBack || emailChanged){
-            navigate('/signup/activate', {state: props})
-        }
-    }, [goBack, emailChanged])
     if (userIsAuthenticated()){
         return <UserLogged/>
     } else if (!props){
@@ -56,7 +49,7 @@ export function ChangeEmailForActivation(){
                 <div className="change-email-container">
                     <Header username={props.username} msg="Cambiando correo para activación"/>
                     <Loader state={loadingState}/>
-                    <Form onSubmitFunction={onSubmit} buttonMsg="Cambiar" buttonsList={[<Button key={v4()} buttonText="Volver" onClickFunction={()=>setGoBack(true)} />]}>
+                    <Form onSubmitFunction={onSubmit} buttonMsg="Cambiar" buttonsList={[<Button key={v4()} buttonText="Volver" onClickFunction={()=>{navigate('/signup/activate', {state: props})}} />]}>
                         <EmailField defaultValue={props.userEmail} errors={errors.email && errors.email.message} registerObject={register("email", BASE_EMAIL_CONSTRAINTS)}/>
                     </Form>
                 </div>

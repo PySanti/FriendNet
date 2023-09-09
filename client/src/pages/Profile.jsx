@@ -3,7 +3,7 @@ import { PropTypes } from "prop-types";
 import { Header } from "../components/Header";
 import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { UserNotLogged } from "./UserNotLogged";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { UserData } from "../components/UserData";
 import { Loader } from "../components/Loader";
 import { LoadingContext } from "../context/LoadingContext";
@@ -28,10 +28,6 @@ import { validateJWT } from "../utils/validateJWT"
 export function Profile({ updating }) {
     // states
     let [profileData, setProfileData] = useState(getUserDataFromLocalStorage());
-    let [backToHome, setBackToHome] = useState(false);
-    let [editProfile, setEditProfile] = useState(false);
-    let [backToProfile, setBackToProfile] = useState(false);
-    let [changePwd, setChangePwd] = useState(false);
     let { loadingState, startLoading, setLoadingState, successfullyLoaded } =useContext(LoadingContext);
     const navigate = useNavigate();
     const onUpdate = async (data) => {
@@ -70,29 +66,7 @@ export function Profile({ updating }) {
             setLoadingState("Sin cambios");
         }
     };
-    useEffect(() => {
-        if (changePwd) {
-            navigate("/home/profile/change_pwd");
-        }
-    }, [changePwd]);
-    useEffect(() => {
-        if (backToHome) {
-            setBackToHome(false);
-            navigate("/home/");
-        }
-    }, [backToHome]);
-    useEffect(() => {
-        if (editProfile) {
-            setEditProfile(false);
-            navigate("/home/profile/edit");
-        }
-    }, [editProfile]);
-    useEffect(() => {
-        if (backToProfile) {
-            setBackToProfile(false);
-            navigate("/home/profile/");
-        }
-    }, [backToProfile]);
+
 
     if (!userIsAuthenticated()) {
         return <UserNotLogged />;
@@ -104,15 +78,15 @@ export function Profile({ updating }) {
                     <Loader state={loadingState}/>
                     <div className="editing-container">
                         {updating ? 
-                            <UserInfoForm updating onFormSubmit={onUpdate} userData={profileData} userPhotoUrl={profileData.photo_link} extraButtons={[<Button key={v4()} buttonText="Volver" onClickFunction={() => setBackToProfile(true) }/>,]}/>
+                            <UserInfoForm updating onFormSubmit={onUpdate} userData={profileData} userPhotoUrl={profileData.photo_link} extraButtons={[<Button key={v4()} buttonText="Volver" onClickFunction={() => {navigate("/home/profile/")} }/>,]}/>
                             : 
                             <>
                                 <UserData userData={profileData} nonShowableAttrs={["is_active","id","photo_link",]} attrsTraductions={{username: "Nombre de usuario",email: "Correo electrónico"}} />
                                 <UserPhoto photoFile={profileData.photo_link} withInput={false} />
                                 <div className="buttons-section">
-                                    <Button buttonText="Editar Perfil" onClickFunction={() => setEditProfile(true)} />
-                                    <Button buttonText="Volver" onClickFunction={() => setBackToHome(true)} />
-                                    <Button buttonText="Modificar Contraseña" onClickFunction={() => setChangePwd(true)} />
+                                    <Button buttonText="Editar Perfil" onClickFunction={() => {navigate("/home/profile/edit")}} />
+                                    <Button buttonText="Volver" onClickFunction={() =>{navigate("/home/")}} />
+                                    <Button buttonText="Modificar Contraseña" onClickFunction={() => {navigate("/home/profile/change_pwd")}} />
                                 </div>
                             </>
                         }

@@ -1,5 +1,5 @@
 import { Header } from "../components/Header"
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect } from "react"
 import { userIsAuthenticated } from "../utils/userIsAuthenticated"
 import { UserLogged } from "./UserLogged"
 import { getUserDetailAPI } from "../api/getUserDetailApi.api"
@@ -20,9 +20,6 @@ import {loginUser} from "../utils/loginUser"
 export function Login() {
     let     {loadingState, startLoading,  successfullyLoaded, setLoadingState}  = useContext(LoadingContext)
     const   navigate                                                            = useNavigate()
-    let     [user, setUser]                                                     = useState(null)
-    let     [userLogged, setUserLogged]                                         = useState(false)
-    let     [goBack, setGoBack]                                                 =   useState(false)
 
     const onLogin = async (data)=>{
         // en este punto ya se sabe que el usuario no esta autenticado
@@ -30,8 +27,9 @@ export function Login() {
             startLoading()
             let response = await getUserDetailAPI(data.username, data.password)
             const userDetail = response.data.user
-            setUser(userDetail)
-            if (userDetail.is_active){
+            if (!userDetail.is_active){
+                navigate('/signup/activate', {state: {'userId' : userDetail.id,'username' : userDetail.username,'userEmail' : userDetail.email}})
+            } else {
                 try {
                     response = await loginUser(data)
                     const notifications = userDetail.notifications
@@ -39,7 +37,7 @@ export function Login() {
                     saveNotificationsInLocalStorage(notifications)
                     saveUserDataInLocalStorage(userDetail)
                     successfullyLoaded()
-                    setUserLogged(true)
+                    navigate('/home/')
                 } catch(error){
                     setLoadingState("Error inesperado logeando usuario!") 
                 }
@@ -56,29 +54,6 @@ export function Login() {
     useEffect(()=>{
         setLoadingState(false)
     }, [])
-    useEffect(()=>{
-        // Se ejecutara cuando se finalice el proceso de logeo
-        if (userLogged){
-            navigate('/home/')
-        }
-    }, [userLogged])
-    useEffect(()=>{
-        if (goBack){
-            navigate('/')
-        }
-    }, [goBack])
-    useEffect(()=>{
-        if (user && !user.is_active){
-            // Se ejecutara si se detecta que el usuario existe pero esta inactivo
-            const props = {
-                'userId' : user.id,
-                'username' : user.username,
-                'userEmail' : user.email
-            }
-            navigate('/signup/activate', {state: props})
-        }
-    }, [user])
-
 
     if (userIsAuthenticated()){
         return <UserLogged/> 
@@ -88,7 +63,7 @@ export function Login() {
                 <div className="login-container">
                     <Header msg="Introduce tus credenciales para ingresar"/>
                     <Loader state={loadingState}/>
-                    <LoginForm handleLogin={onLogin} extraButtons={[<Button key={v4()} onClickFunction={()=>setGoBack(true)} buttonText="Volver"/>]}/>
+                    <LoginForm handleLogin={onLogin} extraButtons={[<Button key={v4()} onClickFunction={()=>{navigate('/')}} buttonText="Volver"/>]}/>
                 </div>
             </div>
         )

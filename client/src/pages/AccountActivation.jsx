@@ -22,21 +22,18 @@ import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_ACTIVATION_CO
  * Pagina creada para llevar activacion de cuenta
  */
 export function AccountActivation() {
-    let { loadingState, setLoadingState, successfullyLoaded, startLoading } =useContext(LoadingContext);
-    let [userActivated, setUserActivated] = useState(false);
-    let realActivationCode = useRef(null);
-    let [goBack, setGoBack] = useState(false);
-    let [goChangeEmail, setGoChangeEmail] = useState(false);
-    const props = useLocation().state;
-    const navigate = useNavigate();
-    const { register, handleSubmit, formState: { errors }} = useForm();
+    let { loadingState, setLoadingState, successfullyLoaded, startLoading } = useContext(LoadingContext);
+    let realActivationCode                                                  = useRef(null);
+    const props                                                             = useLocation().state;
+    const navigate                                                          = useNavigate();
+    const { register, handleSubmit, formState: { errors }}                  = useForm();
     const onSubmit = handleSubmit(async (data) => {
         startLoading();
         if (Number(data.activationCode) === Number(realActivationCode.current)) {
             try {
                 await activateUserAPI(props.userId);
-                setUserActivated(true);
                 successfullyLoaded();
+                navigate("/login/");
             } catch (error) {
                 setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : "Error inesperado en el servidor al activar usuario!");
             }
@@ -51,23 +48,8 @@ export function AccountActivation() {
         sendMail(activationCode, props.userEmail, props.username);
         realActivationCode.current =  activationCode
     }, []);
-    useEffect(() => {
-        if (goBack) {
-            navigate("/");
-        }
-    }, [goBack]);
-    useEffect(() => {
-        if (userActivated) {
-            navigate("/login/");
-        }
-    }, [userActivated]);
-    useEffect(() => {
-        if (goChangeEmail) {
-            navigate("/signup/activate/change_email", { state: props });
-        }
-    }, [goChangeEmail]);
+
     if (userIsAuthenticated()) {
-        // comprobaciones para cuando se ejecute la url directamente
         return <UserLogged />;
     } else if (!props) {
         return <UserNotLogged />;
@@ -77,7 +59,7 @@ export function AccountActivation() {
                 <div className="account-activation-container">
                     <Header username={props.username} msg={`Correo de activación enviado a ${props.userEmail}`}/>
                     <Loader state={loadingState} />
-                    <Form onSubmitFunction={onSubmit} buttonMsg="Activar" buttonsList={[<Button key={v4()} buttonText="Volver" onClickFunction={() => setGoBack(true)} />,<Button key={v4()} buttonText="Cambiar correo" onClickFunction={() => setGoChangeEmail(true)}/>]}>
+                    <Form onSubmitFunction={onSubmit} buttonMsg="Activar" buttonsList={[<Button key={v4()} buttonText="Volver" onClickFunction={() => {navigate("/")}} />,<Button key={v4()} buttonText="Cambiar correo" onClickFunction={() => {navigate("/signup/activate/change_email", { state: props })}}/>]}>
                         <ActivationCodeField errors={errors.activationCode && errors.activationCode.message} registerObject={register("activationCode", BASE_ACTIVATION_CODE_CONSTRAINTS)}/>
                     </Form>
                 </div>

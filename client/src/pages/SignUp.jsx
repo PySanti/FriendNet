@@ -1,6 +1,6 @@
 // react modules
 import { Header }                   from "../components/Header";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 // api's
 import { createUsuarioAPI }         from "../api/createUsuario.api";
 import { checkExistingUserAPI } from "../api/checkExistingUser.api";
@@ -19,8 +19,6 @@ import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/con
 
 export function SignUp() {
     let {loadingState, successfullyLoaded, startLoading, setLoadingState} = useContext(LoadingContext)
-    let [userData, setUserData]                                 = useState(null);
-    let [goBack, setGoBack]                                     =   useState(false)
     const navigate                                              = useNavigate()
     const onSignUp = async (data) =>{
         try{
@@ -32,11 +30,7 @@ export function SignUp() {
                     try{
                         const createUserResponse        = await createUsuarioAPI(data)
                         successfullyLoaded()
-                        setUserData({
-                            'userId' : createUserResponse.data.new_user_id,
-                            'username' : data.username,
-                            'userEmail' : data.email,
-                        })
+                        navigate('/signup/activate', {state: { 'userId' : createUserResponse.data.new_user_id, 'username' : data.username, 'userEmail' : data.email, }})
                     } catch(error){
                         if (error.response.data.error === "cloudinary_error"){
                             setLoadingState("Error con la nube!")
@@ -57,16 +51,7 @@ export function SignUp() {
     useEffect(()=>{
         setLoadingState(false)
     }, [])
-    useEffect(()=>{
-        if (goBack){
-            navigate('/')
-        }
-    }, [goBack])
-    useEffect(() => {
-        if (userData){
-            navigate('/signup/activate', {state: userData})
-        }
-    }, [userData])
+
 
     if (userIsAuthenticated()){
         return <UserLogged/>
@@ -76,7 +61,7 @@ export function SignUp() {
                 <div className="signup-page-container">
                     <Header msg="Regístrate de una vez!"/>
                     <Loader state={loadingState}/>
-                    <UserInfoForm onFormSubmit={onSignUp} extraButtons={[<Button key={v4()} buttonText="Volver" onClickFunction={()=>setGoBack(true)}/>,]}/>
+                    <UserInfoForm onFormSubmit={onSignUp} extraButtons={[<Button key={v4()} buttonText="Volver" onClickFunction={()=>{navigate('/')}}/>,]}/>
                 </div>
             </div>
         )

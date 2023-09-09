@@ -32,7 +32,6 @@ export function Home() {
     const user = getUserDataFromLocalStorage()
     const navigate = useNavigate()
 
-    let [goToProfile, setGoToProfile] = useState(false)
 
     let {loadingState, setLoadingState,startLoading,  successfullyLoaded} = useContext(LoadingContext)
     let [notifications, setNotifications] = useState(getNotificationsFromLocalStorage())
@@ -181,11 +180,6 @@ export function Home() {
 
 
     useEffect(()=>{
-        if(goToProfile){
-            navigate("/home/profile/")
-        }
-    }, [goToProfile])
-    useEffect(()=>{
         async function initializeUserList(){
             setLoadingState(false)
             if (userIsAuthenticated() && userList.length === 0){
@@ -246,7 +240,7 @@ export function Home() {
                     <div className="buttons-container">
                         <NotificationsContainer notificationList={notifications} onNotificationClick={(notification)=>onUserButtonClick(notification.sender_user)} onNotificationDelete={onNotificationDelete} />
                         <Button buttonText="Salir" onClickFunction={onLogout}/>
-                        <Button buttonText="Perfil" onClickFunction={()=>{setGoToProfile(true)}}/>
+                        <Button buttonText="Perfil" onClickFunction={()=>{navigate('/home/profile/')}}/>
                     </div>
                     <Loader state={loadingState}/>
                     <div className="users-interface-container">

@@ -13,8 +13,8 @@
 
     // hacer que, las funciones asincronas que se llaman dentro de useEffects, sean llamadas dentro de funciones autoCall (modularizar esas funciones para evitar declaracion multiple)
 
-    
-    // revisar sistema de goTo y states
+
+    // revisar sistema de userPhoto y posible uso de useRef con el
 
     // hacer que, cuando se use userIsAuthenticated se compruebe ademas la validez del token
 
@@ -22,6 +22,10 @@
 
 
     // revisar sistema de uso de userKeyword, cada vez que se cambia esa vriable se vuelve a renderizar el componente
+
+    // revisar sistema de redirectExpiredUser : es necesario pasar la funcion por parametro?
+
+    // revisar que todos los useEffect-states sean realmente necesarios
 
 
     // implementar websockets para mensajes
@@ -89,6 +93,7 @@
     // darle estilos al loader del usersList
     // agrear codigo en caso de que no se haya seleccionado ningun chatingUser en el componente Chat, algo asi como "Selecciona un usuario para chatear"
     // arreglar errror que sucede cuando el usuario recarga la lista de mensajes hacia arriba
+    // solucionar error de estilo generado cuando el usuario quiere selccionar el texto que le facilita el navegador en un input
 
 // Fase 5:
     // centrarnos en testear bien las imagenes (calidad, tiempos de carga, portabilidad )
