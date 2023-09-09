@@ -9,8 +9,6 @@
 
 
 // fase 3:
-    // implementar paginacion en notificaciones
-
     // hacer que, las funciones asincronas que se llaman dentro de useEffects, sean llamadas dentro de funciones autoCall (modularizar esas funciones para evitar declaracion multiple)
 
     // eliminar uso de states en variables normales y usar useRef
