@@ -47,6 +47,10 @@ export const BASE_USERNAME_CONSTRAINTS = {
         value: BASE_USERNAME_MIN_LENGTH,
         message: `Por favor, ingresa un usuario con al menos ${BASE_USERNAME_MIN_LENGTH} caracteres`,
     },
+    pattern : {
+        value : /^[^\s]+$/,
+        message : "Por favor, ingresa un nombre de usuario sin espacios"
+    }
 };
 export const BASE_PASSWORD_CONSTRAINTS = {
     required: {
