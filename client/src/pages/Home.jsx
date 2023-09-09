@@ -54,7 +54,32 @@ export function Home() {
     let messagesHistorialPage = useRef(1)
     let noMoreMessages = useRef(false)
 
-
+    const initializeUserList = async ()=>{
+        setLoadingState(false)
+        if (userIsAuthenticated() && userList.length === 0){
+            await loadUsersList()
+            userListPage.current = 2
+        }
+    }
+    const chargeUsersList = async ()=>{
+        if (!noMoreUsers.current){
+            await loadUsersList()
+            userListPage.current += 1
+        }
+        setGottaUpdateUserList(false)
+    }
+    const reFillUsersList = async ()=>{
+        userListPage.current = 1
+        noMoreUsers.current = false
+        await loadUsersList()
+    }
+    const chargeMessagesList = async ()=>{
+        messagesHistorialPage.current += 1
+        setGottaUpdateMessagesHistorial(false)
+        if (!noMoreMessages.current){
+            await loadMessages()
+        }
+    }
 
     const updateMessagesHistorial = (newMessages) =>{
         if (messagesHistorialPage.current === 1){
@@ -180,13 +205,6 @@ export function Home() {
 
 
     useEffect(()=>{
-        async function initializeUserList(){
-            setLoadingState(false)
-            if (userIsAuthenticated() && userList.length === 0){
-                await loadUsersList()
-                userListPage.current = 2
-            }
-        }
         initializeUserList()
     }, [])
     useEffect(()=>{
@@ -196,38 +214,17 @@ export function Home() {
     }, [clickedUser])
     useEffect(()=>{
         if (gottaUpdateUserList){
-            const updateList = async ()=>{
-                if (!noMoreUsers.current){
-                    await loadUsersList()
-                    userListPage.current += 1
-                }
-                setGottaUpdateUserList(false)
-            }
-            updateList()
+            chargeUsersList()
         }
     }, [gottaUpdateUserList])
     useEffect(()=>{
         if (userKeyword !== undefined){ // si userKeyword esta inicializado ...
-            const updateList = async ()=>{
-                userListPage.current = 1
-                noMoreUsers.current = false
-                await loadUsersList()
-            }
-            updateList()
+            reFillUsersList()
         }
     }, [userKeyword])
     useEffect(()=>{
         if (gottaUpdateMessagesHistorial ){
-            const updateMessages = async ()=>{
-                messagesHistorialPage.current += 1
-                setGottaUpdateMessagesHistorial(false)
-                if (!noMoreMessages.current){
-                    await loadMessages()
-                } else {
-                    console.log('No hay mas mensajes pana')
-                }
-            }
-            updateMessages()
+            chargeMessagesList()
         }
     }, [gottaUpdateMessagesHistorial])
     if (!userIsAuthenticated()){

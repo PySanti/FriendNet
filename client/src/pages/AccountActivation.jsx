@@ -7,7 +7,7 @@ import { useContext, useEffect, useState, useRef } from "react";
 import { activateUserAPI } from "../api/activateUser.api";
 import { generateActivationCode } from "../utils/generateActivationCode";
 import { userIsAuthenticated } from "../utils/userIsAuthenticated";
-import { sendMail } from "../utils/sendMail";
+import { sendActivationEmailAPI } from "../api/sendActivationEmail.api";
 import { UserLogged } from "./UserLogged";
 import { UserNotLogged } from "./UserNotLogged";
 import { Loader } from "../components/Loader";
@@ -27,6 +27,13 @@ export function AccountActivation() {
     const props                                                             = useLocation().state;
     const navigate                                                          = useNavigate();
     const { register, handleSubmit, formState: { errors }}                  = useForm();
+    const handleActivationCodeSending = async ()=>{
+        setLoadingState(false);
+        const activationCode = generateActivationCode();
+        console.log(activationCode)
+        realActivationCode.current =  activationCode
+        await sendActivationEmailAPI(props.userEmail, props.username, activationCode)
+    }
     const onSubmit = handleSubmit(async (data) => {
         startLoading();
         if (Number(data.activationCode) === Number(realActivationCode.current)) {
@@ -42,11 +49,7 @@ export function AccountActivation() {
         }
     });
     useEffect(() => {
-        setLoadingState(false);
-        // se enviara el correo de activacion la primera vez que se monte el componente
-        const activationCode = generateActivationCode();
-        sendMail(activationCode, props.userEmail, props.username);
-        realActivationCode.current =  activationCode
+        handleActivationCodeSending()
     }, []);
 
     if (userIsAuthenticated()) {
