@@ -24,9 +24,9 @@ import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 export function ChangePwd(){
     const {register, handleSubmit, formState : {errors}} = useForm()
     const navigate = useNavigate()
+    const   user = getUserDataFromLocalStorage()
     let   [backToProfile, setBackToProfile] = useState(false)
     let   {loadingState, setLoadingState, successfullyLoaded, startLoading} = useContext(LoadingContext)
-    let   [user] = useState(getUserDataFromLocalStorage())
     const changePwd = handleSubmit(async (data)=>{
         if (data['oldPwd'] !== data['newPwd']){
             const successValidating = await validateJWT() 

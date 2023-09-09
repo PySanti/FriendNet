@@ -31,12 +31,12 @@ export function SignUp() {
                     delete data.confirmPwd
                     try{
                         const createUserResponse        = await createUsuarioAPI(data)
+                        successfullyLoaded()
                         setUserData({
                             'userId' : createUserResponse.data.new_user_id,
                             'username' : data.username,
                             'userEmail' : data.email,
                         })
-                        successfullyLoaded()
                     } catch(error){
                         if (error.response.data.error === "cloudinary_error"){
                             setLoadingState("Error con la nube!")

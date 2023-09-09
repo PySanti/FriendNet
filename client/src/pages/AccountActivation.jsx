@@ -2,7 +2,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { Header } from "../components/Header";
 import { useForm } from "react-hook-form";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 // api's
 import { activateUserAPI } from "../api/activateUser.api";
 import { generateActivationCode } from "../utils/generateActivationCode";
@@ -24,7 +24,7 @@ import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_ACTIVATION_CO
 export function AccountActivation() {
     let { loadingState, setLoadingState, successfullyLoaded, startLoading } =useContext(LoadingContext);
     let [userActivated, setUserActivated] = useState(false);
-    let [realActivationCode, setRealActivationCode] = useState(null);
+    let realActivationCode = useRef(null);
     let [goBack, setGoBack] = useState(false);
     let [goChangeEmail, setGoChangeEmail] = useState(false);
     const props = useLocation().state;
@@ -32,7 +32,7 @@ export function AccountActivation() {
     const { register, handleSubmit, formState: { errors }} = useForm();
     const onSubmit = handleSubmit(async (data) => {
         startLoading();
-        if (Number(data.activationCode) === Number(realActivationCode)) {
+        if (Number(data.activationCode) === Number(realActivationCode.current)) {
             try {
                 await activateUserAPI(props.userId);
                 setUserActivated(true);
@@ -49,7 +49,7 @@ export function AccountActivation() {
         // se enviara el correo de activacion la primera vez que se monte el componente
         const activationCode = generateActivationCode();
         sendMail(activationCode, props.userEmail, props.username);
-        setRealActivationCode(activationCode);
+        realActivationCode.current =  activationCode
     }, []);
     useEffect(() => {
         if (goBack) {

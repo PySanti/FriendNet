@@ -29,6 +29,11 @@ import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
  * Pagina principal del sitio
  */
 export function Home() {
+    const user = getUserDataFromLocalStorage()
+    const navigate = useNavigate()
+
+    let [goToProfile, setGoToProfile] = useState(false)
+
     let {loadingState, setLoadingState,startLoading,  successfullyLoaded} = useContext(LoadingContext)
     let [notifications, setNotifications] = useState(getNotificationsFromLocalStorage())
     let [chatGlobeList, setChatGlobeList] = useState(getChatGlobesList(notifications))
@@ -41,7 +46,7 @@ export function Home() {
     // userList pagination
     let [gottaUpdateUserList, setGottaUpdateUserList]           = useState(false)
     let userListPage                                            = useRef(1)
-    let [noMoreUsers, setNoMoreUsers]                           = useState(false)
+    let noMoreUsers                                             = useRef(false)
     let [userListLoaderActivated, setUserListLoaderActivated]   = useState(true)
     let [userList, setUserList]                                 = useState([])
     
@@ -52,9 +57,6 @@ export function Home() {
 
 
 
-    const user = getUserDataFromLocalStorage()
-    let [goToProfile, setGoToProfile] = useState(false)
-    const navigate = useNavigate()
     const updateMessagesHistorial = (newMessages) =>{
         if (messagesHistorialPage.current === 1){
             setMessagesHistorial(newMessages)
@@ -87,7 +89,7 @@ export function Home() {
                 setLoadingState(BASE_FALLEN_SERVER_LOG)
             } else {
                 if (error.response.data.error=== "no_more_pages"){
-                    setNoMoreUsers(true)
+                    noMoreUsers.current = true
                     setUserListLoaderActivated(false)
                     successfullyLoaded()
                 } else {
@@ -201,7 +203,7 @@ export function Home() {
     useEffect(()=>{
         if (gottaUpdateUserList){
             const updateList = async ()=>{
-                if (!noMoreUsers){
+                if (!noMoreUsers.current){
                     await loadUsersList()
                     userListPage.current += 1
                 }
@@ -214,7 +216,7 @@ export function Home() {
         if (userKeyword !== undefined){ // si userKeyword esta inicializado ...
             const updateList = async ()=>{
                 userListPage.current = 1
-                setNoMoreUsers(false)
+                noMoreUsers.current = false
                 await loadUsersList()
             }
             updateList()

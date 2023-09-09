@@ -9,13 +9,19 @@
 
 
 // fase 3:
+    // agregar error que permite a los usuarios agregar nombres con espacios
+
     // hacer que, las funciones asincronas que se llaman dentro de useEffects, sean llamadas dentro de funciones autoCall (modularizar esas funciones para evitar declaracion multiple)
 
-    // eliminar uso de states en variables normales y usar useRef
+    
+    // revisar sistema de goTo y states
 
     // hacer que, cuando se use userIsAuthenticated se compruebe ademas la validez del token
 
     // repasar todo el codigo de la aplicacion y refactorizar y modularizar lo maximo posible
+
+
+    // revisar sistema de uso de userKeyword, cada vez que se cambia esa vriable se vuelve a renderizar el componente
 
 
     // implementar websockets para mensajes
