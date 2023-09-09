@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { Header } from "../components/Header";
 import { LoadingContext } from "../context/LoadingContext";
 import {  useLocation, useNavigate} from "react-router-dom";

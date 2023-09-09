@@ -25,7 +25,6 @@
 
     // revisar sistema de redirectExpiredUser : es necesario pasar la funcion por parametro?
 
-    // revisar que todos los useEffect-states sean realmente necesarios
 
 
     // implementar websockets para mensajes
