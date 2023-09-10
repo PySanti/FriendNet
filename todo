@@ -15,7 +15,8 @@
 
     // revisar sistema de uso de userKeyword, cada vez que se cambia esa vriable se vuelve a renderizar el componente
 
-
+    // solucionar mal funcionamiento de eliminacion de notificaciones
+    
 
 
     // implementar websockets para mensajes

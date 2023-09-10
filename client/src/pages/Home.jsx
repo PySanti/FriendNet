@@ -1,14 +1,12 @@
-import { useContext, useEffect, useState, useRef } from "react"
+import { useContext, useEffect, useState } from "react"
 
 import { userIsAuthenticated } from "../utils/userIsAuthenticated"
 import { UserNotLogged } from "./UserNotLogged"
 import { Header } from "../components/Header"
 import { useNavigate } from "react-router-dom"
-import { getUsersListAPI } from "../api/getUsersList.api"
 import { LoadingContext } from "../context/LoadingContext"
-import { getMessagesHistorialAPI } from "../api/getMessagesHistorial.api"
 import { Loader } from "../components/Loader"
-import { sendMsgAPI } from "../api/sendMsg.api"
+import { BASE_JWT_ERROR_LOG, BASE_LOGIN_REQUIRED_ERROR_MSG} from "../utils/constants"
 import { NotificationsContainer } from "../components/NotificationsContainer"
 import { UsersList } from "../components/UsersList"
 import { Chat } from "../components/Chat"
@@ -17,13 +15,12 @@ import "../styles/Home.css"
 import {redirectExpiredUser} from "../utils/redirectExpiredUser"
 import { getNotificationsFromLocalStorage } from "../utils/getNotificationsFromLocalStorage"
 import { removeNotificationFromLocalStorage } from "../utils/removeNotificationFromLocalStorage"
-import { getJWTFromLocalStorage } from "../utils/getJWTFromLocalStorage"
 import { getChatGlobesList } from "../utils/getChatGlobesList"
 import { removeRelatedNotifications } from "../utils/removeRelatedNotifications"
 import { saveNotificationsInLocalStorage } from "../utils/saveNotificationsInLocalStorage"
 import { validateJWT } from "../utils/validateJWT"
-import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_JWT_ERROR_LOG, BASE_LOGIN_REQUIRED_ERROR_MSG} from "../utils/constants"
 import {logoutUser} from "../utils/logoutUser"
+import {diferentUserHasBeenClicked} from "../utils/diferentUserHasBeenClicked"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 /**
  * Pagina principal del sitio
@@ -31,145 +28,15 @@ import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 export function Home() {
     const user = getUserDataFromLocalStorage()
     const navigate = useNavigate()
-
-
-    let {loadingState, setLoadingState,startLoading,  successfullyLoaded} = useContext(LoadingContext)
+    const loadingStateHandlers = useContext(LoadingContext)
+    let {loadingState, setLoadingState,startLoading,  successfullyLoaded} = loadingStateHandlers
     let [notifications, setNotifications] = useState(getNotificationsFromLocalStorage())
     let [chatGlobeList, setChatGlobeList] = useState(getChatGlobesList(notifications))
-    let [messagesHistorial, setMessagesHistorial] = useState([])
     let [clickedUser, setClickedUser] = useState(null)
+    let [lastClickedUser, setLastClickedUser] = useState(null)
 
-    // userFilter
-    let [userKeyword, setUserKeyword] = useState(undefined)
 
-    // userList pagination
-    let [gottaUpdateUserList, setGottaUpdateUserList]           = useState(false)
-    let userListPage                                            = useRef(1)
-    let noMoreUsers                                             = useRef(false)
-    let [userListLoaderActivated, setUserListLoaderActivated]   = useState(true)
-    let [userList, setUserList]                                 = useState([])
-    
-    // messages pagination
-    let [gottaUpdateMessagesHistorial, setGottaUpdateMessagesHistorial]           = useState(false)
-    let messagesHistorialPage = useRef(1)
-    let noMoreMessages = useRef(false)
 
-    const initializeUserList = async ()=>{
-        setLoadingState(false)
-        if (userIsAuthenticated() && userList.length === 0){
-            await loadUsersList()
-            userListPage.current = 2
-        }
-    }
-    const chargeUsersList = async ()=>{
-        if (!noMoreUsers.current){
-            await loadUsersList()
-            userListPage.current += 1
-        }
-        setGottaUpdateUserList(false)
-    }
-    const reFillUsersList = async ()=>{
-        userListPage.current = 1
-        noMoreUsers.current = false
-        await loadUsersList()
-    }
-    const chargeMessagesList = async ()=>{
-        messagesHistorialPage.current += 1
-        setGottaUpdateMessagesHistorial(false)
-        if (!noMoreMessages.current){
-            await loadMessages()
-        }
-    }
-
-    const updateMessagesHistorial = (newMessages) =>{
-        if (messagesHistorialPage.current === 1){
-            setMessagesHistorial(newMessages)
-        } else {
-            messagesHistorial.unshift(...newMessages)
-            setMessagesHistorial(messagesHistorial)
-        }
-    }
-    const updateUserList = (newUsers)=>{
-        if (userListPage.current === 1){
-            setUserList(newUsers)
-        } else {
-            setUserList(userList.concat(newUsers))
-        }
-    }
-    const addMessage = (new_msg)=>{
-        messagesHistorial.push(new_msg)
-        setMessagesHistorial(messagesHistorial)
-    }
-    const loadUsersList = async ()=>{
-        startLoading()
-        try{
-            setUserListLoaderActivated(true)
-            let response = await getUsersListAPI(!userKeyword || userKeyword.length === 0 ? undefined : userKeyword, user.id, userListPage.current)
-            updateUserList(response.data.users_list)
-            setUserListLoaderActivated(false)
-            successfullyLoaded()
-        } catch(error){
-            if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
-                setLoadingState(BASE_FALLEN_SERVER_LOG)
-            } else {
-                if (error.response.data.error=== "no_more_pages"){
-                    noMoreUsers.current = true
-                    setUserListLoaderActivated(false)
-                    successfullyLoaded()
-                } else {
-                    setLoadingState('Error inesperado cargando datos de usuarios!')
-                }
-            }
-        }
-    }
-    const onMsgSending = async (data)=>{
-        startLoading()
-        const successValidating = await validateJWT()
-        if (successValidating === true){
-            try {
-                const response = await sendMsgAPI(clickedUser.id, data.msg, getJWTFromLocalStorage().access)
-                addMessage(response.data.sended_msg)
-                successfullyLoaded()
-            } catch(error){
-                setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
-            }
-        } else {
-            if (successValidating === BASE_LOGIN_REQUIRED_ERROR_MSG){
-                redirectExpiredUser(navigate)
-            } else {
-                setLoadingState(BASE_JWT_ERROR_LOG)
-            }
-        }
-    }
-    const loadMessages = async ()=>{
-        startLoading()
-        const successValidating = await validateJWT()
-        if (successValidating === true){
-            try{
-                const response = await getMessagesHistorialAPI(clickedUser.id, getJWTFromLocalStorage().access, messagesHistorialPage.current)
-                updateMessagesHistorial(response.data !== "no_messages_between" ? response.data.messages_hist : [])
-                console.log(response.data.messages_hist)
-                successfullyLoaded()
-            } catch(error){
-                if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
-                    setLoadingState(BASE_FALLEN_SERVER_LOG)
-                } else {
-                    if (error.response.data.error === "no_more_pages"){
-                        noMoreMessages.current = true
-                        successfullyLoaded()
-                    } else {
-                        setLoadingState('Error inesperado buscando chat!')
-                    }
-                }
-            }
-        } else {
-            if (successValidating === BASE_LOGIN_REQUIRED_ERROR_MSG){
-                redirectExpiredUser(navigate)
-            } else {
-                setLoadingState(BASE_JWT_ERROR_LOG)
-            }
-        }
-    }
     const onLogout = async ()=>{
         startLoading()
         const successValidating = await validateJWT()
@@ -190,43 +57,23 @@ export function Home() {
         setChatGlobeList(getChatGlobesList(updatedNotifications))
     }
     const onUserButtonClick = (newClickedUser)=>{
-        if (!clickedUser || newClickedUser.id !== clickedUser.id){
-            messagesHistorialPage.current = 1
-            noMoreMessages.current = false
-            const updatedNotifications = removeRelatedNotifications(newClickedUser.id, notifications)
+        setLastClickedUser(clickedUser);
+        setClickedUser(newClickedUser)
+    }
+
+
+
+    useEffect(()=>{
+        if (diferentUserHasBeenClicked(lastClickedUser, clickedUser)){
+            const updatedNotifications = removeRelatedNotifications(clickedUser.id, notifications)
             if(updatedNotifications){
                 saveNotificationsInLocalStorage(updatedNotifications)
                 setNotifications(updatedNotifications)
                 setChatGlobeList(getChatGlobesList(updatedNotifications))
             }
-            setClickedUser(newClickedUser)
-        }
-    }
-
-
-    useEffect(()=>{
-        initializeUserList()
-    }, [])
-    useEffect(()=>{
-        if (clickedUser){
-            loadMessages()
         }
     }, [clickedUser])
-    useEffect(()=>{
-        if (gottaUpdateUserList){
-            chargeUsersList()
-        }
-    }, [gottaUpdateUserList])
-    useEffect(()=>{
-        if (userKeyword !== undefined){ // si userKeyword esta inicializado ...
-            reFillUsersList()
-        }
-    }, [userKeyword])
-    useEffect(()=>{
-        if (gottaUpdateMessagesHistorial ){
-            chargeMessagesList()
-        }
-    }, [gottaUpdateMessagesHistorial])
+
     if (!userIsAuthenticated()){
         return <UserNotLogged/>
     } else {
@@ -242,20 +89,17 @@ export function Home() {
                     <Loader state={loadingState}/>
                     <div className="users-interface-container">
                         <UsersList  
-                            usersList={userList}  
                             onClickEvent={onUserButtonClick}  
                             chatGlobeList={chatGlobeList}  
-                            gottaUpdateListSetter={setGottaUpdateUserList} 
-                            loaderActivated={userListLoaderActivated} 
-                            userKeyword={userKeyword}
-                            userKeywordSetter={setUserKeyword}
+                            loadingStateHandlers={loadingStateHandlers}
+                            sessionUserId = {user.id}
                         />
                         <Chat 
-                            chatingUser={clickedUser} 
-                            messages={messagesHistorial} 
+                            clickedUser={clickedUser} 
+                            lastClickedUser={lastClickedUser}
                             sessionUserId={user.id} 
-                            onMsgSending={onMsgSending} 
-                            messagesUpdatingSetter={setGottaUpdateMessagesHistorial}/>
+                            loadingStateHandlers ={loadingStateHandlers}
+                            />
                     </div>
                 </div>
             </div>
