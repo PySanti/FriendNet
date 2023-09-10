@@ -10,9 +10,6 @@
 
 // fase 3:
 
-    // revisar sistema de userPhoto y posible uso de useRef con el
-
-
     // repasar todo el codigo de la aplicacion y refactorizar y modularizar lo maximo posible
 
 
@@ -22,6 +19,7 @@
 
 
     // implementar websockets para mensajes
+
     // implementar webSockets para actualizacion de notificaciones
 
     // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
