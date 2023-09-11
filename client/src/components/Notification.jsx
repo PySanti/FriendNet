@@ -1,12 +1,13 @@
+
+import {PropTypes} from "prop-types"
+import "../styles/Notification.css"
+
 /**
  * Componente creado para modularizar Notification de NotificationsContainer
  * @param {Function} onNotificationClick funcion que se ejecutara cuando se clickee la notificacion 
  * @param {Function} onNotificationDelete funcion que se ejecutara cuando se elimine una notificacion
  * @param {Object} notification
  */
-import {PropTypes} from "prop-types"
-import "../styles/Notification.css"
-
 export function Notification({onNotificationClick, notification, onNotificationDelete}){
     return (
         <div className="individual-notification-container" >
