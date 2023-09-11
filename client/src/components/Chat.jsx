@@ -4,7 +4,7 @@ import { ChattingUserHeader } from "./ChatingUserHeader"
 import { MsgSendingInput } from "./MsgSendingInput"
 import {PropTypes} from "prop-types"
 /**
- * Contenedor unicamente del chat entre el session user
+ * Contenedor unicamente del chat entre el session user y el clicked user
  * @param {Number} sessionUserId id del usuario de la sesion
  * @param {Object} clickedUser info del usuario con el que se esta chateando
  * @param {Object} lastClickedUser

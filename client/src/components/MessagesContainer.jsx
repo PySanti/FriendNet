@@ -17,22 +17,22 @@ import { sendMsgAPI } from "../api/sendMsg.api"
 
 
 /**
- * Recibe la lista de mensajes y retorna un contenedor HTML renderizable
+ * Componente encargado de renderizar y mantener la lista de mensajes 
  * @param {Number} sessionUserId  id de usuario de sesion
  * @param {Object} clickedUser 
- * @param {Object} lastClickedUser 
- * @param {Object} loadingStateHandlers
- * @param {Object} newMsg
+ * @param {Object} lastClickedUser  
+ * @param {Object} loadingStateHandlers objecto que contendra los objetos necesarios para mantener los estados de carga
+ * @param {Object} newMsg state creado para cuando se envia un mensaje nuevo
  * 
  */
 export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, loadingStateHandlers, newMsg }){
     const containerRef                                                  = useRef(null)
+    const navigate                                                      = useNavigate()
     let [messagesHistorial, setMessagesHistorial]                       = useState([])
     let messagesHistorialPage                                           = useRef(1)
     let noMoreMessages                                                  = useRef(false)
     let { setLoadingState,startLoading,  successfullyLoaded} = loadingStateHandlers
-    const navigate = useNavigate()
-
+    
 
     const addMessage = (new_msg)=>{
         messagesHistorial.push(new_msg)
@@ -143,7 +143,4 @@ MessagesContainer.propTypes = {
     lastClickedUser : PropTypes.object,
     loadingStateHandlers : PropTypes.object.isRequired,
     newMsg : PropTypes.object,
-}
-MessagesContainer.defaultProps = {
-    messages : undefined
 }

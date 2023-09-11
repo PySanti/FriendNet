@@ -1,3 +1,4 @@
+import {useRef} from "react"
 import { useForm } from "react-hook-form"
 import { BASE_MESSAGE_MAX_LENGTH } from "../utils/constants"
 import {PropTypes} from "prop-types"
@@ -9,14 +10,15 @@ import "../styles/MessageSendingInput.css"
  */
 export function MsgSendingInput({onMsgSending}){
     let {register, handleSubmit} = useForm()
+    const inputRef = useRef(null)
     const onSubmit = handleSubmit((data)=>{
         onMsgSending(data)
-        document.getElementById("msg-input").value=""
+        inputRef.current.value = ""
     })
     return (
         <div className="message-sending-input-container">
             <form className="message-sending-form" onSubmit={onSubmit}>
-                <input id="msg-input" placeholder="Enviale un mensaje" className="message-sending-input" type="text" maxLength={BASE_MESSAGE_MAX_LENGTH} {...register("msg")}/>
+                <input ref={inputRef} placeholder="Enviale un mensaje" className="message-sending-input" type="text" maxLength={BASE_MESSAGE_MAX_LENGTH} {...register("msg")}/>
             </form>
         </div>
     )
