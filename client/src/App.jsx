@@ -70,7 +70,7 @@ function App() {
           path='/home/profile/edit'  
           element={
             <LoadingContextProvider>
-              <Profile updating/> 
+              <Profile edit/> 
             </LoadingContextProvider>
           }/>
         <Route 

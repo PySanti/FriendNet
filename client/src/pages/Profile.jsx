@@ -25,7 +25,7 @@ import { validateJWT } from "../utils/validateJWT"
  * Pagina creada para llevar perfil de usuario, tanto para
  * actualizacion como visualizacion
  */
-export function Profile({ updating }) {
+export function Profile({ edit }) {
     // states
     let [profileData, setProfileData] = useState(getUserDataFromLocalStorage());
     let { loadingState, startLoading, setLoadingState, successfullyLoaded } =useContext(LoadingContext);
@@ -74,10 +74,10 @@ export function Profile({ updating }) {
         return (
             <div className="centered-container">
                 <div className="profile-container">
-                    <Header username={profileData.username} msg={updating ? "Editando perfil" : "Viendo perfil"} />
+                    <Header username={profileData.username} msg={edit ? "Editando perfil" : "Viendo perfil"} />
                     <Loader state={loadingState}/>
                     <div className="editing-container">
-                        {updating ? 
+                        {edit ? 
                             <UserInfoForm onFormSubmit={onUpdate} userData={profileData} userPhotoUrl={profileData.photo_link} extraButtons={[<Button key={v4()} buttonText="Volver" onClickFunction={() => {navigate("/home/profile/")} }/>,]}/>
                             : 
                             <>
@@ -98,8 +98,8 @@ export function Profile({ updating }) {
 }
 
 Profile.propTypes = {
-    updating: PropTypes.bool,
+    edit: PropTypes.bool,
 };
 Profile.defaultProps = {
-    updating: undefined,
+    edit: undefined,
 };
