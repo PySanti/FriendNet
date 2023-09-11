@@ -1,6 +1,8 @@
 /**
  * Revisa la lista de notificaciones, y en caso de que alguna notificacion este relacionada con el usuario clickedUser, las elimina y retorna la lista actualizada
  * en caso contrario false
+ * @param {Number} clickedUserId id del usuario clickeado
+ * @param {Array} notificationsList array de notificaciones
  */
 export function removeRelatedNotifications(clickedUserId, notificationsList){
     let relatedNotificacionsIndex = []
