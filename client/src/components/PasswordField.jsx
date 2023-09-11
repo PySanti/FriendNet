@@ -14,7 +14,7 @@ export function PasswordField({errors, registerObject, label}){
     return (
         <FormField label={label} errors={errors}>
             <input className="password-input" type={previsualizationActivated ? "text" : "password"} name={registerObject.name} {...registerObject}/>
-            <button className="password-visualization" type="button" onClick={()=>setPrevisualizationActivated(previsualizationActivated ? false : true)}/>
+            <button className="password-visualization" type="button" onClick={()=>setPrevisualizationActivated(!previsualizationActivated)}/>
         </FormField>
     )
 }
