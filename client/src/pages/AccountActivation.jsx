@@ -2,7 +2,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { Header } from "../components/Header";
 import { useForm } from "react-hook-form";
-import { useContext, useEffect, useState, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 // api's
 import { activateUserAPI } from "../api/activateUser.api";
 import { generateActivationCode } from "../utils/generateActivationCode";
@@ -23,16 +23,14 @@ import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_ACTIVATION_CO
  */
 export function AccountActivation() {
     let { loadingState, setLoadingState, successfullyLoaded, startLoading } = useContext(LoadingContext);
-    let realActivationCode                                                  = useRef(null);
+    let realActivationCode                                                  = useRef(generateActivationCode());
     const props                                                             = useLocation().state;
     const navigate                                                          = useNavigate();
     const { register, handleSubmit, formState: { errors }}                  = useForm();
     const handleActivationCodeSending = async ()=>{
         setLoadingState(false);
-        const activationCode = generateActivationCode();
-        console.log(activationCode)
-        realActivationCode.current =  activationCode
-        await sendActivationEmailAPI(props.userEmail, props.username, activationCode)
+        console.log(realActivationCode.current)
+        await sendActivationEmailAPI(props.userEmail, props.username, realActivationCode.current)
     }
     const onSubmit = handleSubmit(async (data) => {
         startLoading();
