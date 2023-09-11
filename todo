@@ -37,7 +37,10 @@
 
     // revisar problemas de rendimiento de red en el userList y getMessagesHistorial (muy lento)
 
+    // revisar error que ocurre cuando se cargan todas las paginas de los usuarios y, al buscar a pysanti, aparecen 2
+
     // testear todas las funcionalidades de la aplicacion y hacer respectivos refactors
+
 
 
     // buscar o repasar funcionamiento de :
