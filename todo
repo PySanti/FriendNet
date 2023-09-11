@@ -10,15 +10,6 @@
 
 // fase 3:
 
-    // repasar todo el codigo de la aplicacion y refactorizar y modularizar lo maximo posible
-
-
-    // revisar sistema de uso de userKeyword, cada vez que se cambia esa vriable se vuelve a renderizar el componente
-
-    // solucionar mal funcionamiento de eliminacion de notificaciones
-    
-
-
     // implementar websockets para mensajes
 
     // implementar webSockets para actualizacion de notificaciones
@@ -27,6 +18,11 @@
     // ActivateUser, ChangeEmailForActivation, GetUserDetail 
 
     // agregar seguridad a GetUsersList : como esta ahora, cualquiera puede saber quien a escrito a quien
+
+    // revisar sistema de uso de userKeyword, cada vez que se cambia esa vriable se vuelve a renderizar el componente
+
+    // solucionar mal funcionamiento de eliminacion de notificaciones
+    
 
     // mejorar sistema de notificaciones, el que tenemos es horrible
 
