@@ -78,7 +78,7 @@ export function Profile({ updating }) {
                     <Loader state={loadingState}/>
                     <div className="editing-container">
                         {updating ? 
-                            <UserInfoForm updating onFormSubmit={onUpdate} userData={profileData} userPhotoUrl={profileData.photo_link} extraButtons={[<Button key={v4()} buttonText="Volver" onClickFunction={() => {navigate("/home/profile/")} }/>,]}/>
+                            <UserInfoForm onFormSubmit={onUpdate} userData={profileData} userPhotoUrl={profileData.photo_link} extraButtons={[<Button key={v4()} buttonText="Volver" onClickFunction={() => {navigate("/home/profile/")} }/>,]}/>
                             : 
                             <>
                                 <UserData userData={profileData} nonShowableAttrs={["is_active","id","photo_link",]} attrsTraductions={{username: "Nombre de usuario",email: "Correo electrónico"}} />

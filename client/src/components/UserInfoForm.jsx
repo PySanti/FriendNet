@@ -16,11 +16,10 @@ import { EmailField } from "./EmailField";
  * Componente creado para los formularios de SignUp y Update,
  * teniendo en cuenta las similitudes entre ambos
  * @param {Object} userData datos del usuario, se enviaran en caso de que se este actualizando
- * @param {Boolean} updating representara si se esta actualizando
  * @param {Function} onFormSubmit funcion que se ejecutara cuando se envie el formulario
  * @param {Array} extraButtons arreglo de buttons extra que se quiera agregar al formulario
  */
-export function UserInfoForm({ userData, updating, onFormSubmit, extraButtons}) {
+export function UserInfoForm({ userData, onFormSubmit, extraButtons}) {
     let [currentPhotoFile, setCurrentPhotoFile] = useState(userData ? userData.photo_link : null);
     const { register, handleSubmit, formState: { errors }, watch} = useForm();
     const onSubmit = handleSubmit((data) => {
@@ -47,11 +46,11 @@ export function UserInfoForm({ userData, updating, onFormSubmit, extraButtons}) 
     }, [userData]);
     return (
         <div className="user-form-container">
-            <Form onSubmitFunction={onSubmit}buttonMsg={updating ? "Actualizar" : "Registrar"}buttonsList={extraButtons}>
+            <Form onSubmitFunction={onSubmit}buttonMsg={userData ? "Actualizar" : "Registrar"}buttonsList={extraButtons}>
                 <>
                     <UsernameField      defaultValue={userData ? userData.username : "juanca"}              errors={errors.username && errors.username.message}         registerObject={register(    "username",    BASE_USERNAME_CONSTRAINTS)}/>
                     <EmailField         defaultValue={userData ? userData.email : "juanca@gmail.com"}       errors={errors.email && errors.email.message}               registerObject={register(    "email",    BASE_EMAIL_CONSTRAINTS)}/>
-                    {!updating && (
+                    {!userData && (
                         <>
                             <PasswordField label="Contraseña"           errors={errors.password && errors.password.message } registerObject={register("password", {     ...BASE_PASSWORD_CONSTRAINTS, validate: passwordChecking("password"), })}/>
                             <PasswordField label="Confirmar Contraseña" errors={errors.confirmPwd && errors.confirmPwd.message } registerObject={register("confirmPwd", {     ...BASE_PASSWORD_CONSTRAINTS, validate: passwordChecking("confirmPwd"), })} />
@@ -66,13 +65,11 @@ export function UserInfoForm({ userData, updating, onFormSubmit, extraButtons}) 
 
 UserInfoForm.propTypes = {
     userData: PropTypes.object,
-    updating: PropTypes.bool,
     onFormSubmit: PropTypes.func.isRequired,
     extraButtons: PropTypes.array,
 };
 
 UserInfoForm.defaultProps = {
     userData: undefined,
-    updating: undefined,
     extraButtons: undefined,
 };

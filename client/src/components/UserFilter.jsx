@@ -5,9 +5,9 @@ import "../styles/UserFilter.css"
 
 /**
  * Filtro de busqueda de usuarios
- * @param {Array} initialUsersList
- * @param {Function} usersListSetter 
- * @param {String} sessionUserId 
+ * @param {Array} userList
+ * @param {Function} userKeyword 
+ * @param {String} userKeywordSetter 
  */
 export function UserFilter({userList, userKeyword, userKeywordSetter}){
     const onLetterInput = (e)=>{

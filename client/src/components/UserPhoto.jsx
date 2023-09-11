@@ -1,3 +1,11 @@
+
+import { useState,useRef } from "react";
+import "../styles/UserPhoto.css";
+import { Button } from "./Button";
+import { PropTypes } from "prop-types";
+import { checkImageFormat } from "../utils/checkImageFormat";
+
+
 /**
  * Contenedor para foto de perfil de usuario
  * @param {String} photoFile sera la foto que se desea renderizar por defecto
@@ -6,14 +14,9 @@
  * @param {Boolean} chatPhoto sera true cuando sea una imagen para renderizar en el chat, de este modo le cambiaremos los estilos
  * Diseniado para trabajar con states dentro de un formulario
  */
-import { useState, useRef } from "react";
-import "../styles/UserPhoto.css";
-import { Button } from "./Button";
-import { PropTypes } from "prop-types";
-import { checkImageFormat } from "../utils/checkImageFormat";
-
 export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
     let [errorMsg, setErrorMsg] = useState(null);
+    const imgInputRef = useRef(null)
     let [currentPhotoName, setCurrentPhotoName] = useState(null);
     let [bigPhotoActivated, setBigPhotoActivated] = useState(false);
     const containerClsName = "user-photo-container";
@@ -63,8 +66,8 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
                         <h3 className="img-input-error-msg">{errorMsg}</h3>
                     </div>
                     <div className="user-photo-input-container">
-                        <input id="photo-input" className="user-photo-input" type="file" onChange={onPhotoChange}/>
-                        <Button buttonText="Seleccionar" onClickFunction={() => document.getElementById("photo-input").click() }/>
+                        <input ref={imgInputRef} id="photo-input" className="user-photo-input" type="file" onChange={onPhotoChange}/>
+                        <Button buttonText="Seleccionar" onClickFunction={() => imgInputRef.current.click() }/>
                         <Button buttonText="Borrar" onClickFunction={deleteCurrentPhoto} />
                     </div>
                 </>
