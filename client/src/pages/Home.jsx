@@ -61,8 +61,6 @@ export function Home() {
         setClickedUser(newClickedUser)
     }
 
-
-
     useEffect(()=>{
         if (diferentUserHasBeenClicked(lastClickedUser, clickedUser)){
             const updatedNotifications = removeRelatedNotifications(clickedUser.id, notifications)

@@ -5,9 +5,9 @@ import { config } from "./baseConfig.api";
 
 /**
  * Llama a la api para recibir chat entre id1 y id2 (historial de mensajes)
- * @param {String} receiverId    
+ * @param {String} receiverId id del segundo integrante del chat 
  * @param {String} accessToken
- * @param {Number} page
+ * @param {Number} page pagina actual de lista de mensajes
  */
 
 export async function getMessagesHistorialAPI(receiverId, accessToken, page){

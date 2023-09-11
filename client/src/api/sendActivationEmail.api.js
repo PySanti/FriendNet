@@ -4,7 +4,7 @@ import { BACKEND_URL } from '../utils/constants'
 
 
 /**
- * Carga datos del archivo smtpjs.json y envia correo con activation_code al usuario username 
+ * Usa utilidad de api para enviar correo con activation_code al usuario username 
  * @param {String} userEmail  
  * @param {String} username  
  * @param {String} activationCode  

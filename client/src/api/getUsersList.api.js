@@ -5,6 +5,7 @@ import { config } from './baseConfig.api'
  * Llama a api que retorna lista de usuarios de la pagina
  * @param {Number} sessionUserId Id de usuario de sesion activa
  * @param {Number} userKeyword palabra clave del usuario que se este buscando
+ * @param {Number} page pagina actual de la lista de usuarios
  */
 export async function getUsersListAPI(userKeyword, sessionUserId, page){
     const data = {
