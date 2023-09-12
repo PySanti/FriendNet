@@ -66,6 +66,7 @@
         // asgi applications
         // ProtocolTypeRouter (enrutador de protocolos)
         // Que es un router
+        // channel layers
 
 
 
