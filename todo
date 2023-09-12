@@ -64,7 +64,11 @@
         // http vs ws (comunicacion persistente)
         // handshake
         // asgi applications
-        // ProtocolTypeRouter
+        // ProtocolTypeRouter (enrutador de protocolos)
+        // Que es un router
+
+
+
 
 
 
