@@ -8,25 +8,9 @@ import { Profile } from "./pages/Profile.jsx"
 import {  LoadingContextProvider } from "./context/LoadingContext.jsx"
 import { ChangePwd } from "./pages/ChangePwd.jsx"
 import { ChangeEmailForActivation } from "./pages/ChangeEmailForActivation.jsx"
-import {useEffect } from "react"
 
 function App() {
-  useEffect(()=>{
-    const socket = new WebSocket('ws://localhost:8000/ws/my_consumer/');
 
-    socket.onopen = () => {
-      console.log('Conexión establecida');
-    };
-
-    socket.onmessage = (event) => {
-      console.log('Mensaje recibido:', event.data);
-    };
-
-    socket.onclose = () => {
-      console.log('Conexión cerrada');
-    };
-
-  }, [])
   return (
     <BrowserRouter>
       <Routes>

@@ -18,7 +18,7 @@ export function MsgSendingInput({onMsgSending}){
     return (
         <div className="message-sending-input-container">
             <form className="message-sending-form" onSubmit={onSubmit}>
-                <input ref={inputRef} placeholder="Enviale un mensaje" className="message-sending-input" type="text" maxLength={BASE_MESSAGE_MAX_LENGTH} {...register("msg")}/>
+                <input ref={inputRef.current} placeholder="Enviale un mensaje" className="message-sending-input" type="text" maxLength={BASE_MESSAGE_MAX_LENGTH} {...register("msg")}/>
             </form>
         </div>
     )

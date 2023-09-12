@@ -107,6 +107,7 @@ export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, 
             }
         }
     }
+    
     useEffect(()=>{
         if (containerRef.current){
             containerRef.current.scrollTop = containerRef.current.clientHeight

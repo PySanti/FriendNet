@@ -1,8 +1,9 @@
-import {useState} from "react"
+import {useState, useEffect, useRef} from "react"
 import { MessagesContainer } from "./MessagesContainer"
 import { ChattingUserHeader } from "./ChatingUserHeader"
 import { MsgSendingInput } from "./MsgSendingInput"
 import {PropTypes} from "prop-types"
+import {userIsAuthenticated} from "../utils/userIsAuthenticated"
 /**
  * Contenedor unicamente del chat entre el session user y el clicked user
  * @param {Number} sessionUserId id del usuario de la sesion
@@ -12,6 +13,25 @@ import {PropTypes} from "prop-types"
  */
 export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateHandlers}){
     let [newMsg, setNewMsg] = useState(null)
+    let socket = useRef(null)
+    useEffect(()=>{
+        socket.current = new WebSocket(`ws://localhost:8000/ws/my_consumer/`);
+        socket.current.onopen = () => {
+            console.log('Conexión establecida');
+        };
+        socket.current.onmessage = (event) => {
+            console.log('Mensaje recibido:', event.data);
+        };
+        socket.current.onclose = () => {
+            console.log('Conexión cerrada');
+        };
+    }, [])
+    useEffect(()=>{
+        if (newMsg){
+            console.log(newMsg)
+            socket.current.send(newMsg.msg)
+        }
+    }, [newMsg])
     return (
         <div className="chat-container">
             {clickedUser && <ChattingUserHeader chatingUser={clickedUser}/>}
