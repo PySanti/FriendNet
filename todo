@@ -46,6 +46,15 @@
         // When
         // Case -> default
         // When -> then
+    
+    // repasar funcionamiento de:
+        // channels 3.0.4
+        // asgi y wsgi
+        // protocolo de websocket
+        // django channels
+        // http vs ws (comunicacion persistente)
+        // handshake
+        // asgi applications
 
 
 

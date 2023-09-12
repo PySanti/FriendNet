@@ -29,3 +29,6 @@ EMAIL_HOST_USER = "friendnetcorp@gmail.com"
 EMAIL_HOST_PASSWORD = SECRETS['EMAIL_PASSWORD']
 
 CLOUDINARY_URL = f'cloudinary://{SECRETS["CLOUDINARY__API_KEY"]}:{SECRETS["CLOUDINARY__API_SECRET"]}@{SECRETS["CLOUDINARY__CLOUD_NAME"]}'    
+
+WSGI_APPLICATION = 'FriendNet.wsgi.application'
+ASGI_APPLICATION = 'FriendNet.asgi.application'  # new
