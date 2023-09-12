@@ -132,7 +132,8 @@ AUTH_USER_MODEL = 'Usuarios.Usuarios'
 
 # frontend servers
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173"
+    "http://localhost:5173",
+    "http://localhost:5174",
 ]
 
 

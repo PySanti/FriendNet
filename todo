@@ -37,6 +37,9 @@
 
     // testear todas las funcionalidades de la aplicacion y hacer respectivos refactors
 
+    // solucionar error que permite que el mismo usuario se logee dos veces desde dos navegadores diferentes
+    
+    // solucionar error que no borra contenido del input al enviar mensaje
 
 
     // buscar o repasar funcionamiento de :
@@ -118,4 +121,4 @@
     // implementar https para myor seguridad
     // una vez que el proyecto este completamente terminado, eliminar todos los logs del front y back
     // a la hora de montar el proyecto en produccion, investigar bien como funciona todo el proceso de montado de backend's
-
+    // cuando terminemos el proyecto por completo, revisar cada linea de codigo, cada paquete, cada todo que hayamos empleado para repasar lo maximo posible
