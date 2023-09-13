@@ -10,9 +10,7 @@
 
 // fase 3:
     // implementacion de websockets para mensajes:
-        // mover toda la implementacion de websockets de los usuarios a los mensajes
         // perfeccionar y repasar la creacion de grupos
-        // hacer que, si un usuario se desconecta del websocket se elimine su participacion en el grupo anterior
         // implementar mesasges-sending-broadcasting
     
     // implementacion de websockets para notificaciones:
@@ -79,6 +77,7 @@
         // pasos para implementacion de channel-layers
         // async_to_sync
         // broadcasting function (group_send)
+        // channel name
 
 
 

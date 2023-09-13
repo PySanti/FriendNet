@@ -1,4 +1,4 @@
-import {useState, useEffect, useRef} from "react"
+import {useState, useEffect} from "react"
 import { MessagesContainer } from "./MessagesContainer"
 import { ChattingUserHeader } from "./ChatingUserHeader"
 import { MsgSendingInput } from "./MsgSendingInput"
@@ -35,6 +35,11 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
             }
         }
     }, [clickedUser])
+    useEffect(()=>{
+        if (newMsg && MAIN_WEBSOCKET.current){
+            console.log('Hola')
+        }
+    }, [newMsg])
 
 
     return (
