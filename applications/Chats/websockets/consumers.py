@@ -22,18 +22,19 @@ class MessagesConsumer(WebsocketConsumer):
             discard_channel_if_found(self.channel_layer, self.channel_name)
             async_to_sync(self.channel_layer.group_add)(data['name'],self.channel_name)
         if data['type'] == "message_broadcasting":
-            async_to_sync(self.channel_layer.group_send)(
-                data['name'],
-                {
-                    'type' : 'chat_message',
-                    'value' : data['value']
-                }
-            )
+            if (len(self.channel_layer.groups[data['name']]) == 2):
+                async_to_sync(self.channel_layer.group_send)(
+                    data['name'],
+                    {
+                        'type' : 'chat_message',
+                        'value' : data['value']
+                    }
+                )
         print_pretty_groups(self.channel_layer.groups)
 
 
     def chat_message(self, event):
-        self.send(text_data=event['value'])
+        self.send(text_data=json.dumps(event['value']))
 
 
 
