@@ -17,6 +17,7 @@ import {wsGroupBroadcastingMessage} from "../utils/wsGroupBroadcastingMessage"
  */
 export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateHandlers}){
     let [newMsg, setNewMsg] = useState(null)
+    let [messagesHistorial, setMessagesHistorial]                       = useState([])
     useEffect(()=>{
         if (clickedUser && clickedUser.is_online){
             if (!MAIN_WEBSOCKET.current){
@@ -55,7 +56,7 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
     return (
         <div className="chat-container">
             {clickedUser && <ChattingUserHeader chatingUser={clickedUser}/>}
-            <MessagesContainer sessionUserId={sessionUserId}  clickedUser={clickedUser} lastClickedUser={lastClickedUser} loadingStateHandlers={loadingStateHandlers} newMsg={newMsg}/>
+            <MessagesContainer sessionUserId={sessionUserId}  clickedUser={clickedUser} lastClickedUser={lastClickedUser} loadingStateHandlers={loadingStateHandlers} newMsg={newMsg} messagesHistorial={messagesHistorial} setMessagesHistorial={setMessagesHistorial}/>
             {clickedUser && <MsgSendingInput onMsgSending={(newMsg)=>setNewMsg(newMsg)}/>}
         </div>
     )

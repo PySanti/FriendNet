@@ -22,12 +22,12 @@ import { sendMsgAPI } from "../api/sendMsg.api"
  * @param {Object} lastClickedUser  
  * @param {Object} loadingStateHandlers objecto que contendra los objetos necesarios para mantener los estados de carga
  * @param {Object} newMsg state creado para cuando se envia un mensaje nuevo
- * 
+ * @param {Array} messagesHistorial
+ * @param {Function} setMessagesHistorial
  */
-export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, loadingStateHandlers, newMsg }){
+export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, loadingStateHandlers, newMsg, messagesHistorial, setMessagesHistorial }){
     const containerRef                                                  = useRef(null)
     const navigate                                                      = useNavigate()
-    let [messagesHistorial, setMessagesHistorial]                       = useState([])
     let messagesHistorialPage                                           = useRef(1)
     let noMoreMessages                                                  = useRef(false)
     let { setLoadingState,startLoading,  successfullyLoaded} = loadingStateHandlers
@@ -143,4 +143,6 @@ MessagesContainer.propTypes = {
     lastClickedUser : PropTypes.object,
     loadingStateHandlers : PropTypes.object.isRequired,
     newMsg : PropTypes.object,
+    messagesHistorial : PropTypes.array,
+    setMessagesHistorial : PropTypes.func
 }
