@@ -11,7 +11,7 @@
 // fase 3:
     // implementacion de websockets para mensajes:
         // perfeccionar y repasar la creacion de grupos
-        // hacer que, si un usuario se desconecta del websocket o se cambia de cliked user, se elimine su participacion en el grupo anterior
+        // hacer que, si un usuario se desconecta del websocket se elimine su participacion en el grupo anterior
         // implementar mesasges-sending-broadcasting
     
     // implementacion de websockets para notificaciones:

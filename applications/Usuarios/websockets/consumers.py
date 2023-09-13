@@ -11,19 +11,19 @@ class MyConsumer(WebsocketConsumer):
         print('Desconectando websocket')
 
     def receive(self, text_data):
-        print('-------')
-        print('Mensaje recibido')
         data = json.loads(text_data)
-        print('-------')
-        for k,v in data.items():
-            print(f"{k}->{v}")
-        print('-------')
+        print(f'Comprobando si este canal se encuentra en algun otro grupo')
+        for k,v in self.channel_layer.groups.copy().items():
+            if self.channel_name in v:
+                print('Si lo hace')
+                async_to_sync(self.channel_layer.group_discard)(k,self.channel_name)
+
         if data['type'] == "group_creation":
-            print(f'Agregando {self.channel_name} al grupo {data["name"]}')
             async_to_sync(self.channel_layer.group_add)(data['name'],self.channel_name)
         print('-------')
         print('Integrantes del grupo')
-        print(self.channel_layer.channels)
+        for k,v in self.channel_layer.groups.items():
+            print(f'{k} -> {v}')
 
     def chat_message(self, event):
         message = event['message']
