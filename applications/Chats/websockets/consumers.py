@@ -21,13 +21,20 @@ class MessagesConsumer(WebsocketConsumer):
         discard_channel_if_found(self.channel_layer, self.channel_name)
         if data['type'] == "group_creation":
             async_to_sync(self.channel_layer.group_add)(data['name'],self.channel_name)
+        if data['type'] == "message_broadcasting":
+            async_to_sync(self.channel_layer.group_send)(
+                data['name'],
+                {
+                    'type' : 'chat_message',
+                    'value' : data['value']
+                }
+            )
         print_pretty_groups(self.channel_layer.groups)
 
 
     def chat_message(self, event):
-        message = event['message']
-        print('Hola')
-        self.send(text_data=message)
+        print(event)
+        # self.send(text_data=message)
 
 
 

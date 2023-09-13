@@ -41,8 +41,11 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
         if (newMsg && MAIN_WEBSOCKET.current){
             MAIN_WEBSOCKET.current.send(
                 wsGroupBroadcastingMessage(
-                    wsGroupName(sessionUserId, clickedUser.id), 
-                    newMsg
+                    wsGroupName(sessionUserId, clickedUser.id),
+                        {... newMsg,
+                            'id' : sessionUserId
+                        } 
+                        
                     )
                 )
         }
