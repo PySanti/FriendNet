@@ -18,8 +18,8 @@ class MessagesConsumer(WebsocketConsumer):
 
     def receive(self, text_data):
         data = json.loads(text_data)
-        discard_channel_if_found(self.channel_layer, self.channel_name)
         if data['type'] == "group_creation":
+            discard_channel_if_found(self.channel_layer, self.channel_name)
             async_to_sync(self.channel_layer.group_add)(data['name'],self.channel_name)
         if data['type'] == "message_broadcasting":
             async_to_sync(self.channel_layer.group_send)(
@@ -33,8 +33,7 @@ class MessagesConsumer(WebsocketConsumer):
 
 
     def chat_message(self, event):
-        print(event)
-        # self.send(text_data=message)
+        self.send(text_data=event['value'])
 
 
 
