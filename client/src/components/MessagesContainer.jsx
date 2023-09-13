@@ -15,7 +15,6 @@ import { sendMsgAPI } from "../api/sendMsg.api"
 
 
 
-
 /**
  * Componente encargado de renderizar y mantener la lista de mensajes 
  * @param {Number} sessionUserId  id de usuario de sesion

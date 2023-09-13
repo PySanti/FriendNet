@@ -62,3 +62,8 @@ export const BASE_PASSWORD_CONSTRAINTS = {
         message: `Por favor, ingresa una contraseña con al menos ${BASE_PASSWORD_MIN_LENGTH} caracteres`,
     },
 };
+
+
+export const MAIN_WEBSOCKET = {
+    'current' : null
+}
