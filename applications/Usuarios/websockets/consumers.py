@@ -4,17 +4,15 @@ from asgiref.sync import async_to_sync
 
 class MyConsumer(WebsocketConsumer):
     def connect(self):
-        self.chat_name = 'test'
-        async_to_sync(self.channel_layer.group_add)(
-            self.chat_name,
-            self.channel_name
-        )
+        print(f'Nombre del canal {self.channel_name}')
         self.accept()
+        self.chat_name = 'test'
+        async_to_sync(self.channel_layer.group_add)(self.chat_name,self.channel_name)
         self.send(text_data="maderfoker")
 
     def disconnect(self, close_code):
-        pass
-    
+        print('Desconectando websocket')
+
     def receive(self, text_data):
         print('RECIBIENDOOOO')
         self.send(text_data)
@@ -25,8 +23,8 @@ class MyConsumer(WebsocketConsumer):
                 'message' : text_data
             }
         )
-        pass
 
     def chat_message(self, event):
         message = event['message']
+        print('Hola')
         self.send(text_data=message)
