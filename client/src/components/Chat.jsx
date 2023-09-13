@@ -28,7 +28,12 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
                     MAIN_WEBSOCKET.current.send(wsGroupCreationMsg(wsGroupName(sessionUserId, clickedUser.id)))
                 };
                 MAIN_WEBSOCKET.current.onmessage = (event) => {
-                    console.log('Mensaje recibido:', event.data);
+                    const data = JSON.parse(event.data)
+                    console.log('Broadcast recibido exitosamente ', data)
+                    if (data.id !== sessionUserId){
+                        messagesHistorial.push(data)
+                        setMessagesHistorial(messagesHistorial)
+                    }
                 };
                 MAIN_WEBSOCKET.current.onclose = () => {
                     console.log('Conexión cerrada');
