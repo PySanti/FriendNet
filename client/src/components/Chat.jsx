@@ -39,12 +39,12 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
     }, [clickedUser])
     useEffect(()=>{
         if (newMsg && MAIN_WEBSOCKET.current){
-            // MAIN_WEBSOCKET.current.send(
-            //     wsGroupBroadcastingMessage(
-            //         wsGroupName(sessionUserId, clickedUser.id), 
-            //         newMsg
-            //         )
-            //     )
+            MAIN_WEBSOCKET.current.send(
+                wsGroupBroadcastingMessage(
+                    wsGroupName(sessionUserId, clickedUser.id), 
+                    newMsg
+                    )
+                )
         }
     }, [newMsg])
 
