@@ -8,10 +8,16 @@ class MessagesConsumer(WebsocketConsumer):
     def connect(self):
         self.accept()
         print(f'Generando conexion a channel -> {self.channel_name}')
+    def print_groups(self):
+        print("~~~~~~~~~")
+        print('Grupos')
+        for k,v in self.channel_layer.groups.items():
+            print(f'{k} -> {v}')
+        print("~~~~~~~~~")
 
     def disconnect(self, close_code):
         print('Desconectando websocket')
-        
+        discard_channel_if_found(self.channel_layer, self.channel_name)
 
     def receive(self, text_data):
         data = json.loads(text_data)
@@ -19,10 +25,8 @@ class MessagesConsumer(WebsocketConsumer):
 
         if data['type'] == "group_creation":
             async_to_sync(self.channel_layer.group_add)(data['name'],self.channel_name)
-        print('-------')
-        print('Integrantes del grupo')
-        for k,v in self.channel_layer.groups.items():
-            print(f'{k} -> {v}')
+        self.print_groups()
+
 
     def chat_message(self, event):
         message = event['message']
