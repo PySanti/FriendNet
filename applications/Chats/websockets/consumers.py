@@ -1,6 +1,8 @@
 from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import async_to_sync
+from .ws_utils.discard_channel_if_found import discard_channel_if_found
 import json
+
 
 class MessagesConsumer(WebsocketConsumer):
     def connect(self):
@@ -9,14 +11,11 @@ class MessagesConsumer(WebsocketConsumer):
 
     def disconnect(self, close_code):
         print('Desconectando websocket')
+        
 
     def receive(self, text_data):
         data = json.loads(text_data)
-        print(f'Comprobando si este canal se encuentra en algun otro grupo')
-        for k,v in self.channel_layer.groups.copy().items():
-            if self.channel_name in v:
-                print('Si lo hace')
-                async_to_sync(self.channel_layer.group_discard)(k,self.channel_name)
+        discard_channel_if_found(self.channel_layer, self.channel_name)
 
         if data['type'] == "group_creation":
             async_to_sync(self.channel_layer.group_add)(data['name'],self.channel_name)
