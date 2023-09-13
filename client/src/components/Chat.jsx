@@ -5,7 +5,9 @@ import { MsgSendingInput } from "./MsgSendingInput"
 import {PropTypes} from "prop-types"
 import {MAIN_WEBSOCKET} from "../utils/constants"
 import {wsGroupCreationMsg} from "../utils/wsGroupCreationMsg"
+import {wsGroupName} from "../utils/wsGroupName"
 import {MESSAGES_WEBSOCKET_ENDPOINT} from "../utils/constants"
+import {wsGroupBroadcastingMessage} from "../utils/wsGroupBroadcastingMessage" 
 /**
  * Contenedor unicamente del chat entre el session user y el clicked user
  * @param {Number} sessionUserId id del usuario de la sesion
@@ -22,7 +24,7 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
                 MAIN_WEBSOCKET.current = new WebSocket(MESSAGES_WEBSOCKET_ENDPOINT);
                 MAIN_WEBSOCKET.current.onopen = () => {
                     console.log('Conexión establecida');
-                    MAIN_WEBSOCKET.current.send(wsGroupCreationMsg(sessionUserId, clickedUser.id))
+                    MAIN_WEBSOCKET.current.send(wsGroupCreationMsg(wsGroupName(sessionUserId, clickedUser.id)))
                 };
                 MAIN_WEBSOCKET.current.onmessage = (event) => {
                     console.log('Mensaje recibido:', event.data);
@@ -31,13 +33,18 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
                     console.log('Conexión cerrada');
                 };
             } else {
-                MAIN_WEBSOCKET.current.send(wsGroupCreationMsg(sessionUserId, clickedUser.id))
+                MAIN_WEBSOCKET.current.send(wsGroupCreationMsg(wsGroupName(sessionUserId, clickedUser.id)))
             }
         }
     }, [clickedUser])
     useEffect(()=>{
         if (newMsg && MAIN_WEBSOCKET.current){
-            console.log('Hola')
+            // MAIN_WEBSOCKET.current.send(
+            //     wsGroupBroadcastingMessage(
+            //         wsGroupName(sessionUserId, clickedUser.id), 
+            //         newMsg
+            //         )
+            //     )
         }
     }, [newMsg])
 
