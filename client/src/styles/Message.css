@@ -13,6 +13,7 @@
     border-bottom-right-radius: 0px;
 }
 .not-session-msg{
+    background-color : rgb(77, 144, 77);
     align-self: flex-start;
     border-bottom-left-radius: 0px;
 }
