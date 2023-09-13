@@ -9,8 +9,13 @@
 
 
 // fase 3:
-
-    // implementar de manera basica los websockets para mensajes y notificaciones
+    // implementacion de websockets para mensajes:
+        // perfeccionar y repasar la creacion de grupos
+        // hacer que, si un usuario se desconecta del websocket o se cambia de cliked user, se elimine su participacion en el grupo anterior
+        // implementar mesasges-sending-broadcasting
+    
+    // implementacion de websockets para notificaciones:
+        // ...
 
     // mejorar y perfeccionar la implementacion de websockets
 
@@ -45,7 +50,7 @@
     
     // solucionar error que no borra contenido del input al enviar mensaje
 
-    // mejorar deteccion de desloego de usuarios
+    // mejorar deteccion de desloego de usuarios (importante)
 
 
     // buscar o repasar funcionamiento de :

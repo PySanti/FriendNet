@@ -22,6 +22,8 @@ class MyConsumer(WebsocketConsumer):
             print(f'Agregando {self.channel_name} al grupo {data["name"]}')
             async_to_sync(self.channel_layer.group_add)(data['name'],self.channel_name)
         print('-------')
+        print('Integrantes del grupo')
+        print(self.channel_layer.channels)
 
     def chat_message(self, event):
         message = event['message']
