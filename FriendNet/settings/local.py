@@ -32,3 +32,8 @@ CLOUDINARY_URL = f'cloudinary://{SECRETS["CLOUDINARY__API_KEY"]}:{SECRETS["CLOUD
 
 WSGI_APPLICATION = 'FriendNet.wsgi.application'
 ASGI_APPLICATION = 'FriendNet.asgi.application'  # new
+CHANNEL_LAYERS = {
+    'default' : {
+        'BACKEND' : 'channels.layers.InMemoryChannelLayer'
+    }
+}

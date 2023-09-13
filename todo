@@ -66,7 +66,10 @@
         // asgi applications
         // ProtocolTypeRouter (enrutador de protocolos)
         // Que es un router
+        // pasos para implementacion de channels / websockets
         // channel layers
+        // grupos
+        // redis
 
 
 
@@ -120,6 +123,7 @@
 
 
 //Produccion:
+    // implementar redis
     // centrarnos en testear bien las imagenes
     // encriptar datos en smtpjs
     // comprobar funcionamiento en todos los navegadores y con todas las resoluciones
