@@ -2,7 +2,7 @@ from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import async_to_sync
 import json
 
-class MyConsumer(WebsocketConsumer):
+class MessagesConsumer(WebsocketConsumer):
     def connect(self):
         self.accept()
         print(f'Generando conexion a channel -> {self.channel_name}')

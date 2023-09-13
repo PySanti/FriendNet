@@ -63,7 +63,7 @@ export const BASE_PASSWORD_CONSTRAINTS = {
     },
 };
 
-
+export const MESSAGES_WEBSOCKET_ENDPOINT = "ws://localhost:8000/ws/messages/"
 export const MAIN_WEBSOCKET = {
     'current' : null
 }
