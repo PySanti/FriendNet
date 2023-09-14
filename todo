@@ -10,8 +10,8 @@
 
 // fase 3:
     // implementacion de websockets para mensajes:
-        // perfeccionar y repasar la creacion de grupos
-        // implementar mesasges-sending-broadcasting
+        // testea, repasar y refactorizar la implementacion de messages broadcasting
+
     
     // implementacion de websockets para notificaciones:
         // ...
