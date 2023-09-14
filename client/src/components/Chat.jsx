@@ -19,7 +19,7 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
     let [newMsg, setNewMsg] = useState(null)
     let [messagesHistorial, setMessagesHistorial]                       = useState([])
     useEffect(()=>{
-        if (clickedUser && clickedUser.is_online){
+        if (clickedUser){
             if (!MAIN_WEBSOCKET.current){
                 console.log('Entrando a un chat por primera vez')
                 MAIN_WEBSOCKET.current = new WebSocket(MESSAGES_WEBSOCKET_ENDPOINT);
