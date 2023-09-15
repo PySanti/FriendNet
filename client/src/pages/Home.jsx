@@ -41,7 +41,7 @@ export function Home() {
         startLoading()
         const successValidating = await validateJWT()
         if (successValidating === true){ 
-            await logoutUser(true)
+            await logoutUser()
             successfullyLoaded()
         } else {
             if (successValidating === BASE_LOGIN_REQUIRED_ERROR_MSG){

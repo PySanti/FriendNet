@@ -12,7 +12,7 @@
     // implementacion de websockets para mensajes:
         // testea, repasar y refactorizar la implementacion de messages broadcasting
         // hacer que, cuando un usuario se deslogee o su token sea invalido, se desconecte del websocket
-
+        // hacer que si el usuario se sale de la pagina del home y tiene un chat abierto, se desconecte del websocket
     
     // implementacion de websockets para notificaciones:
         // ...
