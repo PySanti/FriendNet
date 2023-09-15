@@ -57,6 +57,7 @@ export function Home() {
                 setLoadingState(BASE_JWT_ERROR_LOG)
             }
         }
+        navigate('/')
     }
     const onNotificationDelete = (notification)=>{
         const updatedNotifications = removeNotificationFromLocalStorage(notification)
