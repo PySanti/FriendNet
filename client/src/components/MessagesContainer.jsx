@@ -24,8 +24,9 @@ import { sendMsgAPI } from "../api/sendMsg.api"
  * @param {Object} newMsg state creado para cuando se envia un mensaje nuevo
  * @param {Array} messagesHistorial
  * @param {Function} setMessagesHistorial
+ * @param {Object} newMsgSendedSetter objeto retornado por la api cuando el mensaje fue enviado exitosamente
  */
-export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, loadingStateHandlers, newMsg, messagesHistorial, setMessagesHistorial }){
+export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, loadingStateHandlers, newMsg, messagesHistorial, setMessagesHistorial, newMsgSendedSetter }){
     const containerRef                                                  = useRef(null)
     const navigate                                                      = useNavigate()
     let messagesHistorialPage                                           = useRef(1)
@@ -43,6 +44,7 @@ export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, 
         if (successValidating === true){
             try {
                 const response = await sendMsgAPI(clickedUser.id, data.msg, getJWTFromLocalStorage().access)
+                newMsgSendedSetter(response.data.sended_msg)
                 addMessage(response.data.sended_msg)
                 successfullyLoaded()
             } catch(error){
@@ -144,5 +146,6 @@ MessagesContainer.propTypes = {
     loadingStateHandlers : PropTypes.object.isRequired,
     newMsg : PropTypes.object,
     messagesHistorial : PropTypes.array,
-    setMessagesHistorial : PropTypes.func
+    setMessagesHistorial : PropTypes.func,
+    newMsgSendedSetter : PropTypes.object.isRequired
 }

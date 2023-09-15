@@ -18,6 +18,7 @@ import {wsGroupBroadcastingMessage} from "../utils/wsGroupBroadcastingMessage"
 export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateHandlers}){
     let [newMsg, setNewMsg] = useState(null)
     let [messagesHistorial, setMessagesHistorial]                       = useState([])
+    let [newMsgSended, setNewMsgSended] = useState(null)
     useEffect(()=>{
         if (clickedUser){
             if (!MAIN_WEBSOCKET.current){
@@ -30,7 +31,8 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
                 MAIN_WEBSOCKET.current.onmessage = (event) => {
                     const data = JSON.parse(event.data)
                     console.log('Broadcast recibido exitosamente ', data)
-                    if (data.id !== sessionUserId){
+                    if (Number(data.parent_id) !== Number(sessionUserId)){
+                        console.log('Agregando broadcast recibido a la lista de mensajes ', data)
                         messagesHistorial.push(data)
                         setMessagesHistorial(messagesHistorial)
                     }
@@ -44,24 +46,20 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
         }
     }, [clickedUser])
     useEffect(()=>{
-        if (newMsg && MAIN_WEBSOCKET.current){
+        if (newMsgSended && MAIN_WEBSOCKET.current){
             MAIN_WEBSOCKET.current.send(
                 wsGroupBroadcastingMessage(
-                    wsGroupName(sessionUserId, clickedUser.id),
-                        {... newMsg,
-                            'id' : sessionUserId
-                        } 
-                        
-                    )
+                    wsGroupName(sessionUserId, clickedUser.id), newMsgSended)
                 )
+            setNewMsgSended(null)
         }
-    }, [newMsg])
+    }, [newMsgSended])
 
 
     return (
         <div className="chat-container">
             {clickedUser && <ChattingUserHeader chatingUser={clickedUser}/>}
-            <MessagesContainer sessionUserId={sessionUserId}  clickedUser={clickedUser} lastClickedUser={lastClickedUser} loadingStateHandlers={loadingStateHandlers} newMsg={newMsg} messagesHistorial={messagesHistorial} setMessagesHistorial={setMessagesHistorial}/>
+            <MessagesContainer sessionUserId={sessionUserId}  clickedUser={clickedUser} lastClickedUser={lastClickedUser} loadingStateHandlers={loadingStateHandlers} newMsg={newMsg} messagesHistorial={messagesHistorial} setMessagesHistorial={setMessagesHistorial} newMsgSendedSetter={setNewMsgSended}/>
             {clickedUser && <MsgSendingInput onMsgSending={(newMsg)=>setNewMsg(newMsg)}/>}
         </div>
     )
