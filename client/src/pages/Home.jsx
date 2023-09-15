@@ -22,6 +22,8 @@ import { validateJWT } from "../utils/validateJWT"
 import {logoutUser} from "../utils/logoutUser"
 import {diferentUserHasBeenClicked} from "../utils/diferentUserHasBeenClicked"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
+import {disconnectWebsocket} from "../utils/disconnectWebsocket" 
+import {MAIN_WEBSOCKET} from "../utils/constants"
 /**
  * Pagina principal del sitio
  */
@@ -36,7 +38,12 @@ export function Home() {
     let [lastClickedUser, setLastClickedUser] = useState(null)
 
 
-
+    useEffect(()=>{
+        return ()=>{
+            // esto se ejecutara cuando el componente sea desmontado
+            disconnectWebsocket(MAIN_WEBSOCKET)
+        }
+    }, [])
     const onLogout = async ()=>{
         startLoading()
         const successValidating = await validateJWT()

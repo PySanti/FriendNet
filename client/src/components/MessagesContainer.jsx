@@ -92,7 +92,6 @@ export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, 
             }
         } else {
             if (successValidating === BASE_LOGIN_REQUIRED_ERROR_MSG){
-                console.log('Hola')
                 redirectExpiredUser(navigate)
             } else {
                 setLoadingState(BASE_JWT_ERROR_LOG)
