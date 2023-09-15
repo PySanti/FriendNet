@@ -147,5 +147,5 @@ MessagesContainer.propTypes = {
     newMsg : PropTypes.object,
     messagesHistorial : PropTypes.array,
     setMessagesHistorial : PropTypes.func,
-    newMsgSendedSetter : PropTypes.object.isRequired
+    newMsgSendedSetter : PropTypes.func.isRequired
 }

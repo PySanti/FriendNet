@@ -33,7 +33,9 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
                     console.log('Broadcast recibido exitosamente ', data)
                     if (Number(data.parent_id) !== Number(sessionUserId)){
                         console.log('Agregando broadcast recibido a la lista de mensajes ', data)
+                        console.log('Antigua lista de mensajes', messagesHistorial)
                         messagesHistorial.push(data)
+                        console.log(`Nueva lista de mensajes `, messagesHistorial)
                         setMessagesHistorial(messagesHistorial)
                     }
                 };
