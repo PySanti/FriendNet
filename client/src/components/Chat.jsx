@@ -3,7 +3,7 @@ import { MessagesContainer } from "./MessagesContainer"
 import { ChattingUserHeader } from "./ChatingUserHeader"
 import { MsgSendingInput } from "./MsgSendingInput"
 import {PropTypes} from "prop-types"
-import {MAIN_WEBSOCKET} from "../utils/constants"
+import {MESSAGES_WEBSOCKET} from "../utils/constants"
 import {wsGroupCreationMsg} from "../utils/wsGroupCreationMsg"
 import {wsGroupName} from "../utils/wsGroupName"
 import {MESSAGES_WEBSOCKET_ENDPOINT} from "../utils/constants"
@@ -21,19 +21,19 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
     let [newMsgSended, setNewMsgSended]                                 = useState(null)
     useEffect(()=>{
         if (clickedUser){
-            if (!MAIN_WEBSOCKET.current){
-                MAIN_WEBSOCKET.current = new WebSocket(MESSAGES_WEBSOCKET_ENDPOINT);
-                MAIN_WEBSOCKET.current.onopen = () => {
-                    MAIN_WEBSOCKET.current.send(wsGroupCreationMsg(wsGroupName(sessionUserId, clickedUser.id)))
+            if (!MESSAGES_WEBSOCKET.current){
+                MESSAGES_WEBSOCKET.current = new WebSocket(MESSAGES_WEBSOCKET_ENDPOINT);
+                MESSAGES_WEBSOCKET.current.onopen = () => {
+                    MESSAGES_WEBSOCKET.current.send(wsGroupCreationMsg(wsGroupName(sessionUserId, clickedUser.id)))
                 };
             } else {
-                MAIN_WEBSOCKET.current.send(wsGroupCreationMsg(wsGroupName(sessionUserId, clickedUser.id)))
+                MESSAGES_WEBSOCKET.current.send(wsGroupCreationMsg(wsGroupName(sessionUserId, clickedUser.id)))
             }
         }
     }, [clickedUser])
     useEffect(()=>{
-        if (newMsgSended && MAIN_WEBSOCKET.current){
-            MAIN_WEBSOCKET.current.send(
+        if (newMsgSended && MESSAGES_WEBSOCKET.current){
+            MESSAGES_WEBSOCKET.current.send(
                 wsGroupBroadcastingMessage(
                     wsGroupName(sessionUserId, clickedUser.id), newMsgSended)
                 )
@@ -41,8 +41,8 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
         }
     }, [newMsgSended])
     useEffect(()=>{
-        if (MAIN_WEBSOCKET.current){
-            MAIN_WEBSOCKET.current.onmessage = (event) => {
+        if (MESSAGES_WEBSOCKET.current){
+            MESSAGES_WEBSOCKET.current.onmessage = (event) => {
                 const data = JSON.parse(event.data)
                 if (Number(data.parent_id) !== Number(sessionUserId)){
                     setMessagesHistorial([...messagesHistorial, data])

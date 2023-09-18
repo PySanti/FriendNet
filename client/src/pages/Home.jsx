@@ -23,7 +23,7 @@ import {logoutUser} from "../utils/logoutUser"
 import {diferentUserHasBeenClicked} from "../utils/diferentUserHasBeenClicked"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import {disconnectWebsocket} from "../utils/disconnectWebsocket" 
-import {MAIN_WEBSOCKET} from "../utils/constants"
+import {MESSAGES_WEBSOCKET} from "../utils/constants"
 import {notificationDeleteAPI} from "../api/notificationDelete.api"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 /**
@@ -43,7 +43,7 @@ export function Home() {
     useEffect(()=>{
         return ()=>{
             // esto se ejecutara cuando el componente sea desmontado
-            disconnectWebsocket(MAIN_WEBSOCKET)
+            disconnectWebsocket(MESSAGES_WEBSOCKET)
         }
     }, [])
     const onLogout = async ()=>{
