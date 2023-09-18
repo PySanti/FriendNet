@@ -9,17 +9,10 @@
 
 
 // fase 3:
-    // implementacion de websockets para mensajes:
-        // testea, repasar y refactorizar la implementacion de messages broadcasting
-    
     // implementacion de websockets para notificaciones:
         // ...
 
     // mejorar y perfeccionar la implementacion de websockets
-
-    // implementar websockets para mensajes
-
-    // implementar webSockets para actualizacion de notificaciones
 
     // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
     // ActivateUser, ChangeEmailForActivation, GetUserDetail 
@@ -29,7 +22,6 @@
     // revisar sistema de uso de userKeyword, cada vez que se cambia esa vriable se vuelve a renderizar el componente
 
     // solucionar mal funcionamiento de eliminacion de notificaciones
-    
 
     // mejorar sistema de notificaciones, el que tenemos es horrible
 

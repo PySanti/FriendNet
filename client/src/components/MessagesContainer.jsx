@@ -73,7 +73,6 @@ export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, 
             try{
                 const response = await getMessagesHistorialAPI(clickedUser.id, getJWTFromLocalStorage().access, messagesHistorialPage.current)
                 updateMessagesHistorial(response.data !== "no_messages_between" ? response.data.messages_hist : [])
-                console.log(response.data.messages_hist)
                 successfullyLoaded()
             } catch(error){
                 if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
@@ -97,7 +96,6 @@ export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, 
     }
     const scrollHandler = (e)=>{
         if (e.target.scrollTop <= 0){
-            console.log('Actualizando lista de mensajes')
             messagesHistorialPage.current += 1
             if (!noMoreMessages.current){
                 loadMessages()

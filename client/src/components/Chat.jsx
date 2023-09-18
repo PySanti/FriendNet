@@ -22,14 +22,9 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
     useEffect(()=>{
         if (clickedUser){
             if (!MAIN_WEBSOCKET.current){
-                console.log('Entrando a un chat por primera vez')
                 MAIN_WEBSOCKET.current = new WebSocket(MESSAGES_WEBSOCKET_ENDPOINT);
                 MAIN_WEBSOCKET.current.onopen = () => {
-                    console.log('Conexión establecida');
                     MAIN_WEBSOCKET.current.send(wsGroupCreationMsg(wsGroupName(sessionUserId, clickedUser.id)))
-                };
-                MAIN_WEBSOCKET.current.onclose = () => {
-                    console.log('Conexión cerrada');
                 };
             } else {
                 MAIN_WEBSOCKET.current.send(wsGroupCreationMsg(wsGroupName(sessionUserId, clickedUser.id)))
@@ -46,11 +41,9 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
         }
     }, [newMsgSended])
     useEffect(()=>{
-        console.log('Actualizando broadcast handler')
         if (MAIN_WEBSOCKET.current){
             MAIN_WEBSOCKET.current.onmessage = (event) => {
                 const data = JSON.parse(event.data)
-                console.log('Broadcast recibido exitosamente ', data)
                 if (Number(data.parent_id) !== Number(sessionUserId)){
                     setMessagesHistorial([...messagesHistorial, data])
                 }

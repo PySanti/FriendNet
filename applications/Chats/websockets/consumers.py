@@ -39,12 +39,3 @@ class MessagesConsumer(WebsocketConsumer):
         self.send(text_data=json.dumps(event['value']))
 
 
-
-# async_to_sync(self.channel_layer.group_add)(self.chat_name,self.channel_name)
-# async_to_sync(self.channel_layer.group_send)(
-#     self.chat_name,
-#     {
-#         'type' : 'chat_message',
-#         'message' : text_data
-#     }
-# )
