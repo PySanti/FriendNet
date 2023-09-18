@@ -16,7 +16,7 @@ import {redirectExpiredUser} from "../utils/redirectExpiredUser"
 import { getNotificationsFromLocalStorage } from "../utils/getNotificationsFromLocalStorage"
 import { removeNotificationFromLocalStorage } from "../utils/removeNotificationFromLocalStorage"
 import { getChatGlobesList } from "../utils/getChatGlobesList"
-import { removeRelatedNotifications } from "../utils/removeRelatedNotifications"
+import { getRelatedNotification } from "../utils/getRelatedNotification"
 import { saveNotificationsInLocalStorage } from "../utils/saveNotificationsInLocalStorage"
 import { validateJWT } from "../utils/validateJWT"
 import {logoutUser} from "../utils/logoutUser"
@@ -61,9 +61,9 @@ export function Home() {
     }
     const onNotificationDelete = (notification)=>{
         const updatedNotifications = removeNotificationFromLocalStorage(notification)
+        saveNotificationsInLocalStorage(updatedNotifications)
         setNotifications(updatedNotifications)
         setChatGlobeList(getChatGlobesList(updatedNotifications))
-        
     }
     const onUserButtonClick = (newClickedUser)=>{
         setLastClickedUser(clickedUser);
@@ -72,11 +72,9 @@ export function Home() {
 
     useEffect(()=>{
         if (diferentUserHasBeenClicked(lastClickedUser, clickedUser)){
-            const updatedNotifications = removeRelatedNotifications(clickedUser.id, notifications)
-            if(updatedNotifications){
-                saveNotificationsInLocalStorage(updatedNotifications)
-                setNotifications(updatedNotifications)
-                setChatGlobeList(getChatGlobesList(updatedNotifications))
+            const relatedNotification = getRelatedNotification(clickedUser.id, notifications)
+            if(relatedNotification){
+                onNotificationDelete(relatedNotification)
             }
         }
     }, [clickedUser])
