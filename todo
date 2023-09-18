@@ -10,7 +10,7 @@
 
 // fase 3:
     // repasar y refactorizar sistema de notificaciones
-    
+
     // implementacion de websockets para notificaciones:
 
     // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
@@ -106,6 +106,7 @@
     // arreglar errror que sucede cuando el usuario recarga la lista de mensajes hacia arriba
     // solucionar error de estilo generado cuando el usuario quiere selccionar el texto que le facilita el navegador en un input
     // reactivar el notificationBell del componente NotificationsContainer
+    // agregar sonidos cuando llgue una notificacion
 
 // Fase 5:
     // centrarnos en testear bien las imagenes (calidad, tiempos de carga, portabilidad )
