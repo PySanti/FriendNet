@@ -35,12 +35,6 @@ class UsuariosManager(BaseUserManager):
         """
         user.is_active = True
         user.save()
-    def deleteAllNotifications(self, user):
-        """
-            Recibe un usuario y elimina todas sus notificaciones
-        """
-        user.notifications.all().delete()
-        user.save()
     def getFormatedNotifications(self, user):
         """
             Recibe el usuario y retorna la lista de notificaciones del usuario formateada
@@ -50,7 +44,7 @@ class UsuariosManager(BaseUserManager):
         for  i in user.notifications.all():
             if i.sender_user_id not in senders_ids:
                 senders_ids.append(i.sender_user_id)
-            notifications_list.append({ 'msg' : i.msg, 'sender_user' : i.sender_user_id})
+            notifications_list.append({ 'id' : i.id, 'msg' : i.msg, 'sender_user' : i.sender_user_id})
         # recordar que hacemos la solicitud de esta manera, para evitar hacer una solicitud por cada iteracion del bucle
         senders_users = {i['id']:i for i in self.filter(id__in=senders_ids).values(*USERS_LIST_ATTRS)}
         for i in notifications_list:

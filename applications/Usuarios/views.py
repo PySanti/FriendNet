@@ -97,7 +97,6 @@ class GetUserDetailAPI(APIView):
                     user = Usuarios.objects.get(username=request.data['username'])
                     if (check_password(request.data['password'], user.password)):
                         formated_user_data = Usuarios.objects.getFormatedUserData(user)
-                        # Usuarios.objects.deleteAllNotifications(user)
                         return JsonResponse({'user' : formated_user_data}, status=status.HTTP_200_OK)
                     else:
                         return Response({'error' : 'user_not_exists'}, status.HTTP_400_BAD_REQUEST)
