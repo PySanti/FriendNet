@@ -34,7 +34,7 @@
     // mejorar sistema de notificaciones, el que tenemos es horrible
 
 
-    // mejorar velocidad de envio de mensajes
+    // mejorar velocidad de envio de mensajes (agregar primero mensaje a la lista antes de enviar al backend, eliminar id)
 
     // revisar comportamiento extranio de botones en el home
 
