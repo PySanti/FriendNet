@@ -9,8 +9,8 @@
 
 
 // fase 3:
-    // mejorar sistema de notificaciones, el que tenemos es horrible
-
+    // repasar y refactorizar sistema de notificaciones
+    
     // implementacion de websockets para notificaciones:
 
     // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
