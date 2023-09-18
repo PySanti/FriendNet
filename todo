@@ -9,9 +9,6 @@
 
 
 // fase 3:
-    // solucionar problema en la carga de mensajes
-
-    // solucionar mal funcionamiento de eliminacion de notificaciones
 
     // mejorar sistema de notificaciones, el que tenemos es horrible
 
@@ -26,17 +23,11 @@
 
     // mejorar velocidad de envio de mensajes (agregar primero mensaje a la lista antes de enviar al backend, eliminar id)
 
-    // revisar comportamiento extranio de botones en el home
-
     // revisar problemas de rendimiento de red en el userList y getMessagesHistorial (muy lento)
 
     // revisar error que ocurre cuando se cargan todas las paginas de los usuarios y, al buscar a pysanti, aparecen 2
 
-    // testear todas las funcionalidades de la aplicacion y hacer respectivos refactors
-
     // solucionar error que permite que el mismo usuario se logee dos veces desde dos navegadores diferentes
-    
-    // solucionar error que no borra contenido del input al enviar mensaje
 
     // mejorar deteccion de desloego de usuarios (importante)
 
@@ -70,7 +61,9 @@
         // broadcasting function (group_send)
         // channel name
 
-
+        // realizar un proceso de testeo, haciendo una lista de todas y cada una de las funcionalidades de la aplicacion
+        // y realizando un proceso de testing por cada una, que incluya uso de consolelog's para asegurarnos
+        // de que todo funciona como lo esperado
 
 
 
