@@ -30,6 +30,8 @@
 
     // mejorar deteccion de desloego de usuarios (importante) (detectar desmontaje de app.jsx?)
 
+    // mejorar sistema de uso de validateJwt : no tiene sentido que hagamos siempre lo mismo, DRY
+
     // testear bien funcionalidad de userList y userFilter dado el cambio realizado para el uso de websockets
 
 

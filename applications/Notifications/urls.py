@@ -7,5 +7,5 @@ from .views import (
     )
 
 urlpatterns = [
-    path('notifications/delete', NotificationDeleteAPI.as_view())
+    path('notification/delete/', NotificationDeleteAPI.as_view())
 ] 

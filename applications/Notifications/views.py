@@ -1,4 +1,4 @@
-from rest_framework.generics import APIView
+from rest_framework.views import APIView
 from .serializers import NotificationsDeleteSerializer
 from rest_framework_simplejwt.authentication import (
     JWTAuthentication
@@ -10,13 +10,21 @@ from rest_framework.permissions import (
 from applications.Usuarios.utils.constants import (
     BASE_SERIALIZER_ERROR_RESPONSE
 )
+from rest_framework import response
+from .models import Notifications
+from rest_framework import status
 class NotificationDeleteAPI(APIView):
     serializer_class = NotificationsDeleteSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     def post(self, request, *args, **kwargs):
-        serialized_data = self.serializer_class(request.data)
+        serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
-            pass
+            try:
+                Notifications.objects.deleteNotification(request.data['notification_id'])
+            except:
+                return response.Response({'deleted' : 'false'}, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                return response.Response({'deleted' : 'true'}, status=status.HTTP_200_OK)
         else:
             return BASE_SERIALIZER_ERROR_RESPONSE 

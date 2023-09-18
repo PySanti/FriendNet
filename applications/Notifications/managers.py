@@ -15,5 +15,11 @@ class NotificationsManager(manager.Manager):
         newNotification = self.create(msg=msg, sender_user_id=sender_user.id)
         receiver_user.notifications.add(newNotification)
         receiver_user.save()
+    def deleteNotification(self, notificationId):
+        """
+            Recibe el id de una notificacion y la elimina
+        """
+        notification = self.get(id=notificationId)
+        notification.delete()
 
 

@@ -31,6 +31,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('applications.Usuarios.urls')),
     path('api/', include('applications.Chats.urls')),
+    path('api/', include('applications.Notifications.urls')),
     path('api/token/', MyTokenObtainPerView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),

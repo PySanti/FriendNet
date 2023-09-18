@@ -24,6 +24,8 @@ import {diferentUserHasBeenClicked} from "../utils/diferentUserHasBeenClicked"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import {disconnectWebsocket} from "../utils/disconnectWebsocket" 
 import {MAIN_WEBSOCKET} from "../utils/constants"
+import {notificationDeleteAPI} from "../api/notificationDelete.api"
+import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 /**
  * Pagina principal del sitio
  */
@@ -59,11 +61,26 @@ export function Home() {
         }
         navigate('/')
     }
-    const onNotificationDelete = (notification)=>{
-        const updatedNotifications = removeNotificationFromLocalStorage(notification)
-        saveNotificationsInLocalStorage(updatedNotifications)
-        setNotifications(updatedNotifications)
-        setChatGlobeList(getChatGlobesList(updatedNotifications))
+    const onNotificationDelete = async (notification)=>{
+        const successValidating = await validateJWT()
+        if (successValidating === true){
+            const updatedNotifications = removeNotificationFromLocalStorage(notification)
+            saveNotificationsInLocalStorage(updatedNotifications)
+            setNotifications(updatedNotifications)
+            setChatGlobeList(getChatGlobesList(updatedNotifications))
+            try{
+                await notificationDeleteAPI(notification.id, getJWTFromLocalStorage().access )
+            }
+            catch{
+                console.log('Error inesperado eliminando notificacion')
+            }
+        } else {
+            if (successValidating === BASE_LOGIN_REQUIRED_ERROR_MSG){
+                redirectExpiredUser(navigate)
+            } else {
+                setLoadingState(BASE_JWT_ERROR_LOG)
+            }
+        }
     }
     const onUserButtonClick = (newClickedUser)=>{
         setLastClickedUser(clickedUser);
