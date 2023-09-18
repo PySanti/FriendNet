@@ -16,9 +16,9 @@ import {wsGroupBroadcastingMessage} from "../utils/wsGroupBroadcastingMessage"
  * @param {Object} loadingStateHandlers
  */
 export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateHandlers}){
-    let [newMsg, setNewMsg] = useState(null)
+    let [newMsg, setNewMsg]                                             = useState(null)
     let [messagesHistorial, setMessagesHistorial]                       = useState([])
-    let [newMsgSended, setNewMsgSended] = useState(null)
+    let [newMsgSended, setNewMsgSended]                                 = useState(null)
     useEffect(()=>{
         if (clickedUser){
             if (!MAIN_WEBSOCKET.current){
@@ -27,17 +27,6 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
                 MAIN_WEBSOCKET.current.onopen = () => {
                     console.log('Conexión establecida');
                     MAIN_WEBSOCKET.current.send(wsGroupCreationMsg(wsGroupName(sessionUserId, clickedUser.id)))
-                };
-                MAIN_WEBSOCKET.current.onmessage = (event) => {
-                    const data = JSON.parse(event.data)
-                    console.log('Broadcast recibido exitosamente ', data)
-                    if (Number(data.parent_id) !== Number(sessionUserId)){
-                        console.log('Agregando broadcast recibido a la lista de mensajes ', data)
-                        console.log('Antigua lista de mensajes', messagesHistorial)
-                        messagesHistorial.push(data)
-                        console.log(`Nueva lista de mensajes `, messagesHistorial)
-                        setMessagesHistorial(messagesHistorial)
-                    }
                 };
                 MAIN_WEBSOCKET.current.onclose = () => {
                     console.log('Conexión cerrada');
@@ -56,6 +45,18 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
             setNewMsgSended(null)
         }
     }, [newMsgSended])
+    useEffect(()=>{
+        console.log('Actualizando broadcast handler')
+        if (MAIN_WEBSOCKET.current){
+            MAIN_WEBSOCKET.current.onmessage = (event) => {
+                const data = JSON.parse(event.data)
+                console.log('Broadcast recibido exitosamente ', data)
+                if (Number(data.parent_id) !== Number(sessionUserId)){
+                    setMessagesHistorial([...messagesHistorial, data])
+                }
+            };
+        }
+    }, [messagesHistorial])
 
 
     return (

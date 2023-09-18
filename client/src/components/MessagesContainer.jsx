@@ -34,10 +34,7 @@ export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, 
     let { setLoadingState,startLoading,  successfullyLoaded} = loadingStateHandlers
     
 
-    const addMessage = (new_msg)=>{
-        messagesHistorial.push(new_msg)
-        setMessagesHistorial(messagesHistorial)
-    }
+
     const sendMsg = async (data)=>{
         startLoading()
         const successValidating = await validateJWT()
@@ -45,7 +42,7 @@ export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, 
             try {
                 const response = await sendMsgAPI(clickedUser.id, data.msg, getJWTFromLocalStorage().access)
                 newMsgSendedSetter(response.data.sended_msg)
-                addMessage(response.data.sended_msg)
+                setMessagesHistorial([...messagesHistorial, response.data.sended_msg])
                 successfullyLoaded()
             } catch(error){
                 setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
@@ -100,11 +97,11 @@ export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, 
     }
     const scrollHandler = (e)=>{
         if (e.target.scrollTop <= 0){
-            console.log('Actualizando lista de mensajes')
-            messagesHistorialPage.current += 1
-            if (!noMoreMessages.current){
-                loadMessages()
-            }
+            // console.log('Actualizando lista de mensajes')
+            // messagesHistorialPage.current += 1
+            // if (!noMoreMessages.current){
+            //     loadMessages()
+            // }
         }
     }
     
