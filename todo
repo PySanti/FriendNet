@@ -107,6 +107,7 @@
     // solucionar error de estilo generado cuando el usuario quiere selccionar el texto que le facilita el navegador en un input
     // reactivar el notificationBell del componente NotificationsContainer
     // agregar sonidos cuando llgue una notificacion
+    // hacer que el notification-bell tenga un numero encima que represente la cantidad de notificaciones
 
 // Fase 5:
     // centrarnos en testear bien las imagenes (calidad, tiempos de carga, portabilidad )
