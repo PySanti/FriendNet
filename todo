@@ -9,10 +9,13 @@
 
 
 // fase 3:
-    // implementacion de websockets para notificaciones:
-        // ...
+    // solucionar problema en la carga de mensajes
 
-    // mejorar y perfeccionar la implementacion de websockets
+    // solucionar mal funcionamiento de eliminacion de notificaciones
+
+    // mejorar sistema de notificaciones, el que tenemos es horrible
+
+    // implementacion de websockets para notificaciones:
 
     // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
     // ActivateUser, ChangeEmailForActivation, GetUserDetail 
@@ -20,11 +23,6 @@
     // agregar seguridad a GetUsersList : como esta ahora, cualquiera puede saber quien a escrito a quien
 
     // revisar sistema de uso de userKeyword, cada vez que se cambia esa vriable se vuelve a renderizar el componente
-
-    // solucionar mal funcionamiento de eliminacion de notificaciones
-
-    // mejorar sistema de notificaciones, el que tenemos es horrible
-
 
     // mejorar velocidad de envio de mensajes (agregar primero mensaje a la lista antes de enviar al backend, eliminar id)
 
