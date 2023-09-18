@@ -9,16 +9,15 @@ import "../styles/MessageSendingInput.css"
  * @param  {Function} onMsgSending funcion que se ejecutara cuando se envie un mensaje
  */
 export function MsgSendingInput({onMsgSending}){
-    let {register, handleSubmit} = useForm()
-    const inputRef = useRef(null)
+    let {register, handleSubmit, reset} = useForm()
     const onSubmit = handleSubmit((data)=>{
         onMsgSending(data)
-        inputRef.current.value = ""
+        reset()
     })
     return (
         <div className="message-sending-input-container">
             <form className="message-sending-form" onSubmit={onSubmit}>
-                <input ref={inputRef.current} placeholder="Enviale un mensaje" className="message-sending-input" type="text" maxLength={BASE_MESSAGE_MAX_LENGTH} {...register("msg")}/>
+                <input placeholder="Enviale un mensaje" className="message-sending-input" type="text" maxLength={BASE_MESSAGE_MAX_LENGTH} {...register("msg")}/>
             </form>
         </div>
     )
