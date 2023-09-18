@@ -97,17 +97,17 @@ export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, 
     }
     const scrollHandler = (e)=>{
         if (e.target.scrollTop <= 0){
-            // console.log('Actualizando lista de mensajes')
-            // messagesHistorialPage.current += 1
-            // if (!noMoreMessages.current){
-            //     loadMessages()
-            // }
+            console.log('Actualizando lista de mensajes')
+            messagesHistorialPage.current += 1
+            if (!noMoreMessages.current){
+                loadMessages()
+            }
         }
     }
     
     useEffect(()=>{
         if (containerRef.current){
-            containerRef.current.scrollTop = containerRef.current.clientHeight
+            containerRef.current.scrollTop = containerRef.current.scrollHeight
         }
     }, [messagesHistorial])
     useEffect(()=>{
