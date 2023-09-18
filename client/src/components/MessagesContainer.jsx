@@ -110,6 +110,7 @@ export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, 
     }, [messagesHistorial])
     useEffect(()=>{
         if (diferentUserHasBeenClicked(lastClickedUser, clickedUser)){
+            setMessagesHistorial([])
             messagesHistorialPage.current = 1
             noMoreMessages.current = false
             loadMessages()
