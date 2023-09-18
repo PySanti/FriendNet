@@ -26,6 +26,8 @@ import {disconnectWebsocket} from "../utils/disconnectWebsocket"
 import {MESSAGES_WEBSOCKET} from "../utils/constants"
 import {notificationDeleteAPI} from "../api/notificationDelete.api"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
+import {NOTIFICATIONS_WEBSOCKET} from "../utils/constants" 
+import {NOTIFICATIONS_WEBSOCKET_ENDPOINT} from "../utils/constants"
 /**
  * Pagina principal del sitio
  */
@@ -41,9 +43,16 @@ export function Home() {
 
 
     useEffect(()=>{
+        if (!NOTIFICATIONS_WEBSOCKET.current){
+            NOTIFICATIONS_WEBSOCKET.current = new WebSocket(NOTIFICATIONS_WEBSOCKET_ENDPOINT)
+            NOTIFICATIONS_WEBSOCKET.onopen = (event)=>{
+                console.log('Estableciendo conexion')
+            }
+        }
         return ()=>{
             // esto se ejecutara cuando el componente sea desmontado
             disconnectWebsocket(MESSAGES_WEBSOCKET)
+            disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
         }
     }, [])
     const onLogout = async ()=>{
