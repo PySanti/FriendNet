@@ -63,6 +63,7 @@ export function Home() {
         const updatedNotifications = removeNotificationFromLocalStorage(notification)
         setNotifications(updatedNotifications)
         setChatGlobeList(getChatGlobesList(updatedNotifications))
+        
     }
     const onUserButtonClick = (newClickedUser)=>{
         setLastClickedUser(clickedUser);

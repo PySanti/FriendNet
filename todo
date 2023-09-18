@@ -28,7 +28,7 @@
 
     // solucionar error que permite que el mismo usuario se logee dos veces desde dos navegadores diferentes
 
-    // mejorar deteccion de desloego de usuarios (importante)
+    // mejorar deteccion de desloego de usuarios (importante) (detectar desmontaje de app.jsx?)
 
     // testear bien funcionalidad de userList y userFilter dado el cambio realizado para el uso de websockets
 
