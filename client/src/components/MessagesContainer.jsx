@@ -12,7 +12,7 @@ import {diferentUserHasBeenClicked} from "../utils/diferentUserHasBeenClicked"
 import {redirectExpiredUser} from "../utils/redirectExpiredUser"
 import { sendMsgAPI } from "../api/sendMsg.api"
 import {NOTIFICATIONS_WEBSOCKET} from "../utils/constants"
-
+import {NotificationsWSNotificationBroadcastingMsg} from "../utils/NotificationsWSNotificationBroadcastingMsg"
 
 
 /**
@@ -105,6 +105,7 @@ export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, 
     }
     useEffect(()=>{
         if (newNotificationId){
+            NOTIFICATIONS_WEBSOCKET.current.send(NotificationsWSNotificationBroadcastingMsg(newNotificationId, clickedUser.id))
             console.log('Id de la nueva notificacion ', newNotificationId)
         }
     }, [newNotificationId])
