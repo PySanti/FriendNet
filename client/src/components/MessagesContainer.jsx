@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom"
 import {diferentUserHasBeenClicked} from "../utils/diferentUserHasBeenClicked"
 import {redirectExpiredUser} from "../utils/redirectExpiredUser"
 import { sendMsgAPI } from "../api/sendMsg.api"
-
+import {NOTIFICATIONS_WEBSOCKET} from "../utils/constants"
 
 
 
@@ -31,8 +31,8 @@ export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, 
     const navigate                                                      = useNavigate()
     let messagesHistorialPage                                           = useRef(1)
     let noMoreMessages                                                  = useRef(false)
-    let { setLoadingState,startLoading,  successfullyLoaded} = loadingStateHandlers
-
+    let { setLoadingState,startLoading,  successfullyLoaded}            = loadingStateHandlers
+    let [newNotificationId, setNewNotificationId]                       = useState(null)
 
 
     const sendMsg = async (data)=>{
@@ -42,6 +42,7 @@ export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, 
             try {
                 const response = await sendMsgAPI(clickedUser.id, data.msg, getJWTFromLocalStorage().access)
                 newMsgSendedSetter(response.data.sended_msg)
+                setNewNotificationId(response.data.sended_notification_id)
                 setMessagesHistorial([...messagesHistorial, response.data.sended_msg])
                 successfullyLoaded()
             } catch(error){
@@ -102,7 +103,11 @@ export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, 
             }
         }
     }
-
+    useEffect(()=>{
+        if (newNotificationId){
+            console.log('Id de la nueva notificacion ', newNotificationId)
+        }
+    }, [newNotificationId])
     useEffect(()=>{
         if (containerRef.current){
             containerRef.current.scrollTop = containerRef.current.scrollHeight
