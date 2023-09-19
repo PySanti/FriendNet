@@ -9,6 +9,7 @@
 
 
 // fase 3:
+    // hacer que, los websockets de notificaciones se creen y cierren cuando se monte y desmonte el App.jsx
     // repasar y refactorizar sistema de notificaciones
 
     // implementacion de websockets para notificaciones:
