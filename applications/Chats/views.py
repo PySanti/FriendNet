@@ -71,7 +71,9 @@ class SendMsgAPI(APIView):
                     Notifications.objects.addNotification(f"Tienes mensajes nuevos de {sender_user.username}", receiver_user, sender_user)
                 new_message = Messages.objects.createMessage(parent=sender_user, content=request.data['msg'])
                 Chats.objects.sendMessage(sender_user, receiver_user,new_message)
-                return JsonResponse({'sended_msg' : Messages.objects.filter(id=new_message.id).values()[0]}, status=status.HTTP_200_OK)
+                new_message_values = new_message.__dict__.copy()
+                del new_message_values['_state']
+                return JsonResponse({'sended_msg' : new_message_values}, status=status.HTTP_200_OK)
             except Exception:
                 return BASE_UNEXPECTED_ERROR_RESPONSE
         else:

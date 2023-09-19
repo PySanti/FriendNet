@@ -32,7 +32,7 @@ export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, 
     let messagesHistorialPage                                           = useRef(1)
     let noMoreMessages                                                  = useRef(false)
     let { setLoadingState,startLoading,  successfullyLoaded} = loadingStateHandlers
-    
+
 
 
     const sendMsg = async (data)=>{
