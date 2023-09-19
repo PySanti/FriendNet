@@ -28,6 +28,7 @@ import {notificationDeleteAPI} from "../api/notificationDelete.api"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {NOTIFICATIONS_WEBSOCKET} from "../utils/constants" 
 import {NOTIFICATIONS_WEBSOCKET_ENDPOINT} from "../utils/constants"
+import {NotificationsWSGroupCreationMsg}  from "../utils/NotificationsWSGroupCreationMsg"
 /**
  * Pagina principal del sitio
  */
@@ -45,8 +46,9 @@ export function Home() {
     useEffect(()=>{
         if (!NOTIFICATIONS_WEBSOCKET.current){
             NOTIFICATIONS_WEBSOCKET.current = new WebSocket(NOTIFICATIONS_WEBSOCKET_ENDPOINT)
-            NOTIFICATIONS_WEBSOCKET.onopen = (event)=>{
+            NOTIFICATIONS_WEBSOCKET.current.onopen = (event)=>{
                 console.log('Estableciendo conexion')
+                NOTIFICATIONS_WEBSOCKET.current.send(NotificationsWSGroupCreationMsg(user.id))
             }
         }
         return ()=>{
