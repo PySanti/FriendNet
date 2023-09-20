@@ -51,7 +51,7 @@ export function Home() {
                 console.log('Estableciendo conexion')
                 NOTIFICATIONS_WEBSOCKET.current.send(NotificationsWSGroupCreationMsg(user.id))
             }
-            NotificationsWSUpdate(notifications,setNotifications )
+            NotificationsWSUpdate(user.id, notifications,setNotifications )
         }
         return ()=>{
             // esto se ejecutara cuando el componente sea desmontado
@@ -62,7 +62,7 @@ export function Home() {
 
     useEffect(()=>{
         if (!NOTIFICATIONS_WEBSOCKET.current){
-            NotificationsWSUpdate(notifications,setNotifications )
+            NotificationsWSUpdate(user.id, notifications,setNotifications )
         }
     }, [notifications])
     const onLogout = async ()=>{
