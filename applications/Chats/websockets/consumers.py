@@ -23,8 +23,6 @@ class MessagesConsumer(WebsocketConsumer):
             async_to_sync(self.channel_layer.group_add)(data['name'],self.channel_name)
         if data['type'] == "message_broadcasting":
             if (len(self.channel_layer.groups[data['name']]) == 2):
-                print('Transmitiendo mensaje a todos los elementos del grupo')
-                print(data['value'])
                 async_to_sync(self.channel_layer.group_send)(
                     data['name'],
                     {

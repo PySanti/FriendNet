@@ -50,6 +50,11 @@ export function Home() {
                 console.log('Estableciendo conexion')
                 NOTIFICATIONS_WEBSOCKET.current.send(NotificationsWSGroupCreationMsg(user.id))
             }
+            NOTIFICATIONS_WEBSOCKET.current.onmessage = (event)=>{
+                const data = JSON.parse(event.data)
+                console.log('Recibiendo datos a traves del websocket de notificaciones')
+                console.log(data)
+            }
         }
         return ()=>{
             // esto se ejecutara cuando el componente sea desmontado

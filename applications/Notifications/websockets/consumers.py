@@ -4,6 +4,7 @@ from applications.Chats.websockets.ws_utils.print_pretty_groups import print_pre
 import json
 from applications.Chats.websockets.ws_utils.discard_channel_if_found import discard_channel_if_found
 from .ws_utils.notifications_group_name import notifications_group_name
+from applications.Notifications.models import Notifications
 class NotificationsConsumer(WebsocketConsumer):
     def connect(self):
         self.accept()
@@ -28,12 +29,21 @@ class NotificationsConsumer(WebsocketConsumer):
             except KeyError:
                 print('El receiver user no tiene un channel abierto')
             else:
+                target_notification = Notifications.objects.filter(id=data["notification_id"]).values()[0]
                 receiver_channel = list(receiver_channel.keys())[0]
                 group_name = notifications_group_name(data["session_user_id"], data["receiver_user_id"])
                 async_to_sync(self.channel_layer.group_add)(group_name, self.channel_name)
                 async_to_sync(self.channel_layer.group_add)(group_name,receiver_channel)
-                
+
+                async_to_sync(self.channel_layer.group_send)(group_name,{    'type' : 'broadcast_notification',    'value' : target_notification})
+    
+                async_to_sync(self.channel_layer.group_discard)(group_name, self.channel_name)
+                async_to_sync(self.channel_layer.group_discard)(group_name, receiver_channel)
+
         print_pretty_groups(self.channel_layer.groups)
+
+    def broadcast_notification(self, event):
+        self.send(text_data=json.dumps(event['value']))
 
 
 
