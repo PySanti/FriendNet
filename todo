@@ -9,10 +9,10 @@
 
 
 // fase 3:
+    // testear bien sistema de websockets de notificaciones y mensajes
+
     // hacer que, los websockets de notificaciones se creen y cierren cuando se monte y desmonte el App.jsx
     // repasar y refactorizar sistema de notificaciones
-
-    // implementacion de websockets para notificaciones:
 
     // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
     // ActivateUser, ChangeEmailForActivation, GetUserDetail 
