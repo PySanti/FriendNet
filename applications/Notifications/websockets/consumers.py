@@ -15,14 +15,9 @@ class NotificationsConsumer(WebsocketConsumer):
         discard_channel_if_found(self.channel_layer, self.channel_name)
 
     def receive(self, text_data):
-        print('Recibiendo info del front-end')
         data = json.loads(text_data)
-        print(data)
         if (data["type"] == "group_creation"):
-            async_to_sync(self.channel_layer.group_add)(
-                str(data['name']),
-                self.channel_name
-            )
+            async_to_sync(self.channel_layer.group_add)(str(data['name']),self.channel_name)
         if (data["type"] == "notification_broadcasting"):
             try:
                 receiver_channel = self.channel_layer.groups[str(data["receiver_user_id"])]
@@ -36,7 +31,7 @@ class NotificationsConsumer(WebsocketConsumer):
                 async_to_sync(self.channel_layer.group_add)(group_name,receiver_channel)
 
                 async_to_sync(self.channel_layer.group_send)(group_name,{    'type' : 'broadcast_notification',    'value' : target_notification})
-    
+
                 async_to_sync(self.channel_layer.group_discard)(group_name, self.channel_name)
                 async_to_sync(self.channel_layer.group_discard)(group_name, receiver_channel)
 
