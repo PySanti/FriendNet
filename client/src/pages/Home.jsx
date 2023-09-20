@@ -39,11 +39,14 @@ export function Home() {
     const loadingStateHandlers = useContext(LoadingContext)
     let {loadingState, setLoadingState,startLoading,  successfullyLoaded} = loadingStateHandlers
     let [notifications, setNotifications] = useState(getNotificationsFromLocalStorage())
-    let [chatGlobeList, setChatGlobeList] = useState(getChatGlobesList(notifications))
+    let [chatGlobeList, setChatGlobeList] = useState([])
     let [clickedUser, setClickedUser] = useState(null)
     let [lastClickedUser, setLastClickedUser] = useState(null)
 
 
+    useEffect(()=>{
+        setChatGlobeList(getChatGlobesList(notifications))
+    }, [notifications])
     useEffect(()=>{
         if (!NOTIFICATIONS_WEBSOCKET.current){
             NOTIFICATIONS_WEBSOCKET.current = new WebSocket(NOTIFICATIONS_WEBSOCKET_ENDPOINT)
