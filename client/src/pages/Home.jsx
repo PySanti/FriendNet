@@ -29,6 +29,7 @@ import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {NOTIFICATIONS_WEBSOCKET} from "../utils/constants" 
 import {NOTIFICATIONS_WEBSOCKET_ENDPOINT} from "../utils/constants"
 import {NotificationsWSGroupCreationMsg}  from "../utils/NotificationsWSGroupCreationMsg"
+import {NotificationsWSUpdate} from "../utils/NotifcationsWSUpdate"
 /**
  * Pagina principal del sitio
  */
@@ -50,11 +51,7 @@ export function Home() {
                 console.log('Estableciendo conexion')
                 NOTIFICATIONS_WEBSOCKET.current.send(NotificationsWSGroupCreationMsg(user.id))
             }
-            NOTIFICATIONS_WEBSOCKET.current.onmessage = (event)=>{
-                const data = JSON.parse(event.data)
-                console.log('Recibiendo datos a traves del websocket de notificaciones')
-                console.log(data)
-            }
+            NotificationsWSUpdate(notifications,setNotifications )
         }
         return ()=>{
             // esto se ejecutara cuando el componente sea desmontado
@@ -62,6 +59,12 @@ export function Home() {
             disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
         }
     }, [])
+
+    useEffect(()=>{
+        if (!NOTIFICATIONS_WEBSOCKET.current){
+            NotificationsWSUpdate(notifications,setNotifications )
+        }
+    }, [notifications])
     const onLogout = async ()=>{
         startLoading()
         const successValidating = await validateJWT()
