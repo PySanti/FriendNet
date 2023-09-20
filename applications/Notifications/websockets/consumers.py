@@ -25,16 +25,14 @@ class NotificationsConsumer(WebsocketConsumer):
         if (data["type"] == "notification_broadcasting"):
             try:
                 receiver_channel = self.channel_layer.groups[str(data["receiver_user_id"])]
-                session_channel = self.channel_layer.groups[str(data["session_user_id"])]
-                group_name = notifications_group_name(data["session_user_id"], data["receiver_user_id"])
-                print(f'Session channel {session_channel}')
-                print(f'Receiver channel {receiver_channel}')
-                async_to_sync(self.channel_layer.group_add)(group_name, session_channel)
-                async_to_sync(self.channel_layer.group_add)(group_name,receiver_channel)
             except KeyError:
                 print('El receiver user no tiene un channel abierto')
             else:
-                print(f"Channel de receiver user {receiver_channel}")
+                receiver_channel = list(receiver_channel.keys())[0]
+                group_name = notifications_group_name(data["session_user_id"], data["receiver_user_id"])
+                async_to_sync(self.channel_layer.group_add)(group_name, self.channel_name)
+                async_to_sync(self.channel_layer.group_add)(group_name,receiver_channel)
+                
         print_pretty_groups(self.channel_layer.groups)
 
 
