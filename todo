@@ -9,6 +9,8 @@
 
 
 // fase 3:
+    //  Hacer que, en caso de que ambos usuarios esten en el chat, no se genere la notificacion
+
     // testear bien sistema de websockets de notificaciones y mensajes
 
     // hacer que, los websockets de notificaciones se creen y cierren cuando se monte y desmonte el App.jsx
