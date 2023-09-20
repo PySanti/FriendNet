@@ -48,7 +48,7 @@ export function Home() {
         setChatGlobeList(getChatGlobesList(notifications))
     }, [notifications])
     useEffect(()=>{
-        if (!NOTIFICATIONS_WEBSOCKET.current){
+        if (!NOTIFICATIONS_WEBSOCKET.current && user){
             NOTIFICATIONS_WEBSOCKET.current = new WebSocket(NOTIFICATIONS_WEBSOCKET_ENDPOINT)
             NOTIFICATIONS_WEBSOCKET.current.onopen = (event)=>{
                 console.log('Estableciendo conexion')
@@ -89,7 +89,6 @@ export function Home() {
             const updatedNotifications = removeNotificationFromLocalStorage(notification)
             saveNotificationsInLocalStorage(updatedNotifications)
             setNotifications(updatedNotifications)
-            setChatGlobeList(getChatGlobesList(updatedNotifications))
             try{
                 await notificationDeleteAPI(notification.id, getJWTFromLocalStorage().access )
             }

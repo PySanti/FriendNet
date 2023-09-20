@@ -110,6 +110,7 @@
     // agregar sonidos cuando llgue una notificacion
     // hacer que el notification-bell tenga un numero encima que represente la cantidad de notificaciones
 
+    
 // Fase 5:
     // centrarnos en testear bien las imagenes (calidad, tiempos de carga, portabilidad )
     // testear bien UserFilter y buscar mas maneras de optimizar
