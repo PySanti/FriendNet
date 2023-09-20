@@ -40,7 +40,7 @@ export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, 
         const successValidating = await validateJWT()
         if (successValidating === true){
             try {
-                const response = await sendMsgAPI(clickedUser.id, data.msg, getJWTFromLocalStorage().access)
+                const response = await sendMsgAPI(clickedUser.id, data.msg, true, getJWTFromLocalStorage().access)
                 newMsgSendedSetter(response.data.sended_msg)
                 setNewNotificationId(response.data.sended_notification_id)
                 setMessagesHistorial([...messagesHistorial, response.data.sended_msg])

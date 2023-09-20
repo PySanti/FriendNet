@@ -12,4 +12,5 @@ class GetMessagesHistorialSerializer(BaseMessagesSerializer):
 
 class SendMsgSerializer(BaseMessagesSerializer):
     msg = serializers.CharField()
+    create_notification = serializers.BooleanField()
 
