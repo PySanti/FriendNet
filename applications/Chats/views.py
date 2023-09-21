@@ -69,6 +69,7 @@ class SendMsgAPI(APIView):
                 receiver_user = Usuarios.objects.get(id=request.data['receiver_id'])
                 new_notification_id = None
                 if (not Notifications.objects.hasNotification(receiver_user, sender_user)) and (request.data["create_notification"]):
+                    print("No se creara la notificacion por que el grupo ya esta lleno o por que ya existen")
                     new_notification_id = Notifications.objects.addNotification(f"Tienes mensajes nuevos de {sender_user.username}", receiver_user, sender_user)
                 new_message = Messages.objects.createMessage(parent=sender_user, content=request.data['msg'])
                 Chats.objects.sendMessage(sender_user, receiver_user,new_message)
