@@ -25,8 +25,9 @@ import {NotificationsWSNotificationBroadcastingMsg} from "../utils/Notifications
  * @param {Array} messagesHistorial
  * @param {Function} setMessagesHistorial
  * @param {Object} newMsgSendedSetter objeto retornado por la api cuando el mensaje fue enviado exitosamente
+ * @param {Object} groupFull
  */
-export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, loadingStateHandlers, newMsg, messagesHistorial, setMessagesHistorial, newMsgSendedSetter }){
+export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, loadingStateHandlers, newMsg, messagesHistorial, setMessagesHistorial, newMsgSendedSetter, groupFull }){
     const containerRef                                                  = useRef(null)
     const navigate                                                      = useNavigate()
     let messagesHistorialPage                                           = useRef(1)
@@ -40,7 +41,7 @@ export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, 
         const successValidating = await validateJWT()
         if (successValidating === true){
             try {
-                const response = await sendMsgAPI(clickedUser.id, data.msg, true, getJWTFromLocalStorage().access)
+                const response = await sendMsgAPI(clickedUser.id, data.msg, groupFull, getJWTFromLocalStorage().access)
                 newMsgSendedSetter(response.data.sended_msg)
                 setNewNotificationId(response.data.sended_notification_id)
                 setMessagesHistorial([...messagesHistorial, response.data.sended_msg])
@@ -148,5 +149,6 @@ MessagesContainer.propTypes = {
     newMsg : PropTypes.object,
     messagesHistorial : PropTypes.array,
     setMessagesHistorial : PropTypes.func,
-    newMsgSendedSetter : PropTypes.func.isRequired
+    newMsgSendedSetter : PropTypes.func.isRequired,
+    groupFull : PropTypes.bool.isRequired
 }

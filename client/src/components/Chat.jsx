@@ -19,6 +19,7 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
     let [newMsg, setNewMsg]                                             = useState(null)
     let [messagesHistorial, setMessagesHistorial]                       = useState([])
     let [newMsgSended, setNewMsgSended]                                 = useState(null)
+    let [groupFull, setGroupFull] = useState(false)
     useEffect(()=>{
         if (clickedUser){
             if (!MESSAGES_WEBSOCKET.current){
@@ -51,6 +52,7 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
                         setMessagesHistorial([...messagesHistorial, data])
                     }
                 } else if (dataType === "group_info"){
+                    setGroupFull(data.group === "full" ? true : false)
                     console.log(data)
                 }
             };
@@ -61,7 +63,7 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
     return (
         <div className="chat-container">
             {clickedUser && <ChattingUserHeader chatingUser={clickedUser}/>}
-            <MessagesContainer sessionUserId={sessionUserId}  clickedUser={clickedUser} lastClickedUser={lastClickedUser} loadingStateHandlers={loadingStateHandlers} newMsg={newMsg} messagesHistorial={messagesHistorial} setMessagesHistorial={setMessagesHistorial} newMsgSendedSetter={setNewMsgSended}/>
+            <MessagesContainer sessionUserId={sessionUserId}  clickedUser={clickedUser} lastClickedUser={lastClickedUser} loadingStateHandlers={loadingStateHandlers} newMsg={newMsg} messagesHistorial={messagesHistorial} setMessagesHistorial={setMessagesHistorial} newMsgSendedSetter={setNewMsgSended} groupFull={groupFull}/>
             {clickedUser && <MsgSendingInput onMsgSending={(newMsg)=>setNewMsg(newMsg)}/>}
         </div>
     )
