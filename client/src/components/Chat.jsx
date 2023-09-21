@@ -44,8 +44,14 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
         if (MESSAGES_WEBSOCKET.current){
             MESSAGES_WEBSOCKET.current.onmessage = (event) => {
                 const data = JSON.parse(event.data)
-                if (Number(data.parent_id) !== Number(sessionUserId)){
-                    setMessagesHistorial([...messagesHistorial, data])
+                const dataType = data.type
+                delete data.type
+                if (dataType === "message_broadcast"){
+                    if (Number(data.parent_id) !== Number(sessionUserId)){
+                        setMessagesHistorial([...messagesHistorial, data])
+                    }
+                } else if (dataType === "group_info"){
+                    console.log(data)
                 }
             };
         }

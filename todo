@@ -62,7 +62,7 @@
         // redis
         // pasos para implementacion de channel-layers
         // async_to_sync
-        // broadcasting function (group_send)
+        // broadcasting function (group_send) (investigar mas)
         // channel name
 
         // realizar un proceso de testeo, haciendo una lista de todas y cada una de las funcionalidades de la aplicacion

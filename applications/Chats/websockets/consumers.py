@@ -13,14 +13,27 @@ class MessagesConsumer(WebsocketConsumer):
     def disconnect(self, close_code):
         print('Desconectando websocket')
         print(f'Eliminando channel : {self.channel_name}')
-        discard_channel_if_found(self.channel_layer, self.channel_name)
+        last_group_name = discard_channel_if_found(self.channel_layer, self.channel_name)
+        if last_group_name and (last_group_name in self.channel_layer.groups):
+            async_to_sync(self.channel_layer.group_send)(last_group_name,{'type' : 'group_info','value' : {    "group" : "not_full"}})
         print_pretty_groups(self.channel_layer.groups)
 
     def receive(self, text_data):
         data = json.loads(text_data)
         if data['type'] == "group_creation":
-            discard_channel_if_found(self.channel_layer, self.channel_name)
+            last_group_name = discard_channel_if_found(self.channel_layer, self.channel_name)
+            if last_group_name and (last_group_name in self.channel_layer.groups):
+                async_to_sync(self.channel_layer.group_send)(last_group_name,{'type' : 'group_info','value' : {    "group" : "not_full"}})
             async_to_sync(self.channel_layer.group_add)(data['name'],self.channel_name)
+            async_to_sync(self.channel_layer.group_send)(
+                data['name'],
+                {
+                    'type' : 'group_info',
+                    'value' : {
+                        "group" : "full" if len(self.channel_layer.groups[data['name']]) == 2 else "not_full"
+                    }
+                }
+            )
         if data['type'] == "message_broadcasting":
             if (len(self.channel_layer.groups[data['name']]) == 2):
                 async_to_sync(self.channel_layer.group_send)(
@@ -34,6 +47,13 @@ class MessagesConsumer(WebsocketConsumer):
 
 
     def chat_message(self, event):
-        self.send(text_data=json.dumps(event['value']))
+        value = event['value']
+        value["type"] = "message_broadcast"
+        self.send(text_data=json.dumps(value))
+    
+    def group_info(self, event):
+        value = event['value']
+        value["type"] = "group_info"
+        self.send(text_data=json.dumps(value))
 
 

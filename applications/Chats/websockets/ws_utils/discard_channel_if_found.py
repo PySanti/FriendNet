@@ -9,5 +9,5 @@ def discard_channel_if_found(channel_layer, target_channel):
     for group_name,channels in channel_layer.groups.copy().items():
         if target_channel in channels:
             async_to_sync(channel_layer.group_discard)(group_name, target_channel)
-            return True
+            return group_name
     return False
