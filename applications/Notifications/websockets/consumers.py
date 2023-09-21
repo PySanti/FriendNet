@@ -24,11 +24,8 @@ class NotificationsConsumer(WebsocketConsumer):
         if (data["type"] == "notification_broadcasting"):
             try:
                 receiver_channel = self.channel_layer.groups[str(data["receiver_user_id"])]
-                current_messages_group_name = messages_group_name(data["session_user_id"], data["receiver_user_id"])
-                if (current_messages_group_name in self.channel_layer.groups) and (len(self.channel_layer.groups[current_messages_group_name]) == 2):
-                    raise KeyError
             except KeyError:
-                print('El receiver user no tiene un channel abierto o ambos usuarios estan en el mismo chat')
+                print('El receiver user no tiene un channel abierto')
             else:
                 target_notification = Notifications.objects.filter(id=data["notification_id"]).values("msg", "id")[0]
                 target_notification["sender_user"] = Usuarios.objects.filter(id=data["session_user_id"]).values(*USERS_LIST_ATTRS)[0]
