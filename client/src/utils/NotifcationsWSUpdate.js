@@ -8,10 +8,10 @@ export function NotificationsWSUpdate(sessionUserId, newNotifications, notificat
         const data = JSON.parse(event.data)
         console.log('Recibiendo datos a traves del websocket de notificaciones')
         console.log(data)
-        const updatedNotifications = [...newNotifications, data]
         if (data.sender_user.id != sessionUserId){
+            const updatedNotifications = [...newNotifications, data]
             notificationsSetter(updatedNotifications)
+            saveNotificationsInLocalStorage(updatedNotifications)
         }
-        saveNotificationsInLocalStorage(updatedNotifications)
     }
 }
