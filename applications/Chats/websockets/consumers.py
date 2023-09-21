@@ -4,7 +4,7 @@ from .ws_utils.discard_channel_if_found import discard_channel_if_found
 from .ws_utils.print_pretty_groups import print_pretty_groups
 import json
 from .ws_utils.group_info_dict import group_info_dict
-
+from .ws_utils.bye_to_last_group import bye_to_last_group
 class MessagesConsumer(WebsocketConsumer):
     def connect(self):
         self.accept()
@@ -13,17 +13,13 @@ class MessagesConsumer(WebsocketConsumer):
     def disconnect(self, close_code):
         print('Desconectando websocket')
         print(f'Eliminando channel : {self.channel_name}')
-        last_group_name = discard_channel_if_found(self.channel_layer, self.channel_name)
-        if last_group_name and (last_group_name in self.channel_layer.groups):
-            async_to_sync(self.channel_layer.group_send)(last_group_name,group_info_dict(is_group_full=False))
+        bye_to_last_group(self)
         print_pretty_groups(self.channel_layer.groups)
 
     def receive(self, text_data):
         data = json.loads(text_data)
         if data['type'] == "group_creation":
-            last_group_name = discard_channel_if_found(self.channel_layer, self.channel_name)
-            if last_group_name and (last_group_name in self.channel_layer.groups):
-                async_to_sync(self.channel_layer.group_send)(last_group_name,group_info_dict(is_group_full=False))
+            bye_to_last_group(self)
             async_to_sync(self.channel_layer.group_add)(data['name'],self.channel_name)
             async_to_sync(self.channel_layer.group_send)(data['name'],group_info_dict(len(self.channel_layer.groups[data['name']]) == 2))
         if data['type'] == "message_broadcasting":
