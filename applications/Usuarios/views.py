@@ -264,6 +264,7 @@ class DisconnectUserAPI(APIView):
     permission_classes      = [IsAuthenticated]
     def post(self, request, *args, **kwargs):
         try:
+            print('Desconectando usuario')
             Usuarios.objects.setUserConection(request.user, False)
             return Response({'success' : 'user_disconected'}, status.HTTP_200_OK)
         except Exception:

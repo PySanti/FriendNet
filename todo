@@ -9,8 +9,7 @@
 
 
 // fase 3:
-
-    // mejorar deteccion de desloego de usuarios (importante) (detectar desmontaje de app.jsx?)
+    // modificar tipo de seguridad del logoutUserApi
 
     // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
     // ActivateUser, ChangeEmailForActivation, GetUserDetail 

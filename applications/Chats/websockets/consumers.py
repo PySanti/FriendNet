@@ -11,8 +11,7 @@ class MessagesConsumer(WebsocketConsumer):
         print(f'Generando conexion a channel -> {self.channel_name}')
 
     def disconnect(self, close_code):
-        print('Desconectando websocket')
-        print(f'Eliminando channel : {self.channel_name}')
+        print('-> Desconectando websocket de mensajes')
         bye_to_last_group(self)
         print_pretty_groups(self.channel_layer.groups)
 

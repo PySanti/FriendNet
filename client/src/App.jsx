@@ -11,11 +11,12 @@ import { ChangeEmailForActivation } from "./pages/ChangeEmailForActivation.jsx"
 import {useEffect} from "react"
 import {disconnectWebsocket} from "./utils/disconnectWebsocket"
 import {NOTIFICATIONS_WEBSOCKET} from "./utils/constants"
-
+import {logoutUser} from "./utils/logoutUser"
 function App() {
   useEffect(()=>{
-    return ()=>{
+    return async ()=>{
       disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
+      await logoutUser()
     }
   }, [])
   return (
