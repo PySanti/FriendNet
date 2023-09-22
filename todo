@@ -9,6 +9,7 @@
 
 
 // fase 3:
+    // hacer que, cuando se desmonte el apps.jsx se limpie el localStorage
     // implementar finally en todos los bloques try/catch
 
     // testear orden con el que retorna la api la usersList
