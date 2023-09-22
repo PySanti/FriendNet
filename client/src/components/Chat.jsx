@@ -20,6 +20,7 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
     let [messagesHistorial, setMessagesHistorial]                       = useState([])
     let [newMsgSended, setNewMsgSended]                                 = useState(null)
     let [groupFull, setGroupFull] = useState(false)
+
     useEffect(()=>{
         if (clickedUser){
             if (!MESSAGES_WEBSOCKET.current){
