@@ -14,8 +14,8 @@ import {NOTIFICATIONS_WEBSOCKET} from "./utils/constants"
 function App() {
   useEffect(()=>{
     return ()=>{
-      disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
       localStorage.clear()
+      disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
     }
   }, [])
   return (

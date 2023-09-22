@@ -9,6 +9,8 @@
 
 
 // fase 3:
+    // implementar finally en todos los bloques try/catch
+
     // testear orden con el que retorna la api la usersList
 
     // revisar por que se verifica el token dos veces al clickear un usuario
