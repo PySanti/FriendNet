@@ -50,6 +50,7 @@ export function Home() {
         if (successValidating === true){ 
             await logoutUser()
             successfullyLoaded()
+            disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
         } else {
             if (successValidating === BASE_LOGIN_REQUIRED_ERROR_MSG){
                 redirectExpiredUser(navigate)
@@ -103,7 +104,6 @@ export function Home() {
         return ()=>{
             // esto se ejecutara cuando el componente sea desmontado
             disconnectWebsocket(MESSAGES_WEBSOCKET)
-            disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
         }
     }, [])
     useEffect(()=>{
