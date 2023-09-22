@@ -5,6 +5,7 @@ from django.contrib.auth.hashers import check_password
 from .utils.constants import (
     USERS_LIST_ATTRS,
     USER_SHOWABLE_FIELDS)
+from channels.layers import get_channel_layer
 
 class UsuariosManager(BaseUserManager):
     def _create_user(self, username, password, email, is_staff, is_superuser, **kwargs):
@@ -22,7 +23,12 @@ class UsuariosManager(BaseUserManager):
         return self._create_user(username, password, email, True, True, **kwargs)
     def create_user(self, username, password, email, **kwargs):
         return self._create_user(username, password, email, False, False, **kwargs)
-
+    def user_is_online(self, user_id):
+        """
+            Revisara si existe algun grupo con el id del usuario, basandose en el estandar de
+            los websockets de notificaciones
+        """
+        return str(user_id) in get_channel_layer().groups
     def activateUser(self, user):
         """
             Realiza las funciones necesarias para activar por completo

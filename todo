@@ -19,7 +19,6 @@
 
     // revisar sistema de uso de userKeyword, cada vez que se cambia esa vriable se vuelve a renderizar el componente
 
-
     // revisar problemas de rendimiento de red en el userList y getMessagesHistorial (muy lento)
 
     // revisar error que ocurre cuando se cargan todas las paginas de los usuarios y, al buscar a pysanti, aparecen 2
