@@ -9,7 +9,6 @@
 
 
 // fase 3:
-    // repasar casos de creacion y eliminacion de websockets, para asegurarnos de que en ningun caso quedaran creados
 
     // mejorar deteccion de desloego de usuarios (importante) (detectar desmontaje de app.jsx?)
 
