@@ -62,10 +62,11 @@
         // async_to_sync
         // broadcasting function (group_send) (investigar mas)
         // channel name
+        // iife
 
-        // realizar un proceso de testeo, haciendo una lista de todas y cada una de las funcionalidades de la aplicacion
-        // y realizando un proceso de testing por cada una, que incluya uso de consolelog's para asegurarnos
-        // de que todo funciona como lo esperado
+    // realizar un proceso de testeo, haciendo una lista de todas y cada una de las funcionalidades de la aplicacion
+    // y realizando un proceso de testing por cada una, que incluya uso de consolelog's para asegurarnos
+    // de que todo funciona como lo esperado
 
 
 
