@@ -111,6 +111,7 @@ export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, 
         }
     }, [newNotificationId])
     useEffect(()=>{
+        console.log(messagesHistorial)
         if (containerRef.current){
             containerRef.current.scrollTop = containerRef.current.scrollHeight
         }

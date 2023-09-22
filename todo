@@ -11,6 +11,8 @@
 // fase 3:
     // modificar tipo de seguridad del logoutUserApi
 
+    // revisar por que se verifica el token dos veces al clickear un usuario
+
     // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
     // ActivateUser, ChangeEmailForActivation, GetUserDetail 
 
