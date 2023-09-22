@@ -107,7 +107,7 @@ export function Home() {
         }
     }, [])
     useEffect(()=>{
-        if (!NOTIFICATIONS_WEBSOCKET.current){
+        if (!NOTIFICATIONS_WEBSOCKET.current && user){
             NotificationsWSUpdate(user.id, notifications,setNotifications )
         }
     }, [notifications])
