@@ -13,6 +13,8 @@
 
     // revisar por que se verifica el token dos veces al clickear un usuario
 
+    // agregar funcionalidad para eliminar websocket de notificaciones cuando se redirije al root
+
     // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
     // ActivateUser, ChangeEmailForActivation, GetUserDetail 
 
