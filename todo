@@ -10,7 +10,6 @@
 
 // fase 3:
 
-    // hacer que, los websockets de notificaciones se creen y cierren cuando se logee y deslogee el usuario
 
     // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
     // ActivateUser, ChangeEmailForActivation, GetUserDetail 
@@ -33,7 +32,6 @@
 
     // testear bien funcionalidad de userList y userFilter dado el cambio realizado para el uso de websockets
 
-    // Hacer que, cuando se use el userIsAuthenticated tambien se evalue el valor del accessToken
 
 
     // buscar o repasar funcionamiento de :
