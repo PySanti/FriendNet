@@ -9,7 +9,9 @@
 
 
 // fase 3:
+    // repasar casos de creacion y eliminacion de websockets, para asegurarnos de que en ningun caso quedaran creados
 
+    // mejorar deteccion de desloego de usuarios (importante) (detectar desmontaje de app.jsx?)
 
     // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
     // ActivateUser, ChangeEmailForActivation, GetUserDetail 
@@ -26,7 +28,6 @@
 
     // solucionar error que permite que el mismo usuario se logee dos veces desde dos navegadores diferentes
 
-    // mejorar deteccion de desloego de usuarios (importante) (detectar desmontaje de app.jsx?)
 
     // mejorar sistema de uso de validateJwt : no tiene sentido que hagamos siempre lo mismo, DRY
 

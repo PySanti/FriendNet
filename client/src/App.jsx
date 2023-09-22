@@ -8,9 +8,16 @@ import { Profile } from "./pages/Profile.jsx"
 import {  LoadingContextProvider } from "./context/LoadingContext.jsx"
 import { ChangePwd } from "./pages/ChangePwd.jsx"
 import { ChangeEmailForActivation } from "./pages/ChangeEmailForActivation.jsx"
+import {useEffect} from "react"
+import {disconnectWebsocket} from "./utils/disconnectWebsocket"
+import {NOTIFICATIONS_WEBSOCKET} from "./utils/constants"
 
 function App() {
-
+  useEffect(()=>{
+    return ()=>{
+      disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
+    }
+  }, [])
   return (
     <BrowserRouter>
       <Routes>
