@@ -23,8 +23,6 @@
 
     // revisar error que ocurre cuando se cargan todas las paginas de los usuarios y, al buscar a pysanti, aparecen 2
 
-    // solucionar error que permite que el mismo usuario se logee dos veces desde dos navegadores diferentes
-
 
     // mejorar sistema de uso de validateJwt : no tiene sentido que hagamos siempre lo mismo, DRY
 

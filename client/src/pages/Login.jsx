@@ -39,7 +39,7 @@ export function Login() {
                     successfullyLoaded()
                     navigate('/home/')
                 } catch(error){
-                    setLoadingState("Error inesperado logeando usuario!") 
+                    setLoadingState(error.response.data.error == "user_is_online" ? "El usuario ya esta en linea!" : "Error inesperado logeando usuario!") 
                 }
             }
         } catch(error){

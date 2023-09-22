@@ -254,6 +254,6 @@ class LoginUser(MyTokenObtainPerView):
     def post(self, request, *args, **kwargs):
         user = Usuarios.objects.get(username=request.data['username'])
         if (Usuarios.objects.user_is_online(user.id)):
-            return Response({'error' : 'user_is_online'})
+            return Response({'error' : 'user_is_online'}, status=status.HTTP_400_BAD_REQUEST)
         else:
             return super().post(request, *args, **kwargs)
