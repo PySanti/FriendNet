@@ -11,7 +11,6 @@
 // fase 3:
     // hacer que, cuando se desmonte el apps.jsx se limpie el localStorage
 
-    // implementar finally en todos los bloques try/catch
 
     // agregar funcionalidad para eliminar websocket de notificaciones cuando se redirije al root
 
