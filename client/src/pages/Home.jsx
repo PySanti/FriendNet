@@ -36,7 +36,7 @@ export function Home() {
     const user = getUserDataFromLocalStorage()
     const navigate = useNavigate()
     const loadingStateHandlers = useContext(LoadingContext)
-    let {loadingState, setLoadingState,startLoading,  successfullyLoaded} = loadingStateHandlers
+    let {loadingState, setLoadingState} = loadingStateHandlers
     let [notifications, setNotifications] = useState(getNotificationsFromLocalStorage())
     let [chatGlobeList, setChatGlobeList] = useState([])
     let [clickedUser, setClickedUser] = useState(null)
@@ -45,19 +45,8 @@ export function Home() {
 
 
     const onLogout = async ()=>{
-        startLoading()
-        const successValidating = await validateJWT()
-        if (successValidating === true){ 
-            await logoutUser()
-            successfullyLoaded()
-            disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
-        } else {
-            if (successValidating === BASE_LOGIN_REQUIRED_ERROR_MSG){
-                redirectExpiredUser(navigate)
-            } else {
-                setLoadingState(BASE_JWT_ERROR_LOG)
-            }
-        }
+        logoutUser()
+        disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
         navigate('/')
     }
     const onNotificationDelete = async (notification)=>{

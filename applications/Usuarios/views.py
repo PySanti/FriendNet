@@ -126,20 +126,10 @@ class GetUsersListAPI(APIView):
                 users_list = users_list.order_by(
                     Case(
                         When(id__in=senders_notifications_ids, then=0),
-                        When(is_online=True, then=1),
-                        default=2,
+                        default=1,
                         output_field=models.IntegerField(),
                     )
                 )
-
-                # users_list = users_list.annotate(
-                #     messages_senders_users=Case(
-                #         When(id__in=senders_notifications_ids, then=0),
-                #         default=1,
-                #         output_field=models.IntegerField(),
-                #     )
-                # ).order_by('messages_senders_users')
-
                 try:
                     # pagination
                     result_page = self.pagination_class().paginate_queryset(users_list.values(*USERS_LIST_ATTRS), request)
@@ -258,14 +248,3 @@ class ChangeUserPwdAPI(APIView):
             print(serialized_data._errors)
             return BASE_SERIALIZER_ERROR_RESPONSE
 
-
-class DisconnectUserAPI(APIView):
-    authentication_classes  = [JWTAuthentication]
-    permission_classes      = [IsAuthenticated]
-    def post(self, request, *args, **kwargs):
-        try:
-            print('Desconectando usuario')
-            Usuarios.objects.setUserConection(request.user, False)
-            return Response({'success' : 'user_disconected'}, status.HTTP_200_OK)
-        except Exception:
-            return BASE_UNEXPECTED_ERROR_RESPONSE

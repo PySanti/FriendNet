@@ -9,7 +9,7 @@ import "../styles/UserButton.css"
 export function UserButton({user, onClickFunction, withGlobe}){
     return (
         <button className="user-button"onClick={()=>onClickFunction(user)}>
-            {user.username}{user.is_online && ", en linea"}
+            {user.username}
             {withGlobe &&<div className="user-button-globe">x</div>}
         </button>
     )

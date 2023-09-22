@@ -9,7 +9,8 @@
 
 
 // fase 3:
-    // modificar tipo de seguridad del logoutUserApi
+    // testear orden con el que retorna la api la usersList
+
 
     // revisar por que se verifica el token dos veces al clickear un usuario
 
@@ -22,7 +23,6 @@
 
     // revisar sistema de uso de userKeyword, cada vez que se cambia esa vriable se vuelve a renderizar el componente
 
-    // mejorar velocidad de envio de mensajes (agregar primero mensaje a la lista antes de enviar al backend, eliminar id)
 
     // revisar problemas de rendimiento de red en el userList y getMessagesHistorial (muy lento)
 

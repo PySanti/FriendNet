@@ -22,12 +22,7 @@ class UsuariosManager(BaseUserManager):
         return self._create_user(username, password, email, True, True, **kwargs)
     def create_user(self, username, password, email, **kwargs):
         return self._create_user(username, password, email, False, False, **kwargs)
-    def setUserConection(self, user, conection):
-        """
-            Settea el atributo is_online del user a conection
-        """
-        user.is_online = conection
-        user.save()
+
     def activateUser(self, user):
         """
             Realiza las funciones necesarias para activar por completo

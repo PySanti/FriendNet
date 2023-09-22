@@ -17,7 +17,6 @@ class Usuarios(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD  = 'username'
     #* NEW ATTRS
     photo_link      = models.CharField(max_length=120, null=True)
-    is_online       = models.BooleanField(default=False)
     is_active       = models.BooleanField(default=False)
     notifications   = models.ManyToManyField(Notifications, blank=True)
     #* MANAGER

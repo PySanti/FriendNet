@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework import status
 
-USERS_LIST_ATTRS = ["id", "username", "is_online", "photo_link"]
+USERS_LIST_ATTRS = ["id", "username", "photo_link"]
 USER_SHOWABLE_FIELDS = [
     "username",
     "email",
