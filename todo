@@ -38,6 +38,8 @@
 
     // testear bien funcionalidad de userList y userFilter dado el cambio realizado para el uso de websockets
 
+    // Hacer que, cuando se use el userIsAuthenticated tambien se evalue el valor del accessToken
+
 
     // buscar o repasar funcionamiento de :
         // annotate

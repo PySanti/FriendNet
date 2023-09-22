@@ -27,8 +27,7 @@ import {MESSAGES_WEBSOCKET} from "../utils/constants"
 import {notificationDeleteAPI} from "../api/notificationDelete.api"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {NOTIFICATIONS_WEBSOCKET} from "../utils/constants" 
-import {NOTIFICATIONS_WEBSOCKET_ENDPOINT} from "../utils/constants"
-import {NotificationsWSGroupCreationMsg}  from "../utils/NotificationsWSGroupCreationMsg"
+import {NotificationsWSInitialize} from "../utils/NotificationsWSInitialize"
 import {NotificationsWSUpdate} from "../utils/NotifcationsWSUpdate"
 /**
  * Pagina principal del sitio
@@ -44,30 +43,7 @@ export function Home() {
     let [lastClickedUser, setLastClickedUser] = useState(null)
 
 
-    useEffect(()=>{
-        setChatGlobeList(getChatGlobesList(notifications))
-    }, [notifications])
-    useEffect(()=>{
-        if (!NOTIFICATIONS_WEBSOCKET.current && user){
-            NOTIFICATIONS_WEBSOCKET.current = new WebSocket(NOTIFICATIONS_WEBSOCKET_ENDPOINT)
-            NOTIFICATIONS_WEBSOCKET.current.onopen = (event)=>{
-                console.log('Estableciendo conexion')
-                NOTIFICATIONS_WEBSOCKET.current.send(NotificationsWSGroupCreationMsg(user.id))
-            }
-            NotificationsWSUpdate(user.id, notifications,setNotifications )
-        }
-        return ()=>{
-            // esto se ejecutara cuando el componente sea desmontado
-            disconnectWebsocket(MESSAGES_WEBSOCKET)
-            disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
-        }
-    }, [])
 
-    useEffect(()=>{
-        if (!NOTIFICATIONS_WEBSOCKET.current){
-            NotificationsWSUpdate(user.id, notifications,setNotifications )
-        }
-    }, [notifications])
     const onLogout = async ()=>{
         startLoading()
         const successValidating = await validateJWT()
@@ -116,7 +92,25 @@ export function Home() {
             }
         }
     }, [clickedUser])
-
+    useEffect(()=>{
+        setChatGlobeList(getChatGlobesList(notifications))
+    }, [notifications])
+    useEffect(()=>{
+        if (!NOTIFICATIONS_WEBSOCKET.current && user){
+            NotificationsWSInitialize(user.id)
+            NotificationsWSUpdate(user.id, notifications,setNotifications )
+        }
+        return ()=>{
+            // esto se ejecutara cuando el componente sea desmontado
+            disconnectWebsocket(MESSAGES_WEBSOCKET)
+            disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
+        }
+    }, [])
+    useEffect(()=>{
+        if (!NOTIFICATIONS_WEBSOCKET.current){
+            NotificationsWSUpdate(user.id, notifications,setNotifications )
+        }
+    }, [notifications])
     if (!userIsAuthenticated()){
         return <UserNotLogged/>
     } else {

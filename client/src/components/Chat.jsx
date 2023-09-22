@@ -4,10 +4,10 @@ import { ChattingUserHeader } from "./ChatingUserHeader"
 import { MsgSendingInput } from "./MsgSendingInput"
 import {PropTypes} from "prop-types"
 import {MESSAGES_WEBSOCKET} from "../utils/constants"
-import {MESSAGES_WEBSOCKET_ENDPOINT} from "../utils/constants"
 import {MessagesWSGroupBroadcastingMessage} from "../utils/MessagesWSGroupBroadcastingMessage" 
 import {MessagesWSGroupCreationMsg}         from "../utils/MessagesWSGroupCreationMsg"
 import {MessagesWSGroupName}                from "../utils/MessagesWSGroupName"
+import {MessagesWSInitialize} from "../utils/MessagesWSInitialize"
 /**
  * Contenedor unicamente del chat entre el session user y el clicked user
  * @param {Number} sessionUserId id del usuario de la sesion
@@ -23,10 +23,7 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
     useEffect(()=>{
         if (clickedUser){
             if (!MESSAGES_WEBSOCKET.current){
-                MESSAGES_WEBSOCKET.current = new WebSocket(MESSAGES_WEBSOCKET_ENDPOINT);
-                MESSAGES_WEBSOCKET.current.onopen = () => {
-                    MESSAGES_WEBSOCKET.current.send(MessagesWSGroupCreationMsg(MessagesWSGroupName(sessionUserId, clickedUser.id)))
-                };
+                MessagesWSInitialize(sessionUserId, clickedUser.id)
             } else {
                 MESSAGES_WEBSOCKET.current.send(MessagesWSGroupCreationMsg(MessagesWSGroupName(sessionUserId, clickedUser.id)))
             }
@@ -34,10 +31,7 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
     }, [clickedUser])
     useEffect(()=>{
         if (newMsgSended && MESSAGES_WEBSOCKET.current){
-            MESSAGES_WEBSOCKET.current.send(
-                MessagesWSGroupBroadcastingMessage(
-                    MessagesWSGroupName(sessionUserId, clickedUser.id), newMsgSended)
-                )
+            MESSAGES_WEBSOCKET.current.send(MessagesWSGroupBroadcastingMessage(MessagesWSGroupName(sessionUserId, clickedUser.id), newMsgSended))
             setNewMsgSended(null)
         }
     }, [newMsgSended])
