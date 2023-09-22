@@ -12,12 +12,6 @@ import {useEffect} from "react"
 import {disconnectWebsocket} from "./utils/disconnectWebsocket"
 import {NOTIFICATIONS_WEBSOCKET} from "./utils/constants"
 function App() {
-  useEffect(()=>{
-    return ()=>{
-      localStorage.clear()
-      disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
-    }
-  }, [])
   return (
     <BrowserRouter>
       <Routes>
