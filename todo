@@ -11,7 +11,6 @@
 // fase 3:
     // testear orden con el que retorna la api la usersList
 
-
     // revisar por que se verifica el token dos veces al clickear un usuario
 
     // agregar funcionalidad para eliminar websocket de notificaciones cuando se redirije al root

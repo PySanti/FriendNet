@@ -15,6 +15,7 @@ function App() {
   useEffect(()=>{
     return ()=>{
       disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
+      localStorage.clear()
     }
   }, [])
   return (

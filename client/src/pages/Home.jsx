@@ -19,7 +19,6 @@ import { getChatGlobesList } from "../utils/getChatGlobesList"
 import { getRelatedNotification } from "../utils/getRelatedNotification"
 import { saveNotificationsInLocalStorage } from "../utils/saveNotificationsInLocalStorage"
 import { validateJWT } from "../utils/validateJWT"
-import {logoutUser} from "../utils/logoutUser"
 import {diferentUserHasBeenClicked} from "../utils/diferentUserHasBeenClicked"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import {disconnectWebsocket} from "../utils/disconnectWebsocket" 
@@ -45,7 +44,7 @@ export function Home() {
 
 
     const onLogout = async ()=>{
-        logoutUser()
+        localStorage.clear()
         disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
         navigate('/')
     }
