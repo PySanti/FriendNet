@@ -10,7 +10,8 @@ from .views import (
     ChangeUserPwdAPI,
     GetUsersListAPI,
     SendActivationEmailAPI,
-    ChangeEmailForActivationAPI
+    ChangeEmailForActivationAPI,
+    LoginUser
     )
 
 urlpatterns = [
@@ -23,4 +24,5 @@ urlpatterns = [
     path('get_user_list/', GetUsersListAPI.as_view()),
     path('send_activation_email/', SendActivationEmailAPI.as_view()),
     path('change_email_for_activation/', ChangeEmailForActivationAPI.as_view()),
+    path('token/', LoginUser.as_view(), name='token_obtain_pair'),
 ] 

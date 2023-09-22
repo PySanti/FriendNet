@@ -41,6 +41,7 @@ from .paginators import (
 )
 from .models import Usuarios
 
+from applications.Usuarios.jwt_views import MyTokenObtainPerView
 
 # non - secured api's
 
@@ -248,3 +249,11 @@ class ChangeUserPwdAPI(APIView):
             print(serialized_data._errors)
             return BASE_SERIALIZER_ERROR_RESPONSE
 
+
+class LoginUser(MyTokenObtainPerView):
+    def post(self, request, *args, **kwargs):
+        user = Usuarios.objects.get(username=request.data['username'])
+        if (Usuarios.objects.user_is_online(user.id)):
+            return Response({'error' : 'user_is_online'})
+        else:
+            return super().post(request, *args, **kwargs)
