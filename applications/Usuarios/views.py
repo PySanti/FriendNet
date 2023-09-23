@@ -270,7 +270,7 @@ class UserIsOnlineAPI(APIView):
         if (serialized_data.is_valid()):
             serialized_data = request.data
             try:
-                target_user = Usuarios.objects.get(id=serialized_data["id"])
+                target_user = Usuarios.objects.get(id=serialized_data["target_user_id"])
             except:
                 return Response({'error' : 'user_not_found'}, status=status.HTTP_400_BAD_REQUEST)
             else:

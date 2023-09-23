@@ -52,4 +52,4 @@ class SendActivationEmailSerializer(serializers.Serializer):
     activation_code = serializers.IntegerField()
 
 class UserIsOnlineSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
+    target_user_id = serializers.IntegerField()
