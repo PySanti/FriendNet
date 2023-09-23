@@ -3,7 +3,7 @@ import axios from 'axios'
 import { BACKEND_URL } from '../utils/constants'
 
 
-export async function userIsOnlineapi(userId, accessToken){
+export async function userIsOnlineAPI(userId, accessToken){
     config.headers = {
         'Content-Type': 'multipart/form-data',
         'Authorization' : `Bearer ${accessToken}`

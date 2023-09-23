@@ -1,4 +1,5 @@
 import {useState, useEffect} from "react"
+import {useNavigate} from "react-router-dom"
 import { MessagesContainer } from "./MessagesContainer"
 import { ChattingUserHeader } from "./ChatingUserHeader"
 import { MsgSendingInput } from "./MsgSendingInput"
@@ -8,7 +9,13 @@ import {MessagesWSGroupBroadcastingMessage} from "../utils/MessagesWSGroupBroadc
 import {MessagesWSGroupCreationMsg}         from "../utils/MessagesWSGroupCreationMsg"
 import {MessagesWSGroupName}                from "../utils/MessagesWSGroupName"
 import {MessagesWSInitialize} from "../utils/MessagesWSInitialize"
+import {userIsOnlineAPI} from "../api/userIsOnline.api"
+import {validateJWT} from "../utils/validateJWT"
+import {BASE_LOGIN_REQUIRED_ERROR_MSG} from "../utils/constants"
+import {redirectExpiredUser} from "../utils/redirectExpiredUser"
+import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 /**
+ * 
  * Contenedor unicamente del chat entre el session user y el clicked user
  * @param {Number} sessionUserId id del usuario de la sesion
  * @param {Object} clickedUser info del usuario con el que se esta chateando
@@ -19,8 +26,20 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
     let [newMsg, setNewMsg]                                             = useState(null)
     let [messagesHistorial, setMessagesHistorial]                       = useState([])
     let [newMsgSended, setNewMsgSended]                                 = useState(null)
-    let [groupFull, setGroupFull] = useState(false)
-
+    let [groupFull, setGroupFull]                                       = useState(false)
+    let [currentUserIsOnline, setCurrentUserIsOnline]                   = useState(false)
+    const navigate = useNavigate()
+    const checkIfUserIsOnline = async (clickedUser)=>{
+        const successValidating = await validateJWT()
+        if (successValidating === true){
+            const userIsOnline = await userIsOnlineAPI(clickedUser.id, getJWTFromLocalStorage().access)
+            setCurrentUserIsOnline(userIsOnline)
+        } else {
+            if (successValidating === BASE_LOGIN_REQUIRED_ERROR_MSG){
+                redirectExpiredUser(navigate)
+            }
+        }
+    }
     useEffect(()=>{
         if (clickedUser){
             if (!MESSAGES_WEBSOCKET.current){
@@ -28,6 +47,11 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
             } else {
                 MESSAGES_WEBSOCKET.current.send(MessagesWSGroupCreationMsg(MessagesWSGroupName(sessionUserId, clickedUser.id)))
             }
+        }
+    }, [clickedUser])
+    useEffect(()=>{
+        if (clickedUser){
+            checkIfUserIsOnline(clickedUser)
         }
     }, [clickedUser])
     useEffect(()=>{
