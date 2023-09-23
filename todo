@@ -11,7 +11,7 @@
 // fase 3:
     // hacer que, cuando se desmonte el apps.jsx se limpie el localStorage
 
-    // implementar api de userIsOnline
+    // cambiar sistema de verificacion de JWT, el que tenemos ahora puede fallar
 
     // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
     // ActivateUser, ChangeEmailForActivation, GetUserDetail, GetUsersList 
