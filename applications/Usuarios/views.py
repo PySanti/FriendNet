@@ -33,7 +33,8 @@ from .serializers import (
     ChangeUserPwdSerializer,
     GetUsersListSerializer,
     SendActivationEmailSerializer,
-    ChangeEmailForActivationSerializer
+    ChangeEmailForActivationSerializer,
+    UserIsOnlineSerializer
 )
 from rest_framework.response import Response
 from .paginators import (
@@ -198,6 +199,16 @@ class SendActivationEmailAPI(APIView):
             print(serialized_data._errors)
             return BASE_SERIALIZER_ERROR_RESPONSE
 
+
+class LoginUserAPI(MyTokenObtainPerView):
+    def post(self, request, *args, **kwargs):
+        user = Usuarios.objects.get(username=request.data['username'])
+        if (Usuarios.objects.user_is_online(user.id)):
+            return Response({'error' : 'user_is_online'}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return super().post(request, *args, **kwargs)
+
+
 #  secured api's
 
 class UpdateUserDataAPI(APIView):
@@ -250,10 +261,20 @@ class ChangeUserPwdAPI(APIView):
             return BASE_SERIALIZER_ERROR_RESPONSE
 
 
-class LoginUser(MyTokenObtainPerView):
+class UserIsOnlineAPI(APIView):
+    serializer_class        = UserIsOnlineSerializer
+    authentication_classes  = [JWTAuthentication]
+    permission_classes      = [IsAuthenticated]
     def post(self, request, *args, **kwargs):
-        user = Usuarios.objects.get(username=request.data['username'])
-        if (Usuarios.objects.user_is_online(user.id)):
-            return Response({'error' : 'user_is_online'}, status=status.HTTP_400_BAD_REQUEST)
+        serialized_data = self.serializer_class(data=request.data)
+        if (serialized_data.is_valid()):
+            serialized_data = request.data
+            try:
+                target_user = Usuarios.objects.get(id=serialized_data["id"])
+            except:
+                return Response({'error' : 'user_not_found'}, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                return Response({"is_online" : Usuarios.objects.user_is_online(target_user.id)}, status=status.HTTP_200_OK)
         else:
-            return super().post(request, *args, **kwargs)
+            return BASE_SERIALIZER_ERROR_RESPONSE
+
