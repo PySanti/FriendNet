@@ -10,9 +10,7 @@ import {MessagesWSGroupCreationMsg}         from "../utils/MessagesWSGroupCreati
 import {MessagesWSGroupName}                from "../utils/MessagesWSGroupName"
 import {MessagesWSInitialize} from "../utils/MessagesWSInitialize"
 import {userIsOnlineAPI} from "../api/userIsOnline.api"
-import {validateJWT} from "../utils/validateJWT"
-import {BASE_LOGIN_REQUIRED_ERROR_MSG} from "../utils/constants"
-import {redirectExpiredUser} from "../utils/redirectExpiredUser"
+import {executeSecuredApi} from "../utils/constants"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 /**
  * 
@@ -31,16 +29,16 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
     const navigate = useNavigate()
 
     const checkIfUserIsOnline = async (clickedUser)=>{
-        const successValidating = await validateJWT()
-        if (successValidating === true){
-            let userIsOnline = await userIsOnlineAPI(clickedUser.id, getJWTFromLocalStorage().access)
-            userIsOnline = userIsOnline.data.is_online
-            setCurrentUserIsOnline(userIsOnline)
-        } else {
-            if (successValidating === BASE_LOGIN_REQUIRED_ERROR_MSG){
-                redirectExpiredUser(navigate)
+        const response = await executeSecuredApi(async ()=>{
+            let response = undefined
+            try{
+                response = await userIsOnlineAPI(clickedUser.id, getJWTFromLocalStorage().access)
+            } catch(error){
+                response = error.response
             }
-        }
+            return response
+        }, navigate)
+        setCurrentUserIsOnline(response.data.is_online)
     }
     useEffect(()=>{
         if (clickedUser){

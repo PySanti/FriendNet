@@ -11,7 +11,13 @@
 // fase 3:
     // hacer que, cuando se desmonte el apps.jsx se limpie el localStorage
 
-    // cambiar sistema de verificacion de JWT, el que tenemos ahora puede fallar
+    // cambiar sistema de verificacion de JWT, el que tenemos ahora puede fallar (uso de whiles)
+
+    // crear un executeSecuredApi function para estandarizar
+
+    // hacer que el validate ahora sea solo refresh 
+    
+    // eliminar todo rastro de validateJWT y su api
 
     // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
     // ActivateUser, ChangeEmailForActivation, GetUserDetail, GetUsersList 
