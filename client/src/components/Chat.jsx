@@ -29,10 +29,12 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
     let [groupFull, setGroupFull]                                       = useState(false)
     let [currentUserIsOnline, setCurrentUserIsOnline]                   = useState(false)
     const navigate = useNavigate()
+
     const checkIfUserIsOnline = async (clickedUser)=>{
         const successValidating = await validateJWT()
         if (successValidating === true){
-            const userIsOnline = await userIsOnlineAPI(clickedUser.id, getJWTFromLocalStorage().access)
+            let userIsOnline = await userIsOnlineAPI(clickedUser.id, getJWTFromLocalStorage().access)
+            userIsOnline = userIsOnline.data.is_online
             setCurrentUserIsOnline(userIsOnline)
         } else {
             if (successValidating === BASE_LOGIN_REQUIRED_ERROR_MSG){
@@ -50,6 +52,7 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
         }
     }, [clickedUser])
     useEffect(()=>{
+        setCurrentUserIsOnline(false)
         if (clickedUser){
             checkIfUserIsOnline(clickedUser)
         }
@@ -81,7 +84,7 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
 
     return (
         <div className="chat-container">
-            {clickedUser && <ChattingUserHeader chatingUser={clickedUser}/>}
+            {clickedUser && <ChattingUserHeader chatingUser={clickedUser} isOnline={currentUserIsOnline}/>}
             <MessagesContainer sessionUserId={sessionUserId}  clickedUser={clickedUser} lastClickedUser={lastClickedUser} loadingStateHandlers={loadingStateHandlers} newMsg={newMsg} messagesHistorial={messagesHistorial} setMessagesHistorial={setMessagesHistorial} newMsgSendedSetter={setNewMsgSended} groupFull={groupFull}/>
             {clickedUser && <MsgSendingInput onMsgSending={(newMsg)=>setNewMsg(newMsg)}/>}
         </div>

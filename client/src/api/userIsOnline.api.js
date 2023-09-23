@@ -11,7 +11,7 @@ export async function userIsOnlineAPI(userId, accessToken){
     const data = {
         "target_user_id" : userId
     }
-    return await axios.put(BACKEND_URL + `api/user_is_online/`,data, config)
+    return await axios.post(BACKEND_URL + `api/user_is_online/`,data, config)
 }
 
 
