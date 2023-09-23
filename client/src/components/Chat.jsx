@@ -10,7 +10,7 @@ import {MessagesWSGroupCreationMsg}         from "../utils/MessagesWSGroupCreati
 import {MessagesWSGroupName}                from "../utils/MessagesWSGroupName"
 import {MessagesWSInitialize} from "../utils/MessagesWSInitialize"
 import {userIsOnlineAPI} from "../api/userIsOnline.api"
-import {executeSecuredApi} from "../utils/constants"
+import {executeSecuredApi} from "../utils/executeSecuredApi"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 /**
  * 
@@ -30,15 +30,17 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
 
     const checkIfUserIsOnline = async (clickedUser)=>{
         const response = await executeSecuredApi(async ()=>{
-            let response = undefined
-            try{
-                response = await userIsOnlineAPI(clickedUser.id, getJWTFromLocalStorage().access)
-            } catch(error){
-                response = error.response
-            }
-            return response
+            return await userIsOnlineAPI(clickedUser.id, getJWTFromLocalStorage().access)
         }, navigate)
-        setCurrentUserIsOnline(response.data.is_online)
+        if (response){
+            if (response !== "unexpected_error" && response.status == 200){
+                console.log('Todo salio bien')
+                setCurrentUserIsOnline(response.data.is_online)
+            } else {
+                console.log(response.response.data)
+                console.log('Hubo un error inesperado')
+            }
+        }
     }
     useEffect(()=>{
         if (clickedUser){
