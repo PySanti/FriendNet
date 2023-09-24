@@ -17,7 +17,9 @@ from .utils.constants import (
     USERS_LIST_ATTRS,
     USER_SHOWABLE_FIELDS,
     BASE_UNEXPECTED_ERROR_RESPONSE,
-    BASE_NO_MORE_PAGES_RESPONSE
+    BASE_NO_MORE_PAGES_RESPONSE,
+    BASE_ERROR_WHILE_DELETING_NOTIFICATION_RESPONSE,
+    BASE_ERROR_WHILE_GETTING_MESSAGES_RESPONSE
 )
 from django.core.mail import send_mail
 from django.contrib.auth.hashers import (
@@ -304,15 +306,14 @@ class EnterChatApi(APIView):
                     try:
                         messages = Chats.objects.getMessagesHistorialReady(request, data['receiver_id'], self)
                     except Exception:
-                        return Response({'error' : 'error_while_getting_messages'}, status=status.HTTP_400_BAD_REQUEST)
+                        return BASE_ERROR_WHILE_GETTING_MESSAGES_RESPONSE
                     else:
                         deleted_notification = {'notification_deleted' : None}
                         if ('related_notification_id' in data):
                             try:
                                 Notifications.objects.deleteNotification(data['related_notification_id'])
                             except:
-                                print('Error eliminando notificacion')
-                                deleted_notification = {'notification_deleted' : False}
+                                return BASE_ERROR_WHILE_DELETING_NOTIFICATION_RESPONSE
                             else:
                                 deleted_notification = {'notification_deleted' : True}
                         messages.update(user_is_online)

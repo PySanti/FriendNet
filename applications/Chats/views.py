@@ -25,7 +25,8 @@ from .paginators import (
 )
 from applications.Usuarios.utils.constants import (
     BASE_SERIALIZER_ERROR_RESPONSE,
-    BASE_UNEXPECTED_ERROR_RESPONSE
+    BASE_UNEXPECTED_ERROR_RESPONSE,
+    BASE_ERROR_WHILE_GETTING_MESSAGES_RESPONSE
 )
 from applications.Usuarios.models import Usuarios
 from applications.Notifications.models import Notifications
@@ -44,7 +45,7 @@ class GetMessagesHistorialAPI(APIView):
             try:
                 messages_hist = Chats.objects.getMessagesHistorialReady(request, request.data['receiver_id'], self)
             except Exception:
-                return BASE_UNEXPECTED_ERROR_RESPONSE
+                return BASE_ERROR_WHILE_GETTING_MESSAGES_RESPONSE
             else:
                 if (messages_hist == "no_more_pages"):
                     return BASE_NO_MORE_PAGES_RESPONSE
