@@ -9,9 +9,10 @@
 
 
 // fase 3:
-    // hacer que todas las llamas a api's al entrar a chat se unifiquen en un solo useEffect
 
     // unificar api's loadMessages, deleteRelatedNotifications y userIsOnline en una sola api llamada EnterChatApi
+
+    // eliminar todas las api's que no se usen
 
     // testear bien todos los puntos en los que se usa el executeSecuredApi
 
