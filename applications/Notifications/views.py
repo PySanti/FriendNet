@@ -23,8 +23,8 @@ class NotificationDeleteAPI(APIView):
             try:
                 Notifications.objects.deleteNotification(request.data['notification_id'])
             except:
-                return response.Response({'deleted' : 'false'}, status=status.HTTP_400_BAD_REQUEST)
+                return response.Response({'deleted' : False}, status=status.HTTP_400_BAD_REQUEST)
             else:
-                return response.Response({'deleted' : 'true'}, status=status.HTTP_200_OK)
+                return response.Response({'deleted' : True}, status=status.HTTP_200_OK)
         else:
             return BASE_SERIALIZER_ERROR_RESPONSE 

@@ -304,12 +304,11 @@ class EnterChatApi(APIView):
                         Notifications.objects.deleteNotification(data['related_notification_id'])
                     except:
                         print('Error eliminando notificacion')
-                        deleted_notification = {'deleted' : 'false'}
+                        deleted_notification = {'deleted' : False}
                     else:
-                        deleted_notification = {'deleted' : 'true'}
-                print(user_is_online)
-                print(messages)
-                print(deleted_notification)
-                return Response({'success'}, status=status.HTTP_200_OK)
+                        deleted_notification = {'deleted' : True}
+                messages.update(user_is_online)
+                messages.update(deleted_notification)
+                return Response(messages, status=status.HTTP_200_OK)
         else:
             return BASE_SERIALIZER_ERROR_RESPONSE
