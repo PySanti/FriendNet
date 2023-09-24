@@ -14,6 +14,8 @@
 
     // eliminar todas las api's que no se usen
 
+    // repasar modificaciones hechas para executeSecuredApi y enterchat api
+
     // testear bien todos los puntos en los que se usa el executeSecuredApi
 
     // testear el scrollHandler del messagesHistorial

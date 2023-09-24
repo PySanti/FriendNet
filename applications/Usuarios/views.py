@@ -298,7 +298,7 @@ class EnterChatApi(APIView):
             else:
                 user_is_online = {'is_online' : Usuarios.objects.user_is_online(receiver_user.id)}
                 messages = Chats.objects.getMessagesHistorialReady(request, data['receiver_id'], self)
-                deleted_notification = None
+                deleted_notification = {'deleted' : None}
                 if ('related_notification_id' in data):
                     try:
                         Notifications.objects.deleteNotification(data['related_notification_id'])

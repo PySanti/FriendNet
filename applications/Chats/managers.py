@@ -49,7 +49,7 @@ class ChatsManager(manager.Manager):
             except Exception:
                 return "no_more_pages"
         else:
-            return "no_messages_between"
+            return {"messages_hist" : "no_messages_between"}
 
 
 class MessagesManager(manager.Manager):
