@@ -16,10 +16,9 @@ import { v4 } from "uuid";
 import { saveUserDataInLocalStorage } from "../utils/saveUserDataInLocalStorage";
 import { getUserDataFromLocalStorage } from "../utils/getUserDataFromLocalStorage";
 import { dataIsDiferent } from "../utils/dataIsDiferent";
-import {redirectExpiredUser} from "../utils/redirectExpiredUser"
-import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_JWT_ERROR_LOG, BASE_LOGIN_REQUIRED_ERROR_MSG} from "../utils/constants"
+import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG } from "../utils/constants"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
-import { validateJWT } from "../utils/validateJWT"
+import {executeSecuredApi} from "../utils/executeSecuredApi"
 
 /**
  * Pagina creada para llevar perfil de usuario, tanto para
@@ -35,31 +34,25 @@ export function Profile({ edit }) {
         // el data.photo siempre sera: null, url de imagen actual, un archivo
         const sendingData = { ...data };
         if (dataIsDiferent(data, profileData)) { // lodash
-            const successValidating = await validateJWT()
-            if (successValidating === true){
-                let updateUserResponse = undefined
-                try {
-                    updateUserResponse = await updateUserDataAPI( sendingData, getJWTFromLocalStorage().access);
-                    profileData.photo_link = updateUserResponse.data.user_data_updated.photo_link
-                    setProfileData(updateUserResponse.data.user_data_updated);
-                    saveUserDataInLocalStorage(updateUserResponse.data.user_data_updated);
+            const response = await executeSecuredApi(async ()=>{
+                return await updateUserDataAPI( sendingData, getJWTFromLocalStorage().access)
+            }, navigate)
+            if (response){
+                if (response !== "unexpected_error" && response.status == 200){
+                    profileData.photo_link = response.data.user_data_updated.photo_link
+                    setProfileData(response.data.user_data_updated);
+                    saveUserDataInLocalStorage(response.data.user_data_updated);
                     successfullyLoaded();
-                } catch (error) {
-                    if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
+                } else {
+                    if (response.message === BASE_FALLEN_SERVER_ERROR_MSG){
                         setLoadingState(BASE_FALLEN_SERVER_LOG)
                     } else {
-                        if (error.response.data.error === "cloudinary_error"){
+                        if (response.response.data.error === "cloudinary_error"){
                             setLoadingState("Error con la nube!");
                         } else {
-                            setLoadingState(error.response.data.error === "username_or_email_taken" ? "El usuario o el email ya están tomados !" : "Error inesperado al actualizar datos del usuario !");
+                            setLoadingState(response.response.data.error === "username_or_email_taken" ? "El usuario o el email ya están tomados !" : "Error inesperado al actualizar datos del usuario !");
                         }
                     }
-                } 
-            } else {
-                if (successValidating === BASE_LOGIN_REQUIRED_ERROR_MSG){
-                    redirectExpiredUser(navigate)
-                } else {
-                    setLoadingState(BASE_JWT_ERROR_LOG)
                 }
             }
         } else {

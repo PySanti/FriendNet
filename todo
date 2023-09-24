@@ -10,6 +10,9 @@
 
 // fase 3:
     // Estandarizar una variable global con el valor "unexpected_error"
+
+    // crear funcion responseIsValid
+
     // implementar el executeSecuredApi en todos los puntos en los que se usa el validate
 
     // eliminar todo rastro de validateJWT y su api
@@ -32,7 +35,6 @@
     // revisar error que ocurre cuando se cargan todas las paginas de los usuarios y, al buscar a pysanti, aparecen 2
 
 
-    // mejorar sistema de uso de validateJwt : no tiene sentido que hagamos siempre lo mismo, DRY
 
     // testear bien funcionalidad de userList y userFilter dado el cambio realizado para el uso de websockets
 
