@@ -56,4 +56,4 @@ class UserIsOnlineSerializer(serializers.Serializer):
 
 class EnterChatSerializer(serializers.Serializer):
     receiver_id = serializers.IntegerField()
-    related_notification_id = serializers.IntegerField( )
+    related_notification_id = serializers.IntegerField(required=False)
