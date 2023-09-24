@@ -49,7 +49,29 @@ export function Home() {
     let [messagesHistorial, setMessagesHistorial]                       = useState([])
 
     let messagesHistorialPage                                           = useRef(1)
-
+    const enterChatHandler = async ()=>{
+        const relatedNotification = getRelatedNotification(clickedUser.id, notifications)
+        const response = await executeSecuredApi(async ()=>{
+            return await enterChatAPI(clickedUser.id, relatedNotification? relatedNotification.id : undefined, getJWTFromLocalStorage().access)
+        }, navigate)
+        if (response){
+            if (!responseIsError(response,200)){
+                updateMessagesHistorial(response.data.messages_historial !== "no_messages_between" ? response.data.messages_hist : [])
+                setCurrentUserIsOnline(response.data.is_online)
+                if (relatedNotification && !response.data.notification_deleted){
+                    setLoadingState('Hubo un error eliminando la notificacion relacionada')
+                } else if (relatedNotification && response.data.notification_deleted){
+                    const updatedNotifications = removeNotificationFromLocalStorage(relatedNotification)
+                    saveNotificationsInLocalStorage(updatedNotifications)
+                    setNotifications(updatedNotifications)
+                }
+                console.log(response)
+            } else {
+                console.log(response.response.data)
+                console.log('Hubo un error inesperado')
+            }
+        }
+    }
     const checkIfUserIsOnline = async (clickedUser)=>{
         const response = await executeSecuredApi(async ()=>{
             return await userIsOnlineAPI(clickedUser.id, getJWTFromLocalStorage().access)
@@ -116,15 +138,8 @@ export function Home() {
     useEffect(()=>{
         (async function() {
             if (diferentUserHasBeenClicked(lastClickedUser, clickedUser)){
-                const relatedNotification = getRelatedNotification(clickedUser.id, notifications)
-                if(relatedNotification){
-                    await onNotificationDelete(relatedNotification)
-                }
                 setCurrentUserIsOnline(false)
-                await checkIfUserIsOnline(clickedUser)
-                await loadMessages()
-                await enterChatAPI(clickedUser.id, relatedNotification? relatedNotification.id : undefined, getJWTFromLocalStorage().access)
-
+                await enterChatHandler()
             }
         })();
     }, [clickedUser])

@@ -296,19 +296,27 @@ class EnterChatApi(APIView):
             except Exception:
                 return Response({'error' : 'user_not_found'}, status=status.HTTP_400_BAD_REQUEST)
             else:
-                user_is_online = {'is_online' : Usuarios.objects.user_is_online(receiver_user.id)}
-                messages = Chats.objects.getMessagesHistorialReady(request, data['receiver_id'], self)
-                deleted_notification = {'deleted' : None}
-                if ('related_notification_id' in data):
+                try:
+                    user_is_online = {'is_online' : Usuarios.objects.user_is_online(receiver_user.id)}
+                except Exception:
+                    return Response({'error' : 'error_while_checking_is_online'}, status=status.HTTP_400_BAD_REQUEST)
+                else:
                     try:
-                        Notifications.objects.deleteNotification(data['related_notification_id'])
-                    except:
-                        print('Error eliminando notificacion')
-                        deleted_notification = {'deleted' : False}
+                        messages = Chats.objects.getMessagesHistorialReady(request, data['receiver_id'], self)
+                    except Exception:
+                        return Response({'error' : 'error_while_getting_messages'}, status=status.HTTP_400_BAD_REQUEST)
                     else:
-                        deleted_notification = {'deleted' : True}
-                messages.update(user_is_online)
-                messages.update(deleted_notification)
-                return Response(messages, status=status.HTTP_200_OK)
+                        deleted_notification = {'notification_deleted' : None}
+                        if ('related_notification_id' in data):
+                            try:
+                                Notifications.objects.deleteNotification(data['related_notification_id'])
+                            except:
+                                print('Error eliminando notificacion')
+                                deleted_notification = {'notification_deleted' : False}
+                            else:
+                                deleted_notification = {'notification_deleted' : True}
+                        messages.update(user_is_online)
+                        messages.update(deleted_notification)
+                        return Response(messages, status=status.HTTP_200_OK)
         else:
             return BASE_SERIALIZER_ERROR_RESPONSE
