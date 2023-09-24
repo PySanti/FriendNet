@@ -4,7 +4,6 @@ import "../styles/MessagesContainer.css"
 import { v4 } from "uuid"
 import { useEffect, useState, useRef } from "react"
 import { getMessagesHistorialAPI } from "../api/getMessagesHistorial.api"
-import { validateJWT } from "../utils/validateJWT"
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_JWT_ERROR_LOG, BASE_LOGIN_REQUIRED_ERROR_MSG} from "../utils/constants"
 import { getJWTFromLocalStorage } from "../utils/getJWTFromLocalStorage"
 import { useNavigate } from "react-router-dom"
@@ -13,7 +12,7 @@ import {redirectExpiredUser} from "../utils/redirectExpiredUser"
 import { sendMsgAPI } from "../api/sendMsg.api"
 import {NOTIFICATIONS_WEBSOCKET} from "../utils/constants"
 import {NotificationsWSNotificationBroadcastingMsg} from "../utils/NotificationsWSNotificationBroadcastingMsg"
-
+import {executeSecuredApi} from "../utils/executeSecuredApi"
 
 /**
  * Componente encargado de renderizar y mantener la lista de mensajes 
@@ -38,25 +37,20 @@ export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, 
 
     const sendMsg = async (data)=>{
         startLoading()
-        const successValidating = await validateJWT()
-        if (successValidating === true){
-            try {
-                const response = await sendMsgAPI(clickedUser.id, data.msg, !groupFull, getJWTFromLocalStorage().access)
+        const response = executeSecuredApi(async ()=>{
+            return await sendMsgAPI(clickedUser.id, data.msg, !groupFull, getJWTFromLocalStorage().access)
+        }, navigate)
+        if (response){
+            if (response !== "unexpected_error" && response.status == 200){
                 newMsgSendedSetter(response.data.sended_msg)
                 setNewNotificationId(response.data.sended_notification_id)
                 setMessagesHistorial([...messagesHistorial, response.data.sended_msg])
                 successfullyLoaded()
-            } catch(error){
-                setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
-            }
-        } else {
-            if (successValidating === BASE_LOGIN_REQUIRED_ERROR_MSG){
-                redirectExpiredUser(navigate)
             } else {
-                setLoadingState(BASE_JWT_ERROR_LOG)
+                setLoadingState(response.error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
             }
         }
-    }
+
     const formatingFunction = (msg)=>{
         return <Message key={v4()} content={msg.content} sessionUserMsg={sessionUserId === msg.parent_id}/>
     }
