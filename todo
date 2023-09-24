@@ -9,12 +9,15 @@
 
 
 // fase 3:
-
-    // unificar api's loadMessages, deleteRelatedNotifications y userIsOnline en una sola api llamada EnterChatApi
+    // repasar y refactorizar:
+        // EnterChatApi y toda su implementacion
+        // Home
+        // MessagesContainer
+        // Chat
+        // executeSecuredApi
 
     // eliminar todas las api's que no se usen
 
-    // repasar modificaciones hechas para executeSecuredApi y enterchat api
 
     // testear bien todos los puntos en los que se usa el executeSecuredApi
 
