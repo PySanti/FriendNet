@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useState, useRef } from "react"
 
 import { userIsAuthenticated } from "../utils/userIsAuthenticated"
 import { UserNotLogged } from "./UserNotLogged"
@@ -28,6 +28,10 @@ import {NotificationsWSUpdate} from "../utils/NotifcationsWSUpdate"
 import {executeSecuredApi} from "../utils/executeSecuredApi"
 import {responseIsError} from "../utils/responseIsError"
 import {userIsOnlineAPI} from "../api/userIsOnline.api"
+import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
+
+import { getMessagesHistorialAPI } from "../api/getMessagesHistorial.api"
+
 /**
  * Pagina principal del sitio
  */
@@ -35,12 +39,15 @@ export function Home() {
     const user = getUserDataFromLocalStorage()
     const navigate = useNavigate()
     const loadingStateHandlers = useContext(LoadingContext)
-    let {loadingState, setLoadingState} = loadingStateHandlers
+    let {loadingState, setLoadingState, startLoading, successfullyLoaded} = loadingStateHandlers
     let [notifications, setNotifications] = useState(getNotificationsFromLocalStorage())
     let [chatGlobeList, setChatGlobeList] = useState([])
     let [clickedUser, setClickedUser] = useState(null)
     let [lastClickedUser, setLastClickedUser] = useState(null)
     let [currentUserIsOnline, setCurrentUserIsOnline]                   = useState(false)
+    let [messagesHistorial, setMessagesHistorial]                       = useState([])
+
+    let messagesHistorialPage                                           = useRef(1)
 
     const checkIfUserIsOnline = async (clickedUser)=>{
         const response = await executeSecuredApi(async ()=>{
@@ -53,6 +60,30 @@ export function Home() {
             } else {
                 console.log(response.response.data)
                 console.log('Hubo un error inesperado')
+            }
+        }
+    }
+    const updateMessagesHistorial = (newMessages) =>{
+        if (messagesHistorialPage.current === 1){
+            setMessagesHistorial(newMessages)
+        } else {
+            messagesHistorial.unshift(...newMessages)
+            setMessagesHistorial(messagesHistorial)
+        }
+    }
+
+    const loadMessages = async ()=>{
+        startLoading()
+        const response = await executeSecuredApi(async ()=>{
+            return await getMessagesHistorialAPI(clickedUser.id, getJWTFromLocalStorage().access, messagesHistorialPage.current)
+        }, navigate)
+        if (response){
+            if (!responseIsError(response, 200)){
+                updateMessagesHistorial(response.data !== "no_messages_between" ? response.data.messages_hist : [])
+                successfullyLoaded()
+            } else {
+                console.log('Error cargando mensajes!')
+                setLoadingState(response.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
             }
         }
     }
@@ -81,14 +112,17 @@ export function Home() {
     }
 
     useEffect(()=>{
-        if (diferentUserHasBeenClicked(lastClickedUser, clickedUser)){
-            const relatedNotification = getRelatedNotification(clickedUser.id, notifications)
-            if(relatedNotification){
-                onNotificationDelete(relatedNotification)
+        (async function() {
+            if (diferentUserHasBeenClicked(lastClickedUser, clickedUser)){
+                const relatedNotification = getRelatedNotification(clickedUser.id, notifications)
+                if(relatedNotification){
+                    await onNotificationDelete(relatedNotification)
+                }
+                setCurrentUserIsOnline(false)
+                await checkIfUserIsOnline(clickedUser)
+                await loadMessages()
             }
-            setCurrentUserIsOnline(false)
-            checkIfUserIsOnline(clickedUser)
-        }
+        })();
     }, [clickedUser])
 
     useEffect(()=>{
@@ -134,7 +168,11 @@ export function Home() {
                             lastClickedUser={lastClickedUser}
                             sessionUserId={user.id} 
                             loadingStateHandlers ={loadingStateHandlers}
+                            messagesHistorial={messagesHistorial}
+                            setMessagesHistorial={setMessagesHistorial}
+                            messagesHistorialPage={messagesHistorialPage}
                             currentUserIsOnline={currentUserIsOnline}
+                            loadMessagesFunc={loadMessages}
                             />
                     </div>
                 </div>

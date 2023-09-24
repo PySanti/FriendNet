@@ -1,5 +1,4 @@
 import {useState, useEffect} from "react"
-import {useNavigate} from "react-router-dom"
 import { MessagesContainer } from "./MessagesContainer"
 import { ChattingUserHeader } from "./ChatingUserHeader"
 import { MsgSendingInput } from "./MsgSendingInput"
@@ -9,10 +8,7 @@ import {MessagesWSGroupBroadcastingMessage} from "../utils/MessagesWSGroupBroadc
 import {MessagesWSGroupCreationMsg}         from "../utils/MessagesWSGroupCreationMsg"
 import {MessagesWSGroupName}                from "../utils/MessagesWSGroupName"
 import {MessagesWSInitialize} from "../utils/MessagesWSInitialize"
-import {userIsOnlineAPI} from "../api/userIsOnline.api"
-import {executeSecuredApi} from "../utils/executeSecuredApi"
-import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
-import {responseIsError} from "../utils/responseIsError"
+
 /**
  * 
  * Contenedor unicamente del chat entre el session user y el clicked user
@@ -21,10 +17,23 @@ import {responseIsError} from "../utils/responseIsError"
  * @param {Object} lastClickedUser
  * @param {Object} loadingStateHandlers
  * @param {Boolean} currentUserIsOnline
+ * @param {Array} messagesHistorial
+ * @param {Function} setMessagesHistorial
+ * @param {Objects} messagesHistorialPage
+ * @param {Func} loadMessagesFunc
 */
-export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateHandlers, currentUserIsOnline}){
+export function Chat({
+        sessionUserId, 
+        clickedUser, 
+        lastClickedUser, 
+        loadingStateHandlers, 
+        currentUserIsOnline, 
+        messagesHistorial, 
+        setMessagesHistorial, 
+        messagesHistorialPage, 
+        loadMessagesFunc}){
+
     let [newMsg, setNewMsg]                                             = useState(null)
-    let [messagesHistorial, setMessagesHistorial]                       = useState([])
     let [newMsgSended, setNewMsgSended]                                 = useState(null)
     let [groupFull, setGroupFull]                                       = useState(false)
 
@@ -67,7 +76,7 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
     return (
         <div className="chat-container">
             {clickedUser && <ChattingUserHeader chatingUser={clickedUser} isOnline={currentUserIsOnline}/>}
-            <MessagesContainer sessionUserId={sessionUserId}  clickedUser={clickedUser} lastClickedUser={lastClickedUser} loadingStateHandlers={loadingStateHandlers} newMsg={newMsg} messagesHistorial={messagesHistorial} setMessagesHistorial={setMessagesHistorial} newMsgSendedSetter={setNewMsgSended} groupFull={groupFull}/>
+            <MessagesContainer sessionUserId={sessionUserId}  clickedUser={clickedUser} lastClickedUser={lastClickedUser} loadingStateHandlers={loadingStateHandlers} newMsg={newMsg} messagesHistorial={messagesHistorial} setMessagesHistorial={setMessagesHistorial} newMsgSendedSetter={setNewMsgSended} groupFull={groupFull} messagesHistorialPage={messagesHistorialPage} loadMessagesFunc={loadMessagesFunc}/>
             {clickedUser && <MsgSendingInput onMsgSending={(newMsg)=>setNewMsg(newMsg)}/>}
         </div>
     )
@@ -78,5 +87,9 @@ Chat.propTypes = {
     clickedUser : PropTypes.object,
     lastClickedUser : PropTypes.object,
     loadingStateHandlers : PropTypes.object.isRequired,
-    currentUserIsOnline : PropTypes.bool.isRequired
+    currentUserIsOnline : PropTypes.bool.isRequired,
+    messagesHistorial : PropTypes.array,
+    setMessagesHistorial : PropTypes.func.isRequired,
+    messagesHistorialPage : PropTypes.object.isRequired,
+    loadMessagesFunc : PropTypes.func.isRequired
 }

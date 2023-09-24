@@ -3,7 +3,6 @@ import { Message } from "./Message"
 import "../styles/MessagesContainer.css"
 import { v4 } from "uuid"
 import { useEffect, useState, useRef } from "react"
-import { getMessagesHistorialAPI } from "../api/getMessagesHistorial.api"
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
 import { getJWTFromLocalStorage } from "../utils/getJWTFromLocalStorage"
 import { useNavigate } from "react-router-dom"
@@ -25,11 +24,23 @@ import {responseIsError} from "../utils/responseIsError"
  * @param {Function} setMessagesHistorial
  * @param {Object} newMsgSendedSetter objeto retornado por la api cuando el mensaje fue enviado exitosamente
  * @param {Object} groupFull
+ * @param {Object} messagesHistorialPage
+ * @param {Function} loadMessagesFunc
  */
-export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, loadingStateHandlers, newMsg, messagesHistorial, setMessagesHistorial, newMsgSendedSetter, groupFull }){
+export function MessagesContainer({
+        sessionUserId, 
+        clickedUser, 
+        lastClickedUser, 
+        loadingStateHandlers,
+        newMsg, 
+        messagesHistorial, 
+        setMessagesHistorial,
+        newMsgSendedSetter, 
+        groupFull, 
+        messagesHistorialPage,
+        loadMessagesFunc }){
     const containerRef                                                  = useRef(null)
     const navigate                                                      = useNavigate()
-    let messagesHistorialPage                                           = useRef(1)
     let noMoreMessages                                                  = useRef(false)
     let { setLoadingState,startLoading,  successfullyLoaded}            = loadingStateHandlers
     let [newNotificationId, setNewNotificationId]                       = useState(null)
@@ -52,41 +63,18 @@ export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, 
             }
         }
     }
-
     const formatingFunction = (msg)=>{
         return <Message key={v4()} content={msg.content} sessionUserMsg={sessionUserId === msg.parent_id}/>
-    }
-    const updateMessagesHistorial = (newMessages) =>{
-        if (messagesHistorialPage.current === 1){
-            setMessagesHistorial(newMessages)
-        } else {
-            messagesHistorial.unshift(...newMessages)
-            setMessagesHistorial(messagesHistorial)
-        }
-    }
-    const loadMessages = async ()=>{
-        startLoading()
-        const response = await executeSecuredApi(async ()=>{
-            return await getMessagesHistorialAPI(clickedUser.id, getJWTFromLocalStorage().access, messagesHistorialPage.current)
-        }, navigate)
-        if (response){
-            if (!responseIsError(response, 200)){
-                updateMessagesHistorial(response.data !== "no_messages_between" ? response.data.messages_hist : [])
-                successfullyLoaded()
-            } else {
-                console.log('Error cargando mensajes!')
-                setLoadingState(response.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
-            }
-        }
     }
     const scrollHandler = (e)=>{
         if (e.target.scrollTop <= 0){
             messagesHistorialPage.current += 1
             if (!noMoreMessages.current){
-                loadMessages()
+                loadMessagesFunc()
             }
         }
     }
+
     useEffect(()=>{
         if (newNotificationId){
             NOTIFICATIONS_WEBSOCKET.current.send(NotificationsWSNotificationBroadcastingMsg(newNotificationId, clickedUser.id, sessionUserId))
@@ -103,7 +91,6 @@ export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, 
             setMessagesHistorial([])
             messagesHistorialPage.current = 1
             noMoreMessages.current = false
-            loadMessages()
         }
     }, [clickedUser])
     useEffect(()=>{
@@ -133,5 +120,7 @@ MessagesContainer.propTypes = {
     messagesHistorial : PropTypes.array,
     setMessagesHistorial : PropTypes.func,
     newMsgSendedSetter : PropTypes.func.isRequired,
-    groupFull : PropTypes.bool.isRequired
+    groupFull : PropTypes.bool.isRequired,
+    messagesHistorialPage : PropTypes.object.isRequired,
+    loadMessagesFunc : PropTypes.func.isRequired
 }

@@ -28,8 +28,7 @@
 
     // revisar error que ocurre cuando se cargan todas las paginas de los usuarios y, al buscar a pysanti, aparecen 2
 
-
-
+    // reducir cantidad de props entre Chat-Home-MessagesContainer
     // testear bien funcionalidad de userList y userFilter dado el cambio realizado para el uso de websockets
 
 
