@@ -49,7 +49,6 @@ export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, 
                 successfullyLoaded()
             } else {
                 console.log('Error enviando mensaje!')
-                console.log(response.response.data.error)
                 setLoadingState(response.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
             }
         }
@@ -68,29 +67,16 @@ export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, 
     }
     const loadMessages = async ()=>{
         startLoading()
-        const successValidating = await validateJWT()
-        if (successValidating === true){
-            try{
-                const response = await getMessagesHistorialAPI(clickedUser.id, getJWTFromLocalStorage().access, messagesHistorialPage.current)
+        const response = await executeSecuredApi(async ()=>{
+            return await getMessagesHistorialAPI(clickedUser.id, getJWTFromLocalStorage().access, messagesHistorialPage.current)
+        }, navigate)
+        if (response){
+            if (response !== "unexpected_error" && response.status == 200){
                 updateMessagesHistorial(response.data !== "no_messages_between" ? response.data.messages_hist : [])
                 successfullyLoaded()
-            } catch(error){
-                if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
-                    setLoadingState(BASE_FALLEN_SERVER_LOG)
-                } else {
-                    if (error.response.data.error === "no_more_pages"){
-                        noMoreMessages.current = true
-                        successfullyLoaded()
-                    } else {
-                        setLoadingState('Error inesperado buscando chat!')
-                    }
-                }
-            }
-        } else {
-            if (successValidating === BASE_LOGIN_REQUIRED_ERROR_MSG){
-                redirectExpiredUser(navigate)
             } else {
-                setLoadingState(BASE_JWT_ERROR_LOG)
+                console.log('Error cargando mensajes!')
+                setLoadingState(response.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
             }
         }
     }
