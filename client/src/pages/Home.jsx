@@ -6,19 +6,16 @@ import { Header } from "../components/Header"
 import { useNavigate } from "react-router-dom"
 import { LoadingContext } from "../context/LoadingContext"
 import { Loader } from "../components/Loader"
-import { BASE_JWT_ERROR_LOG, BASE_LOGIN_REQUIRED_ERROR_MSG} from "../utils/constants"
 import { NotificationsContainer } from "../components/NotificationsContainer"
 import { UsersList } from "../components/UsersList"
 import { Chat } from "../components/Chat"
 import { Button } from "../components/Button"
 import "../styles/Home.css"
-import {redirectExpiredUser} from "../utils/redirectExpiredUser"
 import { getNotificationsFromLocalStorage } from "../utils/getNotificationsFromLocalStorage"
 import { removeNotificationFromLocalStorage } from "../utils/removeNotificationFromLocalStorage"
 import { getChatGlobesList } from "../utils/getChatGlobesList"
 import { getRelatedNotification } from "../utils/getRelatedNotification"
 import { saveNotificationsInLocalStorage } from "../utils/saveNotificationsInLocalStorage"
-import { validateJWT } from "../utils/validateJWT"
 import {diferentUserHasBeenClicked} from "../utils/diferentUserHasBeenClicked"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import {disconnectWebsocket} from "../utils/disconnectWebsocket" 
@@ -28,6 +25,7 @@ import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {NOTIFICATIONS_WEBSOCKET} from "../utils/constants" 
 import {NotificationsWSInitialize} from "../utils/NotificationsWSInitialize"
 import {NotificationsWSUpdate} from "../utils/NotifcationsWSUpdate"
+import {executeSecuredApi} from "../utils/executeSecuredApi"
 /**
  * Pagina principal del sitio
  */
@@ -49,22 +47,16 @@ export function Home() {
         navigate('/')
     }
     const onNotificationDelete = async (notification)=>{
-        const successValidating = await validateJWT()
-        if (successValidating === true){
-            const updatedNotifications = removeNotificationFromLocalStorage(notification)
-            saveNotificationsInLocalStorage(updatedNotifications)
-            setNotifications(updatedNotifications)
-            try{
-                await notificationDeleteAPI(notification.id, getJWTFromLocalStorage().access )
-            }
-            catch{
-                console.log('Error inesperado eliminando notificacion')
-            }
-        } else {
-            if (successValidating === BASE_LOGIN_REQUIRED_ERROR_MSG){
-                redirectExpiredUser(navigate)
+        const response = await executeSecuredApi(async ()=>{
+            return await notificationDeleteAPI(notification.id, getJWTFromLocalStorage().access )
+        }, navigate)
+        if (response){
+            if (response !== "unexpected_error" && response.status == 200){
+                const updatedNotifications = removeNotificationFromLocalStorage(notification)
+                saveNotificationsInLocalStorage(updatedNotifications)
+                setNotifications(updatedNotifications)
             } else {
-                setLoadingState(BASE_JWT_ERROR_LOG)
+                console.log('Error inesperado eliminando notificacion')
             }
         }
     }
