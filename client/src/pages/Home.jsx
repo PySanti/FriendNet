@@ -28,7 +28,7 @@ import {NotificationsWSUpdate} from "../utils/NotifcationsWSUpdate"
 import {executeSecuredApi} from "../utils/executeSecuredApi"
 import {responseIsError} from "../utils/responseIsError"
 import {userIsOnlineAPI} from "../api/userIsOnline.api"
-import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
+import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_UNEXPECTED_ERROR_MESSAGE} from "../utils/constants"
 import {enterChatAPI} from "../api/enterChat.api"
 
 import { getMessagesHistorialAPI } from "../api/getMessagesHistorial.api"
@@ -55,18 +55,29 @@ export function Home() {
         const response = await executeSecuredApi(async ()=>{
             return await enterChatAPI(clickedUser.id, relatedNotification? relatedNotification.id : undefined, getJWTFromLocalStorage().access)
         }, navigate)
-        if (!responseIsError(response, 200)){
-            console.log(response)
-            updateMessagesHistorial(response.data.messages_historial !== "no_messages_between" ? response.data.messages_hist : [])
-            setCurrentUserIsOnline(response.data.is_online)
-            if (relatedNotification && response.data.notification_deleted){
-                const updatedNotifications = removeNotificationFromLocalStorage(relatedNotification)
-                saveNotificationsInLocalStorage(updatedNotifications)
-                setNotifications(updatedNotifications)
+        if (response){
+            if (response.status == 200){
+                updateMessagesHistorial(response.data.messages_historial !== "no_messages_between" ? response.data.messages_hist : [])
+                setCurrentUserIsOnline(response.data.is_online)
+                if (relatedNotification && response.data.notification_deleted){
+                    const updatedNotifications = removeNotificationFromLocalStorage(relatedNotification)
+                    saveNotificationsInLocalStorage(updatedNotifications)
+                    setNotifications(updatedNotifications)
+                }
+                successfullyLoaded()
+            } else if (response.status == 400){
+                setLoadingState({
+                    "user_not_found"                    : "Tuvimos problemas para encontrar a ese usuario!",
+                    "error_while_checking_is_online"    : 'Error comprobando si el usuario esta en linea!',
+                    "error_while_getting_messages"      : 'Error buscando mensajes!',
+                    "error_while_deleting_notification" /: 'Error borrando notificacion !'
+                }[response.data.error])
+            }  else if (response == BASE_FALLEN_SERVER_ERROR_MSG || response == BASE_UNEXPECTED_ERROR_MESSAGE){
+                setLoadingState({
+                    BASE_FALLEN_SERVER_ERROR_MSG : "Red caida!",
+                    BASE_UNEXPECTED_ERROR_MESSAGE : 'Error inesperado !'
+                }[response])
             }
-            successfullyLoaded()
-        } else {
-            console.log('Hubo un error inesperado')
         }
 
     }

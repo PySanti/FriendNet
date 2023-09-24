@@ -1,6 +1,7 @@
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {refreshTokenAPI} from "../api/refreshToken.api"
-import {UNAUTHORIZED_STATUS_CODE, JWT_LOCALSTORAGE_NAME, BASE_LOGIN_REQUIRED_ERROR_MSG} from "../utils/constants"
+import {BASE_UNEXPECTED_ERROR_MESSAGE, UNAUTHORIZED_STATUS_CODE, JWT_LOCALSTORAGE_NAME, BASE_LOGIN_REQUIRED_ERROR_MSG} from "../utils/constants"
+
 /**
  * Refrescara el token del usuario y setea su valor en el localStorage. 
  * 
@@ -18,7 +19,7 @@ export async function refreshToken() {
             console.log('Token de refresco expirado')
             return BASE_LOGIN_REQUIRED_ERROR_MSG
         } else {
-            return "unexpected_error"
+            return BASE_UNEXPECTED_ERROR_MESSAGE
         }
     }
     return true

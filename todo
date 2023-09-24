@@ -9,6 +9,14 @@
 
 
 // fase 3:
+    // revisar manejo de erroes en todas las executedSecureApis y seguir ejemplo de enterChat
+
+    // eliminar uso de responseIsError
+
+    // implementar funcionalidad de SetLoadingState(dict[key])
+
+
+
     // repasar y refactorizar:
         // EnterChatApi y toda su implementacion
         // Home
@@ -40,7 +48,9 @@
     // reducir cantidad de props entre Chat-Home-MessagesContainer
     // testear bien funcionalidad de userList y userFilter dado el cambio realizado para el uso de websockets
 
+    // revisar si todas las llamadas apis tengan soporte a servidor caido
 
+    // revisar posibles implementaciones de constantes
 
     // buscar o repasar funcionamiento de :
         // annotate
@@ -116,6 +126,7 @@
     // reactivar el notificationBell del componente NotificationsContainer
     // agregar sonidos cuando llgue una notificacion
     // hacer que el notification-bell tenga un numero encima que represente la cantidad de notificaciones
+    // revisar errores ortograficos
 
     
 // Fase 5:

@@ -9,6 +9,7 @@ export const BASE_USERNAME_MAX_LENGTH = 15;
 export const BASE_USERNAME_MIN_LENGTH = 6;
 export const BASE_PASSWORD_MIN_LENGTH = 10;
 export const BASE_LOGIN_REQUIRED_ERROR_MSG = "requires_login"
+export const BASE_UNEXPECTED_ERROR_MESSAGE = "unexpected_error"
 export const BASE_ACTIVATION_CODE_CONSTRAINTS = {
     required: {
         value: true,
