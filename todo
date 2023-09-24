@@ -9,7 +9,7 @@
 
 
 // fase 3:
-
+    // Estandarizar una variable global con el valor "unexpected_error"
     // implementar el executeSecuredApi en todos los puntos en los que se usa el validate
 
     // eliminar todo rastro de validateJWT y su api

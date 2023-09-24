@@ -17,7 +17,7 @@ import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_JWT_ERROR_LOG
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import { validateJWT } from "../utils/validateJWT"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
-
+import {executeSecuredApi} from "../utils/executeSecuredApi"
 /**
  * Pagina creado para cambio de contraseña
  */
@@ -28,24 +28,19 @@ export function ChangePwd(){
     let   {loadingState, setLoadingState, successfullyLoaded, startLoading} = useContext(LoadingContext)
     const changePwd = handleSubmit(async (data)=>{
         if (data['oldPwd'] !== data['newPwd']){
-            const successValidating = await validateJWT() 
-            if (successValidating === true){
-                startLoading()
-                try{
-                    await changeUserPwdAPI(data.oldPwd, data.newPwd, getJWTFromLocalStorage().access)
+            startLoading()
+            const response = await executeSecuredApi(async ()=>{
+                return await changeUserPwdAPI(data.oldPwd, data.newPwd, getJWTFromLocalStorage().access)
+            }, navigate)
+            if (response){
+                if (response !== "unexpected_error" && response.status == 200){
                     successfullyLoaded()
-                } catch(error){
-                    if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
+                } else {
+                    if (response.message === BASE_FALLEN_SERVER_ERROR_MSG){
                         setLoadingState(BASE_FALLEN_SERVER_LOG)
                     } else {
-                        setLoadingState(error.response.data.error === 'invalid_pwd' ? "Error, la contraseña actual es invalida !" : 'Error inesperado en respuesta de servidor')
+                        setLoadingState(response.response.data.error === 'invalid_pwd' ? "Error, la contraseña actual es invalida !" : 'Error inesperado en respuesta de servidor')
                     } 
-                }
-            } else   {
-                if (successValidating === BASE_LOGIN_REQUIRED_ERROR_MSG){
-                    redirectExpiredUser(navigate)
-                } else {
-                    setLoadingState(BASE_JWT_ERROR_LOG)
                 }
             }
         } else {

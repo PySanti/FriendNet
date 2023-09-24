@@ -4,16 +4,14 @@ import "../styles/MessagesContainer.css"
 import { v4 } from "uuid"
 import { useEffect, useState, useRef } from "react"
 import { getMessagesHistorialAPI } from "../api/getMessagesHistorial.api"
-import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_JWT_ERROR_LOG, BASE_LOGIN_REQUIRED_ERROR_MSG} from "../utils/constants"
+import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
 import { getJWTFromLocalStorage } from "../utils/getJWTFromLocalStorage"
 import { useNavigate } from "react-router-dom"
 import {diferentUserHasBeenClicked} from "../utils/diferentUserHasBeenClicked"
-import {redirectExpiredUser} from "../utils/redirectExpiredUser"
 import { sendMsgAPI } from "../api/sendMsg.api"
 import {NOTIFICATIONS_WEBSOCKET} from "../utils/constants"
 import {NotificationsWSNotificationBroadcastingMsg} from "../utils/NotificationsWSNotificationBroadcastingMsg"
 import {executeSecuredApi} from "../utils/executeSecuredApi"
-import {validateJWT} from "../utils/validateJWT"
 
 /**
  * Componente encargado de renderizar y mantener la lista de mensajes 
