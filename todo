@@ -9,15 +9,10 @@
 
 
 // fase 3:
-    // Estandarizar una variable global con el valor "unexpected_error"
-
-    // crear funcion responseIsValid
 
     // testear bien todos los puntos en los que se usa el executeSecuredApi
 
     // hacer que, cuando se desmonte el apps.jsx se limpie el localStorage
-
-    // implemenetar mas uso de codigos de estado en llamados a api para garantizar un mejor manejo de errores
 
     // Implementar websockets para is_online?
 
