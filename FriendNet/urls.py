@@ -20,7 +20,6 @@ from django.urls import (
 )
 from rest_framework_simplejwt.views import (
     TokenRefreshView,
-    TokenVerifyView
 )
 
 from django.conf.urls.static import static
@@ -32,5 +31,4 @@ urlpatterns = [
     path('api/', include('applications.Chats.urls')),
     path('api/', include('applications.Notifications.urls')),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
 ]

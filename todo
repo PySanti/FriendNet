@@ -13,9 +13,6 @@
 
     // crear funcion responseIsValid
 
-    // implementar el executeSecuredApi en todos los puntos en los que se usa el validate
-
-    // eliminar todo rastro de validateJWT y su api
 
     // testear bien todos los puntos en los que se usa el executeSecuredApi
 
