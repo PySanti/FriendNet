@@ -16,6 +16,8 @@
 
     // testear bien todos los puntos en los que se usa el executeSecuredApi
 
+    // testear el scrollHandler del messagesHistorial
+
     // hacer que, cuando se desmonte el apps.jsx se limpie el localStorage
 
     // Implementar websockets para is_online?
