@@ -13,6 +13,7 @@ import { sendMsgAPI } from "../api/sendMsg.api"
 import {NOTIFICATIONS_WEBSOCKET} from "../utils/constants"
 import {NotificationsWSNotificationBroadcastingMsg} from "../utils/NotificationsWSNotificationBroadcastingMsg"
 import {executeSecuredApi} from "../utils/executeSecuredApi"
+import {validateJWT} from "../utils/validateJWT"
 
 /**
  * Componente encargado de renderizar y mantener la lista de mensajes 
@@ -37,7 +38,7 @@ export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, 
 
     const sendMsg = async (data)=>{
         startLoading()
-        const response = executeSecuredApi(async ()=>{
+        const response = await executeSecuredApi(async ()=>{
             return await sendMsgAPI(clickedUser.id, data.msg, !groupFull, getJWTFromLocalStorage().access)
         }, navigate)
         if (response){
@@ -47,9 +48,12 @@ export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, 
                 setMessagesHistorial([...messagesHistorial, response.data.sended_msg])
                 successfullyLoaded()
             } else {
-                setLoadingState(response.error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
+                console.log('Error enviando mensaje!')
+                console.log(response.response.data.error)
+                setLoadingState(response.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
             }
         }
+    }
 
     const formatingFunction = (msg)=>{
         return <Message key={v4()} content={msg.content} sessionUserMsg={sessionUserId === msg.parent_id}/>

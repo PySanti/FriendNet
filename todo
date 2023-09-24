@@ -9,6 +9,7 @@
 
 
 // fase 3:
+
     // implementar el executeSecuredApi en todos los puntos en los que se usa el validate
 
     // eliminar todo rastro de validateJWT y su api
@@ -16,6 +17,10 @@
     // testear bien todos los puntos en los que se usa el executeSecuredApi
 
     // hacer que, cuando se desmonte el apps.jsx se limpie el localStorage
+
+    // implemenetar mas uso de codigos de estado en llamados a api para garantizar un mejor manejo de errores
+
+    // Implementar websockets para is_online?
 
     // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
     // ActivateUser, ChangeEmailForActivation, GetUserDetail, GetUsersList 
