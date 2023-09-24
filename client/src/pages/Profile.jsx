@@ -39,7 +39,7 @@ export function Profile({ edit }) {
                 return await updateUserDataAPI( sendingData, getJWTFromLocalStorage().access)
             }, navigate)
             if (response){
-                if (responseIsError(response, 200)){
+                if (!responseIsError(response, 200)){
                     profileData.photo_link = response.data.user_data_updated.photo_link
                     setProfileData(response.data.user_data_updated);
                     saveUserDataInLocalStorage(response.data.user_data_updated);

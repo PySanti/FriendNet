@@ -52,7 +52,7 @@ export function Home() {
             return await notificationDeleteAPI(notification.id, getJWTFromLocalStorage().access )
         }, navigate)
         if (response){
-            if (responseIsError(response, 200)){
+            if (!responseIsError(response, 200)){
                 const updatedNotifications = removeNotificationFromLocalStorage(notification)
                 saveNotificationsInLocalStorage(updatedNotifications)
                 setNotifications(updatedNotifications)
