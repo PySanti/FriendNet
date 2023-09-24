@@ -36,6 +36,20 @@ class ChatsManager(manager.Manager):
         """
         chat = self._chatBetween(session_user_id, chat_user_id)
         return chat.messages.all().order_by('-id') if chat else None
+    def getMessagesHistorialReady(self, request, receiver_id, api):
+        """
+            Retornara el historial de mensajes paginado  en un diccionario en caso de que existan mensajes entre 
+            los usuarios
+        """
+        messages_hist = self.getMessagesHistorial(request.user.id, receiver_id)
+        if (messages_hist):
+            try:
+                messages_hist = api.pagination_class().paginate_queryset(messages_hist.values(), request)[::-1]
+                return {"messages_hist" : messages_hist}
+            except Exception:
+                return "no_more_pages"
+        else:
+            return "no_messages_between"
 
 
 class MessagesManager(manager.Manager):

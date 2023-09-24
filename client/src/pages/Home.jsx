@@ -78,6 +78,7 @@ export function Home() {
             return await getMessagesHistorialAPI(clickedUser.id, getJWTFromLocalStorage().access, messagesHistorialPage.current)
         }, navigate)
         if (response){
+            console.log(response.status)
             if (!responseIsError(response, 200)){
                 updateMessagesHistorial(response.data !== "no_messages_between" ? response.data.messages_hist : [])
                 successfullyLoaded()

@@ -66,11 +66,11 @@ export function MessagesContainer({
     const formatingFunction = (msg)=>{
         return <Message key={v4()} content={msg.content} sessionUserMsg={sessionUserId === msg.parent_id}/>
     }
-    const scrollHandler = (e)=>{
+    const scrollHandler = async (e)=>{
         if (e.target.scrollTop <= 0){
             messagesHistorialPage.current += 1
             if (!noMoreMessages.current){
-                loadMessagesFunc()
+                await loadMessagesFunc()
             }
         }
     }

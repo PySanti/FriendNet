@@ -42,17 +42,16 @@ class GetMessagesHistorialAPI(APIView):
         if serialized_data.is_valid():
             # request.user = sender_user
             try:
-                messages_hist = Chats.objects.getMessagesHistorial(request.user.id, request.data['receiver_id'])
-                if (messages_hist):
-                    try:
-                        messages_hist = self.pagination_class().paginate_queryset(messages_hist.values(), request)[::-1]
-                        return JsonResponse({"messages_hist" : messages_hist}, status=status.HTTP_200_OK)
-                    except Exception:
-                        return BASE_NO_MORE_PAGES_RESPONSE
-                else:
-                    return Response('no_messages_between', status.HTTP_200_OK)
+                messages_hist = Chats.objects.getMessagesHistorialReady(request, request.data['receiver_id'], self)
             except Exception:
                 return BASE_UNEXPECTED_ERROR_RESPONSE
+            else:
+                if (messages_hist == "no_more_pages"):
+                    return BASE_NO_MORE_PAGES_RESPONSE
+                elif (messages_hist == "no_messages_between"):
+                    return Response('no_messages_between', status.HTTP_200_OK)
+                else:
+                    return JsonResponse(messages_hist, status=status.HTTP_200_OK)
         else:
             print(serialized_data._errors)
             return BASE_SERIALIZER_ERROR_RESPONSE
