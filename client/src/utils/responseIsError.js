@@ -4,5 +4,5 @@
  * Retornara true si la respuesta es producto de un error o false en caso de que sea valida
  */
 export function responseIsError(response, validStatus){
-    response === "unexpected_error" || response.status != validStatus
+    response === "unexpected_error" || response.response.status != validStatus
 }

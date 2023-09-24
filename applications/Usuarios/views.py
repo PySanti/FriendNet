@@ -295,6 +295,7 @@ class EnterChatApi(APIView):
             print(data)
             try:
                 receiver_user = Usuarios.objects.get(id=data["receiver_id"])
+                raise Exception
             except Exception:
                 return Response({'error' : 'user_not_found'}, status=status.HTTP_400_BAD_REQUEST)
             else:

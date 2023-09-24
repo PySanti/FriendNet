@@ -15,8 +15,7 @@
         // MessagesContainer
         // Chat
         // executeSecuredApi
-    
-    // implementar try-catch con executeSecuredApi para manejo de errores
+
 
     // eliminar todas las api's que no se usen
 

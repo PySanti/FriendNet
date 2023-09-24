@@ -51,10 +51,12 @@ export function Home() {
     let messagesHistorialPage                                           = useRef(1)
     const enterChatHandler = async ()=>{
         const relatedNotification = getRelatedNotification(clickedUser.id, notifications)
-        try{
-            const response = await executeSecuredApi(async ()=>{
-                return await enterChatAPI(clickedUser.id, relatedNotification? relatedNotification.id : undefined, getJWTFromLocalStorage().access)
-            }, navigate)
+        startLoading()
+        const response = await executeSecuredApi(async ()=>{
+            return await enterChatAPI(clickedUser.id, relatedNotification? relatedNotification.id : undefined, getJWTFromLocalStorage().access)
+        }, navigate)
+        if (!responseIsError(response, 200)){
+            console.log(response)
             updateMessagesHistorial(response.data.messages_historial !== "no_messages_between" ? response.data.messages_hist : [])
             setCurrentUserIsOnline(response.data.is_online)
             if (relatedNotification && response.data.notification_deleted){
@@ -62,7 +64,8 @@ export function Home() {
                 saveNotificationsInLocalStorage(updatedNotifications)
                 setNotifications(updatedNotifications)
             }
-        } catch (error){
+            successfullyLoaded()
+        } else {
             console.log('Hubo un error inesperado')
         }
 
