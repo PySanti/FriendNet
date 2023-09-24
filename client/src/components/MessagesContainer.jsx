@@ -12,6 +12,7 @@ import { sendMsgAPI } from "../api/sendMsg.api"
 import {NOTIFICATIONS_WEBSOCKET} from "../utils/constants"
 import {NotificationsWSNotificationBroadcastingMsg} from "../utils/NotificationsWSNotificationBroadcastingMsg"
 import {executeSecuredApi} from "../utils/executeSecuredApi"
+import {responseIsError} from "../utils/responseIsError"
 
 /**
  * Componente encargado de renderizar y mantener la lista de mensajes 
@@ -40,7 +41,7 @@ export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, 
             return await sendMsgAPI(clickedUser.id, data.msg, !groupFull, getJWTFromLocalStorage().access)
         }, navigate)
         if (response){
-            if (response !== "unexpected_error" && response.status == 200){
+            if (!responseIsError(response, 200)){
                 newMsgSendedSetter(response.data.sended_msg)
                 setNewNotificationId(response.data.sended_notification_id)
                 setMessagesHistorial([...messagesHistorial, response.data.sended_msg])
@@ -69,7 +70,7 @@ export function MessagesContainer({sessionUserId, clickedUser, lastClickedUser, 
             return await getMessagesHistorialAPI(clickedUser.id, getJWTFromLocalStorage().access, messagesHistorialPage.current)
         }, navigate)
         if (response){
-            if (response !== "unexpected_error" && response.status == 200){
+            if (!responseIsError(response, 200)){
                 updateMessagesHistorial(response.data !== "no_messages_between" ? response.data.messages_hist : [])
                 successfullyLoaded()
             } else {

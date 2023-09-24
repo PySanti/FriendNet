@@ -16,6 +16,7 @@ import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/con
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import {executeSecuredApi} from "../utils/executeSecuredApi"
+import {responseIsError} from "../utils/responseIsError"
 /**
  * Pagina creado para cambio de contraseña
  */
@@ -31,7 +32,7 @@ export function ChangePwd(){
                 return await changeUserPwdAPI(data.oldPwd, data.newPwd, getJWTFromLocalStorage().access)
             }, navigate)
             if (response){
-                if (response !== "unexpected_error" && response.status == 200){
+                if (!responseIsError(response, 200)){
                     successfullyLoaded()
                 } else {
                     if (response.message === BASE_FALLEN_SERVER_ERROR_MSG){

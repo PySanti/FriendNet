@@ -19,6 +19,7 @@ import { dataIsDiferent } from "../utils/dataIsDiferent";
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG } from "../utils/constants"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {executeSecuredApi} from "../utils/executeSecuredApi"
+import {responseIsError} from "../utils/responseIsError"
 
 /**
  * Pagina creada para llevar perfil de usuario, tanto para
@@ -38,7 +39,7 @@ export function Profile({ edit }) {
                 return await updateUserDataAPI( sendingData, getJWTFromLocalStorage().access)
             }, navigate)
             if (response){
-                if (response !== "unexpected_error" && response.status == 200){
+                if (responseIsError(response, 200)){
                     profileData.photo_link = response.data.user_data_updated.photo_link
                     setProfileData(response.data.user_data_updated);
                     saveUserDataInLocalStorage(response.data.user_data_updated);

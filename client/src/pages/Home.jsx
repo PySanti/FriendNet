@@ -26,6 +26,7 @@ import {NOTIFICATIONS_WEBSOCKET} from "../utils/constants"
 import {NotificationsWSInitialize} from "../utils/NotificationsWSInitialize"
 import {NotificationsWSUpdate} from "../utils/NotifcationsWSUpdate"
 import {executeSecuredApi} from "../utils/executeSecuredApi"
+import {responseIsError} from "../utils/responseIsError"
 /**
  * Pagina principal del sitio
  */
@@ -51,7 +52,7 @@ export function Home() {
             return await notificationDeleteAPI(notification.id, getJWTFromLocalStorage().access )
         }, navigate)
         if (response){
-            if (response !== "unexpected_error" && response.status == 200){
+            if (responseIsError(response, 200)){
                 const updatedNotifications = removeNotificationFromLocalStorage(notification)
                 saveNotificationsInLocalStorage(updatedNotifications)
                 setNotifications(updatedNotifications)

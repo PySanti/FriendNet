@@ -12,6 +12,7 @@ import {MessagesWSInitialize} from "../utils/MessagesWSInitialize"
 import {userIsOnlineAPI} from "../api/userIsOnline.api"
 import {executeSecuredApi} from "../utils/executeSecuredApi"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
+import {responseIsError} from "../utils/responseIsError"
 /**
  * 
  * Contenedor unicamente del chat entre el session user y el clicked user
@@ -33,7 +34,7 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
             return await userIsOnlineAPI(clickedUser.id, getJWTFromLocalStorage().access)
         }, navigate)
         if (response){
-            if (response !== "unexpected_error" && response.status == 200){
+            if (!responseIsError(response, 200)){
                 console.log('Todo salio bien')
                 setCurrentUserIsOnline(response.data.is_online)
             } else {
