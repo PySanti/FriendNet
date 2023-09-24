@@ -29,6 +29,7 @@ import {executeSecuredApi} from "../utils/executeSecuredApi"
 import {responseIsError} from "../utils/responseIsError"
 import {userIsOnlineAPI} from "../api/userIsOnline.api"
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
+import {enterChatAPI} from "../api/enterChat.api"
 
 import { getMessagesHistorialAPI } from "../api/getMessagesHistorial.api"
 
@@ -122,6 +123,8 @@ export function Home() {
                 setCurrentUserIsOnline(false)
                 await checkIfUserIsOnline(clickedUser)
                 await loadMessages()
+                await enterChatAPI(clickedUser.id, relatedNotification? relatedNotification.id : undefined, getJWTFromLocalStorage().access)
+
             }
         })();
     }, [clickedUser])

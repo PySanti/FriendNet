@@ -292,20 +292,24 @@ class EnterChatApi(APIView):
             data = request.data
             print(data)
             try:
-                receiver_user = Usuarios.objects.get(id=serialized_data["receiver_id"])
+                receiver_user = Usuarios.objects.get(id=data["receiver_id"])
             except Exception:
                 return Response({'error' : 'user_not_found'}, status=status.HTTP_400_BAD_REQUEST)
             else:
                 user_is_online = {'is_online' : Usuarios.objects.user_is_online(receiver_user.id)}
                 messages = Chats.objects.getMessagesHistorialReady(request, data['receiver_id'], self)
                 deleted_notification = None
-                if (data['related_notificacion_id']):
+                if ('related_notification_id' in data):
                     try:
-                        Notifications.objects.deleteNotification(request.data['related_notification_id'])
+                        Notifications.objects.deleteNotification(data['related_notification_id'])
                     except:
+                        print('Error eliminando notificacion')
                         deleted_notification = {'deleted' : 'false'}
                     else:
-                        deleted_notification = {'deleted' : 'false'}
-            pr    
+                        deleted_notification = {'deleted' : 'true'}
+                print(user_is_online)
+                print(messages)
+                print(deleted_notification)
+                return Response({'success'}, status=status.HTTP_200_OK)
         else:
             return BASE_SERIALIZER_ERROR_RESPONSE
