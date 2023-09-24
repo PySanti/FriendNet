@@ -21,8 +21,6 @@ export async function executeSecuredApi(apiCallingFunction, navigateFunc){
             response = await apiCallingFunction() 
             break
         } catch(error){
-            console.log('Saludos')
-            console.log(error.response.status)
             if (error.response.status === 401){
                 console.log('El token no es valido')
                 const successValidating = await refreshToken()

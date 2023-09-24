@@ -20,29 +20,15 @@ import {responseIsError} from "../utils/responseIsError"
  * @param {Object} clickedUser info del usuario con el que se esta chateando
  * @param {Object} lastClickedUser
  * @param {Object} loadingStateHandlers
- */
-export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateHandlers}){
+ * @param {Boolean} currentUserIsOnline
+*/
+export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateHandlers, currentUserIsOnline}){
     let [newMsg, setNewMsg]                                             = useState(null)
     let [messagesHistorial, setMessagesHistorial]                       = useState([])
     let [newMsgSended, setNewMsgSended]                                 = useState(null)
     let [groupFull, setGroupFull]                                       = useState(false)
-    let [currentUserIsOnline, setCurrentUserIsOnline]                   = useState(false)
-    const navigate = useNavigate()
 
-    const checkIfUserIsOnline = async (clickedUser)=>{
-        const response = await executeSecuredApi(async ()=>{
-            return await userIsOnlineAPI(clickedUser.id, getJWTFromLocalStorage().access)
-        }, navigate)
-        if (response){
-            if (!responseIsError(response, 200)){
-                console.log('Todo salio bien')
-                setCurrentUserIsOnline(response.data.is_online)
-            } else {
-                console.log(response.response.data)
-                console.log('Hubo un error inesperado')
-            }
-        }
-    }
+
     useEffect(()=>{
         if (clickedUser){
             if (!MESSAGES_WEBSOCKET.current){
@@ -52,12 +38,7 @@ export function Chat({sessionUserId, clickedUser, lastClickedUser, loadingStateH
             }
         }
     }, [clickedUser])
-    useEffect(()=>{
-        setCurrentUserIsOnline(false)
-        if (clickedUser){
-            checkIfUserIsOnline(clickedUser)
-        }
-    }, [clickedUser])
+
     useEffect(()=>{
         if (newMsgSended && MESSAGES_WEBSOCKET.current){
             MESSAGES_WEBSOCKET.current.send(MessagesWSGroupBroadcastingMessage(MessagesWSGroupName(sessionUserId, clickedUser.id), newMsgSended))
@@ -97,4 +78,5 @@ Chat.propTypes = {
     clickedUser : PropTypes.object,
     lastClickedUser : PropTypes.object,
     loadingStateHandlers : PropTypes.object.isRequired,
+    currentUserIsOnline : PropTypes.bool.isRequired
 }

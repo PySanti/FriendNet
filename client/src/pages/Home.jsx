@@ -27,6 +27,7 @@ import {NotificationsWSInitialize} from "../utils/NotificationsWSInitialize"
 import {NotificationsWSUpdate} from "../utils/NotifcationsWSUpdate"
 import {executeSecuredApi} from "../utils/executeSecuredApi"
 import {responseIsError} from "../utils/responseIsError"
+import {userIsOnlineAPI} from "../api/userIsOnline.api"
 /**
  * Pagina principal del sitio
  */
@@ -39,9 +40,22 @@ export function Home() {
     let [chatGlobeList, setChatGlobeList] = useState([])
     let [clickedUser, setClickedUser] = useState(null)
     let [lastClickedUser, setLastClickedUser] = useState(null)
+    let [currentUserIsOnline, setCurrentUserIsOnline]                   = useState(false)
 
-
-
+    const checkIfUserIsOnline = async (clickedUser)=>{
+        const response = await executeSecuredApi(async ()=>{
+            return await userIsOnlineAPI(clickedUser.id, getJWTFromLocalStorage().access)
+        }, navigate)
+        if (response){
+            if (!responseIsError(response,200)){
+                console.log('Todo salio bien')
+                setCurrentUserIsOnline(response.data.is_online)
+            } else {
+                console.log(response.response.data)
+                console.log('Hubo un error inesperado')
+            }
+        }
+    }
     const onLogout = async ()=>{
         localStorage.clear()
         disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
@@ -72,8 +86,11 @@ export function Home() {
             if(relatedNotification){
                 onNotificationDelete(relatedNotification)
             }
+            setCurrentUserIsOnline(false)
+            checkIfUserIsOnline(clickedUser)
         }
     }, [clickedUser])
+
     useEffect(()=>{
         setChatGlobeList(getChatGlobesList(notifications))
     }, [notifications])
@@ -117,6 +134,7 @@ export function Home() {
                             lastClickedUser={lastClickedUser}
                             sessionUserId={user.id} 
                             loadingStateHandlers ={loadingStateHandlers}
+                            currentUserIsOnline={currentUserIsOnline}
                             />
                     </div>
                 </div>
