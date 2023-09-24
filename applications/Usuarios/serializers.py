@@ -53,3 +53,7 @@ class SendActivationEmailSerializer(serializers.Serializer):
 
 class UserIsOnlineSerializer(serializers.Serializer):
     target_user_id = serializers.IntegerField()
+
+class EnterChatSerializer(serializers.Serializer):
+    receiver_id = serializers.IntegerField()
+    related_notificacion_id = serializers.IntegerField(required=False)

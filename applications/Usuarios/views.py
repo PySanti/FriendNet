@@ -34,16 +34,18 @@ from .serializers import (
     GetUsersListSerializer,
     SendActivationEmailSerializer,
     ChangeEmailForActivationSerializer,
-    UserIsOnlineSerializer
+    UserIsOnlineSerializer,
+    EnterChatSerializer
 )
 from rest_framework.response import Response
 from .paginators import (
     UsersListPaginator
 )
 from .models import Usuarios
-
+from applications.Chats.paginators import MessagesPaginationClass
 from applications.Usuarios.jwt_views import MyTokenObtainPerView
-
+from applications.Chats.models import Chats
+from applications.Notifications.models import Notifications
 # non - secured api's
 
 class CheckExistingUserAPI(APIView):
@@ -278,3 +280,32 @@ class UserIsOnlineAPI(APIView):
         else:
             return BASE_SERIALIZER_ERROR_RESPONSE
 
+class EnterChatApi(APIView):
+    serializer_class        =  EnterChatSerializer
+    authentication_classes  = [JWTAuthentication]
+    permission_classes      = [IsAuthenticated]
+    pagination_class        = MessagesPaginationClass
+
+    def post(self, request, *args, **kwargs):
+        serialized_data = self.serializer_class(data=request.data)
+        if serialized_data.is_valid():
+            data = request.data
+            print(data)
+            try:
+                receiver_user = Usuarios.objects.get(id=serialized_data["receiver_id"])
+            except Exception:
+                return Response({'error' : 'user_not_found'}, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                user_is_online = {'is_online' : Usuarios.objects.user_is_online(receiver_user.id)}
+                messages = Chats.objects.getMessagesHistorialReady(request, data['receiver_id'], self)
+                deleted_notification = None
+                if (data['related_notificacion_id']):
+                    try:
+                        Notifications.objects.deleteNotification(request.data['related_notification_id'])
+                    except:
+                        deleted_notification = {'deleted' : 'false'}
+                    else:
+                        deleted_notification = {'deleted' : 'false'}
+            pr    
+        else:
+            return BASE_SERIALIZER_ERROR_RESPONSE
