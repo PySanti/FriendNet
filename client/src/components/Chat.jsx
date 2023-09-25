@@ -67,6 +67,8 @@ export function Chat({
                 } else if (dataType === "group_info"){
                     setGroupFull(data.group === "full" ? true : false)
                     console.log(data)
+                } else if (dataType === "connection_inform"){
+                    console.log(data['value'])
                 }
             };
         }

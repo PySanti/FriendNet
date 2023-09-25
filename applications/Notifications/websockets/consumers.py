@@ -49,7 +49,10 @@ class NotificationsConsumer(WebsocketConsumer):
                     group,
                     {
                         'type' : 'broadcast_connection_inform',
-                        'value' : f"{data['session_user_id']}_connected"
+                        'value' : {
+                            "type" : "connection_inform",
+                            "value" : f"{data['session_user_id']}_connected"
+                        }
                     }
                 ) 
 
@@ -57,7 +60,3 @@ class NotificationsConsumer(WebsocketConsumer):
 
     def broadcast_notification(self, event):
         self.send(text_data=json.dumps(event['value']))
-    
-
-
-
