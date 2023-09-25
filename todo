@@ -11,13 +11,6 @@
 // fase 3:
 
 
-    // eliminar todas las api's que no se usen
-
-
-    // testear bien todos los puntos en los que se usa el executeSecuredApi
-
-    // testear el scrollHandler del messagesHistorial
-
     // hacer que, cuando se desmonte el apps.jsx se limpie el localStorage
 
     // Implementar websockets para is_online?
@@ -141,3 +134,4 @@
     // a la hora de montar el proyecto en produccion, investigar bien como funciona todo el proceso de montado de backend's
     // cuando terminemos el proyecto por completo, revisar cada linea de codigo, cada paquete, cada todo que hayamos empleado para repasar lo maximo posible
     // cambiar el nombre del proyecto
+    // eliminar codigo inutil
