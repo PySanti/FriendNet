@@ -10,8 +10,6 @@
 
 // fase 3:
 
-    // implementar funcionalidad de SetLoadingState(dict[key]) en todos lados
-
     // revisar si se usan los loadingStateHandlres cuando se desea
     
     // repasar y refactorizar:
