@@ -166,6 +166,7 @@ export function Home() {
                             setMessagesHistorial={setMessagesHistorial}
                             messagesHistorialPage={messagesHistorialPage}
                             currentUserIsOnline={currentUserIsOnline}
+                            setCurrentUserIsOnline = {setCurrentUserIsOnline}
                             />
                     </div>
                 </div>

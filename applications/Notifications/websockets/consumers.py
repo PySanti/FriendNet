@@ -51,7 +51,8 @@ class NotificationsConsumer(WebsocketConsumer):
                         'type' : 'broadcast_connection_inform',
                         'value' : {
                             "type" : "connection_inform",
-                            "value" : f"{data['session_user_id']}_connected"
+                            "connected_user_id" : data['session_user_id'],
+                            "connected" : True
                         }
                     }
                 ) 

@@ -20,12 +20,14 @@ import {MessagesWSInitialize} from "../utils/MessagesWSInitialize"
  * @param {Array} messagesHistorial
  * @param {Function} setMessagesHistorial
  * @param {Objects} messagesHistorialPage
+ * @param {Function} setCurrentUserIsOnline
 */
 export function Chat({
         sessionUserId, 
         clickedUser, 
         lastClickedUser, 
-        loadingStateHandlers, 
+        loadingStateHandlers,
+        setCurrentUserIsOnline,
         currentUserIsOnline, 
         messagesHistorial, 
         setMessagesHistorial, 
@@ -68,7 +70,11 @@ export function Chat({
                     setGroupFull(data.group === "full" ? true : false)
                     console.log(data)
                 } else if (dataType === "connection_inform"){
-                    console.log(data['value'])
+                    if (data['connected_user_id'] == clickedUser.id){
+                        setCurrentUserIsOnline(data['connected'])
+                    } else {
+                        console.error('Error con el connection_inform')
+                    }
                 }
             };
         }
@@ -92,5 +98,6 @@ Chat.propTypes = {
     currentUserIsOnline : PropTypes.bool.isRequired,
     messagesHistorial : PropTypes.array,
     setMessagesHistorial : PropTypes.func.isRequired,
-    messagesHistorialPage : PropTypes.object.isRequired
+    messagesHistorialPage : PropTypes.object.isRequired,
+    setCurrentUserIsOnline : PropTypes.func.isRequired
 }
