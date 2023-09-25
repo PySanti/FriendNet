@@ -9,10 +9,7 @@
 
 
 // fase 3:
-    // repasar, testear y refactorizar:
-        // executeSecuredApi
 
-    // revisar si se usan los loadingStateHandlres cuando se desea
 
     // eliminar todas las api's que no se usen
 
@@ -73,7 +70,7 @@
     // y realizando un proceso de testing por cada una, que incluya uso de consolelog's para asegurarnos
     // de que todo funciona como lo esperado
 
-
+    // revisar si se usan los loadingStateHandlres cuando se desea
 
 
 
