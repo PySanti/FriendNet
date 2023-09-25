@@ -12,11 +12,11 @@ import { Button } from "../components/Button";
 import { Form } from "../components/Form";
 import { PasswordField } from "../components/PasswordField";
 import { v4 } from "uuid";
-import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
+import {BASE_UNEXPECTED_ERROR_MESSAGE, BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import {executeSecuredApi} from "../utils/executeSecuredApi"
-import {responseIsError} from "../utils/responseIsError"
+
 /**
  * Pagina creado para cambio de contraseña
  */
@@ -32,15 +32,16 @@ export function ChangePwd(){
                 return await changeUserPwdAPI(data.oldPwd, data.newPwd, getJWTFromLocalStorage().access)
             }, navigate)
             if (response){
-                if (!responseIsError(response, 200)){
+                if (response.status == 200){
                     successfullyLoaded()
-                } else {
-                    if (response.message === BASE_FALLEN_SERVER_ERROR_MSG){
-                        setLoadingState(BASE_FALLEN_SERVER_LOG)
-                    } else {
-                        setLoadingState(response.response.data.error === 'invalid_pwd' ? "Error, la contraseña actual es invalida !" : 'Error inesperado en respuesta de servidor')
-                    } 
-                }
+                } else if (response.status == 400){
+                    setLoadingState(response.response.data.error === 'invalid_pwd' ? "Error, la contraseña actual es invalida !" : 'Error inesperado en respuesta de servidor')
+                } else if (response == BASE_FALLEN_SERVER_ERROR_MSG || response == BASE_UNEXPECTED_ERROR_MESSAGE){
+                    setLoadingState({
+                        BASE_FALLEN_SERVER_ERROR_MSG : BASE_FALLEN_SERVER_LOG,
+                        BASE_UNEXPECTED_ERROR_MESSAGE : BASE_UNEXPECTED_ERROR_LOG
+                    }[response])
+                } 
             }
         } else {
             setLoadingState("No hay cambios")
