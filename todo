@@ -9,18 +9,14 @@
 
 
 // fase 3:
-
-    // revisar si se usan los loadingStateHandlres cuando se desea
-    
-    // repasar y refactorizar:
+    // repasar, testear y refactorizar:
         // EnterChatApi y toda su implementacion
         // Home
         // MessagesContainer
         // Chat
         // executeSecuredApi
-    
 
-
+    // revisar si se usan los loadingStateHandlres cuando se desea
 
     // eliminar todas las api's que no se usen
 
