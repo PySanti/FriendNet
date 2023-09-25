@@ -9,7 +9,9 @@
 
 
 // fase 3:
-    // Implementar websockets para is_online
+    // Repasar implementacion de connection_inform
+
+    // Terminar connection_inform
 
     // hacer que, cuando se desmonte el apps.jsx se limpie el localStorage
 
