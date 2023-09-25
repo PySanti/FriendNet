@@ -8,6 +8,8 @@ from applications.Notifications.models import Notifications
 from applications.Usuarios.utils.constants import USERS_LIST_ATTRS
 from applications.Usuarios.models import Usuarios
 from applications.Chats.websockets.ws_utils.messages_group_name import messages_group_name
+from .ws_utils.get_opened_groups_with_id import get_opened_groups_with_id
+
 class NotificationsConsumer(WebsocketConsumer):
     def connect(self):
         self.accept()
@@ -38,6 +40,9 @@ class NotificationsConsumer(WebsocketConsumer):
 
                 async_to_sync(self.channel_layer.group_discard)(group_name, self.channel_name)
                 async_to_sync(self.channel_layer.group_discard)(group_name, receiver_channel)
+        if (data['type'] == "conection_inform"):
+            print('Imprimiendo grupos abiertos con el id del usuario de la sesion')
+            print(get_opened_groups_with_id(data["session_user_id"]))
 
         print_pretty_groups(self.channel_layer.groups)
 

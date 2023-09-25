@@ -9,11 +9,9 @@
 
 
 // fase 3:
-
+    // Implementar websockets para is_online?
 
     // hacer que, cuando se desmonte el apps.jsx se limpie el localStorage
-
-    // Implementar websockets para is_online?
 
     // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
     // ActivateUser, ChangeEmailForActivation, GetUserDetail, GetUsersList 
@@ -21,6 +19,8 @@
     // revisar sistema de uso de userKeyword, cada vez que se cambia esa vriable se vuelve a renderizar el componente
 
     // revisar problemas de rendimiento de red en el userList y getMessagesHistorial (muy lento)
+
+    // revisar posibles problemas de escalabilidad con grupos en websockets. Ver casos de uso para multiples usuarios
 
     // revisar error que ocurre cuando se cargan todas las paginas de los usuarios y, al buscar a pysanti, aparecen 2
 
@@ -30,6 +30,7 @@
     // revisar si todas las llamadas apis tengan soporte a servidor caido
 
     // revisar posibles implementaciones de constantes
+
 
     // buscar o repasar funcionamiento de :
         // annotate
