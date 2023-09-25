@@ -20,7 +20,6 @@ import {MessagesWSInitialize} from "../utils/MessagesWSInitialize"
  * @param {Array} messagesHistorial
  * @param {Function} setMessagesHistorial
  * @param {Objects} messagesHistorialPage
- * @param {Func} loadMessagesFunc
 */
 export function Chat({
         sessionUserId, 
@@ -30,8 +29,7 @@ export function Chat({
         currentUserIsOnline, 
         messagesHistorial, 
         setMessagesHistorial, 
-        messagesHistorialPage, 
-        loadMessagesFunc}){
+        messagesHistorialPage}){
 
     let [newMsg, setNewMsg]                                             = useState(null)
     let [newMsgSended, setNewMsgSended]                                 = useState(null)
@@ -76,7 +74,7 @@ export function Chat({
     return (
         <div className="chat-container">
             {clickedUser && <ChattingUserHeader chatingUser={clickedUser} isOnline={currentUserIsOnline}/>}
-            <MessagesContainer sessionUserId={sessionUserId}  clickedUser={clickedUser} lastClickedUser={lastClickedUser} loadingStateHandlers={loadingStateHandlers} newMsg={newMsg} messagesHistorial={messagesHistorial} setMessagesHistorial={setMessagesHistorial} newMsgSendedSetter={setNewMsgSended} groupFull={groupFull} messagesHistorialPage={messagesHistorialPage} loadMessagesFunc={loadMessagesFunc}/>
+            <MessagesContainer sessionUserId={sessionUserId}  clickedUser={clickedUser} lastClickedUser={lastClickedUser} loadingStateHandlers={loadingStateHandlers} newMsg={newMsg} messagesHistorial={messagesHistorial} setMessagesHistorial={setMessagesHistorial} newMsgSendedSetter={setNewMsgSended} groupFull={groupFull} messagesHistorialPage={messagesHistorialPage}/>
             {clickedUser && <MsgSendingInput onMsgSending={(newMsg)=>setNewMsg(newMsg)}/>}
         </div>
     )
@@ -90,6 +88,5 @@ Chat.propTypes = {
     currentUserIsOnline : PropTypes.bool.isRequired,
     messagesHistorial : PropTypes.array,
     setMessagesHistorial : PropTypes.func.isRequired,
-    messagesHistorialPage : PropTypes.object.isRequired,
-    loadMessagesFunc : PropTypes.func.isRequired
+    messagesHistorialPage : PropTypes.object.isRequired
 }

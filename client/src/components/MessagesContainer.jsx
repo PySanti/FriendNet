@@ -11,6 +11,8 @@ import { sendMsgAPI } from "../api/sendMsg.api"
 import {NOTIFICATIONS_WEBSOCKET} from "../utils/constants"
 import {NotificationsWSNotificationBroadcastingMsg} from "../utils/NotificationsWSNotificationBroadcastingMsg"
 import {executeSecuredApi} from "../utils/executeSecuredApi"
+import {getMessagesHistorialAPI} from "../api/getMessagesHistorial.api"
+import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
 
 /**
  * Componente encargado de renderizar y mantener la lista de mensajes 
@@ -24,7 +26,6 @@ import {executeSecuredApi} from "../utils/executeSecuredApi"
  * @param {Object} newMsgSendedSetter objeto retornado por la api cuando el mensaje fue enviado exitosamente
  * @param {Object} groupFull
  * @param {Object} messagesHistorialPage
- * @param {Function} loadMessagesFunc
  */
 export function MessagesContainer({
         sessionUserId, 
@@ -36,15 +37,28 @@ export function MessagesContainer({
         setMessagesHistorial,
         newMsgSendedSetter, 
         groupFull, 
-        messagesHistorialPage,
-        loadMessagesFunc }){
+        messagesHistorialPage }){
     const containerRef                                                  = useRef(null)
     const navigate                                                      = useNavigate()
     let noMoreMessages                                                  = useRef(false)
     let { setLoadingState,startLoading,  successfullyLoaded}            = loadingStateHandlers
     let [newNotificationId, setNewNotificationId]                       = useState(null)
 
-
+    const loadMessages = async ()=>{
+        startLoading()
+        const response = await executeSecuredApi(async ()=>{
+            return await getMessagesHistorialAPI(clickedUser.id, getJWTFromLocalStorage().access, messagesHistorialPage.current)
+        }, navigate)
+        if (response){
+            if (response.status == 200){
+                updateMessagesHistorial(setMessagesHistorial, messagesHistorialPage, response.data !== "no_messages_between" ? response.data.messages_hist : [], messagesHistorial)
+                successfullyLoaded()
+            } else {
+                console.log('Error cargando mensajes!')
+                setLoadingState(response.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
+            }
+        }
+    }
     const sendMsg = async (data)=>{
         startLoading()
         const response = await executeSecuredApi(async ()=>{
@@ -73,7 +87,7 @@ export function MessagesContainer({
         if (e.target.scrollTop <= 0){
             messagesHistorialPage.current += 1
             if (!noMoreMessages.current){
-                await loadMessagesFunc()
+                await loadMessages()
             }
         }
     }
@@ -124,6 +138,5 @@ MessagesContainer.propTypes = {
     setMessagesHistorial : PropTypes.func,
     newMsgSendedSetter : PropTypes.func.isRequired,
     groupFull : PropTypes.bool.isRequired,
-    messagesHistorialPage : PropTypes.object.isRequired,
-    loadMessagesFunc : PropTypes.func.isRequired
+    messagesHistorialPage : PropTypes.object.isRequired
 }

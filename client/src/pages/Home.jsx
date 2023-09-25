@@ -27,11 +27,9 @@ import {NotificationsWSInitialize} from "../utils/NotificationsWSInitialize"
 import {NotificationsWSUpdate} from "../utils/NotifcationsWSUpdate"
 import {executeSecuredApi} from "../utils/executeSecuredApi"
 import {responseIsError} from "../utils/responseIsError"
-import {userIsOnlineAPI} from "../api/userIsOnline.api"
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_UNEXPECTED_ERROR_MESSAGE, BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
 import {enterChatAPI} from "../api/enterChat.api"
-
-import { getMessagesHistorialAPI } from "../api/getMessagesHistorial.api"
+import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
 
 /**
  * Pagina principal del sitio
@@ -57,7 +55,7 @@ export function Home() {
         }, navigate)
         if (response){
             if (response.status == 200){
-                updateMessagesHistorial(response.data.messages_historial !== "no_messages_between" ? response.data.messages_hist : [])
+                updateMessagesHistorial(setMessagesHistorial, messagesHistorialPage, response.data !== "no_messages_between" ? response.data.messages_hist : [], messagesHistorial)
                 setCurrentUserIsOnline(response.data.is_online)
                 if (relatedNotification && response.data.notification_deleted){
                     const updatedNotifications = removeNotificationFromLocalStorage(relatedNotification)
@@ -81,45 +79,9 @@ export function Home() {
         }
 
     }
-    const checkIfUserIsOnline = async (clickedUser)=>{
-        const response = await executeSecuredApi(async ()=>{
-            return await userIsOnlineAPI(clickedUser.id, getJWTFromLocalStorage().access)
-        }, navigate)
-        if (response){
-            if (!responseIsError(response,200)){
-                console.log('Todo salio bien')
-                setCurrentUserIsOnline(response.data.is_online)
-            } else {
-                console.log(response.response.data)
-                console.log('Hubo un error inesperado')
-            }
-        }
-    }
-    const updateMessagesHistorial = (newMessages) =>{
-        if (messagesHistorialPage.current === 1){
-            setMessagesHistorial(newMessages)
-        } else {
-            messagesHistorial.unshift(...newMessages)
-            setMessagesHistorial(messagesHistorial)
-        }
-    }
 
-    const loadMessages = async ()=>{
-        startLoading()
-        const response = await executeSecuredApi(async ()=>{
-            return await getMessagesHistorialAPI(clickedUser.id, getJWTFromLocalStorage().access, messagesHistorialPage.current)
-        }, navigate)
-        if (response){
-            console.log(response.status)
-            if (!responseIsError(response, 200)){
-                updateMessagesHistorial(response.data !== "no_messages_between" ? response.data.messages_hist : [])
-                successfullyLoaded()
-            } else {
-                console.log('Error cargando mensajes!')
-                setLoadingState(response.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
-            }
-        }
-    }
+
+
     const onLogout = async ()=>{
         localStorage.clear()
         disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
@@ -200,7 +162,6 @@ export function Home() {
                             setMessagesHistorial={setMessagesHistorial}
                             messagesHistorialPage={messagesHistorialPage}
                             currentUserIsOnline={currentUserIsOnline}
-                            loadMessagesFunc={loadMessages}
                             />
                     </div>
                 </div>
