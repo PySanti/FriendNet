@@ -10,8 +10,6 @@
 
 // fase 3:
     // repasar, testear y refactorizar:
-        // EnterChatApi y toda su implementacion
-        // Home
         // MessagesContainer
         // Chat
         // executeSecuredApi

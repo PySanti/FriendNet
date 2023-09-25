@@ -80,7 +80,6 @@ export function Home() {
     }
 
 
-
     const onLogout = async ()=>{
         localStorage.clear()
         disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
@@ -111,18 +110,6 @@ export function Home() {
     }
 
     useEffect(()=>{
-        (async function() {
-            if (diferentUserHasBeenClicked(lastClickedUser, clickedUser)){
-                setCurrentUserIsOnline(false)
-                await enterChatHandler()
-            }
-        })();
-    }, [clickedUser])
-
-    useEffect(()=>{
-        setChatGlobeList(getChatGlobesList(notifications))
-    }, [notifications])
-    useEffect(()=>{
         if (!NOTIFICATIONS_WEBSOCKET.current && user){
             NotificationsWSInitialize(user.id)
             NotificationsWSUpdate(user.id, notifications,setNotifications )
@@ -132,6 +119,19 @@ export function Home() {
             disconnectWebsocket(MESSAGES_WEBSOCKET)
         }
     }, [])
+    useEffect(()=>{
+        if (diferentUserHasBeenClicked(lastClickedUser, clickedUser)){
+            (async function() {
+                setCurrentUserIsOnline(false)
+                await enterChatHandler()
+            })();
+        }
+    }, [clickedUser])
+
+    useEffect(()=>{
+        setChatGlobeList(getChatGlobesList(notifications))
+    }, [notifications])
+
     useEffect(()=>{
         if (!NOTIFICATIONS_WEBSOCKET.current && user){
             NotificationsWSUpdate(user.id, notifications,setNotifications )
