@@ -40,9 +40,10 @@ class NotificationsConsumer(WebsocketConsumer):
 
                 async_to_sync(self.channel_layer.group_discard)(group_name, self.channel_name)
                 async_to_sync(self.channel_layer.group_discard)(group_name, receiver_channel)
-        if (data['type'] == "conection_inform"):
-            print('Imprimiendo grupos abiertos con el id del usuario de la sesion')
-            print(get_opened_groups_with_id(data["session_user_id"]))
+
+
+        if (data['type'] == "connection_inform"):
+            print(get_opened_groups_with_id(data["session_user_id"], self.channel_layer.groups))
 
         print_pretty_groups(self.channel_layer.groups)
 

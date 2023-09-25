@@ -4,6 +4,11 @@ def get_opened_groups_with_id(target_id, groups):
     """
     found_groups = []
     for group_name, channels in groups.items():
-        [id_1, id_2] = group_name.split('-')
-        if (target_id in [id_1, id_2]):
-            found_groups.append(group_name)
+        try:
+            [id_1, id_2] = group_name.split('-')
+            if (str(target_id) in [id_1, id_2]):
+                found_groups.append(group_name)
+        except ValueError:
+            # en este caso estaremos evaluando un grupo para notificacion, entonces continuamos
+            pass
+    return found_groups
