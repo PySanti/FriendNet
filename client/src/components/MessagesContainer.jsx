@@ -53,9 +53,13 @@ export function MessagesContainer({
             if (response.status == 200){
                 updateMessagesHistorial(setMessagesHistorial, messagesHistorialPage, response.data !== "no_messages_between" ? response.data.messages_hist : [], messagesHistorial)
                 successfullyLoaded()
-            } else {
-                console.log('Error cargando mensajes!')
-                setLoadingState(response.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
+            } else if (response.status == 400){
+                if (response.data.error == "no_more_pages"){
+                    noMoreMessages.current = true
+                    successfullyLoaded()
+                }
+            } else if (response == BASE_FALLEN_SERVER_ERROR_MSG || response == BASE_UNEXPECTED_ERROR_MESSAGE){
+                setLoadingState(response.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado en respuesta del servidor, no se pudieron cargar los mensajes !')
             }
         }
     }
@@ -105,14 +109,15 @@ export function MessagesContainer({
     }, [messagesHistorial])
     useEffect(()=>{
         if (diferentUserHasBeenClicked(lastClickedUser, clickedUser)){
-            setMessagesHistorial([])
             messagesHistorialPage.current = 1
             noMoreMessages.current = false
         }
     }, [clickedUser])
     useEffect(()=>{
         if (newMsg){
-            sendMsg(newMsg)
+            (async function(){
+                await sendMsg(newMsg)
+            })();
         }
     }, [newMsg])
     return (
