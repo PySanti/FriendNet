@@ -13,16 +13,16 @@
 
     // eliminar uso de responseIsError
 
-    // implementar funcionalidad de SetLoadingState(dict[key])
-
-
-
+    // implementar funcionalidad de SetLoadingState(dict[key]) en todos lados
+    
     // repasar y refactorizar:
         // EnterChatApi y toda su implementacion
         // Home
         // MessagesContainer
         // Chat
         // executeSecuredApi
+    
+
 
 
     // eliminar todas las api's que no se usen

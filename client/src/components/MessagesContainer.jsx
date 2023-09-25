@@ -3,7 +3,7 @@ import { Message } from "./Message"
 import "../styles/MessagesContainer.css"
 import { v4 } from "uuid"
 import { useEffect, useState, useRef } from "react"
-import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
+import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_UNEXPECTED_ERROR_MESSAGE, BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
 import { getJWTFromLocalStorage } from "../utils/getJWTFromLocalStorage"
 import { useNavigate } from "react-router-dom"
 import {diferentUserHasBeenClicked} from "../utils/diferentUserHasBeenClicked"
@@ -11,7 +11,6 @@ import { sendMsgAPI } from "../api/sendMsg.api"
 import {NOTIFICATIONS_WEBSOCKET} from "../utils/constants"
 import {NotificationsWSNotificationBroadcastingMsg} from "../utils/NotificationsWSNotificationBroadcastingMsg"
 import {executeSecuredApi} from "../utils/executeSecuredApi"
-import {responseIsError} from "../utils/responseIsError"
 
 /**
  * Componente encargado de renderizar y mantener la lista de mensajes 
@@ -52,14 +51,18 @@ export function MessagesContainer({
             return await sendMsgAPI(clickedUser.id, data.msg, !groupFull, getJWTFromLocalStorage().access)
         }, navigate)
         if (response){
-            if (!responseIsError(response, 200)){
+            if (response.status == 200){
                 newMsgSendedSetter(response.data.sended_msg)
                 setNewNotificationId(response.data.sended_notification_id)
                 setMessagesHistorial([...messagesHistorial, response.data.sended_msg])
                 successfullyLoaded()
-            } else {
-                console.log('Error enviando mensaje!')
-                setLoadingState(response.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
+            } else if (response.status == 400){
+                setLoadingState('Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
+            } else if (response == BASE_FALLEN_SERVER_ERROR_MSG || response == BASE_UNEXPECTED_ERROR_MESSAGE){
+                setLoadingState({
+                    BASE_FALLEN_SERVER_ERROR_MSG : BASE_FALLEN_SERVER_LOG,
+                    BASE_UNEXPECTED_ERROR_MESSAGE : BASE_UNEXPECTED_ERROR_LOG
+                }[response])
             }
         }
     }
