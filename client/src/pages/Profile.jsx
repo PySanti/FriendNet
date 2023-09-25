@@ -16,10 +16,9 @@ import { v4 } from "uuid";
 import { saveUserDataInLocalStorage } from "../utils/saveUserDataInLocalStorage";
 import { getUserDataFromLocalStorage } from "../utils/getUserDataFromLocalStorage";
 import { dataIsDiferent } from "../utils/dataIsDiferent";
-import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG } from "../utils/constants"
+import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_UNEXPECTED_ERROR_LOG, BASE_UNEXPECTED_ERROR_MESSAGE } from "../utils/constants"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {executeSecuredApi} from "../utils/executeSecuredApi"
-import {responseIsError} from "../utils/responseIsError"
 
 /**
  * Pagina creada para llevar perfil de usuario, tanto para
@@ -39,21 +38,21 @@ export function Profile({ edit }) {
                 return await updateUserDataAPI( sendingData, getJWTFromLocalStorage().access)
             }, navigate)
             if (response){
-                if (!responseIsError(response, 200)){
+                if (response.status == 200){
                     profileData.photo_link = response.data.user_data_updated.photo_link
                     setProfileData(response.data.user_data_updated);
                     saveUserDataInLocalStorage(response.data.user_data_updated);
                     successfullyLoaded();
-                } else {
-                    if (response.message === BASE_FALLEN_SERVER_ERROR_MSG){
-                        setLoadingState(BASE_FALLEN_SERVER_LOG)
-                    } else {
-                        if (response.response.data.error === "cloudinary_error"){
-                            setLoadingState("Error con la nube!");
-                        } else {
-                            setLoadingState(response.response.data.error === "username_or_email_taken" ? "El usuario o el email ya están tomados !" : "Error inesperado al actualizar datos del usuario !");
-                        }
-                    }
+                } else if (response.status == 400){
+                    setLoadingState({
+                        "username_or_email_taken"   : "El usuario o el email ya están tomados !",
+                        "cloudinary_error"          : "Error al subir la imagen a la nube!"
+                    }[response.data.error])
+                } else if (response == BASE_FALLEN_SERVER_ERROR_MSG || response == BASE_UNEXPECTED_ERROR_MESSAGE){
+                    setLoadingState({
+                        BASE_FALLEN_SERVER_ERROR_MSG : BASE_FALLEN_SERVER_LOG,
+                        BASE_UNEXPECTED_ERROR_MESSAGE : BASE_UNEXPECTED_ERROR_LOG
+                    }[response])
                 }
             }
         } else {

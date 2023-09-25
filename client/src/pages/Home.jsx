@@ -26,7 +26,6 @@ import {NOTIFICATIONS_WEBSOCKET} from "../utils/constants"
 import {NotificationsWSInitialize} from "../utils/NotificationsWSInitialize"
 import {NotificationsWSUpdate} from "../utils/NotifcationsWSUpdate"
 import {executeSecuredApi} from "../utils/executeSecuredApi"
-import {responseIsError} from "../utils/responseIsError"
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_UNEXPECTED_ERROR_MESSAGE, BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
 import {enterChatAPI} from "../api/enterChat.api"
 import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
@@ -45,8 +44,8 @@ export function Home() {
     let [lastClickedUser, setLastClickedUser] = useState(null)
     let [currentUserIsOnline, setCurrentUserIsOnline]                   = useState(false)
     let [messagesHistorial, setMessagesHistorial]                       = useState([])
-
     let messagesHistorialPage                                           = useRef(1)
+
     const enterChatHandler = async ()=>{
         const relatedNotification = getRelatedNotification(clickedUser.id, notifications)
         startLoading()
@@ -92,12 +91,17 @@ export function Home() {
             return await notificationDeleteAPI(notification.id, getJWTFromLocalStorage().access )
         }, navigate)
         if (response){
-            if (!responseIsError(response, 200)){
+            if (response.status == 200){
                 const updatedNotifications = removeNotificationFromLocalStorage(notification)
                 saveNotificationsInLocalStorage(updatedNotifications)
                 setNotifications(updatedNotifications)
-            } else {
+            } else if (response.status == 400){
                 console.log('Error inesperado eliminando notificacion')
+            } else if (response == BASE_FALLEN_SERVER_ERROR_MSG || response == BASE_UNEXPECTED_ERROR_MESSAGE){
+                setLoadingState({
+                    BASE_FALLEN_SERVER_ERROR_MSG : BASE_FALLEN_SERVER_LOG,
+                    BASE_UNEXPECTED_ERROR_MESSAGE : BASE_UNEXPECTED_ERROR_LOG
+                }[response])
             }
         }
     }
