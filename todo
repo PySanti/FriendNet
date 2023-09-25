@@ -10,7 +10,6 @@
 
 // fase 3:
     // repasar, testear y refactorizar:
-        // Chat
         // executeSecuredApi
 
     // revisar si se usan los loadingStateHandlres cuando se desea
