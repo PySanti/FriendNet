@@ -9,9 +9,11 @@
 
 
 // fase 3:
-    // Implementar websockets para is_online?
+    // Implementar websockets para is_online
 
     // hacer que, cuando se desmonte el apps.jsx se limpie el localStorage
+
+    // testear notificaciones y websockets de notificaciones
 
     // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
     // ActivateUser, ChangeEmailForActivation, GetUserDetail, GetUsersList 
@@ -108,7 +110,7 @@
     // hacer que el notification-bell tenga un numero encima que represente la cantidad de notificaciones
     // revisar errores ortograficos
 
-    
+
 // Fase 5:
     // centrarnos en testear bien las imagenes (calidad, tiempos de carga, portabilidad )
     // testear bien UserFilter y buscar mas maneras de optimizar

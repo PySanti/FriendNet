@@ -37,10 +37,11 @@ class MessagesConsumer(WebsocketConsumer):
         value = event['value']
         value["type"] = "message_broadcast"
         self.send(text_data=json.dumps(value))
-    
+
     def group_info(self, event):
         value = event['value']
         value["type"] = "group_info"
         self.send(text_data=json.dumps(value))
 
-
+    def broadcast_connection_inform(self, event):
+        self.send(text_data=json.dumps(event['value']))

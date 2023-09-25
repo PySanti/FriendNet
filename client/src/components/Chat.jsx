@@ -57,6 +57,8 @@ export function Chat({
             MESSAGES_WEBSOCKET.current.onmessage = (event) => {
                 const data = JSON.parse(event.data)
                 const dataType = data.type
+                console.log('Recibiendo datos a traves del websocket de notificaciones')
+                console.log(data)
                 delete data.type
                 if (dataType === "message_broadcast"){
                     if (Number(data.parent_id) !== Number(sessionUserId)){
