@@ -28,12 +28,12 @@ export async function executeSecuredApi(apiCallingFunction, navigateFunc){
                 break
             } else if (error.response.status === 401){ // token
                 console.log('El token no es valido')
-                const successValidating = await refreshToken()
-                if (successValidating === BASE_LOGIN_REQUIRED_ERROR_MSG){
+                const refreshingResponse = await refreshToken()
+                if (refreshingResponse === BASE_LOGIN_REQUIRED_ERROR_MSG){
                     redirectExpiredUser(navigateFunc)
                     break
-                } else if (successValidating !== true){
-                    response = successValidating
+                } else if (refreshingResponse !== true){
+                    response = refreshingResponse
                     break
                 }
             } else { // api

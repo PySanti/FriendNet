@@ -54,7 +54,7 @@ export function Home() {
         }, navigate)
         if (response){
             if (response.status == 200){
-                updateMessagesHistorial(setMessagesHistorial, messagesHistorialPage, response.data !== "no_messages_between" ? response.data.messages_hist : [], messagesHistorial)
+                updateMessagesHistorial(setMessagesHistorial, messagesHistorialPage, response.data.messages_hist!== "no_messages_between" ? response.data.messages_hist : [], messagesHistorial)
                 setCurrentUserIsOnline(response.data.is_online)
                 if (relatedNotification && response.data.notification_deleted){
                     const updatedNotifications = removeNotificationFromLocalStorage(relatedNotification)
