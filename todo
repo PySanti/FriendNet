@@ -9,9 +9,6 @@
 
 
 // fase 3:
-    // revisar manejo de erroes en todas las executedSecureApis y seguir ejemplo de enterChat
-
-    // eliminar uso de responseIsError
 
     // implementar funcionalidad de SetLoadingState(dict[key]) en todos lados
 
