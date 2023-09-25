@@ -17,7 +17,7 @@ export async function enterChatAPI(receiverId, relatedNotificationId, accessToke
     config.headers = {
         'Authorization' : `Bearer ${accessToken}`
     }
-    return await axios.post(BACKEND_URL + 'api/enter_chat/', data, config)
+    return await axios.post(BACKEND_URL + 'api/enter_chat/?page=1', data, config)
 }
 
 
