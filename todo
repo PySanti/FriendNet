@@ -17,6 +17,8 @@
 
     // testear notificaciones y websockets de notificaciones
 
+    // revisar posible modularizacion de websockets
+
     // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
     // ActivateUser, ChangeEmailForActivation, GetUserDetail, GetUsersList 
 
