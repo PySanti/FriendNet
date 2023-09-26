@@ -12,7 +12,8 @@ export function NotificationsWSInitialize(userId){
         NOTIFICATIONS_WEBSOCKET.current.send(JSON.stringify(
             {
                 "type" : "connection_inform",
-                "session_user_id" : userId
+                "user_id" : userId,
+                'connected' : true
             }
         ))
     }

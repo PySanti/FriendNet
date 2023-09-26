@@ -43,7 +43,7 @@ class NotificationsConsumer(WebsocketConsumer):
 
 
         if (data['type'] == "connection_inform"):
-            for group in get_opened_groups_with_id(data["session_user_id"], self.channel_layer.groups):
+            for group in get_opened_groups_with_id(data["user_id"], self.channel_layer.groups):
                 print('Informando a ', group)
                 async_to_sync(self.channel_layer.group_send)(
                     group,
@@ -51,8 +51,8 @@ class NotificationsConsumer(WebsocketConsumer):
                         'type' : 'broadcast_connection_inform',
                         'value' : {
                             "type" : "connection_inform",
-                            "connected_user_id" : data['session_user_id'],
-                            "connected" : True
+                            "user_id" : data['user_id'],
+                            "connected" : data['connected']
                         }
                     }
                 ) 

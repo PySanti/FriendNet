@@ -70,7 +70,7 @@ export function Chat({
                     setGroupFull(data.group === "full" ? true : false)
                     console.log(data)
                 } else if (dataType === "connection_inform"){
-                    if (data['connected_user_id'] == clickedUser.id){
+                    if (data['user_id'] == clickedUser.id){
                         setCurrentUserIsOnline(data['connected'])
                     } else {
                         console.error('Error con el connection_inform')
