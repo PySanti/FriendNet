@@ -11,6 +11,8 @@
 // fase 3:
     // Repasar implementacion de connection_inform
 
+    // Repasar toda la implementacion de websockets
+    
     // Terminar connection_inform
 
     // hacer que, cuando se desmonte el apps.jsx se limpie el localStorage
