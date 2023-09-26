@@ -9,6 +9,9 @@
 
 
 // fase 3:
+    // Terminar implementacion de connection_inform
+    // Revisar si es necesario el uso de la fincion discard_if_found
+
     // Repasar implementacion de connection_inform
 
     // Repasar toda la implementacion de websockets
