@@ -9,6 +9,14 @@
 
 
 // fase 3:
+    // revisar posibles implementaciones de constantes
+
+    // revisar si todas las llamadas apis tengan soporte a servidor caido
+
+    // testear bien funcionalidad de userList y userFilter dado el cambio realizado para el uso de websockets
+
+    // revisar error que ocurre cuando se cargan todas las paginas de los usuarios y, al buscar a pysanti, aparecen 2
+
     // implementar states globales, sustant
 
     // testear group_info broadcasting, el problema viene dado por que la primera vez qur se recibe el broadcast, no hay un onmessage definido
@@ -22,14 +30,10 @@
 
     // revisar posibles problemas de escalabilidad con grupos en websockets. Ver casos de uso para multiples usuarios
 
-    // revisar error que ocurre cuando se cargan todas las paginas de los usuarios y, al buscar a pysanti, aparecen 2
 
     // reducir cantidad de props entre Chat-Home-MessagesContainer
-    // testear bien funcionalidad de userList y userFilter dado el cambio realizado para el uso de websockets
 
-    // revisar si todas las llamadas apis tengan soporte a servidor caido
 
-    // revisar posibles implementaciones de constantes
 
 
     // buscar o repasar funcionamiento de :
