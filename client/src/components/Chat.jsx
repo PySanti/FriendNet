@@ -14,24 +14,25 @@ import {ChatWSInitialize}               from "../utils/ChatWSInitialize"
  * Contenedor unicamente del chat entre el session user y el clicked user
  * @param {Number} sessionUserId id del usuario de la sesion
  * @param {Object} clickedUser info del usuario con el que se esta chateando
- * @param {Object} lastClickedUser
  * @param {Object} loadingStateHandlers
  * @param {Boolean} currentUserIsOnline
  * @param {Array} messagesHistorial
  * @param {Function} setMessagesHistorial
  * @param {Objects} messagesHistorialPage
  * @param {Function} setCurrentUserIsOnline
+ * @param {Object} noMoreMessages
 */
 export function Chat({
         sessionUserId, 
         clickedUser, 
-        lastClickedUser, 
         loadingStateHandlers,
         setCurrentUserIsOnline,
         currentUserIsOnline, 
         messagesHistorial, 
         setMessagesHistorial, 
-        messagesHistorialPage}){
+        messagesHistorialPage,
+        noMoreMessages
+    }){
 
     let [newMsg, setNewMsg]                                             = useState(null)
     let [newMsgSended, setNewMsgSended]                                 = useState(null)
@@ -84,7 +85,7 @@ export function Chat({
     return (
         <div className="chat-container">
             {clickedUser && <ChattingUserHeader chatingUser={clickedUser} isOnline={currentUserIsOnline}/>}
-            <MessagesContainer sessionUserId={sessionUserId}  clickedUser={clickedUser} lastClickedUser={lastClickedUser} loadingStateHandlers={loadingStateHandlers} newMsg={newMsg} messagesHistorial={messagesHistorial} setMessagesHistorial={setMessagesHistorial} newMsgSendedSetter={setNewMsgSended} groupFull={groupFull} messagesHistorialPage={messagesHistorialPage}/>
+            <MessagesContainer sessionUserId={sessionUserId}  clickedUser={clickedUser} loadingStateHandlers={loadingStateHandlers} newMsg={newMsg} messagesHistorial={messagesHistorial} setMessagesHistorial={setMessagesHistorial} newMsgSendedSetter={setNewMsgSended} groupFull={groupFull} messagesHistorialPage={messagesHistorialPage} noMoreMessages={noMoreMessages}/>
             {clickedUser && <MsgSendingInput onMsgSending={(newMsg)=>setNewMsg(newMsg)}/>}
         </div>
     )
@@ -93,11 +94,11 @@ export function Chat({
 Chat.propTypes = {
     sessionUserId : PropTypes.number.isRequired,
     clickedUser : PropTypes.object,
-    lastClickedUser : PropTypes.object,
     loadingStateHandlers : PropTypes.object.isRequired,
     currentUserIsOnline : PropTypes.bool.isRequired,
     messagesHistorial : PropTypes.array,
     setMessagesHistorial : PropTypes.func.isRequired,
     messagesHistorialPage : PropTypes.object.isRequired,
-    setCurrentUserIsOnline : PropTypes.func.isRequired
+    setCurrentUserIsOnline : PropTypes.func.isRequired,
+    noMoreMessages : PropTypes.object.isRequired
 }

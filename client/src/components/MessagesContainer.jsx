@@ -26,21 +26,22 @@ import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
  * @param {Object} newMsgSendedSetter objeto retornado por la api cuando el mensaje fue enviado exitosamente
  * @param {Object} groupFull
  * @param {Object} messagesHistorialPage
- */
+ * @param {Object} noMoreMessages  
+*/
 export function MessagesContainer({
         sessionUserId, 
         clickedUser, 
-        lastClickedUser, 
         loadingStateHandlers,
         newMsg, 
         messagesHistorial, 
         setMessagesHistorial,
         newMsgSendedSetter, 
         groupFull, 
-        messagesHistorialPage }){
+        messagesHistorialPage,
+        noMoreMessages
+    }){
     const containerRef                                                  = useRef(null)
     const navigate                                                      = useNavigate()
-    let noMoreMessages                                                  = useRef(false)
     let { setLoadingState,startLoading,  successfullyLoaded}            = loadingStateHandlers
     let [newNotificationId, setNewNotificationId]                       = useState(null)
 
@@ -91,6 +92,7 @@ export function MessagesContainer({
         if (e.target.scrollTop <= 0){
             messagesHistorialPage.current += 1
             if (!noMoreMessages.current){
+                console.log('Hola')
                 await loadMessages()
             }
         }
@@ -107,12 +109,6 @@ export function MessagesContainer({
             containerRef.current.scrollTop = containerRef.current.scrollHeight
         }
     }, [messagesHistorial])
-    useEffect(()=>{
-        if (diferentUserHasBeenClicked(lastClickedUser, clickedUser)){
-            messagesHistorialPage.current = 1
-            noMoreMessages.current = false
-        }
-    }, [clickedUser])
     useEffect(()=>{
         if (newMsg){
             (async function(){
@@ -136,12 +132,12 @@ export function MessagesContainer({
 MessagesContainer.propTypes = {
     sessionUserId : PropTypes.number.isRequired,
     clickedUser : PropTypes.object,
-    lastClickedUser : PropTypes.object,
     loadingStateHandlers : PropTypes.object.isRequired,
     newMsg : PropTypes.object,
     messagesHistorial : PropTypes.array,
     setMessagesHistorial : PropTypes.func,
     newMsgSendedSetter : PropTypes.func.isRequired,
     groupFull : PropTypes.bool.isRequired,
-    messagesHistorialPage : PropTypes.object.isRequired
+    messagesHistorialPage : PropTypes.object.isRequired,
+    noMoreMessages : PropTypes.object.isRequired
 }

@@ -5,6 +5,7 @@ from .ws_utils.print_pretty_groups import print_pretty_groups
 import json
 from .ws_utils.group_info_dict import group_info_dict
 from .ws_utils.bye_to_last_group import bye_to_last_group
+
 class ChatWSConsumer(WebsocketConsumer):
     def connect(self):
         self.accept()

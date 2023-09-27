@@ -45,6 +45,7 @@ export function Home() {
     let [currentUserIsOnline, setCurrentUserIsOnline]                   = useState(false)
     let [messagesHistorial, setMessagesHistorial]                       = useState([])
     let messagesHistorialPage                                           = useRef(1)
+    let noMoreMessages                                                  = useRef(false)
 
     const enterChatHandler = async ()=>{
         const relatedNotification = getRelatedNotification(clickedUser.id, notifications)
@@ -122,6 +123,8 @@ export function Home() {
     useEffect(()=>{
         if (diferentUserHasBeenClicked(lastClickedUser, clickedUser)){
             (async function() {
+                messagesHistorialPage.current = 1
+                noMoreMessages.current = false
                 setCurrentUserIsOnline(false)
                 await enterChatHandler()
             })();
@@ -167,6 +170,7 @@ export function Home() {
                             messagesHistorialPage={messagesHistorialPage}
                             currentUserIsOnline={currentUserIsOnline}
                             setCurrentUserIsOnline = {setCurrentUserIsOnline}
+                            noMoreMessages = {noMoreMessages}
                             />
                     </div>
                 </div>
