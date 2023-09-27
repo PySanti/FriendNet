@@ -72,8 +72,6 @@ export function Chat({
                 } else if (dataType === "connection_inform"){
                     if (data['user_id'] == clickedUser.id){
                         setCurrentUserIsOnline(data['connected'])
-                    } else {
-                        console.error('Error con el connection_inform')
                     }
                 }
             };

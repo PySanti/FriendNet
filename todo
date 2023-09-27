@@ -11,7 +11,7 @@
 // fase 3:
     // implementar states globales, sustant
 
-    // testear group_info broadcasting
+    // testear group_info broadcasting, el problema viene dado por que la primera vez qur se recibe el broadcast, no hay un onmessage definido
 
     // revisar problema de no_more_pages al entrar al chatz
 
