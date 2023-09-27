@@ -3,7 +3,7 @@ import { MessagesContainer } from "./MessagesContainer"
 import { ChattingUserHeader } from "./ChatingUserHeader"
 import { MsgSendingInput } from "./MsgSendingInput"
 import {PropTypes} from "prop-types"
-import {MESSAGES_WEBSOCKET} from "../utils/constants"
+import {CHAT_WEBSOCKET} from "../utils/constants"
 import {MessagesWSGroupBroadcastingMessage} from "../utils/MessagesWSGroupBroadcastingMessage" 
 import {MessagesWSGroupCreationMsg}         from "../utils/MessagesWSGroupCreationMsg"
 import {MessagesWSGroupName}                from "../utils/MessagesWSGroupName"
@@ -40,23 +40,23 @@ export function Chat({
 
     useEffect(()=>{
         if (clickedUser){
-            if (!MESSAGES_WEBSOCKET.current){
+            if (!CHAT_WEBSOCKET.current){
                 MessagesWSInitialize(sessionUserId, clickedUser.id)
             } else {
-                MESSAGES_WEBSOCKET.current.send(MessagesWSGroupCreationMsg(MessagesWSGroupName(sessionUserId, clickedUser.id)))
+                CHAT_WEBSOCKET.current.send(MessagesWSGroupCreationMsg(MessagesWSGroupName(sessionUserId, clickedUser.id)))
             }
         }
     }, [clickedUser])
 
     useEffect(()=>{
-        if (newMsgSended && MESSAGES_WEBSOCKET.current){
-            MESSAGES_WEBSOCKET.current.send(MessagesWSGroupBroadcastingMessage(MessagesWSGroupName(sessionUserId, clickedUser.id), newMsgSended))
+        if (newMsgSended && CHAT_WEBSOCKET.current){
+            CHAT_WEBSOCKET.current.send(MessagesWSGroupBroadcastingMessage(MessagesWSGroupName(sessionUserId, clickedUser.id), newMsgSended))
             setNewMsgSended(null)
         }
     }, [newMsgSended])
     useEffect(()=>{
-        if (MESSAGES_WEBSOCKET.current){
-            MESSAGES_WEBSOCKET.current.onmessage = (event) => {
+        if (CHAT_WEBSOCKET.current){
+            CHAT_WEBSOCKET.current.onmessage = (event) => {
                 const data = JSON.parse(event.data)
                 const dataType = data.type
                 console.log('Recibiendo datos a traves del websocket de notificaciones')

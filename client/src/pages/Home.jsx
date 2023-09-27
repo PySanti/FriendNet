@@ -19,7 +19,7 @@ import { saveNotificationsInLocalStorage } from "../utils/saveNotificationsInLoc
 import {diferentUserHasBeenClicked} from "../utils/diferentUserHasBeenClicked"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import {disconnectWebsocket} from "../utils/disconnectWebsocket" 
-import {MESSAGES_WEBSOCKET} from "../utils/constants"
+import {CHAT_WEBSOCKET} from "../utils/constants"
 import {notificationDeleteAPI} from "../api/notificationDelete.api"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {NOTIFICATIONS_WEBSOCKET} from "../utils/constants" 
@@ -116,7 +116,7 @@ export function Home() {
         }
         return ()=>{
             // esto se ejecutara cuando el componente sea desmontado
-            disconnectWebsocket(MESSAGES_WEBSOCKET)
+            disconnectWebsocket(CHAT_WEBSOCKET)
         }
     }, [])
     useEffect(()=>{

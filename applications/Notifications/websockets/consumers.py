@@ -11,7 +11,7 @@ from applications.Chats.websockets.ws_utils.messages_group_name import messages_
 from .ws_utils.get_opened_groups_with_id import get_opened_groups_with_id
 from .ws_utils.connection_inform_dict import connection_inform_dict 
 
-class NotificationsConsumer(WebsocketConsumer):
+class NotificationsWSConsumer(WebsocketConsumer):
     def connect(self):
         self.accept()
         print(f'-> Estableciendo conexion con websocket de notificaciones')
