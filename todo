@@ -9,13 +9,13 @@
 
 
 // fase 3:
-    // repasar implementacion de websockets completa
-
-    // cambiar el nombre de MESSAGES_WEBSOCKET Por CHAT_WEBSOCKET
-
-    // hacer que, cuando se desmonte el apps.jsx se limpie el localStorage
+    // cambiar el nombre de MESSAGES_WEBSOCKET Por CHAT_WEBSOCKET y testear cambios (revisar nombres de funciones tambien)
 
     // testear notificaciones y websockets de notificaciones
+
+    // repasar implementacion de websockets completa
+
+    // hacer que, cuando se desmonte el apps.jsx se limpie el localStorage
 
     // revisar posible modularizacion de websockets
 
