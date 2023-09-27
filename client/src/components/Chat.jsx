@@ -4,10 +4,10 @@ import { ChattingUserHeader } from "./ChatingUserHeader"
 import { MsgSendingInput } from "./MsgSendingInput"
 import {PropTypes} from "prop-types"
 import {CHAT_WEBSOCKET} from "../utils/constants"
-import {MessagesWSGroupBroadcastingMessage} from "../utils/MessagesWSGroupBroadcastingMessage" 
-import {MessagesWSGroupCreationMsg}         from "../utils/MessagesWSGroupCreationMsg"
-import {MessagesWSGroupName}                from "../utils/MessagesWSGroupName"
-import {MessagesWSInitialize} from "../utils/MessagesWSInitialize"
+import {ChatWSGroupBroadcastingMessage} from "../utils/ChatWSGroupBroadcastingMessage" 
+import {ChatWSGroupCreationMsg}         from "../utils/ChatWSGroupCreationMsg"
+import {ChatWSGroupName}                from "../utils/ChatWSGroupName"
+import {ChatWSInitialize}               from "../utils/ChatWSInitialize"
 
 /**
  * 
@@ -41,16 +41,16 @@ export function Chat({
     useEffect(()=>{
         if (clickedUser){
             if (!CHAT_WEBSOCKET.current){
-                MessagesWSInitialize(sessionUserId, clickedUser.id)
+                ChatWSInitialize(sessionUserId, clickedUser.id)
             } else {
-                CHAT_WEBSOCKET.current.send(MessagesWSGroupCreationMsg(MessagesWSGroupName(sessionUserId, clickedUser.id)))
+                CHAT_WEBSOCKET.current.send(ChatWSGroupCreationMsg(ChatWSGroupName(sessionUserId, clickedUser.id)))
             }
         }
     }, [clickedUser])
 
     useEffect(()=>{
         if (newMsgSended && CHAT_WEBSOCKET.current){
-            CHAT_WEBSOCKET.current.send(MessagesWSGroupBroadcastingMessage(MessagesWSGroupName(sessionUserId, clickedUser.id), newMsgSended))
+            CHAT_WEBSOCKET.current.send(ChatWSGroupBroadcastingMessage(ChatWSGroupName(sessionUserId, clickedUser.id), newMsgSended))
             setNewMsgSended(null)
         }
     }, [newMsgSended])
