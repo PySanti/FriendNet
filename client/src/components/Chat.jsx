@@ -60,7 +60,7 @@ export function Chat({
             CHAT_WEBSOCKET.current.onmessage = (event) => {
                 const data = JSON.parse(event.data)
                 const dataType = data.type
-                console.log('Recibiendo datos a traves del websocket de notificaciones')
+                console.log('Recibiendo datos a traves del websocket de mensajes')
                 console.log(data)
                 delete data.type
                 if (dataType === "message_broadcast"){
@@ -69,7 +69,6 @@ export function Chat({
                     }
                 } else if (dataType === "group_info"){
                     setGroupFull(data.group === "full" ? true : false)
-                    console.log(data)
                 } else if (dataType === "connection_inform"){
                     if (data['user_id'] == clickedUser.id){
                         setCurrentUserIsOnline(data['connected'])
