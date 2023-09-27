@@ -9,6 +9,7 @@ from applications.Usuarios.utils.constants import USERS_LIST_ATTRS
 from applications.Usuarios.models import Usuarios
 from applications.Chats.websockets.ws_utils.messages_group_name import messages_group_name
 from .ws_utils.get_opened_groups_with_id import get_opened_groups_with_id
+from .ws_utils.connection_inform_dict import connection_inform_dict 
 
 class NotificationsConsumer(WebsocketConsumer):
     def connect(self):
@@ -19,18 +20,7 @@ class NotificationsConsumer(WebsocketConsumer):
         print('-> Desconectando websocket de notificacion')
         group_name = discard_channel_if_found(self.channel_layer, self.channel_name)
         for group in get_opened_groups_with_id(group_name, self.channel_layer.groups):
-            print('Informando a ', group)
-            async_to_sync(self.channel_layer.group_send)(
-                group,
-                {
-                    'type' : 'broadcast_connection_inform',
-                    'value' : {
-                        "type" : "connection_inform",
-                        "user_id" : group_name,
-                        "connected" : False
-                    }
-                }
-            ) 
+            async_to_sync(self.channel_layer.group_send)(group,connection_inform_dict(group_name, False))
 
     def receive(self, text_data):
         data = json.loads(text_data)
@@ -57,18 +47,7 @@ class NotificationsConsumer(WebsocketConsumer):
 
         if (data['type'] == "connection_inform"):
             for group in get_opened_groups_with_id(data["user_id"], self.channel_layer.groups):
-                print('Informando a ', group)
-                async_to_sync(self.channel_layer.group_send)(
-                    group,
-                    {
-                        'type' : 'broadcast_connection_inform',
-                        'value' : {
-                            "type" : "connection_inform",
-                            "user_id" : data['user_id'],
-                            "connected" : data['connected']
-                        }
-                    }
-                ) 
+                async_to_sync(self.channel_layer.group_send)(group,connection_inform_dict(data['user_id'], data['connected']))
 
         print_pretty_groups(self.channel_layer.groups)
 
