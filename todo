@@ -15,9 +15,6 @@
 
     // repasar implementacion de websockets completa
 
-    // hacer que, cuando se desmonte el apps.jsx se limpie el localStorage
-
-    // revisar posible modularizacion de websockets
 
     // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
     // ActivateUser, ChangeEmailForActivation, GetUserDetail, GetUsersList 
