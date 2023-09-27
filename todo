@@ -13,6 +13,8 @@
 
     // implementar funcion para estandarizar connection_inform_dict desde el front
 
+    // cambiar el nombre de MESSAGES_WEBSOCKET Por CHAT_WEBSOCKET
+
     // hacer que, cuando se desmonte el apps.jsx se limpie el localStorage
 
     // testear notificaciones y websockets de notificaciones
