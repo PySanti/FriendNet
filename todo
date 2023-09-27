@@ -11,7 +11,9 @@
 // fase 3:
     // implementar states globales, sustant
 
-    // testear notificaciones y websockets de notificaciones
+    // testear group_information
+
+    // revisar problema de no_more_pages al entrar al chatz
 
     // repasar implementacion de websockets completa
 
