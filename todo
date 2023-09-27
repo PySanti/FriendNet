@@ -9,14 +9,9 @@
 
 
 // fase 3:
-    // Terminar implementacion de connection_inform
-    // Revisar si es necesario el uso de la fincion discard_if_found
+    // repasar implementacion de websockets completa
 
-    // Repasar implementacion de connection_inform
-
-    // Repasar toda la implementacion de websockets
-    
-    // Terminar connection_inform
+    // implementar funcion para estandarizar connection_inform_dict desde el front
 
     // hacer que, cuando se desmonte el apps.jsx se limpie el localStorage
 
