@@ -13,8 +13,6 @@
 
     // testear group_info broadcasting, el problema viene dado por que la primera vez qur se recibe el broadcast, no hay un onmessage definido
 
-    // revisar problema de no_more_pages al entrar al chatz
-
     // repasar implementacion de websockets completa
 
     // hacer que, cuando se desmonte el apps.jsx se limpie el localStorage

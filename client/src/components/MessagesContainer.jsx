@@ -91,8 +91,8 @@ export function MessagesContainer({
     const scrollHandler = async (e)=>{
         if (e.target.scrollTop <= 0){
             messagesHistorialPage.current += 1
-            if (!noMoreMessages.current){
-                console.log('Hola')
+            if (!noMoreMessages.current && messagesHistorial.length >= 10){  
+                // la ultima condicion se pone para evitar que se llame a la api cuando no se ha scrolleado
                 await loadMessages()
             }
         }
