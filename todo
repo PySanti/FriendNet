@@ -9,9 +9,9 @@
 
 
 // fase 3:
-    // revisar posibles implementaciones de constantes
+    // agregar soporte para server caido en la llamada a sendActivationCodeApi y refreshTokenApi
 
-    // revisar si todas las llamadas apis tengan soporte a servidor caido
+    // revisar posibles implementaciones de constantes
 
     // testear bien funcionalidad de userList y userFilter dado el cambio realizado para el uso de websockets
 
