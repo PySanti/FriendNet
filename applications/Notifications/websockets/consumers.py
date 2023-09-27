@@ -17,7 +17,20 @@ class NotificationsConsumer(WebsocketConsumer):
 
     def disconnect(self, close_code):
         print('-> Desconectando websocket de notificacion')
-        discard_channel_if_found(self.channel_layer, self.channel_name)
+        group_name = discard_channel_if_found(self.channel_layer, self.channel_name)
+        for group in get_opened_groups_with_id(group_name, self.channel_layer.groups):
+            print('Informando a ', group)
+            async_to_sync(self.channel_layer.group_send)(
+                group,
+                {
+                    'type' : 'broadcast_connection_inform',
+                    'value' : {
+                        "type" : "connection_inform",
+                        "user_id" : group_name,
+                        "connected" : False
+                    }
+                }
+            ) 
 
     def receive(self, text_data):
         data = json.loads(text_data)
