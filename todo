@@ -9,8 +9,6 @@
 
 
 // fase 3:
-    // cambiar el nombre de MESSAGES_WEBSOCKET Por CHAT_WEBSOCKET y testear cambios (revisar nombres de funciones tambien)
-
     // testear notificaciones y websockets de notificaciones
 
     // repasar implementacion de websockets completa
