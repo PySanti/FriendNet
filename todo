@@ -15,11 +15,8 @@
 
     // repasar implementacion de websockets completa
 
-
     // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
-    // ActivateUser, ChangeEmailForActivation, GetUserDetail, GetUsersList 
-
-    // revisar sistema de uso de userKeyword, cada vez que se cambia esa vriable se vuelve a renderizar el componente
+    // ActivateUser, ChangeEmailForActivation, GetUserDetail, GetUsersList
 
     // revisar problemas de rendimiento de red en el userList y getMessagesHistorial (muy lento)
 
