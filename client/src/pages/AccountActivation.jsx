@@ -30,7 +30,14 @@ export function AccountActivation() {
     const handleActivationCodeSending = async ()=>{
         setLoadingState(false);
         console.log(realActivationCode.current)
-        await sendActivationEmailAPI(props.userEmail, props.username, realActivationCode.current)
+        try{
+            const response = await sendActivationEmailAPI(props.userEmail, props.username, realActivationCode.current)
+            successfullyLoaded()
+        } catch(error){
+            if (error.message == BASE_FALLEN_SERVER_ERROR_MSG){
+                setLoadingState(BASE_FALLEN_SERVER_LOG)
+            }
+        }
     }
     const onSubmit = handleSubmit(async (data) => {
         startLoading();
