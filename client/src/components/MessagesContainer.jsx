@@ -101,7 +101,6 @@ export function MessagesContainer({
     useEffect(()=>{
         if (newNotificationId){
             NOTIFICATIONS_WEBSOCKET.current.send(NotificationsWSNotificationBroadcastingMsg(newNotificationId, clickedUser.id, sessionUserId))
-            console.log('Id de la nueva notificacion ', newNotificationId)
         }
     }, [newNotificationId])
     useEffect(()=>{

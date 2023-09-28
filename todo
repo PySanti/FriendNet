@@ -9,12 +9,14 @@
 
 
 // fase 3:
+    // Modificar implementacion de websockets para que : Al enviar un mensaje, se compruebe directamente en el backend
+    // si el websocket de notificaciones del receiver_user esta abierto y si en el chat entre el session_user y el receiver user
+    // no hay dos channels, en ese caso, enviar directamente el broadcast de la notificacion desde el backend. De Este modo ahorraremos
+    // muchas operaciones, states, etc ... 
 
     // revisar posibles implementaciones de constantes
 
     // implementar states globales, sustant
-
-    // testear group_info broadcasting, el problema viene dado por que la primera vez qur se recibe el broadcast, no hay un onmessage definido
 
     // repasar implementacion de websockets completa
 
