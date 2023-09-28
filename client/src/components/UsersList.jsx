@@ -33,13 +33,11 @@ export function UsersList({onClickEvent, chatGlobeList, loadingStateHandlers, se
         }
     }
     const loadUsersList = async ()=>{
-        startLoading()
         try{
             setLoaderActivated(true)
             let response = await getUsersListAPI(!userKeyword || userKeyword.length === 0 ? undefined : userKeyword, sessionUserId, userListPage.current)
             updateUserList(response.data.users_list)
             setLoaderActivated(false)
-            successfullyLoaded()
         } catch(error){
             if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
                 setLoadingState(BASE_FALLEN_SERVER_LOG)
@@ -47,7 +45,6 @@ export function UsersList({onClickEvent, chatGlobeList, loadingStateHandlers, se
                 if (error.response.data.error=== "no_more_pages"){
                     noMoreUsers.current = true
                     setLoaderActivated(false)
-                    successfullyLoaded()
                 } else {
                     setLoadingState('Error inesperado cargando datos de usuarios!')
                 }

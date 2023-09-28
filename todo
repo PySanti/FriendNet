@@ -12,10 +12,6 @@
 
     // revisar posibles implementaciones de constantes
 
-    // testear bien funcionalidad de userList y userFilter dado el cambio realizado para el uso de websockets
-
-    // revisar error que ocurre cuando se cargan todas las paginas de los usuarios y, al buscar a pysanti, aparecen 2
-
     // implementar states globales, sustant
 
     // testear group_info broadcasting, el problema viene dado por que la primera vez qur se recibe el broadcast, no hay un onmessage definido
