@@ -66,7 +66,7 @@ export function MessagesContainer({
     const sendMsg = async (data)=>{
         startLoading()
         const response = await executeSecuredApi(async ()=>{
-            return await sendMsgAPI(clickedUser.id, data.msg, !groupFull, getJWTFromLocalStorage().access)
+            return await sendMsgAPI(clickedUser.id, data.msg, getJWTFromLocalStorage().access)
         }, navigate)
         if (response){
             if (response.status == 200){

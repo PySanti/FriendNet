@@ -9,10 +9,9 @@
 
 
 // fase 3:
-
-    // reemplazar funcionamiento de group_information con notifications_websocket_is_opened y messages_group_is_full
-
     // testear optimizaciones hechas por el group_full
+
+    // implementar notifications broadcasting de notificaciones desde el mismo backend
 
     // tratar de realizar una optimizacion similar con los mensajes
 
