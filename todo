@@ -9,10 +9,11 @@
 
 
 // fase 3:
-    // Modificar implementacion de websockets para que : Al enviar un mensaje, se compruebe directamente en el backend
-    // si el websocket de notificaciones del receiver_user esta abierto y si en el chat entre el session_user y el receiver user
-    // no hay dos channels, en ese caso, enviar directamente el broadcast de la notificacion desde el backend. De Este modo ahorraremos
-    // muchas operaciones, states, etc ... Posteriormente, revisar si podemos realizar el mismo tipo de optimizacion con las notificaciones
+    // eliminar todo rasto de group_full y de group_information
+
+    // reemplazar funcionamiento de group_information con notifications_websocket_is_opened y messages_group_is_full
+
+    // tratar de realizar una optimizacion similar con los mensajes
 
     // revisar posibles implementaciones de constantes
 
