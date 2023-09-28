@@ -36,7 +36,6 @@ export function Chat({
 
     let [newMsg, setNewMsg]                                             = useState(null)
     let [newMsgSended, setNewMsgSended]                                 = useState(null)
-    let [groupFull, setGroupFull]                                       = useState(false)
 
 
     useEffect(()=>{
@@ -67,8 +66,6 @@ export function Chat({
                     if (Number(data.parent_id) !== Number(sessionUserId)){
                         setMessagesHistorial([...messagesHistorial, data])
                     }
-                } else if (dataType === "group_info"){
-                    setGroupFull(data.group === "full" ? true : false)
                 } else if (dataType === "connection_inform"){
                     if (data['user_id'] == clickedUser.id){
                         setCurrentUserIsOnline(data['connected'])
@@ -82,7 +79,7 @@ export function Chat({
     return (
         <div className="chat-container">
             {clickedUser && <ChattingUserHeader chatingUser={clickedUser} isOnline={currentUserIsOnline}/>}
-            <MessagesContainer sessionUserId={sessionUserId}  clickedUser={clickedUser} loadingStateHandlers={loadingStateHandlers} newMsg={newMsg} messagesHistorial={messagesHistorial} setMessagesHistorial={setMessagesHistorial} newMsgSendedSetter={setNewMsgSended} groupFull={groupFull} messagesHistorialPage={messagesHistorialPage} noMoreMessages={noMoreMessages}/>
+            <MessagesContainer sessionUserId={sessionUserId}  clickedUser={clickedUser} loadingStateHandlers={loadingStateHandlers} newMsg={newMsg} messagesHistorial={messagesHistorial} setMessagesHistorial={setMessagesHistorial} newMsgSendedSetter={setNewMsgSended} messagesHistorialPage={messagesHistorialPage} noMoreMessages={noMoreMessages}/>
             {clickedUser && <MsgSendingInput onMsgSending={(newMsg)=>setNewMsg(newMsg)}/>}
         </div>
     )

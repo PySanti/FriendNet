@@ -9,17 +9,19 @@
 
 
 // fase 3:
-    // eliminar todo rasto de group_full y de group_information
 
     // reemplazar funcionamiento de group_information con notifications_websocket_is_opened y messages_group_is_full
 
+    // testear optimizaciones hechas por el group_full
+
     // tratar de realizar una optimizacion similar con los mensajes
+
+    // repasar implementacion de websockets completa
 
     // revisar posibles implementaciones de constantes
 
     // implementar states globales, sustant
 
-    // repasar implementacion de websockets completa
 
     // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
     // ActivateUser, ChangeEmailForActivation, GetUserDetail, GetUsersList

@@ -24,7 +24,7 @@ import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
  * @param {Array} messagesHistorial
  * @param {Function} setMessagesHistorial
  * @param {Object} newMsgSendedSetter objeto retornado por la api cuando el mensaje fue enviado exitosamente
- * @param {Object} groupFull
+
  * @param {Object} messagesHistorialPage
  * @param {Object} noMoreMessages  
 */
@@ -35,8 +35,7 @@ export function MessagesContainer({
         newMsg, 
         messagesHistorial, 
         setMessagesHistorial,
-        newMsgSendedSetter, 
-        groupFull, 
+        newMsgSendedSetter,  
         messagesHistorialPage,
         noMoreMessages
     }){
@@ -136,7 +135,6 @@ MessagesContainer.propTypes = {
     messagesHistorial : PropTypes.array,
     setMessagesHistorial : PropTypes.func,
     newMsgSendedSetter : PropTypes.func.isRequired,
-    groupFull : PropTypes.bool.isRequired,
     messagesHistorialPage : PropTypes.object.isRequired,
     noMoreMessages : PropTypes.object.isRequired
 }
