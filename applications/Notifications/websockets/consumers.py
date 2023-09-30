@@ -31,7 +31,7 @@ class NotificationsWSConsumer(WebsocketConsumer):
             if str(data["receiver_user_id"]) in self.channel_layer.groups: 
                 target_notification = Notifications.objects.filter(id=data["notification_id"]).values("msg", "id")[0]
                 target_notification["sender_user"] = Usuarios.objects.filter(id=data["session_user_id"]).values(*USERS_LIST_ATTRS)[0]
-                broadcast_notification(data['session_user_id'], data['receiver_user_id'], target_notification)
+                #broadcast_notification(data['session_user_id'], data['receiver_user_id'], target_notification)
             else:
                 print('El receiver user no tiene channel abierto')
 

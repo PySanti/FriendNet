@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from applications.Usuarios.utils.constants import BASE_NO_MORE_PAGES_RESPONSE
+from applications.Usuarios.utils.constants import BASE_NO_MORE_PAGES_RESPONSE, USERS_LIST_ATTRS
 from rest_framework.views import (
     APIView,
 )
@@ -33,6 +33,7 @@ from applications.Notifications.models import Notifications
 # Create your views here.
 from .websockets.ws_utils.notification_wesocket_is_opened import notification_wesocket_is_opened
 from .websockets.ws_utils.messages_group_is_full import messages_group_is_full
+from applications.Notifications.websockets.ws_utils.broadcast_notification import broadcast_notification
 
 class GetMessagesHistorialAPI(APIView):
     serializer_class        =  GetMessagesHistorialSerializer
@@ -68,15 +69,19 @@ class SendMsgAPI(APIView):
             try:
                 sender_user = request.user
                 receiver_user = Usuarios.objects.get(id=request.data['receiver_id'])
-                new_notification_id = None
+                new_notification = None
                 if (not Notifications.objects.hasNotification(receiver_user, sender_user) and (not messages_group_is_full(receiver_user.id, sender_user.id))):
-                    new_notification_id = Notifications.objects.addNotification(f"Tienes mensajes nuevos de {sender_user.username}", receiver_user, sender_user)
+                    new_notification = Notifications.objects.addNotification(f"Tienes mensajes nuevos de {sender_user.username}", receiver_user, sender_user)
+                    new_notification = Notifications.objects.filter(id=new_notification.id).values("msg", "id")[0]
+                    if (notification_wesocket_is_opened(receiver_user.id)):
+                        new_notification["sender_user"] = Usuarios.objects.filter(id=sender_user.id).values(*USERS_LIST_ATTRS)[0]
+                        broadcast_notification(receiver_user.id, sender_user.id, new_notification)
                 new_message = Messages.objects.createMessage(parent=sender_user, content=request.data['msg'])
                 Chats.objects.sendMessage(sender_user, receiver_user,new_message)
                 new_message_values = new_message.__dict__.copy()
                 del new_message_values['_state']
-                return JsonResponse({'sended_msg' : new_message_values, 'sended_notification_id' : new_notification_id }, status=status.HTTP_200_OK)
-            except Exception:
+                return JsonResponse({'sended_msg' : new_message_values, 'sended_notification_id' : new_notification["id"] if new_notification else None }, status=status.HTTP_200_OK)
+            except:
                 return BASE_UNEXPECTED_ERROR_RESPONSE
         else:
             return BASE_SERIALIZER_ERROR_RESPONSE
