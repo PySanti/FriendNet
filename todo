@@ -10,8 +10,6 @@
 
 // fase 3:
 
-    // testear nuevo sistema de notifications broadcasting
-
     // tratar de realizar una optimizacion similar con los mensajes
 
     // repasar implementacion de websockets completa
