@@ -13,8 +13,6 @@
 
     // revisar posibles implementaciones de constantes
 
-    // revisar bien la desconexion de websockets de notificaciones y la comprobacion para login de user is_online
-
     // no permitir que se cree un notifications_websocket si ya existe un grupo con el id
 
     // implementar states globales, sustant

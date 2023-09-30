@@ -7,7 +7,7 @@ def discard_channel_if_found(target_channel):
         Si el canal es encontrado en algun grupo, lo elimina y retorna True
         Si el canal no es encontrado en nigun grupo, retorna False
     """
-    channel_layer = get_channel_layer
+    channel_layer = get_channel_layer()
     for group_name,channels in channel_layer.groups.copy().items():
         if target_channel in channels:
             async_to_sync(channel_layer.group_discard)(group_name, target_channel)
