@@ -27,10 +27,8 @@ class NotificationsWSConsumer(WebsocketConsumer):
         data = json.loads(text_data)
         if (data["type"] == "group_creation"):
             async_to_sync(self.channel_layer.group_add)(str(data['name']),self.channel_name)
-
-        if (data['type'] == "connection_inform"):
-            for group in get_opened_groups_with_id(data["user_id"], self.channel_layer.groups):
-                async_to_sync(self.channel_layer.group_send)(group,connection_inform_dict(data['user_id'], data['connected']))
+            for group in get_opened_groups_with_id(data["name"], self.channel_layer.groups):
+                async_to_sync(self.channel_layer.group_send)(group,connection_inform_dict(data['name'], True))
 
         print_pretty_groups(self.channel_layer.groups)
 
