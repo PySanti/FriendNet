@@ -9,7 +9,9 @@
 
 
 // fase 3:
-    // implementar notifications broadcasting de notificaciones desde el mismo backend
+    // eliminar todo rastro de antiguo sistema de notificacionts broadcasting
+
+    // testear nuevo sistema de notifications broadcasting
 
     // tratar de realizar una optimizacion similar con los mensajes
 
