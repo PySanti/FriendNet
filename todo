@@ -9,9 +9,6 @@
 
 
 // fase 3:
-    // testear broadcasting de notificaciones dados los cambios hechos
-
-
     // revisar posibles implementaciones de constantes
 
     // no permitir que se cree un notifications_websocket si ya existe un grupo con el id

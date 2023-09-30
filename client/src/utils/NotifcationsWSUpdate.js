@@ -15,7 +15,7 @@ export function NotificationsWSUpdate(sessionUserId, newNotifications, notificat
                 saveNotificationsInLocalStorage(updatedNotifications)
             }
         } else if (data.type == "connection_error"){
-            
+            //
         }
     }
 }
