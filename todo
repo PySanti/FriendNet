@@ -9,12 +9,15 @@
 
 
 // fase 3:
+    // implementar states globales, zustand
+
+    // reducir cantidad de props entre Chat-Home-MessagesContainer
+
+    // revisar posibles problemas de escalabilidad con grupos en websockets. Ver casos de uso para multiples usuarios
 
     // revisar error de id's con creacion de notificaciones
 
     // revisar posibles implementaciones de constantes
-
-    // implementar states globales, sustant
 
 
     // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
@@ -22,10 +25,8 @@
 
     // revisar problemas de rendimiento de red en el userList y getMessagesHistorial (muy lento)
 
-    // revisar posibles problemas de escalabilidad con grupos en websockets. Ver casos de uso para multiples usuarios
 
 
-    // reducir cantidad de props entre Chat-Home-MessagesContainer
 
 
 
