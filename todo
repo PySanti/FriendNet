@@ -9,13 +9,14 @@
 
 
 // fase 3:
-    // revisar posibles implementaciones de constantes
+    // testear y repasar ultimas modificaciones
 
-    // no permitir que se cree un notifications_websocket si ya existe un grupo con el id
+    // revisar error de id's con creacion de notificaciones
+
+    // revisar posibles implementaciones de constantes
 
     // implementar states globales, sustant
 
-    // revisar error de id's con creacion de notificaciones
 
     // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
     // ActivateUser, ChangeEmailForActivation, GetUserDetail, GetUsersList
