@@ -10,6 +10,7 @@ from applications.Usuarios.models import Usuarios
 from applications.Chats.websockets.ws_utils.messages_group_name import messages_group_name
 from .ws_utils.get_opened_groups_with_id import get_opened_groups_with_id
 from .ws_utils.connection_inform_dict import connection_inform_dict 
+from .ws_utils.broadcast_notification import broadcast_notification
 
 class NotificationsWSConsumer(WebsocketConsumer):
     def connect(self):
@@ -27,23 +28,12 @@ class NotificationsWSConsumer(WebsocketConsumer):
         if (data["type"] == "group_creation"):
             async_to_sync(self.channel_layer.group_add)(str(data['name']),self.channel_name)
         if (data["type"] == "notification_broadcasting"):
-            try:
-                receiver_channel = self.channel_layer.groups[str(data["receiver_user_id"])]
-            except KeyError:
-                print('El receiver user no tiene un channel abierto')
-            else:
+            if str(data["receiver_user_id"]) in self.channel_layer.groups: 
                 target_notification = Notifications.objects.filter(id=data["notification_id"]).values("msg", "id")[0]
                 target_notification["sender_user"] = Usuarios.objects.filter(id=data["session_user_id"]).values(*USERS_LIST_ATTRS)[0]
-                receiver_channel = list(receiver_channel.keys())[0]
-                group_name = notifications_group_name(data["session_user_id"], data["receiver_user_id"])
-                async_to_sync(self.channel_layer.group_add)(group_name, self.channel_name)
-                async_to_sync(self.channel_layer.group_add)(group_name,receiver_channel)
-
-                async_to_sync(self.channel_layer.group_send)(group_name,{    'type' : 'broadcast_notification',    'value' : target_notification})
-
-                async_to_sync(self.channel_layer.group_discard)(group_name, self.channel_name)
-                async_to_sync(self.channel_layer.group_discard)(group_name, receiver_channel)
-
+                broadcast_notification(data['session_user_id'], data['receiver_user_id'], target_notification)
+            else:
+                print('El receiver user no tiene channel abierto')
 
         if (data['type'] == "connection_inform"):
             for group in get_opened_groups_with_id(data["user_id"], self.channel_layer.groups):
@@ -51,5 +41,5 @@ class NotificationsWSConsumer(WebsocketConsumer):
 
         print_pretty_groups(self.channel_layer.groups)
 
-    def broadcast_notification(self, event):
+    def broadcast_notification_handler(self, event):
         self.send(text_data=json.dumps(event['value']))
