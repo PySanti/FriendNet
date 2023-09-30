@@ -11,6 +11,8 @@
 // fase 3:
     // implementar states globales, zustand
 
+    // hacer el loadingState un state global
+
     // reducir cantidad de props entre Chat-Home-MessagesContainer
 
     // revisar posibles problemas de escalabilidad con grupos en websockets. Ver casos de uso para multiples usuarios
