@@ -4,7 +4,6 @@ import { ChattingUserHeader } from "./ChatingUserHeader"
 import { MsgSendingInput } from "./MsgSendingInput"
 import {PropTypes} from "prop-types"
 import {CHAT_WEBSOCKET} from "../utils/constants"
-import {ChatWSGroupBroadcastingMessage} from "../utils/ChatWSGroupBroadcastingMessage" 
 import {ChatWSGroupCreationMsg}         from "../utils/ChatWSGroupCreationMsg"
 import {ChatWSGroupName}                from "../utils/ChatWSGroupName"
 import {ChatWSInitialize}               from "../utils/ChatWSInitialize"
@@ -35,7 +34,6 @@ export function Chat({
     }){
 
     let [newMsg, setNewMsg]                                             = useState(null)
-    let [newMsgSended, setNewMsgSended]                                 = useState(null)
 
 
     useEffect(()=>{
@@ -48,12 +46,7 @@ export function Chat({
         }
     }, [clickedUser])
 
-    useEffect(()=>{
-        if (newMsgSended && CHAT_WEBSOCKET.current){
-            CHAT_WEBSOCKET.current.send(ChatWSGroupBroadcastingMessage(ChatWSGroupName(sessionUserId, clickedUser.id), newMsgSended))
-            setNewMsgSended(null)
-        }
-    }, [newMsgSended])
+
     useEffect(()=>{
         if (CHAT_WEBSOCKET.current){
             CHAT_WEBSOCKET.current.onmessage = (event) => {
@@ -79,7 +72,7 @@ export function Chat({
     return (
         <div className="chat-container">
             {clickedUser && <ChattingUserHeader chatingUser={clickedUser} isOnline={currentUserIsOnline}/>}
-            <MessagesContainer sessionUserId={sessionUserId}  clickedUser={clickedUser} loadingStateHandlers={loadingStateHandlers} newMsg={newMsg} messagesHistorial={messagesHistorial} setMessagesHistorial={setMessagesHistorial} newMsgSendedSetter={setNewMsgSended} messagesHistorialPage={messagesHistorialPage} noMoreMessages={noMoreMessages}/>
+            <MessagesContainer sessionUserId={sessionUserId}  clickedUser={clickedUser} loadingStateHandlers={loadingStateHandlers} newMsg={newMsg} messagesHistorial={messagesHistorial} setMessagesHistorial={setMessagesHistorial} messagesHistorialPage={messagesHistorialPage} noMoreMessages={noMoreMessages}/>
             {clickedUser && <MsgSendingInput onMsgSending={(newMsg)=>setNewMsg(newMsg)}/>}
         </div>
     )

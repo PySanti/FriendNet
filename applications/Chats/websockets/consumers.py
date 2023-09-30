@@ -20,9 +20,6 @@ class ChatWSConsumer(WebsocketConsumer):
         if data['type'] == "group_creation":
             discard_channel_if_found(self.channel_layer, self.channel_name)
             async_to_sync(self.channel_layer.group_add)(data['name'],self.channel_name)
-        if data['type'] == "message_broadcasting":
-            if (len(self.channel_layer.groups[data['name']]) == 2):
-                async_to_sync(self.channel_layer.group_send)(data['name'],{'type' : 'broadcast_message_handler','value' : data['value']})
         print_pretty_groups(self.channel_layer.groups)
 
 

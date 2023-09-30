@@ -20,7 +20,6 @@ import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
  * @param {Object} newMsg state creado para cuando se envia un mensaje nuevo
  * @param {Array} messagesHistorial
  * @param {Function} setMessagesHistorial
- * @param {Object} newMsgSendedSetter objeto retornado por la api cuando el mensaje fue enviado exitosamente
 
  * @param {Object} messagesHistorialPage
  * @param {Object} noMoreMessages  
@@ -32,7 +31,6 @@ export function MessagesContainer({
         newMsg, 
         messagesHistorial, 
         setMessagesHistorial,
-        newMsgSendedSetter,  
         messagesHistorialPage,
         noMoreMessages
     }){
@@ -66,7 +64,6 @@ export function MessagesContainer({
         }, navigate)
         if (response){
             if (response.status == 200){
-                //newMsgSendedSetter(response.data.sended_msg)
                 setMessagesHistorial([...messagesHistorial, response.data.sended_msg])
                 successfullyLoaded()
             } else if (response.status == 400){
@@ -124,7 +121,6 @@ MessagesContainer.propTypes = {
     newMsg : PropTypes.object,
     messagesHistorial : PropTypes.array,
     setMessagesHistorial : PropTypes.func,
-    newMsgSendedSetter : PropTypes.func.isRequired,
     messagesHistorialPage : PropTypes.object.isRequired,
     noMoreMessages : PropTypes.object.isRequired
 }
