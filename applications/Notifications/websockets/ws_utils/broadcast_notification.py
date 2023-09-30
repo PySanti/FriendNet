@@ -13,6 +13,9 @@ def broadcast_notification(id1, id2, newNotification):
     else:
         async_to_sync(channel_layer.group_add)(group_name, channels[0])
         async_to_sync(channel_layer.group_add)(group_name,channels[1])
-        async_to_sync(channel_layer.group_send)(group_name,{    'type' : 'broadcast_notification_handler',    'value' : newNotification})
+        async_to_sync(channel_layer.group_send)(group_name,{    'type' : 'broadcast_notification_handler',    'value' : {
+            "type" : "new_notification",
+            "new_notification" : newNotification
+        }})
         async_to_sync(channel_layer.group_discard)(group_name, channels[0])
         async_to_sync(channel_layer.group_discard)(group_name, channels[1])

@@ -24,7 +24,9 @@ class NotificationsWSConsumer(WebsocketConsumer):
                     str(data["name"]),
                     {
                         "type" : "broadcast_connection_error",
-                        "value" : "connection_error"
+                        "value" : {
+                            "type" : "connection_error"
+                        }
                     }
                 )
             else:
