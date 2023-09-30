@@ -11,13 +11,22 @@ import "../styles/MessageSendingInput.css"
 export function MsgSendingInput({onMsgSending}){
     let {register, handleSubmit, reset} = useForm()
     const onSubmit = handleSubmit((data)=>{
-        onMsgSending(data)
-        reset()
+        const new_msg = data.msg.trim()
+        if (new_msg.length > 0){
+            onMsgSending(data)
+            reset()
+        }
     })
     return (
         <div className="message-sending-input-container">
             <form className="message-sending-form" onSubmit={onSubmit}>
-                <input placeholder="Enviale un mensaje" className="message-sending-input" type="text" maxLength={BASE_MESSAGE_MAX_LENGTH} {...register("msg")}/>
+                <input 
+                placeholder="Enviale un mensaje" 
+                className="message-sending-input" 
+                type="text" 
+                maxLength={BASE_MESSAGE_MAX_LENGTH} 
+                minLength={1} 
+                {...register("msg")}/>
             </form>
         </div>
     )
