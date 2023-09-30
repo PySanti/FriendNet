@@ -3,6 +3,7 @@ from asgiref.sync import async_to_sync
 from .ws_utils.discard_channel_if_found import discard_channel_if_found
 from .ws_utils.print_pretty_groups import print_pretty_groups
 import json
+from .ws_utils import broadcast_message
 
 class ChatWSConsumer(WebsocketConsumer):
     def connect(self):
@@ -21,17 +22,11 @@ class ChatWSConsumer(WebsocketConsumer):
             async_to_sync(self.channel_layer.group_add)(data['name'],self.channel_name)
         if data['type'] == "message_broadcasting":
             if (len(self.channel_layer.groups[data['name']]) == 2):
-                async_to_sync(self.channel_layer.group_send)(
-                    data['name'],
-                    {
-                        'type' : 'chat_message',
-                        'value' : data['value']
-                    }
-                )
+                async_to_sync(self.channel_layer.group_send)(data['name'],{'type' : 'broadcast_message_handler','value' : data['value']})
         print_pretty_groups(self.channel_layer.groups)
 
 
-    def chat_message(self, event):
+    def broadcast_message_handler(self, event):
         value = event['value']
         value["type"] = "message_broadcast"
         self.send(text_data=json.dumps(value))

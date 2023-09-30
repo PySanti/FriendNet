@@ -31,7 +31,7 @@ from applications.Usuarios.utils.constants import (
 from applications.Usuarios.models import Usuarios
 from applications.Notifications.models import Notifications
 # Create your views here.
-from .websockets.ws_utils.notification_wesocket_is_opened import notification_wesocket_is_opened
+from applications.Notifications.websockets.ws_utils.notification_wesocket_is_opened import notification_wesocket_is_opened
 from .websockets.ws_utils.messages_group_is_full import messages_group_is_full
 from applications.Notifications.websockets.ws_utils.broadcast_notification import broadcast_notification
 
@@ -69,7 +69,6 @@ class SendMsgAPI(APIView):
             try:
                 sender_user = request.user
                 receiver_user = Usuarios.objects.get(id=request.data['receiver_id'])
-                new_notification = None
                 if (not Notifications.objects.hasNotification(receiver_user, sender_user) and (not messages_group_is_full(receiver_user.id, sender_user.id))):
                     new_notification = Notifications.objects.addNotification(f"Tienes mensajes nuevos de {sender_user.username}", receiver_user, sender_user)
                     new_notification = Notifications.objects.filter(id=new_notification.id).values("msg", "id")[0]
@@ -80,7 +79,7 @@ class SendMsgAPI(APIView):
                 Chats.objects.sendMessage(sender_user, receiver_user,new_message)
                 new_message_values = new_message.__dict__.copy()
                 del new_message_values['_state']
-                return JsonResponse({'sended_msg' : new_message_values, 'sended_notification_id' : new_notification["id"] if new_notification else None }, status=status.HTTP_200_OK)
+                return JsonResponse({'sended_msg' : new_message_values}, status=status.HTTP_200_OK)
             except:
                 return BASE_UNEXPECTED_ERROR_RESPONSE
         else:
