@@ -6,10 +6,7 @@ import { useEffect, useState, useRef } from "react"
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_UNEXPECTED_ERROR_MESSAGE, BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
 import { getJWTFromLocalStorage } from "../utils/getJWTFromLocalStorage"
 import { useNavigate } from "react-router-dom"
-import {diferentUserHasBeenClicked} from "../utils/diferentUserHasBeenClicked"
 import { sendMsgAPI } from "../api/sendMsg.api"
-import {NOTIFICATIONS_WEBSOCKET} from "../utils/constants"
-import {NotificationsWSNotificationBroadcastingMsg} from "../utils/NotificationsWSNotificationBroadcastingMsg"
 import {executeSecuredApi} from "../utils/executeSecuredApi"
 import {getMessagesHistorialAPI} from "../api/getMessagesHistorial.api"
 import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
@@ -42,7 +39,6 @@ export function MessagesContainer({
     const containerRef                                                  = useRef(null)
     const navigate                                                      = useNavigate()
     let { setLoadingState,startLoading,  successfullyLoaded}            = loadingStateHandlers
-    let [newNotificationId, setNewNotificationId]                       = useState(null)
 
     const loadMessages = async ()=>{
         startLoading()
@@ -71,7 +67,6 @@ export function MessagesContainer({
         if (response){
             if (response.status == 200){
                 newMsgSendedSetter(response.data.sended_msg)
-                setNewNotificationId(response.data.sended_notification_id)
                 setMessagesHistorial([...messagesHistorial, response.data.sended_msg])
                 successfullyLoaded()
             } else if (response.status == 400){
@@ -97,11 +92,6 @@ export function MessagesContainer({
         }
     }
 
-    useEffect(()=>{
-        if (newNotificationId){
-            NOTIFICATIONS_WEBSOCKET.current.send(NotificationsWSNotificationBroadcastingMsg(newNotificationId, clickedUser.id, sessionUserId))
-        }
-    }, [newNotificationId])
     useEffect(()=>{
         if (containerRef.current){
             containerRef.current.scrollTop = containerRef.current.scrollHeight
