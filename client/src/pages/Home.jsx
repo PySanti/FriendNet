@@ -29,6 +29,7 @@ import {executeSecuredApi} from "../utils/executeSecuredApi"
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_UNEXPECTED_ERROR_MESSAGE, BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
 import {enterChatAPI} from "../api/enterChat.api"
 import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
+import {useClickedUser} from "../store/clickedUserStore"
 
 /**
  * Pagina principal del sitio
