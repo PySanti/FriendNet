@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState, useRef } from "react"
-
+import {logoutUser} from "../utils/logoutUser"
 import { userIsAuthenticated } from "../utils/userIsAuthenticated"
 import { UserNotLogged } from "./UserNotLogged"
 import { Header } from "../components/Header"
@@ -81,11 +81,7 @@ export function Home() {
     }
 
 
-    const onLogout = async ()=>{
-        localStorage.clear()
-        disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
-        navigate('/')
-    }
+
     const onNotificationDelete = async (notification)=>{
         const response = await executeSecuredApi(async ()=>{
             return await notificationDeleteAPI(notification.id, getJWTFromLocalStorage().access )
@@ -149,7 +145,7 @@ export function Home() {
                     <Header username={user.username} msg="En el home"/>
                     <div className="buttons-container">
                         <NotificationsContainer notificationList={notifications} onNotificationClick={(notification)=>onUserButtonClick(notification.sender_user)} onNotificationDelete={onNotificationDelete} />
-                        <Button buttonText="Salir" onClickFunction={onLogout}/>
+                        <Button buttonText="Salir" onClickFunction={()=>logoutUser(navigate)}/>
                         <Button buttonText="Perfil" onClickFunction={()=>{navigate('/home/profile/')}}/>
                     </div>
                     <Loader state={loadingState}/>
