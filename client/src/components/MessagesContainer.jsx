@@ -66,7 +66,7 @@ export function MessagesContainer({
         }, navigate)
         if (response){
             if (response.status == 200){
-                newMsgSendedSetter(response.data.sended_msg)
+                //newMsgSendedSetter(response.data.sended_msg)
                 setMessagesHistorial([...messagesHistorial, response.data.sended_msg])
                 successfullyLoaded()
             } else if (response.status == 400){

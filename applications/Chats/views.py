@@ -34,7 +34,7 @@ from applications.Notifications.models import Notifications
 from applications.Notifications.websockets.ws_utils.notification_wesocket_is_opened import notification_wesocket_is_opened
 from .websockets.ws_utils.messages_group_is_full import messages_group_is_full
 from applications.Notifications.websockets.ws_utils.broadcast_notification import broadcast_notification
-
+from applications.Chats.websockets.ws_utils.broadcast_message import broadcast_message
 class GetMessagesHistorialAPI(APIView):
     serializer_class        =  GetMessagesHistorialSerializer
     authentication_classes  = [JWTAuthentication]
@@ -79,6 +79,7 @@ class SendMsgAPI(APIView):
                 Chats.objects.sendMessage(sender_user, receiver_user,new_message)
                 new_message_values = new_message.__dict__.copy()
                 del new_message_values['_state']
+                broadcast_message(sender_user.id, receiver_user.id, new_message_values)
                 return JsonResponse({'sended_msg' : new_message_values}, status=status.HTTP_200_OK)
             except:
                 return BASE_UNEXPECTED_ERROR_RESPONSE
