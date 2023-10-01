@@ -43,7 +43,6 @@ export function Home() {
     let [chatGlobeList, setChatGlobeList]                                   = useState([])
     let [clickedUser, setClickedUser]                                       = useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
     let [lastClickedUser, setLastClickedUser]                               = useState(null)
-    let [currentUserIsOnline, setCurrentUserIsOnline]                       = useState(false)
     let [messagesHistorial, setMessagesHistorial]                           = useState([])
     let messagesHistorialPage                                               = useRef(1)
     let noMoreMessages                                                      = useRef(false)
@@ -58,7 +57,8 @@ export function Home() {
         if (response){
             if (response.status == 200){
                 updateMessagesHistorial(setMessagesHistorial, messagesHistorialPage, response.data.messages_hist!== "no_messages_between" ? response.data.messages_hist : [], messagesHistorial)
-                setCurrentUserIsOnline(response.data.is_online)
+                clickedUser.is_online = response.data.is_online
+                setClickedUser(clickedUser)
                 if (relatedNotification && response.data.notification_deleted){
                     const updatedNotifications = removeNotificationFromLocalStorage(relatedNotification)
                     saveNotificationsInLocalStorage(updatedNotifications)
@@ -120,7 +120,8 @@ export function Home() {
             (async function() {
                 messagesHistorialPage.current = 1
                 noMoreMessages.current = false
-                setCurrentUserIsOnline(false)
+                clickedUser.is_online = false
+                setClickedUser(clickedUser)
                 await enterChatHandler()
             })();
         }
@@ -160,8 +161,6 @@ export function Home() {
                             messagesHistorial={messagesHistorial}
                             setMessagesHistorial={setMessagesHistorial}
                             messagesHistorialPage={messagesHistorialPage}
-                            currentUserIsOnline={currentUserIsOnline}
-                            setCurrentUserIsOnline = {setCurrentUserIsOnline}
                             noMoreMessages = {noMoreMessages}
                             />
                     </div>

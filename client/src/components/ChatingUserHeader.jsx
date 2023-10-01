@@ -8,19 +8,16 @@ import {useClickedUser} from "../store/clickedUserStore"
  * Cabecera del chat con datos del usuario
 
  */
-export function ChattingUserHeader({ isOnline}){
+export function ChattingUserHeader(){
     const clickedUser                                                   = useClickedUser((state)=>(state.clickedUser))
     return (
         <div className="chatting-user-header-container">
             <UserPhoto photoFile={clickedUser.photo_link} chatPhoto/>
             <div className="chatting-user__username-container">
-                <h3 className="chatting-user__username">{clickedUser.username}{isOnline && ", en linea"}</h3>
+                <h3 className="chatting-user__username">{clickedUser.username}{clickedUser.is_online && ", en linea"}</h3>
             </div>
         </div>
     )
 }
 
 
-ChattingUserHeader.propTypes = {
-    isOnline : PropTypes.bool.isRequired
-}
