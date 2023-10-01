@@ -153,10 +153,8 @@ export function Home() {
                             onClickEvent={onUserButtonClick}  
                             chatGlobeList={chatGlobeList}  
                             loadingStateHandlers={loadingStateHandlers}
-                            sessionUserId = {user.id}
                         />
                         <Chat 
-                            sessionUserId={user.id} 
                             loadingStateHandlers ={loadingStateHandlers}
                             messagesHistorial={messagesHistorial}
                             setMessagesHistorial={setMessagesHistorial}

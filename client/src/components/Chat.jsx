@@ -8,10 +8,10 @@ import {ChatWSGroupCreationMsg}         from "../utils/ChatWSGroupCreationMsg"
 import {ChatWSGroupName}                from "../utils/ChatWSGroupName"
 import {ChatWSInitialize}               from "../utils/ChatWSInitialize"
 import {useClickedUser}                 from "../store/clickedUserStore"
+import {getUserDataFromLocalStorage}    from "../utils/getUserDataFromLocalStorage"
 /**
  * 
- * Contenedor unicamente del chat entre el session user y el clicked user
- * @param {Number} sessionUserId id del usuario de la sesion
+ * Contenedor unicamente del chat entre el session user y el clicked usee
  * @param {Object} loadingStateHandlers
  * @param {Array} messagesHistorial
  * @param {Function} setMessagesHistorial
@@ -19,7 +19,6 @@ import {useClickedUser}                 from "../store/clickedUserStore"
  * @param {Object} noMoreMessages
 */
 export function Chat({
-        sessionUserId, 
         loadingStateHandlers,
         messagesHistorial, 
         setMessagesHistorial, 
@@ -29,13 +28,13 @@ export function Chat({
 
     let [newMsg, setNewMsg]                                             = useState(null)
     let [clickedUser, setClickedUser]                                                   = useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
-
+    const userData = getUserDataFromLocalStorage()
     useEffect(()=>{
         if (clickedUser){
             if (!CHAT_WEBSOCKET.current){
-                ChatWSInitialize(sessionUserId, clickedUser.id)
+                ChatWSInitialize(userData.id, clickedUser.id)
             } else {
-                CHAT_WEBSOCKET.current.send(ChatWSGroupCreationMsg(ChatWSGroupName(sessionUserId, clickedUser.id)))
+                CHAT_WEBSOCKET.current.send(ChatWSGroupCreationMsg(ChatWSGroupName(userData.id, clickedUser.id)))
             }
         }
     }, [clickedUser])
@@ -50,7 +49,7 @@ export function Chat({
                 console.log(data)
                 delete data.type
                 if (dataType === "message_broadcast"){
-                    if (Number(data.parent_id) !== Number(sessionUserId)){
+                    if (Number(data.parent_id) !== Number(userData.id)){
                         setMessagesHistorial([...messagesHistorial, data])
                     }
                 } else if (dataType === "connection_inform"){
@@ -67,14 +66,13 @@ export function Chat({
     return (
         <div className="chat-container">
             {clickedUser.username  && <ChattingUserHeader/>}
-            <MessagesContainer sessionUserId={sessionUserId} loadingStateHandlers={loadingStateHandlers} newMsg={newMsg} messagesHistorial={messagesHistorial} setMessagesHistorial={setMessagesHistorial} messagesHistorialPage={messagesHistorialPage} noMoreMessages={noMoreMessages}/>
+            <MessagesContainer loadingStateHandlers={loadingStateHandlers} newMsg={newMsg} messagesHistorial={messagesHistorial} setMessagesHistorial={setMessagesHistorial} messagesHistorialPage={messagesHistorialPage} noMoreMessages={noMoreMessages}/>
             {clickedUser.username && <MsgSendingInput onMsgSending={(newMsg)=>setNewMsg(newMsg)}/>}
         </div>
     )
 }
 
 Chat.propTypes = {
-    sessionUserId : PropTypes.number.isRequired,
     loadingStateHandlers : PropTypes.object.isRequired,
     messagesHistorial : PropTypes.array,
     setMessagesHistorial : PropTypes.func.isRequired,

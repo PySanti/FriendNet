@@ -6,7 +6,7 @@ import { UserFilter } from "./UserFilter"
 import {useState, useEffect, useRef} from "react"
 import { getUsersListAPI } from "../api/getUsersList.api"
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
-
+import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import { userIsAuthenticated } from "../utils/userIsAuthenticated"
 
 /**
@@ -14,16 +14,15 @@ import { userIsAuthenticated } from "../utils/userIsAuthenticated"
  * @param {Function} onClickEvent evento a ejecutar cuando los usersButtons sean presionados
  * @param {Array} chatGlobeList lista de ids de los usuarios con globe en la usersList
  * @param {Array} loadingStateHandlers 
- * @param {Number} sessionUserId 
  */
-export function UsersList({onClickEvent, chatGlobeList, loadingStateHandlers, sessionUserId }){
+export function UsersList({onClickEvent, chatGlobeList, loadingStateHandlers }){
     const loaderClassName                                           ="users-list-loader" 
     let userListPage                                                = useRef(1)
     let noMoreUsers                                                 = useRef(false)
     let [loaderActivated, setLoaderActivated]                       = useState(true)
     let [usersList, setUsersList]                                   = useState([])
     let [ userKeyword, setUserKeyword]                               = useState(undefined)
-    let { setLoadingState,startLoading,  successfullyLoaded}        = loadingStateHandlers
+    let { setLoadingState}        = loadingStateHandlers
 
     const updateUserList = (newUsers)=>{
         if (userListPage.current === 1){
@@ -35,7 +34,7 @@ export function UsersList({onClickEvent, chatGlobeList, loadingStateHandlers, se
     const loadUsersList = async ()=>{
         try{
             setLoaderActivated(true)
-            let response = await getUsersListAPI(!userKeyword || userKeyword.length === 0 ? undefined : userKeyword, sessionUserId, userListPage.current)
+            let response = await getUsersListAPI(!userKeyword || userKeyword.length === 0 ? undefined : userKeyword, getUserDataFromLocalStorage().id, userListPage.current)
             updateUserList(response.data.users_list)
             setLoaderActivated(false)
         } catch(error){
@@ -103,8 +102,7 @@ export function UsersList({onClickEvent, chatGlobeList, loadingStateHandlers, se
 UsersList.propTypes = {
     onClickEvent : PropTypes.func.isRequired,
     loadingStateHandlers : PropTypes.object.isRequired,
-    chatGlobeList : PropTypes.array,
-    sessionUserId : PropTypes.number
+    chatGlobeList : PropTypes.array
 }
 UsersList.defaultProps = {
     chatGlobeList : undefined,

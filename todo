@@ -11,10 +11,6 @@
 // fase 3:
     // repasar implementacion de zustand
 
-    // hacer que los componentes que reciben el sessionUserId, saquen los datos del usuario del localStorage
-
-    // implementar states globales, zustand
-
     // hacer el loadingState un state global
 
     // reducir cantidad de props entre Chat-Home-MessagesContainer

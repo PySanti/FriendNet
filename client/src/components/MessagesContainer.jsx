@@ -11,10 +11,10 @@ import {executeSecuredApi} from "../utils/executeSecuredApi"
 import {getMessagesHistorialAPI} from "../api/getMessagesHistorial.api"
 import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
 import {useClickedUser} from "../store/clickedUserStore"
+import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 
 /**
  * Componente encargado de renderizar y mantener la lista de mensajes 
- * @param {Number} sessionUserId  id de usuario de sesion
  * @param {Object} loadingStateHandlers objecto que contendra los objetos necesarios para mantener los estados de carga
  * @param {Object} newMsg state creado para cuando se envia un mensaje nuevo
  * @param {Array} messagesHistorial
@@ -24,7 +24,6 @@ import {useClickedUser} from "../store/clickedUserStore"
  * @param {Object} noMoreMessages  
 */
 export function MessagesContainer({
-        sessionUserId, 
         loadingStateHandlers,
         newMsg, 
         messagesHistorial, 
@@ -77,7 +76,7 @@ export function MessagesContainer({
         }
     }
     const formatingFunction = (msg)=>{
-        return <Message key={v4()} content={msg.content} sessionUserMsg={sessionUserId === msg.parent_id}/>
+        return <Message key={v4()} content={msg.content} sessionUserMsg={getUserDataFromLocalStorage().id === msg.parent_id}/>
     }
     const scrollHandler = async (e)=>{
         if (e.target.scrollTop <= 0){
@@ -115,7 +114,6 @@ export function MessagesContainer({
 }
 
 MessagesContainer.propTypes = {
-    sessionUserId : PropTypes.number.isRequired,
     loadingStateHandlers : PropTypes.object.isRequired,
     newMsg : PropTypes.object,
     messagesHistorial : PropTypes.array,
