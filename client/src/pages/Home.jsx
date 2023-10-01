@@ -38,15 +38,16 @@ export function Home() {
     const user = getUserDataFromLocalStorage()
     const navigate = useNavigate()
     const loadingStateHandlers = useContext(LoadingContext)
-    let {loadingState, setLoadingState, startLoading, successfullyLoaded} = loadingStateHandlers
-    let [notifications, setNotifications] = useState(getNotificationsFromLocalStorage())
-    let [chatGlobeList, setChatGlobeList] = useState([])
-    let [clickedUser, setClickedUser] = useState(null)
-    let [lastClickedUser, setLastClickedUser] = useState(null)
-    let [currentUserIsOnline, setCurrentUserIsOnline]                   = useState(false)
-    let [messagesHistorial, setMessagesHistorial]                       = useState([])
-    let messagesHistorialPage                                           = useRef(1)
-    let noMoreMessages                                                  = useRef(false)
+    let {loadingState, setLoadingState, startLoading, successfullyLoaded}   = loadingStateHandlers
+    let [notifications, setNotifications]                                   = useState(getNotificationsFromLocalStorage())
+    let [chatGlobeList, setChatGlobeList]                                   = useState([])
+    let [clickedUser, setClickedUser]                                       = useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
+    let [lastClickedUser, setLastClickedUser]                               = useState(null)
+    let [currentUserIsOnline, setCurrentUserIsOnline]                       = useState(false)
+    let [messagesHistorial, setMessagesHistorial]                           = useState([])
+    let messagesHistorialPage                                               = useRef(1)
+    let noMoreMessages                                                      = useRef(false)
+
 
     const enterChatHandler = async ()=>{
         const relatedNotification = getRelatedNotification(clickedUser.id, notifications)
@@ -80,9 +81,6 @@ export function Home() {
         }
 
     }
-
-
-
     const onNotificationDelete = async (notification)=>{
         const response = await executeSecuredApi(async ()=>{
             return await notificationDeleteAPI(notification.id, getJWTFromLocalStorage().access )
@@ -108,7 +106,6 @@ export function Home() {
     }
 
     useEffect(()=>{
-
         if (!NOTIFICATIONS_WEBSOCKET.current && user){
             NotificationsWSInitialize(user.id)
             NotificationsWSUpdate(user.id, notifications,setNotifications, navigate )
@@ -128,16 +125,15 @@ export function Home() {
             })();
         }
     }, [clickedUser])
-
     useEffect(()=>{
         setChatGlobeList(getChatGlobesList(notifications))
     }, [notifications])
-
     useEffect(()=>{
         if (!NOTIFICATIONS_WEBSOCKET.current && user){
             NotificationsWSUpdate(user.id, notifications,setNotifications )
         }
     }, [notifications])
+
     if (!userIsAuthenticated()){
         return <UserNotLogged/>
     } else {
@@ -159,8 +155,6 @@ export function Home() {
                             sessionUserId = {user.id}
                         />
                         <Chat 
-                            clickedUser={clickedUser} 
-                            lastClickedUser={lastClickedUser}
                             sessionUserId={user.id} 
                             loadingStateHandlers ={loadingStateHandlers}
                             messagesHistorial={messagesHistorial}

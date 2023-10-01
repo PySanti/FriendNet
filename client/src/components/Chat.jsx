@@ -7,12 +7,11 @@ import {CHAT_WEBSOCKET} from "../utils/constants"
 import {ChatWSGroupCreationMsg}         from "../utils/ChatWSGroupCreationMsg"
 import {ChatWSGroupName}                from "../utils/ChatWSGroupName"
 import {ChatWSInitialize}               from "../utils/ChatWSInitialize"
-
+import {useClickedUser}                 from "../store/clickedUserStore"
 /**
  * 
  * Contenedor unicamente del chat entre el session user y el clicked user
  * @param {Number} sessionUserId id del usuario de la sesion
- * @param {Object} clickedUser info del usuario con el que se esta chateando
  * @param {Object} loadingStateHandlers
  * @param {Boolean} currentUserIsOnline
  * @param {Array} messagesHistorial
@@ -23,7 +22,6 @@ import {ChatWSInitialize}               from "../utils/ChatWSInitialize"
 */
 export function Chat({
         sessionUserId, 
-        clickedUser, 
         loadingStateHandlers,
         setCurrentUserIsOnline,
         currentUserIsOnline, 
@@ -34,7 +32,7 @@ export function Chat({
     }){
 
     let [newMsg, setNewMsg]                                             = useState(null)
-
+    let clickedUser                                                   = useClickedUser((state)=>(state.clickedUser))
 
     useEffect(()=>{
         if (clickedUser){
@@ -71,16 +69,15 @@ export function Chat({
 
     return (
         <div className="chat-container">
-            {clickedUser && <ChattingUserHeader chatingUser={clickedUser} isOnline={currentUserIsOnline}/>}
-            <MessagesContainer sessionUserId={sessionUserId}  clickedUser={clickedUser} loadingStateHandlers={loadingStateHandlers} newMsg={newMsg} messagesHistorial={messagesHistorial} setMessagesHistorial={setMessagesHistorial} messagesHistorialPage={messagesHistorialPage} noMoreMessages={noMoreMessages}/>
-            {clickedUser && <MsgSendingInput onMsgSending={(newMsg)=>setNewMsg(newMsg)}/>}
+            {clickedUser.username  && <ChattingUserHeader isOnline={currentUserIsOnline}/>}
+            <MessagesContainer sessionUserId={sessionUserId} loadingStateHandlers={loadingStateHandlers} newMsg={newMsg} messagesHistorial={messagesHistorial} setMessagesHistorial={setMessagesHistorial} messagesHistorialPage={messagesHistorialPage} noMoreMessages={noMoreMessages}/>
+            {clickedUser.username && <MsgSendingInput onMsgSending={(newMsg)=>setNewMsg(newMsg)}/>}
         </div>
     )
 }
 
 Chat.propTypes = {
     sessionUserId : PropTypes.number.isRequired,
-    clickedUser : PropTypes.object,
     loadingStateHandlers : PropTypes.object.isRequired,
     currentUserIsOnline : PropTypes.bool.isRequired,
     messagesHistorial : PropTypes.array,

@@ -11,6 +11,10 @@
 // fase 3:
     // repasar implementacion de zustand
 
+    // incluirle un atributo is_online al clickedUser para evitar crear otro state
+
+    // hacer que los componentes que reciben el sessionUserId, saquen los datos del usuario del localStorage
+
     // implementar states globales, zustand
 
     // hacer el loadingState un state global

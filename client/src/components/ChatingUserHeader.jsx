@@ -1,17 +1,20 @@
 import { UserPhoto } from "./UserPhoto";
 import {PropTypes} from "prop-types"
 import "../styles/ChattingUserHeader.css"
+import {useClickedUser} from "../store/clickedUserStore"
+
 
 /**
  * Cabecera del chat con datos del usuario
- * @param {Object} chatingUser datos del usuario con el que se esta chateando
+
  */
-export function ChattingUserHeader({chatingUser, isOnline}){
+export function ChattingUserHeader({ isOnline}){
+    const clickedUser                                                   = useClickedUser((state)=>(state.clickedUser))
     return (
         <div className="chatting-user-header-container">
-            <UserPhoto photoFile={chatingUser.photo_link} chatPhoto/>
+            <UserPhoto photoFile={clickedUser.photo_link} chatPhoto/>
             <div className="chatting-user__username-container">
-                <h3 className="chatting-user__username">{chatingUser.username}{isOnline && ", en linea"}</h3>
+                <h3 className="chatting-user__username">{clickedUser.username}{isOnline && ", en linea"}</h3>
             </div>
         </div>
     )
@@ -19,6 +22,5 @@ export function ChattingUserHeader({chatingUser, isOnline}){
 
 
 ChattingUserHeader.propTypes = {
-    chatingUser : PropTypes.object.isRequired,
     isOnline : PropTypes.bool.isRequired
 }

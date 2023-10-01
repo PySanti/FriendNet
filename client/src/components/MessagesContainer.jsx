@@ -10,12 +10,11 @@ import { sendMsgAPI } from "../api/sendMsg.api"
 import {executeSecuredApi} from "../utils/executeSecuredApi"
 import {getMessagesHistorialAPI} from "../api/getMessagesHistorial.api"
 import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
+import {useClickedUser} from "../store/clickedUserStore"
 
 /**
  * Componente encargado de renderizar y mantener la lista de mensajes 
  * @param {Number} sessionUserId  id de usuario de sesion
- * @param {Object} clickedUser 
- * @param {Object} lastClickedUser  
  * @param {Object} loadingStateHandlers objecto que contendra los objetos necesarios para mantener los estados de carga
  * @param {Object} newMsg state creado para cuando se envia un mensaje nuevo
  * @param {Array} messagesHistorial
@@ -26,7 +25,6 @@ import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
 */
 export function MessagesContainer({
         sessionUserId, 
-        clickedUser, 
         loadingStateHandlers,
         newMsg, 
         messagesHistorial, 
@@ -36,7 +34,9 @@ export function MessagesContainer({
     }){
     const containerRef                                                  = useRef(null)
     const navigate                                                      = useNavigate()
+    const clickedUser                                                   = useClickedUser((state)=>(state.clickedUser))
     let { setLoadingState,startLoading,  successfullyLoaded}            = loadingStateHandlers
+
 
     const loadMessages = async ()=>{
         startLoading()
@@ -116,7 +116,6 @@ export function MessagesContainer({
 
 MessagesContainer.propTypes = {
     sessionUserId : PropTypes.number.isRequired,
-    clickedUser : PropTypes.object,
     loadingStateHandlers : PropTypes.object.isRequired,
     newMsg : PropTypes.object,
     messagesHistorial : PropTypes.array,
