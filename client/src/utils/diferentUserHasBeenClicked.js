@@ -4,5 +4,5 @@
  * @param {Object} newClickedUser
  */
 export function diferentUserHasBeenClicked(lastClickedUser, newClickedUser){
-    return (newClickedUser && (!lastClickedUser || lastClickedUser.id !== newClickedUser.id))
+    return (newClickedUser.username && (!lastClickedUser || lastClickedUser.id !== newClickedUser.id))
 }

@@ -12,13 +12,13 @@ import {getMessagesHistorialAPI} from "../api/getMessagesHistorial.api"
 import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
 import {useClickedUser} from "../store/clickedUserStore"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
+import {useMessagesHistorial} from "../store/messagesHistorialStore"
 
 /**
  * Componente encargado de renderizar y mantener la lista de mensajes 
  * @param {Object} loadingStateHandlers objecto que contendra los objetos necesarios para mantener los estados de carga
  * @param {Object} newMsg state creado para cuando se envia un mensaje nuevo
- * @param {Array} messagesHistorial
- * @param {Function} setMessagesHistorial
+
 
  * @param {Object} messagesHistorialPage
  * @param {Object} noMoreMessages  
@@ -26,8 +26,6 @@ import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 export function MessagesContainer({
         loadingStateHandlers,
         newMsg, 
-        messagesHistorial, 
-        setMessagesHistorial,
         messagesHistorialPage,
         noMoreMessages
     }){
@@ -35,6 +33,7 @@ export function MessagesContainer({
     const navigate                                                      = useNavigate()
     const clickedUser                                                   = useClickedUser((state)=>(state.clickedUser))
     let { setLoadingState,startLoading,  successfullyLoaded}            = loadingStateHandlers
+    const [messagesHistorial, setMessagesHistorial]                     = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
 
 
     const loadMessages = async ()=>{
@@ -116,8 +115,6 @@ export function MessagesContainer({
 MessagesContainer.propTypes = {
     loadingStateHandlers : PropTypes.object.isRequired,
     newMsg : PropTypes.object,
-    messagesHistorial : PropTypes.array,
-    setMessagesHistorial : PropTypes.func,
     messagesHistorialPage : PropTypes.object.isRequired,
     noMoreMessages : PropTypes.object.isRequired
 }

@@ -30,6 +30,7 @@ import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_UNEXPECTED_ER
 import {enterChatAPI} from "../api/enterChat.api"
 import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
 import {useClickedUser} from "../store/clickedUserStore"
+import {useMessagesHistorial} from "../store/messagesHistorialStore"
 
 /**
  * Pagina principal del sitio
@@ -43,7 +44,7 @@ export function Home() {
     let [chatGlobeList, setChatGlobeList]                                   = useState([])
     let [clickedUser, setClickedUser]                                       = useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
     let [lastClickedUser, setLastClickedUser]                               = useState(null)
-    let [messagesHistorial, setMessagesHistorial]                           = useState([])
+    let [messagesHistorial, setMessagesHistorial]                           = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
     let messagesHistorialPage                                               = useRef(1)
     let noMoreMessages                                                      = useRef(false)
 
@@ -156,8 +157,6 @@ export function Home() {
                         />
                         <Chat 
                             loadingStateHandlers ={loadingStateHandlers}
-                            messagesHistorial={messagesHistorial}
-                            setMessagesHistorial={setMessagesHistorial}
                             messagesHistorialPage={messagesHistorialPage}
                             noMoreMessages = {noMoreMessages}
                             />

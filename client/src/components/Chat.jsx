@@ -9,26 +9,27 @@ import {ChatWSGroupName}                from "../utils/ChatWSGroupName"
 import {ChatWSInitialize}               from "../utils/ChatWSInitialize"
 import {useClickedUser}                 from "../store/clickedUserStore"
 import {getUserDataFromLocalStorage}    from "../utils/getUserDataFromLocalStorage"
+import {useMessagesHistorial} from "../store/messagesHistorialStore"
 /**
  * 
  * Contenedor unicamente del chat entre el session user y el clicked usee
  * @param {Object} loadingStateHandlers
- * @param {Array} messagesHistorial
- * @param {Function} setMessagesHistorial
  * @param {Objects} messagesHistorialPage
  * @param {Object} noMoreMessages
 */
 export function Chat({
         loadingStateHandlers,
-        messagesHistorial, 
-        setMessagesHistorial, 
         messagesHistorialPage,
         noMoreMessages
     }){
 
     let [newMsg, setNewMsg]                                             = useState(null)
     let [clickedUser, setClickedUser]                                                   = useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
+    let [messagesHistorial, setMessagesHistorial]                           = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
+
     const userData = getUserDataFromLocalStorage()
+    
+    
     useEffect(()=>{
         if (clickedUser){
             if (!CHAT_WEBSOCKET.current){
@@ -66,7 +67,7 @@ export function Chat({
     return (
         <div className="chat-container">
             {clickedUser.username  && <ChattingUserHeader/>}
-            <MessagesContainer loadingStateHandlers={loadingStateHandlers} newMsg={newMsg} messagesHistorial={messagesHistorial} setMessagesHistorial={setMessagesHistorial} messagesHistorialPage={messagesHistorialPage} noMoreMessages={noMoreMessages}/>
+            <MessagesContainer loadingStateHandlers={loadingStateHandlers} newMsg={newMsg}  messagesHistorialPage={messagesHistorialPage} noMoreMessages={noMoreMessages}/>
             {clickedUser.username && <MsgSendingInput onMsgSending={(newMsg)=>setNewMsg(newMsg)}/>}
         </div>
     )
@@ -74,8 +75,6 @@ export function Chat({
 
 Chat.propTypes = {
     loadingStateHandlers : PropTypes.object.isRequired,
-    messagesHistorial : PropTypes.array,
-    setMessagesHistorial : PropTypes.func.isRequired,
     messagesHistorialPage : PropTypes.object.isRequired,
     noMoreMessages : PropTypes.object.isRequired
 }
