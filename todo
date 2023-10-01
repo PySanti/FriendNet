@@ -9,6 +9,8 @@
 
 
 // fase 3:
+    // repasar implementacion de zustand
+
     // implementar states globales, zustand
 
     // hacer el loadingState un state global
