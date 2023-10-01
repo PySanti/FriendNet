@@ -108,6 +108,7 @@ export function Home() {
     }
 
     useEffect(()=>{
+
         if (!NOTIFICATIONS_WEBSOCKET.current && user){
             NotificationsWSInitialize(user.id)
             NotificationsWSUpdate(user.id, notifications,setNotifications, navigate )
