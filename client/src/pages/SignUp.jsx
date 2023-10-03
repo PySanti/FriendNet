@@ -1,6 +1,5 @@
 // react modules
 import { Header }                   from "../components/Header";
-import { useContext, useEffect } from "react";
 // api's
 import { createUsuarioAPI }         from "../api/createUsuario.api";
 import { checkExistingUserAPI } from "../api/checkExistingUser.api";
@@ -11,14 +10,13 @@ import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { UserLogged } from "./UserLogged";
 import { UserInfoForm } from "../components/UserInfoForm";
 import { Loader } from "../components/Loader";
-import { LoadingContext } from "../context/LoadingContext";
 import { Button } from "../components/Button";
 import { v4 } from "uuid";
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
-
+import {useLoadingState} from "../store/loadingStateStore"
 
 export function SignUp() {
-    let {loadingState, successfullyLoaded, startLoading, setLoadingState} = useContext(LoadingContext)
+    const [loadingState, successfullyLoaded, startLoading, setLoadingState] = useLoadingState((state)=>([state.loadingState, state.successfullyLoaded, state.startLoading, state.setLoadingState]))
     const navigate                                              = useNavigate()
     const onSignUp = async (data) =>{
         try{

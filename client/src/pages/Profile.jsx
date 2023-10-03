@@ -3,10 +3,9 @@ import { PropTypes } from "prop-types";
 import { Header } from "../components/Header";
 import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { UserNotLogged } from "./UserNotLogged";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { UserData } from "../components/UserData";
 import { Loader } from "../components/Loader";
-import { LoadingContext } from "../context/LoadingContext";
 import { UserInfoForm } from "../components/UserInfoForm";
 import { updateUserDataAPI } from "../api/updateUserData.api";
 import { UserPhoto } from "../components/UserPhoto";
@@ -19,6 +18,7 @@ import { dataIsDiferent } from "../utils/dataIsDiferent";
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_UNEXPECTED_ERROR_LOG, BASE_UNEXPECTED_ERROR_MESSAGE } from "../utils/constants"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {executeSecuredApi} from "../utils/executeSecuredApi"
+import {useLoadingState} from "../store/loadingStateStore"
 
 /**
  * Pagina creada para llevar perfil de usuario, tanto para
@@ -27,7 +27,7 @@ import {executeSecuredApi} from "../utils/executeSecuredApi"
 export function Profile({ edit }) {
     // states
     let [profileData, setProfileData] = useState(getUserDataFromLocalStorage());
-    let { loadingState, startLoading, setLoadingState, successfullyLoaded } =useContext(LoadingContext);
+    const [ loadingState, startLoading, setLoadingState, successfullyLoaded ] = useLoadingState((state)=>([state.loadingState, state.startLoading. state.setLoadingState, state.successfullyLoaded ]))
     const navigate = useNavigate();
     const onUpdate = async (data) => {
         startLoading();

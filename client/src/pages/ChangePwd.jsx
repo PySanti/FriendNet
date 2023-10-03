@@ -1,11 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import {  useEffect } from "react";
 import { Header } from "../components/Header";
 import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { UserNotLogged } from "./UserNotLogged";
 import { useForm } from "react-hook-form";
 import {BASE_PASSWORD_CONSTRAINTS} from "../utils/constants"
 import { changeUserPwdAPI } from "../api/changePwd.api";
-import { LoadingContext } from "../context/LoadingContext";
 import { Loader } from "../components/Loader";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";

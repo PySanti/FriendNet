@@ -1,11 +1,10 @@
 import { Header } from "../components/Header"
-import { useContext, useEffect } from "react"
+import {  useEffect } from "react"
 import { userIsAuthenticated } from "../utils/userIsAuthenticated"
 import { UserLogged } from "./UserLogged"
 import { getUserDetailAPI } from "../api/getUserDetailApi.api"
 import { useNavigate } from "react-router-dom"
 import { Loader } from "../components/Loader"
-import { LoadingContext } from "../context/LoadingContext"
 import "../styles/Login.css"
 import { LoginForm } from "../components/LoginForm"
 import { Button } from "../components/Button"
@@ -14,11 +13,12 @@ import { saveUserDataInLocalStorage } from "../utils/saveUserDataInLocalStorage"
 import { saveNotificationsInLocalStorage } from "../utils/saveNotificationsInLocalStorage"
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
 import {loginUser} from "../utils/loginUser"
+import {useLoadingState} from "../store/loadingStateStore"
 /**
  * Pagina creada para llevar logeo de usuarios
  */
 export function Login() {
-    let     {loadingState, startLoading,  successfullyLoaded, setLoadingState}  = useContext(LoadingContext)
+    const     [loadingState, startLoading,  successfullyLoaded, setLoadingState]  = useLoadingState((state)=>([state.loadingState, state.startLoading, state.successfullyLoaded, state,setLoadingState]))
     const   navigate                                                            = useNavigate()
 
     const onLogin = async (data)=>{
