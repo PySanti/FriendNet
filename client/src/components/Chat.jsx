@@ -12,13 +12,11 @@ import {getUserDataFromLocalStorage}    from "../utils/getUserDataFromLocalStora
 import {useMessagesHistorial} from "../store/messagesHistorialStore"
 /**
  * 
- * Contenedor unicamente del chat entre el session user y el clicked usee
- * @param {Object} loadingStateHandlers
+ * Contenedor unicamente del chat entre el session user y el clicked usee\
  * @param {Objects} messagesHistorialPage
  * @param {Object} noMoreMessages
 */
 export function Chat({
-        loadingStateHandlers,
         messagesHistorialPage,
         noMoreMessages
     }){
@@ -67,14 +65,13 @@ export function Chat({
     return (
         <div className="chat-container">
             {clickedUser.username  && <ChattingUserHeader/>}
-            <MessagesContainer loadingStateHandlers={loadingStateHandlers} newMsg={newMsg}  messagesHistorialPage={messagesHistorialPage} noMoreMessages={noMoreMessages}/>
+            <MessagesContainer newMsg={newMsg}  messagesHistorialPage={messagesHistorialPage} noMoreMessages={noMoreMessages}/>
             {clickedUser.username && <MsgSendingInput onMsgSending={(newMsg)=>setNewMsg(newMsg)}/>}
         </div>
     )
 }
 
 Chat.propTypes = {
-    loadingStateHandlers : PropTypes.object.isRequired,
     messagesHistorialPage : PropTypes.object.isRequired,
     noMoreMessages : PropTypes.object.isRequired
 }

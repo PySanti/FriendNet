@@ -9,7 +9,11 @@
 
 
 // fase 3:
+    // terminar de implementar el useLoadingState en todos los puntos en los que se usa el loadingContext
 
+    // testear ultimos cambios
+    
+    // eliminar todo rastro del LoadingContext
 
     // repasar implementacion de zustand
 

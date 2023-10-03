@@ -31,15 +31,14 @@ import {enterChatAPI} from "../api/enterChat.api"
 import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
 import {useClickedUser} from "../store/clickedUserStore"
 import {useMessagesHistorial} from "../store/messagesHistorialStore"
-
+import {useLoadingState} from "../store/loadingStateStore"
 /**
  * Pagina principal del sitio
  */
 export function Home() {
     const user = getUserDataFromLocalStorage()
     const navigate = useNavigate()
-    const loadingStateHandlers = useContext(LoadingContext)
-    let {loadingState, setLoadingState, startLoading, successfullyLoaded}   = loadingStateHandlers
+    let {loadingState, setLoadingState, startLoading, successfullyLoaded}   = useLoadingState((state)=>([state.loadingState, state.setLoadingState, state.startLoading, state.successfullyLoaded]))
     let [notifications, setNotifications]                                   = useState(getNotificationsFromLocalStorage())
     let [chatGlobeList, setChatGlobeList]                                   = useState([])
     let [clickedUser, setClickedUser]                                       = useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
@@ -153,10 +152,8 @@ export function Home() {
                         <UsersList  
                             onClickEvent={onUserButtonClick}  
                             chatGlobeList={chatGlobeList}  
-                            loadingStateHandlers={loadingStateHandlers}
                         />
                         <Chat 
-                            loadingStateHandlers ={loadingStateHandlers}
                             messagesHistorialPage={messagesHistorialPage}
                             noMoreMessages = {noMoreMessages}
                             />

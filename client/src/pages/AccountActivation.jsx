@@ -13,16 +13,15 @@ import { UserNotLogged } from "./UserNotLogged";
 import { Loader } from "../components/Loader";
 import { ActivationCodeField } from "../components/ActivationCodeField";
 import { Form } from "../components/Form";
-import { LoadingContext } from "../context/LoadingContext";
 import { Button } from "../components/Button";
 import { v4 } from "uuid";
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_ACTIVATION_CODE_CONSTRAINTS} from "../utils/constants"
-
+import {useLoadingState} from "../store/loadingStateStore"
 /**
  * Pagina creada para llevar activacion de cuenta
  */
 export function AccountActivation() {
-    let { loadingState, setLoadingState, successfullyLoaded, startLoading } = useContext(LoadingContext);
+    let { loadingState, setLoadingState, successfullyLoaded, startLoading } = useLoadingState((state)=>([state.loadingState, state.setLoadingState, state.successfullyLoaded, state.startLoading]));
     let realActivationCode                                                  = useRef(generateActivationCode());
     const props                                                             = useLocation().state;
     const navigate                                                          = useNavigate();

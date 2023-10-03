@@ -13,10 +13,10 @@ import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
 import {useClickedUser} from "../store/clickedUserStore"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import {useMessagesHistorial} from "../store/messagesHistorialStore"
+import {useLoadingState} from "../store/loadingStateStore"
 
 /**
  * Componente encargado de renderizar y mantener la lista de mensajes 
- * @param {Object} loadingStateHandlers objecto que contendra los objetos necesarios para mantener los estados de carga
  * @param {Object} newMsg state creado para cuando se envia un mensaje nuevo
 
 
@@ -24,7 +24,6 @@ import {useMessagesHistorial} from "../store/messagesHistorialStore"
  * @param {Object} noMoreMessages  
 */
 export function MessagesContainer({
-        loadingStateHandlers,
         newMsg, 
         messagesHistorialPage,
         noMoreMessages
@@ -32,7 +31,7 @@ export function MessagesContainer({
     const containerRef                                                  = useRef(null)
     const navigate                                                      = useNavigate()
     const clickedUser                                                   = useClickedUser((state)=>(state.clickedUser))
-    let { setLoadingState,startLoading,  successfullyLoaded}            = loadingStateHandlers
+    const [setLoadingState,startLoading,  successfullyLoaded]            = useLoadingState((state)=>[state.setLoadingState, state.startLoading, state.successfullyLoaded])
     const [messagesHistorial, setMessagesHistorial]                     = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
 
 
@@ -113,7 +112,6 @@ export function MessagesContainer({
 }
 
 MessagesContainer.propTypes = {
-    loadingStateHandlers : PropTypes.object.isRequired,
     newMsg : PropTypes.object,
     messagesHistorialPage : PropTypes.object.isRequired,
     noMoreMessages : PropTypes.object.isRequired

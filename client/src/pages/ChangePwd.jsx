@@ -16,6 +16,7 @@ import {BASE_UNEXPECTED_ERROR_MESSAGE, BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import {executeSecuredApi} from "../utils/executeSecuredApi"
+import {useLoadingState} from "../store/loadingStateStore"
 
 /**
  * Pagina creado para cambio de contraseña
@@ -24,7 +25,7 @@ export function ChangePwd(){
     const {register, handleSubmit, formState : {errors}} = useForm()
     const navigate = useNavigate()
     const   user = getUserDataFromLocalStorage()
-    let   {loadingState, setLoadingState, successfullyLoaded, startLoading} = useContext(LoadingContext)
+    const   {loadingState, setLoadingState, successfullyLoaded, startLoading} = useLoadingState((state)=>([state.loadingState, state.setLoadingState, state.successfullyLoaded, state.startLoading]))
     const changePwd = handleSubmit(async (data)=>{
         if (data['oldPwd'] !== data['newPwd']){
             startLoading()
