@@ -9,7 +9,9 @@
 
 
 // fase 3:
-    // repasar implementacion de zustand
+    // modularizar las notificaciones del Home lo maximo posible usando useChatGlobeList y useNotifications
+
+    // repasar y testear implementacion de zustand
 
     // Aprovechar states globales para modularizar lo mejor posible
 
@@ -17,13 +19,11 @@
 
     // revisar error de id's con creacion de notificaciones
 
-    // revisar posibles implementaciones de constantes
-
+    // revisar problemas de rendimiento de red en el userList y getMessagesHistorial (muy lento)
 
     // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
     // ActivateUser, ChangeEmailForActivation, GetUserDetail, GetUsersList
 
-    // revisar problemas de rendimiento de red en el userList y getMessagesHistorial (muy lento)
 
 
 
