@@ -64,9 +64,9 @@ export function Chat({
 
     return (
         <div className="chat-container">
-            {clickedUser.username  && <ChattingUserHeader/>}
+            {clickedUser  && <ChattingUserHeader/>}
             <MessagesContainer newMsg={newMsg}  messagesHistorialPage={messagesHistorialPage} noMoreMessages={noMoreMessages}/>
-            {clickedUser.username && <MsgSendingInput onMsgSending={(newMsg)=>setNewMsg(newMsg)}/>}
+            {clickedUser && <MsgSendingInput onMsgSending={(newMsg)=>setNewMsg(newMsg)}/>}
         </div>
     )
 }
