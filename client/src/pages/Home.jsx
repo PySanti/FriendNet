@@ -10,20 +10,13 @@ import { UsersList } from "../components/UsersList"
 import { Chat } from "../components/Chat"
 import { Button } from "../components/Button"
 import "../styles/Home.css"
-import { getNotificationsFromLocalStorage } from "../utils/getNotificationsFromLocalStorage"
 import { removeNotificationFromLocalStorage } from "../utils/removeNotificationFromLocalStorage"
-import { getChatGlobesList } from "../utils/getChatGlobesList"
 import { getRelatedNotification } from "../utils/getRelatedNotification"
 import { saveNotificationsInLocalStorage } from "../utils/saveNotificationsInLocalStorage"
 import {diferentUserHasBeenClicked} from "../utils/diferentUserHasBeenClicked"
-import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import {disconnectWebsocket} from "../utils/disconnectWebsocket" 
 import {CHAT_WEBSOCKET} from "../utils/constants"
-import {notificationDeleteAPI} from "../api/notificationDelete.api"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
-import {NOTIFICATIONS_WEBSOCKET} from "../utils/constants" 
-import {NotificationsWSInitialize} from "../utils/NotificationsWSInitialize"
-import {NotificationsWSUpdate} from "../utils/NotifcationsWSUpdate"
 import {executeSecuredApi} from "../utils/executeSecuredApi"
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_UNEXPECTED_ERROR_MESSAGE, BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
 import {enterChatAPI} from "../api/enterChat.api"
@@ -31,21 +24,21 @@ import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
 import {useClickedUser} from "../store/clickedUserStore"
 import {useMessagesHistorial} from "../store/messagesHistorialStore"
 import {useLoadingState} from "../store/loadingStateStore"
+import {useNotifications} from "../store/notificationsStore"
+
+
 /**
  * Pagina principal del sitio
  */
 export function Home() {
-    const user = getUserDataFromLocalStorage()
     const navigate = useNavigate()
     const [setLoadingState, startLoading, successfullyLoaded]   = useLoadingState((state)=>([state.setLoadingState, state.startLoading, state.successfullyLoaded]))
-    let [notifications, setNotifications]                                   = useState(getNotificationsFromLocalStorage())
-    let [chatGlobeList, setChatGlobeList]                                   = useState([])
     let [clickedUser, setClickedUser]                                       = useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
     let [lastClickedUser, setLastClickedUser]                               = useState(null)
     let [messagesHistorial, setMessagesHistorial]                           = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
     let messagesHistorialPage                                               = useRef(1)
     let noMoreMessages                                                      = useRef(false)
-
+    let [notifications, setNotifications]                                   = useNotifications((state)=>[state.notifications, state.setNotifications])
 
     const enterChatHandler = async ()=>{
         const relatedNotification = getRelatedNotification(clickedUser.id, notifications)
@@ -80,35 +73,13 @@ export function Home() {
         }
 
     }
-    const onNotificationDelete = async (notification)=>{
-        const response = await executeSecuredApi(async ()=>{
-            return await notificationDeleteAPI(notification.id, getJWTFromLocalStorage().access )
-        }, navigate)
-        if (response){
-            if (response.status == 200){
-                const updatedNotifications = removeNotificationFromLocalStorage(notification)
-                saveNotificationsInLocalStorage(updatedNotifications)
-                setNotifications(updatedNotifications)
-            } else if (response.status == 400){
-                console.log('Error inesperado eliminando notificacion')
-            } else if (response == BASE_FALLEN_SERVER_ERROR_MSG || response == BASE_UNEXPECTED_ERROR_MESSAGE){
-                setLoadingState({
-                    BASE_FALLEN_SERVER_ERROR_MSG : BASE_FALLEN_SERVER_LOG,
-                    BASE_UNEXPECTED_ERROR_MESSAGE : BASE_UNEXPECTED_ERROR_LOG
-                }[response])
-            }
-        }
-    }
+
     const onUserButtonClick = (newClickedUser)=>{
         setLastClickedUser(clickedUser);
         setClickedUser(newClickedUser)
     }
 
     useEffect(()=>{
-        if (!NOTIFICATIONS_WEBSOCKET.current && user){
-            NotificationsWSInitialize(user.id)
-            NotificationsWSUpdate(user.id, notifications,setNotifications, navigate )
-        }
         return ()=>{
             // esto se ejecutara cuando el componente sea desmontado
             setClickedUser(null)
@@ -127,14 +98,6 @@ export function Home() {
             })();
         }
     }, [clickedUser])
-    useEffect(()=>{
-        setChatGlobeList(getChatGlobesList(notifications))
-    }, [notifications])
-    useEffect(()=>{
-        if (!NOTIFICATIONS_WEBSOCKET.current && user){
-            NotificationsWSUpdate(user.id, notifications,setNotifications )
-        }
-    }, [notifications])
 
     if (!userIsAuthenticated()){
         return <UserNotLogged/>
@@ -144,20 +107,14 @@ export function Home() {
                 <div className="home-container">
                     <Header msg="En el home"/>
                     <div className="buttons-container">
-                        <NotificationsContainer notificationList={notifications} onNotificationClick={(notification)=>onUserButtonClick(notification.sender_user)} onNotificationDelete={onNotificationDelete} />
+                        <NotificationsContainer onNotificationClick={(notification)=>onUserButtonClick(notification.sender_user)} />
                         <Button buttonText="Salir" onClickFunction={()=>logoutUser(navigate)}/>
                         <Button buttonText="Perfil" onClickFunction={()=>{navigate('/home/profile/')}}/>
                     </div>
                     <Loader/>
                     <div className="users-interface-container">
-                        <UsersList  
-                            onClickEvent={onUserButtonClick}  
-                            chatGlobeList={chatGlobeList}  
-                        />
-                        <Chat 
-                            messagesHistorialPage={messagesHistorialPage}
-                            noMoreMessages = {noMoreMessages}
-                            />
+                        <UsersList  onClickEvent={onUserButtonClick}/>
+                        <Chat messagesHistorialPage={messagesHistorialPage} noMoreMessages = {noMoreMessages}/>
                     </div>
                 </div>
             </div>

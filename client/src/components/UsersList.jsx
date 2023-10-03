@@ -9,13 +9,12 @@ import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/con
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import { userIsAuthenticated } from "../utils/userIsAuthenticated"
 import {useLoadingState} from "../store/loadingStateStore"
+import {useChatGlobeList} from "../store/chatGlobeListStore"
 /**
  * Recibe la lista de usuarios directa de la api y retorna la lista de elementos jsx
- * @param {Function} onClickEvent evento a ejecutar cuando los usersButtons sean presionados
- * @param {Array} chatGlobeList lista de ids de los usuarios con globe en la usersList
-
+ * @param {Function} onClickEvent evento a ejecutar cuando los usersButtons sean presionado
  */
-export function UsersList({onClickEvent, chatGlobeList }){
+export function UsersList({onClickEvent }){
     const loaderClassName                                           ="users-list-loader" 
     const  setLoadingState                                          = useLoadingState((state)=>(state.setLoadingState))
     let userListPage                                                = useRef(1)
@@ -23,6 +22,8 @@ export function UsersList({onClickEvent, chatGlobeList }){
     let [loaderActivated, setLoaderActivated]                       = useState(true)
     let [usersList, setUsersList]                                   = useState([])
     let [ userKeyword, setUserKeyword]                               = useState(undefined)
+    let [chatGlobeList]                                             = useChatGlobeList((state)=>(state.chatGlobeList))
+
 
     const updateUserList = (newUsers)=>{
         if (userListPage.current === 1){
@@ -101,10 +102,6 @@ export function UsersList({onClickEvent, chatGlobeList }){
 
 UsersList.propTypes = {
     onClickEvent : PropTypes.func.isRequired,
-    chatGlobeList : PropTypes.array
-}
-UsersList.defaultProps = {
-    chatGlobeList : undefined,
 }
 
 
