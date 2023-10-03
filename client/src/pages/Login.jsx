@@ -18,7 +18,7 @@ import {useLoadingState} from "../store/loadingStateStore"
  * Pagina creada para llevar logeo de usuarios
  */
 export function Login() {
-    const     [loadingState, startLoading,  successfullyLoaded, setLoadingState]  = useLoadingState((state)=>([state.loadingState, state.startLoading, state.successfullyLoaded, state,setLoadingState]))
+    const     [loadingState, startLoading,  successfullyLoaded, setLoadingState]  = useLoadingState((state)=>([state.loadingState, state.startLoading, state.successfullyLoaded, state.setLoadingState]))
     const   navigate                                                            = useNavigate()
 
     const onLogin = async (data)=>{

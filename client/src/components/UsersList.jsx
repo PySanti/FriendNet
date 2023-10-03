@@ -17,12 +17,12 @@ import {useLoadingState} from "../store/loadingStateStore"
  */
 export function UsersList({onClickEvent, chatGlobeList }){
     const loaderClassName                                           ="users-list-loader" 
+    const  setLoadingState                                          = useLoadingState((state)=>(state.setLoadingState))
     let userListPage                                                = useRef(1)
     let noMoreUsers                                                 = useRef(false)
     let [loaderActivated, setLoaderActivated]                       = useState(true)
     let [usersList, setUsersList]                                   = useState([])
     let [ userKeyword, setUserKeyword]                               = useState(undefined)
-    let { setLoadingState}        = useLoadingState((state)=>(state.loadingState))
 
     const updateUserList = (newUsers)=>{
         if (userListPage.current === 1){

@@ -27,7 +27,7 @@ import {useLoadingState} from "../store/loadingStateStore"
 export function Profile({ edit }) {
     // states
     let [profileData, setProfileData] = useState(getUserDataFromLocalStorage());
-    const [ loadingState, startLoading, setLoadingState, successfullyLoaded ] = useLoadingState((state)=>([state.loadingState, state.startLoading. state.setLoadingState, state.successfullyLoaded ]))
+    const [ startLoading, setLoadingState, successfullyLoaded ] = useLoadingState((state)=>([state.startLoading, state.setLoadingState, state.successfullyLoaded ]))
     const navigate = useNavigate();
     const onUpdate = async (data) => {
         startLoading();

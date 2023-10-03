@@ -37,7 +37,7 @@ import {useLoadingState} from "../store/loadingStateStore"
 export function Home() {
     const user = getUserDataFromLocalStorage()
     const navigate = useNavigate()
-    let {loadingState, setLoadingState, startLoading, successfullyLoaded}   = useLoadingState((state)=>([state.loadingState, state.setLoadingState, state.startLoading, state.successfullyLoaded]))
+    const [setLoadingState, startLoading, successfullyLoaded]   = useLoadingState((state)=>([state.setLoadingState, state.startLoading, state.successfullyLoaded]))
     let [notifications, setNotifications]                                   = useState(getNotificationsFromLocalStorage())
     let [chatGlobeList, setChatGlobeList]                                   = useState([])
     let [clickedUser, setClickedUser]                                       = useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
