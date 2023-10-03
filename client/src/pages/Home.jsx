@@ -146,7 +146,7 @@ export function Home() {
                         <Button buttonText="Salir" onClickFunction={()=>logoutUser(navigate)}/>
                         <Button buttonText="Perfil" onClickFunction={()=>{navigate('/home/profile/')}}/>
                     </div>
-                    <Loader state={loadingState}/>
+                    <Loader/>
                     <div className="users-interface-container">
                         <UsersList  
                             onClickEvent={onUserButtonClick}  

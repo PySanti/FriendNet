@@ -47,7 +47,7 @@ export function ChangeEmailForActivation(){
             <div className="centered-container">
                 <div className="change-email-container">
                     <Header username={props.username} msg="Cambiando correo para activación"/>
-                    <Loader state={loadingState}/>
+                    <Loader/>
                     <Form onSubmitFunction={onSubmit} buttonMsg="Cambiar" buttonsList={[<Button key={v4()} buttonText="Volver" onClickFunction={()=>{navigate('/signup/activate', {state: props})}} />]}>
                         <EmailField defaultValue={props.userEmail} errors={errors.email && errors.email.message} registerObject={register("email", BASE_EMAIL_CONSTRAINTS)}/>
                     </Form>

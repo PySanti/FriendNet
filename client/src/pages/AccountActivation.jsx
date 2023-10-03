@@ -65,7 +65,7 @@ export function AccountActivation() {
             <div className="centered-container">
                 <div className="account-activation-container">
                     <Header username={props.username} msg={`Correo de activación enviado a ${props.userEmail}`}/>
-                    <Loader state={loadingState} />
+                    <Loader/>
                     <Form onSubmitFunction={onSubmit} buttonMsg="Activar" buttonsList={[<Button key={v4()} buttonText="Volver" onClickFunction={() => {navigate("/")}} />,<Button key={v4()} buttonText="Cambiar correo" onClickFunction={() => {navigate("/signup/activate/change_email", { state: props })}}/>]}>
                         <ActivationCodeField errors={errors.activationCode && errors.activationCode.message} registerObject={register("activationCode", BASE_ACTIVATION_CODE_CONSTRAINTS)}/>
                     </Form>
