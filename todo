@@ -9,9 +9,7 @@
 
 
 // fase 3:
-    // modularizar las notificaciones del Home lo maximo posible usando useChatGlobeList y useNotifications
-
-    // crear funcion updateNotifications para actualizar las notfiicaciones
+    // testear ultimos cambios
 
     // repasar y testear implementacion de zustand
 
