@@ -111,6 +111,8 @@ export function Home() {
         }
         return ()=>{
             // esto se ejecutara cuando el componente sea desmontado
+            setClickedUser(null)
+            setMessagesHistorial([])
             disconnectWebsocket(CHAT_WEBSOCKET)
         }
     }, [])
