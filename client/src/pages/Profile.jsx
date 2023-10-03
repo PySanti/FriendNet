@@ -67,7 +67,7 @@ export function Profile({ edit }) {
         return (
             <div className="centered-container">
                 <div className="profile-container">
-                    <Header username={profileData.username} msg={edit ? "Editando perfil" : "Viendo perfil"} />
+                    <Header msg={edit ? "Editando perfil" : "Viendo perfil"} />
                     <Loader/>
                     <div className="editing-container">
                         {edit ? 

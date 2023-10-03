@@ -142,7 +142,7 @@ export function Home() {
         return (
             <div className="centered-container">
                 <div className="home-container">
-                    <Header username={user.username} msg="En el home"/>
+                    <Header msg="En el home"/>
                     <div className="buttons-container">
                         <NotificationsContainer notificationList={notifications} onNotificationClick={(notification)=>onUserButtonClick(notification.sender_user)} onNotificationDelete={onNotificationDelete} />
                         <Button buttonText="Salir" onClickFunction={()=>logoutUser(navigate)}/>
