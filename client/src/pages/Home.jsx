@@ -25,7 +25,7 @@ import {useClickedUser} from "../store/clickedUserStore"
 import {useMessagesHistorial} from "../store/messagesHistorialStore"
 import {useLoadingState} from "../store/loadingStateStore"
 import {useNotifications} from "../store/notificationsStore"
-
+import {removeAndUpdateNotifications} from "../store/removeAndUpdateNotifications"
 
 /**
  * Pagina principal del sitio
@@ -52,9 +52,7 @@ export function Home() {
                 clickedUser.is_online = response.data.is_online
                 setClickedUser(clickedUser)
                 if (relatedNotification && response.data.notification_deleted){
-                    const updatedNotifications = removeNotificationFromLocalStorage(relatedNotification)
-                    saveNotificationsInLocalStorage(updatedNotifications)
-                    setNotifications(updatedNotifications)
+                    removeAndUpdateNotifications(relatedNotification, setNotifications)
                 }
                 successfullyLoaded()
             } else if (response.status == 400){

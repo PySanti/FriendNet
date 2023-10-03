@@ -15,10 +15,9 @@ import {useNavigate} from "react-router-dom"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {executeSecuredApi} from "../utils/executeSecuredApi"
 import {notificationDeleteAPI} from "../api/notificationDelete.api"
-import {removeNotificationFromLocalStorage} from "../utils/removeNotificationFromLocalStorage"
-import {saveNotificationsInLocalStorage} from "../utils/saveNotificationsInLocalStorage"
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_UNEXPECTED_ERROR_MESSAGE, BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
 import {useLoadingState} from "../store/loadingStateStore"
+import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotifications"
 /**
  * Componente creado para contener las notificaciones del usuarios
  * @param {Function} onNotificationClick funcion que se ejecutara cuando se clickee una notificacion
@@ -38,9 +37,7 @@ export function NotificationsContainer({onNotificationClick}){
         }, navigate)
         if (response){
             if (response.status == 200){
-                const updatedNotifications = removeNotificationFromLocalStorage(notification)
-                saveNotificationsInLocalStorage(updatedNotifications)
-                setNotifications(updatedNotifications)
+                removeAndUpdateNotifications(notification, setNotifications)
             } else if (response.status == 400){
                 console.log('Error inesperado eliminando notificacion')
             } else if (response == BASE_FALLEN_SERVER_ERROR_MSG || response == BASE_UNEXPECTED_ERROR_MESSAGE){
