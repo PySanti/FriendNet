@@ -22,7 +22,7 @@ export function UsersList({onClickEvent }){
     let [loaderActivated, setLoaderActivated]                       = useState(true)
     let [usersList, setUsersList]                                   = useState([])
     let [ userKeyword, setUserKeyword]                               = useState(undefined)
-    let [chatGlobeList]                                             = useChatGlobeList((state)=>(state.chatGlobeList))
+    let chatGlobeList                                             = useChatGlobeList((state)=>(state.chatGlobeList))
 
 
     const updateUserList = (newUsers)=>{

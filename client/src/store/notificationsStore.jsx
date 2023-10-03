@@ -1,8 +1,7 @@
 import create from "zustand"
-import {getNotificationsFromLocalStorage} from "../utils/getNotificationsFromLocalStorage"
 
 
 export const useNotifications = create((set)=>({
-    notifications : getNotificationsFromLocalStorage(),
+    notifications : [],
     setNotifications : (newNotifications)=>(set(()=>({notifications : newNotifications})))
 }))

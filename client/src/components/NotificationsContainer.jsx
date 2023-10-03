@@ -18,6 +18,7 @@ import {notificationDeleteAPI} from "../api/notificationDelete.api"
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_UNEXPECTED_ERROR_MESSAGE, BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
 import {useLoadingState} from "../store/loadingStateStore"
 import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotifications"
+import {getNotificationsFromLocalStorage} from "../utils/getNotificationsFromLocalStorage"
 /**
  * Componente creado para contener las notificaciones del usuarios
  * @param {Function} onNotificationClick funcion que se ejecutara cuando se clickee una notificacion
@@ -25,7 +26,7 @@ import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotification
 export function NotificationsContainer({onNotificationClick}){
     let [notificacionsActivated, setNotificationsActivated] = useState(false)
     let [setChatGlobeList] = useChatGlobeList((state)=>([state.setChatGlobeList]))
-    let [notifications, setNotifications] = useNotifications((state)=>(state.notifications, state.setNotifications))
+    let [notifications, setNotifications] = useNotifications((state)=>([state.notifications, state.setNotifications]))
     const userData = getUserDataFromLocalStorage()
     const notificationListCls = "notification-list"
     const navigate = useNavigate()
@@ -54,11 +55,15 @@ export function NotificationsContainer({onNotificationClick}){
     }
     useEffect(()=>{
         setChatGlobeList(getChatGlobesList(notifications))
-        if (!NOTIFICATIONS_WEBSOCKET.current && userData){
+        if (NOTIFICATIONS_WEBSOCKET.current && userData){
             NotificationsWSUpdate(userData.id, notifications,setNotifications )
         }
     }, [notifications])
     useEffect(()=>{
+        if (notifications.length == 0){
+            console.log('Ayuda por favor')
+            setNotifications(getNotificationsFromLocalStorage())
+        }
         if (!NOTIFICATIONS_WEBSOCKET.current && userData){
             NotificationsWSInitialize(userData.id)
             NotificationsWSUpdate(userData.id, notifications,setNotifications, navigate)
@@ -80,6 +85,5 @@ export function NotificationsContainer({onNotificationClick}){
 
 NotificationsContainer.propTypes = {
     onNotificationClick : PropTypes.func.isRequired,
-    onNotificationDelete : PropTypes.func.isRequired,
 }
 

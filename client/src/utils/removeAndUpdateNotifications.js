@@ -1,5 +1,5 @@
-import {removeNotificationFromLocalStorage} from "../utils/remove&UpdateNotifications"
-import {saveNotificationsInLocalStorage} from "../utils/saveNotificationsInLocalStorage"
+import {removeNotificationFromLocalStorage} from "./removeNotificationFromLocalStorage"
+import {saveNotificationsInLocalStorage} from "./saveNotificationsInLocalStorage"
 
 export function removeAndUpdateNotifications(notification, notificationsSetter){
     const updatedNotifications = removeNotificationFromLocalStorage(notification)

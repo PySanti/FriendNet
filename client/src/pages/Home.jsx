@@ -25,7 +25,7 @@ import {useClickedUser} from "../store/clickedUserStore"
 import {useMessagesHistorial} from "../store/messagesHistorialStore"
 import {useLoadingState} from "../store/loadingStateStore"
 import {useNotifications} from "../store/notificationsStore"
-import {removeAndUpdateNotifications} from "../store/removeAndUpdateNotifications"
+import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotifications"
 
 /**
  * Pagina principal del sitio
