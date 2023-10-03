@@ -9,9 +9,6 @@
 
 
 // fase 3:
-
-    // eliminar todo rastro del LoadingContext
-
     // repasar implementacion de zustand
 
     // hacer el loadingState un state global
