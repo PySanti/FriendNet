@@ -9,8 +9,6 @@
 
 
 // fase 3:
-    // revisar error de id's con creacion de notificaciones
-
     // revisar problemas de rendimiento de red en el userList y getMessagesHistorial (muy lento)
 
     // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
