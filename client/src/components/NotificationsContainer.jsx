@@ -56,7 +56,7 @@ export function NotificationsContainer({onNotificationClick}){
     useEffect(()=>{
         setChatGlobeList(getChatGlobesList(notifications))
         if (NOTIFICATIONS_WEBSOCKET.current && userData){
-            NotificationsWSUpdate(userData.id, notifications,setNotifications )
+            NotificationsWSUpdate(userData.id, notifications,setNotifications, navigate )
         }
     }, [notifications])
     useEffect(()=>{
