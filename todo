@@ -9,12 +9,6 @@
 
 
 // fase 3:
-    // testear ultimos cambios
-
-    // repasar y testear implementacion de zustand
-
-    // Aprovechar states globales para modularizar lo mejor posible
-
     // revisar posibles problemas de escalabilidad con grupos en websockets. Ver casos de uso para multiples usuarios
 
     // revisar error de id's con creacion de notificaciones
