@@ -159,13 +159,15 @@ class ChangeEmailForActivationAPI(APIView):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
             try:
-                serialized_data = serialized_data.data
-                if (Usuarios.objects.userExists(email=serialized_data['new_email'])):
-                    return Response({'error' : 'email_exists'}, status.HTTP_400_BAD_REQUEST)
+                user = Usuarios.objects.get(id=serialized_data['user_id'])
+                if (check_password(serialized_data.data['password'], user.password)):
+                    if (Usuarios.objects.userExists(email=serialized_data['new_email'])):
+                        return Response({'error' : 'email_exists'}, status.HTTP_400_BAD_REQUEST)
+                    else:
+                        Usuarios.objects.setEmail(user, serialized_data['new_email'])
+                        return Response({'success' : 'email_setted'}, status.HTTP_200_OK)
                 else:
-                    user = Usuarios.objects.get(id=serialized_data['user_id'])
-                    Usuarios.objects.setEmail(user, serialized_data['new_email'])
-                    return Response({'success' : 'email_setted'}, status.HTTP_200_OK)
+                    return BASE_USER_NOT_EXISTS_RESPONSE
             except Exception:
                 return BASE_UNEXPECTED_ERROR_RESPONSE
         else:
