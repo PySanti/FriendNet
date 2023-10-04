@@ -16,3 +16,4 @@ BASE_NO_MORE_PAGES_RESPONSE = Response({'error' : "no_more_pages"}, status.HTTP_
 BASE_IMAGES_WIDTH = 400
 BASE_ERROR_WHILE_DELETING_NOTIFICATION_RESPONSE = Response({'error' : 'error_while_deleting_notification'}, status=status.HTTP_400_BAD_REQUEST)
 BASE_ERROR_WHILE_GETTING_MESSAGES_RESPONSE = Response({'error' : 'error_while_getting_messages'}, status=status.HTTP_400_BAD_REQUEST)
+BASE_USER_NOT_EXISTS_RESPONSE = Response({'error' : 'user_not_exists'}, status.HTTP_400_BAD_REQUEST) 

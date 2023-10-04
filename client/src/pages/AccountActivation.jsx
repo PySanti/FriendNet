@@ -17,6 +17,7 @@ import { Button } from "../components/Button";
 import { v4 } from "uuid";
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_ACTIVATION_CODE_CONSTRAINTS} from "../utils/constants"
 import {useLoadingState} from "../store/loadingStateStore"
+import {BASE_USER_NOT_EXISTS_ERROR} from "../utils/constants"
 /**
  * Pagina creada para llevar activacion de cuenta
  */
@@ -36,6 +37,8 @@ export function AccountActivation() {
         } catch(error){
             if (error.message == BASE_FALLEN_SERVER_ERROR_MSG){
                 setLoadingState(BASE_FALLEN_SERVER_LOG)
+            } else if (error.response.data == BASE_USER_NOT_EXISTS_ERROR){
+                setLoadingState("Error de seguridad activando el usuario!")
             }
         }
     }

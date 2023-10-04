@@ -19,7 +19,8 @@ from .utils.constants import (
     BASE_UNEXPECTED_ERROR_RESPONSE,
     BASE_NO_MORE_PAGES_RESPONSE,
     BASE_ERROR_WHILE_DELETING_NOTIFICATION_RESPONSE,
-    BASE_ERROR_WHILE_GETTING_MESSAGES_RESPONSE
+    BASE_ERROR_WHILE_GETTING_MESSAGES_RESPONSE,
+    BASE_USER_NOT_EXISTS_RESPONSE
 )
 from django.core.mail import send_mail
 from django.contrib.auth.hashers import (
@@ -106,9 +107,9 @@ class GetUserDetailAPI(APIView):
                         formated_user_data = Usuarios.objects.getFormatedUserData(user)
                         return JsonResponse({'user' : formated_user_data}, status=status.HTTP_200_OK)
                     else:
-                        return Response({'error' : 'user_not_exists'}, status.HTTP_400_BAD_REQUEST)
+                        return BASE_USER_NOT_EXISTS_RESPONSE
                 else:
-                    return Response({'error' : 'user_not_exists'}, status.HTTP_400_BAD_REQUEST)
+                    return BASE_USER_NOT_EXISTS_RESPONSE
             except Exception:
                 return BASE_UNEXPECTED_ERROR_RESPONSE
         else:
@@ -202,7 +203,7 @@ class SendActivationEmailAPI(APIView):
                         recipient_list  =   [serialized_data.data['user_email']])
                     return Response({"email_sended" : True}, status.HTTP_200_OK)
                 else:
-                    return Response({'error' : 'user_not_exists'}, status.HTTP_400_BAD_REQUEST) 
+                    return BASE_USER_NOT_EXISTS_RESPONSE
             except Exception:
                 return BASE_UNEXPECTED_ERROR_RESPONSE
         else:
