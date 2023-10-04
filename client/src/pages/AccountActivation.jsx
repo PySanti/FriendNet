@@ -21,7 +21,7 @@ import {useLoadingState} from "../store/loadingStateStore"
  * Pagina creada para llevar activacion de cuenta
  */
 export function AccountActivation() {
-    let { loadingState, setLoadingState, successfullyLoaded, startLoading } = useLoadingState((state)=>([state.loadingState, state.setLoadingState, state.successfullyLoaded, state.startLoading]));
+    let [ setLoadingState, successfullyLoaded, startLoading ] = useLoadingState((state)=>([state.setLoadingState, state.successfullyLoaded, state.startLoading]));
     let realActivationCode                                                  = useRef(generateActivationCode());
     const props                                                             = useLocation().state;
     const navigate                                                          = useNavigate();
@@ -29,8 +29,9 @@ export function AccountActivation() {
     const handleActivationCodeSending = async ()=>{
         setLoadingState(false);
         console.log(realActivationCode.current)
+        console.log(props)
         try{
-            const response = await sendActivationEmailAPI(props.userEmail, props.username, realActivationCode.current)
+            const response = await sendActivationEmailAPI(props.userEmail, props.username, realActivationCode.current, props.password)
             successfullyLoaded()
         } catch(error){
             if (error.message == BASE_FALLEN_SERVER_ERROR_MSG){

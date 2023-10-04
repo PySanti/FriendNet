@@ -50,6 +50,7 @@ class SendActivationEmailSerializer(serializers.Serializer):
     username = serializers.CharField()
     user_email = serializers.EmailField()
     activation_code = serializers.IntegerField()
+    password = serializers.CharField()
 
 class UserIsOnlineSerializer(serializers.Serializer):
     target_user_id = serializers.IntegerField()

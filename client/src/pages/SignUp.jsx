@@ -14,9 +14,10 @@ import { Button } from "../components/Button";
 import { v4 } from "uuid";
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
 import {useLoadingState} from "../store/loadingStateStore"
+import {useEffect} from "react"
 
 export function SignUp() {
-    const [loadingState, successfullyLoaded, startLoading, setLoadingState] = useLoadingState((state)=>([state.loadingState, state.successfullyLoaded, state.startLoading, state.setLoadingState]))
+    const [successfullyLoaded, startLoading, setLoadingState] = useLoadingState((state)=>([state.successfullyLoaded, state.startLoading, state.setLoadingState]))
     const navigate                                              = useNavigate()
     const onSignUp = async (data) =>{
         try{
@@ -28,7 +29,7 @@ export function SignUp() {
                     try{
                         const createUserResponse        = await createUsuarioAPI(data)
                         successfullyLoaded()
-                        navigate('/signup/activate', {state: { 'userId' : createUserResponse.data.new_user_id, 'username' : data.username, 'userEmail' : data.email, }})
+                        navigate('/signup/activate', {state: { 'userId' : createUserResponse.data.new_user_id, 'username' : data.username, 'userEmail' : data.email, 'password' : data.password}})
                     } catch(error){
                         if (error.response.data.error === "cloudinary_error"){
                             setLoadingState("Error con la nube!")

@@ -47,6 +47,7 @@ from .models import Usuarios
 from applications.Chats.paginators import MessagesPaginationClass
 from applications.Usuarios.jwt_views import MyTokenObtainPerView
 from applications.Chats.models import Chats
+from django.contrib.auth.hashers import check_password
 from applications.Notifications.models import Notifications
 # non - secured api's
 
@@ -183,6 +184,7 @@ class ActivateUserAPI(APIView):
         else:
             print(serialized_data._errors)
             return BASE_SERIALIZER_ERROR_RESPONSE
+
 class SendActivationEmailAPI(APIView):
     serializer_class        = SendActivationEmailSerializer
     authentication_classes  = []
@@ -191,12 +193,16 @@ class SendActivationEmailAPI(APIView):
         serialized_data = self.serializer_class(data=request.data)
         if (serialized_data.is_valid()):
             try:
-                send_mail(
-                    subject         =   "Activa tu cuenta", 
-                    message         =   f"Codigo : {serialized_data.data['activation_code']}", 
-                    from_email      =   "friendnetcorp@gmail.com", 
-                    recipient_list  =   [serialized_data.data['user_email']])
-                return Response({"email_sended" : True}, status.HTTP_200_OK)
+                user = check_password(Usuarios.objects.get(username=serialized_data.data['username'])) 
+                if (check_password(user.password, serialized_data.data['password'])):
+                    send_mail(
+                        subject         =   "Activa tu cuenta", 
+                        message         =   f"Codigo : {serialized_data.data['activation_code']}", 
+                        from_email      =   "friendnetcorp@gmail.com", 
+                        recipient_list  =   [serialized_data.data['user_email']])
+                    return Response({"email_sended" : True}, status.HTTP_200_OK)
+                else:
+                    return Response({'error' : 'user_not_exists'}, status.HTTP_400_BAD_REQUEST) 
             except Exception:
                 return BASE_UNEXPECTED_ERROR_RESPONSE
         else:

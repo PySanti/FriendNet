@@ -17,10 +17,6 @@
 
 
 
-
-
-
-
     // buscar o repasar funcionamiento de :
         // annotate
         // agreggate
@@ -28,7 +24,7 @@
         // When
         // Case -> default
         // When -> then
-    
+
     // repasar funcionamiento de:
         // channels 3.0.4
         // asgi y wsgi ( por que se pone http en la application del asgi )

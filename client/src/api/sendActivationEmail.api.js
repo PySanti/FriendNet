@@ -9,11 +9,12 @@ import { BACKEND_URL } from '../utils/constants'
  * @param {String} username  
  * @param {String} activationCode  
  */
-export async function sendActivationEmailAPI(userEmail, username, activationCode){
+export async function sendActivationEmailAPI(userEmail, username, activationCode, password){
     const data = {
         'username' : username,
         'user_email' : userEmail,
         'activation_code' : activationCode,
+        'password' : password
     }
     return await axios.post(BACKEND_URL + `api/send_activation_email/`,data, config)
 }
