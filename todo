@@ -9,6 +9,9 @@
 
 
 // fase 3:
+
+    // solucionar problema del connection_error
+
     // revisar posibles problemas de escalabilidad con grupos en websockets. Ver casos de uso para multiples usuarios
 
     // revisar error de id's con creacion de notificaciones

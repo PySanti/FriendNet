@@ -74,7 +74,7 @@ class SendMsgAPI(APIView):
                     new_notification = Notifications.objects.filter(id=new_notification.id).values("msg", "id")[0]
                     if (notification_wesocket_is_opened(receiver_user.id)):
                         new_notification["sender_user"] = Usuarios.objects.filter(id=sender_user.id).values(*USERS_LIST_ATTRS)[0]
-                        broadcast_notification(receiver_user.id, sender_user.id, new_notification)
+                        broadcast_notification(receiver_user.id, new_notification)
                 new_message = Messages.objects.createMessage(parent=sender_user, content=request.data['msg'])
                 Chats.objects.sendMessage(sender_user, receiver_user,new_message)
                 new_message_values = new_message.__dict__.copy()
