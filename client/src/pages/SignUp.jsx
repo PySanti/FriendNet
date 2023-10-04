@@ -15,7 +15,7 @@ import { v4 } from "uuid";
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
 import {useLoadingState} from "../store/loadingStateStore"
 import {useEffect} from "react"
-
+import {BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
 export function SignUp() {
     const [successfullyLoaded, startLoading, setLoadingState] = useLoadingState((state)=>([state.successfullyLoaded, state.startLoading, state.setLoadingState]))
     const navigate                                              = useNavigate()
@@ -31,10 +31,14 @@ export function SignUp() {
                         successfullyLoaded()
                         navigate('/signup/activate', {state: { 'userId' : createUserResponse.data.new_user_id, 'username' : data.username, 'userEmail' : data.email, 'password' : data.password}})
                     } catch(error){
-                        if (error.response.data.error === "cloudinary_error"){
-                            setLoadingState("Error con la nube!")
-                        } else {
-                            setLoadingState("Error inesperado al registrar datos del usuario!")
+                        try{
+                            if (error.response.data.error === "cloudinary_error"){
+                                setLoadingState("Error con la nube!")
+                            } else {
+                                setLoadingState("Error inesperado al registrar datos del usuario!")
+                            }
+                        } catch(error){
+                            setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
                         }
                     }
                 } catch(error){
@@ -44,7 +48,11 @@ export function SignUp() {
                 setLoadingState("Ya existe un usuario con ese Nombre de usuario o Correo electronico!")
             }
         } catch(error){
-            setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : "Error inesperado chequeando existencia de usuario en la base de datos!")
+            try{
+                setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : "Error inesperado chequeando existencia de usuario en la base de datos!")
+            } catch(error){
+                setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
+            }
         }
 }
     useEffect(()=>{

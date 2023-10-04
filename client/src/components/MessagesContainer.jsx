@@ -51,6 +51,8 @@ export function MessagesContainer({
                 }
             } else if (response == BASE_FALLEN_SERVER_ERROR_MSG || response == BASE_UNEXPECTED_ERROR_MESSAGE){
                 setLoadingState(response.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado en respuesta del servidor, no se pudieron cargar los mensajes !')
+            } else {
+                setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
             }
         }
     }
@@ -70,6 +72,8 @@ export function MessagesContainer({
                     BASE_FALLEN_SERVER_ERROR_MSG : BASE_FALLEN_SERVER_LOG,
                     BASE_UNEXPECTED_ERROR_MESSAGE : BASE_UNEXPECTED_ERROR_LOG
                 }[response])
+            } else {
+                setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
             }
         }
     }

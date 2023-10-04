@@ -17,7 +17,8 @@ import { Button } from "../components/Button";
 import { v4 } from "uuid";
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_ACTIVATION_CODE_CONSTRAINTS} from "../utils/constants"
 import {useLoadingState} from "../store/loadingStateStore"
-import {BASE_USER_NOT_EXISTS_ERROR} from "../utils/constants"
+import {BASE_USER_NOT_EXISTS_ERROR, BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
+
 /**
  * Pagina creada para llevar activacion de cuenta
  */
@@ -54,7 +55,11 @@ export function AccountActivation() {
                 successfullyLoaded();
                 navigate("/login/");
             } catch (error) {
-                setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : "Error inesperado en el servidor al activar usuario!");
+                try{
+                    setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : "Error inesperado en el servidor al activar usuario!");
+                } catch(error){
+                    setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
+                }
             }
         } else {
             setLoadingState("Codigo invalido!");

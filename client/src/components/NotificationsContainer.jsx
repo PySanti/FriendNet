@@ -46,6 +46,8 @@ export function NotificationsContainer({onNotificationClick}){
                     BASE_FALLEN_SERVER_ERROR_MSG : BASE_FALLEN_SERVER_LOG,
                     BASE_UNEXPECTED_ERROR_MESSAGE : BASE_UNEXPECTED_ERROR_LOG
                 }[response])
+            } else {
+                setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
             }
         }
     }

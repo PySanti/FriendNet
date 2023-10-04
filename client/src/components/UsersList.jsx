@@ -10,6 +10,7 @@ import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import { userIsAuthenticated } from "../utils/userIsAuthenticated"
 import {useLoadingState} from "../store/loadingStateStore"
 import {useChatGlobeList} from "../store/chatGlobeListStore"
+import {BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
 /**
  * Recibe la lista de usuarios directa de la api y retorna la lista de elementos jsx
  * @param {Function} onClickEvent evento a ejecutar cuando los usersButtons sean presionado
@@ -39,15 +40,19 @@ export function UsersList({onClickEvent }){
             updateUserList(response.data.users_list)
             setLoaderActivated(false)
         } catch(error){
-            if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
-                setLoadingState(BASE_FALLEN_SERVER_LOG)
-            } else {
-                if (error.response.data.error=== "no_more_pages"){
-                    noMoreUsers.current = true
-                    setLoaderActivated(false)
+            try {                
+                if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
+                    setLoadingState(BASE_FALLEN_SERVER_LOG)
                 } else {
-                    setLoadingState('Error inesperado cargando datos de usuarios!')
+                    if (error.response.data.error=== "no_more_pages"){
+                        noMoreUsers.current = true
+                        setLoaderActivated(false)
+                    } else {
+                        setLoadingState('Error inesperado cargando datos de usuarios!')
+                    }
                 }
+            } catch(error){
+                setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
             }
         }
     }
