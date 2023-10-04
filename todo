@@ -9,7 +9,7 @@
 
 
 // fase 3:
-    // crear variable global para user_not_exists
+    // testear y repasar seguridad en sendActivationEmail
 
     // implementar seguridad por password para:
         // activateUser
