@@ -179,7 +179,7 @@ class ActivateUserAPI(APIView):
         if (serialized_data.is_valid()):
             try:
                 user = Usuarios.objects.get(id=request.data['user_id'])
-                if (check_password(serialized_data.data['password']), user.password):
+                if check_password(serialized_data.data['password'], user.password):
                     Usuarios.objects.activateUser(user)
                     return Response({'success' : 'user_activated'}, status.HTTP_200_OK)
                 else:
