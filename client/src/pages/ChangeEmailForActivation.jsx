@@ -15,7 +15,7 @@ import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/con
 import {useLoadingState} from "../store/loadingStateStore"
 
 export function ChangeEmailForActivation(){
-    let {loadingState, setLoadingState, successfullyLoaded, startLoading} = useLoadingState((state)=>([state.loadingState, state.setLoadingState, state.successfullyLoaded, state.startLoading]))
+    let [ setLoadingState, successfullyLoaded, startLoading] = useLoadingState((state)=>([state.setLoadingState, state.successfullyLoaded, state.startLoading]))
     const props                                         = useLocation().state
     const  navigate                                     = useNavigate()
     const {register, handleSubmit, formState:{errors}}  = useForm()
