@@ -19,7 +19,7 @@ class NotificationsWSConsumer(WebsocketConsumer):
         data = json.loads(text_data)
         if (data["type"] == "group_creation"):
             async_to_sync(self.channel_layer.group_add)(str(data['name']),self.channel_name)
-            if len(self.channel_layer.groups[str(data["name"])])==2:
+            if len(self.channel_layer.groups[str(data["name"])])>1:
                 async_to_sync(self.channel_layer.group_send)(str(data["name"]),{"type" : "broadcast_connection_error","value" : {    "type" : "connection_error"}})
             else:
                 broadcast_connection_inform(user_id=data["name"], connected=True)
