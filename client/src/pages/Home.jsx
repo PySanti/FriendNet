@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState } from "react"
 import {logoutUser} from "../utils/logoutUser"
 import { userIsAuthenticated } from "../utils/userIsAuthenticated"
 import { UserNotLogged } from "./UserNotLogged"
@@ -10,67 +10,19 @@ import { UsersList } from "../components/UsersList"
 import { Chat } from "../components/Chat"
 import { Button } from "../components/Button"
 import "../styles/Home.css"
-import { removeNotificationFromLocalStorage } from "../utils/removeNotificationFromLocalStorage"
-import { getRelatedNotification } from "../utils/getRelatedNotification"
-import { saveNotificationsInLocalStorage } from "../utils/saveNotificationsInLocalStorage"
-import {diferentUserHasBeenClicked} from "../utils/diferentUserHasBeenClicked"
 import {disconnectWebsocket} from "../utils/disconnectWebsocket" 
 import {CHAT_WEBSOCKET} from "../utils/constants"
-import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
-import {executeSecuredApi} from "../utils/executeSecuredApi"
-import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_UNEXPECTED_ERROR_MESSAGE, BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
-import {enterChatAPI} from "../api/enterChat.api"
-import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
 import {useClickedUser} from "../store/clickedUserStore"
 import {useMessagesHistorial} from "../store/messagesHistorialStore"
-import {useLoadingState} from "../store/loadingStateStore"
-import {useNotifications} from "../store/notificationsStore"
-import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotifications"
-
+import {useLastClickedUser} from "../store/lastClickedUserStore"
 /**
  * Pagina principal del sitio
  */
 export function Home() {
     const navigate = useNavigate()
-    const [setLoadingState, startLoading, successfullyLoaded]   = useLoadingState((state)=>([state.setLoadingState, state.startLoading, state.successfullyLoaded]))
-    let [clickedUser, setClickedUser]                                       = useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
-    let [lastClickedUser, setLastClickedUser]                               = useState(null)
-    let [messagesHistorial, setMessagesHistorial]                           = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
-    let messagesHistorialPage                                               = useRef(1)
-    let noMoreMessages                                                      = useRef(false)
-    let [notifications, setNotifications]                                   = useNotifications((state)=>[state.notifications, state.setNotifications])
-
-    const enterChatHandler = async ()=>{
-        const relatedNotification = getRelatedNotification(clickedUser.id, notifications)
-        startLoading()
-        const response = await executeSecuredApi(async ()=>{
-            return await enterChatAPI(clickedUser.id, relatedNotification? relatedNotification.id : undefined, getJWTFromLocalStorage().access)
-        }, navigate)
-        if (response){
-            if (response.status == 200){
-                updateMessagesHistorial(setMessagesHistorial, messagesHistorialPage, response.data.messages_hist!== "no_messages_between" ? response.data.messages_hist : [], messagesHistorial)
-                clickedUser.is_online = response.data.is_online
-                setClickedUser(clickedUser)
-                if (relatedNotification && response.data.notification_deleted){
-                    removeAndUpdateNotifications(relatedNotification, setNotifications)
-                }
-                successfullyLoaded()
-            } else if (response.status == 400){
-                setLoadingState({
-                    "user_not_found"                    : "Tuvimos problemas para encontrar a ese usuario!",
-                    "error_while_checking_is_online"    : 'Error comprobando si el usuario esta en linea!',
-                    "error_while_getting_messages"      : 'Error buscando mensajes!',
-                    "error_while_deleting_notification" : 'Error borrando notificacion !'
-                }[response.data.error])
-            }  else if (response == BASE_FALLEN_SERVER_ERROR_MSG || response == BASE_UNEXPECTED_ERROR_MESSAGE){
-                setLoadingState({
-                    BASE_FALLEN_SERVER_ERROR_MSG : BASE_FALLEN_SERVER_LOG,
-                    BASE_UNEXPECTED_ERROR_MESSAGE : BASE_UNEXPECTED_ERROR_LOG
-                }[response])
-            }
-        }
-
-    }
+    let [clickedUser, setClickedUser]   = useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
+    let setMessagesHistorial            = useMessagesHistorial((state)=>(state.setMessagesHistorial))
+    let setLastClickedUser              = useLastClickedUser((state)=>(state.setLastClickedUser))
 
     const onUserButtonClick = (newClickedUser)=>{
         setLastClickedUser(clickedUser);
@@ -81,21 +33,11 @@ export function Home() {
         return ()=>{
             // esto se ejecutara cuando el componente sea desmontado
             setClickedUser(null)
+            setLastClickedUser(null)
             setMessagesHistorial([])
             disconnectWebsocket(CHAT_WEBSOCKET)
         }
     }, [])
-    useEffect(()=>{
-        if (diferentUserHasBeenClicked(lastClickedUser, clickedUser)){
-            (async function() {
-                messagesHistorialPage.current = 1
-                noMoreMessages.current = false
-                clickedUser.is_online = false
-                setClickedUser(clickedUser)
-                await enterChatHandler()
-            })();
-        }
-    }, [clickedUser])
 
     if (!userIsAuthenticated()){
         return <UserNotLogged/>
@@ -112,7 +54,7 @@ export function Home() {
                     <Loader/>
                     <div className="users-interface-container">
                         <UsersList  onClickEvent={onUserButtonClick}/>
-                        <Chat messagesHistorialPage={messagesHistorialPage} noMoreMessages = {noMoreMessages}/>
+                        <Chat/>
                     </div>
                 </div>
             </div>
