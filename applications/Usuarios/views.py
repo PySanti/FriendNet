@@ -194,8 +194,8 @@ class SendActivationEmailAPI(APIView):
         serialized_data = self.serializer_class(data=request.data)
         if (serialized_data.is_valid()):
             try:
-                user = check_password(Usuarios.objects.get(username=serialized_data.data['username'])) 
-                if (check_password(user.password, serialized_data.data['password'])):
+                user = Usuarios.objects.get(username=serialized_data.data['username']) 
+                if (check_password(serialized_data.data['password'], user.password)):
                     send_mail(
                         subject         =   "Activa tu cuenta", 
                         message         =   f"Codigo : {serialized_data.data['activation_code']}", 

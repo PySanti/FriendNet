@@ -37,7 +37,7 @@ export function AccountActivation() {
         } catch(error){
             if (error.message == BASE_FALLEN_SERVER_ERROR_MSG){
                 setLoadingState(BASE_FALLEN_SERVER_LOG)
-            } else if (error.response.data == BASE_USER_NOT_EXISTS_ERROR){
+            } else if (error.response.data.error == BASE_USER_NOT_EXISTS_ERROR){
                 setLoadingState("Error de seguridad activando el usuario!")
             }
         }
