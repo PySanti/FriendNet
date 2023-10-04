@@ -9,13 +9,19 @@
 
 
 // fase 3:
+    // crear variable global para user_not_exists
+
+    // implementar seguridad por password para:
+        // activateUser
+        // sendActivationEmail
+        // changeEmailForActivation
+
+
     // revisar problemas de rendimiento de red en el userList y getMessagesHistorial (muy lento)
 
-    // revisar posibles vulnerabilidades en : SendActivationEmail (limitar cantidad de emails enviados para evitar caida del server), 
-    // ActivateUser, ChangeEmailForActivation, GetUserDetail, GetUsersList
+    // rateLimiter
 
-
-
+    // revisar posibles vulnerabilidades en : GetUsersList
 
     // buscar o repasar funcionamiento de :
         // annotate
