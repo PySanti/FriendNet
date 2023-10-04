@@ -7,7 +7,8 @@ import { BACKEND_URL } from '../utils/constants'
  * Usa utilidad de api para enviar correo con activation_code al usuario username 
  * @param {String} userEmail  
  * @param {String} username  
- * @param {String} activationCode  
+ * @param {String} activationCode 
+ * @param {String} password 
  */
 export async function sendActivationEmailAPI(userEmail, username, activationCode, password){
     const data = {
