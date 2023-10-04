@@ -60,9 +60,9 @@ export function NotificationsContainer({onNotificationClick}){
         }
     }, [notifications])
     useEffect(()=>{
-        if (notifications.length == 0){
-            console.log('Ayuda por favor')
-            setNotifications(getNotificationsFromLocalStorage())
+        const localStorageNotifications = getNotificationsFromLocalStorage()
+        if (notifications.length == 0 && localStorageNotifications){
+            setNotifications(localStorageNotifications)
         }
         if (!NOTIFICATIONS_WEBSOCKET.current && userData){
             NotificationsWSInitialize(userData.id)
