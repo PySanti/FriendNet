@@ -35,10 +35,14 @@ export function AccountActivation() {
             const response = await sendActivationEmailAPI(props.userEmail, props.username, realActivationCode.current, props.password)
             successfullyLoaded()
         } catch(error){
-            if (error.message == BASE_FALLEN_SERVER_ERROR_MSG){
-                setLoadingState(BASE_FALLEN_SERVER_LOG)
-            } else if (error.response.data.error == BASE_USER_NOT_EXISTS_ERROR){
-                setLoadingState("Error de seguridad activando el usuario!")
+            try{
+                if (error.message == BASE_FALLEN_SERVER_ERROR_MSG){
+                    setLoadingState(BASE_FALLEN_SERVER_LOG)
+                } else if (error.response.data.error == BASE_USER_NOT_EXISTS_ERROR){
+                    setLoadingState("Error de seguridad activando el usuario!")
+                }
+            } catch(error){
+                setLoadingState('Error inesperado enviando codigo de activacion!')
             }
         }
     }

@@ -22,6 +22,8 @@
 
     // revisar error de : Application instance <Task pending name='Task-6' coro=<StaticFilesWrapper.__call__() running at /home/santiago/Escritorio/Projects/FriendNet/dependencies/lib/python3.8/site-packages/channels/staticfiles.py:44> wait_for=<Future pending cb=[_chain_future.<locals>._call_check_cancel() at /usr/lib/python3.8/asyncio/futures.py:360, <TaskWakeupMethWrapper object at 0x7f8b1db425b0>()]>> for connection <WebRequest at 0x7f8b1dc6ef70 method=POST uri=/api/send_activation_email/ clientproto=HTTP/1.1> took too long to shut down and was killed.
 
+    // implementar try catch en los setLoadingState para manejo de errores inesperados
+
     // buscar o repasar funcionamiento de :
         // annotate
         // agreggate
