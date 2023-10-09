@@ -11,9 +11,8 @@ import { Button } from "../components/Button";
 import { Form } from "../components/Form";
 import { PasswordField } from "../components/PasswordField";
 import { v4 } from "uuid";
-import {BASE_UNEXPECTED_ERROR_MESSAGE, BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
+import {BASE_UNEXPECTED_ERROR_MESSAGE, BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_UNEXPECTED_ERROR_LOG, BASE_RATE_LIMIT_BLOCK_RESPONSE} from "../utils/constants"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
-import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import {executeSecuredApi} from "../utils/executeSecuredApi"
 import {useLoadingState} from "../store/loadingStateStore"
 
@@ -23,8 +22,7 @@ import {useLoadingState} from "../store/loadingStateStore"
 export function ChangePwd(){
     const {register, handleSubmit, formState : {errors}} = useForm()
     const navigate = useNavigate()
-    const   user = getUserDataFromLocalStorage()
-    const   {loadingState, setLoadingState, successfullyLoaded, startLoading} = useLoadingState((state)=>([state.loadingState, state.setLoadingState, state.successfullyLoaded, state.startLoading]))
+    const   [ setLoadingState, successfullyLoaded, startLoading] = useLoadingState((state)=>([state.loadingState, state.setLoadingState, state.successfullyLoaded, state.startLoading]))
     const changePwd = handleSubmit(async (data)=>{
         if (data['oldPwd'] !== data['newPwd']){
             startLoading()
@@ -36,6 +34,8 @@ export function ChangePwd(){
                     successfullyLoaded()
                 } else if (response.status == 400){
                     setLoadingState(response.response.data.error === 'invalid_pwd' ? "Error, la contraseña actual es invalida !" : 'Error inesperado en respuesta de servidor')
+                } else if (response.status == 403){
+                    setLoadingState(BASE_RATE_LIMIT_BLOCK_RESPONSE)
                 } else if (response == BASE_FALLEN_SERVER_ERROR_MSG || response == BASE_UNEXPECTED_ERROR_MESSAGE){
                     setLoadingState({
                         BASE_FALLEN_SERVER_ERROR_MSG : BASE_FALLEN_SERVER_LOG,

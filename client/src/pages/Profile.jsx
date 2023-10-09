@@ -15,7 +15,7 @@ import { v4 } from "uuid";
 import { saveUserDataInLocalStorage } from "../utils/saveUserDataInLocalStorage";
 import { getUserDataFromLocalStorage } from "../utils/getUserDataFromLocalStorage";
 import { dataIsDiferent } from "../utils/dataIsDiferent";
-import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_UNEXPECTED_ERROR_LOG, BASE_UNEXPECTED_ERROR_MESSAGE } from "../utils/constants"
+import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_UNEXPECTED_ERROR_LOG, BASE_UNEXPECTED_ERROR_MESSAGE, BASE_RATE_LIMIT_BLOCK_RESPONSE } from "../utils/constants"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {executeSecuredApi} from "../utils/executeSecuredApi"
 import {useLoadingState} from "../store/loadingStateStore"
@@ -48,7 +48,9 @@ export function Profile({ edit }) {
                         "username_or_email_taken"   : "El usuario o el email ya están tomados !",
                         "cloudinary_error"          : "Error al subir la imagen a la nube!"
                     }[response.data.error])
-                } else if (response == BASE_FALLEN_SERVER_ERROR_MSG || response == BASE_UNEXPECTED_ERROR_MESSAGE){
+                } else if (response.status == 403){
+                    setLoadingState(BASE_RATE_LIMIT_BLOCK_RESPONSE)
+                }   else if (response == BASE_FALLEN_SERVER_ERROR_MSG || response == BASE_UNEXPECTED_ERROR_MESSAGE){
                     setLoadingState({
                         BASE_FALLEN_SERVER_ERROR_MSG : BASE_FALLEN_SERVER_LOG,
                         BASE_UNEXPECTED_ERROR_MESSAGE : BASE_UNEXPECTED_ERROR_LOG

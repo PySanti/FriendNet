@@ -3,7 +3,7 @@ import { Message } from "./Message"
 import "../styles/MessagesContainer.css"
 import { v4 } from "uuid"
 import { useEffect, useRef } from "react"
-import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_UNEXPECTED_ERROR_MESSAGE, BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
+import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_UNEXPECTED_ERROR_MESSAGE, BASE_UNEXPECTED_ERROR_LOG, BASE_RATE_LIMIT_BLOCK_RESPONSE} from "../utils/constants"
 import { getJWTFromLocalStorage } from "../utils/getJWTFromLocalStorage"
 import { useNavigate } from "react-router-dom"
 import { sendMsgAPI } from "../api/sendMsg.api"
@@ -49,6 +49,8 @@ export function MessagesContainer({
                     noMoreMessages.current = true
                     successfullyLoaded()
                 }
+            } else if (response.status == 403){
+                setLoadingState(BASE_RATE_LIMIT_BLOCK_RESPONSE)
             } else if (response == BASE_FALLEN_SERVER_ERROR_MSG || response == BASE_UNEXPECTED_ERROR_MESSAGE){
                 setLoadingState(response.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado en respuesta del servidor, no se pudieron cargar los mensajes !')
             } else {
@@ -67,6 +69,8 @@ export function MessagesContainer({
                 successfullyLoaded()
             } else if (response.status == 400){
                 setLoadingState('Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
+            } else if (response.status == 403){
+                setLoadingState(BASE_RATE_LIMIT_BLOCK_RESPONSE)
             } else if (response == BASE_FALLEN_SERVER_ERROR_MSG || response == BASE_UNEXPECTED_ERROR_MESSAGE){
                 setLoadingState({
                     BASE_FALLEN_SERVER_ERROR_MSG : BASE_FALLEN_SERVER_LOG,

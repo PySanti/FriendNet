@@ -74,3 +74,4 @@ export const CHAT_WEBSOCKET = {
 export const NOTIFICATIONS_WEBSOCKET = {
     'current' : null
 }
+export const BASE_RATE_LIMIT_BLOCK_RESPONSE = "Has hecho muchas solicitudes ultimamente, espera un poco ... "

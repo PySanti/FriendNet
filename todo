@@ -9,7 +9,9 @@
 
 
 // fase 3:
-    // Implmenetar soporte para 403 en el front
+    // terminar de implementar soporte para 403 en el front
+
+    // estandarizar soporte de 403 en el front para DRY
 
     // revisar problemas de rendimiento de red en el userList y getMessagesHistorial (muy lento)
 
