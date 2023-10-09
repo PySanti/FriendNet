@@ -14,10 +14,13 @@ from applications.Usuarios.utils.constants import (
 from .models import Notifications
 from rest_framework import status
 from rest_framework.response import Response
+from django_ratelimit.decorators import ratelimit
+from django.utils.decorators import method_decorator
 class NotificationDeleteAPI(APIView):
     serializer_class = NotificationsDeleteSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+    @method_decorator(ratelimit(key="ip", rate="5/s", method="POST"))
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():

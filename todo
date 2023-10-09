@@ -9,7 +9,9 @@
 
 
 // fase 3:
-    // Terminar de implementar finalmente el rateLimiter en todas las api's
+    // agregar constantes BASE_RATE_LIMIT_TIMER y BASE_RATE_LIMIT_KEY
+
+    // Implmenetar soporte para 403 en el front
 
     // revisar problemas de rendimiento de red en el userList y getMessagesHistorial (muy lento)
 
