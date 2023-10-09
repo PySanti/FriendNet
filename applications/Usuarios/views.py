@@ -50,6 +50,8 @@ from applications.Usuarios.jwt_views import MyTokenObtainPerView
 from applications.Chats.models import Chats
 from django.contrib.auth.hashers import check_password
 from applications.Notifications.models import Notifications
+from django_ratelimit.decorators import ratelimit 
+from django.utils.decorators import method_decorator
 # non - secured api's
 
 class CheckExistingUserAPI(APIView):
@@ -115,13 +117,13 @@ class GetUserDetailAPI(APIView):
         else:
             print(serialized_data._errors)
             return BASE_SERIALIZER_ERROR_RESPONSE
-
 class GetUsersListAPI(APIView):
     serializer_class        = GetUsersListSerializer
     authentication_classes  = []
     permission_classes      = [AllowAny]
     pagination_class        = UsersListPaginator
 
+    @method_decorator(ratelimit(key="ip", rate="5/s", method="POST"))
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
