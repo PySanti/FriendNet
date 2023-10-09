@@ -9,9 +9,7 @@
 
 
 // fase 3:
-    // terminar de implementar soporte para 403 en el front
-
-    // estandarizar soporte de 403 en el front para DRY
+    // Estandarizar mensajes de error comunes en llamadas a api's,, DRY
 
     // revisar y repasar toda la implementacion de rate_limiting
 
