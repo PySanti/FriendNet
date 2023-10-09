@@ -48,8 +48,7 @@ THIRD_PARTY_APPS = [
     "channels",
     "rest_framework",
     "corsheaders",
-    "coreapi",
-    "rest_framework_simplejwt.token_blacklist"
+    "rest_framework_simplejwt.token_blacklist",
 ]
 SECRET_FILE_PATH = BASE_DIR.parent / 'secrets.json'
 INSTALLED_APPS = LOCAL_APPS + DJANGO_APPS + THIRD_PARTY_APPS
