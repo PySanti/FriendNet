@@ -14,7 +14,7 @@ import { saveNotificationsInLocalStorage } from "../utils/saveNotificationsInLoc
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
 import {loginUser} from "../utils/loginUser"
 import {useLoadingState} from "../store/loadingStateStore"
-import {BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
+import {BASE_UNEXPECTED_ERROR_LOG, BASE_RATE_LIMIT_BLOCK_RESPONSE} from "../utils/constants"
 /**
  * Pagina creada para llevar logeo de usuarios
  */
@@ -41,7 +41,11 @@ export function Login() {
                     navigate('/home/')
                 } catch(error){
                     try{
-                        setLoadingState(error.response.data.error == "user_is_online" ? "El usuario ya esta en linea!" : "Error inesperado logeando usuario!") 
+                        if (error.response.status == 403){
+                            setLoadingState(BASE_RATE_LIMIT_BLOCK_RESPONSE)
+                        } else {
+                            setLoadingState(error.response.data.error == "user_is_online" ? "El usuario ya esta en linea!" : "Error inesperado logeando usuario!") 
+                        }
                     } catch(error){
                         setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
                     }
@@ -51,6 +55,8 @@ export function Login() {
             try{
                 if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
                     setLoadingState(BASE_FALLEN_SERVER_LOG)
+                } else if (error.response.status == 403){
+                    setLoadingState(BASE_RATE_LIMIT_BLOCK_RESPONSE)
                 } else {
                     // por seguridad, la api retornara el mismo codigo de error para cuando el usuario o la contrasenia esten mal
                     setLoadingState(error.response.data.error===  "user_not_exists" ? "Usuario o contraseña inválidos !" : "Error inesperado en respuesta de servidor, esta caido !") 

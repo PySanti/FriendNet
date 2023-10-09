@@ -2,7 +2,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { Header } from "../components/Header";
 import { useForm } from "react-hook-form";
-import { useContext, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 // api's
 import { activateUserAPI } from "../api/activateUser.api";
 import { generateActivationCode } from "../utils/generateActivationCode";
@@ -17,7 +17,7 @@ import { Button } from "../components/Button";
 import { v4 } from "uuid";
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_ACTIVATION_CODE_CONSTRAINTS} from "../utils/constants"
 import {useLoadingState} from "../store/loadingStateStore"
-import {BASE_USER_NOT_EXISTS_ERROR, BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
+import {BASE_USER_NOT_EXISTS_ERROR, BASE_UNEXPECTED_ERROR_LOG, BASE_RATE_LIMIT_BLOCK_RESPONSE, BASE_RATE_LIMIT_BLOCK_RESPONSE} from "../utils/constants"
 
 /**
  * Pagina creada para llevar activacion de cuenta
@@ -33,7 +33,7 @@ export function AccountActivation() {
         console.log(realActivationCode.current)
         console.log(props)
         try{
-            const response = await sendActivationEmailAPI(props.userEmail, props.username, realActivationCode.current, props.password)
+            await sendActivationEmailAPI(props.userEmail, props.username, realActivationCode.current, props.password)
             successfullyLoaded()
         } catch(error){
             try{
@@ -41,6 +41,8 @@ export function AccountActivation() {
                     setLoadingState(BASE_FALLEN_SERVER_LOG)
                 } else if (error.response.data.error == BASE_USER_NOT_EXISTS_ERROR){
                     setLoadingState("Error de seguridad activando el usuario!")
+                } else if (error.response.status == 403){
+                    setLoadingState(BASE_RATE_LIMIT_BLOCK_RESPONSE)
                 }
             } catch(error){
                 setLoadingState('Error inesperado enviando codigo de activacion!')
@@ -56,7 +58,11 @@ export function AccountActivation() {
                 navigate("/login/");
             } catch (error) {
                 try{
-                    setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : "Error inesperado en el servidor al activar usuario!");
+                    if (error.response.status == 403){
+                        setLoadingState(BASE_RATE_LIMIT_BLOCK_RESPONSE)
+                    } else {
+                        setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : "Error inesperado en el servidor al activar usuario!");
+                    }
                 } catch(error){
                     setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
                 }

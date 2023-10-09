@@ -12,7 +12,7 @@ import { UserInfoForm } from "../components/UserInfoForm";
 import { Loader } from "../components/Loader";
 import { Button } from "../components/Button";
 import { v4 } from "uuid";
-import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
+import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_RATE_LIMIT_BLOCK_RESPONSE} from "../utils/constants"
 import {useLoadingState} from "../store/loadingStateStore"
 import {useEffect} from "react"
 import {BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
@@ -34,6 +34,8 @@ export function SignUp() {
                         try{
                             if (error.response.data.error === "cloudinary_error"){
                                 setLoadingState("Error con la nube!")
+                            } else  if (error.response.status == 403){
+                                setLoadingState(BASE_RATE_LIMIT_BLOCK_RESPONSE)
                             } else {
                                 setLoadingState("Error inesperado al registrar datos del usuario!")
                             }
@@ -49,7 +51,11 @@ export function SignUp() {
             }
         } catch(error){
             try{
-                setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : "Error inesperado chequeando existencia de usuario en la base de datos!")
+                if (error.response.status == 403){
+                    setLoadingState(BASE_RATE_LIMIT_BLOCK_RESPONSE)
+                } else {
+                    setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : "Error inesperado chequeando existencia de usuario en la base de datos!")
+                }
             } catch(error){
                 setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
             }

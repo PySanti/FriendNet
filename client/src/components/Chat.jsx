@@ -53,8 +53,6 @@ export function Chat(){
                     removeAndUpdateNotifications(relatedNotification, setNotifications)
                 }
                 successfullyLoaded()
-            }else if (response.status == 403){
-                setLoadingState(BASE_RATE_LIMIT_BLOCK_RESPONSE)
             } else if (response.status == 400){
                 setLoadingState({
                     "user_not_found"                    : "Tuvimos problemas para encontrar a ese usuario!",
@@ -62,6 +60,8 @@ export function Chat(){
                     "error_while_getting_messages"      : 'Error buscando mensajes!',
                     "error_while_deleting_notification" : 'Error borrando notificacion !'
                 }[response.data.error])
+            }else if (response.status == 403){
+                setLoadingState(BASE_RATE_LIMIT_BLOCK_RESPONSE)
             }  else if (response == BASE_FALLEN_SERVER_ERROR_MSG || response == BASE_UNEXPECTED_ERROR_MESSAGE){
                 setLoadingState({
                     BASE_FALLEN_SERVER_ERROR_MSG : BASE_FALLEN_SERVER_LOG,
