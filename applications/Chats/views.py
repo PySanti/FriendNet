@@ -26,7 +26,9 @@ from .paginators import (
 from applications.Usuarios.utils.constants import (
     BASE_SERIALIZER_ERROR_RESPONSE,
     BASE_UNEXPECTED_ERROR_RESPONSE,
-    BASE_ERROR_WHILE_GETTING_MESSAGES_RESPONSE
+    BASE_ERROR_WHILE_GETTING_MESSAGES_RESPONSE,
+    BASE_RATE_LIMIT_TIMER,
+    BASE_RATE_LIMIT_KEY
 )
 from applications.Usuarios.models import Usuarios
 from applications.Notifications.models import Notifications
@@ -43,7 +45,7 @@ class GetMessagesHistorialAPI(APIView):
     permission_classes      = [IsAuthenticated]
     pagination_class        = MessagesPaginationClass
 
-    @method_decorator(ratelimit(key="ip", rate="5/s", method="POST"))
+    @method_decorator(ratelimit(key=BASE_RATE_LIMIT_KEY, rate=BASE_RATE_LIMIT_TIMER, method="POST"))
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
@@ -66,7 +68,7 @@ class SendMsgAPI(APIView):
     serializer_class        = SendMsgSerializer
     authentication_classes  = [JWTAuthentication]
     permission_classes      = [IsAuthenticated]
-    @method_decorator(ratelimit(key="ip", rate="5/s", method="POST"))
+    @method_decorator(ratelimit(key=BASE_RATE_LIMIT_KEY, rate=BASE_RATE_LIMIT_TIMER, method="POST"))
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():

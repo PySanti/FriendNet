@@ -20,7 +20,9 @@ from .utils.constants import (
     BASE_NO_MORE_PAGES_RESPONSE,
     BASE_ERROR_WHILE_DELETING_NOTIFICATION_RESPONSE,
     BASE_ERROR_WHILE_GETTING_MESSAGES_RESPONSE,
-    BASE_USER_NOT_EXISTS_RESPONSE
+    BASE_USER_NOT_EXISTS_RESPONSE,
+    BASE_RATE_LIMIT_TIMER,
+    BASE_RATE_LIMIT_KEY
 )
 from django.core.mail import send_mail
 from django.contrib.auth.hashers import (
@@ -52,13 +54,14 @@ from django.contrib.auth.hashers import check_password
 from applications.Notifications.models import Notifications
 from django_ratelimit.decorators import ratelimit 
 from django.utils.decorators import method_decorator
+
 # non - secured api's
 
 class CheckExistingUserAPI(APIView):
     serializer_class        = CheckExistingUserSerializer
     authentication_classes  = []
     permission_classes      = [AllowAny]
-    @method_decorator(ratelimit(key="ip", rate="5/s", method="POST"))
+    @method_decorator(ratelimit(key=BASE_RATE_LIMIT_KEY, rate=BASE_RATE_LIMIT_TIMER, method="POST"))
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
@@ -76,7 +79,7 @@ class CreateUsuariosAPI(APIView):
     serializer_class        = CreateUsuariosSerializer
     authentication_classes  = []
     permission_classes      = [AllowAny]
-    @method_decorator(ratelimit(key="ip", rate="5/s", method="POST"))
+    @method_decorator(ratelimit(key=BASE_RATE_LIMIT_KEY, rate=BASE_RATE_LIMIT_TIMER, method="POST"))
     def post(self, request, *args, **kwargs):
         # enviamos al serializer los datos para hacer las comprobaciones de la imagen
         serializer = self.serializer_class(data=request.data, context={'request' : request.data})
@@ -101,7 +104,7 @@ class GetUserDetailAPI(APIView):
     serializer_class = GetUserDetailSerializer
     authentication_classes  = []
     permission_classes      = [AllowAny]
-    @method_decorator(ratelimit(key="ip", rate="5/s", method="POST"))
+    @method_decorator(ratelimit(key=BASE_RATE_LIMIT_KEY, rate=BASE_RATE_LIMIT_TIMER, method="POST"))
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
@@ -126,7 +129,7 @@ class GetUsersListAPI(APIView):
     permission_classes      = [AllowAny]
     pagination_class        = UsersListPaginator
 
-    @method_decorator(ratelimit(key="ip", rate="5/s", method="POST"))
+    @method_decorator(ratelimit(key=BASE_RATE_LIMIT_KEY, rate=BASE_RATE_LIMIT_TIMER, method="POST"))
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
@@ -160,7 +163,7 @@ class ChangeEmailForActivationAPI(APIView):
     serializer_class        = ChangeEmailForActivationSerializer
     authentication_classes  = []
     permission_classes      = [AllowAny]
-    @method_decorator(ratelimit(key="ip", rate="5/s", method="POST"))
+    @method_decorator(ratelimit(key=BASE_RATE_LIMIT_KEY, rate=BASE_RATE_LIMIT_TIMER, method="POST"))
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
@@ -182,7 +185,7 @@ class ActivateUserAPI(APIView):
     serializer_class        = ActivateUserSerializer
     authentication_classes  = []
     permission_classes      = [AllowAny]
-    @method_decorator(ratelimit(key="ip", rate="5/s", method="POST"))
+    @method_decorator(ratelimit(key=BASE_RATE_LIMIT_KEY, rate=BASE_RATE_LIMIT_TIMER, method="POST"))
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if (serialized_data.is_valid()):
@@ -203,7 +206,7 @@ class SendActivationEmailAPI(APIView):
     serializer_class        = SendActivationEmailSerializer
     authentication_classes  = []
     permission_classes      = [AllowAny]
-    @method_decorator(ratelimit(key="ip", rate="5/s", method="POST"))
+    @method_decorator(ratelimit(key=BASE_RATE_LIMIT_KEY, rate=BASE_RATE_LIMIT_TIMER, method="POST"))
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if (serialized_data.is_valid()):
@@ -226,7 +229,7 @@ class SendActivationEmailAPI(APIView):
 
 
 class LoginUserAPI(MyTokenObtainPerView):
-    @method_decorator(ratelimit(key="ip", rate="5/s", method="POST"))
+    @method_decorator(ratelimit(key=BASE_RATE_LIMIT_KEY, rate=BASE_RATE_LIMIT_TIMER, method="POST"))
     def post(self, request, *args, **kwargs):
         user = Usuarios.objects.get(username=request.data['username'])
         if (Usuarios.objects.user_is_online(user.id)):
@@ -270,7 +273,7 @@ class ChangeUserPwdAPI(APIView):
     serializer_class        = ChangeUserPwdSerializer
     authentication_classes  = [JWTAuthentication]
     permission_classes      = [IsAuthenticated]
-    @method_decorator(ratelimit(key="ip", rate="5/s", method="POST"))
+    @method_decorator(ratelimit(key=BASE_RATE_LIMIT_KEY, rate=BASE_RATE_LIMIT_TIMER, method="POST"))
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
@@ -292,7 +295,7 @@ class UserIsOnlineAPI(APIView):
     serializer_class        = UserIsOnlineSerializer
     authentication_classes  = [JWTAuthentication]
     permission_classes      = [IsAuthenticated]
-    @method_decorator(ratelimit(key="ip", rate="5/s", method="POST"))
+    @method_decorator(ratelimit(key=BASE_RATE_LIMIT_KEY, rate=BASE_RATE_LIMIT_TIMER, method="POST"))
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if (serialized_data.is_valid()):
@@ -311,7 +314,7 @@ class EnterChatApi(APIView):
     authentication_classes  = [JWTAuthentication]
     permission_classes      = [IsAuthenticated]
     pagination_class        = MessagesPaginationClass
-    @method_decorator(ratelimit(key="ip", rate="5/s", method="POST"))
+    @method_decorator(ratelimit(key=BASE_RATE_LIMIT_KEY, rate=BASE_RATE_LIMIT_TIMER, method="POST"))
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
