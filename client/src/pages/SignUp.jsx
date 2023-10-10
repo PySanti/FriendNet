@@ -12,7 +12,6 @@ import { UserInfoForm } from "../components/UserInfoForm";
 import { Loader } from "../components/Loader";
 import { Button } from "../components/Button";
 import { v4 } from "uuid";
-import { BASE_RATE_LIMIT_BLOCK_RESPONSE} from "../utils/constants"
 import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 import {useLoadingState} from "../store/loadingStateStore"
 import {useEffect} from "react"

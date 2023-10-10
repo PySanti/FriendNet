@@ -3,7 +3,6 @@ import { Message } from "./Message"
 import "../styles/MessagesContainer.css"
 import { v4 } from "uuid"
 import { useEffect, useRef } from "react"
-import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_UNEXPECTED_ERROR_MESSAGE, BASE_UNEXPECTED_ERROR_LOG, BASE_RATE_LIMIT_BLOCK_RESPONSE} from "../utils/constants"
 import { getJWTFromLocalStorage } from "../utils/getJWTFromLocalStorage"
 import { useNavigate } from "react-router-dom"
 import { sendMsgAPI } from "../api/sendMsg.api"
@@ -18,16 +17,10 @@ import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 /**
  * Componente encargado de renderizar y mantener la lista de mensajes 
  * @param {Object} newMsg state creado para cuando se envia un mensaje nuevo
-
-
  * @param {Object} messagesHistorialPage
  * @param {Object} noMoreMessages  
 */
-export function MessagesContainer({
-        newMsg, 
-        messagesHistorialPage,
-        noMoreMessages
-    }){
+export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}){
     const containerRef                                                  = useRef(null)
     const navigate                                                      = useNavigate()
     const clickedUser                                                   = useClickedUser((state)=>(state.clickedUser))

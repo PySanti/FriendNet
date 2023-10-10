@@ -11,10 +11,9 @@ import { Button } from "../components/Button"
 import { v4 } from "uuid"
 import { saveUserDataInLocalStorage } from "../utils/saveUserDataInLocalStorage"
 import { saveNotificationsInLocalStorage } from "../utils/saveNotificationsInLocalStorage"
-import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
 import {loginUser} from "../utils/loginUser"
 import {useLoadingState} from "../store/loadingStateStore"
-import {BASE_UNEXPECTED_ERROR_LOG, BASE_RATE_LIMIT_BLOCK_RESPONSE} from "../utils/constants"
+import {BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
 import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 /**
  * Pagina creada para llevar logeo de usuarios

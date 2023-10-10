@@ -12,7 +12,7 @@ import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { UserLogged } from "./UserLogged";
 import { changeEmailForActivationAPI } from "../api/changeEmailForActivation.api";
 import {useLoadingState} from "../store/loadingStateStore"
-import {BASE_UNEXPECTED_ERROR_LOG, BASE_RATE_LIMIT_BLOCK_RESPONSE} from "../utils/constants"
+import {BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
 import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 
 export function ChangeEmailForActivation(){
