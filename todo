@@ -9,8 +9,6 @@
 
 
 // fase 3:
-    // Meter el id para USERS_LIST_ATTRS
-
     // hacer que el broadcast_clicked_user se haga a todos los channels de notificaciones
 
     // hacer que, el broadcast type siempre se asigne en los broadcast_handlers
