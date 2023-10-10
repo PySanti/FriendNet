@@ -9,7 +9,7 @@
 
 
 // fase 3:
-    // Estandarizar mensajes de error comunes en llamadas a api's,, DRY
+    // repasar y testear toda la implementacion de handleStandardApiErrors
 
     // revisar y repasar toda la implementacion de rate_limiting
 
