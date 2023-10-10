@@ -54,13 +54,11 @@ export function Login() {
             }
         } catch(error){
             try{
-                if (error.message === BASE_FALLEN_SERVER_ERROR_MSG){
-                    setLoadingState(BASE_FALLEN_SERVER_LOG)
-                } else if (error.response.status == 403){
-                    setLoadingState(BASE_RATE_LIMIT_BLOCK_RESPONSE)
-                } else {
+                if (error.response.data.error===  "user_not_exists"){
                     // por seguridad, la api retornara el mismo codigo de error para cuando el usuario o la contrasenia esten mal
-                    setLoadingState(error.response.data.error===  "user_not_exists" ? "Usuario o contraseña inválidos !" : "Error inesperado en respuesta de servidor, esta caido !") 
+                    setLoadingState("Usuario o contraseña inválidos !") 
+                } else {
+                    handleStandardApiErrors(error.response, setLoadingState, "Error inesperado encontrando datos del usuario !")
                 }
             } catch(error){
                 setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
