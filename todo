@@ -9,8 +9,6 @@
 
 
 // fase 3:
-    // repasar y testear toda la implementacion de handleStandardApiErrors
-
     // revisar y repasar toda la implementacion de rate_limiting
 
     // revisar problemas de rendimiento de red en el userList y getMessagesHistorial (muy lento)
@@ -48,7 +46,7 @@
 
     // realizar un proceso de testeo, haciendo una lista de todas y cada una de las funcionalidades de la aplicacion
     // y realizando un proceso de testing por cada una, que incluya uso de consolelog's para asegurarnos
-    // de que todo funciona como lo esperado
+    // de que todo funciona como lo esperado. Testear api's, una por una, su manejo de errores. Testear 403
 
     // Testear websockets con muchos puertos
 
