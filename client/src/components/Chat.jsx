@@ -21,6 +21,7 @@ import {enterChatAPI} from "../api/enterChat.api"
 import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
 import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotifications"
 import {useLastClickedUser} from "../store/lastClickedUserStore"
+import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 
 /**
  * 
@@ -60,15 +61,8 @@ export function Chat(){
                     "error_while_getting_messages"      : 'Error buscando mensajes!',
                     "error_while_deleting_notification" : 'Error borrando notificacion !'
                 }[response.data.error])
-            }else if (response.status == 403){
-                setLoadingState(BASE_RATE_LIMIT_BLOCK_RESPONSE)
-            }  else if (response == BASE_FALLEN_SERVER_ERROR_MSG || response == BASE_UNEXPECTED_ERROR_MESSAGE){
-                setLoadingState({
-                    BASE_FALLEN_SERVER_ERROR_MSG : BASE_FALLEN_SERVER_LOG,
-                    BASE_UNEXPECTED_ERROR_MESSAGE : BASE_UNEXPECTED_ERROR_LOG
-                }[response])
-            } else {
-                setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
+            } else{
+                handleStandardApiErrors(response, setLoadingState, "Error inesperado entrando al chat !")
             }
         }
     }

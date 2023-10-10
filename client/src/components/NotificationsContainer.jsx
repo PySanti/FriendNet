@@ -15,10 +15,10 @@ import {useNavigate} from "react-router-dom"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {executeSecuredApi} from "../utils/executeSecuredApi"
 import {notificationDeleteAPI} from "../api/notificationDelete.api"
-import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_UNEXPECTED_ERROR_MESSAGE, BASE_UNEXPECTED_ERROR_LOG, BASE_RATE_LIMIT_BLOCK_RESPONSE} from "../utils/constants"
 import {useLoadingState} from "../store/loadingStateStore"
 import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotifications"
 import {getNotificationsFromLocalStorage} from "../utils/getNotificationsFromLocalStorage"
+import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 /**
  * Componente creado para contener las notificaciones del usuarios
  * @param {Function} onNotificationClick funcion que se ejecutara cuando se clickee una notificacion
@@ -41,15 +41,8 @@ export function NotificationsContainer({onNotificationClick}){
                 removeAndUpdateNotifications(notification, setNotifications)
             } else if (response.status == 400){
                 console.log('Error inesperado eliminando notificacion')
-            } else if (response.status == 403){
-                setLoadingState(BASE_RATE_LIMIT_BLOCK_RESPONSE)
-            }else if (response == BASE_FALLEN_SERVER_ERROR_MSG || response == BASE_UNEXPECTED_ERROR_MESSAGE){
-                setLoadingState({
-                    BASE_FALLEN_SERVER_ERROR_MSG : BASE_FALLEN_SERVER_LOG,
-                    BASE_UNEXPECTED_ERROR_MESSAGE : BASE_UNEXPECTED_ERROR_LOG
-                }[response])
             } else {
-                setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
+                handleStandardApiErrors(response, setLoadingState, "Ha habido un fallo eliminando la notificación !")
             }
         }
     }

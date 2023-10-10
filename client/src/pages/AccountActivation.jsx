@@ -30,19 +30,15 @@ export function AccountActivation() {
     const { register, handleSubmit, formState: { errors }}                  = useForm();
     const handleActivationCodeSending = async ()=>{
         setLoadingState(false);
-        console.log(realActivationCode.current)
-        console.log(props)
         try{
             await sendActivationEmailAPI(props.userEmail, props.username, realActivationCode.current, props.password)
             successfullyLoaded()
         } catch(error){
             try{
-                if (error.message == BASE_FALLEN_SERVER_ERROR_MSG){
-                    setLoadingState(BASE_FALLEN_SERVER_LOG)
-                } else if (error.response.data.error == BASE_USER_NOT_EXISTS_ERROR){
+                if (error.response.data.error == BASE_USER_NOT_EXISTS_ERROR){
                     setLoadingState("Error de seguridad activando el usuario!")
                 } else {
-                    handleStandardApiErrors(error.response, setLoadingState)
+                    handleStandardApiErrors(error.response, setLoadingState, "Hubo un error enviando el correo de activación !")
                 }
             } catch(error){
                 setLoadingState('Error inesperado enviando codigo de activacion!')

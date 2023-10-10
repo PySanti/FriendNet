@@ -1,7 +1,7 @@
 import {BASE_RATE_LIMIT_BLOCK_RESPONSE, BASE_FALLEN_SERVER_ERROR_MSG, BASE_UNEXPECTED_ERROR_LOG, BASE_UNEXPECTED_ERROR_MESSAGE, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
 import {} from "."
 
-export function handleStandardApiErrors(response, loadingStateSetter){
+export function handleStandardApiErrors(response, loadingStateSetter, unexpectedErrorMsg){
     if (response.status == 403){
         loadingStateSetter(BASE_RATE_LIMIT_BLOCK_RESPONSE)
     } else if (response == BASE_FALLEN_SERVER_ERROR_MSG || response == BASE_UNEXPECTED_ERROR_MESSAGE){
@@ -10,6 +10,6 @@ export function handleStandardApiErrors(response, loadingStateSetter){
             BASE_UNEXPECTED_ERROR_MESSAGE : BASE_UNEXPECTED_ERROR_LOG
         }[response])
     } else {
-        loadingStateSetter(BASE_UNEXPECTED_ERROR_LOG)
+        loadingStateSetter(unexpectedErrorMsg)
     }
 }

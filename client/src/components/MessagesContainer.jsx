@@ -49,12 +49,8 @@ export function MessagesContainer({
                     noMoreMessages.current = true
                     successfullyLoaded()
                 }
-            } else if (response.status == 403){
-                setLoadingState(BASE_RATE_LIMIT_BLOCK_RESPONSE)
-            } else if (response == BASE_FALLEN_SERVER_ERROR_MSG || response == BASE_UNEXPECTED_ERROR_MESSAGE){
-                setLoadingState(response.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : 'Error inesperado en respuesta del servidor, no se pudieron cargar los mensajes !')
             } else {
-                setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
+                handleStandardApiErrors(response, setLoadingState, "Error inesperado cargando los mensajes !")
             }
         }
     }
@@ -70,7 +66,7 @@ export function MessagesContainer({
             } else if (response.status == 400){
                 setLoadingState('Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
             } else {
-                handleStandardApiErrors(response, setLoadingState)
+                handleStandardApiErrors(response, setLoadingState, "Hemos detectado un error enviando el mensaje!")
             }
         }
     }
