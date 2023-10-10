@@ -14,7 +14,7 @@ import {useClickedUser} from "../store/clickedUserStore"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import {useMessagesHistorial} from "../store/messagesHistorialStore"
 import {useLoadingState} from "../store/loadingStateStore"
-
+import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 /**
  * Componente encargado de renderizar y mantener la lista de mensajes 
  * @param {Object} newMsg state creado para cuando se envia un mensaje nuevo
@@ -69,15 +69,8 @@ export function MessagesContainer({
                 successfullyLoaded()
             } else if (response.status == 400){
                 setLoadingState('Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
-            } else if (response.status == 403){
-                setLoadingState(BASE_RATE_LIMIT_BLOCK_RESPONSE)
-            } else if (response == BASE_FALLEN_SERVER_ERROR_MSG || response == BASE_UNEXPECTED_ERROR_MESSAGE){
-                setLoadingState({
-                    BASE_FALLEN_SERVER_ERROR_MSG : BASE_FALLEN_SERVER_LOG,
-                    BASE_UNEXPECTED_ERROR_MESSAGE : BASE_UNEXPECTED_ERROR_LOG
-                }[response])
             } else {
-                setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
+                handleStandardApiErrors(response, setLoadingState)
             }
         }
     }

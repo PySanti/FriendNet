@@ -18,7 +18,7 @@ import { v4 } from "uuid";
 import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_ACTIVATION_CODE_CONSTRAINTS} from "../utils/constants"
 import {useLoadingState} from "../store/loadingStateStore"
 import {BASE_USER_NOT_EXISTS_ERROR, BASE_UNEXPECTED_ERROR_LOG, BASE_RATE_LIMIT_BLOCK_RESPONSE} from "../utils/constants"
-
+import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 /**
  * Pagina creada para llevar activacion de cuenta
  */
@@ -41,8 +41,8 @@ export function AccountActivation() {
                     setLoadingState(BASE_FALLEN_SERVER_LOG)
                 } else if (error.response.data.error == BASE_USER_NOT_EXISTS_ERROR){
                     setLoadingState("Error de seguridad activando el usuario!")
-                } else if (error.response.status == 403){
-                    setLoadingState(BASE_RATE_LIMIT_BLOCK_RESPONSE)
+                } else {
+                    handleStandardApiErrors(error.response, setLoadingState)
                 }
             } catch(error){
                 setLoadingState('Error inesperado enviando codigo de activacion!')
