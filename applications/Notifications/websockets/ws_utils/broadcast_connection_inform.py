@@ -10,5 +10,5 @@ def broadcast_connection_inform(user_id, connected):
         que dicho id se acaba de conectar
     """
     channel_layer = get_channel_layer()
-    for group in get_opened_groups_with_id(str(user_id), channel_layer.groups):
+    for group in get_opened_groups_with_id(str(user_id)):
         async_to_sync(channel_layer.group_send)(group,connection_inform_dict(str(user_id), connected=connected))

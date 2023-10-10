@@ -9,6 +9,10 @@
 
 
 // fase 3:
+    // implementar brodcast_updated_clicked_user
+    
+    // hacer que, el broadcast type siempre se asigne en los broadcast_handlers
+
     // revisar problemas de rendimiento de red en el userList y getMessagesHistorial (muy lento)
 
     // implementar modificacion por websockets para informar de si el usuario modifico su usuario o foto de perfil
