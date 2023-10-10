@@ -15,6 +15,7 @@ import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/con
 import {loginUser} from "../utils/loginUser"
 import {useLoadingState} from "../store/loadingStateStore"
 import {BASE_UNEXPECTED_ERROR_LOG, BASE_RATE_LIMIT_BLOCK_RESPONSE} from "../utils/constants"
+import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 /**
  * Pagina creada para llevar logeo de usuarios
  */
@@ -41,10 +42,10 @@ export function Login() {
                     navigate('/home/')
                 } catch(error){
                     try{
-                        if (error.response.status == 403){
-                            setLoadingState(BASE_RATE_LIMIT_BLOCK_RESPONSE)
+                        if (error.response.data.error == "user_is_online"){
+                            setLoadingState("El usuario ya esta en linea!") 
                         } else {
-                            setLoadingState(error.response.data.error == "user_is_online" ? "El usuario ya esta en linea!" : "Error inesperado logeando usuario!") 
+                            handleStandardApiErrors(error.response, setLoadingState, "Hubo un error logeando al usuario !")
                         }
                     } catch(error){
                         setLoadingState(BASE_UNEXPECTED_ERROR_LOG)

@@ -11,10 +11,9 @@ import { UserNotLogged } from "./UserNotLogged";
 import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { UserLogged } from "./UserLogged";
 import { changeEmailForActivationAPI } from "../api/changeEmailForActivation.api";
-import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
 import {useLoadingState} from "../store/loadingStateStore"
-import {BASE_USER_NOT_EXISTS_ERROR} from "../utils/constants"
 import {BASE_UNEXPECTED_ERROR_LOG, BASE_RATE_LIMIT_BLOCK_RESPONSE} from "../utils/constants"
+import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 
 export function ChangeEmailForActivation(){
     let [ setLoadingState, successfullyLoaded, startLoading] = useLoadingState((state)=>([state.setLoadingState, state.successfullyLoaded, state.startLoading]))
@@ -31,14 +30,10 @@ export function ChangeEmailForActivation(){
                 navigate('/signup/activate', {state: props})
             } catch(error){
                 try{
-                    if (error.message === BASE_FALLEN_SERVER_ERROR_MSG ){
-                        setLoadingState(BASE_FALLEN_SERVER_LOG)
-                    } else if (error.response.data.error == BASE_USER_NOT_EXISTS_ERROR){
-                        setLoadingState('Error inesperado modificando el email !')
-                    } else if (error.response.status == 403){
-                        setLoadingState(BASE_RATE_LIMIT_BLOCK_RESPONSE)
+                    if (error.response.data.error==="email_exists"){
+                        setLoadingState("Error, ese email ya fue registrado !")
                     } else {
-                        setLoadingState(error.response.data.error==="email_exists" ? "Error, ese email ya fue registrado !" : "Error inesperado al modificar email !")
+                        handleStandardApiErrors(error.response, setLoadingState, "Hubo un error inesperado cambiando el correo !")
                     }
                 } catch(error){
                     setLoadingState(BASE_UNEXPECTED_ERROR_LOG)

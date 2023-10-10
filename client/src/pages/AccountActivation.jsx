@@ -54,11 +54,7 @@ export function AccountActivation() {
                 navigate("/login/");
             } catch (error) {
                 try{
-                    if (error.response.status == 403){
-                        setLoadingState(BASE_RATE_LIMIT_BLOCK_RESPONSE)
-                    } else {
-                        setLoadingState(error.message === BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : "Error inesperado en el servidor al activar usuario!");
-                    }
+                    handleStandardApiErrors(error.response, setLoadingState, "Hubo un error activando tu cuenta !")
                 } catch(error){
                     setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
                 }

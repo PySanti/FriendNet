@@ -11,10 +11,11 @@ import { Button } from "../components/Button";
 import { Form } from "../components/Form";
 import { PasswordField } from "../components/PasswordField";
 import { v4 } from "uuid";
-import {BASE_UNEXPECTED_ERROR_MESSAGE, BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_UNEXPECTED_ERROR_LOG, BASE_RATE_LIMIT_BLOCK_RESPONSE} from "../utils/constants"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {executeSecuredApi} from "../utils/executeSecuredApi"
 import {useLoadingState} from "../store/loadingStateStore"
+import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
+
 
 /**
  * Pagina creado para cambio de contraseña
@@ -34,15 +35,8 @@ export function ChangePwd(){
                     successfullyLoaded()
                 } else if (response.status == 400){
                     setLoadingState(response.response.data.error === 'invalid_pwd' ? "Error, la contraseña actual es invalida !" : 'Error inesperado en respuesta de servidor')
-                } else if (response.status == 403){
-                    setLoadingState(BASE_RATE_LIMIT_BLOCK_RESPONSE)
-                } else if (response == BASE_FALLEN_SERVER_ERROR_MSG || response == BASE_UNEXPECTED_ERROR_MESSAGE){
-                    setLoadingState({
-                        BASE_FALLEN_SERVER_ERROR_MSG : BASE_FALLEN_SERVER_LOG,
-                        BASE_UNEXPECTED_ERROR_MESSAGE : BASE_UNEXPECTED_ERROR_LOG
-                    }[response])
-                }  else {
-                    setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
+                } else {
+                    handleStandardApiErrors(response, setLoadingState, "Hubo un error cambiando la contraseña !")
                 }
             }
         } else {
