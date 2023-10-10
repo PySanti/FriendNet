@@ -54,9 +54,8 @@ from django.contrib.auth.hashers import check_password
 from applications.Notifications.models import Notifications
 from django_ratelimit.decorators import ratelimit 
 from django.utils.decorators import method_decorator
-from channels.layers import get_channel_layer
-from applications.Notifications.websockets.ws_utils.get_opened_groups_with_id import get_opened_groups_with_id
-from asgiref.sync import async_to_sync
+from .websockets.ws_utils.broadcast_updated_clicked_user import broadcast_updated_clicked_user
+
 # non - secured api's
 
 class CheckExistingUserAPI(APIView):
@@ -263,14 +262,7 @@ class UpdateUserDataAPI(APIView):
                     current_photo_link=user.photo_link)
                 try:
                     updated_user = Usuarios.objects.updateUser(user, serialized_data)
-                    for group in get_opened_groups_with_id(updated_user.id):
-                        print()
-                        async_to_sync(get_channel_layer().group_send)(
-                            group,{
-                                'type' : 'broadcast_updated_clicked_user',
-                                'value' : {i[0]:i[1] for i in updated_user.__dict__.items() if i[0] in USERS_LIST_ATTRS}
-                            }
-                        )
+                    broadcast_updated_clicked_user(updated_user)
                     return JsonResponse({'user_data_updated' : {i[0]:i[1] for i in updated_user.__dict__.items() if i[0] in USER_SHOWABLE_FIELDS}}, status=status.HTTP_200_OK)
                 except:
                     return Response({'error': "error_updating"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
