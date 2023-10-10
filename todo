@@ -11,6 +11,7 @@
 // fase 3:
     // revisar problemas de rendimiento de red en el userList y getMessagesHistorial (muy lento)
 
+    // implementar modificacion por websockets para informar de si el usuario modifico su usuario o foto de perfil
     // buscar o repasar funcionamiento de :
         // annotate
         // agreggate
@@ -44,7 +45,8 @@
 
     // realizar un proceso de testeo, haciendo una lista de todas y cada una de las funcionalidades de la aplicacion
     // y realizando un proceso de testing por cada una, que incluya uso de consolelog's para asegurarnos
-    // de que todo funciona como lo esperado. Testear api's, una por una, su manejo de errores. Testear 403
+    // de que todo funciona como lo esperado. Testear api's, una por una, su manejo de errores. Testear 403. Testear bien y repasar con logs
+    // el comportamiento de los websockets
 
     // Testear websockets con muchos puertos
 

@@ -1,5 +1,4 @@
 import {BASE_RATE_LIMIT_BLOCK_RESPONSE, BASE_FALLEN_SERVER_ERROR_MSG, BASE_UNEXPECTED_ERROR_LOG, BASE_UNEXPECTED_ERROR_MESSAGE, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
-import {} from "."
 
 export function handleStandardApiErrors(response, loadingStateSetter, unexpectedErrorMsg){
     if (response.status == 403){
