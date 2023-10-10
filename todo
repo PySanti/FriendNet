@@ -9,8 +9,6 @@
 
 
 // fase 3:
-    // revisar y repasar toda la implementacion de rate_limiting
-
     // revisar problemas de rendimiento de red en el userList y getMessagesHistorial (muy lento)
 
     // buscar o repasar funcionamiento de :
