@@ -31,9 +31,3 @@ class ChatWSConsumer(WebsocketConsumer):
     def broadcast_connection_inform(self, event):
         self.send(text_data=json.dumps(event['value']))
 
-    def broadcast_updated_clicked_user(self, event):
-        value = {}
-        value["value"] = event["value"]
-        value["type"] = "updated_clicked_user"
-        self.send(text_data=json.dumps(value))
-

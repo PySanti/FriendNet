@@ -17,6 +17,9 @@ export function NotificationsWSUpdate(sessionUserId, newNotifications, notificat
             }
         } else if (data.type == "connection_error"){
             logoutUser(navigateFunc)
+        } else  if (data.type === "updated_clicked_user"){
+            console.log('Recibiendo informacion de usuario actualizado')
+            console.log(data)
         }
     }
 }
