@@ -11,6 +11,7 @@ import {useLoadingState} from "../store/loadingStateStore"
 import {useChatGlobeList} from "../store/chatGlobeListStore"
 import {BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
 import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
+import {useUsersList} from "../store/usersListStore"
 /**
  * Recibe la lista de usuarios directa de la api y retorna la lista de elementos jsx
  * @param {Function} onClickEvent evento a ejecutar cuando los usersButtons sean presionado
@@ -21,7 +22,7 @@ export function UsersList({onClickEvent }){
     let userListPage                                                = useRef(1)
     let noMoreUsers                                                 = useRef(false)
     let [loaderActivated, setLoaderActivated]                       = useState(true)
-    let [usersList, setUsersList]                                   = useState([])
+    let [usersList, setUsersList]                                   = useUsersList((state)=>([state.usersList, state.setUsersList]))
     let [ userKeyword, setUserKeyword]                               = useState(undefined)
     let chatGlobeList                                             = useChatGlobeList((state)=>(state.chatGlobeList))
 
