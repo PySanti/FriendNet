@@ -23,7 +23,7 @@ import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 export function ChangePwd(){
     const {register, handleSubmit, formState : {errors}} = useForm()
     const navigate = useNavigate()
-    const   [ setLoadingState, successfullyLoaded, startLoading] = useLoadingState((state)=>([state.loadingState, state.setLoadingState, state.successfullyLoaded, state.startLoading]))
+    const   [ setLoadingState, successfullyLoaded, startLoading] = useLoadingState((state)=>([state.setLoadingState, state.successfullyLoaded, state.startLoading]))
     const changePwd = handleSubmit(async (data)=>{
         if (data['oldPwd'] !== data['newPwd']){
             startLoading()

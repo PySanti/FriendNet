@@ -98,6 +98,8 @@ export function Chat(){
                         clickedUser.is_online = data['connected']
                         setClickedUser(clickedUser)
                     }
+                } else  if (dataType === "updated_clicked_user"){
+                    setClickedUser(data.value)
                 }
             };
         }
