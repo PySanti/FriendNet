@@ -244,6 +244,7 @@ class UpdateUserDataAPI(APIView):
     serializer_class        = UpdateUsuariosSerializer
     authentication_classes  = [JWTAuthentication]
     permission_classes      = [IsAuthenticated]
+    @method_decorator(ratelimit(key=BASE_RATE_LIMIT_KEY, rate=BASE_RATE_LIMIT_TIMER, method="PUT"))
     def put(self, request, *args, **kwargs):
         # enviamos al serializer los datos para hacer las comprobaciones de la imagen
         serializer = self.serializer_class(data=request.data, context={'request' : request.data})
