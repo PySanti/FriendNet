@@ -17,6 +17,8 @@
 
     // Mejorar implementacion de NotificationsWsUpdate
 
+    // modificar broadcast_updated_clicked_user por broadcast_updated_user
+
     // revisar problemas de rendimiento de red en el userList y getMessagesHistorial (muy lento)
 
     // implementar modificacion por websockets para informar de si el usuario modifico su usuario o foto de perfil
