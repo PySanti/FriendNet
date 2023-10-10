@@ -19,6 +19,8 @@ import {useLoadingState} from "../store/loadingStateStore"
 import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotifications"
 import {getNotificationsFromLocalStorage} from "../utils/getNotificationsFromLocalStorage"
 import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
+import {useUsersList} from "../store/usersListStore"
+import {useClickedUser} from "../store/useClickedUser"
 /**
  * Componente creado para contener las notificaciones del usuarios
  * @param {Function} onNotificationClick funcion que se ejecutara cuando se clickee una notificacion
@@ -27,6 +29,8 @@ export function NotificationsContainer({onNotificationClick}){
     let [notificacionsActivated, setNotificationsActivated] = useState(false)
     let [setChatGlobeList] = useChatGlobeList((state)=>([state.setChatGlobeList]))
     let [notifications, setNotifications] = useNotifications((state)=>([state.notifications, state.setNotifications]))
+    let [usersList, setUsersList] = useUsersList((state)=>([state.usersList, state.setUsersList]))
+    let [clickedUser, setClickedUser] = useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
     const userData = getUserDataFromLocalStorage()
     const notificationListCls = "notification-list"
     const navigate = useNavigate()
@@ -53,7 +57,7 @@ export function NotificationsContainer({onNotificationClick}){
     useEffect(()=>{
         setChatGlobeList(getChatGlobesList(notifications))
         if (NOTIFICATIONS_WEBSOCKET.current && userData){
-            NotificationsWSUpdate(userData.id, notifications,setNotifications, navigate )
+            NotificationsWSUpdate(userData.id, notifications,setNotifications, navigate, usersList, setUsersList, setClickedUser)
         }
     }, [notifications])
     useEffect(()=>{
@@ -63,7 +67,7 @@ export function NotificationsContainer({onNotificationClick}){
         }
         if (!NOTIFICATIONS_WEBSOCKET.current && userData){
             NotificationsWSInitialize(userData.id)
-            NotificationsWSUpdate(userData.id, notifications,setNotifications, navigate)
+            NotificationsWSUpdate(userData.id, notifications,setNotifications, navigate, usersList, setUsersList, setClickedUser)
         }
     }, [])
     return (

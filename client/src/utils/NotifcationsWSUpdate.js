@@ -4,7 +4,7 @@ import {logoutUser} from "../utils/logoutUser"
 /**
  * Se encargara de actualizar el soporte para recepcion de notification broadcasting
  */
-export function NotificationsWSUpdate(sessionUserId, newNotifications, notificationsSetter, navigateFunc){
+export function NotificationsWSUpdate(sessionUserId, newNotifications, notificationsSetter, navigateFunc, usersList,  setUsersList){
     NOTIFICATIONS_WEBSOCKET.current.onmessage = (event)=>{
         const data = JSON.parse(event.data)
         console.log('Recibiendo datos a traves del websocket de notificaciones')
@@ -20,6 +20,7 @@ export function NotificationsWSUpdate(sessionUserId, newNotifications, notificat
         } else  if (data.type === "updated_clicked_user"){
             console.log('Recibiendo informacion de usuario actualizado')
             console.log(data)
+
         }
     }
 }
