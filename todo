@@ -13,6 +13,8 @@
 
     // implementar mas iief
 
+    // react profiler y datadog
+
     // buscar o repasar funcionamiento de :
         // annotate
         // agreggate
@@ -43,6 +45,8 @@
 
 
     // repasar zustand
+
+    
 
     // realizar un proceso de testeo, haciendo una lista de todas y cada una de las funcionalidades de la aplicacion
     // y realizando un proceso de testing por cada una, que incluya uso de consolelog's para asegurarnos
@@ -93,6 +97,8 @@
     // agregar sonidos cuando llgue una notificacion
     // hacer que el notification-bell tenga un numero encima que represente la cantidad de notificaciones
     // revisar errores ortograficos
+
+    // hacer que, al recargar la lista de mensajes, que se quede el scroller donde estaba
 
 
 // Fase 5:
