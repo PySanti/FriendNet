@@ -9,12 +9,6 @@
 
 
 // fase 3:
-    // crear funcion para estandarizar funcionamiento de los broadcast_handlers
-
-    // repasar y testear todos los broadcast_handlers
-
-    // hacer que todos los websockets envien mensajes con el formato type = "" - value = {}
-
     // revisar problemas de rendimiento de red en el userList y getMessagesHistorial (muy lento)
 
 
