@@ -9,15 +9,13 @@
 
 
 // fase 3:
-    // repasar y testear implementacion de broadcast_updated_user
+    // hacer que, si se cambia el clicked user por updated_user, que no se vuelva a llamar a la api de enterChat
 
     // hacer que, el broadcast type siempre se asigne en los broadcast_handlers
 
     // hacer que todos los websockets envien mensajes con el formato type = "" - value = {}
 
     // Mejorar implementacion de NotificationsWsUpdate
-
-    // modificar broadcast_updated_clicked_user por broadcast_updated_user
 
     // revisar problemas de rendimiento de red en el userList y getMessagesHistorial (muy lento)
 

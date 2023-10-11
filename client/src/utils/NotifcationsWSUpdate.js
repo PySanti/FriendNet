@@ -17,7 +17,7 @@ export function NotificationsWSUpdate(sessionUserId, newNotifications, notificat
             }
         } else if (data.type == "connection_error"){
             logoutUser(navigateFunc)
-        } else  if (data.type === "updated_clicked_user"){
+        } else  if (data.type === "updated_user"){
             setUsersList(usersList.map(user => {
                 if (user.id == data.value.id){
                     return data.value

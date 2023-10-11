@@ -29,9 +29,9 @@ class NotificationsWSConsumer(WebsocketConsumer):
         self.send(text_data=json.dumps(event['value']))
     def broadcast_connection_error(self, event):
         self.send(text_data=json.dumps(event["value"]))
-    def broadcast_updated_clicked_user(self, event):
+    def broadcast_updated_user(self, event):
         value = {}
         value["value"] = event["value"]
-        value["type"] = "updated_clicked_user"
+        value["type"] = "updated_user"
         self.send(text_data=json.dumps(value))
 
