@@ -15,6 +15,7 @@ import {CHAT_WEBSOCKET} from "../utils/constants"
 import {useClickedUser} from "../store/clickedUserStore"
 import {useMessagesHistorial} from "../store/messagesHistorialStore"
 import {useLastClickedUser} from "../store/lastClickedUserStore"
+import {useUsersList} from "../store/usersListStore"
 /**
  * Pagina principal del sitio
  */
@@ -23,6 +24,7 @@ export function Home() {
     let [clickedUser, setClickedUser]   = useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
     let setMessagesHistorial            = useMessagesHistorial((state)=>(state.setMessagesHistorial))
     let setLastClickedUser              = useLastClickedUser((state)=>(state.setLastClickedUser))
+    let setUsersList                    = useUsersList((state)=>(state.setUsersList))
 
     const onUserButtonClick = (newClickedUser)=>{
         setLastClickedUser(clickedUser);
@@ -35,6 +37,7 @@ export function Home() {
             setClickedUser(null)
             setLastClickedUser(null)
             setMessagesHistorial([])
+            setUsersList([])
             disconnectWebsocket(CHAT_WEBSOCKET)
         }
     }, [])

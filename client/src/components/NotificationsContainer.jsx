@@ -20,7 +20,7 @@ import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotification
 import {getNotificationsFromLocalStorage} from "../utils/getNotificationsFromLocalStorage"
 import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 import {useUsersList} from "../store/usersListStore"
-import {useClickedUser} from "../store/useClickedUser"
+import {useClickedUser} from "../store/clickedUserStore"
 /**
  * Componente creado para contener las notificaciones del usuarios
  * @param {Function} onNotificationClick funcion que se ejecutara cuando se clickee una notificacion
