@@ -229,6 +229,21 @@
         //
         // repasar el base.py, local.py
         // read_secret_data
+    
+    //Estandar de testing:
+    //    ~ Lectura del codigo para entendimiento
+    //    ~ Revision de documentacion y actualizar en caso de ser necesario
+    //    ~ Revisar argumentos e implementaciones de la funcionalidad para asegurarnos de que la integracion esta bien
+    //    ~ Refactorizar si se quiere
+    //    ~ Realizar uso de la funcionalidad implementando logs para asegurarnos de todo
+//
+    //    Para api's:
+    //        ~ Revisar ademas todos y cada uno de las implementaciones de la api usando raise Exception
+    //        para revisar el manejo de errores del front. Revisar ademas el rate limiter de cada api
+    //    
+    //    Para websockets:
+    //        ~ Si el broadcasting de alguna funcionalidad del websocket puede soportar muchos Usuarios
+    //        testearse para ese caso
 
 
 
