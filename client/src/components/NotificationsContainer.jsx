@@ -9,7 +9,6 @@ import {useChatGlobeList} from "../store/chatGlobeListStore"
 import {getChatGlobesList} from "../utils/getChatGlobesList"
 import {NOTIFICATIONS_WEBSOCKET} from "../utils/constants"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
-import {NotificationsWSUpdate} from "../utils/NotifcationsWSUpdate"
 import {NotificationsWSInitialize} from "../utils/NotificationsWSInitialize"
 import {useNavigate} from "react-router-dom"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
@@ -69,8 +68,8 @@ export function NotificationsContainer({onNotificationClick}){
                 console.log('Recibiendo datos a traves del websocket de notificaciones')
                 console.log(data)
                 if (data.type == "new_notification"){
-                    if (data.new_notification.sender_user.id != userData.id){
-                        const updatedNotifications = [...notifications, data.new_notification]
+                    if (data.value.new_notification.sender_user.id != userData.id){
+                        const updatedNotifications = [...notifications, data.value.new_notification]
                         setNotifications(updatedNotifications)
                         saveNotificationsInLocalStorage(updatedNotifications)
                     }

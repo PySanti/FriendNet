@@ -10,6 +10,6 @@ def broadcast_message(id1, id2, message):
     channel_layer = get_channel_layer()
     group_name = messages_group_name(id1, id2)
     if (group_name in channel_layer.groups) and (len(channel_layer.groups[group_name]) == 2):
-        async_to_sync(channel_layer.group_send)(group_name,{'type' : 'broadcast_message_handler','value' : message})
+        async_to_sync(channel_layer.group_send)(group_name,{'type' : 'broadcast_message','value' : message})
         return True
     return False

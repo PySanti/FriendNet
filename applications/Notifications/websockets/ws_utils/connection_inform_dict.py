@@ -6,7 +6,6 @@ def connection_inform_dict(user_id, connected):
     return {
         'type' : 'broadcast_connection_inform',
         'value' : {
-            "type" : "connection_inform",
             "user_id" : user_id,
             "connected" : connected
         }

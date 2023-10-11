@@ -85,17 +85,15 @@ export function Chat(){
         if (CHAT_WEBSOCKET.current){
             CHAT_WEBSOCKET.current.onmessage = (event) => {
                 const data = JSON.parse(event.data)
-                const dataType = data.type
                 console.log('Recibiendo datos a traves del websocket de mensajes')
                 console.log(data)
-                delete data.type
-                if (dataType === "message_broadcast"){
-                    if (Number(data.parent_id) !== Number(userData.id)){
-                        setMessagesHistorial([...messagesHistorial, data])
+                if (data.type === "message_broadcast"){
+                    if (Number(data.value.parent_id) !== Number(userData.id)){
+                        setMessagesHistorial([...messagesHistorial, data.value])
                     }
-                } else if (dataType === "connection_inform"){
-                    if (data['user_id'] == clickedUser.id){
-                        clickedUser.is_online = data['connected']
+                } else if (data.type === "connection_inform"){
+                    if (data.value.user_id == clickedUser.id){
+                        clickedUser.is_online = data.value.connected
                         setClickedUser(clickedUser)
                     }
                 } 

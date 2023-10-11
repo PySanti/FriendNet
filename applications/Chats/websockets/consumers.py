@@ -23,11 +23,15 @@ class ChatWSConsumer(WebsocketConsumer):
         print_pretty_groups(self.channel_layer.groups)
 
 
-    def broadcast_message_handler(self, event):
-        value = event['value']
+    def broadcast_message(self, event):
+        value = {}
+        value["value"] = event['value']
         value["type"] = "message_broadcast"
         self.send(text_data=json.dumps(value))
 
     def broadcast_connection_inform(self, event):
-        self.send(text_data=json.dumps(event['value']))
+        value = {}
+        value["type"] = "connection_inform"
+        value["value"] = event["value"]
+        self.send(text_data=json.dumps(value))
 

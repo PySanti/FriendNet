@@ -9,7 +9,9 @@
 
 
 // fase 3:
-    // hacer que, el broadcast type siempre se asigne en los broadcast_handlers
+    // crear funcion para estandarizar funcionamiento de los broadcast_handlers
+
+    // repasar y testear todos los broadcast_handlers
 
     // hacer que todos los websockets envien mensajes con el formato type = "" - value = {}
 
