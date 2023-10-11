@@ -21,6 +21,10 @@ import {getNotificationsFromLocalStorage} from "../utils/getNotificationsFromLoc
 import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 import {useUsersList} from "../store/usersListStore"
 import {useClickedUser} from "../store/clickedUserStore"
+import {useLastClickedUser} from "../store/lastClickedUserStore"
+import {saveNotificationsInLocalStorage} from "../utils/saveNotificationsInLocalStorage"
+import {logoutUser} from "../utils/logoutUser"
+
 /**
  * Componente creado para contener las notificaciones del usuarios
  * @param {Function} onNotificationClick funcion que se ejecutara cuando se clickee una notificacion
@@ -31,6 +35,7 @@ export function NotificationsContainer({onNotificationClick}){
     let [notifications, setNotifications] = useNotifications((state)=>([state.notifications, state.setNotifications]))
     let [usersList, setUsersList] = useUsersList((state)=>([state.usersList, state.setUsersList]))
     let [clickedUser, setClickedUser] = useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
+    let setLastClickedUser = useLastClickedUser((state)=>(state.setLastClickedUser))
     const userData = getUserDataFromLocalStorage()
     const notificationListCls = "notification-list"
     const navigate = useNavigate()
@@ -59,7 +64,33 @@ export function NotificationsContainer({onNotificationClick}){
     }, [notifications])
     useEffect(()=>{
         if (NOTIFICATIONS_WEBSOCKET.current && userData){
-            NotificationsWSUpdate(userData.id, notifications,setNotifications, navigate, usersList, setUsersList, setClickedUser, clickedUser)
+            NOTIFICATIONS_WEBSOCKET.current.onmessage = (event)=>{
+                const data = JSON.parse(event.data)
+                console.log('Recibiendo datos a traves del websocket de notificaciones')
+                console.log(data)
+                if (data.type == "new_notification"){
+                    if (data.new_notification.sender_user.id != userData.id){
+                        const updatedNotifications = [...notifications, data.new_notification]
+                        setNotifications(updatedNotifications)
+                        saveNotificationsInLocalStorage(updatedNotifications)
+                    }
+                } else if (data.type == "connection_error"){
+                    logoutUser(navigate)
+                } else  if (data.type === "updated_user"){
+                    setUsersList(usersList.map(user => {
+                        if (user.id == data.value.id){
+                            return data.value
+                        } else {
+                            return user
+                        }
+                    }))
+                    if (clickedUser && data.value.id == clickedUser.id){
+                        setLastClickedUser(clickedUser)
+                        data.value.is_online = clickedUser.is_online
+                        setClickedUser(data.value)
+                    }
+                }
+            }
         }
     }, [usersList, clickedUser, notifications])
     useEffect(()=>{
