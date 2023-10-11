@@ -23,8 +23,9 @@ export function UsersList({onClickEvent }){
     let noMoreUsers                                                 = useRef(false)
     let [loaderActivated, setLoaderActivated]                       = useState(true)
     let [usersList, setUsersList]                                   = useUsersList((state)=>([state.usersList, state.setUsersList]))
-    let [ userKeyword, setUserKeyword]                               = useState(undefined)
-    let chatGlobeList                                             = useChatGlobeList((state)=>(state.chatGlobeList))
+    let [ userKeyword, setUserKeyword]                              = useState(undefined)
+    let chatGlobeList                                               = useChatGlobeList((state)=>(state.chatGlobeList))
+    let [scrollDetectorBlock, setScrollDetectorBlock]               = useState(false)
 
 
     const updateUserList = (newUsers)=>{
@@ -58,8 +59,12 @@ export function UsersList({onClickEvent }){
         return <UserButton key={v4()}user={user}onClickFunction={onClickEvent} withGlobe={chatGlobeList.includes(user.id)} />
     }
     const scrollDetector = async (event)=>{
-        if ((event.target.scrollTop + event.target.clientHeight) >= event.target.scrollHeight){
+        if (((event.target.scrollTop + event.target.clientHeight) >= event.target.scrollHeight) && (!scrollDetectorBlock)){
             if (!noMoreUsers.current){
+                setScrollDetectorBlock(true)
+                setTimeout(() => {
+                    setScrollDetectorBlock(false)
+                }, 1000);
                 await loadUsersList()
                 userListPage.current += 1
             }
@@ -68,15 +73,19 @@ export function UsersList({onClickEvent }){
     useEffect(()=>{
         setLoadingState(false)
         if (userIsAuthenticated() && usersList.length === 0){
-            loadUsersList()
-            userListPage.current = 2
+            (async function() {
+                await loadUsersList()
+                userListPage.current = 2
+            })()
         }
     }, [])
     useEffect(()=>{
         if (userKeyword !== undefined){ // si userKeyword esta inicializado ...
-            userListPage.current = 1
-            noMoreUsers.current = false
-            loadUsersList()
+            (async function(){
+                userListPage.current = 1
+                noMoreUsers.current = false
+                await loadUsersList()
+            })()
         }
     }, [userKeyword])
 

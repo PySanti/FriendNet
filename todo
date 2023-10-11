@@ -11,7 +11,7 @@
 // fase 3:
     // revisar problemas de rendimiento de red en el userList y getMessagesHistorial (muy lento)
 
-
+    // implementar mas iief
     // buscar o repasar funcionamiento de :
         // annotate
         // agreggate
