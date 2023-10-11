@@ -4,6 +4,7 @@ from applications.Chats.websockets.ws_utils.print_pretty_groups import print_pre
 import json
 from applications.Chats.websockets.ws_utils.discard_channel_if_found import discard_channel_if_found
 from .ws_utils.broadcast_connection_inform import broadcast_connection_inform
+from applications.Chats.websockets.ws_utils.broadcast_dict import broadcast_dict
 
 class NotificationsWSConsumer(WebsocketConsumer):
     def connect(self):
@@ -26,18 +27,9 @@ class NotificationsWSConsumer(WebsocketConsumer):
         print_pretty_groups(self.channel_layer.groups)
 
     def broadcast_notification(self, event):
-        value = {}
-        value["type"] = "new_notification"
-        value["value"] = event["value"]
-        self.send(text_data=json.dumps(event['value']))
+        self.send(text_data=json.dumps(broadcast_dict(broadcast_type="new_notification", broadcast_value=event["value"])))
     def broadcast_connection_error(self, event):
-        value = {
-            "type" : "connection_error"
-        }
-        self.send(text_data=json.dumps(value))
+        self.send(text_data=json.dumps(broadcast_dict(broadcast_type="connection_error")))
     def broadcast_updated_user(self, event):
-        value = {}
-        value["value"] = event["value"]
-        value["type"] = "updated_user"
-        self.send(text_data=json.dumps(value))
+        self.send(text_data=json.dumps(broadcast_dict(broadcast_type="updated_user", broadcast_value=event["value"])))
 

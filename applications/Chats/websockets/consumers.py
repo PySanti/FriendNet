@@ -3,7 +3,7 @@ from asgiref.sync import async_to_sync
 from .ws_utils.discard_channel_if_found import discard_channel_if_found
 from .ws_utils.print_pretty_groups import print_pretty_groups
 import json
-from .ws_utils import broadcast_message
+from .ws_utils.broadcast_dict import broadcast_dict
 
 class ChatWSConsumer(WebsocketConsumer):
     def connect(self):
@@ -24,14 +24,8 @@ class ChatWSConsumer(WebsocketConsumer):
 
 
     def broadcast_message(self, event):
-        value = {}
-        value["value"] = event['value']
-        value["type"] = "message_broadcast"
-        self.send(text_data=json.dumps(value))
+        self.send(text_data=json.dumps(broadcast_dict(broadcast_type="message_broadcast", broadcast_value=event["value"])))
 
     def broadcast_connection_inform(self, event):
-        value = {}
-        value["type"] = "connection_inform"
-        value["value"] = event["value"]
-        self.send(text_data=json.dumps(value))
+        self.send(text_data=json.dumps(broadcast_dict(broadcast_type="connection_inform", broadcast_value=event["value"])))
 
