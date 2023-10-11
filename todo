@@ -9,8 +9,6 @@
 
 
 // fase 3:
-    // repasar funcionamiento de scrollDetectorBlock
-
     // revisar problemas de rendimiento de red en el userList y getMessagesHistorial (muy lento)
 
     // implementar mas iief
