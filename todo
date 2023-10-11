@@ -46,7 +46,191 @@
 
     // repasar zustand
 
-    
+    // Lista de funcionalidades:
+        // Chats WS Utils:
+        //              broadcast_dict
+        //              broadcast_message
+        //              discard_channel_if_found
+        //              messages_group_is_full
+        //              messages_group_name
+        //              print_pretty_groups
+        // ChatWSConsumer :
+        //              connect
+        //              disconnect
+        //              receive
+        //              Todos los funcionamientos en todos los contextos
+        // ChatsManager:
+        //              _chatBetween                
+        //              createChat                  
+        //              sendMessage                 
+        //              getMessagesHistorial        
+        //              getMessagesHistorialReady   
+        //              MessagesManager : createMessage
+        // Chats Views:
+        //              GetMessagesHistorialApi
+        //              SendMsgApi
+        //
+        // Ws Utils de Notifications:
+        //              broadcasts_connection_inform
+        //              broadcasts_notification
+        //              connection_inform_dict
+        //              get_openned_groups_with_id
+        //              notifications_websocket_is_opened
+        //
+        // Notifications Consumer:
+        //              connect
+        //              disconnect
+        //              receive
+        //              Todas las funcionalidades en todos los contextos
+        //
+        // Notifications Manager:
+        //              hasNotification
+        //              addNotification
+        //              deleteNotification
+        //
+        //  Notifications Views:
+        //              notificationDeleteApi
+        //
+        // Usuarios Api Cloudinary:
+        //              save_image_cloudinary
+        //              delete_image_cloudinary
+        //
+        // Usuarios utils:
+        //              get_image_size
+        //              get_public_id
+        //              load_cloudinary_secrets
+        //              set_photo_link
+        // Usuarios websockets utils:
+        //              broadcast_updated_user
+        //              get_notifications_groups
+        //
+        // Usuarios jwt_views
+        // Usuarios manager:
+        //
+        //                  _create_user
+        //                  create_superuser
+        //                  create_user
+        //                  user_is_online
+        //                  activateUser
+        //                  getFormatedNotifications
+        //                  getFormatedUserData
+        //                  changePassword
+        //                  userExists
+        //                  updateUser
+        //                  setEmail
+        //
+        //  Usuarios views:
+        //
+        //                  CheckExistingUserAPI
+        //                  CreateUsuariosAPI
+        //                  GetUserDetailAPI
+        //                  GetUsersListAPI
+        //                  ChangeEmailForActivationAPI
+        //                  ActivateUserAPI
+        //                  SendActivationEmailAPI
+        //                  LoginUserAPI
+        //                  UpdateUserDataAPI
+        //                  ChangeUserPwdAPI
+        //                  UserIsOnlineAPI
+        //                  EnterChatApi
+        //  Client Apis:
+        //                  activateUser.api.js
+        //                  baseConfig.api.js
+        //                  changeEmailForActivation.api.js
+        //                  changePwd.api.js
+        //                  checkExistingUser.api.js
+        //                  createUsuario.api.js
+        //                  enterChat.api.js
+        //                  getMessagesHistorial.api.js
+        //                  getUserDetailApi.api.js
+        //                  getUsersList.api.js
+        //                  loginUser.api.js
+        //                  notificationDelete.api.js
+        //                  refreshToken.api.js
+        //                  sendActivationEmail.api.js
+        //                  sendMsg.api.js
+        //                  updateUserData.api.js
+        //                  userIsOnline.api.js
+        // client Components:
+        //                  ActivationCodeField.jsx
+        //                  Button.jsx
+        //                  ChatingUserHeader.jsx
+        //                  Chat.jsx
+        //                  EmailField.jsx
+        //                  FormField.jsx
+        //                  Form.jsx
+        //                  Header.jsx
+        //                  InputError.jsx
+        //                  Label.jsx
+        //                  Loader.jsx
+        //                  LoginForm.jsx
+        //                  Message.jsx
+        //                  MessagesContainer.jsx
+        //                  MsgSendingInput.jsx
+        //                  Notification.jsx
+        //                  NotificationsContainer.jsx
+        //                  PasswordField.jsx
+        //                  UserButton.jsx
+        //                  UserData.jsx
+        //                  UserFilter.jsx
+        //                  UserInfoForm.jsx
+        //                  UsernameField.jsx
+        //                  UserPhoto.jsx
+        //                  UsersList.jsx
+        //  client pages:
+        //                  AccountActivation.jsx
+        //                  ChangeEmailForActivation.jsx
+        //                  ChangePwd.jsx
+        //                  Home.jsx
+        //                  Login.jsx
+        //                  Profile.jsx
+        //                  Root.jsx
+        //                  SignUp.jsx
+        //                  UserLogged.jsx
+        //                  UserNotLogged.jsx
+        // client Store:
+        //                  chatGlobeListStore.jsx
+        //                  clickedUserStore.jsx
+        //                  lastClickedUserStore.jsx
+        //                  loadingStateStore.jsx
+        //                  messagesHistorialStore.jsx
+        //                  notificationsStore.jsx
+        //                  usersListStore.jsx
+        //  client utils:
+        //                 ChatWSGroupCreationMsg.js
+        //                 ChatWSGroupName.js
+        //                 ChatWSInitialize.js
+        //                 checkImageFormat.js
+        //                 constants.js
+        //                 dataIsDiferent.js
+        //                 diferentUserHasBeenClicked.js
+        //                 disconnectWebsocket.js
+        //                 executeSecuredApi.js
+        //                 generateActivationCode.js
+        //                 getChatGlobesList.js
+        //                 getJWTFromLocalStorage.js
+        //                 getNotificationsFromLocalStorage.js
+        //                 getRelatedNotification.js
+        //                 getUserDataFromLocalStorage.js
+        //                 handleStandardApiErrors.js
+        //                 loginUser.js
+        //                 logoutUser.js
+        //                 NotificationsWSGroupCreationMsg.js
+        //                 NotificationsWSInitialize.js
+        //                 redirectExpiredUser.js
+        //                 refreshToken.js
+        //                 removeAndUpdateNotifications.js
+        //                 removeNotificationFromLocalStorage.js
+        //                 saveNotificationsInLocalStorage.js
+        //                 saveUserDataInLocalStorage.js
+        //                 updateMessagesHistorial.js
+        //                 userIsAuthenticated.js
+        //
+        //
+        // repasar el base.py, local.py
+        // read_secret_data
+
+
 
     // realizar un proceso de testeo, haciendo una lista de todas y cada una de las funcionalidades de la aplicacion
     // y realizando un proceso de testing por cada una, que incluya uso de consolelog's para asegurarnos

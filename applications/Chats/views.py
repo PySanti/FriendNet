@@ -39,6 +39,7 @@ from applications.Notifications.websockets.ws_utils.broadcast_notification impor
 from applications.Chats.websockets.ws_utils.broadcast_message import broadcast_message
 from django.utils.decorators import method_decorator
 from django_ratelimit.decorators import ratelimit
+
 class GetMessagesHistorialAPI(APIView):
     serializer_class        =  GetMessagesHistorialSerializer
     authentication_classes  = [JWTAuthentication]

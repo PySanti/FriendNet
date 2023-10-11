@@ -18,7 +18,6 @@ class ChatsManager(manager.Manager):
         new_chat.users.add(user_2)
         new_chat.save()
         return new_chat
-
     def sendMessage(self, sender_user, receiver_user, new_message):
         """
             Envia un mensaje de un usuario a otro
