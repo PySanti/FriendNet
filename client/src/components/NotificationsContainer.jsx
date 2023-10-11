@@ -56,10 +56,12 @@ export function NotificationsContainer({onNotificationClick}){
     }
     useEffect(()=>{
         setChatGlobeList(getChatGlobesList(notifications))
-        if (NOTIFICATIONS_WEBSOCKET.current && userData){
-            NotificationsWSUpdate(userData.id, notifications,setNotifications, navigate, usersList, setUsersList, setClickedUser)
-        }
     }, [notifications])
+    useEffect(()=>{
+        if (NOTIFICATIONS_WEBSOCKET.current && userData){
+            NotificationsWSUpdate(userData.id, notifications,setNotifications, navigate, usersList, setUsersList, setClickedUser, clickedUser)
+        }
+    }, [usersList, clickedUser, notifications])
     useEffect(()=>{
         const localStorageNotifications = getNotificationsFromLocalStorage()
         if (notifications.length == 0 && localStorageNotifications){
@@ -67,7 +69,6 @@ export function NotificationsContainer({onNotificationClick}){
         }
         if (!NOTIFICATIONS_WEBSOCKET.current && userData){
             NotificationsWSInitialize(userData.id)
-            NotificationsWSUpdate(userData.id, notifications,setNotifications, navigate, usersList, setUsersList, setClickedUser)
         }
     }, [])
     return (
