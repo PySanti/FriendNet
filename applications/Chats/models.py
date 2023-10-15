@@ -23,7 +23,7 @@ class Chats(models.Model):
     # manager
     objects = ChatsManager() 
     def __str__(self) -> str:
-        users = self.users.all()
+        users = list(self.users.all())
         return f"""
         {users[0].username} - {users[1].username}
         """

@@ -47,13 +47,6 @@
     // repasar zustand
 
     // Lista de funcionalidades:
-        // ChatsManager:
-        //              _chatBetween                
-        //              createChat                  
-        //              sendMessage                 
-        //              getMessagesHistorial        
-        //              getMessagesHistorialReady   
-        //              MessagesManager : createMessage
         // Chats Views:
         //              GetMessagesHistorialApi
         //              SendMsgApi

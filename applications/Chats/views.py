@@ -78,8 +78,8 @@ class SendMsgAPI(APIView):
                 receiver_user = Usuarios.objects.get(id=request.data['receiver_id'])
                 if (not Notifications.objects.hasNotification(receiver_user, sender_user) and (not messages_group_is_full(receiver_user.id, sender_user.id))):
                     new_notification = Notifications.objects.addNotification(f"Tienes mensajes nuevos de {sender_user.username}", receiver_user, sender_user)
-                    new_notification = Notifications.objects.filter(id=new_notification.id).values("msg", "id")[0]
                     if (notification_wesocket_is_opened(receiver_user.id)):
+                        new_notification = Notifications.objects.filter(id=new_notification.id).values("msg", "id")[0]
                         new_notification["sender_user"] = Usuarios.objects.filter(id=sender_user.id).values(*USERS_LIST_ATTRS)[0]
                         broadcast_notification(receiver_user.id, new_notification)
                 new_message = Messages.objects.createMessage(parent=sender_user, content=request.data['msg'])
