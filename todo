@@ -47,11 +47,6 @@
     // repasar zustand
 
     // Lista de funcionalidades:
-        // ChatWSConsumer :
-        //              connect
-        //              disconnect
-        //              receive
-        //              Todos los funcionamientos en todos los contextos
         // ChatsManager:
         //              _chatBetween                
         //              createChat                  

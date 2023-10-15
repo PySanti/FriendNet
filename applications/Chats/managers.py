@@ -9,7 +9,7 @@ class ChatsManager(manager.Manager):
         """
         chat = self.filter(users__id=id_1).filter(users__id=id_2)
         return chat[0] if chat else None
-    def createChat(self, user_1, user_2):
+    def _createChat(self, user_1, user_2):
         """
             Recibe dos usuarios y crea un chat entre ellos
         """
@@ -24,7 +24,7 @@ class ChatsManager(manager.Manager):
         """
         chat_between = self._chatBetween(sender_user.id, receiver_user.id)
         if not chat_between:
-            chat_between = self.createChat(sender_user, receiver_user)
+            chat_between = self._createChat(sender_user, receiver_user)
 
         chat_between.messages.add(new_message)
         chat_between.save()
