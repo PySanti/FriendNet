@@ -48,8 +48,6 @@
 
     // Lista de funcionalidades:
         // Chats WS Utils:
-        //              messages_group_is_full
-        //              messages_group_name
         //              print_pretty_groups
         // ChatWSConsumer :
         //              connect
