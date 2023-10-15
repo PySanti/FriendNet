@@ -47,12 +47,8 @@
     // repasar zustand
 
     // Lista de funcionalidades:
-        // Chats Views:
-        //              GetMessagesHistorialApi
-        //              SendMsgApi
         //
         // Ws Utils de Notifications:
-        //              broadcasts_connection_inform
         //              broadcasts_notification
         //              connection_inform_dict
         //              get_openned_groups_with_id
@@ -158,7 +154,7 @@
         //                  UserInfoForm.jsx
         //                  UsernameField.jsx
         //                  UserPhoto.jsx
-        //                  UsersList.jsx
+        //                  UsersList.jsx (revisar activacion no deseada del loaderActivated)
         //  client pages:
         //                  AccountActivation.jsx (revisar el envio masivo de activations code)
         //                  ChangeEmailForActivation.jsx
