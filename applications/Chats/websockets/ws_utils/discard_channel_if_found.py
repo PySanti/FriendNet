@@ -12,7 +12,8 @@ def discard_channel_if_found(target_channel):
     channel_layer = get_channel_layer()
     for group_name,channels in channel_layer.groups.copy().items():
         if target_channel in channels:
+            print(f'Eliminando channel {target_channel} del grupo {group_name}')
             async_to_sync(channel_layer.group_discard)(group_name, target_channel)
+            print_pretty_groups()
             return group_name
-    print_pretty_groups()
     return False

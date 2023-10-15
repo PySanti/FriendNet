@@ -4,12 +4,6 @@ from .messages_group_name import messages_group_name
 
 def broadcast_message(id1, id2, message):
     """
-        Se encargara de hacer el broadcast del mensaje, 
-        En caso de que no pueda, retornara False
+        Se encargara de hacer el broadcast del mensaje
     """
-    channel_layer = get_channel_layer()
-    group_name = messages_group_name(id1, id2)
-    if (group_name in channel_layer.groups) and (len(channel_layer.groups[group_name]) == 2):
-        async_to_sync(channel_layer.group_send)(group_name,{'type' : 'broadcast_message','value' : message})
-        return True
-    return False
+    async_to_sync(get_channel_layer().group_send)(messages_group_name(id1, id2),{'type' : 'broadcast_message','value' : message})

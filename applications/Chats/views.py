@@ -86,7 +86,8 @@ class SendMsgAPI(APIView):
                 Chats.objects.sendMessage(sender_user, receiver_user,new_message)
                 new_message_values = new_message.__dict__.copy()
                 del new_message_values['_state']
-                broadcast_message(sender_user.id, receiver_user.id, new_message_values)
+                if (messages_group_is_full(receiver_user.id, sender_user.id)):
+                    broadcast_message(sender_user.id, receiver_user.id, new_message_values)
                 return JsonResponse({'sended_msg' : new_message_values}, status=status.HTTP_200_OK)
             except:
                 return BASE_UNEXPECTED_ERROR_RESPONSE
