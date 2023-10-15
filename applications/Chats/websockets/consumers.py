@@ -11,16 +11,14 @@ class ChatWSConsumer(WebsocketConsumer):
         print(f'Generando conexion a channel -> {self.channel_name}')
 
     def disconnect(self, close_code):
-        print('-> Desconectando websocket de mensajes')
         discard_channel_if_found(self.channel_name)
-        print_pretty_groups(self.channel_layer.groups)
 
     def receive(self, text_data):
         data = json.loads(text_data)
         if data['type'] == "group_creation":
             discard_channel_if_found(self.channel_name)
             async_to_sync(self.channel_layer.group_add)(data['name'],self.channel_name)
-        print_pretty_groups(self.channel_layer.groups)
+        print_pretty_groups()
 
 
     def broadcast_message(self, event):

@@ -48,8 +48,6 @@
 
     // Lista de funcionalidades:
         // Chats WS Utils:
-        //              broadcast_message
-        //              discard_channel_if_found
         //              messages_group_is_full
         //              messages_group_name
         //              print_pretty_groups
