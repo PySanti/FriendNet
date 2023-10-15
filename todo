@@ -192,7 +192,6 @@
         //                  usersListStore.jsx
         //  client utils:
         //                 ChatWSGroupCreationMsg.js
-        //                 ChatWSGroupName.js
         //                 ChatWSInitialize.js
         //                 checkImageFormat.js
         //                 constants.js

@@ -4,6 +4,7 @@ from .ws_utils.discard_channel_if_found import discard_channel_if_found
 from .ws_utils.print_pretty_groups import print_pretty_groups
 import json
 from .ws_utils.broadcast_dict import broadcast_dict
+from .ws_utils.messages_group_name import messages_group_name
 
 class ChatWSConsumer(WebsocketConsumer):
     def connect(self):
@@ -17,7 +18,7 @@ class ChatWSConsumer(WebsocketConsumer):
         data = json.loads(text_data)
         if data['type'] == "group_creation":
             discard_channel_if_found(self.channel_name)
-            async_to_sync(self.channel_layer.group_add)(data['name'],self.channel_name)
+            async_to_sync(self.channel_layer.group_add)(messages_group_name(data['session_user_id'], data['clicked_user_id']),self.channel_name)
         print_pretty_groups()
 
 

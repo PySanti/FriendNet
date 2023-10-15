@@ -4,7 +4,6 @@ import { ChattingUserHeader } from "./ChatingUserHeader"
 import { MsgSendingInput } from "./MsgSendingInput"
 import {CHAT_WEBSOCKET} from "../utils/constants"
 import {ChatWSGroupCreationMsg}         from "../utils/ChatWSGroupCreationMsg"
-import {ChatWSGroupName}                from "../utils/ChatWSGroupName"
 import {ChatWSInitialize}               from "../utils/ChatWSInitialize"
 import {useClickedUser}                 from "../store/clickedUserStore"
 import {getUserDataFromLocalStorage}    from "../utils/getUserDataFromLocalStorage"
@@ -68,9 +67,9 @@ export function Chat(){
     useEffect(()=>{
         if (diferentUserHasBeenClicked(lastClickedUser, clickedUser)){
             if (!CHAT_WEBSOCKET.current){
-                ChatWSInitialize(userData.id, clickedUser.id)
+                ChatWSInitialize(clickedUser.id)
             } else {
-                CHAT_WEBSOCKET.current.send(ChatWSGroupCreationMsg(ChatWSGroupName(userData.id, clickedUser.id)))
+                CHAT_WEBSOCKET.current.send(ChatWSGroupCreationMsg(clickedUser.id))
             }
             (async function() {
                 messagesHistorialPage.current = 1
