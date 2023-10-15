@@ -49,8 +49,6 @@
     // Lista de funcionalidades:
         //
         // Ws Utils de Notifications:
-        //              broadcasts_notification
-        //              connection_inform_dict
         //              get_openned_groups_with_id
         //              notifications_websocket_is_opened
         //

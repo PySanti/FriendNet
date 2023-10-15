@@ -9,7 +9,6 @@ def broadcast_notification(receiver_id, newNotification):
         Debe hacerse una comprobacion previa a su uso, para saber si el receiver
         tiene un channel abierto
     """
-    print(f'-> Haciendo broadcats de notificacion {newNotification["id"]}')
     async_to_sync(get_channel_layer().group_send)(str(receiver_id),
     {    
         'type' : 'broadcast_notification_handler',
