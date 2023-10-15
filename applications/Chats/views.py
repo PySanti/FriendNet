@@ -33,7 +33,7 @@ from applications.Usuarios.utils.constants import (
 from applications.Usuarios.models import Usuarios
 from applications.Notifications.models import Notifications
 # Create your views here.
-from applications.Notifications.websockets.ws_utils.notification_wesocket_is_opened import notification_wesocket_is_opened
+from applications.Notifications.websockets.ws_utils.notification_websocket_is_opened import notification_websocket_is_opened
 from .websockets.ws_utils.messages_group_is_full import messages_group_is_full
 from applications.Notifications.websockets.ws_utils.broadcast_notification import broadcast_notification
 from applications.Chats.websockets.ws_utils.broadcast_message import broadcast_message
@@ -78,7 +78,7 @@ class SendMsgAPI(APIView):
                 receiver_user = Usuarios.objects.get(id=request.data['receiver_id'])
                 if (not Notifications.objects.hasNotification(receiver_user, sender_user) and (not messages_group_is_full(receiver_user.id, sender_user.id))):
                     new_notification = Notifications.objects.addNotification(f"Tienes mensajes nuevos de {sender_user.username}", receiver_user, sender_user)
-                    if (notification_wesocket_is_opened(receiver_user.id)):
+                    if (notification_websocket_is_opened(receiver_user.id)):
                         new_notification = Notifications.objects.filter(id=new_notification.id).values("msg", "id")[0]
                         new_notification["sender_user"] = Usuarios.objects.filter(id=sender_user.id).values(*USERS_LIST_ATTRS)[0]
                         broadcast_notification(receiver_user.id, new_notification)
