@@ -31,6 +31,7 @@ export function AccountActivation() {
     const handleActivationCodeSending = async ()=>{
         setLoadingState(false);
         try{
+            console.log('-> ', realActivationCode.current)
             await sendActivationEmailAPI(props.userEmail, props.username, realActivationCode.current, props.password)
             successfullyLoaded()
         } catch(error){

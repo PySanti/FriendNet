@@ -167,7 +167,7 @@
         //                  UserPhoto.jsx
         //                  UsersList.jsx
         //  client pages:
-        //                  AccountActivation.jsx
+        //                  AccountActivation.jsx (revisar el envio masivo de activations code)
         //                  ChangeEmailForActivation.jsx
         //                  ChangePwd.jsx
         //                  Home.jsx
