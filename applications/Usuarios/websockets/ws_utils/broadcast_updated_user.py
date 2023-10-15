@@ -11,7 +11,7 @@ def broadcast_updated_user(updated_user):
     for group in get_notifications_groups(updated_user.id):
         async_to_sync(get_channel_layer().group_send)(
             group,{
-                'type' : 'broadcast_updated_user',
+                'type' : 'broadcast_updated_user_handler',
                 'value' : {i[0]:i[1] for i in updated_user.__dict__.items() if i[0] in USERS_LIST_ATTRS}
             }
         )

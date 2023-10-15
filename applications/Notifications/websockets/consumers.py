@@ -21,15 +21,15 @@ class NotificationsWSConsumer(WebsocketConsumer):
         if (data["type"] == "group_creation"):
             async_to_sync(self.channel_layer.group_add)(str(data['name']),self.channel_name)
             if len(self.channel_layer.groups[str(data["name"])])>1:
-                async_to_sync(self.channel_layer.group_send)(str(data["name"]),{"type" : "broadcast_connection_error"})
+                async_to_sync(self.channel_layer.group_send)(str(data["name"]),{"type" : "broadcast_connection_error_handler"})
             else:
                 broadcast_connection_inform(user_id=data["name"], connected=True)
         print_pretty_groups()
 
-    def broadcast_notification(self, event):
+    def broadcast_notification_handler(self, event):
         self.send(text_data=json.dumps(broadcast_dict(broadcast_type="new_notification", broadcast_value=event["value"])))
-    def broadcast_connection_error(self, event):
+    def broadcast_connection_error_handler(self, event):
         self.send(text_data=json.dumps(broadcast_dict(broadcast_type="connection_error")))
-    def broadcast_updated_user(self, event):
+    def broadcast_updated_user_handler(self, event):
         self.send(text_data=json.dumps(broadcast_dict(broadcast_type="updated_user", broadcast_value=event["value"])))
 

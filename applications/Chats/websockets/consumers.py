@@ -22,9 +22,9 @@ class ChatWSConsumer(WebsocketConsumer):
         print_pretty_groups()
 
 
-    def broadcast_message(self, event):
+    def broadcast_message_handler(self, event):
         self.send(text_data=json.dumps(broadcast_dict(broadcast_type="message_broadcast", broadcast_value=event["value"])))
 
-    def broadcast_connection_inform(self, event):
+    def broadcast_connection_inform_handler(self, event):
         self.send(text_data=json.dumps(broadcast_dict(broadcast_type="connection_inform", broadcast_value=event["value"])))
 

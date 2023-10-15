@@ -4,7 +4,7 @@ def connection_inform_dict(user_id, connected):
         de mensaje de connection_inform
     """
     return {
-        'type' : 'broadcast_connection_inform',
+        'type' : 'broadcast_connection_inform_handler',
         'value' : {
             "user_id" : user_id,
             "connected" : connected
