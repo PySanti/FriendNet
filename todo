@@ -47,8 +47,6 @@
     // repasar zustand
 
     // Lista de funcionalidades:
-        // Chats WS Utils:
-        //              print_pretty_groups
         // ChatWSConsumer :
         //              connect
         //              disconnect
