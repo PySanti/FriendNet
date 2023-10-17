@@ -7,8 +7,19 @@ import { AccountActivation } from "./pages/AccountActivation.jsx"
 import { Profile } from "./pages/Profile.jsx"
 import { ChangePwd } from "./pages/ChangePwd.jsx"
 import { ChangeEmailForActivation } from "./pages/ChangeEmailForActivation.jsx"
+import {useEffect} from "react"
+import {NOTIFICATIONS_WEBSOCKET} from "./utils/constants"
+import {getUserDataFromLocalStorage} from "./utils/getUserDataFromLocalStorage"
+import {NotificationsWSInitialize} from "./utils/NotificationsWSInitialize"
+import {userIsAuthenticated} from "./utils/userIsAuthenticated"
+
 
 function App() {
+  useEffect(()=>{
+    if (!NOTIFICATIONS_WEBSOCKET.current && userIsAuthenticated()){
+      NotificationsWSInitialize(getUserDataFromLocalStorage().id)
+    }
+  }, [])
   return (
     <BrowserRouter>
       <Routes>
