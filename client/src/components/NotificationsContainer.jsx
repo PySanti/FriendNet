@@ -76,12 +76,8 @@ export function NotificationsContainer({onNotificationClick}){
                 } else if (data.type == "connection_error"){
                     logoutUser(navigate)
                 } else  if (data.type === "updated_user"){
-                    setUsersList(usersList.map(user => {
-                        if (user.id == data.value.id){
-                            return data.value
-                        } else {
-                            return user
-                        }
+                    setUsersList(usersList.map(user => { 
+                        return  user.id == data.value.id ? data.value : user;
                     }))
                     if (clickedUser && data.value.id == clickedUser.id){
                         setLastClickedUser(clickedUser)
