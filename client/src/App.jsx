@@ -28,9 +28,14 @@ function App() {
   useEffect(()=>{
     if (!NOTIFICATIONS_WEBSOCKET.current && userIsAuthenticated()){
       NotificationsWSInitialize(getUserDataFromLocalStorage().id)
-      NotificationsWSUpdate(notifications, setNotifications, undefined, setUsersList, usersList, clickedUser, setLastClickedUser, setClickedUser)
     }
   }, [])
+  useEffect(()=>{
+    if (NOTIFICATIONS_WEBSOCKET.current && userData){
+      NotificationsWSUpdate(notifications, setNotifications, undefined, setUsersList, usersList, clickedUser, setLastClickedUser, setClickedUser)
+    }
+  }, [notifications])
+
   return (
     <BrowserRouter>
       <Routes>
