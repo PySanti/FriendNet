@@ -22,6 +22,9 @@ import {useClickedUser} from "../store/clickedUserStore"
 import {useLastClickedUser} from "../store/lastClickedUserStore"
 import {NotificationsWSUpdate} from "../utils/NotificationsWSUpdate"
 import {useNotifications} from "../store/notificationsStore"
+import {NotificationsWSCanBeUpdated} from "../utils/NotificationsWSCanBeUpdated"
+
+
 
 /**
  * Componente creado para contener las notificaciones del usuarios
@@ -61,7 +64,7 @@ export function NotificationsContainer({onNotificationClick}){
         setChatGlobeList(getChatGlobesList(notifications))
     }, [notifications])
     useEffect(()=>{
-        if (NOTIFICATIONS_WEBSOCKET.current && userData){
+        if (NotificationsWSCanBeUpdated()){
             NotificationsWSUpdate(notifications, setNotifications, navigate, setUsersList, usersList, clickedUser, setLastClickedUser, setClickedUser)
         }
     }, [usersList, clickedUser, notifications])

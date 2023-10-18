@@ -17,7 +17,7 @@ import {useClickedUser} from "./store/clickedUserStore"
 import {useLastClickedUser} from "./store/lastClickedUserStore"
 import {NotificationsWSUpdate} from "./utils/NotificationsWSUpdate"
 import {useNotifications} from "./store/notificationsStore"
-
+import {NotificationsWSCanBeUpdated} from "./utils/NotificationsWSCanBeUpdated"
 
 
 function App() {
@@ -31,7 +31,7 @@ function App() {
     }
   }, [])
   useEffect(()=>{
-    if (NOTIFICATIONS_WEBSOCKET.current && userData){
+    if (NotificationsWSCanBeUpdated()){
       NotificationsWSUpdate(notifications, setNotifications, undefined, setUsersList, usersList, clickedUser, setLastClickedUser, setClickedUser)
     }
   }, [notifications])

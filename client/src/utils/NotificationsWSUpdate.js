@@ -3,6 +3,9 @@ import {getUserDataFromLocalStorage} from "./getUserDataFromLocalStorage"
 import {saveNotificationsInLocalStorage} from "./saveNotificationsInLocalStorage"
 import {logoutUser} from "./logoutUser"
 
+/**
+ * Actualizara el soporte del websocket de notificaciones para recepcion de mensajes desde el backend
+ */
 export function NotificationsWSUpdate(notifications, setNotifications, navigate, setUsersList, usersList, clickedUser, setLastClickedUser, setClickedUser){
     const userData = getUserDataFromLocalStorage()
     NOTIFICATIONS_WEBSOCKET.current.onmessage = (event)=>{
