@@ -12,6 +12,9 @@
     // terminar de hacer el todo en miro
     // revisar solucion a problema de websockets de notificaciones
     // revisar problemas de rendimiento de red en el userList y getMessagesHistorial (muy lento) (react profiler y datadog)
+    // revisar error al borrar notificacion entrando al chat con usuario nuevo
+    // testear el connection_error
+
 
     // buscar o repasar funcionamiento de :
         // annotate
@@ -45,6 +48,7 @@
     // repasar zustand
 
     // Lista de funcionalidades:
+
         // Notifications Consumer:
         //              revisar tiempos de vida del websocket de notificaciones, debe estar activo cuando el usuario se vaya del home y recargue la pagina
         //              connect

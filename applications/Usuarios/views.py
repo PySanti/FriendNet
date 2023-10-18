@@ -341,7 +341,7 @@ class EnterChatApi(APIView):
                         deleted_notification = {'notification_deleted' : None}
                         if ('related_notification_id' in data):
                             try:
-                                Notifications.objects.deleteNotification(data['related_notification_id'])
+                                Notifications.objects.delete_notification(data['related_notification_id'])
                             except:
                                 return BASE_ERROR_WHILE_DELETING_NOTIFICATION_RESPONSE
                             else:
