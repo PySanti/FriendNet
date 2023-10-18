@@ -24,6 +24,8 @@ class NotificationsWSConsumer(WebsocketConsumer):
                 async_to_sync(self.channel_layer.group_send)(str(data["name"]),{"type" : "broadcast_connection_error_handler"})
             else:
                 broadcast_connection_inform(user_id=data["name"], connected=True)
+        if (data["type"] == "typing_inform"):
+            pass
         print_pretty_groups()
 
     def broadcast_notification_handler(self, event):

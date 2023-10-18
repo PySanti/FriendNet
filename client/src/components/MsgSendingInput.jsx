@@ -4,15 +4,18 @@ import { BASE_MESSAGE_MAX_LENGTH } from "../utils/constants"
 import {PropTypes} from "prop-types"
 import "../styles/MessageSendingInput.css"
 import {NOTIFICATIONS_WEBSOCKET} from "../utils/constants"
-
+import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
+import {useClickedUser} from "../store/clickedUserStore"
 /**
  * Input creado para el envio de mensajes
  * @param  {Function} onMsgSending funcion que se ejecutara cuando se envie un mensaje
  */
 export function MsgSendingInput({onMsgSending}){
+    let clickedUser = useClickedUser((state)=>state.clickedUser)
     let [userIsWritting, setUserIsWritting] = useState(false)
     let [currentTimeoutNumber, setCurrentTimeoutNumber] = useState(null); 
     let {register, handleSubmit, reset} = useForm()
+    const userData = getUserDataFromLocalStorage()
     const onSubmit = handleSubmit((data)=>{
         const new_msg = data.msg.trim()
         if (new_msg.length > 0){
@@ -20,7 +23,18 @@ export function MsgSendingInput({onMsgSending}){
             reset()
         }
     })
-
+    useEffect(()=>{
+        if (NOTIFICATIONS_WEBSOCKET.current && userData && clickedUser){
+            NOTIFICATIONS_WEBSOCKET.current.send(JSON.stringify({
+                "type" : "typing_inform",
+                "value" : {
+                    "clicked_user_id" : clickedUser.id,
+                    "session_user_id" : userData.id,
+                    "typing" : userIsWritting
+                }
+            }))
+        }
+    }, [userIsWritting])
     const handleMsgSendingInput = (e)=>{
         setUserIsWritting(true)
         if (currentTimeoutNumber){
