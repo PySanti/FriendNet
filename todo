@@ -52,10 +52,6 @@
         //              receive
         //              Todas las funcionalidades en todos los contextos
         //
-        // Notifications Manager:
-        //              hasNotification
-        //              addNotification
-        //              deleteNotification
         //
         //  Notifications Views:
         //              notificationDeleteApi
