@@ -6,13 +6,14 @@ import "../styles/MessageSendingInput.css"
 import {NOTIFICATIONS_WEBSOCKET} from "../utils/constants"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import {useClickedUser} from "../store/clickedUserStore"
+import {NotificationsWSTypingInformMsg} from "../utils/NotificationsWSTypingInformMsg"
 /**
  * Input creado para el envio de mensajes
  * @param  {Function} onMsgSending funcion que se ejecutara cuando se envie un mensaje
  */
 export function MsgSendingInput({onMsgSending}){
     let clickedUser = useClickedUser((state)=>state.clickedUser)
-    let [userIsWritting, setUserIsWritting] = useState(false)
+    let [userIsTyping, setUserIsTyping] = useState(false)
     let [currentTimeoutNumber, setCurrentTimeoutNumber] = useState(null); 
     let {register, handleSubmit, reset} = useForm()
     const userData = getUserDataFromLocalStorage()
@@ -25,23 +26,16 @@ export function MsgSendingInput({onMsgSending}){
     })
     useEffect(()=>{
         if (NOTIFICATIONS_WEBSOCKET.current && userData && clickedUser){
-            NOTIFICATIONS_WEBSOCKET.current.send(JSON.stringify({
-                "type" : "typing_inform",
-                "value" : {
-                    "clicked_user_id" : clickedUser.id,
-                    "session_user_id" : userData.id,
-                    "typing" : userIsWritting
-                }
-            }))
+            NOTIFICATIONS_WEBSOCKET.current.send(NotificationsWSTypingInformMsg(clickedUser.id, userIsTyping))
         }
-    }, [userIsWritting])
+    }, [userIsTyping])
     const handleMsgSendingInput = (e)=>{
-        setUserIsWritting(true)
+        setUserIsTyping(true)
         if (currentTimeoutNumber){
             clearTimeout(currentTimeoutNumber)
         }
         setCurrentTimeoutNumber(setTimeout(() => {
-            setUserIsWritting(false)
+            setUserIsTyping(false)
         }, 600))
     }
     return (
