@@ -75,6 +75,7 @@ export function Chat(){
                 messagesHistorialPage.current = 1
                 noMoreMessages.current = false
                 clickedUser.is_online = false
+                clickedUser.is_typing = false
                 setClickedUser(clickedUser)
                 await enterChatHandler()
             })();
@@ -95,7 +96,12 @@ export function Chat(){
                         clickedUser.is_online = data.value.connected
                         setClickedUser(clickedUser)
                     }
-                } 
+                } else if (data.type === "typing_inform"){
+                    if (data.value.user_id == clickedUser.id){
+                        clickedUser.is_typing = data.value.typing
+                        setClickedUser(clickedUser)
+                    }
+                }
             };
         }
     }, [messagesHistorial])

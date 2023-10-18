@@ -15,6 +15,7 @@ export function ChattingUserHeader(){
             <UserPhoto photoFile={clickedUser.photo_link} chatPhoto/>
             <div className="chatting-user__username-container">
                 <h3 className="chatting-user__username">{clickedUser.username}{clickedUser.is_online && ", en linea"}</h3>
+                <h3 className="chatting-user__typing">{clickedUser.is_typing && "escribiendo ... "}</h3>
             </div>
         </div>
     )
