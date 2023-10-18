@@ -10,6 +10,7 @@ import "../styles/UserFilter.css"
  * @param {String} userKeywordSetter 
  */
 export function UserFilter({userList, userKeyword, userKeywordSetter}){
+
     const onLetterInput = (e)=>{
         // optimizacion
         if (!userKeyword || e.target.value.length <= userKeyword.length || userList.length > 0){
