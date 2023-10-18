@@ -12,12 +12,23 @@ import {NOTIFICATIONS_WEBSOCKET} from "./utils/constants"
 import {getUserDataFromLocalStorage} from "./utils/getUserDataFromLocalStorage"
 import {NotificationsWSInitialize} from "./utils/NotificationsWSInitialize"
 import {userIsAuthenticated} from "./utils/userIsAuthenticated"
+import {useUsersList} from "./store/usersListStore"
+import {useClickedUser} from "./store/clickedUserStore"
+import {useLastClickedUser} from "./store/lastClickedUserStore"
+import {NotificationsWSUpdate} from "./utils/NotificationsWSUpdate"
+import {useNotifications} from "./store/notificationsStore"
+
 
 
 function App() {
+  let [notifications, setNotifications] = useNotifications((state)=>([state.notifications, state.setNotifications]))
+  let [usersList, setUsersList] = useUsersList((state)=>([state.usersList, state.setUsersList]))
+  let [clickedUser, setClickedUser] = useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
+  let setLastClickedUser = useLastClickedUser((state)=>(state.setLastClickedUser))
   useEffect(()=>{
     if (!NOTIFICATIONS_WEBSOCKET.current && userIsAuthenticated()){
       NotificationsWSInitialize(getUserDataFromLocalStorage().id)
+      NotificationsWSUpdate(notifications, setNotifications, undefined, setUsersList, usersList, clickedUser, setLastClickedUser, setClickedUser)
     }
   }, [])
   return (

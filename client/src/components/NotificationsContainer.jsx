@@ -4,7 +4,6 @@ import {  useState } from "react"
 import { v4 } from "uuid"
 import { Notification } from "./Notification"
 import {useEffect} from "react"
-import {useNotifications} from "../store/notificationsStore"
 import {useChatGlobeList} from "../store/chatGlobeListStore"
 import {getChatGlobesList} from "../utils/getChatGlobesList"
 import {NOTIFICATIONS_WEBSOCKET} from "../utils/constants"
@@ -21,8 +20,8 @@ import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 import {useUsersList} from "../store/usersListStore"
 import {useClickedUser} from "../store/clickedUserStore"
 import {useLastClickedUser} from "../store/lastClickedUserStore"
-import {saveNotificationsInLocalStorage} from "../utils/saveNotificationsInLocalStorage"
-import {logoutUser} from "../utils/logoutUser"
+import {NotificationsWSUpdate} from "../utils/NotificationsWSUpdate"
+import {useNotifications} from "../store/notificationsStore"
 
 /**
  * Componente creado para contener las notificaciones del usuarios
@@ -63,29 +62,7 @@ export function NotificationsContainer({onNotificationClick}){
     }, [notifications])
     useEffect(()=>{
         if (NOTIFICATIONS_WEBSOCKET.current && userData){
-            NOTIFICATIONS_WEBSOCKET.current.onmessage = (event)=>{
-                const data = JSON.parse(event.data)
-                console.log('Recibiendo datos a traves del websocket de notificaciones')
-                console.log(data)
-                if (data.type == "new_notification"){
-                    if (data.value.new_notification.sender_user.id != userData.id){
-                        const updatedNotifications = [...notifications, data.value.new_notification]
-                        setNotifications(updatedNotifications)
-                        saveNotificationsInLocalStorage(updatedNotifications)
-                    }
-                } else if (data.type == "connection_error"){
-                    logoutUser(navigate)
-                } else  if (data.type === "updated_user"){
-                    setUsersList(usersList.map(user => { 
-                        return  user.id == data.value.id ? data.value : user;
-                    }))
-                    if (clickedUser && data.value.id == clickedUser.id){
-                        setLastClickedUser(clickedUser)
-                        data.value.is_online = clickedUser.is_online
-                        setClickedUser(data.value)
-                    }
-                }
-            }
+            NotificationsWSUpdate(notifications, setNotifications, navigate, setUsersList, usersList, clickedUser, setLastClickedUser, setClickedUser)
         }
     }, [usersList, clickedUser, notifications])
     useEffect(()=>{
