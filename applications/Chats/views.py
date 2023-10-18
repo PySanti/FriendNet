@@ -52,7 +52,7 @@ class GetMessagesHistorialAPI(APIView):
         if serialized_data.is_valid():
             # request.user = sender_user
             try:
-                messages_hist = Chats.objects.getMessagesHistorialReady(request, request.data['receiver_id'], self)
+                messages_hist = Chats.objects.get_messages_historial_ready(request, request.data['receiver_id'], self)
             except Exception:
                 return BASE_ERROR_WHILE_GETTING_MESSAGES_RESPONSE
             else:
@@ -82,8 +82,8 @@ class SendMsgAPI(APIView):
                         new_notification = Notifications.objects.filter(id=new_notification.id).values("msg", "id")[0]
                         new_notification["sender_user"] = Usuarios.objects.filter(id=sender_user.id).values(*USERS_LIST_ATTRS)[0]
                         broadcast_notification(receiver_user.id, new_notification)
-                new_message = Messages.objects.createMessage(parent=sender_user, content=request.data['msg'])
-                Chats.objects.sendMessage(sender_user, receiver_user,new_message)
+                new_message = Messages.objects.create_message(parent=sender_user, content=request.data['msg'])
+                Chats.objects.send_message(sender_user, receiver_user,new_message)
                 new_message_values = new_message.__dict__.copy()
                 del new_message_values['_state']
                 if (messages_group_is_full(receiver_user.id, sender_user.id)):

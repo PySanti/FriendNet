@@ -334,7 +334,7 @@ class EnterChatApi(APIView):
                     return Response({'error' : 'error_while_checking_is_online'}, status=status.HTTP_400_BAD_REQUEST)
                 else:
                     try:
-                        messages = Chats.objects.getMessagesHistorialReady(request, data['receiver_id'], self)
+                        messages = Chats.objects.get_messages_historial_ready(request, data['receiver_id'], self)
                     except Exception:
                         return BASE_ERROR_WHILE_GETTING_MESSAGES_RESPONSE
                     else:
