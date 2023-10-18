@@ -10,6 +10,6 @@ export function logoutUser(navigateFunc){
         disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
         navigateFunc('/')
     } else {
-        window.location.href("/")
+        window.location.href = "/"
     }
 }
