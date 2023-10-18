@@ -28,7 +28,7 @@ class NotificationDeleteAPI(APIView):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
             try:
-                Notifications.objects.deleteNotification(request.data['notification_id'])
+                Notifications.objects.delete_notification(request.data['notification_id'])
             except:
                 return BASE_ERROR_WHILE_DELETING_NOTIFICATION_RESPONSE
             else:

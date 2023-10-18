@@ -76,8 +76,8 @@ class SendMsgAPI(APIView):
             try:
                 sender_user = request.user
                 receiver_user = Usuarios.objects.get(id=request.data['receiver_id'])
-                if (not Notifications.objects.hasNotification(receiver_user, sender_user) and (not messages_group_is_full(receiver_user.id, sender_user.id))):
-                    new_notification = Notifications.objects.addNotification(f"Tienes mensajes nuevos de {sender_user.username}", receiver_user, sender_user)
+                if (not Notifications.objects.has_notification(receiver_user, sender_user) and (not messages_group_is_full(receiver_user.id, sender_user.id))):
+                    new_notification = Notifications.objects.add_notification(f"Tienes mensajes nuevos de {sender_user.username}", receiver_user, sender_user)
                     if (notification_websocket_is_opened(receiver_user.id)):
                         new_notification = Notifications.objects.filter(id=new_notification.id).values("msg", "id")[0]
                         new_notification["sender_user"] = Usuarios.objects.filter(id=sender_user.id).values(*USERS_LIST_ATTRS)[0]
