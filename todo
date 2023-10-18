@@ -9,6 +9,7 @@
 
 
 // fase 3:
+    // revisar solucion a problema de websockets de notificaciones
     // Implementar funcionalidad de websockets para cuando los usuarios esten escribiendo
     // revisar problemas de rendimiento de red en el userList y getMessagesHistorial (muy lento) (react profiler y datadog)
 
