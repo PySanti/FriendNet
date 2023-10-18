@@ -19,6 +19,11 @@ import {NotificationsWSUpdate} from "./utils/NotificationsWSUpdate"
 import {useNotifications} from "./store/notificationsStore"
 import {NotificationsWSCanBeUpdated} from "./utils/NotificationsWSCanBeUpdated"
 
+/**
+ * Toda la implementacion que tenemos del websocket de notificaciones en el app.jsx
+ * es para poder agregar un soporte basico para recepcion de mensajes en el websocket
+ * mientras el Home no se monta ...
+ */
 
 function App() {
   let [notifications, setNotifications] = useNotifications((state)=>([state.notifications, state.setNotifications]))
