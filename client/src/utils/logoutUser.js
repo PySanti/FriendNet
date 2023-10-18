@@ -6,6 +6,10 @@ import {disconnectWebsocket} from "../utils/disconnectWebsocket"
  */
 export function logoutUser(navigateFunc){
     localStorage.clear()
-    disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
-    navigateFunc('/')
+    if (navigateFunc){
+        disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
+        navigateFunc('/')
+    } else {
+        window.location.href("/")
+    }
 }
