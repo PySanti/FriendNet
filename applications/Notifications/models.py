@@ -10,4 +10,4 @@ class Notifications(models.Model):
     objects = NotificationsManager()
 
     def __str__(self) -> str:
-        return f"{self.sender_user_id}, {self.msg}"
+        return f"{self.sender_user_id}, {self.msg}, {self.id}"
