@@ -23,7 +23,7 @@ export function SignUp() {
         try{
             startLoading()
             const checkUserResponse = await checkExistingUserAPI(data['username'], data['email'])
-            if (checkUserResponse.data.existing !== "true"){
+            if (!checkUserResponse.data.existing){
                 delete data.confirmPwd
                 try{
                     const createUserResponse        = await createUsuarioAPI(data)

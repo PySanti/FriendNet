@@ -67,14 +67,10 @@ class CheckExistingUserAPI(APIView):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
             try:
-                if Usuarios.objects.user_exists(username=request.data['username'], email=request.data['email']):
-                    return Response({'existing' : 'true'}, status.HTTP_200_OK)
-                else:
-                    return Response({'existing' : 'false'}, status.HTTP_200_OK)
+                return Response({'existing' : True if Usuarios.objects.user_exists(username=request.data['username'], email=request.data['email']) else False }, status.HTTP_200_OK)
             except Exception:
                 return BASE_UNEXPECTED_ERROR_RESPONSE
         else:
-            print(serialized_data._errors)
             return BASE_SERIALIZER_ERROR_RESPONSE
 class CreateUsuariosAPI(APIView):
     serializer_class        = CreateUsuariosSerializer
