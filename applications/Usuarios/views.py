@@ -67,7 +67,7 @@ class CheckExistingUserAPI(APIView):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
             try:
-                if Usuarios.objects.userExists(username=request.data['username'], email=request.data['email']):
+                if Usuarios.objects.user_exists(username=request.data['username'], email=request.data['email']):
                     return Response({'existing' : 'true'}, status.HTTP_200_OK)
                 else:
                     return Response({'existing' : 'false'}, status.HTTP_200_OK)
@@ -110,10 +110,10 @@ class GetUserDetailAPI(APIView):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
             try:
-                if Usuarios.objects.userExists(request.data['username']):
+                if Usuarios.objects.user_exists(request.data['username']):
                     user = Usuarios.objects.get(username=request.data['username'])
                     if (check_password(request.data['password'], user.password)):
-                        formated_user_data = Usuarios.objects.getFormatedUserData(user)
+                        formated_user_data = Usuarios.objects.get_formated_user_data(user)
                         return JsonResponse({'user' : formated_user_data}, status=status.HTTP_200_OK)
                     else:
                         return BASE_USER_NOT_EXISTS_RESPONSE
@@ -171,10 +171,10 @@ class ChangeEmailForActivationAPI(APIView):
             try:
                 user = Usuarios.objects.get(id=serialized_data.data['user_id'])
                 if check_password(serialized_data.data['password'], user.password):
-                    if (Usuarios.objects.userExists(email=serialized_data.data['new_email'])):
+                    if (Usuarios.objects.user_exists(email=serialized_data.data['new_email'])):
                         return Response({'error' : 'email_exists'}, status.HTTP_400_BAD_REQUEST)
                     else:
-                        Usuarios.objects.setEmail(user, serialized_data.data['new_email'])
+                        Usuarios.objects.set_email(user, serialized_data.data['new_email'])
                         return Response({'success' : 'email_setted'}, status.HTTP_200_OK)
                 else:
                     return BASE_USER_NOT_EXISTS_RESPONSE
@@ -193,7 +193,7 @@ class ActivateUserAPI(APIView):
             try:
                 user = Usuarios.objects.get(id=request.data['user_id'])
                 if check_password(serialized_data.data['password'], user.password):
-                    Usuarios.objects.activateUser(user)
+                    Usuarios.objects.activate_user(user)
                     return Response({'success' : 'user_activated'}, status.HTTP_200_OK)
                 else:
                     return BASE_USER_NOT_EXISTS_RESPONSE
@@ -252,7 +252,7 @@ class UpdateUserDataAPI(APIView):
         if serializer.is_valid():
             user = request.user
             serialized_data = serializer.data
-            if ((serialized_data['username'] != user.username) and (Usuarios.objects.userExists(username=serialized_data['username']))) or (serialized_data['email'] != user.email) and (Usuarios.objects.userExists(email=serialized_data['email'])):
+            if ((serialized_data['username'] != user.username) and (Usuarios.objects.user_exists(username=serialized_data['username']))) or (serialized_data['email'] != user.email) and (Usuarios.objects.user_exists(email=serialized_data['email'])):
                 return Response({'error' : 'username_or_email_taken'}, status.HTTP_400_BAD_REQUEST)
             try:
                 serialized_data = set_photo_link(
@@ -261,7 +261,7 @@ class UpdateUserDataAPI(APIView):
                     photo_file=request.FILES['photo'] if ('photo' in request.FILES) else None,
                     current_photo_link=user.photo_link)
                 try:
-                    updated_user = Usuarios.objects.updateUser(user, serialized_data)
+                    updated_user = Usuarios.objects.update_user(user, serialized_data)
                     broadcast_updated_user(updated_user)
                     return JsonResponse({'user_data_updated' : {i[0]:i[1] for i in updated_user.__dict__.items() if i[0] in USER_SHOWABLE_FIELDS}}, status=status.HTTP_200_OK)
                 except:
@@ -283,7 +283,7 @@ class ChangeUserPwdAPI(APIView):
             try:
                 user = request.user
                 if check_password(request.data['old_password'], user.password):
-                    Usuarios.objects.changePassword(user, request.data['new_password'])
+                    Usuarios.objects.change_password(user, request.data['new_password'])
                     return Response({'success' : 'pwd_setted'}, status.HTTP_200_OK)
                 else:
                     return Response({'error' : 'invalid_pwd'}, status.HTTP_400_BAD_REQUEST)

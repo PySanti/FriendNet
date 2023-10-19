@@ -29,14 +29,14 @@ class UsuariosManager(BaseUserManager):
             los websockets de notificaciones
         """
         return str(user_id) in get_channel_layer().groups
-    def activateUser(self, user):
+    def activate_user(self, user):
         """
             Realiza las funciones necesarias para activar por completo
             a un usuario despues de haber sido creado
         """
         user.is_active = True
         user.save()
-    def getFormatedNotifications(self, user):
+    def _get_formated_notifications(self, user):
         """
             Recibe el usuario y retorna la lista de notificaciones del usuario formateada
         """
@@ -54,25 +54,25 @@ class UsuariosManager(BaseUserManager):
             else:
                 notifications_list.pop(notifications_list.index(i))
         return notifications_list
-    def getFormatedUserData(self, user):
+    def get_formated_user_data(self, user):
         """
             Recibe al usuario y retorna sus datos formateados
         """
         base_user_data = {i[0]:i[1] for i in user.__dict__.items() if i[0] in USER_SHOWABLE_FIELDS}
-        base_user_data['notifications'] = self.getFormatedNotifications(user)
+        base_user_data['notifications'] = self._get_formated_notifications(user)
         return base_user_data
-    def changePassword(self, user, new_password):
+    def change_password(self, user, new_password):
         """
             Recibe el usuario y su nueva contraseña y la settea 
         """
         user.set_password(new_password)
         user.save()
-    def userExists(self, username=None, email=None):
+    def user_exists(self, username=None, email=None):
         """
             Retorna true en caso de que exista algun usuario con username o email
         """
         return True if ((username and self.filter(username=username)) or (email and self.filter(email=email))) else False
-    def updateUser(self, user, new_data):
+    def update_user(self, user, new_data):
         """
             Recibe el id de un usuario y sus nuevos datos y lo actualiza
         """
@@ -82,7 +82,7 @@ class UsuariosManager(BaseUserManager):
         user.photo_link     = new_data['photo_link']
         user.save()
         return user
-    def setEmail(self, user, new_email):
+    def set_email(self, user, new_email):
         """
             Recibe al usuario y modifica su email con new_email
         """
