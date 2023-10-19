@@ -10,12 +10,9 @@ def set_photo_link(sended_data, view_type, photo_file=None, current_photo_link=N
         Genera el campo 'photo_link' a partir del campo 'photo' del formulario enviado desde el frontend
     """
     if not sended_data['photo']:
-        if (view_type == "creating"):
-            sended_data['photo_link'] = None     
-        elif (view_type == "updating"):
-            sended_data['photo_link'] = None
-            if (current_photo_link):
-                delete_image_cloudinary(get_publicid(current_photo_link))
+        sended_data['photo_link'] = None
+        if (view_type == "updating") and (current_photo_link):
+            delete_image_cloudinary(get_publicid(current_photo_link))
 
     else:
         if view_type == "creating":
