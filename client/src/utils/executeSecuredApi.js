@@ -14,7 +14,7 @@ import {BASE_FALLEN_SERVER_ERROR_MSG} from "../utils/constants"
  *  BASE_UNEXPECTED_ERROR_MSG en caso de que haya habido un error inesperado con la api de refresco del token (caso muy poco comun)
 *   BASE_FALLEN_SERVER_ERROR_MSG en caso de que el server este caido 
 */
-export async function executeSecuredApi(apiCallingFunction, navigateFunc, loadigStateSetter){
+export async function executeSecuredApi(apiCallingFunction, navigateFunc){
     let response = undefined
     const condition = true
     while(condition){

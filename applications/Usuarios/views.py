@@ -294,7 +294,6 @@ class EnterChatApi(APIView):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
             data = request.data
-            print(data)
             try:
                 receiver_user = Usuarios.objects.get(id=data["receiver_id"])
             except Exception:
