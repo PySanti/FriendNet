@@ -32,7 +32,7 @@ export function Login() {
                 navigate('/signup/activate', {state: {'userId' : userDetail.id,'username' : userDetail.username,'userEmail' : userDetail.email, 'password' : data.password}})
             } else {
                 try {
-                    response = await loginUser(data)
+                    await loginUser(data)
                     const notifications = userDetail.notifications
                     delete userDetail.notifications
                     saveNotificationsInLocalStorage(notifications)

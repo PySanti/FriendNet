@@ -259,9 +259,8 @@ class UpdateUserDataAPI(APIView):
                 except:
                     return Response({'error': "error_updating"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             except:
-                return Response({'error': "cloudinary_error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                return Response({'error': "cloudinary_error"}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            print(serializer._errors)
             return BASE_SERIALIZER_ERROR_RESPONSE
 
 class ChangeUserPwdAPI(APIView):
