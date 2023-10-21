@@ -118,7 +118,6 @@ class GetUserDetailAPI(APIView):
             except Exception:
                 return BASE_UNEXPECTED_ERROR_RESPONSE
         else:
-            print(serialized_data._errors)
             return BASE_SERIALIZER_ERROR_RESPONSE
 class GetUsersListAPI(APIView):
     serializer_class        = GetUsersListSerializer
