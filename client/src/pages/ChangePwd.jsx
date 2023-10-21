@@ -34,7 +34,7 @@ export function ChangePwd(){
                 if (response.status == 200){
                     successfullyLoaded()
                 } else if (response.status == 400){
-                    setLoadingState(response.response.data.error === 'invalid_pwd' ? "Error, la contraseña actual es invalida !" : 'Error inesperado en respuesta de servidor')
+                    setLoadingState(response.data.error === 'invalid_pwd' ? "Error, la contraseña actual es invalida !" : 'Error inesperado en respuesta de servidor')
                 } else {
                     handleStandardApiErrors(response, setLoadingState, "Hubo un error cambiando la contraseña !")
                 }
