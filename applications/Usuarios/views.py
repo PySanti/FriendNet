@@ -39,7 +39,6 @@ from .serializers import (
     GetUsersListSerializer,
     SendActivationEmailSerializer,
     ChangeEmailForActivationSerializer,
-    UserIsOnlineSerializer,
     EnterChatSerializer
 )
 from rest_framework.response import Response
@@ -284,23 +283,6 @@ class ChangeUserPwdAPI(APIView):
             return BASE_SERIALIZER_ERROR_RESPONSE
 
 
-class UserIsOnlineAPI(APIView):
-    serializer_class        = UserIsOnlineSerializer
-    authentication_classes  = [JWTAuthentication]
-    permission_classes      = [IsAuthenticated]
-    @method_decorator(ratelimit(key=BASE_RATE_LIMIT_KEY, rate=BASE_RATE_LIMIT_TIMER, method="POST"))
-    def post(self, request, *args, **kwargs):
-        serialized_data = self.serializer_class(data=request.data)
-        if (serialized_data.is_valid()):
-            serialized_data = request.data
-            try:
-                target_user = Usuarios.objects.get(id=serialized_data["target_user_id"])
-            except:
-                return Response({'error' : 'user_not_found'}, status=status.HTTP_400_BAD_REQUEST)
-            else:
-                return Response({"is_online" : Usuarios.objects.user_is_online(target_user.id)}, status=status.HTTP_200_OK)
-        else:
-            return BASE_SERIALIZER_ERROR_RESPONSE
 
 class EnterChatApi(APIView):
     serializer_class        =  EnterChatSerializer
