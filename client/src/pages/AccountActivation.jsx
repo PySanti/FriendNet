@@ -65,7 +65,9 @@ export function AccountActivation() {
         }
     });
     useEffect(() => {
-        handleActivationCodeSending()
+        (async function(){
+            await handleActivationCodeSending()
+        } )()
     }, []);
 
     if (userIsAuthenticated()) {

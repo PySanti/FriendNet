@@ -152,7 +152,6 @@ class GetUsersListAPI(APIView):
             except Exception:
                 return BASE_UNEXPECTED_ERROR_RESPONSE
         else:
-            print(serialized_data._errors)
             return BASE_SERIALIZER_ERROR_RESPONSE
 
 class ChangeEmailForActivationAPI(APIView):
@@ -195,7 +194,6 @@ class ActivateUserAPI(APIView):
             except:
                 return BASE_UNEXPECTED_ERROR_RESPONSE
         else:
-            print(serialized_data._errors)
             return BASE_SERIALIZER_ERROR_RESPONSE
 
 class SendActivationEmailAPI(APIView):
@@ -220,7 +218,6 @@ class SendActivationEmailAPI(APIView):
             except Exception:
                 return BASE_UNEXPECTED_ERROR_RESPONSE
         else:
-            print(serialized_data._errors)
             return BASE_SERIALIZER_ERROR_RESPONSE
 
 
