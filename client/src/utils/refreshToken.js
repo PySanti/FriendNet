@@ -1,6 +1,6 @@
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {refreshTokenAPI} from "../api/refreshToken.api"
-import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_UNEXPECTED_ERROR_MESSAGE, UNAUTHORIZED_STATUS_CODE, JWT_LOCALSTORAGE_NAME, BASE_LOGIN_REQUIRED_ERROR_MSG} from "../utils/constants"
+import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_UNEXPECTED_ERROR_MESSAGE, UNAUTHORIZED_STATUS_CODE, JWT_LOCALSTORAGE_NAME, BASE_LOGIN_REQUIRED_ERROR_MSG} from "../utils/constants"
 
 /**
  * Refrescara el token del usuario y setea su valor en el localStorage. 

@@ -6,7 +6,6 @@ import { config } from './baseConfig.api'
  * @param {String} accessToken 
  * @param {Number} receiverId
  * @param {String} msg
- * @param {Boolean} createNotification
  */
 export async function sendMsgAPI(receiverId, msg, accessToken){
     const data =     {
