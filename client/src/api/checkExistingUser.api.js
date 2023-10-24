@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { BACKEND_URL } from '../utils/constants'
 import { config } from './baseConfig.api'
 

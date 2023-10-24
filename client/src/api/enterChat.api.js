@@ -4,9 +4,9 @@ import { config } from "./baseConfig.api";
 
 
 /**
- * Llama a la api para cambiar old_password por new_password 
- * @param {String} oldPwd  
- * @param {String} newPwd  
+ * Llama a la api para recibir info necesaria para apertura de chat 
+ * @param {Number} receiverId  
+ * @param {Number} relatedNotificationId  
  * @param {Number} accessToken
  */
 export async function enterChatAPI(receiverId, relatedNotificationId, accessToken){
