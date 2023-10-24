@@ -1,5 +1,4 @@
 import { UserButton } from "./UserButton"
-import {PropTypes} from "prop-types"
 import "../styles/UsersList.css"
 import { v4 } from "uuid"
 import { UserFilter } from "./UserFilter"
@@ -12,11 +11,13 @@ import {useChatGlobeList} from "../store/chatGlobeListStore"
 import {BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
 import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 import {useUsersList} from "../store/usersListStore"
+import {useClickedUser} from "../store/clickedUserStore"
+import {useLastClickedUser} from "../store/lastClickedUserStore"
+
 /**
  * Recibe la lista de usuarios directa de la api y retorna la lista de elementos jsx
- * @param {Function} onClickEvent evento a ejecutar cuando los usersButtons sean presionado
  */
-export function UsersList({onClickEvent }){
+export function UsersList(){
     const loaderClassName                                           ="users-list-loader" 
     const  setLoadingState                                          = useLoadingState((state)=>(state.setLoadingState))
     let userListPage                                                = useRef(1)
@@ -26,7 +27,8 @@ export function UsersList({onClickEvent }){
     let [ userKeyword, setUserKeyword]                              = useState(undefined)
     let chatGlobeList                                               = useChatGlobeList((state)=>(state.chatGlobeList))
     let [scrollDetectorBlock, setScrollDetectorBlock]               = useState(false)
-
+    let [clickedUser, setClickedUser]   = useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
+    let setLastClickedUser              = useLastClickedUser((state)=>(state.setLastClickedUser))
 
     const updateUserList = (newUsers)=>{
         if (userListPage.current === 1){
@@ -53,6 +55,10 @@ export function UsersList({onClickEvent }){
                 setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
             }
         }
+    }
+    const onClickEvent = (newClickedUser)=>{
+        setLastClickedUser(clickedUser);
+        setClickedUser(newClickedUser)
     }
 
     const formatingFunction = (user)=>{
@@ -109,10 +115,4 @@ export function UsersList({onClickEvent }){
         </>
     )
 }
-
-
-UsersList.propTypes = {
-    onClickEvent : PropTypes.func.isRequired,
-}
-
 

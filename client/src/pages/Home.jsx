@@ -21,15 +21,10 @@ import {useUsersList} from "../store/usersListStore"
  */
 export function Home() {
     const navigate = useNavigate()
-    let [clickedUser, setClickedUser]   = useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
+    let [setClickedUser]   = useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
     let setMessagesHistorial            = useMessagesHistorial((state)=>(state.setMessagesHistorial))
     let setLastClickedUser              = useLastClickedUser((state)=>(state.setLastClickedUser))
     let setUsersList                    = useUsersList((state)=>(state.setUsersList))
-
-    const onUserButtonClick = (newClickedUser)=>{
-        setLastClickedUser(clickedUser);
-        setClickedUser(newClickedUser)
-    }
 
     useEffect(()=>{
         return ()=>{
@@ -56,7 +51,7 @@ export function Home() {
                     </div>
                     <Loader/>
                     <div className="users-interface-container">
-                        <UsersList  onClickEvent={onUserButtonClick}/>
+                        <UsersList/>
                         <Chat/>
                     </div>
                 </div>

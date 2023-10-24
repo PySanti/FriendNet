@@ -23,7 +23,7 @@ import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 
 /**
  * 
- * Contenedor unicamente del chat entre el session user y el clicked usee\
+ * Contenedor unicamente del chat entre el session user y el clicked user
 */
 export function Chat(){
     let messagesHistorialPage                                               = useRef(1)
