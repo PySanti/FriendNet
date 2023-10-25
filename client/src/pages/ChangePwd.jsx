@@ -5,7 +5,6 @@ import { UserNotLogged } from "./UserNotLogged";
 import { useForm } from "react-hook-form";
 import {BASE_PASSWORD_CONSTRAINTS} from "../utils/constants"
 import { changeUserPwdAPI } from "../api/changePwd.api";
-import { Loader } from "../components/Loader";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
 import { Form } from "../components/Form";
