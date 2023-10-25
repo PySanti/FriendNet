@@ -14,9 +14,9 @@ export function Notification({notification, onNotificationDelete}){
     let [clickedUser, setClickedUser] = useClickedUser((state)=>[state.clickedUser, state.setClickedUser])
     let setLastClickedUser = useLastClickedUser((state)=>state.setLastClickedUser)
     
-    const onNotificationClick = ()=>{
+    const onNotificationClick = async ()=>{
         updateClickedUser(clickedUser, notification.sender_user, setClickedUser, setLastClickedUser)
-        onNotificationDelete(notification)
+        await onNotificationDelete(notification)
     }
     return (
         <div className="individual-notification-container" >
