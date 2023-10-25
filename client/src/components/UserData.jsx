@@ -17,7 +17,7 @@ export function UserData({nonShowableAttrs, attrsTraductions}){
             showKey = Object.keys(attrsTraductions).includes(key) ? attrsTraductions[key] : key
             return (
                 <div key={v4()} className="user-data-item">
-                    <p key={v4()}>{showKey} : {userData[key]}</p>
+                    <p className="user-data-item__content" key={v4()}>{showKey} : {userData[key]}</p>
                 </div>
             )
         }
@@ -30,7 +30,6 @@ export function UserData({nonShowableAttrs, attrsTraductions}){
 }
 
 UserData.propTypes = {
-    userData : PropTypes.object.isRequired,
     nonShowableAttrs : PropTypes.array.isRequired,
     attrsTraductions : PropTypes.object.isRequired,
 }

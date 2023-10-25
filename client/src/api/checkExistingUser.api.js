@@ -1,6 +1,6 @@
 import { BACKEND_URL } from '../utils/constants'
 import { config } from './baseConfig.api'
-
+import axios from "axios"
 
 /**
  * Llama a la api para comprobar existencia de usuario por username y email

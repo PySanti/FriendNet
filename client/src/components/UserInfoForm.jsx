@@ -58,7 +58,7 @@ export function UserInfoForm({ userData, onFormSubmit, extraButtons}) {
                     )}
                 </>
             </Form>
-            <UserPhoto withInput photoFile={currentPhotoFile} photoFileSetter={setCurrentPhotoFile} />
+            <UserPhoto withInput photoFileSetter={setCurrentPhotoFile} />
         </div>
     );
 }

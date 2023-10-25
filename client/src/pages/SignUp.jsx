@@ -44,6 +44,7 @@ export function SignUp() {
                 setLoadingState("Ya existe un usuario con ese Nombre de usuario o Correo electronico!")
             }
         } catch(error){
+            console.log(error)
             try{
                 handleStandardApiErrors(error.response, setLoadingState, "Hubo un error comprobando existencia de usuario !")
             } catch(error){

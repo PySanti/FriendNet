@@ -10,7 +10,7 @@ export function ChattingUserHeader(){
     const clickedUser = useClickedUser((state)=>(state.clickedUser))
     return (
         <div className="chatting-user-header-container">
-            <UserPhoto photoFile={clickedUser.photo_link} chatPhoto/>
+            <UserPhoto chatPhoto/>
             <div className="chatting-user__username-container">
                 <h3 className="chatting-user__username">{clickedUser.username}{clickedUser.is_online && ", en linea"}</h3>
                 <h3 className="chatting-user__typing">{clickedUser.is_typing && "escribiendo ... "}</h3>

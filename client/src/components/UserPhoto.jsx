@@ -4,21 +4,23 @@ import "../styles/UserPhoto.css";
 import { Button } from "./Button";
 import { PropTypes } from "prop-types";
 import { checkImageFormat } from "../utils/checkImageFormat";
+import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 
 
 /**
  * Contenedor para foto de perfil de usuario
- * @param {String} photoFile sera la foto que se desea renderizar por defecto
- * @param {Boolean}  withInput sera true si se desea que el componente contenga una opcion para modificar la foto
+  * @param {Boolean}  withInput sera true si se desea que el componente contenga una opcion para modificar la foto
  * @param {Function} photoFileSetter se ejecutara cuando se cambie la foto y la misma se le sera enviada por parametro.
  * @param {Boolean} chatPhoto sera true cuando sea una imagen para renderizar en el chat, de este modo le cambiaremos los estilos
  * Diseniado para trabajar con states dentro de un formulario
  */
-export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
+export function UserPhoto({withInput,chatPhoto,photoFileSetter}) {
+    const userData = getUserDataFromLocalStorage()
+    const photoFile =  userData ? userData.photo_link : null
     let [errorMsg, setErrorMsg] = useState(null);
-    const imgInputRef = useRef(null)
     let [currentPhotoName, setCurrentPhotoName] = useState(null);
     let [bigPhotoActivated, setBigPhotoActivated] = useState(false);
+    const imgInputRef = useRef(null)
     const containerClsName = "user-photo-container";
     const smallImgClsName = "user-photo";
     const bigImgClsName = () => {
@@ -77,14 +79,12 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
 }
 
 UserPhoto.propTypes = {
-    photoFile: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     withInput: PropTypes.bool,
     photoFileSetter: PropTypes.func,
     chatPhoto: PropTypes.bool,
 };
 
 UserPhoto.defaultProps = {
-    photoFile: undefined,
     withInput: undefined,
     photoFileSetter: undefined,
     chatPhoto: undefined,

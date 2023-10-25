@@ -71,7 +71,7 @@ export function Profile({ edit }) {
                             : 
                             <>
                                 <UserData nonShowableAttrs={["is_active","id","photo_link",]} attrsTraductions={{"username": "Nombre de usuario","email": "Correo electrónico"}} />
-                                <UserPhoto photoFile={profileData.photo_link} withInput={false} />
+                                <UserPhoto withInput={false} />
                                 <div className="buttons-section">
                                     <Button buttonText="Editar Perfil" onClickFunction={() => {navigate("/home/profile/edit")}} />
                                     <Button buttonText="Volver" onClickFunction={() =>{navigate("/home/")}} />
