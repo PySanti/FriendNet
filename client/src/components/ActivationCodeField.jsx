@@ -14,8 +14,7 @@ export function ActivationCodeField({errors, registerObject}){
                 maxLength   =   {6}
                 name        =   {registerObject.name}
                 id          =   {registerObject.name}
-                {...registerObject}
-            />
+                {...registerObject}/>
         </FormField>
     )
 }

@@ -2,7 +2,7 @@ import "../styles/Form.css"
 import { Button } from "./Button"
 import {PropTypes} from "prop-types"
 /**
- * Componente creado para almacenar formularios
+ * Componente creado para almacenar formularios. Wrapper de FormFields y buttons
  * @param {import("react").ComponentElement} children hijos del formulario
  * @param {Function}  onSubmitFunction funcion que se ejecutara cuando se envie el formulario
  * @param {String} buttonMsg mensaje de button de submit

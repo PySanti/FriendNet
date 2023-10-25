@@ -1,7 +1,7 @@
 import "../styles/InputError.css"
 import {PropTypes} from "prop-types"
 /**
- * Componente creado para contener mensajes de error en FromField's
+ * Componente creado para contener mensajes de error en FormField's
  * @param {String} msg mensaje de error
  */
 export function InputError({msg}){
