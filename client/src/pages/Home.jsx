@@ -45,7 +45,7 @@ export function Home() {
                 <div className="home-container">
                     <Header msg="En el home"/>
                     <div className="buttons-container">
-                        <NotificationsContainer onNotificationClick={(notification)=>onUserButtonClick(notification.sender_user)} />
+                        <NotificationsContainer/>
                         <Button buttonText="Salir" onClickFunction={()=>logoutUser(navigate)}/>
                         <Button buttonText="Perfil" onClickFunction={()=>{navigate('/home/profile/')}}/>
                     </div>

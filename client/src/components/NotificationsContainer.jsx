@@ -28,9 +28,8 @@ import {NotificationsWSCanBeUpdated} from "../utils/NotificationsWSCanBeUpdated"
 
 /**
  * Componente creado para contener las notificaciones del usuarios
- * @param {Function} onNotificationClick funcion que se ejecutara cuando se clickee una notificacion
  */
-export function NotificationsContainer({onNotificationClick}){
+export function NotificationsContainer(){
     let [notificacionsActivated, setNotificationsActivated] = useState(false)
     let [setChatGlobeList] = useChatGlobeList((state)=>([state.setChatGlobeList]))
     let [notifications, setNotifications] = useNotifications((state)=>([state.notifications, state.setNotifications]))
@@ -58,7 +57,7 @@ export function NotificationsContainer({onNotificationClick}){
     }
 
     const formatingFunction =(notification)=>{
-        return <Notification key={v4()} onNotificationClick={onNotificationClick} notification={notification} onNotificationDelete={onNotificationDelete}/>
+        return <Notification key={v4()} notification={notification} onNotificationDelete={onNotificationDelete}/>
     }
     useEffect(()=>{
         setChatGlobeList(getChatGlobesList(notifications))
@@ -89,9 +88,5 @@ export function NotificationsContainer({onNotificationClick}){
             </div>
         </div>
     )
-}
-
-NotificationsContainer.propTypes = {
-    onNotificationClick : PropTypes.func.isRequired,
 }
 

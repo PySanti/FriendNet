@@ -7,13 +7,9 @@ import { getUsersListAPI } from "../api/getUsersList.api"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import { userIsAuthenticated } from "../utils/userIsAuthenticated"
 import {useLoadingState} from "../store/loadingStateStore"
-import {useChatGlobeList} from "../store/chatGlobeListStore"
 import {BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
 import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 import {useUsersList} from "../store/usersListStore"
-import {useClickedUser} from "../store/clickedUserStore"
-import {useLastClickedUser} from "../store/lastClickedUserStore"
-import {updateClickedUser} from "../utils/updateClickedUser"
 
 /**
  * Recibe la lista de usuarios directa de la api y retorna la lista de elementos jsx
@@ -26,10 +22,7 @@ export function UsersList(){
     let [loaderActivated, setLoaderActivated]                       = useState(true)
     let [usersList, setUsersList]                                   = useUsersList((state)=>([state.usersList, state.setUsersList]))
     let [ userKeyword, setUserKeyword]                              = useState(undefined)
-    let chatGlobeList                                               = useChatGlobeList((state)=>(state.chatGlobeList))
     let [scrollDetectorBlock, setScrollDetectorBlock]               = useState(false)
-    let [clickedUser, setClickedUser]   = useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
-    let setLastClickedUser              = useLastClickedUser((state)=>(state.setLastClickedUser))
 
     const updateUserList = (newUsers)=>{
         if (userListPage.current === 1){
@@ -58,7 +51,7 @@ export function UsersList(){
         }
     }
     const formatingFunction = (user)=>{
-        return <UserButton key={v4()}user={user}onClickFunction={(newClickedUser)=>updateClickedUser(clickedUser, newClickedUser, setClickedUser, setLastClickedUser)} withGlobe={chatGlobeList.includes(user.id)} />
+        return <UserButton key={v4()}user={user}  />
     }
     const scrollDetector = async (event)=>{
         if (((event.target.scrollTop + event.target.clientHeight) >= event.target.scrollHeight) && (!scrollDetectorBlock)){

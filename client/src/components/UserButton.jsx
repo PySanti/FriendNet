@@ -1,25 +1,28 @@
 import {PropTypes} from "prop-types"
 import "../styles/UserButton.css"
+import {useClickedUser} from "../store/clickedUserStore"
+import {useLastClickedUser} from "../store/lastClickedUserStore"
+import {updateClickedUser} from "../utils/updateClickedUser"
+
+import {useChatGlobeList} from "../store/chatGlobeListStore"
+
 /**
  * Retorna un userButton, button a renderizar en la UsersList
  * @param {Object} user
- * @param {Function} onClickFunction
- * @param {Boolean} withGlobe sera true en caso de que se quiera renderizar el button con globo de notificacion
- */
-export function UserButton({user, onClickFunction, withGlobe}){
+*/
+export function UserButton({user}){
+    let [clickedUser, setClickedUser]   = useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
+    let setLastClickedUser              = useLastClickedUser((state)=>(state.setLastClickedUser))
+    let chatGlobeList                   = useChatGlobeList((state)=>(state.chatGlobeList))
+
     return (
-        <button className="user-button"onClick={()=>onClickFunction(user)}>
+        <button className="user-button" onClick={()=>updateClickedUser(clickedUser, user, setClickedUser, setLastClickedUser)}>
             {user.username}
-            {withGlobe &&<div className="user-button-globe">x</div>}
+            {chatGlobeList.includes(user.id) &&<div className="user-button-globe">x</div>}
         </button>
     )
 }
 
 UserButton.propTypes = {
     user : PropTypes.object.isRequired,
-    onClickFunction : PropTypes.func.isRequired,
-    withGlobe : PropTypes.bool,
-}
-UserButton.defaultProps = {
-    withGlobe : undefined
 }
