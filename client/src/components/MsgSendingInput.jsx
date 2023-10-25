@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react"
+import {useState, useEffect, useRef} from "react"
 import { useForm } from "react-hook-form"
 import { BASE_MESSAGE_MAX_LENGTH } from "../utils/constants"
 import {PropTypes} from "prop-types"
@@ -12,12 +12,12 @@ import {NotificationsWSTypingInformMsg} from "../utils/NotificationsWSTypingInfo
  * @param  {Function} onMsgSending funcion que se ejecutara cuando se envie un mensaje
  */
 export function MsgSendingInput({onMsgSending}){
-    let clickedUser = useClickedUser((state)=>state.clickedUser)
+    let clickedUser                     = useClickedUser((state)=>state.clickedUser)
     let [userIsTyping, setUserIsTyping] = useState(false)
-    let [currentTimeoutNumber, setCurrentTimeoutNumber] = useState(null); 
+    let currentTimeoutNumber            = useRef(null); 
     let {register, handleSubmit, reset} = useForm()
-    const userData = getUserDataFromLocalStorage()
-    const onSubmit = handleSubmit((data)=>{
+    const userData                      = getUserDataFromLocalStorage()
+    const onSubmit                      = handleSubmit((data)=>{
         const new_msg = data.msg.trim()
         if (new_msg.length > 0){
             onMsgSending(data)
@@ -31,10 +31,10 @@ export function MsgSendingInput({onMsgSending}){
     }, [userIsTyping])
     const handleMsgSendingInput = (e)=>{
         setUserIsTyping(true)
-        if (currentTimeoutNumber){
-            clearTimeout(currentTimeoutNumber)
+        if (currentTimeoutNumber.current){
+            clearTimeout(currentTimeoutNumber.current)
         }
-        setCurrentTimeoutNumber(setTimeout(() => {
+        currentTimeoutNumber.current = (setTimeout(() => {
             setUserIsTyping(false)
         }, 600))
     }

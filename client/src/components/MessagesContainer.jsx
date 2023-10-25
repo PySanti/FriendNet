@@ -10,7 +10,6 @@ import {executeSecuredApi} from "../utils/executeSecuredApi"
 import {getMessagesHistorialAPI} from "../api/getMessagesHistorial.api"
 import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
 import {useClickedUser} from "../store/clickedUserStore"
-import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import {useMessagesHistorial} from "../store/messagesHistorialStore"
 import {useLoadingState} from "../store/loadingStateStore"
 import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
@@ -70,8 +69,8 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     }
     const scrollHandler = async (e)=>{
         if (e.target.scrollTop <= 0){
-            messagesHistorialPage.current += 1
             if (!noMoreMessages.current && messagesHistorial.length >= 10){  
+                messagesHistorialPage.current += 1
                 // la ultima condicion se pone para evitar que se llame a la api cuando no se ha scrolleado
                 await loadMessages()
             }
