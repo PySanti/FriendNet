@@ -15,7 +15,7 @@ import { EmailField } from "./EmailField";
 /**
  * Componente creado para los formularios de SignUp y Update,
  * teniendo en cuenta las similitudes entre ambos
- * @param {Object} userData datos del usuario, se enviaran en caso de que se este actualizando
+ * @param {Bool} updating sera true cuando se este actualizando
  * @param {Function} onFormSubmit funcion que se ejecutara cuando se envie el formulario
  * @param {Array} extraButtons arreglo de buttons extra que se quiera agregar al formulario
  */
@@ -64,12 +64,12 @@ export function UserInfoForm({ userData, onFormSubmit, extraButtons}) {
 }
 
 UserInfoForm.propTypes = {
-    userData: PropTypes.object,
+    updating: PropTypes.bool,
     onFormSubmit: PropTypes.func.isRequired,
     extraButtons: PropTypes.array,
 };
 
 UserInfoForm.defaultProps = {
-    userData: undefined,
+    updating: undefined,
     extraButtons: undefined,
 };
