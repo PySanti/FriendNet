@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { UsernameField } from "./UsernameField";
 import { PasswordField } from "./PasswordField";
 import { EmailField } from "./EmailField";
+import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 /**
  * Componente creado para los formularios de SignUp y Update,
  * teniendo en cuenta las similitudes entre ambos
@@ -19,8 +20,9 @@ import { EmailField } from "./EmailField";
  * @param {Function} onFormSubmit funcion que se ejecutara cuando se envie el formulario
  * @param {Array} extraButtons arreglo de buttons extra que se quiera agregar al formulario
  */
-export function UserInfoForm({ userData, onFormSubmit, extraButtons}) {
-    let [currentPhotoFile, setCurrentPhotoFile] = useState(userData ? userData.photo_link : null);
+export function UserInfoForm({ updating, onFormSubmit, extraButtons}) {
+    const userData = getUserDataFromLocalStorage()
+    let [currentPhotoFile, setCurrentPhotoFile] = useState(updating ? userData.photo_link : null);
     const { register, handleSubmit, formState: { errors }, watch} = useForm();
     const onSubmit = handleSubmit((data) => {
         data.photo = currentPhotoFile; // currentPhotoFile o es null o es una imagen que ya esta validada o es la misma imagen que el usuario ya tenia
@@ -42,15 +44,15 @@ export function UserInfoForm({ userData, onFormSubmit, extraButtons}) {
     useEffect(() => {
         console.log("El usuario ha cambiado su imagen en el server");
         // de esta manera, se deberia actualizar el estado cada vez que cambie la url del usuario
-        setCurrentPhotoFile(userData ? userData.photo_link : null);
+        setCurrentPhotoFile(updating ? userData.photo_link : null);
     }, [userData]);
     return (
         <div className="user-form-container">
-            <Form onSubmitFunction={onSubmit}buttonMsg={userData ? "Actualizar" : "Registrar"}buttonsList={extraButtons}>
+            <Form onSubmitFunction={onSubmit}buttonMsg={updating ? "Actualizar" : "Registrar"}buttonsList={extraButtons}>
                 <>
-                    <UsernameField      defaultValue={userData ? userData.username : "juanca"}              errors={errors.username && errors.username.message}         registerObject={register(    "username",    BASE_USERNAME_CONSTRAINTS)}/>
-                    <EmailField         defaultValue={userData ? userData.email : "juanca@gmail.com"}       errors={errors.email && errors.email.message}               registerObject={register(    "email",    BASE_EMAIL_CONSTRAINTS)}/>
-                    {!userData && (
+                    <UsernameField      defaultValue={updating ? userData.username : "juanca"}              errors={errors.username && errors.username.message}         registerObject={register(    "username",    BASE_USERNAME_CONSTRAINTS)}/>
+                    <EmailField         defaultValue={updating ? userData.email : "juanca@gmail.com"}       errors={errors.email && errors.email.message}               registerObject={register(    "email",    BASE_EMAIL_CONSTRAINTS)}/>
+                    {!updating && (
                         <>
                             <PasswordField label="Contraseña"           errors={errors.password && errors.password.message } registerObject={register("password", {     ...BASE_PASSWORD_CONSTRAINTS, validate: passwordChecking("password"), })}/>
                             <PasswordField label="Confirmar Contraseña" errors={errors.confirmPwd && errors.confirmPwd.message } registerObject={register("confirmPwd", {     ...BASE_PASSWORD_CONSTRAINTS, validate: passwordChecking("confirmPwd"), })} />

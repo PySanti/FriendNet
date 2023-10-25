@@ -5,7 +5,6 @@ import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { UserNotLogged } from "./UserNotLogged";
 import { useState } from "react";
 import { UserData } from "../components/UserData";
-import { Loader } from "../components/Loader";
 import { UserInfoForm } from "../components/UserInfoForm";
 import { updateUserDataAPI } from "../api/updateUserData.api";
 import { UserPhoto } from "../components/UserPhoto";
@@ -67,7 +66,7 @@ export function Profile({ edit }) {
                     <Header msg={edit ? "Editando perfil" : "Viendo perfil"} />
                     <div className="editing-container">
                         {edit ? 
-                            <UserInfoForm onFormSubmit={onUpdate} userData={profileData} userPhotoUrl={profileData.photo_link} extraButtons={[<Button key={v4()} buttonText="Volver" onClickFunction={() => {navigate("/home/profile/")} }/>,]}/>
+                            <UserInfoForm updating onFormSubmit={onUpdate} extraButtons={[<Button key={v4()} buttonText="Volver" onClickFunction={() => {navigate("/home/profile/")} }/>,]}/>
                             : 
                             <>
                                 <UserData nonShowableAttrs={["is_active","id","photo_link",]} attrsTraductions={{"username": "Nombre de usuario","email": "Correo electrónico"}} />
