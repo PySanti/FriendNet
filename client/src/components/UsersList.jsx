@@ -13,6 +13,7 @@ import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 import {useUsersList} from "../store/usersListStore"
 import {useClickedUser} from "../store/clickedUserStore"
 import {useLastClickedUser} from "../store/lastClickedUserStore"
+import {updateClickedUser} from "../utils/updateClickedUser"
 
 /**
  * Recibe la lista de usuarios directa de la api y retorna la lista de elementos jsx
@@ -56,13 +57,8 @@ export function UsersList(){
             }
         }
     }
-    const onClickEvent = (newClickedUser)=>{
-        setLastClickedUser(clickedUser);
-        setClickedUser(newClickedUser)
-    }
-
     const formatingFunction = (user)=>{
-        return <UserButton key={v4()}user={user}onClickFunction={onClickEvent} withGlobe={chatGlobeList.includes(user.id)} />
+        return <UserButton key={v4()}user={user}onClickFunction={(newClickedUser)=>updateClickedUser(clickedUser, newClickedUser, setClickedUser, setLastClickedUser)} withGlobe={chatGlobeList.includes(user.id)} />
     }
     const scrollDetector = async (event)=>{
         if (((event.target.scrollTop + event.target.clientHeight) >= event.target.scrollHeight) && (!scrollDetectorBlock)){
