@@ -87,7 +87,7 @@ export function UsersList(){
     return (
         <>
             <div className="users-list">
-                <UserFilter userList={usersList} userKeyword={userKeyword} userKeywordSetter={setUserKeyword} />
+                <UserFilter userKeyword={userKeyword} userKeywordSetter={setUserKeyword} />
                 {usersList.length > 0 ? 
                     <div className="users-list-container"  onScroll={scrollDetector}>
                         {usersList.map(formatingFunction)}
