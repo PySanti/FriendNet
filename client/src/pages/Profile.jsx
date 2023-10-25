@@ -70,7 +70,7 @@ export function Profile({ edit }) {
                             <UserInfoForm onFormSubmit={onUpdate} userData={profileData} userPhotoUrl={profileData.photo_link} extraButtons={[<Button key={v4()} buttonText="Volver" onClickFunction={() => {navigate("/home/profile/")} }/>,]}/>
                             : 
                             <>
-                                <UserData userData={profileData} nonShowableAttrs={["is_active","id","photo_link",]} attrsTraductions={{username: "Nombre de usuario",email: "Correo electrónico"}} />
+                                <UserData nonShowableAttrs={["is_active","id","photo_link",]} attrsTraductions={{"username": "Nombre de usuario","email": "Correo electrónico"}} />
                                 <UserPhoto photoFile={profileData.photo_link} withInput={false} />
                                 <div className="buttons-section">
                                     <Button buttonText="Editar Perfil" onClickFunction={() => {navigate("/home/profile/edit")}} />

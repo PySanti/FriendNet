@@ -1,21 +1,20 @@
 import {PropTypes} from "prop-types"
 import { v4 } from "uuid"
+import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 
 /**
  * Componente creado para ser usado en conjunto con api getUserDetail
  * Toma los elementos de props.userData y retorna una lista de 
  * <p>'s con los atributos formateados
- * @param {Object} userData datos de usuario a formatear
- * @param {Array} nonShowableAttrs lista de atributos de objeto que no se formatearan
+  * @param {Array} nonShowableAttrs lista de atributos de objeto que no se formatearan
  * @param {Object} attrsTraductions objeto con atributo actual(clave) : traduccion (valor)
  */
-export function UserData({userData, nonShowableAttrs, attrsTraductions}){
+export function UserData({nonShowableAttrs, attrsTraductions}){
+    const userData = getUserDataFromLocalStorage()
+    let showKey = null
     const formatingFunction = (key)=>{
         if (!(nonShowableAttrs.includes(key))){
-            let showKey = key
-            if (Object.keys(attrsTraductions).includes(key)){
-                showKey = attrsTraductions[key]
-            }
+            showKey = Object.keys(attrsTraductions).includes(key) ? attrsTraductions[key] : key
             return (
                 <div key={v4()} className="user-data-item">
                     <p key={v4()}>{showKey} : {userData[key]}</p>
