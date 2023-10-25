@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import {logoutUser} from "../utils/logoutUser"
 import { userIsAuthenticated } from "../utils/userIsAuthenticated"
 import { UserNotLogged } from "./UserNotLogged"
@@ -21,7 +21,7 @@ import {useUsersList} from "../store/usersListStore"
  */
 export function Home() {
     const navigate = useNavigate()
-    let [setClickedUser]   = useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
+    let setClickedUser   = useClickedUser((state)=>(state.setClickedUser))
     let setMessagesHistorial            = useMessagesHistorial((state)=>(state.setMessagesHistorial))
     let setLastClickedUser              = useLastClickedUser((state)=>(state.setLastClickedUser))
     let setUsersList                    = useUsersList((state)=>(state.setUsersList))
@@ -49,7 +49,6 @@ export function Home() {
                         <Button buttonText="Salir" onClickFunction={()=>logoutUser(navigate)}/>
                         <Button buttonText="Perfil" onClickFunction={()=>{navigate('/home/profile/')}}/>
                     </div>
-                    <Loader/>
                     <div className="users-interface-container">
                         <UsersList/>
                         <Chat/>

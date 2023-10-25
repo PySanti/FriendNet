@@ -1,6 +1,6 @@
 import "../styles/Loader.css"
-import {PropTypes} from "prop-types"
 import {useLoadingState} from "../store/loadingStateStore"
+
 /**
  * Loader creado para mejorar la experiencia de usuario mientras se hace un llamado a api
  */

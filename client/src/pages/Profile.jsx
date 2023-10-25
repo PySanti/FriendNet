@@ -65,7 +65,6 @@ export function Profile({ edit }) {
             <div className="centered-container">
                 <div className="profile-container">
                     <Header msg={edit ? "Editando perfil" : "Viendo perfil"} />
-                    <Loader/>
                     <div className="editing-container">
                         {edit ? 
                             <UserInfoForm onFormSubmit={onUpdate} userData={profileData} userPhotoUrl={profileData.photo_link} extraButtons={[<Button key={v4()} buttonText="Volver" onClickFunction={() => {navigate("/home/profile/")} }/>,]}/>
