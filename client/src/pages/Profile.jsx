@@ -66,7 +66,7 @@ export function Profile({ edit }) {
                     <Header msg={edit ? "Editando perfil" : "Viendo perfil"} />
                     <div className="editing-container">
                         {edit ? 
-                            <UserInfoForm updating onFormSubmit={onUpdate} extraButtons={[<Button key={v4()} buttonText="Volver" onClickFunction={() => {navigate("/home/profile/")} }/>,]}/>
+                            <UserInfoForm userData={profileData} onFormSubmit={onUpdate} extraButtons={[<Button key={v4()} buttonText="Volver" onClickFunction={() => {navigate("/home/profile/")} }/>,]}/>
                             : 
                             <>
                                 <UserData nonShowableAttrs={["is_active","id","photo_link",]} attrsTraductions={{"username": "Nombre de usuario","email": "Correo electrónico"}} />
