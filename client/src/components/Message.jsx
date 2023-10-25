@@ -1,21 +1,20 @@
 import "../styles/Message.css"
 import {PropTypes} from "prop-types"
+import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 
 /**
  *  Componente creado para mensajes individuales 
- * @param {String} content contenido del mensaje
- * @param {Boolean} sessionUserMsg sera true en caso de que sea un mensaje enviado por el dueño de la sesión
+ * @param {Object} messageObj objeto del mensaje retornado por la api
  */
-export function Message({content, sessionUserMsg}){
+export function Message({messageObj}){
     const messageCls = "message"
     return (
-        <div className={sessionUserMsg ? `${messageCls} session-msg` :  `${messageCls} not-session-msg` }>
-            <h3 className="message-content">{content}</h3>
+        <div className={messageObj.parent_id == getUserDataFromLocalStorage().id ? `${messageCls} session-msg` :  `${messageCls} not-session-msg` }>
+            <h3 className="message-content">{messageObj.content}</h3>
         </div>
     )
 }
 
 Message.propTypes = {
-    content : PropTypes.string.isRequired,
-    sessionUserMsg : PropTypes.bool.isRequired,
+    messageObj : PropTypes.object.isRequired,
 }

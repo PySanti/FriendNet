@@ -66,7 +66,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
         }
     }
     const formatingFunction = (msg)=>{
-        return <Message key={v4()} content={msg.content} sessionUserMsg={getUserDataFromLocalStorage().id === msg.parent_id}/>
+        return <Message key={v4()} messageObj={msg}/>
     }
     const scrollHandler = async (e)=>{
         if (e.target.scrollTop <= 0){

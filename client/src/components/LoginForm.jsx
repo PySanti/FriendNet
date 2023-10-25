@@ -11,11 +11,8 @@ import {PropTypes} from "prop-types"
  */
 export function LoginForm({handleLogin, extraButtons}){
     const {register, handleSubmit, formState: {errors}}  = useForm()
-    const onSubmit = handleSubmit((data)=>{
-        handleLogin(data)
-    })
     return (
-        <Form onSubmitFunction={onSubmit} buttonMsg={"Acceder"} buttonsList={extraButtons} > 
+        <Form onSubmitFunction={handleSubmit((data)=>{handleLogin(data)})} buttonMsg={"Acceder"} buttonsList={extraButtons} > 
             <UsernameField errors={errors.username && errors.username.message} registerObject={register("username", BASE_USERNAME_CONSTRAINTS)}/>
             <PasswordField label="Contraseña"  errors={errors.password && errors.password.message} registerObject={register("password", BASE_PASSWORD_CONSTRAINTS)}/>
         </Form>
