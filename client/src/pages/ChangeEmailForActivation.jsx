@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import { EmailField } from "../components/EmailField";
 import { BASE_EMAIL_CONSTRAINTS } from "../utils/constants";
 import { Form } from "../components/Form";
-import { Loader } from "../components/Loader";
 import { UserNotLogged } from "./UserNotLogged";
 import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { UserLogged } from "./UserLogged";
@@ -15,6 +14,9 @@ import {useLoadingState} from "../store/loadingStateStore"
 import {BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
 import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 
+/**
+ * Page creada para la modificacion del Email para activacion 
+ */
 export function ChangeEmailForActivation(){
     let [ setLoadingState, successfullyLoaded, startLoading] = useLoadingState((state)=>([state.setLoadingState, state.successfullyLoaded, state.startLoading]))
     const props                                         = useLocation().state
