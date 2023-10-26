@@ -23,7 +23,15 @@ export function UsersList(){
     let [usersList, setUsersList]                                   = useUsersList((state)=>([state.usersList, state.setUsersList]))
     let [ userKeyword, setUserKeyword]                              = useState(undefined)
     let [scrollDetectorBlock, setScrollDetectorBlock]               = useState(false)
-
+    const canChargeUsersList = (event)=>{
+        return ((event.target.scrollTop + event.target.clientHeight) >= event.target.scrollHeight) && (!scrollDetectorBlock) && (!noMoreUsers.current)
+    }
+    const updateScrollDetectorBlock = ()=>{
+        setScrollDetectorBlock(true)
+        setTimeout(() => {
+            setScrollDetectorBlock(false)
+        }, 1000);
+    }
     const updateUserList = (newUsers)=>{
         if (userListPage.current === 1){
             setUsersList(newUsers)
@@ -59,16 +67,11 @@ export function UsersList(){
         return <UserButton key={v4()}user={user}  />
     }
     const scrollDetector = async (event)=>{
-        if (((event.target.scrollTop + event.target.clientHeight) >= event.target.scrollHeight) && (!scrollDetectorBlock)){
-            if (!noMoreUsers.current){
-                setScrollDetectorBlock(true)
-                setTimeout(() => {
-                    setScrollDetectorBlock(false)
-                }, 1000);
-                await loadUsersList()
-                userListPage.current += 1
-            }
-        } 
+        if (canChargeUsersList(event)){
+            updateScrollDetectorBlock()
+            await loadUsersList()
+            userListPage.current += 1
+        }
     }
     useEffect(()=>{
         setLoadingState(false)
