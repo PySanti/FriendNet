@@ -9,13 +9,12 @@ import {   useNavigate } from "react-router-dom";
 import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { UserLogged } from "./UserLogged";
 import { UserInfoForm } from "../components/UserInfoForm";
-import { Loader } from "../components/Loader";
 import { Button } from "../components/Button";
 import { v4 } from "uuid";
 import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 import {useLoadingState} from "../store/loadingStateStore"
-import {useEffect} from "react"
 import {BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
+
 export function SignUp() {
     const [successfullyLoaded, startLoading, setLoadingState] = useLoadingState((state)=>([state.successfullyLoaded, state.startLoading, state.setLoadingState]))
     const navigate                                              = useNavigate()
@@ -41,10 +40,9 @@ export function SignUp() {
                     }
                 }
             } else {
-                setLoadingState("Ya existe un usuario con ese Nombre de usuario o Correo electronico!")
+                setLoadingState("Ya existe un usuario con ese Nombre de usuario o Correo electrónico!")
             }
         } catch(error){
-            console.log(error)
             try{
                 handleStandardApiErrors(error.response, setLoadingState, "Hubo un error comprobando existencia de usuario !")
             } catch(error){

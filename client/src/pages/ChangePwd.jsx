@@ -1,4 +1,4 @@
-import {  useEffect } from "react";
+
 import { Header } from "../components/Header";
 import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { UserNotLogged } from "./UserNotLogged";
