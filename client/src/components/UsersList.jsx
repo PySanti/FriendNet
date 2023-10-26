@@ -19,7 +19,7 @@ export function UsersList(){
     const  setLoadingState                                          = useLoadingState((state)=>(state.setLoadingState))
     let userListPage                                                = useRef(1)
     let noMoreUsers                                                 = useRef(false)
-    let [loaderActivated, setLoaderActivated]                       = useState(true)
+    let [loaderActivated, setLoaderActivated]                       = useState(false)
     let [usersList, setUsersList]                                   = useUsersList((state)=>([state.usersList, state.setUsersList]))
     let [ userKeyword, setUserKeyword]                              = useState(undefined)
     let [scrollDetectorBlock, setScrollDetectorBlock]               = useState(false)
@@ -32,11 +32,16 @@ export function UsersList(){
         }
     }
     const loadUsersList = async ()=>{
+        const loaderMustBeUsed = userListPage.current > 1 
         try{
-            setLoaderActivated(true)
+            if (loaderMustBeUsed){
+                setLoaderActivated(true)
+            }
             let response = await getUsersListAPI(!userKeyword || userKeyword.length === 0 ? undefined : userKeyword, getUserDataFromLocalStorage().id, userListPage.current)
             updateUserList(response.data.users_list)
-            setLoaderActivated(false)
+            if (loaderMustBeUsed){
+                setLoaderActivated(false)
+            }
         } catch(error){
             try {                
                 if (error.response.data.error=== "no_more_pages"){
