@@ -3,6 +3,10 @@ import { Header } from "../components/Header"
 import { Button } from "../components/Button"
 
 
+/**
+ * Page a renderizar cuando el usuario trate de acceder a una pagina a la que debe
+ * estar logeado sin estarlo
+ */
 export function UserNotLogged(){
     const navigate = useNavigate()
     return (
