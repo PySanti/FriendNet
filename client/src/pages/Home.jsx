@@ -4,7 +4,6 @@ import { userIsAuthenticated } from "../utils/userIsAuthenticated"
 import { UserNotLogged } from "./UserNotLogged"
 import { Header } from "../components/Header"
 import { useNavigate } from "react-router-dom"
-import { Loader } from "../components/Loader"
 import { NotificationsContainer } from "../components/NotificationsContainer"
 import { UsersList } from "../components/UsersList"
 import { Chat } from "../components/Chat"
@@ -20,8 +19,8 @@ import {useUsersList} from "../store/usersListStore"
  * Pagina principal del sitio
  */
 export function Home() {
-    const navigate = useNavigate()
-    let setClickedUser   = useClickedUser((state)=>(state.setClickedUser))
+    const navigate                      = useNavigate()
+    let setClickedUser                  = useClickedUser((state)=>(state.setClickedUser))
     let setMessagesHistorial            = useMessagesHistorial((state)=>(state.setMessagesHistorial))
     let setLastClickedUser              = useLastClickedUser((state)=>(state.setLastClickedUser))
     let setUsersList                    = useUsersList((state)=>(state.setUsersList))

@@ -24,8 +24,7 @@ import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
  * actualizacion como visualizacion
  */
 export function Profile({ edit }) {
-    // states
-    let [profileData, setProfileData] = useState(getUserDataFromLocalStorage());
+    let   [profileData, setProfileData]                         = useState(getUserDataFromLocalStorage());
     const [ startLoading, setLoadingState, successfullyLoaded ] = useLoadingState((state)=>([state.startLoading, state.setLoadingState, state.successfullyLoaded ]))
     const navigate = useNavigate();
     const onUpdate = async (data) => {
@@ -38,7 +37,6 @@ export function Profile({ edit }) {
             }, navigate)
             if (response){
                 if (response.status == 200){
-                    profileData.photo_link = response.data.user_data_updated.photo_link
                     setProfileData(response.data.user_data_updated);
                     saveUserDataInLocalStorage(response.data.user_data_updated);
                     successfullyLoaded();
