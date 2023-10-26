@@ -15,6 +15,9 @@ import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 import {useLoadingState} from "../store/loadingStateStore"
 import {BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
 
+/**
+ * Page creada para el registro de los usuarios
+ */
 export function SignUp() {
     const [successfullyLoaded, startLoading, setLoadingState] = useLoadingState((state)=>([state.successfullyLoaded, state.startLoading, state.setLoadingState]))
     const navigate                                              = useNavigate()
