@@ -10,7 +10,6 @@ import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { sendActivationEmailAPI } from "../api/sendActivationEmail.api";
 import { UserLogged } from "./UserLogged";
 import { UserNotLogged } from "./UserNotLogged";
-import { Loader } from "../components/Loader";
 import { ActivationCodeField } from "../components/ActivationCodeField";
 import { Form } from "../components/Form";
 import { Button } from "../components/Button";

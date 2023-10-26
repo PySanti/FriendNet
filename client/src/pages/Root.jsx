@@ -18,7 +18,7 @@ export function Root() {
                     <Header msg="Chatea con quien quieras !"/>
                     <section className="redirect-container">
                         <div className="signin-container">
-                            <div className="signin-cotainer__title-container">
+                            <div className="signin-container__title-container">
                                 <h4 className="signin-container__title">
                                     Tienes cuenta? 
                                 </h4>
