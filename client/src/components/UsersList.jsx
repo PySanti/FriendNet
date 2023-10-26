@@ -32,13 +32,6 @@ export function UsersList(){
             setScrollDetectorBlock(false)
         }, 1000);
     }
-    const updateUserList = (newUsers)=>{
-        if (userListPage.current === 1){
-            setUsersList(newUsers)
-        } else {
-            setUsersList(usersList.concat(newUsers))
-        }
-    }
     const loadUsersList = async ()=>{
         const loaderMustBeUsed = userListPage.current > 1 
         try{
@@ -46,7 +39,7 @@ export function UsersList(){
                 setLoaderActivated(true)
             }
             let response = await getUsersListAPI(!userKeyword || userKeyword.length === 0 ? undefined : userKeyword, getUserDataFromLocalStorage().id, userListPage.current)
-            updateUserList(response.data.users_list)
+            setUsersList(userListPage.current === 1 ? response.data.users_list : usersList.concat(response.data.users_list))
             if (loaderMustBeUsed){
                 setLoaderActivated(false)
             }
