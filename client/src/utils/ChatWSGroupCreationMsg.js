@@ -6,7 +6,9 @@ import {getUserDataFromLocalStorage} from "./getUserDataFromLocalStorage"
 export function ChatWSGroupCreationMsg(clickedUserId){
     return JSON.stringify({
         'type' : 'group_creation',
-        'session_user_id' : getUserDataFromLocalStorage().id,
-        'clicked_user_id' : clickedUserId
+        "value" : {
+            'session_user_id' : getUserDataFromLocalStorage().id,
+            'clicked_user_id' : clickedUserId
+        }
     })
 }
