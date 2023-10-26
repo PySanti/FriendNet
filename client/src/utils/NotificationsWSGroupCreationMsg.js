@@ -5,6 +5,8 @@
 export function NotificationsWSGroupCreationMsg(sessionUserId){
     return JSON.stringify({
         'type' : 'group_creation',
-        'name' : sessionUserId 
+        "value": {
+            'name' : sessionUserId 
+        }
     })
 }

@@ -22,11 +22,11 @@ class NotificationsWSConsumer(WebsocketConsumer):
     def receive(self, text_data):
         data = json.loads(text_data)
         if (data["type"] == "group_creation"):
-            async_to_sync(self.channel_layer.group_add)(str(data['name']),self.channel_name)
-            if len(self.channel_layer.groups[str(data["name"])])>1:
-                async_to_sync(self.channel_layer.group_send)(str(data["name"]),{"type" : "broadcast_connection_error_handler"})
+            async_to_sync(self.channel_layer.group_add)(str(data['value']['name']),self.channel_name)
+            if len(self.channel_layer.groups[str(data['value']["name"])])>1:
+                async_to_sync(self.channel_layer.group_send)(str(data['value']["name"]),{"type" : "broadcast_connection_error_handler"})
             else:
-                broadcast_connection_inform(user_id=data["name"], connected=True)
+                broadcast_connection_inform(user_id=data['value']["name"], connected=True)
         if (data["type"] == "typing_inform"):
             value = data["value"]
             if (messages_group_is_full(value["session_user_id"], value["clicked_user_id"])):
