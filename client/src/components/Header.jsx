@@ -1,4 +1,5 @@
 import "../styles/Header.css"
+
 import {PropTypes} from "prop-types"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import {Loader} from "../components/Loader"
@@ -8,6 +9,7 @@ import {Loader} from "../components/Loader"
  */
 export function Header({msg}) {
     const userData = getUserDataFromLocalStorage()
+
     return (
         <>
             <header className="header-container">

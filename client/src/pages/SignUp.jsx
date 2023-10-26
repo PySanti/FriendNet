@@ -52,10 +52,6 @@ export function SignUp() {
             }
         }
 }
-    useEffect(()=>{
-        setLoadingState(false)
-    }, [])
-
 
     if (userIsAuthenticated()){
         return <UserLogged/>

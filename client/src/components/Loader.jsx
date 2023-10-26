@@ -1,5 +1,6 @@
 import "../styles/Loader.css"
 import {useLoadingState} from "../store/loadingStateStore"
+import {useEffect} from "react"
 
 /**
  * Loader creado para mejorar la experiencia de usuario mientras se hace un llamado a api
@@ -11,7 +12,10 @@ export function Loader(){
      * modificacion de espacio en el DOM
      */
     const baseClass = "state-msg"
-    const loadingState = useLoadingState((state)=>(state.loadingState))
+    const [loadingState, setLoadingState] = useLoadingState((state)=>([state.loadingState, state.setLoadingState]))
+    useEffect(()=>{
+        setLoadingState(false)
+    }, [])
     return (
         <div className="state-container">
             <h2 className={loadingState ? `${baseClass} state-activated` : baseClass}>{loadingState}</h2>

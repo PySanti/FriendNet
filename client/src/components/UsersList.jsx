@@ -63,7 +63,6 @@ export function UsersList(){
         }
     }
     useEffect(()=>{
-        setLoadingState(false)
         if (userIsAuthenticated() && usersList.length === 0){
             (async function() {
                 await loadUsersList()

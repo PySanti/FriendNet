@@ -64,9 +64,6 @@ export function Login() {
             }
         }
     }
-    useEffect(()=>{
-        setLoadingState(false)
-    }, [])
 
     if (userIsAuthenticated()){
         return <UserLogged/> 

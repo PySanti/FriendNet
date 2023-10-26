@@ -43,9 +43,6 @@ export function ChangePwd(){
         }
     })
 
-    useEffect(()=>{
-        setLoadingState(false)
-    }, [])
     if (!userIsAuthenticated()){
         return  <UserNotLogged/>
     } else {
