@@ -33,21 +33,16 @@ export function UsersList(){
         }, 1000);
     }
     const loadUsersList = async ()=>{
-        const loaderMustBeUsed = userListPage.current > 1 
+        if (userListPage.current > 1 ){
+            setLoaderActivated(true)
+        }
         try{
-            if (loaderMustBeUsed){
-                setLoaderActivated(true)
-            }
             let response = await getUsersListAPI(!userKeyword || userKeyword.length === 0 ? undefined : userKeyword, getUserDataFromLocalStorage().id, userListPage.current)
             setUsersList(userListPage.current === 1 ? response.data.users_list : usersList.concat(response.data.users_list))
-            if (loaderMustBeUsed){
-                setLoaderActivated(false)
-            }
         } catch(error){
             try {                
                 if (error.response.data.error=== "no_more_pages"){
                     noMoreUsers.current = true
-                    setLoaderActivated(false)
                 } else {
                     handleStandardApiErrors(error.response, setLoadingState, "Ha habido un error cargando la lista de usuarios !")
                 }
@@ -55,6 +50,7 @@ export function UsersList(){
                 setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
             }
         }
+        setLoaderActivated(false)
     }
     const formatingFunction = (user)=>{
         return <UserButton key={v4()}user={user}  />
