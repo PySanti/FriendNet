@@ -47,9 +47,7 @@ export function ChangePwd(){
         setLoadingState(false)
     }, [])
     if (!userIsAuthenticated()){
-        return (
-            <UserNotLogged/>
-        )
+        return  <UserNotLogged/>
     } else {
         return (
             <div className="centered-container">
