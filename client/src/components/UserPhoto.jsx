@@ -4,7 +4,7 @@ import "../styles/UserPhoto.css";
 import { Button } from "./Button";
 import { PropTypes } from "prop-types";
 import { checkImageFormat } from "../utils/checkImageFormat";
-
+import {getImageFileName} from "../utils/getImageFileName"
 
 /**
  * Contenedor para foto de perfil de usuario
@@ -15,12 +15,12 @@ import { checkImageFormat } from "../utils/checkImageFormat";
  * Diseniado para trabajar con states dentro de un formulario
  */
 export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
-    let [errorMsg, setErrorMsg] = useState(null);
-    const imgInputRef = useRef(null)
-    let [currentPhotoName, setCurrentPhotoName] = useState(null);
-    let [bigPhotoActivated, setBigPhotoActivated] = useState(false);
-    const containerClsName = "user-photo-container";
-    const smallImgClsName = "user-photo";
+    let [errorMsg, setErrorMsg]                     = useState(null);
+    let [currentPhotoName, setCurrentPhotoName]     = useState(null);
+    let [bigPhotoActivated, setBigPhotoActivated]   = useState(false);
+    const imgInputRef                               = useRef(null)
+    const containerClsName                          = "user-photo-container";
+    const smallImgClsName                           = "user-photo";
     const bigImgClsName = () => {
         return bigPhotoActivated? `${smallImgClsName} big-user-photo big-user-photo__activated`: `${smallImgClsName} big-user-photo`;
     };
@@ -42,13 +42,7 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
         if (imageCheckerResponse === true) {
             photoFileSetter(file);
             setErrorMsg(null);
-            const reader = new FileReader();
-            reader.addEventListener("load", function () {
-                setCurrentPhotoName(reader.result);
-            });
-            if (file) {
-                reader.readAsDataURL(file);
-            }
+            getImageFileName(file, setCurrentPhotoName)
         } else {
             setErrorMsg(imageCheckerResponse);
         }
