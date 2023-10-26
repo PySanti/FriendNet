@@ -3,7 +3,10 @@ import { Header } from "../components/Header"
 import { Button } from "../components/Button"
 import "../styles/UserLogged.css"
 
-
+/**
+ * Pagina a renderizar cuando el usuario trata de acceder a pages
+ * para logeo, activacion o registro estando ya logeado
+ */
 export function UserLogged(){
     const navigate = useNavigate()
     return (
