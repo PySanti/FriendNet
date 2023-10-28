@@ -16,7 +16,6 @@ export function Notification({notification, onNotificationDelete}){
     
     const onNotificationClick = async ()=>{
         updateClickedUser(clickedUser, notification.sender_user, setClickedUser, setLastClickedUser)
-        await onNotificationDelete(notification)
     }
     return (
         <div className="individual-notification-container" >
