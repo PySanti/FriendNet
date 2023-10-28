@@ -1,7 +1,11 @@
 import {BASE_RATE_LIMIT_BLOCK_RESPONSE, BASE_FALLEN_SERVER_ERROR_MSG, BASE_UNEXPECTED_ERROR_LOG, BASE_UNEXPECTED_ERROR_MESSAGE, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
 
+/**
+ * Funcion creada para estandarizar mensajes de error que se setearan
+ * en el loadingStateSetter para DRY
+ */
 export function handleStandardApiErrors(response, loadingStateSetter, unexpectedErrorMsg){
-    if (response == undefined){
+    if (response == undefined || response == BASE_FALLEN_SERVER_ERROR_MSG){
         loadingStateSetter(BASE_FALLEN_SERVER_LOG)
     } else {
         if (response.status == 403){
