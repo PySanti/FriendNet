@@ -38,7 +38,9 @@ export async function executeSecuredApi(apiCallingFunction, navigateFunc){
                         return error.message == BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_ERROR_MSG : BASE_UNEXPECTED_ERROR_MESSAGE 
                     }
                 }
-            } 
+            } else {
+                return BASE_UNEXPECTED_ERROR_MESSAGE
+            }
         }
     }
     return response
