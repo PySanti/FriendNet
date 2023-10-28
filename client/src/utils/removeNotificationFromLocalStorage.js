@@ -3,6 +3,8 @@ import { saveNotificationsInLocalStorage } from "./saveNotificationsInLocalStora
 
 /**
  * Elimina una notificacion de la lista de notificaciones del LocalStorage y retorna la nueva lista
+ * 
+ * Guardara la lista actualizada en el mismo localStorage
  * @param {Object} notification 
  */
 export function removeNotificationFromLocalStorage(notification){
@@ -13,5 +15,6 @@ export function removeNotificationFromLocalStorage(notification){
             notifications.splice(i, 1)
         }
     }
+    saveNotificationsInLocalStorage(notifications)
     return notifications
 }
