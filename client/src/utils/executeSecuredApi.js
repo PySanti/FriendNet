@@ -1,9 +1,11 @@
-import {refreshToken} from "../utils/refreshToken"
 import {redirectExpiredUser} from "../utils/redirectExpiredUser"
-import {BASE_LOGIN_REQUIRED_ERROR_MSG} from "../utils/constants"
-import {BASE_FALLEN_SERVER_ERROR_MSG} from "../utils/constants"
+import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
+import {refreshTokenAPI} from "../api/refreshToken.api"
+import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_UNEXPECTED_ERROR_MESSAGE, UNAUTHORIZED_STATUS_CODE, JWT_LOCALSTORAGE_NAME, BASE_LOGIN_REQUIRED_ERROR_MSG} from "../utils/constants"
+
+
 /**
- * Recibira un wrap de la funcion que se desea ejecutar y realizara los
+ * Recibira una funcion que retornara la respuesta de la llamada a la target api que se desea ejecutar y realizara los
  * procesos necesarios para la ejecucion de una api segura, retornara la 
  * respuesta de la api o redirijira al usuario
  * 
@@ -22,24 +24,21 @@ export async function executeSecuredApi(apiCallingFunction, navigateFunc){
             response = await apiCallingFunction() 
             break
         } catch(error){
-            // en este punto, el error puede ser : por api, por token o por servidor caido
-            if (error.message == BASE_FALLEN_SERVER_ERROR_MSG){ // server caido
-                response = BASE_FALLEN_SERVER_ERROR_MSG
-                break
-            } else if (error.response.status === 401){ // token
-                console.log('El token no es valido')
-                const refreshingResponse = await refreshToken()
-                if (refreshingResponse === BASE_LOGIN_REQUIRED_ERROR_MSG){
-                    redirectExpiredUser(navigateFunc)
-                    break
-                } else if (refreshingResponse !== true){
-                    response = refreshingResponse
-                    break
+            if (error.message == BASE_FALLEN_SERVER_ERROR_MSG || error.response.status !== 401){
+                return error.message == BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_ERROR_MSG :  error.response
+            } else if (error.response.status === 401){ // error por token
+                try {
+                    const response = await refreshTokenAPI(getJWTFromLocalStorage().refresh)
+                    localStorage.setItem(JWT_LOCALSTORAGE_NAME, JSON.stringify(response.data))
+                } catch(error) {
+                    if (error.response.status === UNAUTHORIZED_STATUS_CODE){
+                        redirectExpiredUser(navigateFunc)
+                        return undefined
+                    } else {
+                        return error.message == BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_ERROR_MSG : BASE_UNEXPECTED_ERROR_MESSAGE 
+                    }
                 }
-            } else { // api
-                response = error.response
-                break
-            }
+            } 
         }
     }
     return response
