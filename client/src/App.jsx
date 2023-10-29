@@ -15,10 +15,12 @@ import {userIsAuthenticated} from "./utils/userIsAuthenticated"
 import {useUsersList} from "./store/usersListStore"
 import {useClickedUser} from "./store/clickedUserStore"
 import {useLastClickedUser} from "./store/lastClickedUserStore"
-import {NotificationsWSUpdate} from "./utils/NotificationsWSUpdate"
 import {useNotifications} from "./store/notificationsStore"
 import {NotificationsWSCanBeUpdated} from "./utils/NotificationsWSCanBeUpdated"
+import {saveNotificationsInLocalStorage} from "./saveNotificationsInLocalStorage"
+import {logoutUser} from "./logoutUser"
 
+/**
 /**
  * Toda la implementacion que tenemos del websocket de notificaciones en el app.jsx
  * es para poder agregar un soporte basico para recepcion de mensajes en el websocket
@@ -37,7 +39,31 @@ function App() {
   }, [])
   useEffect(()=>{
     if (NotificationsWSCanBeUpdated()){
-      NotificationsWSUpdate(notifications, setNotifications, undefined, setUsersList, usersList, clickedUser, setLastClickedUser, setClickedUser)
+      NOTIFICATIONS_WEBSOCKET.current.onmessage = (event)=>{
+        const data = JSON.parse(event.data)
+        console.log('Recibiendo datos a traves del websocket de notificaciones')
+        console.log(data)
+        if (data.type == "new_notification"){
+            if (data.value.new_notification.sender_user.id != getUserDataFromLocalStorage().id){
+                const updatedNotifications = [...notifications, data.value.new_notification]
+                setNotifications(updatedNotifications)
+                saveNotificationsInLocalStorage(updatedNotifications)
+            }
+        } else if (data.type == "connection_error"){
+            logoutUser(undefined)
+        } else  if (data.type === "updated_user"){
+            if (usersList.length > 0){
+                setUsersList(usersList.map(user => { 
+                    return  user.id == data.value.id ? data.value : user;
+                }))
+                if (clickedUser && data.value.id == clickedUser.id){
+                    setLastClickedUser(clickedUser)
+                    data.value.is_online = clickedUser.is_online
+                    setClickedUser(data.value)
+                }
+            }
+        }
+      }
     }
   }, [notifications, usersList, clickedUser])
 
