@@ -17,8 +17,8 @@ import {useClickedUser} from "./store/clickedUserStore"
 import {useLastClickedUser} from "./store/lastClickedUserStore"
 import {useNotifications} from "./store/notificationsStore"
 import {NotificationsWSCanBeUpdated} from "./utils/NotificationsWSCanBeUpdated"
-import {saveNotificationsInLocalStorage} from "./saveNotificationsInLocalStorage"
-import {logoutUser} from "./logoutUser"
+import {saveNotificationsInLocalStorage} from "./utils/saveNotificationsInLocalStorage"
+import {logoutUser} from "./utils/logoutUser"
 
 /**
 /**
