@@ -3,7 +3,7 @@ from ..utils.read_secret_data import read_secret_data
 
 DEBUG = True
 ALLOWED_HOSTS = []
-SECRETS = read_secret_data('local', SECRET_FILE_PATH)
+SECRETS = read_secret_data(SECRET_FILE_PATH)
 
 DATABASES = {
     'default': {
