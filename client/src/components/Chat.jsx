@@ -104,7 +104,7 @@ export function Chat(){
                 }
             };
         }
-    }, [messagesHistorial])
+    }, [messagesHistorial, clickedUser])
 
 
     return (
