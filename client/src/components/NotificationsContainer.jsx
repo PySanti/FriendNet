@@ -17,14 +17,7 @@ import {useLoadingState} from "../store/loadingStateStore"
 import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotifications"
 import {getNotificationsFromLocalStorage} from "../utils/getNotificationsFromLocalStorage"
 import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
-import {useUsersList} from "../store/usersListStore"
-import {useClickedUser} from "../store/clickedUserStore"
-import {useLastClickedUser} from "../store/lastClickedUserStore"
-import {NotificationsWSUpdate} from "../utils/NotificationsWSUpdate"
 import {useNotifications} from "../store/notificationsStore"
-import {NotificationsWSCanBeUpdated} from "../utils/NotificationsWSCanBeUpdated"
-
-
 
 /**
  * Componente creado para contener las notificaciones del usuarios
@@ -33,9 +26,6 @@ export function NotificationsContainer(){
     let [notificacionsActivated, setNotificationsActivated] = useState(false)
     let [setChatGlobeList] = useChatGlobeList((state)=>([state.setChatGlobeList]))
     let [notifications, setNotifications] = useNotifications((state)=>([state.notifications, state.setNotifications]))
-    let [usersList, setUsersList] = useUsersList((state)=>([state.usersList, state.setUsersList]))
-    let [clickedUser, setClickedUser] = useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
-    let setLastClickedUser = useLastClickedUser((state)=>(state.setLastClickedUser))
     const userData = getUserDataFromLocalStorage()
     const notificationListCls = "notification-list"
     const navigate = useNavigate()
