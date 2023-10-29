@@ -62,11 +62,7 @@ export function NotificationsContainer(){
     useEffect(()=>{
         setChatGlobeList(getChatGlobesList(notifications))
     }, [notifications])
-    useEffect(()=>{
-        if (NotificationsWSCanBeUpdated()){
-            NotificationsWSUpdate(notifications, setNotifications, navigate, setUsersList, usersList, clickedUser, setLastClickedUser, setClickedUser)
-        }
-    }, [usersList, clickedUser, notifications])
+
     useEffect(()=>{
         const localStorageNotifications = getNotificationsFromLocalStorage()
         if (notifications.length == 0 && localStorageNotifications){

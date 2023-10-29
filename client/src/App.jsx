@@ -39,7 +39,7 @@ function App() {
     if (NotificationsWSCanBeUpdated()){
       NotificationsWSUpdate(notifications, setNotifications, undefined, setUsersList, usersList, clickedUser, setLastClickedUser, setClickedUser)
     }
-  }, [notifications])
+  }, [notifications, usersList, clickedUser])
 
   return (
     <BrowserRouter>
