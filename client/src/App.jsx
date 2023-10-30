@@ -19,7 +19,7 @@ import {useNotifications} from "./store/notificationsStore"
 import {NotificationsWSCanBeUpdated} from "./utils/NotificationsWSCanBeUpdated"
 import {saveNotificationsInLocalStorage} from "./utils/saveNotificationsInLocalStorage"
 import {logoutUser} from "./utils/logoutUser"
-
+import {Page404} from "./pages/Page404"
 /**
 /**
  * Toda la implementacion que tenemos del websocket de notificaciones en el app.jsx
@@ -122,7 +122,12 @@ function App() {
           element={
               <ChangePwd/> 
           }/>
-
+        <Route 
+          exact 
+          path='/*'  
+          element={
+              <Page404/> 
+          }/>
       </Routes>
     </BrowserRouter>
   )
