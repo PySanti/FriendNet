@@ -63,7 +63,7 @@ export function AccountActivation() {
         }
     });
     useEffect(() => {
-        if (userIsAuthenticated()){
+        if (props){
             (async function(){
                 await handleActivationCodeSending()
             } )()
