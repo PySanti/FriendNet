@@ -29,7 +29,7 @@ export const BASE_ACTIVATION_CODE_CONSTRAINTS = {
     },
 }
 
-
+export const BASE_PAGE_NOT_FOUND_LOG = "Pagina no encontrada :("
 export const BASE_EMAIL_CONSTRAINTS = {
     required: {
         value: true,
