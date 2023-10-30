@@ -44,7 +44,7 @@ export function ChangePwd(){
     })
 
     if (!userIsAuthenticated()){
-        return  <UserNotLogged/>
+        return  <UserNotLogged msg="No puedes cambiar tu contraseña si aun no tienes cuenta o no has iniciado sesión en ella"/>
     } else {
         return (
             <div className="centered-container">

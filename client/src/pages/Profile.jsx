@@ -56,7 +56,7 @@ export function Profile({ edit }) {
 
 
     if (!userIsAuthenticated()) {
-        return <UserNotLogged />;
+        return <UserNotLogged msg="No puedes acceder a tu perfil si aun no has iniciado sesión o no tienes cuenta"/>;
     } else {
         return (
             <div className="centered-container">

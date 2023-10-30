@@ -73,7 +73,7 @@ export function AccountActivation() {
     if (userIsAuthenticated()) {
         return <UserLogged />;
     } else if (!props) {
-        return <UserNotLogged />;
+        return <UserNotLogged msg="No puedes activar tu cuenta si aun no te has registrado o tratado de logear"/>;
     } else {
         return (
             <div className="centered-container">

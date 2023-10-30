@@ -48,7 +48,7 @@ export function ChangeEmailForActivation(){
     if (userIsAuthenticated()){
         return <UserLogged/>
     } else if (!props){
-        return <UserNotLogged/>
+        return <UserNotLogged msg="No puedes cambiar tu email para activar tu cuenta si aun no tienes cuenta o no has tratado de iniciar sesión en ella"/>
     } else {
         return (
             <div className="centered-container">

@@ -38,7 +38,7 @@ export function Home() {
     }, [])
 
     if (!userIsAuthenticated()){
-        return <UserNotLogged/>
+        return <UserNotLogged msg="No puedes acceder al Home si aun no has iniciado sesión o no tienes cuenta"/>
     } else {
         return (
             <div className="centered-container">
