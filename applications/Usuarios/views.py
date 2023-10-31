@@ -204,16 +204,12 @@ class SendActivationEmailAPI(APIView):
         serialized_data = self.serializer_class(data=request.data)
         if (serialized_data.is_valid()):
             try:
-                user = Usuarios.objects.get(username=serialized_data.data['username']) 
-                if (check_password(serialized_data.data['password'], user.password)):
-                    send_mail(
-                        subject         =   "Activa tu cuenta", 
-                        message         =   f"Codigo : {serialized_data.data['activation_code']}", 
-                        from_email      =   "friendnetcorp@gmail.com", 
-                        recipient_list  =   [serialized_data.data['user_email']])
-                    return Response({"email_sended" : True}, status.HTTP_200_OK)
-                else:
-                    return BASE_USER_NOT_EXISTS_RESPONSE
+                send_mail(
+                    subject         =   "Activa tu cuenta", 
+                    message         =   f"Codigo : {serialized_data.data['activation_code']}", 
+                    from_email      =   "friendnetcorp@gmail.com", 
+                    recipient_list  =   [serialized_data.data['user_email']])
+                return Response({"email_sended" : True}, status.HTTP_200_OK)
             except Exception:
                 return BASE_UNEXPECTED_ERROR_RESPONSE
         else:
