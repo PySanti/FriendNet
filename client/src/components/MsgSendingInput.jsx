@@ -16,6 +16,7 @@ export function MsgSendingInput({onMsgSending}){
     let [userIsTyping, setUserIsTyping] = useState(false)
     let currentTimeoutNumber            = useRef(null); 
     let {register, handleSubmit, reset} = useForm()
+    let [clickedUserWhenTyping, setClickedUserWhenTyping] = useState(null)
     const userData                      = getUserDataFromLocalStorage()
     const onSubmit                      = handleSubmit((data)=>{
         const new_msg = data.msg.trim()
@@ -25,11 +26,12 @@ export function MsgSendingInput({onMsgSending}){
         }
     })
     useEffect(()=>{
-        if (NOTIFICATIONS_WEBSOCKET.current && userData && clickedUser){
-            NOTIFICATIONS_WEBSOCKET.current.send(NotificationsWSTypingInformMsg(clickedUser.id, userIsTyping))
+        if (NOTIFICATIONS_WEBSOCKET.current && userData && clickedUser && clickedUserWhenTyping){
+            NOTIFICATIONS_WEBSOCKET.current.send(NotificationsWSTypingInformMsg(clickedUserWhenTyping.id, userIsTyping))
         }
     }, [userIsTyping])
     const handleMsgSendingInput = (e)=>{
+        setClickedUserWhenTyping(clickedUser)
         setUserIsTyping(true)
         if (currentTimeoutNumber.current){
             clearTimeout(currentTimeoutNumber.current)
