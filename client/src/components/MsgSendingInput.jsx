@@ -30,6 +30,9 @@ export function MsgSendingInput({onMsgSending}){
             NOTIFICATIONS_WEBSOCKET.current.send(NotificationsWSTypingInformMsg(clickedUserWhenTyping.id, userIsTyping))
         }
     }, [userIsTyping])
+    useEffect(()=>{
+        reset()
+    }, [clickedUser])
     const handleMsgSendingInput = (e)=>{
         setClickedUserWhenTyping(clickedUser)
         setUserIsTyping(true)
