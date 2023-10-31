@@ -8,7 +8,6 @@ import { BACKEND_URL } from '../utils/constants'
  * @param {String} userEmail  
  * @param {String} username  
  * @param {String} activationCode 
- * @param {String} password 
  */
 export async function sendActivationEmailAPI(userEmail, username, activationCode){
     const data = {

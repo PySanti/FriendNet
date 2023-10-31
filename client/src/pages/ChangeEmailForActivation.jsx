@@ -26,7 +26,7 @@ export function ChangeEmailForActivation(){
         startLoading()
         if (data.email !== props.userEmail){
             try{
-                await changeEmailForActivationAPI(props.userId, data.email, props.password)
+                await changeEmailForActivationAPI(props.userId, data.email)
                 successfullyLoaded()
                 props.userEmail = data.email
                 navigate('/signup/activate', {state: props})
