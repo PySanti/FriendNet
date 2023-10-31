@@ -30,7 +30,7 @@ export function SignUp() {
                 try{
                     const createUserResponse        = await createUsuarioAPI(data)
                     successfullyLoaded()
-                    navigate('/signup/activate', {state: { 'userId' : createUserResponse.data.new_user_id, 'username' : data.username, 'userEmail' : data.email, 'password' : data.password}})
+                    navigate('/signup/activate', {state: { 'userId' : createUserResponse.data.new_user_id, 'username' : data.username, 'userEmail' : data.email}})
                 } catch(error){
                     try{
                         if (error.response.data.error === "cloudinary_error"){

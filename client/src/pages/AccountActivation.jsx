@@ -16,7 +16,7 @@ import { Button } from "../components/Button";
 import { v4 } from "uuid";
 import {BASE_ACTIVATION_CODE_CONSTRAINTS} from "../utils/constants"
 import {useLoadingState} from "../store/loadingStateStore"
-import {BASE_USER_NOT_EXISTS_ERROR, BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
+import {BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
 import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 /**
  * Pagina creada para llevar activacion de cuenta
@@ -30,15 +30,11 @@ export function AccountActivation() {
     const handleActivationCodeSending = async ()=>{
         try{
             console.log('-> ', realActivationCode.current)
-            await sendActivationEmailAPI(props.userEmail, props.username, realActivationCode.current, props.password)
+            await sendActivationEmailAPI(props.userEmail, props.username, realActivationCode.current)
             successfullyLoaded()
         } catch(error){
             try{
-                if (error.response.data.error == BASE_USER_NOT_EXISTS_ERROR){
-                    setLoadingState("Error de seguridad activando el usuario!")
-                } else {
-                    handleStandardApiErrors(error.response, setLoadingState, "Hubo un error enviando el correo de activación !")
-                }
+                handleStandardApiErrors(error.response, setLoadingState, "Hubo un error enviando el correo de activación !")
             } catch(error){
                 setLoadingState('Error inesperado enviando codigo de activacion!')
             }

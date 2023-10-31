@@ -27,7 +27,7 @@ export function Login() {
             let response = await getUserDetailAPI(data.username, data.password)
             const userDetail = response.data.user
             if (!userDetail.is_active){
-                navigate('/signup/activate', {state: {'userId' : userDetail.id,'username' : userDetail.username,'userEmail' : userDetail.email, 'password' : data.password}})
+                navigate('/signup/activate', {state: {'userId' : userDetail.id,'username' : userDetail.username,'userEmail' : userDetail.email}})
             } else {
                 try {
                     await loginUser(data)
