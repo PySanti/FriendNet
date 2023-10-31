@@ -4,12 +4,10 @@ import { config } from './baseConfig.api'
 /**
  * Llama a la api para activar un usuario
  * @param {Number} id id del usuario a activar
- * @param {String} password
  */
-export async function activateUserAPI(id, password){
+export async function activateUserAPI(id){
     const data =     {
-        "user_id" : id,
-        "password" : password
+        "user_id" : id
     }
     return await axios.post(BACKEND_URL + `api/create/activateUser/`,data, config)
 }

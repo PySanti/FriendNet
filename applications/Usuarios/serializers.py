@@ -27,9 +27,9 @@ class ChangeEmailForActivationSerializer(serializers.Serializer):
     user_id = serializers.IntegerField()
     new_email = serializers.EmailField()
 
+
 class ActivateUserSerializer(serializers.Serializer):
     user_id=serializers.IntegerField()
-    password = serializers.CharField()
 
 class GetUserDetailSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=15)

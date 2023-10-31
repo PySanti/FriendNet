@@ -181,12 +181,8 @@ class ActivateUserAPI(APIView):
         serialized_data = self.serializer_class(data=request.data)
         if (serialized_data.is_valid()):
             try:
-                user = Usuarios.objects.get(id=request.data['user_id'])
-                if check_password(serialized_data.data['password'], user.password):
-                    Usuarios.objects.activate_user(user)
-                    return Response({'success' : 'user_activated'}, status.HTTP_200_OK)
-                else:
-                    return BASE_USER_NOT_EXISTS_RESPONSE
+                Usuarios.objects.activate_user(Usuarios.objects.get(id=request.data['user_id']))
+                return Response({'success' : 'user_activated'}, status.HTTP_200_OK)
             except:
                 return BASE_UNEXPECTED_ERROR_RESPONSE
         else:

@@ -44,7 +44,7 @@ export function AccountActivation() {
         startLoading();
         if (Number(data.activationCode) === Number(realActivationCode.current)) {
             try {
-                await activateUserAPI(props.userId, props.password);
+                await activateUserAPI(props.userId);
                 successfullyLoaded();
                 navigate("/login/");
             } catch (error) {
