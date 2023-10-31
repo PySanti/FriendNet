@@ -13,6 +13,7 @@ import {loginUser} from "../utils/loginUser"
 import {useLoadingState} from "../store/loadingStateStore"
 import {BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
 import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
+import {generateLocationProps} from "../utils/generateLocationProps"
 /**
  * Pagina creada para llevar logeo de usuarios
  */
@@ -27,7 +28,7 @@ export function Login() {
             let response = await getUserDetailAPI(data.username, data.password)
             const userDetail = response.data.user
             if (!userDetail.is_active){
-                navigate('/signup/activate', {state: {'userId' : userDetail.id,'username' : userDetail.username,'userEmail' : userDetail.email}})
+                navigate('/signup/activate', {state: generateLocationProps(userDetail.email, userDetail.username, userDetail.id)})
             } else {
                 try {
                     await loginUser(data)

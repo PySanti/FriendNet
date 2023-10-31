@@ -6,6 +6,6 @@ export function generateLocationProps(email, username, id){
     return {
         'userId' : id,
         'userEmail' : email,
-        'username' : username
+        'username' : username   
     }
 }

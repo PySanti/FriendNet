@@ -14,7 +14,7 @@ import { v4 } from "uuid";
 import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 import {useLoadingState} from "../store/loadingStateStore"
 import {BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
-
+import {generateLocationProps} from "../utils/generateLocationProps"
 /**
  * Page creada para el registro de los usuarios
  */
@@ -30,7 +30,7 @@ export function SignUp() {
                 try{
                     const createUserResponse        = await createUsuarioAPI(data)
                     successfullyLoaded()
-                    navigate('/signup/activate', {state: { 'userId' : createUserResponse.data.new_user_id, 'username' : data.username, 'userEmail' : data.email}})
+                    navigate('/signup/activate', {state: generateLocationProps(data.email, data.username, createUserResponse.data.new_user_id)})
                 } catch(error){
                     try{
                         if (error.response.data.error === "cloudinary_error"){
