@@ -62,7 +62,12 @@ function App() {
                     setClickedUser(data.value)
                 }
             }
-        }
+        } else if (data.type === "typing_inform"){
+          if (clickedUser && data.value.user_id == clickedUser.id){
+            clickedUser.is_typing = data.value.typing
+            setClickedUser(clickedUser)
+          }
+      }
       }
     }
   }, [notifications, usersList, clickedUser])

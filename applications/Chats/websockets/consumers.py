@@ -21,8 +21,7 @@ class ChatWSConsumer(WebsocketConsumer):
             async_to_sync(self.channel_layer.group_add)(messages_group_name(data['value']['session_user_id'], data['value']['clicked_user_id']),self.channel_name)
         print_pretty_groups()
 
-    def broadcast_typing_inform_handler(self, event):
-        self.send(text_data=json.dumps(broadcast_dict(broadcast_type="typing_inform", broadcast_value=event["value"])))
+
     def broadcast_message_handler(self, event):
         self.send(text_data=json.dumps(broadcast_dict(broadcast_type="message_broadcast", broadcast_value=event["value"])))
     def broadcast_connection_inform_handler(self, event):

@@ -5,9 +5,8 @@ import json
 from applications.Chats.websockets.ws_utils.discard_channel_if_found import discard_channel_if_found
 from .ws_utils.broadcast_connection_inform import broadcast_connection_inform
 from applications.Chats.websockets.ws_utils.broadcast_dict import broadcast_dict
-from applications.Chats.websockets.ws_utils.messages_group_is_full import messages_group_is_full
 from .ws_utils.broadcast_typing_inform import broadcast_typing_inform
-
+from .ws_utils.notification_websocket_is_opened import notification_websocket_is_opened
 
 class NotificationsWSConsumer(WebsocketConsumer):
     def connect(self):
@@ -29,10 +28,12 @@ class NotificationsWSConsumer(WebsocketConsumer):
                 broadcast_connection_inform(user_id=data['value']["name"], connected=True)
         if (data["type"] == "typing_inform"):
             value = data["value"]
-            if (messages_group_is_full(value["session_user_id"], value["clicked_user_id"])):
+            if notification_websocket_is_opened(value["clicked_user_id"]):
                 broadcast_typing_inform(**value)
         print_pretty_groups()
 
+    def broadcast_typing_inform_handler(self, event):
+        self.send(text_data=json.dumps(broadcast_dict(broadcast_type="typing_inform", broadcast_value=event["value"])))
     def broadcast_notification_handler(self, event):
         self.send(text_data=json.dumps(broadcast_dict(broadcast_type="new_notification", broadcast_value=event["value"])))
     def broadcast_connection_error_handler(self, event):
