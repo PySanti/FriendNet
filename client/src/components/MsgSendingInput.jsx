@@ -26,7 +26,7 @@ export function MsgSendingInput({onMsgSending}){
         }
     })
     useEffect(()=>{
-        if (NOTIFICATIONS_WEBSOCKET.current && userData && clickedUser && clickedUserWhenTyping){
+        if (NOTIFICATIONS_WEBSOCKET.current && userData && clickedUserWhenTyping && userIsTyping){
             NOTIFICATIONS_WEBSOCKET.current.send(NotificationsWSTypingInformMsg(clickedUserWhenTyping.id, userIsTyping))
         }
     }, [userIsTyping])
@@ -41,6 +41,13 @@ export function MsgSendingInput({onMsgSending}){
         }
         currentTimeoutNumber.current = (setTimeout(() => {
             setUserIsTyping(false)
+            /**
+             * Recordar que en este punto, llamamos a la funcion desde aca,
+             * para evitar errores cuando se desmonte la pagina por entrar al profile por ejemplo
+            */
+            if (NOTIFICATIONS_WEBSOCKET.current){
+                NOTIFICATIONS_WEBSOCKET.current.send(NotificationsWSTypingInformMsg(clickedUserWhenTyping.id, false))
+            }
         }, 600))
     }
     return (

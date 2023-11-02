@@ -94,6 +94,7 @@ export function Chat(){
                 } else if (data.type === "connection_inform"){
                     if (data.value.user_id == clickedUser.id){
                         clickedUser.is_online = data.value.connected
+                        clickedUser.is_typing = !data.value.connected ? false : clickedUser.is_typing
                         setClickedUser(clickedUser)
                     }
                 }
