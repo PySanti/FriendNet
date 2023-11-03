@@ -29,7 +29,7 @@ export function NotificationsContainer(){
     const userData = getUserDataFromLocalStorage()
     const notificationListCls = "notification-list"
     const navigate = useNavigate()
-    const setLoadingState = useLoadingState((state)=>(state.setLoadingState))
+    const [setLoadingState, successfullyLoaded] = useLoadingState((state)=>([state.setLoadingState, state.successfullyLoaded]))
 
     const onNotificationDelete = async (notification)=>{
         const response = await executeSecuredApi(async ()=>{
@@ -38,6 +38,7 @@ export function NotificationsContainer(){
         if (response){
             if (response.status == 200){
                 removeAndUpdateNotifications(notification, setNotifications)
+                successfullyLoaded()
             } else if (response.status == 400){
                 console.log('Error inesperado eliminando notificacion')
             } else {
