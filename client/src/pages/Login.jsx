@@ -13,6 +13,7 @@ import {loginUser} from "../utils/loginUser"
 import {useLoadingState} from "../store/loadingStateStore"
 import {BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
 import {generateLocationProps} from "../utils/generateLocationProps"
+import {executeApi} from "../utils/executeApi"
 /**
  * Pagina creada para llevar logeo de usuarios
  */
@@ -22,31 +23,35 @@ export function Login() {
 
     const onLogin = async (data)=>{
         // en este punto ya se sabe que el usuario no esta autenticado
-        try{
-            startLoading()
-            let response = await getUserDetailAPI(data.username, data.password)
-            const userDetail = response.data.user
-            if (!userDetail.is_active){
-                navigate('/signup/activate', {state: generateLocationProps(userDetail.email, userDetail.username, userDetail.id)})
-            } else {
-                try {
-                    await loginUser(data)
-                    const notifications = userDetail.notifications
-                    delete userDetail.notifications
-                    saveNotificationsInLocalStorage(notifications)
-                    saveUserDataInLocalStorage(userDetail)
-                    successfullyLoaded()
-                    navigate('/home/')
-                } catch(error){
-                    if (error.response.data.error == "user_is_online"){
-                        setLoadingState("El usuario ya esta en linea!") 
-                    } else {
-                        setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
+        startLoading()
+        let response = executeApi(async ()=>{
+            return await getUserDetailAPI(data.username, data.password)
+        }, navigate, setLoadingState)
+        if (response){
+            if (response.status == 200){
+                const userDetail = response.data.user
+                if (!userDetail.is_active){
+                    navigate('/signup/activate', {state: generateLocationProps(userDetail.email, userDetail.username, userDetail.id)})
+                } else {
+                    response = executeApi(async ()=>{
+                        return await loginUser(data)
+                    }, navigate, setLoadingState)
+                    if (response){
+                        if (response.status == 200){
+                            const notifications = userDetail.notifications
+                            delete userDetail.notifications
+                            saveNotificationsInLocalStorage(notifications)
+                            saveUserDataInLocalStorage(userDetail)
+                            successfullyLoaded()
+                            navigate('/home/')
+                        } else if (response.data.error == "user_is_online"){
+                            setLoadingState("El usuario ya esta en linea!") 
+                        } else{
+                            setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
+                        } 
                     }
                 }
-            }
-        } catch(error){
-            if (error.response.data.error===  "user_not_exists"){
+            } else if (response.data.error == "user_not_exists"){
                 // por seguridad, la api retornara el mismo codigo de error para cuando el usuario o la contrasenia esten mal
                 setLoadingState("Usuario o contraseña inválidos !") 
             } else {
