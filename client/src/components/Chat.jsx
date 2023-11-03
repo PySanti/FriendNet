@@ -14,7 +14,7 @@ import { getRelatedNotification } from "../utils/getRelatedNotification"
 import {diferentUserHasBeenClicked} from "../utils/diferentUserHasBeenClicked"
 import {useNavigate} from "react-router-dom" 
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
-import {executeSecuredApi} from "../utils/executeSecuredApi"
+import {executeApi} from "../utils/executeApi"
 import {enterChatAPI} from "../api/enterChat.api"
 import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
 import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotifications"
@@ -40,7 +40,7 @@ export function Chat(){
     const enterChatHandler = async ()=>{
         const relatedNotification = getRelatedNotification(clickedUser.id, notifications)
         startLoading()
-        const response = await executeSecuredApi(async ()=>{
+        const response = await executeApi(async ()=>{
             return await enterChatAPI(clickedUser.id, relatedNotification? relatedNotification.id : undefined, getJWTFromLocalStorage().access)
         }, navigate)
         if (response){

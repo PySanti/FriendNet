@@ -11,7 +11,7 @@ import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import {NotificationsWSInitialize} from "../utils/NotificationsWSInitialize"
 import {useNavigate} from "react-router-dom"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
-import {executeSecuredApi} from "../utils/executeSecuredApi"
+import {executeApi} from "../utils/executeApi"
 import {notificationDeleteAPI} from "../api/notificationDelete.api"
 import {useLoadingState} from "../store/loadingStateStore"
 import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotifications"
@@ -32,7 +32,7 @@ export function NotificationsContainer(){
     const [setLoadingState, successfullyLoaded] = useLoadingState((state)=>([state.setLoadingState, state.successfullyLoaded]))
 
     const onNotificationDelete = async (notification)=>{
-        const response = await executeSecuredApi(async ()=>{
+        const response = await executeApi(async ()=>{
             return await notificationDeleteAPI(notification.id, getJWTFromLocalStorage().access )
         }, navigate)
         if (response){

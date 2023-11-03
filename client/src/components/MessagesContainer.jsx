@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react"
 import { getJWTFromLocalStorage } from "../utils/getJWTFromLocalStorage"
 import { useNavigate } from "react-router-dom"
 import { sendMsgAPI } from "../api/sendMsg.api"
-import {executeSecuredApi} from "../utils/executeSecuredApi"
+import {executeApi} from "../utils/executeApi"
 import {getMessagesHistorialAPI} from "../api/getMessagesHistorial.api"
 import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
 import {useClickedUser} from "../store/clickedUserStore"
@@ -29,7 +29,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
 
     const loadMessages = async ()=>{
         startLoading()
-        const response = await executeSecuredApi(async ()=>{
+        const response = await executeApi(async ()=>{
             return await getMessagesHistorialAPI(clickedUser.id, getJWTFromLocalStorage().access, messagesHistorialPage.current)
         }, navigate)
         if (response){
@@ -52,7 +52,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     }
     const sendMsg = async (data)=>{
         startLoading()
-        const response = await executeSecuredApi(async ()=>{
+        const response = await executeApi(async ()=>{
             return await sendMsgAPI(clickedUser.id, data.msg, getJWTFromLocalStorage().access)
         }, navigate)
         if (response){

@@ -15,7 +15,7 @@ import { saveUserDataInLocalStorage } from "../utils/saveUserDataInLocalStorage"
 import { getUserDataFromLocalStorage } from "../utils/getUserDataFromLocalStorage";
 import { dataIsDiferent } from "../utils/dataIsDiferent";
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
-import {executeSecuredApi} from "../utils/executeSecuredApi"
+import {executeApi} from "../utils/executeApi"
 import {useLoadingState} from "../store/loadingStateStore"
 import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 
@@ -32,7 +32,7 @@ export function Profile({ edit }) {
         // el data.photo siempre sera: null, url de imagen actual, un archivo
         const sendingData = { ...data };
         if (dataIsDiferent(data, profileData)) { // lodash
-            const response = await executeSecuredApi(async ()=>{
+            const response = await executeApi(async ()=>{
                 return await updateUserDataAPI( sendingData, getJWTFromLocalStorage().access)
             }, navigate)
             if (response){

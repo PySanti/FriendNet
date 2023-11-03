@@ -11,7 +11,7 @@ import { Form } from "../components/Form";
 import { PasswordField } from "../components/PasswordField";
 import { v4 } from "uuid";
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
-import {executeSecuredApi} from "../utils/executeSecuredApi"
+import {executeApi} from "../utils/executeApi"
 import {useLoadingState} from "../store/loadingStateStore"
 import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 
@@ -26,7 +26,7 @@ export function ChangePwd(){
     const changePwd = handleSubmit(async (data)=>{
         if (data['oldPwd'] !== data['newPwd']){
             startLoading()
-            const response = await executeSecuredApi(async ()=>{
+            const response = await executeApi(async ()=>{
                 return await changeUserPwdAPI(data.oldPwd, data.newPwd, getJWTFromLocalStorage().access)
             }, navigate)
             if (response){
