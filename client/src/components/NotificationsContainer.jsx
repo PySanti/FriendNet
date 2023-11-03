@@ -34,7 +34,7 @@ export function NotificationsContainer(){
     const onNotificationDelete = async (notification)=>{
         const response = await executeApi(async ()=>{
             return await notificationDeleteAPI(notification.id, getJWTFromLocalStorage().access )
-        }, navigate)
+        }, navigate, setLoadingState)
         if (response){
             if (response.status == 200){
                 removeAndUpdateNotifications(notification, setNotifications)

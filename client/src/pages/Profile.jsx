@@ -34,7 +34,7 @@ export function Profile({ edit }) {
         if (dataIsDiferent(data, profileData)) { // lodash
             const response = await executeApi(async ()=>{
                 return await updateUserDataAPI( sendingData, getJWTFromLocalStorage().access)
-            }, navigate)
+            }, navigate, setLoadingState)
             if (response){
                 if (response.status == 200){
                     setProfileData(response.data.user_data_updated);

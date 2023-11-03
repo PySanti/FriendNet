@@ -28,7 +28,7 @@ export function ChangePwd(){
             startLoading()
             const response = await executeApi(async ()=>{
                 return await changeUserPwdAPI(data.oldPwd, data.newPwd, getJWTFromLocalStorage().access)
-            }, navigate)
+            }, navigate, setLoadingState)
             if (response){
                 if (response.status == 200){
                     successfullyLoaded()
