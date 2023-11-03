@@ -41,7 +41,9 @@ export function NotificationsContainer(){
             } else if (response.status == 400){
                 console.log('Error inesperado eliminando notificacion')
             } else {
-                handleStandardApiErrors(response, setLoadingState, "Ha habido un fallo eliminando la notificación !")
+                if (!handleStandardApiErrors(response, setLoadingState)){
+                    setLoadingState('Ha ocurrido un error eliminando la notificación !')
+                }
             }
         }
     }

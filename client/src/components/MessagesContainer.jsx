@@ -44,7 +44,9 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
                     setLoadingState('Ha habido un error cargando los mensajes !')
                 }
             } else {
-                handleStandardApiErrors(response, setLoadingState, "Error inesperado cargando los mensajes !")
+                if (!handleStandardApiErrors(response, setLoadingState)){
+                    setLoadingState('Error inesperado cargando los mensajes !')
+                }
             }
         }
     }
@@ -60,7 +62,9 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
             } else if (response.status == 400){
                 setLoadingState('Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
             } else {
-                handleStandardApiErrors(response, setLoadingState, "Hemos detectado un error enviando el mensaje!")
+                if (!handleStandardApiErrors(response, setLoadingState)){
+                    setLoadingState('Error inesperado enviando el mensaje !')
+                }
             }
         }
     }

@@ -35,7 +35,9 @@ export function ChangePwd(){
                 } else if (response.status == 400){
                     setLoadingState(response.data.error === 'invalid_pwd' ? "Error, la contraseña actual es invalida !" : 'Error inesperado en respuesta de servidor')
                 } else {
-                    handleStandardApiErrors(response, setLoadingState, "Hubo un error cambiando la contraseña !")
+                    if (!handleStandardApiErrors(response, setLoadingState)){
+                        setLoadingState('Hubo un error cambiando la contraseña !')
+                    }
                 }
             }
         } else {

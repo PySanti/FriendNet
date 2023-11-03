@@ -46,7 +46,9 @@ export function Profile({ edit }) {
                         "cloudinary_error"          : "Error al subir la imagen a la nube!"
                     }[response.data.error])
                 } else {
-                    handleStandardApiErrors(response, setLoadingState, "Hubo un error actualizando los datos del usuario !")
+                    if (!handleStandardApiErrors(response, setLoadingState)){
+                        setLoadingState('Hubo un error actualizando tus datos !')
+                    }
                 }
             }
         } else {
