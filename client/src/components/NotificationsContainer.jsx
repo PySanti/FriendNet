@@ -16,7 +16,6 @@ import {notificationDeleteAPI} from "../api/notificationDelete.api"
 import {useLoadingState} from "../store/loadingStateStore"
 import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotifications"
 import {getNotificationsFromLocalStorage} from "../utils/getNotificationsFromLocalStorage"
-import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 import {useNotifications} from "../store/notificationsStore"
 
 /**
@@ -42,9 +41,7 @@ export function NotificationsContainer(){
             } else if (response.status == 400){
                 console.log('Error inesperado eliminando notificacion')
             } else {
-                if (!handleStandardApiErrors(response, setLoadingState)){
-                    setLoadingState('Ha ocurrido un error eliminando la notificación !')
-                }
+                setLoadingState('Ha ocurrido un error eliminando la notificación !')
             }
         }
     }

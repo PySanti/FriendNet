@@ -12,7 +12,6 @@ import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
 import {useClickedUser} from "../store/clickedUserStore"
 import {useMessagesHistorial} from "../store/messagesHistorialStore"
 import {useLoadingState} from "../store/loadingStateStore"
-import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 /**
  * Componente encargado de renderizar y mantener la lista de mensajes 
  * @param {Object} newMsg state creado para cuando se envia un mensaje nuevo
@@ -44,9 +43,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
                     setLoadingState('Ha habido un error cargando los mensajes !')
                 }
             } else {
-                if (!handleStandardApiErrors(response, setLoadingState)){
-                    setLoadingState('Error inesperado cargando los mensajes !')
-                }
+                setLoadingState('Error inesperado cargando los mensajes !')
             }
         }
     }
@@ -62,9 +59,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
             } else if (response.status == 400){
                 setLoadingState('Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
             } else {
-                if (!handleStandardApiErrors(response, setLoadingState)){
-                    setLoadingState('Error inesperado enviando el mensaje !')
-                }
+                setLoadingState('Error inesperado enviando el mensaje !')
             }
         }
     }

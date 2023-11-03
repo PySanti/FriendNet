@@ -12,7 +12,6 @@ import { saveNotificationsInLocalStorage } from "../utils/saveNotificationsInLoc
 import {loginUser} from "../utils/loginUser"
 import {useLoadingState} from "../store/loadingStateStore"
 import {BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
-import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 import {generateLocationProps} from "../utils/generateLocationProps"
 /**
  * Pagina creada para llevar logeo de usuarios
@@ -39,26 +38,18 @@ export function Login() {
                     successfullyLoaded()
                     navigate('/home/')
                 } catch(error){
-                    try{
-                        if (error.response.data.error == "user_is_online"){
-                            setLoadingState("El usuario ya esta en linea!") 
-                        } else {
-                            handleStandardApiErrors(error.response, setLoadingState, "Hubo un error logeando al usuario !")
-                        }
-                    } catch(error){
+                    if (error.response.data.error == "user_is_online"){
+                        setLoadingState("El usuario ya esta en linea!") 
+                    } else {
                         setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
                     }
                 }
             }
         } catch(error){
-            try{
-                if (error.response.data.error===  "user_not_exists"){
-                    // por seguridad, la api retornara el mismo codigo de error para cuando el usuario o la contrasenia esten mal
-                    setLoadingState("Usuario o contraseña inválidos !") 
-                } else {
-                    handleStandardApiErrors(error.response, setLoadingState, "Error inesperado encontrando datos del usuario !")
-                }
-            } catch(error){
+            if (error.response.data.error===  "user_not_exists"){
+                // por seguridad, la api retornara el mismo codigo de error para cuando el usuario o la contrasenia esten mal
+                setLoadingState("Usuario o contraseña inválidos !") 
+            } else {
                 setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
             }
         }

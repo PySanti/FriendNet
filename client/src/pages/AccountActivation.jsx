@@ -17,7 +17,6 @@ import { v4 } from "uuid";
 import {BASE_ACTIVATION_CODE_CONSTRAINTS} from "../utils/constants"
 import {useLoadingState} from "../store/loadingStateStore"
 import {BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
-import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 /**
  * Pagina creada para llevar activacion de cuenta
  */
@@ -33,11 +32,7 @@ export function AccountActivation() {
             await sendActivationEmailAPI(props.userEmail, props.username, realActivationCode.current)
             successfullyLoaded()
         } catch(error){
-            try{
-                handleStandardApiErrors(error.response, setLoadingState, "Hubo un error enviando el correo de activación !")
-            } catch(error){
-                setLoadingState('Error inesperado enviando codigo de activacion!')
-            }
+            setLoadingState('Error inesperado enviando codigo de activacion!')
         }
     }
     const onSubmit = handleSubmit(async (data) => {
@@ -48,11 +43,7 @@ export function AccountActivation() {
                 successfullyLoaded();
                 navigate("/login/");
             } catch (error) {
-                try{
-                    handleStandardApiErrors(error.response, setLoadingState, "Hubo un error activando tu cuenta !")
-                } catch(error){
-                    setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
-                }
+                setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
             }
         } else {
             setLoadingState("Codigo invalido!");

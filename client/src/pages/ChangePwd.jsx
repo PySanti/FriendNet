@@ -13,7 +13,6 @@ import { v4 } from "uuid";
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {executeApi} from "../utils/executeApi"
 import {useLoadingState} from "../store/loadingStateStore"
-import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 
 
 /**
@@ -35,9 +34,7 @@ export function ChangePwd(){
                 } else if (response.status == 400){
                     setLoadingState(response.data.error === 'invalid_pwd' ? "Error, la contraseña actual es invalida !" : 'Error inesperado en respuesta de servidor')
                 } else {
-                    if (!handleStandardApiErrors(response, setLoadingState)){
-                        setLoadingState('Hubo un error cambiando la contraseña !')
-                    }
+                    setLoadingState('Hubo un error cambiando la contraseña !')
                 }
             }
         } else {

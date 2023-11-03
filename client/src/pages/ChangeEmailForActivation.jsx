@@ -12,7 +12,6 @@ import { UserLogged } from "./UserLogged";
 import { changeEmailForActivationAPI } from "../api/changeEmailForActivation.api";
 import {useLoadingState} from "../store/loadingStateStore"
 import {BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
-import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 
 /**
  * Page creada para la modificacion del Email para activacion 
@@ -31,13 +30,9 @@ export function ChangeEmailForActivation(){
                 props.userEmail = data.email
                 navigate('/signup/activate', {state: props})
             } catch(error){
-                try{
-                    if (error.response.data.error==="email_exists"){
-                        setLoadingState("Error, ese email ya fue registrado !")
-                    } else {
-                        handleStandardApiErrors(error.response, setLoadingState, "Hubo un error inesperado cambiando el correo !")
-                    }
-                } catch(error){
+                if (error.response.data.error==="email_exists"){
+                    setLoadingState("Error, ese email ya fue registrado !")
+                } else {
                     setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
                 }
             }

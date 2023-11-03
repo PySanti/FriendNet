@@ -11,7 +11,6 @@ import { UserLogged } from "./UserLogged";
 import { UserInfoForm } from "../components/UserInfoForm";
 import { Button } from "../components/Button";
 import { v4 } from "uuid";
-import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 import {useLoadingState} from "../store/loadingStateStore"
 import {BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
 import {generateLocationProps} from "../utils/generateLocationProps"
@@ -32,13 +31,9 @@ export function SignUp() {
                     successfullyLoaded()
                     navigate('/signup/activate', {state: generateLocationProps(data.email, data.username, createUserResponse.data.new_user_id)})
                 } catch(error){
-                    try{
-                        if (error.response.data.error === "cloudinary_error"){
-                            setLoadingState("Error con la nube!")
-                        } else {
-                            handleStandardApiErrors(error.response, setLoadingState, "Error creando usuario !")
-                        }
-                    } catch(error){
+                    if (error.response.data.error === "cloudinary_error"){
+                        setLoadingState("Error con la nube!")
+                    } else {
                         setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
                     }
                 }
@@ -46,11 +41,7 @@ export function SignUp() {
                 setLoadingState("Ya existe un usuario con ese Nombre de usuario o Correo electrónico!")
             }
         } catch(error){
-            try{
-                handleStandardApiErrors(error.response, setLoadingState, "Hubo un error comprobando existencia de usuario !")
-            } catch(error){
-                setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
-            }
+            setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
         }
 }
 

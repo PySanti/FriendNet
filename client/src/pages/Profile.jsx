@@ -17,7 +17,6 @@ import { dataIsDiferent } from "../utils/dataIsDiferent";
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {executeApi} from "../utils/executeApi"
 import {useLoadingState} from "../store/loadingStateStore"
-import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 
 /**
  * Pagina creada para llevar perfil de usuario, tanto para
@@ -46,9 +45,7 @@ export function Profile({ edit }) {
                         "cloudinary_error"          : "Error al subir la imagen a la nube!"
                     }[response.data.error])
                 } else {
-                    if (!handleStandardApiErrors(response, setLoadingState)){
-                        setLoadingState('Hubo un error actualizando tus datos !')
-                    }
+                    setLoadingState('Hubo un error actualizando tus datos !')
                 }
             }
         } else {

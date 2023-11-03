@@ -7,8 +7,6 @@ import { getUsersListAPI } from "../api/getUsersList.api"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import { userIsAuthenticated } from "../utils/userIsAuthenticated"
 import {useLoadingState} from "../store/loadingStateStore"
-import {BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
-import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 import {useUsersList} from "../store/usersListStore"
 import {executeApi} from "../utils/executeApi"
 /**
