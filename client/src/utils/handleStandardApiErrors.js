@@ -1,21 +1,17 @@
-import {BASE_RATE_LIMIT_BLOCK_RESPONSE, BASE_FALLEN_SERVER_ERROR_MSG, BASE_UNEXPECTED_ERROR_LOG, BASE_UNEXPECTED_ERROR_MESSAGE, BASE_FALLEN_SERVER_LOG} from "../utils/constants"
+import {BASE_FALLEN_SERVER_ERROR_MSG, BASE_FALLEN_SERVER_LOG, BASE_RATE_LIMIT_BLOCK_RESPONSE} from "../utils/constants"
 
 /**
  * Funcion creada para estandarizar mensajes de error que se setearan
- * en el loadingStateSetter para DRY
+ * en el loadingStateSetter para DRY.
+ * 
+ * Retornara true en caso de que se logre manejar el error, false en caso contrario
  */
-export function handleStandardApiErrors(response, loadingStateSetter, unexpectedErrorMsg){
-    console.log('Recibiendo error al handleStandard')
-    console.log(response)
-    if (response == undefined){
-        loadingStateSetter(BASE_FALLEN_SERVER_LOG)
+export function handleStandardApiErrors(response, loadingStateSetter){
+    const is_fallen_server = response === BASE_FALLEN_SERVER_ERROR_MSG || response.message === BASE_FALLEN_SERVER_ERROR_MSG 
+    if (is_fallen_server || response.status == 403){
+        loadingStateSetter(is_fallen_server ? BASE_FALLEN_SERVER_LOG : BASE_RATE_LIMIT_BLOCK_RESPONSE)
+        return true;
     } else {
-        if (response == BASE_FALLEN_SERVER_ERROR_MSG || response == BASE_UNEXPECTED_ERROR_MESSAGE){
-            loadingStateSetter(response == BASE_FALLEN_SERVER_ERROR_MSG ? BASE_FALLEN_SERVER_LOG : BASE_UNEXPECTED_ERROR_LOG)
-        } else if (response.status == 403){
-            loadingStateSetter(BASE_RATE_LIMIT_BLOCK_RESPONSE)
-        } else {
-            loadingStateSetter(unexpectedErrorMsg)
-        }
+        return false;
     }
 }
