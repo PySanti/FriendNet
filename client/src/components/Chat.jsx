@@ -60,9 +60,7 @@ export function Chat(){
                     "error_while_deleting_notification" : 'Error borrando notificacion !'
                 }[response.data.error])
             } else{
-                if (!handleStandardApiErrors(response, setLoadingState)){
-                    setLoadingState('Error inesperado entrando al chat !')
-                }
+                setLoadingState('Error inesperado entrando al chat !')
             }
         }
     }

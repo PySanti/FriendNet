@@ -10,7 +10,7 @@ import {useLoadingState} from "../store/loadingStateStore"
 import {BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
 import {handleStandardApiErrors} from "../utils/handleStandardApiErrors"
 import {useUsersList} from "../store/usersListStore"
-
+import {executeApi} from "../utils/executeApi"
 /**
  * Recibe la lista de usuarios directa de la api y retorna la lista de elementos jsx
  */
@@ -36,18 +36,18 @@ export function UsersList(){
         if (userListPage.current > 1 ){
             setLoaderActivated(true)
         }
-        try{
-            let response = await getUsersListAPI(!userKeyword || userKeyword.length === 0 ? undefined : userKeyword, getUserDataFromLocalStorage().id, userListPage.current)
-            setUsersList(userListPage.current === 1 ? response.data.users_list : usersList.concat(response.data.users_list))
-        } catch(error){
-            try {                
-                if (error.response.data.error=== "no_more_pages"){
+        const response = executeApi(async ()=>{
+            return await getUsersListAPI(!userKeyword || userKeyword.length === 0 ? undefined : userKeyword, getUserDataFromLocalStorage().id, userListPage.current)
+        })
+        if (response){
+            if (response.status == 200){
+                setUsersList(userListPage.current === 1 ? response.data.users_list : usersList.concat(response.data.users_list))
+            } else if (response.status == 400){
+                if (response.data.error=== "no_more_pages"){
                     noMoreUsers.current = true
                 } else {
-                    handleStandardApiErrors(error.response, setLoadingState, "Ha habido un error cargando la lista de usuarios !")
+                    setLoaderActivated("Ha habido un error cargando la lista de usuarios !")
                 }
-            } catch(error){
-                setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
             }
         }
         setLoaderActivated(false)
