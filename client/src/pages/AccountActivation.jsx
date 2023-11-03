@@ -43,12 +43,16 @@ export function AccountActivation() {
     const onSubmit = handleSubmit(async (data) => {
         startLoading();
         if (Number(data.activationCode) === Number(realActivationCode.current)) {
-            try {
-                await activateUserAPI(props.userId);
-                successfullyLoaded();
-                navigate("/login/");
-            } catch (error) {
-                setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
+            const response = executeApi(async ()=>{
+                return await activateUserAPI(props.userId); 
+            }, navigate, setLoadingState)
+            if (response){
+                if (response.status == 200){
+                    successfullyLoaded();
+                    navigate("/login/");
+                } else {
+                    setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
+                }
             }
         } else {
             setLoadingState("Codigo invalido!");
