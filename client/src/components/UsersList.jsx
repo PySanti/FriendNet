@@ -9,6 +9,7 @@ import { userIsAuthenticated } from "../utils/userIsAuthenticated"
 import {useLoadingState} from "../store/loadingStateStore"
 import {useUsersList} from "../store/usersListStore"
 import {executeApi} from "../utils/executeApi"
+import {useNavigate} from "react-router-dom"
 /**
  * Recibe la lista de usuarios directa de la api y retorna la lista de elementos jsx
  */
@@ -21,6 +22,7 @@ export function UsersList(){
     let [usersList, setUsersList]                                   = useUsersList((state)=>([state.usersList, state.setUsersList]))
     let [ userKeyword, setUserKeyword]                              = useState(undefined)
     let [scrollDetectorBlock, setScrollDetectorBlock]               = useState(false)
+    const navigate = useNavigate()
     const canChargeUsersList = (event)=>{
         return ((event.target.scrollTop + event.target.clientHeight) >= event.target.scrollHeight) && (!scrollDetectorBlock) && (!noMoreUsers.current)
     }
@@ -36,7 +38,7 @@ export function UsersList(){
         }
         const response = executeApi(async ()=>{
             return await getUsersListAPI(!userKeyword || userKeyword.length === 0 ? undefined : userKeyword, getUserDataFromLocalStorage().id, userListPage.current)
-        })
+        }, navigate,setLoadingState )
         if (response){
             if (response.status == 200){
                 setUsersList(userListPage.current === 1 ? response.data.users_list : usersList.concat(response.data.users_list))
