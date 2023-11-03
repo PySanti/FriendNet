@@ -14,6 +14,7 @@ import { v4 } from "uuid";
 import {useLoadingState} from "../store/loadingStateStore"
 import {BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
 import {generateLocationProps} from "../utils/generateLocationProps"
+import {executeApi} from "../utils/executeApi"
 /**
  * Page creada para el registro de los usuarios
  */
@@ -21,27 +22,33 @@ export function SignUp() {
     const [successfullyLoaded, startLoading, setLoadingState] = useLoadingState((state)=>([state.successfullyLoaded, state.startLoading, state.setLoadingState]))
     const navigate                                              = useNavigate()
     const onSignUp = async (data) =>{
-        try{
-            startLoading()
-            const checkUserResponse = await checkExistingUserAPI(data['username'], data['email'])
-            if (!checkUserResponse.data.existing){
-                delete data.confirmPwd
-                try{
-                    const createUserResponse        = await createUsuarioAPI(data)
-                    successfullyLoaded()
-                    navigate('/signup/activate', {state: generateLocationProps(data.email, data.username, createUserResponse.data.new_user_id)})
-                } catch(error){
-                    if (error.response.data.error === "cloudinary_error"){
-                        setLoadingState("Error con la nube!")
-                    } else {
-                        setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
+        startLoading()
+        let response = executeApi(async ()=>{
+            return await checkExistingUserAPI(data['username'], data['email'])
+        }, navigate, setLoadingState)
+        if (response){
+            if (response.status == 200){
+                if (!response.data.existing){
+                    delete data.confirmPwd
+                    response = executeApi(async ()=>{
+                        return await createUsuarioAPI(data)
+                    }, navigate, setLoadingState)
+                    if (response){
+                        if (response.status == 200){
+                            successfullyLoaded()
+                            navigate('/signup/activate', {state: generateLocationProps(data.email, data.username, response.data.new_user_id)})
+                        } else if (response.data.error == "cloudinary_error"){
+                            setLoadingState("Error con la nube!")
+                        } else {
+                            setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
+                        }
                     }
+                }else {
+                    setLoadingState("Ya existe un usuario con ese Nombre de usuario o Correo electrónico!")
                 }
             } else {
-                setLoadingState("Ya existe un usuario con ese Nombre de usuario o Correo electrónico!")
+                setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
             }
-        } catch(error){
-            setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
         }
 }
 
