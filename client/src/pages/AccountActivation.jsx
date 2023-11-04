@@ -51,11 +51,11 @@ export function AccountActivation() {
                     successfullyLoaded();
                     navigate("/login/");
                 } else {
-                    setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
+                    setLoadingState("Error inesperado activando tu cuenta !")
                 }
             }
         } else {
-            setLoadingState("Codigo invalido!");
+            setLoadingState("Código invalido!");
         }
     });
     useEffect(() => {
