@@ -47,7 +47,7 @@ export function Login() {
                         } else if (response.data.error == "user_is_online"){
                             setLoadingState("El usuario ya esta en linea!") 
                         } else{
-                            setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
+                            setLoadingState("Error inesperado iniciando sesión !")
                         } 
                     }
                 }
@@ -55,7 +55,7 @@ export function Login() {
                 // por seguridad, la api retornara el mismo codigo de error para cuando el usuario o la contrasenia esten mal
                 setLoadingState("Usuario o contraseña inválidos !") 
             } else {
-                setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
+                setLoadingState("Error inesperado buscando datos del usuario !")
             }
         }
     }
