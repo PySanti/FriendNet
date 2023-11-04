@@ -42,7 +42,7 @@ export function UsersList(){
         if (response){
             if (response.status == 200){
                 setUsersList(userListPage.current === 1 ? response.data.users_list : usersList.concat(response.data.users_list))
-            } else if (response.status == 400 && response.data.error=== "no_more_pages"){
+            } else if (response.data.error=== "no_more_pages"){
                 noMoreUsers.current = true
             } else {
                 setLoaderActivated("Ha habido un error cargando la lista de usuarios !")

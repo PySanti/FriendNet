@@ -40,10 +40,11 @@ export function Profile({ edit }) {
                     saveUserDataInLocalStorage(response.data.user_data_updated);
                     successfullyLoaded();
                 } else if (response.status == 400){
-                    setLoadingState({
+                    const log = {
                         "username_or_email_taken"   : "El usuario o el email ya están tomados !",
                         "cloudinary_error"          : "Error al subir la imagen a la nube!"
-                    }[response.data.error])
+                    }[response.data.error]
+                    setLoadingState(log ? log : 'Hubo un error actualizando tus datos !')
                 } else {
                     setLoadingState('Hubo un error actualizando tus datos !')
                 }
