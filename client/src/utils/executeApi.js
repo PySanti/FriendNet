@@ -7,7 +7,9 @@ import {handleStandardApiErrors} from "./handleStandardApiErrors"
 /**
  * Funcion creada para estandarizar el protocolo de ejecucion de tanto api's normales
  * como api's seguras. Creado tambien para estandarizar comportamiento para mensajes de error
- * comunes
+ * comunes.
+ * 
+ * Retornara false en caso de que ya se haya manejado la respuesta de la api
 */
 export async function executeApi(apiCallingFunction, navigateFunc, loadingStateSetter){
     let response = undefined
@@ -24,13 +26,13 @@ export async function executeApi(apiCallingFunction, navigateFunc, loadingStateS
                         localStorage.setItem(JWT_LOCALSTORAGE_NAME, JSON.stringify(response.data))
                     } catch(error) {
                         redirectExpiredUser(navigateFunc)
-                        return undefined
+                        return false
                     }
                 } else {
                     return error.response
                 }
             } else {
-                return true
+                return false
             }
         }
     }
