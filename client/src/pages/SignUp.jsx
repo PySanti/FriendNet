@@ -40,14 +40,14 @@ export function SignUp() {
                         } else if (response.data.error == "cloudinary_error"){
                             setLoadingState("Error con la nube!")
                         } else {
-                            setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
+                            setLoadingState("Error inesperado creando un usuario para ti !")
                         }
                     }
                 }else {
                     setLoadingState("Ya existe un usuario con ese Nombre de usuario o Correo electrónico!")
                 }
             } else {
-                setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
+                setLoadingState("Error inesperado revisando si existe un usuario con esos datos!")
             }
         }
 }
