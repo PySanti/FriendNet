@@ -25,7 +25,7 @@ export function ChangePwd(){
     const changePwd = handleSubmit(async (data)=>{
         if (data['oldPwd'] !== data['newPwd']){
             startLoading()
-            const response = await executeApi(async ()=>{
+            const response = executeApi(async ()=>{
                 return await changeUserPwdAPI(data.oldPwd, data.newPwd, getJWTFromLocalStorage().access)
             }, navigate, setLoadingState)
             if (response){

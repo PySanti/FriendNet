@@ -28,7 +28,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
 
     const loadMessages = async ()=>{
         startLoading()
-        const response = await executeApi(async ()=>{
+        const response = executeApi(async ()=>{
             return await getMessagesHistorialAPI(clickedUser.id, getJWTFromLocalStorage().access, messagesHistorialPage.current)
         }, navigate, setLoadingState)
         if (response){
@@ -49,7 +49,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     }
     const sendMsg = async (data)=>{
         startLoading()
-        const response = await executeApi(async ()=>{
+        const response = executeApi(async ()=>{
             return await sendMsgAPI(clickedUser.id, data.msg, getJWTFromLocalStorage().access)
         }, navigate, setLoadingState)
         if (response){
