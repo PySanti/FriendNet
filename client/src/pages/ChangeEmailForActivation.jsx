@@ -35,7 +35,7 @@ export function ChangeEmailForActivation(){
                 } else if (response.data.error==="email_exists"){
                     setLoadingState("Error, ese email ya fue registrado !")
                 } else {
-                    setLoadingState(BASE_UNEXPECTED_ERROR_LOG)
+                    setLoadingState("Error inesperado cambiando tu correo electrónico !")
                 }
             }
         } else {
