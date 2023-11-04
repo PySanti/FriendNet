@@ -31,10 +31,10 @@ export function ChangePwd(){
             if (response){
                 if (response.status == 200){
                     successfullyLoaded()
-                } else if (response.status == 400){
-                    setLoadingState(response.data.error === 'invalid_pwd' ? "Error, la contraseña actual es invalida !" : 'Error inesperado en respuesta de servidor')
+                } else if (response.data.error === 'invalid_pwd'){
+                    setLoadingState("Error, la contraseña actual es invalida !")
                 } else {
-                    setLoadingState('Hubo un error cambiando la contraseña !')
+                    setLoadingState('Error inesperado cambiando la contraseña !')
                 }
             }
         } else {
