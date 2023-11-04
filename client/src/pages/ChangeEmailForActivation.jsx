@@ -24,7 +24,7 @@ export function ChangeEmailForActivation(){
     const onSubmit = handleSubmit(async (data)=>{
         startLoading()
         if (data.email !== props.userEmail){
-            const response = executeApi(async ()=>{
+            const response = await executeApi(async ()=>{
                 return await changeEmailForActivationAPI(props.userId, data.email) 
             }, navigate, setLoadingState)
             if (response){

@@ -36,7 +36,7 @@ export function UsersList(){
         if (userListPage.current > 1 ){
             setLoaderActivated(true)
         }
-        const response = executeApi(async ()=>{
+        const response = await executeApi(async ()=>{
             return await getUsersListAPI(!userKeyword || userKeyword.length === 0 ? undefined : userKeyword, getUserDataFromLocalStorage().id, userListPage.current)
         }, navigate,setLoadingState )
         if (response){

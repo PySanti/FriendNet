@@ -29,7 +29,7 @@ export function AccountActivation() {
     const { register, handleSubmit, formState: { errors }}                  = useForm();
     const handleActivationCodeSending = async ()=>{
         console.log('-> ', realActivationCode.current)
-        const response = executeApi(async ()=>{
+        const response = await executeApi(async ()=>{
             return await sendActivationEmailAPI(props.userEmail, props.username, realActivationCode.current) 
         }, navigate, setLoadingState)
         if (response){
@@ -43,7 +43,7 @@ export function AccountActivation() {
     const onSubmit = handleSubmit(async (data) => {
         startLoading();
         if (Number(data.activationCode) === Number(realActivationCode.current)) {
-            const response = executeApi(async ()=>{
+            const response = await executeApi(async ()=>{
                 return await activateUserAPI(props.userId); 
             }, navigate, setLoadingState)
             if (response){

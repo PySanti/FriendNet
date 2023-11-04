@@ -39,7 +39,7 @@ export function Chat(){
     const enterChatHandler = async ()=>{
         const relatedNotification = getRelatedNotification(clickedUser.id, notifications)
         startLoading()
-        const response = executeApi(async ()=>{
+        const response = await executeApi(async ()=>{
             return await enterChatAPI(clickedUser.id, relatedNotification? relatedNotification.id : undefined, getJWTFromLocalStorage().access)
         }, navigate, setLoadingState)
         if (response){

@@ -23,14 +23,14 @@ export function SignUp() {
     const navigate                                              = useNavigate()
     const onSignUp = async (data) =>{
         startLoading()
-        let response = executeApi(async ()=>{
+        let response = await executeApi(async ()=>{
             return await checkExistingUserAPI(data['username'], data['email'])
         }, navigate, setLoadingState)
         if (response){
             if (response.status == 200){
                 if (!response.data.existing){
                     delete data.confirmPwd
-                    response = executeApi(async ()=>{
+                    response = await executeApi(async ()=>{
                         return await createUsuarioAPI(data)
                     }, navigate, setLoadingState)
                     if (response){

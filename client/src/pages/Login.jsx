@@ -24,7 +24,7 @@ export function Login() {
     const onLogin = async (data)=>{
         // en este punto ya se sabe que el usuario no esta autenticado
         startLoading()
-        let response = executeApi(async ()=>{
+        let response = await executeApi(async ()=>{
             return await getUserDetailAPI(data.username, data.password)
         }, navigate, setLoadingState)
         if (response){
@@ -33,7 +33,7 @@ export function Login() {
                 if (!userDetail.is_active){
                     navigate('/signup/activate', {state: generateLocationProps(userDetail.email, userDetail.username, userDetail.id)})
                 } else {
-                    response = executeApi(async ()=>{
+                    response = await executeApi(async ()=>{
                         return await loginUser(data)
                     }, navigate, setLoadingState)
                     if (response){
