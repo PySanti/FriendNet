@@ -19,7 +19,7 @@ export async function executeApi(apiCallingFunction, navigateFunc, loadingStateS
             response = await apiCallingFunction() 
             break
         } catch(error){
-            if (!handleStandardApiErrors(response, loadingStateSetter)){
+            if (!handleStandardApiErrors(error, loadingStateSetter)){
                 if (error.response.status === 401){ // error por token
                     try {
                         const response = await refreshTokenAPI(getJWTFromLocalStorage().refresh)
