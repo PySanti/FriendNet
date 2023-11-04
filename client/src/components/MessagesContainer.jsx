@@ -56,8 +56,6 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
             if (response.status == 200){
                 setMessagesHistorial([...messagesHistorial, response.data.sended_msg])
                 successfullyLoaded()
-            } else if (response.status == 400){
-                setLoadingState('Error inesperado en respuesta del servidor, no se pudo enviar el mensaje !')
             } else {
                 setLoadingState('Error inesperado enviando el mensaje !')
             }
