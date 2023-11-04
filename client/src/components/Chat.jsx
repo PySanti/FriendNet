@@ -76,6 +76,7 @@ export function Chat(){
                 clickedUser.is_online = false
                 clickedUser.is_typing = false
                 setClickedUser(clickedUser)
+                setMessagesHistorial([])
                 await enterChatHandler()
             })();
         }
