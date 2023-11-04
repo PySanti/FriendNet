@@ -89,11 +89,11 @@ class CreateUsuariosAPI(APIView):
                 )
                 try:
                     new_user = Usuarios.objects.create_user(**serialized_data)
-                    return Response({'new_user_id' : new_user.id}, status=status.HTTP_201_CREATED)
+                    return Response({'new_user_id' : new_user.id}, status=status.HTTP_200_OK)
                 except:
-                    return Response({'error': "error_creating"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                    return Response({'error': "error_creating"}, status=status.HTTP_400_BAD_REQUEST)
             except:
-                return Response({'error': "cloudinary_error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                return Response({'error': "cloudinary_error"}, status=status.HTTP_400_BAD_REQUEST)
         else:
             return BASE_SERIALIZER_ERROR_RESPONSE
 class GetUserDetailAPI(APIView):
@@ -245,7 +245,7 @@ class UpdateUserDataAPI(APIView):
                     broadcast_updated_user(updated_user)
                     return JsonResponse({'user_data_updated' : {i[0]:i[1] for i in updated_user.__dict__.items() if i[0] in USER_SHOWABLE_FIELDS}}, status=status.HTTP_200_OK)
                 except:
-                    return Response({'error': "error_updating"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                    return Response({'error': "error_updating"}, status=status.HTTP_400_BAD_REQUEST)
             except:
                 return Response({'error': "cloudinary_error"}, status=status.HTTP_400_BAD_REQUEST)
         else:
