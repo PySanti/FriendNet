@@ -38,8 +38,6 @@ export function NotificationsContainer(){
             if (response.status == 200){
                 removeAndUpdateNotifications(notification, setNotifications)
                 successfullyLoaded()
-            } else if (response.status == 400){
-                console.log('Error inesperado eliminando notificacion')
             } else {
                 setLoadingState('Ha ocurrido un error eliminando la notificación !')
             }
