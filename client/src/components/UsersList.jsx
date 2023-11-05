@@ -44,7 +44,27 @@ export function UsersList(){
         }, navigate,setLoadingState )
         if (response){
             if (response.status == 200){
-                updateUsersIdList(usersIdList, usersList, setUsersIdList)
+                const new_users_list = response.data.users_list
+                // updateUsersIdList(usersIdList, usersList, setUsersIdList)
+                // if (userListPage.current === 1){
+                //     console.log('Agregando usuarios directamente')
+                //     setUsersIdList(new_users_list.map(user=>{
+                //         return user.id
+                //     }))
+                //     setUsersList(new_users_list)
+                // } else {
+                //     console.log('Agregando usuarios por for')
+                //     new_users_list.forEach(user => {        
+                //         if (!usersIdList.includes(user.id)){
+                //             usersList.push(user)
+                //             usersIdList.push(user.id)
+                //         } else {
+                //             console.log(`${user.username} ya esta en la lista, no se agregara`)
+                //         }
+                //     });
+                //     setUsersIdList(usersIdList)
+                //     setUsersList(usersList)
+                // }
                 setUsersList(userListPage.current === 1 ? response.data.users_list : usersList.concat(response.data.users_list))
             } else if (response.data.error=== "no_more_pages"){
                 noMoreUsers.current = true

@@ -42,14 +42,12 @@ function App() {
     if (NotificationsWSCanBeUpdated()){
       NOTIFICATIONS_WEBSOCKET.current.onmessage = (event)=>{
         const data = JSON.parse(event.data)
-        console.log('Recibiendo datos a traves del websocket de notificaciones')
-        console.log(data)
         if (data.type == "new_notification"){
             if (data.value.new_notification.sender_user.id != getUserDataFromLocalStorage().id){
                 const updatedNotifications = [...notifications, data.value.new_notification]
                 setNotifications(updatedNotifications)
                 saveNotificationsInLocalStorage(updatedNotifications)
-                shiftUser(usersList, setUsersList, data.value.new_notification.sender_user)
+                // shiftUser(usersList, setUsersList, data.value.new_notification.sender_user)
             }
 
         } else if (data.type == "connection_error"){

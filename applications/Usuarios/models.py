@@ -23,7 +23,7 @@ class Usuarios(AbstractBaseUser, PermissionsMixin):
     objects         = UsuariosManager()
 
     def __str__(self):
-        return f"{self.username}"
+        return f"{self.username}, {self.id}"
     class Meta:
         verbose_name = 'Usuario'
         verbose_name_plural = 'Usuarios'
