@@ -20,6 +20,7 @@ import {NotificationsWSCanBeUpdated} from "./utils/NotificationsWSCanBeUpdated"
 import {saveNotificationsInLocalStorage} from "./utils/saveNotificationsInLocalStorage"
 import {logoutUser} from "./utils/logoutUser"
 import {Page404} from "./pages/Page404"
+import {shiftUser} from "./utils/shiftUser"
 /**
 /**
  * Toda la implementacion que tenemos del websocket de notificaciones en el app.jsx
@@ -48,7 +49,9 @@ function App() {
                 const updatedNotifications = [...notifications, data.value.new_notification]
                 setNotifications(updatedNotifications)
                 saveNotificationsInLocalStorage(updatedNotifications)
+                shiftUser(usersList, setUsersList, data.value.new_notification.sender_user)
             }
+
         } else if (data.type == "connection_error"){
             logoutUser(undefined)
         } else  if (data.type === "updated_user"){
