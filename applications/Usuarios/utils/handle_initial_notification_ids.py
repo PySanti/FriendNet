@@ -1,6 +1,6 @@
 from django.core.cache import cache
 
-def handle_notification_ids(method, session_user_id, notification_ids=None):
+def handle_initial_notification_ids(method, session_user_id, notification_ids=None):
     """
         Funcion creada para manejar las notification_ids del
         usuario duenio de la sesion al logearse.

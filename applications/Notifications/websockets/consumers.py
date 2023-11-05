@@ -7,6 +7,8 @@ from .ws_utils.broadcast_connection_inform import broadcast_connection_inform
 from applications.Chats.websockets.ws_utils.broadcast_dict import broadcast_dict
 from .ws_utils.broadcast_typing_inform import broadcast_typing_inform
 from .ws_utils.notification_websocket_is_opened import notification_websocket_is_opened
+from applications.Usuarios.utils.handle_initial_notification_ids import handle_initial_notification_ids
+
 
 class NotificationsWSConsumer(WebsocketConsumer):
     def connect(self):
