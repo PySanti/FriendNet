@@ -55,7 +55,7 @@ from django_ratelimit.decorators import ratelimit
 from django.utils.decorators import method_decorator
 from .websockets.ws_utils.broadcast_updated_user import broadcast_updated_user
 from django.core.cache import cache
-
+from .utils.handle_initial_notification_ids import handle_initial_notification_ids
 
 # non - secured api's
 
@@ -132,17 +132,18 @@ class GetUsersListAPI(APIView):
         if serialized_data.is_valid():
             try:
                 session_user = Usuarios.objects.get(id=serialized_data.data['session_user_id'])
-                senders_notifications_ids = [a['sender_user_id'] for a in list(session_user.notifications.values('sender_user_id'))]
+                senders_notifications_ids = handle_initial_notification_ids('get', session_user.id)
                 users_list = Usuarios.objects.filter(is_active=True).exclude(id=serialized_data.data['session_user_id'])
                 if 'user_keyword' in serialized_data.data:
                     users_list = users_list.filter(username__icontains=serialized_data.data['user_keyword'])
-                users_list = users_list.order_by(
-                    Case(
-                        When(id__in=senders_notifications_ids, then=0),
-                        default=1,
-                        output_field=models.IntegerField(),
+                if senders_notifications_ids:
+                    users_list = users_list.order_by(
+                        Case(
+                            When(id__in=senders_notifications_ids, then=0),
+                            default=1,
+                            output_field=models.IntegerField(),
+                        )
                     )
-                )
                 try:
                     # pagination
                     result_page = self.pagination_class().paginate_queryset(users_list.values(*USERS_LIST_ATTRS), request)
