@@ -20,6 +20,7 @@ import {NotificationsWSCanBeUpdated} from "./utils/NotificationsWSCanBeUpdated"
 import {saveNotificationsInLocalStorage} from "./utils/saveNotificationsInLocalStorage"
 import {logoutUser} from "./utils/logoutUser"
 import {Page404} from "./pages/Page404"
+import {useNotificationsIdsCached} from "./store/notificationsIdCachedStore"
 import {shiftUser} from "./utils/shiftUser"
 /**
 /**
@@ -33,6 +34,7 @@ function App() {
   let [usersList, setUsersList] = useUsersList((state)=>([state.usersList, state.setUsersList]))
   let [clickedUser, setClickedUser] = useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
   let setLastClickedUser = useLastClickedUser((state)=>(state.setLastClickedUser))
+  let setNotificationsIdsCached = useNotificationsIdsCached((state)=>state.setNotificationsIdsCached)
   useEffect(()=>{
     if (!NOTIFICATIONS_WEBSOCKET.current && userIsAuthenticated()){
       NotificationsWSInitialize(getUserDataFromLocalStorage().id)
@@ -42,6 +44,7 @@ function App() {
     if (NotificationsWSCanBeUpdated()){
       NOTIFICATIONS_WEBSOCKET.current.onmessage = (event)=>{
         const data = JSON.parse(event.data)
+        console.log(data)
         if (data.type == "new_notification"){
             if (data.value.new_notification.sender_user.id != getUserDataFromLocalStorage().id){
                 const updatedNotifications = [...notifications, data.value.new_notification]
@@ -68,7 +71,9 @@ function App() {
             clickedUser.is_typing = data.value.typing
             setClickedUser(clickedUser)
           }
-      }
+        } else if (data.type === "notifications_ids_cached_inform"){
+          setNotificationsIdsCached(true)
+        }
       }
     }
   }, [notifications, usersList, clickedUser])

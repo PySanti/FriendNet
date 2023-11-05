@@ -9,6 +9,7 @@ from .ws_utils.broadcast_typing_inform import broadcast_typing_inform
 from .ws_utils.notification_websocket_is_opened import notification_websocket_is_opened
 from applications.Usuarios.utils.handle_initial_notification_ids import handle_initial_notification_ids
 from applications.Usuarios.models import Usuarios
+from .ws_utils.broadcast_notifications_ids_cached_inform import broadcast_notifications_ids_cached_inform
 
 class NotificationsWSConsumer(WebsocketConsumer):
     def connect(self):
@@ -31,6 +32,7 @@ class NotificationsWSConsumer(WebsocketConsumer):
                 session_user = Usuarios.objects.get(id=int(data['value']['name']))
                 initial_notifications_list = [a['sender_user_id'] for a in list(session_user.notifications.values('sender_user_id'))] 
                 handle_initial_notification_ids('post', session_user.id,initial_notifications_list )
+                broadcast_notifications_ids_cached_inform(session_user.id)
                 broadcast_connection_inform(user_id=data['value']["name"], connected=True)
         if (data["type"] == "typing_inform"):
             value = data["value"]
@@ -40,7 +42,8 @@ class NotificationsWSConsumer(WebsocketConsumer):
 
     def broadcast_typing_inform_handler(self, event):
         self.send(text_data=json.dumps(broadcast_dict(broadcast_type="typing_inform", broadcast_value=event["value"])))
-    
+    def broadcast_notifications_ids_cached_inform_handler(self, event):
+        self.send(text_data=json.dumps(broadcast_dict(broadcast_type="notifications_ids_cached_inform")))
     def broadcast_notification_handler(self, event):
         self.send(text_data=json.dumps(broadcast_dict(broadcast_type="new_notification", broadcast_value=event["value"])))
     def broadcast_connection_error_handler(self, event):
