@@ -12,6 +12,8 @@ import {executeApi} from "../utils/executeApi"
 import {useNavigate} from "react-router-dom"
 import {updateUsersIdList} from "../utils/updateUsersIdList"
 import {useUsersIdList} from "../store/usersIdListStore"
+
+import {useNotificationsIdsCached} from "../store/notificationsIdCachedStore"
 /**
  * Recibe la lista de usuarios directa de la api y retorna la lista de elementos jsx
  */
@@ -25,6 +27,7 @@ export function UsersList(){
     let [usersList, setUsersList]                                   = useUsersList((state)=>([state.usersList, state.setUsersList]))
     let [ userKeyword, setUserKeyword]                              = useState(undefined)
     let [scrollDetectorBlock, setScrollDetectorBlock]               = useState(false)
+    let notificationsIdsCached                                      = useNotificationsIdsCached((state)=>state.notificationsIdsCached)
     const navigate = useNavigate()
     const canChargeUsersList = (event)=>{
         return ((event.target.scrollTop + event.target.clientHeight) >= event.target.scrollHeight) && (!scrollDetectorBlock) && (!noMoreUsers.current)
@@ -78,20 +81,20 @@ export function UsersList(){
         return <UserButton key={v4()}user={user}  />
     }
     const scrollDetector = async (event)=>{
-        if (canChargeUsersList(event)){
+        if (canChargeUsersList(event) && notificationsIdsCached){
             updateScrollDetectorBlock()
             await loadUsersList()
             userListPage.current += 1
         }
     }
     useEffect(()=>{
-        if (userIsAuthenticated() && usersList.length === 0){
+        if (userIsAuthenticated() && usersList.length === 0 && notificationsIdsCached){
             (async function() {
                 await loadUsersList()
                 userListPage.current = 2
             })()
         }
-    }, [])
+    }, [notificationsIdsCached])
     useEffect(()=>{
         if (userKeyword !== undefined){ // si userKeyword esta inicializado ...
             (async function(){
@@ -100,7 +103,7 @@ export function UsersList(){
                 await loadUsersList()
             })()
         }
-    }, [userKeyword])
+    }, [userKeyword,notificationsIdsCached ])
     return (
         <>
             <div className="users-list">

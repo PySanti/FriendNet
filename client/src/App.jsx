@@ -77,7 +77,6 @@ function App() {
       }
     }
   }, [notifications, usersList, clickedUser])
-
   return (
     <BrowserRouter>
       <Routes>
