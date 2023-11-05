@@ -133,6 +133,8 @@ class GetUsersListAPI(APIView):
             try:
                 session_user = Usuarios.objects.get(id=serialized_data.data['session_user_id'])
                 senders_notifications_ids = handle_initial_notification_ids('get', session_user.id)
+                if senders_notifications_ids == None:
+                    return Response({'error' : 'need_cached_data'}, status=status.HTTP_400_BAD_REQUEST)
                 users_list = Usuarios.objects.filter(is_active=True).exclude(id=serialized_data.data['session_user_id'])
                 if 'user_keyword' in serialized_data.data:
                     users_list = users_list.filter(username__icontains=serialized_data.data['user_keyword'])
