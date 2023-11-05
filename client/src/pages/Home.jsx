@@ -15,7 +15,7 @@ import {useClickedUser} from "../store/clickedUserStore"
 import {useMessagesHistorial} from "../store/messagesHistorialStore"
 import {useLastClickedUser} from "../store/lastClickedUserStore"
 import {useUsersList} from "../store/usersListStore"
-
+import {useUsersIdList} from "../store/usersIdListStore"
 /**
  * Pagina principal del sitio
  */
@@ -25,13 +25,14 @@ export function Home() {
     let setMessagesHistorial            = useMessagesHistorial((state)=>(state.setMessagesHistorial))
     let setLastClickedUser              = useLastClickedUser((state)=>(state.setLastClickedUser))
     let setUsersList                    = useUsersList((state)=>(state.setUsersList))
-
+    let setUsersIdList                  = useUsersIdList((state)=>state.setUsersIdList)
     useEffect(()=>{
         return ()=>{
             // esto se ejecutara cuando el componente sea desmontado
             setClickedUser(null)
             setLastClickedUser(null)
             setMessagesHistorial([])
+            setUsersIdList([])
             setUsersList([])
             disconnectWebsocket(CHAT_WEBSOCKET)
         }

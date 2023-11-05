@@ -10,6 +10,8 @@ import {useLoadingState} from "../store/loadingStateStore"
 import {useUsersList} from "../store/usersListStore"
 import {executeApi} from "../utils/executeApi"
 import {useNavigate} from "react-router-dom"
+import {updateUsersIdList} from "../utils/updateUsersIdList"
+import {useUsersIdList} from "../store/usersIdListStore"
 /**
  * Recibe la lista de usuarios directa de la api y retorna la lista de elementos jsx
  */
@@ -19,6 +21,7 @@ export function UsersList(){
     let userListPage                                                = useRef(1)
     let noMoreUsers                                                 = useRef(false)
     let [loaderActivated, setLoaderActivated]                       = useState(false)
+    let [usersIdList, setUsersIdList]                               = useUsersIdList((state)=>[state.usersIdList, state.setUsersIdList])
     let [usersList, setUsersList]                                   = useUsersList((state)=>([state.usersList, state.setUsersList]))
     let [ userKeyword, setUserKeyword]                              = useState(undefined)
     let [scrollDetectorBlock, setScrollDetectorBlock]               = useState(false)
@@ -41,6 +44,7 @@ export function UsersList(){
         }, navigate,setLoadingState )
         if (response){
             if (response.status == 200){
+                updateUsersIdList(usersIdList, usersList, setUsersIdList)
                 setUsersList(userListPage.current === 1 ? response.data.users_list : usersList.concat(response.data.users_list))
             } else if (response.data.error=== "no_more_pages"){
                 noMoreUsers.current = true
@@ -77,7 +81,6 @@ export function UsersList(){
             })()
         }
     }, [userKeyword])
-
     return (
         <>
             <div className="users-list">
