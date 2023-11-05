@@ -40,6 +40,7 @@ class NotificationsWSConsumer(WebsocketConsumer):
 
     def broadcast_typing_inform_handler(self, event):
         self.send(text_data=json.dumps(broadcast_dict(broadcast_type="typing_inform", broadcast_value=event["value"])))
+    
     def broadcast_notification_handler(self, event):
         self.send(text_data=json.dumps(broadcast_dict(broadcast_type="new_notification", broadcast_value=event["value"])))
     def broadcast_connection_error_handler(self, event):
