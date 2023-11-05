@@ -96,14 +96,14 @@ export function UsersList(){
         }
     }, [notificationsIdsCached])
     useEffect(()=>{
-        if (userKeyword !== undefined){ // si userKeyword esta inicializado ...
+        if (userKeyword !== undefined && notificationsIdsCached){ // si userKeyword esta inicializado ...
             (async function(){
                 userListPage.current = 1
                 noMoreUsers.current = false
                 await loadUsersList()
             })()
         }
-    }, [userKeyword,notificationsIdsCached ])
+    }, [userKeyword])
     return (
         <>
             <div className="users-list">

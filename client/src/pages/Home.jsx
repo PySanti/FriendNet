@@ -16,6 +16,8 @@ import {useMessagesHistorial} from "../store/messagesHistorialStore"
 import {useLastClickedUser} from "../store/lastClickedUserStore"
 import {useUsersList} from "../store/usersListStore"
 import {useUsersIdList} from "../store/usersIdListStore"
+import {useNotificationsIdsCached} from "../store/notificationsIdCachedStore"
+
 /**
  * Pagina principal del sitio
  */
@@ -26,6 +28,8 @@ export function Home() {
     let setLastClickedUser              = useLastClickedUser((state)=>(state.setLastClickedUser))
     let setUsersList                    = useUsersList((state)=>(state.setUsersList))
     let setUsersIdList                  = useUsersIdList((state)=>state.setUsersIdList)
+    let setNotificationsIdsCached       = useNotificationsIdsCached((state)=>state.setNotificationsIdsCached)
+
     useEffect(()=>{
         return ()=>{
             // esto se ejecutara cuando el componente sea desmontado
@@ -37,7 +41,10 @@ export function Home() {
             disconnectWebsocket(CHAT_WEBSOCKET)
         }
     }, [])
-
+    const logoutHandler = ()=>{
+        logoutUser(navigate)
+        setNotificationsIdsCached(false)
+    }
     if (!userIsAuthenticated()){
         return <UserNotLogged msg="No puedes acceder al Home si aun no has iniciado sesión o no tienes cuenta"/>
     } else {
@@ -47,7 +54,7 @@ export function Home() {
                     <Header msg="En el home"/>
                     <div className="buttons-container">
                         <NotificationsContainer/>
-                        <Button buttonText="Salir" onClickFunction={()=>logoutUser(navigate)}/>
+                        <Button buttonText="Salir" onClickFunction={logoutHandler}/>
                         <Button buttonText="Perfil" onClickFunction={()=>{navigate('/home/profile/')}}/>
                     </div>
                     <div className="users-interface-container">
