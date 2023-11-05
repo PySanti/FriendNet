@@ -8,7 +8,7 @@ from applications.Chats.websockets.ws_utils.broadcast_dict import broadcast_dict
 from .ws_utils.broadcast_typing_inform import broadcast_typing_inform
 from .ws_utils.notification_websocket_is_opened import notification_websocket_is_opened
 from applications.Usuarios.utils.handle_initial_notification_ids import handle_initial_notification_ids
-
+from applications.Usuarios.models import Usuarios
 
 class NotificationsWSConsumer(WebsocketConsumer):
     def connect(self):
@@ -18,6 +18,7 @@ class NotificationsWSConsumer(WebsocketConsumer):
     def disconnect(self, close_code):
         print('-> Desconectando websocket de notificacion')
         group_name = discard_channel_if_found(self.channel_name)
+        handle_initial_notification_ids('delete', group_name )
         broadcast_connection_inform(user_id=group_name, connected=False)
 
     def receive(self, text_data):
@@ -27,6 +28,9 @@ class NotificationsWSConsumer(WebsocketConsumer):
             if len(self.channel_layer.groups[str(data['value']["name"])])>1:
                 async_to_sync(self.channel_layer.group_send)(str(data['value']["name"]),{"type" : "broadcast_connection_error_handler"})
             else:
+                session_user = Usuarios.objects.get(id=int(data['value']['name']))
+                initial_notifications_list = [a['sender_user_id'] for a in list(session_user.notifications.values('sender_user_id'))] 
+                handle_initial_notification_ids('post', session_user.id,initial_notifications_list )
                 broadcast_connection_inform(user_id=data['value']["name"], connected=True)
         if (data["type"] == "typing_inform"):
             value = data["value"]
