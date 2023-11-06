@@ -18,7 +18,9 @@ export function UserButton({user}){
     return (
         <button className="user-button" onClick={()=>updateClickedUser(clickedUser, user, setClickedUser, setLastClickedUser)}>
             {user.username}
+            {user.is_typing && " ..."}
             {chatGlobeList.includes(user.id) &&<div className="user-button-globe">x</div>}
+
         </button>
     )
 }

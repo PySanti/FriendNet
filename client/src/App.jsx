@@ -69,9 +69,14 @@ function App() {
                 }
             }
         } else if (data.type === "typing_inform"){
-          if (clickedUser && data.value.user_id == clickedUser.id){
-            clickedUser.is_typing = data.value.typing
-            setClickedUser(clickedUser)
+          if (usersIdList.includes(data.value.user_id)){
+            usersList.map((user)=>{
+              if (user.id == data.value.user_id){
+                user.is_typing = data.value.typing
+              }
+              return user
+            })
+            setUsersList(usersList)
           }
         } else if (data.type === "notifications_ids_cached_inform"){
           setNotificationsIdsCached(true)
