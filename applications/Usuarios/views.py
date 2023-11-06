@@ -56,7 +56,7 @@ from django.utils.decorators import method_decorator
 from .websockets.ws_utils.broadcast_updated_user import broadcast_updated_user
 from django.core.cache import cache
 from .utils.handle_initial_notification_ids import handle_initial_notification_ids
-
+from .utils.add_istyping_field import add_istyping_field
 # non - secured api's
 
 class CheckExistingUserAPI(APIView):
@@ -148,7 +148,7 @@ class GetUsersListAPI(APIView):
                     )
                 try:
                     # pagination
-                    result_page = self.pagination_class().paginate_queryset(users_list.values(*USERS_LIST_ATTRS), request)
+                    result_page = self.pagination_class().paginate_queryset(add_istyping_field(users_list.values(*USERS_LIST_ATTRS)), request)
                 except Exception:
                     return BASE_NO_MORE_PAGES_RESPONSE
 

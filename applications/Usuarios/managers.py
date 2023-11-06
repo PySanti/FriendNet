@@ -6,7 +6,7 @@ from .utils.constants import (
     USERS_LIST_ATTRS,
     USER_SHOWABLE_FIELDS)
 from channels.layers import get_channel_layer
-
+from .utils.add_istyping_field import add_istyping_field
 class UsuariosManager(BaseUserManager):
     def _create_user(self, username, password, email, is_staff, is_superuser, **kwargs):
         new_user = self.model(
@@ -47,7 +47,7 @@ class UsuariosManager(BaseUserManager):
                 senders_ids.append(i.sender_user_id)
             notifications_list.append({ 'id' : i.id, 'msg' : i.msg, 'sender_user' : i.sender_user_id})
         # recordar que hacemos la solicitud de esta manera, para evitar hacer una solicitud por cada iteracion del bucle
-        senders_users = {i['id']:i for i in self.filter(id__in=senders_ids).values(*USERS_LIST_ATTRS)}
+        senders_users = {i['id']:i for i in add_istyping_field(self.filter(id__in=senders_ids).values(*USERS_LIST_ATTRS))}
         for i in notifications_list:
             if i['sender_user'] in senders_users:
                 i['sender_user']=senders_users[i['sender_user']]

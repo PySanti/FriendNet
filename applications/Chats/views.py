@@ -39,7 +39,7 @@ from applications.Notifications.websockets.ws_utils.broadcast_notification impor
 from applications.Chats.websockets.ws_utils.broadcast_message import broadcast_message
 from django.utils.decorators import method_decorator
 from django_ratelimit.decorators import ratelimit
-
+from applications.Usuarios.utils.add_istyping_field import add_istyping_field
 class GetMessagesHistorialAPI(APIView):
     serializer_class        =  GetMessagesHistorialSerializer
     authentication_classes  = [JWTAuthentication]
@@ -80,7 +80,7 @@ class SendMsgAPI(APIView):
                     new_notification = Notifications.objects.add_notification(f"Tienes mensajes nuevos de {sender_user.username}", receiver_user, sender_user)
                     if (notification_websocket_is_opened(receiver_user.id)):
                         new_notification = Notifications.objects.filter(id=new_notification.id).values("msg", "id")[0]
-                        new_notification["sender_user"] = Usuarios.objects.filter(id=sender_user.id).values(*USERS_LIST_ATTRS)[0]
+                        new_notification["sender_user"] = add_istyping_field(Usuarios.objects.filter(id=sender_user.id).values(*USERS_LIST_ATTRS))[0]
                         broadcast_notification(receiver_user.id, new_notification)
                 new_message = Messages.objects.create_message(parent=sender_user, content=request.data['msg'])
                 Chats.objects.send_message(sender_user, receiver_user,new_message)
