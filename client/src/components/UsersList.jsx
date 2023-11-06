@@ -48,8 +48,11 @@ export function UsersList(){
                 if (!usersIdList.includes(user.id)){
                     usersList.push(user)
                     usersIdList.push(user.id)
+                } else {
+                    console.log(`${user.username} ya esta en la lista, no se agregara`)
                 }
             });
+            console.log(usersIdList)
             setUsersIdList(usersIdList)
             setUsersList(usersList)
         }

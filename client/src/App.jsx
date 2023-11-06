@@ -22,6 +22,7 @@ import {logoutUser} from "./utils/logoutUser"
 import {Page404} from "./pages/Page404"
 import {useNotificationsIdsCached} from "./store/notificationsIdCachedStore"
 import {shiftUser} from "./utils/shiftUser"
+import {useUsersIdList} from "./store/usersIdListStore"
 /**
 /**
  * Toda la implementacion que tenemos del websocket de notificaciones en el app.jsx
@@ -35,6 +36,7 @@ function App() {
   let [clickedUser, setClickedUser] = useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
   let setLastClickedUser = useLastClickedUser((state)=>(state.setLastClickedUser))
   let setNotificationsIdsCached = useNotificationsIdsCached((state)=>state.setNotificationsIdsCached)
+  let [usersIdList, setUsersIdList] = useUsersIdList((state)=>[state.usersIdList, state.setUsersIdList])
   useEffect(()=>{
     if (!NOTIFICATIONS_WEBSOCKET.current && userIsAuthenticated()){
       NotificationsWSInitialize(getUserDataFromLocalStorage().id, setNotificationsIdsCached)
@@ -50,8 +52,8 @@ function App() {
                 const updatedNotifications = [...notifications, data.value.new_notification]
                 setNotifications(updatedNotifications)
                 saveNotificationsInLocalStorage(updatedNotifications)
-                // shiftUser(usersList, setUsersList, data.value.new_notification.sender_user)
-            }
+                shiftUser(usersList, setUsersList, data.value.new_notification.sender_user, usersIdList, setUsersIdList)
+                }
 
         } else if (data.type == "connection_error"){
             logoutUser(undefined)
