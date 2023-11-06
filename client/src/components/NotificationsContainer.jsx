@@ -17,6 +17,7 @@ import {useLoadingState} from "../store/loadingStateStore"
 import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotifications"
 import {getNotificationsFromLocalStorage} from "../utils/getNotificationsFromLocalStorage"
 import {useNotifications} from "../store/notificationsStore"
+import {useNotificationsIdsCached} from "../store/notificationsIdCachedStore"
 
 /**
  * Componente creado para contener las notificaciones del usuarios
@@ -29,6 +30,8 @@ export function NotificationsContainer(){
     const notificationListCls = "notification-list"
     const navigate = useNavigate()
     const [setLoadingState, successfullyLoaded] = useLoadingState((state)=>([state.setLoadingState, state.successfullyLoaded]))
+    let setNotificationsIdsCached                                      = useNotificationsIdsCached((state)=>state.setNotificationsIdsCached)
+
 
     const onNotificationDelete = async (notification)=>{
         const response = await executeApi(async ()=>{
@@ -53,7 +56,7 @@ export function NotificationsContainer(){
 
     useEffect(()=>{
         if (!NOTIFICATIONS_WEBSOCKET.current && userData){
-            NotificationsWSInitialize(userData.id)
+            NotificationsWSInitialize(userData.id, setNotificationsIdsCached)
         }
         const localStorageNotifications = getNotificationsFromLocalStorage()
         if (notifications.length == 0 && localStorageNotifications){

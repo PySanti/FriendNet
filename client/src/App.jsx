@@ -37,7 +37,7 @@ function App() {
   let setNotificationsIdsCached = useNotificationsIdsCached((state)=>state.setNotificationsIdsCached)
   useEffect(()=>{
     if (!NOTIFICATIONS_WEBSOCKET.current && userIsAuthenticated()){
-      NotificationsWSInitialize(getUserDataFromLocalStorage().id)
+      NotificationsWSInitialize(getUserDataFromLocalStorage().id, setNotificationsIdsCached)
     }
   }, [])
   useEffect(()=>{
