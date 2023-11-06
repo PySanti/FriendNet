@@ -10,7 +10,6 @@ import {useLoadingState} from "../store/loadingStateStore"
 import {useUsersList} from "../store/usersListStore"
 import {executeApi} from "../utils/executeApi"
 import {useNavigate} from "react-router-dom"
-import {updateUsersIdList} from "../utils/updateUsersIdList"
 import {useUsersIdList} from "../store/usersIdListStore"
 
 import {useNotificationsIdsCached} from "../store/notificationsIdCachedStore"
@@ -38,6 +37,23 @@ export function UsersList(){
             setScrollDetectorBlock(false)
         }, 1000);
     }
+    const updateUsers = (new_users_list)=>{
+        if (userListPage.current === 1){
+            setUsersIdList(new_users_list.map(user=>{
+                return user.id
+            }))
+            setUsersList(new_users_list)
+        } else {
+            new_users_list.forEach(user => {        
+                if (!usersIdList.includes(user.id)){
+                    usersList.push(user)
+                    usersIdList.push(user.id)
+                }
+            });
+            setUsersIdList(usersIdList)
+            setUsersList(usersList)
+        }
+    }
     const loadUsersList = async ()=>{
         if (userListPage.current > 1 ){
             setLoaderActivated(true)
@@ -47,28 +63,7 @@ export function UsersList(){
         }, navigate,setLoadingState )
         if (response){
             if (response.status == 200){
-                const new_users_list = response.data.users_list
-                // updateUsersIdList(usersIdList, usersList, setUsersIdList)
-                // if (userListPage.current === 1){
-                //     console.log('Agregando usuarios directamente')
-                //     setUsersIdList(new_users_list.map(user=>{
-                //         return user.id
-                //     }))
-                //     setUsersList(new_users_list)
-                // } else {
-                //     console.log('Agregando usuarios por for')
-                //     new_users_list.forEach(user => {        
-                //         if (!usersIdList.includes(user.id)){
-                //             usersList.push(user)
-                //             usersIdList.push(user.id)
-                //         } else {
-                //             console.log(`${user.username} ya esta en la lista, no se agregara`)
-                //         }
-                //     });
-                //     setUsersIdList(usersIdList)
-                //     setUsersList(usersList)
-                // }
-                setUsersList(userListPage.current === 1 ? response.data.users_list : usersList.concat(response.data.users_list))
+                updateUsers(response.data.users_list)
             } else if (response.data.error=== "no_more_pages"){
                 noMoreUsers.current = true
             } else {
