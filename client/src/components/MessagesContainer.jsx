@@ -9,9 +9,9 @@ import { sendMsgAPI } from "../api/sendMsg.api"
 import {executeApi} from "../utils/executeApi"
 import {getMessagesHistorialAPI} from "../api/getMessagesHistorial.api"
 import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
-import {useClickedUser} from "../store/clickedUserStore"
-import {useMessagesHistorial} from "../store/messagesHistorialStore"
-import {useLoadingState} from "../store/loadingStateStore"
+import {useClickedUser} from "../store"
+import {useMessagesHistorial} from "../store"
+import {useLoadingState} from "../store"
 /**
  * Componente encargado de renderizar y mantener la lista de mensajes 
  * @param {Object} newMsg state creado para cuando se envia un mensaje nuevo

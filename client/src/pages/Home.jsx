@@ -11,15 +11,7 @@ import { Button } from "../components/Button"
 import "../styles/Home.css"
 import {disconnectWebsocket} from "../utils/disconnectWebsocket" 
 import {CHAT_WEBSOCKET} from "../utils/constants"
-import {useClickedUser} from "../store/clickedUserStore"
-import {useMessagesHistorial} from "../store/messagesHistorialStore"
-import {useLastClickedUser} from "../store/lastClickedUserStore"
-import {useUsersList} from "../store/usersListStore"
-import {useUsersIdList} from "../store/usersIdListStore"
-import {useNotificationsIdsCached} from "../store/notificationsIdCachedStore"
-import {useUsersListPage} from "../store/usersListPageStore"
-import {useNoMoreUsers} from "../store/noMoreUsersStore"
-import {useNotifications} from "../store/notificationsStore"
+import * as states from "../store"
 // import { destroy } from 'zustand';
 
 
@@ -29,34 +21,34 @@ import {useNotifications} from "../store/notificationsStore"
  */
 export function Home() {
     const navigate                      = useNavigate()
-    let setClickedUser                  = useClickedUser((state)=>(state.setClickedUser))
-    let setMessagesHistorial            = useMessagesHistorial((state)=>(state.setMessagesHistorial))
-    let setLastClickedUser              = useLastClickedUser((state)=>(state.setLastClickedUser))
-    let setUsersList                    = useUsersList((state)=>(state.setUsersList))
-    let setUsersIdList                  = useUsersIdList((state)=>state.setUsersIdList)
-    let setNotificationsIdsCached       = useNotificationsIdsCached((state)=>state.setNotificationsIdsCached)
-    let setUsersListPage                = useUsersListPage((state)=>state.setUsersListPage)
-    let setNoMoreUsers                  = useNoMoreUsers((state)=>state.setNoMoreUsers)
-    let setNotifications                = useNotifications((state)=>state.setNotifications)
     useEffect(()=>{
         return ()=>{
             // esto se ejecutara cuando el componente sea desmontado
-            setClickedUser(null)
-            setLastClickedUser(null)
-            setMessagesHistorial([])
+            resetSomeStates(["useClickedUser", "useLastClickedUser", "useMessagesHistorial"])
             disconnectWebsocket(CHAT_WEBSOCKET)
         }
     }, [])
+    const resetSomeStates = (statesList)=>{
+        Object.keys(states).forEach(key=>{
+            if (statesList.includes(key)){
+                console.log(`Reseteando ${key}`)
+                resetState(states[key])
+            }
+        })
+    }
+    const resetState = (state)=>{
+        if (state.getState().reset){
+            state.getState().reset()
+        }
+    }
+    const resetAllGlobalStates = ()=>{
+        Object.keys(states).forEach(key => {
+            resetState(states[key])
+        });
+    }
     const logoutHandler = ()=>{
         logoutUser(navigate)
-        // Limpia todos los estados globales
-        // destroy();
-        setUsersListPage(1)
-        setNoMoreUsers(false)
-        setUsersIdList([])
-        setNotifications([])
-        setUsersList([])
-        setNotificationsIdsCached(false)
+        resetAllGlobalStates()
     }
     if (!userIsAuthenticated()){
         return <UserNotLogged msg="No puedes acceder al Home si aun no has iniciado sesión o no tienes cuenta"/>

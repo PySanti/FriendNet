@@ -6,15 +6,15 @@ import {useState, useEffect} from "react"
 import { getUsersListAPI } from "../api/getUsersList.api"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import { userIsAuthenticated } from "../utils/userIsAuthenticated"
-import {useLoadingState} from "../store/loadingStateStore"
-import {useUsersList} from "../store/usersListStore"
+import {useLoadingState} from "../store"
+import {useUsersList} from "../store"
 import {executeApi} from "../utils/executeApi"
 import {useNavigate} from "react-router-dom"
-import {useUsersIdList} from "../store/usersIdListStore"
-import {useUsersListPage} from "../store/usersListPageStore"
-import {useNoMoreUsers} from "../store/noMoreUsersStore"
+import {useUsersIdList} from "../store"
+import {useUsersListPage} from "../store"
+import {useNoMoreUsers} from "../store"
 
-import {useNotificationsIdsCached} from "../store/notificationsIdCachedStore"
+import {useNotificationsIdsCached} from "../store"
 /**
  * Recibe la lista de usuarios directa de la api y retorna la lista de elementos jsx
  */

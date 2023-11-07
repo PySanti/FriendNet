@@ -1,10 +1,10 @@
 import {PropTypes} from "prop-types"
 import "../styles/UserButton.css"
-import {useClickedUser} from "../store/clickedUserStore"
-import {useLastClickedUser} from "../store/lastClickedUserStore"
+import {useClickedUser} from "../store"
+import {useLastClickedUser} from "../store"
 import {updateClickedUser} from "../utils/updateClickedUser"
 
-import {useChatGlobeList} from "../store/chatGlobeListStore"
+import {useChatGlobeList} from "../store"
 
 /**
  * Retorna un userButton, button a renderizar en la UsersList

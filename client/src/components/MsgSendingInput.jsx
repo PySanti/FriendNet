@@ -5,7 +5,7 @@ import {PropTypes} from "prop-types"
 import "../styles/MessageSendingInput.css"
 import {NOTIFICATIONS_WEBSOCKET} from "../utils/constants"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
-import {useClickedUser} from "../store/clickedUserStore"
+import {useClickedUser} from "../store"
 import {NotificationsWSTypingInformMsg} from "../utils/NotificationsWSTypingInformMsg"
 /**
  * Input creado para el envio de mensajes

@@ -16,7 +16,7 @@ import { getUserDataFromLocalStorage } from "../utils/getUserDataFromLocalStorag
 import { dataIsDiferent } from "../utils/dataIsDiferent";
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {executeApi} from "../utils/executeApi"
-import {useLoadingState} from "../store/loadingStateStore"
+import {useLoadingState} from "../store"
 
 /**
  * Pagina creada para llevar perfil de usuario, tanto para

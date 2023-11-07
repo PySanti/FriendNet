@@ -11,7 +11,7 @@ import { UserLogged } from "./UserLogged";
 import { UserInfoForm } from "../components/UserInfoForm";
 import { Button } from "../components/Button";
 import { v4 } from "uuid";
-import {useLoadingState} from "../store/loadingStateStore"
+import {useLoadingState} from "../store"
 import {BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
 import {generateLocationProps} from "../utils/generateLocationProps"
 import {executeApi} from "../utils/executeApi"

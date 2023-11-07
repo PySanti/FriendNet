@@ -1,5 +1,5 @@
 import "../styles/Loader.css"
-import {useLoadingState} from "../store/loadingStateStore"
+import {useLoadingState} from "../store"
 import {useEffect} from "react"
 
 /**

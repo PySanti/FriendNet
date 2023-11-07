@@ -10,7 +10,7 @@ import { UserNotLogged } from "./UserNotLogged";
 import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { UserLogged } from "./UserLogged";
 import { changeEmailForActivationAPI } from "../api/changeEmailForActivation.api";
-import {useLoadingState} from "../store/loadingStateStore"
+import {useLoadingState} from "../store"
 import {BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
 import {executeApi} from "../utils/executeApi"
 /**

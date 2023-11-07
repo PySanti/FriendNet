@@ -1,6 +1,6 @@
 import {PropTypes} from "prop-types"
 import "../styles/UserFilter.css"
-import {useUsersList} from "../store/usersListStore"
+import {useUsersList} from "../store"
 
 
 /**

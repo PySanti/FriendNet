@@ -1,6 +1,6 @@
 import { UserPhoto } from "./UserPhoto";
 import "../styles/ChattingUserHeader.css"
-import {useClickedUser} from "../store/clickedUserStore"
+import {useClickedUser} from "../store"
 
 
 /**

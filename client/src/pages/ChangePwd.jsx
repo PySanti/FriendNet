@@ -12,7 +12,7 @@ import { PasswordField } from "../components/PasswordField";
 import { v4 } from "uuid";
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {executeApi} from "../utils/executeApi"
-import {useLoadingState} from "../store/loadingStateStore"
+import {useLoadingState} from "../store"
 
 
 /**

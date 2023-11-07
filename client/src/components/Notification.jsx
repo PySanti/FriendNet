@@ -1,6 +1,6 @@
 import {updateClickedUser} from "../utils/updateClickedUser"
-import {useClickedUser} from "../store/clickedUserStore"
-import {useLastClickedUser} from "../store/lastClickedUserStore"
+import {useClickedUser} from "../store"
+import {useLastClickedUser} from "../store"
 import {PropTypes} from "prop-types"
 import "../styles/Notification.css"
 
