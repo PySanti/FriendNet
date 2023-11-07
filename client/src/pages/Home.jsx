@@ -17,6 +17,11 @@ import {useLastClickedUser} from "../store/lastClickedUserStore"
 import {useUsersList} from "../store/usersListStore"
 import {useUsersIdList} from "../store/usersIdListStore"
 import {useNotificationsIdsCached} from "../store/notificationsIdCachedStore"
+import {useUsersListPage} from "../store/usersListPageStore"
+import {useNoMoreUsers} from "../store/noMoreUsersStore"
+// import { destroy } from 'zustand';
+
+
 
 /**
  * Pagina principal del sitio
@@ -29,7 +34,8 @@ export function Home() {
     let setUsersList                    = useUsersList((state)=>(state.setUsersList))
     let setUsersIdList                  = useUsersIdList((state)=>state.setUsersIdList)
     let setNotificationsIdsCached       = useNotificationsIdsCached((state)=>state.setNotificationsIdsCached)
-
+    let setUsersListPage                = useUsersListPage((state)=>state.setUsersListPage)
+    let setNoMoreUsers                  = useNoMoreUsers((state)=>state.setNoMoreUsers)
     useEffect(()=>{
         return ()=>{
             // esto se ejecutara cuando el componente sea desmontado
@@ -41,6 +47,12 @@ export function Home() {
     }, [])
     const logoutHandler = ()=>{
         logoutUser(navigate)
+        // Limpia todos los estados globales
+        // destroy();
+        setUsersListPage(1)
+        setNoMoreUsers(false)
+        setUsersIdList([])
+        setUsersList([])
         setNotificationsIdsCached(false)
     }
     if (!userIsAuthenticated()){
