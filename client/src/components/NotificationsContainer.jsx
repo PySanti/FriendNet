@@ -55,12 +55,12 @@ export function NotificationsContainer(){
     }, [notifications])
 
     useEffect(()=>{
-        if (!NOTIFICATIONS_WEBSOCKET.current && userData){
-            NotificationsWSInitialize(userData.id, setNotificationsIdsCached)
-        }
         const localStorageNotifications = getNotificationsFromLocalStorage()
         if (notifications.length == 0 && localStorageNotifications){
             setNotifications(localStorageNotifications)
+        }
+        if (!NOTIFICATIONS_WEBSOCKET.current && userData){
+            NotificationsWSInitialize(userData.id, setNotificationsIdsCached)
         }
     }, [])
     return (

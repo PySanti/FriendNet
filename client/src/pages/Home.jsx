@@ -19,6 +19,7 @@ import {useUsersIdList} from "../store/usersIdListStore"
 import {useNotificationsIdsCached} from "../store/notificationsIdCachedStore"
 import {useUsersListPage} from "../store/usersListPageStore"
 import {useNoMoreUsers} from "../store/noMoreUsersStore"
+import {useNotifications} from "../store/notificationsStore"
 // import { destroy } from 'zustand';
 
 
@@ -36,6 +37,7 @@ export function Home() {
     let setNotificationsIdsCached       = useNotificationsIdsCached((state)=>state.setNotificationsIdsCached)
     let setUsersListPage                = useUsersListPage((state)=>state.setUsersListPage)
     let setNoMoreUsers                  = useNoMoreUsers((state)=>state.setNoMoreUsers)
+    let setNotifications                = useNotifications((state)=>state.setNotifications)
     useEffect(()=>{
         return ()=>{
             // esto se ejecutara cuando el componente sea desmontado
@@ -52,6 +54,7 @@ export function Home() {
         setUsersListPage(1)
         setNoMoreUsers(false)
         setUsersIdList([])
+        setNotifications([])
         setUsersList([])
         setNotificationsIdsCached(false)
     }
