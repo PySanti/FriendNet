@@ -138,7 +138,7 @@ class GetUsersListAPI(APIView):
                 users_list = Usuarios.objects.filter(is_active=True).exclude(id=serialized_data.data['session_user_id'])
                 if 'user_keyword' in serialized_data.data:
                     users_list = users_list.filter(username__icontains=serialized_data.data['user_keyword'])
-                if senders_notifications_ids:
+                if senders_notifications_ids != None:
                     users_list = users_list.order_by(
                         Case(
                             When(id__in=senders_notifications_ids, then=0),

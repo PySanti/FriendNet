@@ -78,8 +78,6 @@ function App() {
             })
             setUsersList(usersList)
           }
-        } else if (data.type === "notifications_ids_cached_inform"){
-          setNotificationsIdsCached(true)
         }
       }
     }

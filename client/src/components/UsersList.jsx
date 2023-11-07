@@ -78,6 +78,9 @@ export function UsersList(){
     const formatingFunction = (user)=>{
         return <UserButton key={v4()}user={user}  />
     }
+    useEffect(()=>{
+        console.log(usersList)
+    }, [usersList])
     const scrollDetector = async (event)=>{
         if (canChargeUsersList(event) && notificationsIdsCached){
             updateScrollDetectorBlock()
