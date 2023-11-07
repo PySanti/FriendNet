@@ -36,8 +36,6 @@ export function Home() {
             setClickedUser(null)
             setLastClickedUser(null)
             setMessagesHistorial([])
-            setUsersIdList([])
-            setUsersList([])
             disconnectWebsocket(CHAT_WEBSOCKET)
         }
     }, [])
