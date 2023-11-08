@@ -24,11 +24,11 @@ export function Home() {
     useEffect(()=>{
         return ()=>{
             // esto se ejecutara cuando el componente sea desmontado
-            resetSomeStates(["useClickedUser", "useLastClickedUser", "useMessagesHistorial"])
+            resetSomeGlobalStates(["useClickedUser", "useLastClickedUser", "useMessagesHistorial"])
             disconnectWebsocket(CHAT_WEBSOCKET)
         }
     }, [])
-    const resetSomeStates = (statesList)=>{
+    const resetSomeGlobalStates = (statesList)=>{
         Object.keys(states).forEach(key=>{
             if (statesList.includes(key)){
                 console.log(`Reseteando ${key}`)
