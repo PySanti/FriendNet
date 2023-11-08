@@ -24,7 +24,7 @@ from .utils.constants import (
     BASE_RATE_LIMIT_TIMER,
     BASE_RATE_LIMIT_KEY
 )
-from django.core.mail import send_mail
+from .utils.send_activation_mail import send_activation_mail
 from django.contrib.auth.hashers import (
     check_password
 )
@@ -202,12 +202,11 @@ class SendActivationEmailAPI(APIView):
         serialized_data = self.serializer_class(data=request.data)
         if (serialized_data.is_valid()):
             try:
-                send_mail(
-                    subject         =   "Activa tu cuenta", 
-                    message         =   f"Codigo : {serialized_data.data['activation_code']}", 
-                    from_email      =   "friendnetcorp@gmail.com", 
-                    recipient_list  =   [serialized_data.data['user_email']])
+                send_activation_mail(
+                    email               =   serialized_data.data['user_email'], 
+                    activation_code     =   serialized_data.data['activation_code'])
                 return Response({"email_sended" : True}, status.HTTP_200_OK)
+            
             except Exception:
                 return BASE_UNEXPECTED_ERROR_RESPONSE
         else:
