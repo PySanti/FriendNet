@@ -2,9 +2,18 @@
 from __future__ import print_function
 import sib_api_v3_sdk
 from sib_api_v3_sdk.rest import ApiException
+import json
+from pathlib import Path
+from datetime import timedelta
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+with open(BASE_DIR / "../../secrets.json", 'r') as f:
+    BREVO_KEY = json.load(f)["BREVO_KEY"]
 
 configuration = sib_api_v3_sdk.Configuration()
-configuration.api_key['api-key'] = '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'
+configuration.api_key['api-key'] = BREVO_KEY
 api_instance    = sib_api_v3_sdk.TransactionalEmailsApi(sib_api_v3_sdk.ApiClient(configuration))
 
 subject         = "from the Python SDK!"
