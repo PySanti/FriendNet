@@ -32,23 +32,11 @@ export function Home() {
         Object.keys(states).forEach(key=>{
             if (statesList.includes(key)){
                 console.log(`Reseteando ${key}`)
-                resetState(states[key])
+                if (states[key].getState().reset){
+                    states[key].getState().reset()
+                }
             }
         })
-    }
-    const resetState = (state)=>{
-        if (state.getState().reset){
-            state.getState().reset()
-        }
-    }
-    const resetAllGlobalStates = ()=>{
-        Object.keys(states).forEach(key => {
-            resetState(states[key])
-        });
-    }
-    const logoutHandler = ()=>{
-        logoutUser(navigate)
-        resetAllGlobalStates()
     }
     if (!userIsAuthenticated()){
         return <UserNotLogged msg="No puedes acceder al Home si aun no has iniciado sesión o no tienes cuenta"/>
@@ -59,7 +47,7 @@ export function Home() {
                     <Header msg="En el home"/>
                     <div className="buttons-container">
                         <NotificationsContainer/>
-                        <Button buttonText="Salir" onClickFunction={logoutHandler}/>
+                        <Button buttonText="Salir" onClickFunction={()=>logoutUser(navigate)}/>
                         <Button buttonText="Perfil" onClickFunction={()=>{navigate('/home/profile/')}}/>
                     </div>
                     <div className="users-interface-container">

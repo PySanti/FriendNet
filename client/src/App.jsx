@@ -12,17 +12,12 @@ import {NOTIFICATIONS_WEBSOCKET} from "./utils/constants"
 import {getUserDataFromLocalStorage} from "./utils/getUserDataFromLocalStorage"
 import {NotificationsWSInitialize} from "./utils/NotificationsWSInitialize"
 import {userIsAuthenticated} from "./utils/userIsAuthenticated"
-import {useUsersList} from "./store"
-import {useClickedUser} from "./store"
-import {useLastClickedUser} from "./store"
-import {useNotifications} from "./store"
 import {NotificationsWSCanBeUpdated} from "./utils/NotificationsWSCanBeUpdated"
 import {saveNotificationsInLocalStorage} from "./utils/saveNotificationsInLocalStorage"
 import {logoutUser} from "./utils/logoutUser"
 import {Page404} from "./pages/Page404"
-import {useNotificationsIdsCached} from "./store"
 import {shiftUser} from "./utils/shiftUser"
-import {useUsersIdList} from "./store"
+import * as states from "./store"
 /**
 /**
  * Toda la implementacion que tenemos del websocket de notificaciones en el app.jsx
@@ -31,15 +26,29 @@ import {useUsersIdList} from "./store"
  */
 
 function App() {
-  let [notifications, setNotifications] = useNotifications((state)=>([state.notifications, state.setNotifications]))
-  let [usersList, setUsersList] = useUsersList((state)=>([state.usersList, state.setUsersList]))
-  let [clickedUser, setClickedUser] = useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
-  let setLastClickedUser = useLastClickedUser((state)=>(state.setLastClickedUser))
-  let setNotificationsIdsCached = useNotificationsIdsCached((state)=>state.setNotificationsIdsCached)
-  let [usersIdList, setUsersIdList] = useUsersIdList((state)=>[state.usersIdList, state.setUsersIdList])
+  let [notifications, setNotifications] = states.useNotifications((state)=>([state.notifications, state.setNotifications]))
+  let [usersList, setUsersList]         = states.useUsersList((state)=>([state.usersList, state.setUsersList]))
+  let [clickedUser, setClickedUser]     = states.useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
+  let setLastClickedUser                = states.useLastClickedUser((state)=>(state.setLastClickedUser))
+  let setNotificationsIdsCached         = states.useNotificationsIdsCached((state)=>state.setNotificationsIdsCached)
+  let [usersIdList, setUsersIdList]     = states.useUsersIdList((state)=>[state.usersIdList, state.setUsersIdList])
+  const resetAllGlobalStates = ()=>{
+    Object.keys(states).forEach(key => {
+      const state = states[key]
+      if (state.getState().reset){
+        console.log(`Reseteando states para close del Notifications WS: ${key}`)
+        state.getState().reset()
+      }
+    });
+  }
   useEffect(()=>{
     if (!NOTIFICATIONS_WEBSOCKET.current && userIsAuthenticated()){
       NotificationsWSInitialize(getUserDataFromLocalStorage().id, setNotificationsIdsCached)
+    }
+    if (NOTIFICATIONS_WEBSOCKET.current){
+      NOTIFICATIONS_WEBSOCKET.current.onclose = ()=>{
+        resetAllGlobalStates()
+      }
     }
   }, [])
   useEffect(()=>{
