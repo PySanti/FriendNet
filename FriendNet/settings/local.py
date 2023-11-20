@@ -19,15 +19,6 @@ SECRET_KEY = SECRETS['KEY']
 # exception Handling 
 
 # Configuración del backend de correo electrónico
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# Configuración del servidor SMTP
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-# Credenciales de inicio de sesión del servidor SMTP
-EMAIL_HOST_USER = "friendnetcorp@gmail.com"
-EMAIL_HOST_PASSWORD = SECRETS['EMAIL_PASSWORD']
-
 CLOUDINARY_URL = f'cloudinary://{SECRETS["CLOUDINARY__API_KEY"]}:{SECRETS["CLOUDINARY__API_SECRET"]}@{SECRETS["CLOUDINARY__CLOUD_NAME"]}'    
 
 WSGI_APPLICATION = 'FriendNet.wsgi.application'
