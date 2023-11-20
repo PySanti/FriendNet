@@ -50,7 +50,7 @@ class GetUsersListSerializer(serializers.Serializer):
 class SendActivationEmailSerializer(serializers.Serializer):
     username = serializers.CharField()
     user_email = serializers.EmailField()
-    activation_code = serializers.IntegerField()
+    activation_code = serializers.CharField()
 
 
 class EnterChatSerializer(serializers.Serializer):
