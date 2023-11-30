@@ -63,12 +63,12 @@ export function UsersList(){
             setUsersList(usersList)
         }
     }
-    const loadUsersList = async ()=>{
-        if (usersListPage > 1 ){
+    const loadUsersList = async (page)=>{
+        if (page > 1 ){
             setLoaderActivated(true)
         }
         const response = await executeApi(async ()=>{
-            return await getUsersListAPI(voidUserKeyword() ? undefined : userKeyword, getUserDataFromLocalStorage().id, usersListPage)
+            return await getUsersListAPI(voidUserKeyword() ? undefined : userKeyword, getUserDataFromLocalStorage().id, page)
         }, navigate,setLoadingState )
         if (response){
             if (response.status == 200){
@@ -90,7 +90,7 @@ export function UsersList(){
     const scrollDetector = async (event)=>{
         if (canChargeUsersList(event) && notificationsIdsCached){
             updateScrollDetectorBlock()
-            await loadUsersList()
+            await loadUsersList(usersListPage)
             setUsersListPage(usersListPage+1)
         }
     }
@@ -98,7 +98,7 @@ export function UsersList(){
         if (userIsAuthenticated()  && notificationsIdsCached && !firstUsersListCall){
             (async function() {
                 console.log('Obteniendo primera pagina de la usersList')
-                await loadUsersList()
+                await loadUsersList(1)
                 setUsersListPage(2)
                 setFirstUsersListCall(true)
             })()
@@ -109,7 +109,7 @@ export function UsersList(){
             (async function(){
                 setNoMoreUsers(false)
                 setUsersListPage(1)
-                await loadUsersList()
+                await loadUsersList(1)
             })()
         }
     }, [userKeyword])
