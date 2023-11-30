@@ -5,5 +5,5 @@ import moment from "moment"
  * de los mensajes
  */
 export function formatedMessageDate(stringed_date){
-    return moment(stringed_date).format("MMM D YYYY, h:mm a");
+    return moment(stringed_date).format("MMM D, YYYY, h:mm a");
 }

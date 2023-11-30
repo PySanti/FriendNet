@@ -1,5 +1,6 @@
 .message-content{
     font-size: 18px;
+    margin-bottom: .4rem;
 }
 .message{
     margin-top: .3rem;
@@ -16,4 +17,9 @@
     background-color : rgb(77, 144, 77);
     align-self: flex-start;
     border-bottom-left-radius: 0px;
+}
+
+.message-date{
+    color : #333;
+    font-size: 0.5rem;
 }
