@@ -58,12 +58,11 @@ function App() {
         console.log(data)
         if (data.type == "new_notification"){
             if (data.value.new_notification.sender_user.id != getUserDataFromLocalStorage().id){
-                const updatedNotifications = [...notifications, data.value.new_notification]
-                setNotifications(updatedNotifications)
-                saveNotificationsInLocalStorage(updatedNotifications)
-                shiftUser(usersList, setUsersList, data.value.new_notification.sender_user, usersIdList, setUsersIdList)
-                }
-
+              const updatedNotifications = [...notifications, data.value.new_notification]
+              setNotifications(updatedNotifications)
+              saveNotificationsInLocalStorage(updatedNotifications)
+              shiftUser(usersList, setUsersList, data.value.new_notification.sender_user, usersIdList, setUsersIdList)
+            }
         } else if (data.type == "connection_error"){
             logoutUser(undefined)
         } else  if (data.type === "updated_user"){

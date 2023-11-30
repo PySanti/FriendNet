@@ -14,5 +14,7 @@ export function shiftUser(usersList, usersListSetter, newUser, usersIdList, user
         usersIdListSetter(usersIdList.concat([newUser.id]))
     }
     usersList.unshift(newUser)
+    console.log(usersList)
+    console.log(usersIdList.concat([newUser.id]))
     usersListSetter(usersList)
 }

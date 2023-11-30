@@ -85,3 +85,10 @@ export const useChatGlobeList = create((set)=>({
     setChatGlobeList : (newChatGlobeList)=>(set(()=>({chatGlobeList : newChatGlobeList}))),
     reset : ()=>(set(()=>({clickedUser : []})))
 }))
+
+export const useFirstUsersListCall = create((set)=>({
+    firstUsersListCall : false,
+    setFirstUsersListCall : (new_val)=>(set(()=>({firstUsersListCall : new_val}))),
+    reset : ()=>(set(()=>({firstUsersListCall: false})))
+}))
+

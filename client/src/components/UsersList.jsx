@@ -13,7 +13,7 @@ import {useNavigate} from "react-router-dom"
 import {useUsersIdList} from "../store"
 import {useUsersListPage} from "../store"
 import {useNoMoreUsers} from "../store"
-
+import {useFirstUsersListCall} from "../store"
 import {useNotificationsIdsCached} from "../store"
 /**
  * Recibe la lista de usuarios directa de la api y retorna la lista de elementos jsx
@@ -28,6 +28,7 @@ export function UsersList(){
     let [usersList, setUsersList]                                   = useUsersList((state)=>([state.usersList, state.setUsersList]))
     let [ userKeyword, setUserKeyword]                              = useState(undefined)
     let [scrollDetectorBlock, setScrollDetectorBlock]               = useState(false)
+    let [firstUsersListCall, setFirstUsersListCall]                 = useFirstUsersListCall((state)=>[state.firstUsersListCall, state.setFirstUsersListCall])
     let notificationsIdsCached                                      = useNotificationsIdsCached((state)=>state.notificationsIdsCached)
     const navigate = useNavigate()
     const canChargeUsersList = (event)=>{
@@ -39,8 +40,11 @@ export function UsersList(){
             setScrollDetectorBlock(false)
         }, 1000);
     }
+    const voidUserKeyword = ()=>{
+        return !userKeyword || userKeyword.length == 0
+    }
     const updateUsers = (new_users_list)=>{
-        if (usersListPage === 1){
+        if (!voidUserKeyword()){
             setUsersIdList(new_users_list.map(user=>{
                 return user.id
             }))
@@ -64,7 +68,7 @@ export function UsersList(){
             setLoaderActivated(true)
         }
         const response = await executeApi(async ()=>{
-            return await getUsersListAPI(!userKeyword || userKeyword.length === 0 ? undefined : userKeyword, getUserDataFromLocalStorage().id, usersListPage)
+            return await getUsersListAPI(voidUserKeyword() ? undefined : userKeyword, getUserDataFromLocalStorage().id, usersListPage)
         }, navigate,setLoadingState )
         if (response){
             if (response.status == 200){
@@ -91,10 +95,12 @@ export function UsersList(){
         }
     }
     useEffect(()=>{
-        if (userIsAuthenticated() && usersList.length === 0 && notificationsIdsCached){
+        if (userIsAuthenticated()  && notificationsIdsCached && !firstUsersListCall){
             (async function() {
+                console.log('Obteniendo primera pagina de la usersList')
                 await loadUsersList()
                 setUsersListPage(2)
+                setFirstUsersListCall(true)
             })()
         }
     }, [notificationsIdsCached])
