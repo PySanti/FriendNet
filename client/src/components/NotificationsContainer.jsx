@@ -18,7 +18,6 @@ import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotification
 import {getNotificationsFromLocalStorage} from "../utils/getNotificationsFromLocalStorage"
 import {useNotifications} from "../store"
 import {useNotificationsIdsCached} from "../store"
-
 /**
  * Componente creado para contener las notificaciones del usuarios
  */

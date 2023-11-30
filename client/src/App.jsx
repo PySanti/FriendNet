@@ -32,22 +32,10 @@ function App() {
   let setLastClickedUser                = states.useLastClickedUser((state)=>(state.setLastClickedUser))
   let setNotificationsIdsCached         = states.useNotificationsIdsCached((state)=>state.setNotificationsIdsCached)
   let [usersIdList, setUsersIdList]     = states.useUsersIdList((state)=>[state.usersIdList, state.setUsersIdList])
-  const resetAllGlobalStates = ()=>{
-    Object.keys(states).forEach(key => {
-      const state = states[key]
-      if (state.getState().reset){
-        state.getState().reset()
-      }
-    });
-  }
+
   useEffect(()=>{
     if (!NOTIFICATIONS_WEBSOCKET.current && userIsAuthenticated()){
       NotificationsWSInitialize(getUserDataFromLocalStorage().id, setNotificationsIdsCached)
-    }
-    if (NOTIFICATIONS_WEBSOCKET.current){
-      NOTIFICATIONS_WEBSOCKET.current.onclose = ()=>{
-        resetAllGlobalStates()
-      }
     }
   }, [])
   useEffect(()=>{
@@ -95,7 +83,9 @@ function App() {
         <Route 
           exact 
           path="/"                   
-          element={<Root />}/>
+          element={
+            <Root />
+        }/>
         <Route 
           exact 
           path="/signup/"            

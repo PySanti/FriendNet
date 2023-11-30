@@ -44,7 +44,7 @@ export function UsersList(){
         return !userKeyword || userKeyword.length == 0
     }
     const updateUsers = (new_users_list)=>{
-        if (!voidUserKeyword()){
+        if (!voidUserKeyword() || voidUserKeyword() && usersListPage==1){
             setUsersIdList(new_users_list.map(user=>{
                 return user.id
             }))

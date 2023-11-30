@@ -11,9 +11,8 @@ import { Button } from "../components/Button"
 import "../styles/Home.css"
 import {disconnectWebsocket} from "../utils/disconnectWebsocket" 
 import {CHAT_WEBSOCKET} from "../utils/constants"
-import * as states from "../store"
 // import { destroy } from 'zustand';
-
+import {resetGlobalStates} from "../utils/resetGlobalStates"
 
 
 /**
@@ -24,19 +23,11 @@ export function Home() {
     useEffect(()=>{
         return ()=>{
             // esto se ejecutara cuando el componente sea desmontado
-            resetSomeGlobalStates(["useClickedUser", "useLastClickedUser", "useMessagesHistorial"])
+            resetGlobalStates(["useClickedUser", "useLastClickedUser", "useMessagesHistorial"])
             disconnectWebsocket(CHAT_WEBSOCKET)
         }
     }, [])
-    const resetSomeGlobalStates = (statesList)=>{
-        Object.keys(states).forEach(key=>{
-            if (statesList.includes(key)){
-                if (states[key].getState().reset){
-                    states[key].getState().reset()
-                }
-            }
-        })
-    }
+
     if (!userIsAuthenticated()){
         return <UserNotLogged msg="No puedes acceder al Home si aun no has iniciado sesión o no tienes cuenta"/>
     } else {

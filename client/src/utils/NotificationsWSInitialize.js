@@ -1,6 +1,7 @@
 import {NOTIFICATIONS_WEBSOCKET} from "../utils/constants"
 import {NOTIFICATIONS_WEBSOCKET_ENDPOINT} from "../utils/constants"
 import {NotificationsWSGroupCreationMsg} from "../utils/NotificationsWSGroupCreationMsg"
+import {resetGlobalStates} from "../utils/resetGlobalStates"
 /**
  * Inicializa el websocket de notificaciones
  */
@@ -10,5 +11,8 @@ export function NotificationsWSInitialize(userId, setNotificationsIdsCached){
         console.log('Estableciendo conexion')
         NOTIFICATIONS_WEBSOCKET.current.send(NotificationsWSGroupCreationMsg(userId))
         setNotificationsIdsCached(true)
+        NOTIFICATIONS_WEBSOCKET.current.onclose = ()=>{
+            resetGlobalStates(undefined)
+        }
     }
 }

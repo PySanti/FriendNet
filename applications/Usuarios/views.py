@@ -54,7 +54,6 @@ from applications.Notifications.models import Notifications
 from django_ratelimit.decorators import ratelimit 
 from django.utils.decorators import method_decorator
 from .websockets.ws_utils.broadcast_updated_user import broadcast_updated_user
-from django.core.cache import cache
 from .utils.handle_initial_notification_ids import handle_initial_notification_ids
 from .utils.add_istyping_field import add_istyping_field
 # non - secured api's
