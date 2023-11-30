@@ -1,7 +1,6 @@
 import "../styles/Message.css"
 import {PropTypes} from "prop-types"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
-import {formatedMessageDate} from "../utils/formatedMessageDate"
 
 /**
  *  Componente creado para mensajes individuales 
@@ -12,7 +11,7 @@ export function Message({messageObj}){
     return (
         <div className={messageObj.parent_id == getUserDataFromLocalStorage().id ? `${messageCls} session-msg` :  `${messageCls} not-session-msg` }>
             <h3 className="message-content">{messageObj.content}</h3>
-            <h3 className="message-date">{formatedMessageDate(messageObj.created_at)}</h3>
+            <h3 className="message-date">{messageObj.created_at}</h3>
         </div>
     )
 }
