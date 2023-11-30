@@ -86,8 +86,6 @@ export function Chat(){
         if (CHAT_WEBSOCKET.current){
             CHAT_WEBSOCKET.current.onmessage = (event) => {
                 const data = JSON.parse(event.data)
-                console.log('Recibiendo datos a traves del websocket de mensajes')
-                console.log(data)
                 if (data.type === "message_broadcast"){
                     if (Number(data.value.parent_id) !== Number(userData.id)){
                         setMessagesHistorial([...messagesHistorial, data.value])

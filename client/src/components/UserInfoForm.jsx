@@ -40,7 +40,6 @@ export function UserInfoForm({ userData, onFormSubmit, extraButtons}) {
         };
     };
     useEffect(() => {
-        console.log("El usuario ha cambiado su imagen en el server");
         // de esta manera, se deberia actualizar el estado cada vez que cambie la url del usuario
         setCurrentPhotoFile(userData ? userData.photo_link : null);
     }, [userData]);

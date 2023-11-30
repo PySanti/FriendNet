@@ -31,7 +31,6 @@ export function Home() {
     const resetSomeGlobalStates = (statesList)=>{
         Object.keys(states).forEach(key=>{
             if (statesList.includes(key)){
-                console.log(`Reseteando ${key}`)
                 if (states[key].getState().reset){
                     states[key].getState().reset()
                 }

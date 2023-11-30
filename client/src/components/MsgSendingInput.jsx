@@ -13,7 +13,6 @@ import {NotificationsWSTypingInformMsg} from "../utils/NotificationsWSTypingInfo
  */
 export function MsgSendingInput({onMsgSending}){
     let clickedUser                     = useClickedUser((state)=>state.clickedUser)
-    let [userIsTyping, setUserIsTyping] = useState(false)
     let currentTimeoutNumber            = useRef(null); 
     let {register, handleSubmit, reset} = useForm()
     let [clickedUserWhenTyping, setClickedUserWhenTyping] = useState(null)
@@ -26,27 +25,26 @@ export function MsgSendingInput({onMsgSending}){
         }
     })
     useEffect(()=>{
-        if (NOTIFICATIONS_WEBSOCKET.current && userData && clickedUserWhenTyping && userIsTyping){
-            NOTIFICATIONS_WEBSOCKET.current.send(NotificationsWSTypingInformMsg(clickedUserWhenTyping.id, userIsTyping))
+        if (NOTIFICATIONS_WEBSOCKET.current && userData && clickedUserWhenTyping){
+            NOTIFICATIONS_WEBSOCKET.current.send(NotificationsWSTypingInformMsg(clickedUserWhenTyping.id, true))
         }
-    }, [userIsTyping])
+    }, [clickedUserWhenTyping])
     useEffect(()=>{
         reset()
     }, [clickedUser])
     const handleMsgSendingInput = (e)=>{
         setClickedUserWhenTyping(clickedUser)
-        setUserIsTyping(true)
         if (currentTimeoutNumber.current){
             clearTimeout(currentTimeoutNumber.current)
         }
         currentTimeoutNumber.current = (setTimeout(() => {
-            setUserIsTyping(false)
+            setClickedUserWhenTyping(null)
             /**
              * Recordar que en este punto, llamamos a la funcion desde aca,
              * para evitar errores cuando se desmonte la pagina por entrar al profile por ejemplo
             */
             if (NOTIFICATIONS_WEBSOCKET.current){
-                NOTIFICATIONS_WEBSOCKET.current.send(NotificationsWSTypingInformMsg(clickedUserWhenTyping.id, false))
+                NOTIFICATIONS_WEBSOCKET.current.send(NotificationsWSTypingInformMsg(clickedUser.id, false))
             }
         }, 600))
     }

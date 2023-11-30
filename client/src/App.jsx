@@ -36,7 +36,6 @@ function App() {
     Object.keys(states).forEach(key => {
       const state = states[key]
       if (state.getState().reset){
-        console.log(`Reseteando states para close del Notifications WS: ${key}`)
         state.getState().reset()
       }
     });
