@@ -29,8 +29,7 @@ class NotificationsWSConsumer(WebsocketConsumer):
                 async_to_sync(self.channel_layer.group_send)(str(data['value']["name"]),{"type" : "broadcast_connection_error_handler"})
             else:
                 session_user = Usuarios.objects.get(id=int(data['value']['name']))
-                initial_notifications_list = [a['sender_user_id'] for a in list(session_user.notifications.values('sender_user_id'))] 
-                handle_initial_notification_ids('post', session_user.id,initial_notifications_list )
+
                 broadcast_connection_inform(user_id=data['value']["name"], connected=True)
         if (data["type"] == "typing_inform"):
             value = data["value"]

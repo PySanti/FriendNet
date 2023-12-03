@@ -46,12 +46,6 @@ export const useNoMoreUsers = create((set)=>({
 }))
 
 
-export const useNotificationsIdsCached = create((set)=>({
-    notificationsIdsCached : false,
-    setNotificationsIdsCached : (notificationsIdsCached)=>(set(()=>({notificationsIdsCached : notificationsIdsCached}))),
-    reset : ()=>(set(()=>({notificationsIdsCached : false})))
-}))
-
 
 export const useMessagesHistorial = create((set)=>({
     messagesHistorial : [],

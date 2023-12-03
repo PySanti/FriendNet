@@ -30,12 +30,11 @@ function App() {
   let [usersList, setUsersList]         = states.useUsersList((state)=>([state.usersList, state.setUsersList]))
   let [clickedUser, setClickedUser]     = states.useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
   let setLastClickedUser                = states.useLastClickedUser((state)=>(state.setLastClickedUser))
-  let setNotificationsIdsCached         = states.useNotificationsIdsCached((state)=>state.setNotificationsIdsCached)
   let [usersIdList, setUsersIdList]     = states.useUsersIdList((state)=>[state.usersIdList, state.setUsersIdList])
 
   useEffect(()=>{
     if (!NOTIFICATIONS_WEBSOCKET.current && userIsAuthenticated()){
-      NotificationsWSInitialize(getUserDataFromLocalStorage().id, setNotificationsIdsCached)
+      NotificationsWSInitialize(getUserDataFromLocalStorage().id)
     }
   }, [])
   useEffect(()=>{

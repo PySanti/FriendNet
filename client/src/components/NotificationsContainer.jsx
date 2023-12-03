@@ -17,7 +17,6 @@ import {useLoadingState} from "../store"
 import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotifications"
 import {getNotificationsFromLocalStorage} from "../utils/getNotificationsFromLocalStorage"
 import {useNotifications} from "../store"
-import {useNotificationsIdsCached} from "../store"
 /**
  * Componente creado para contener las notificaciones del usuarios
  */
@@ -29,7 +28,6 @@ export function NotificationsContainer(){
     const notificationListCls = "notification-list"
     const navigate = useNavigate()
     const [setLoadingState, successfullyLoaded] = useLoadingState((state)=>([state.setLoadingState, state.successfullyLoaded]))
-    let setNotificationsIdsCached                                      = useNotificationsIdsCached((state)=>state.setNotificationsIdsCached)
 
 
     const onNotificationDelete = async (notification)=>{
@@ -59,7 +57,7 @@ export function NotificationsContainer(){
             setNotifications(localStorageNotifications)
         }
         if (!NOTIFICATIONS_WEBSOCKET.current && userData){
-            NotificationsWSInitialize(userData.id, setNotificationsIdsCached)
+            NotificationsWSInitialize(userData.id)
         }
     }, [])
     return (

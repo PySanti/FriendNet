@@ -14,7 +14,6 @@ import {useUsersIdList} from "../store"
 import {useUsersListPage} from "../store"
 import {useNoMoreUsers} from "../store"
 import {useFirstUsersListCall} from "../store"
-import {useNotificationsIdsCached} from "../store"
 /**
  * Recibe la lista de usuarios directa de la api y retorna la lista de elementos jsx
  */
@@ -29,7 +28,6 @@ export function UsersList(){
     let [ userKeyword, setUserKeyword]                              = useState(undefined)
     let [scrollDetectorBlock, setScrollDetectorBlock]               = useState(false)
     let [firstUsersListCall, setFirstUsersListCall]                 = useFirstUsersListCall((state)=>[state.firstUsersListCall, state.setFirstUsersListCall])
-    let notificationsIdsCached                                      = useNotificationsIdsCached((state)=>state.notificationsIdsCached)
     const navigate = useNavigate()
     const canChargeUsersList = (event)=>{
         return ((event.target.scrollTop + event.target.clientHeight) >= event.target.scrollHeight) && (!scrollDetectorBlock) && (!noMoreUsers)
@@ -44,7 +42,7 @@ export function UsersList(){
         return !userKeyword || userKeyword.length == 0
     }
     const updateUsers = (new_users_list)=>{
-        if (!voidUserKeyword() || voidUserKeyword() && usersListPage==1){
+        if (!voidUserKeyword() || (voidUserKeyword() && usersListPage==1)){
             setUsersIdList(new_users_list.map(user=>{
                 return user.id
             }))
@@ -88,14 +86,14 @@ export function UsersList(){
         console.log(usersList)
     }, [usersList])
     const scrollDetector = async (event)=>{
-        if (canChargeUsersList(event) && notificationsIdsCached){
+        if (canChargeUsersList(event)){
             updateScrollDetectorBlock()
             await loadUsersList(usersListPage)
             setUsersListPage(usersListPage+1)
         }
     }
     useEffect(()=>{
-        if (userIsAuthenticated()  && notificationsIdsCached && !firstUsersListCall){
+        if (userIsAuthenticated()  && !firstUsersListCall){
             (async function() {
                 console.log('Obteniendo primera pagina de la usersList')
                 await loadUsersList(1)
@@ -103,9 +101,9 @@ export function UsersList(){
                 setFirstUsersListCall(true)
             })()
         }
-    }, [notificationsIdsCached])
+    }, [])
     useEffect(()=>{
-        if (userKeyword !== undefined && notificationsIdsCached){ // si userKeyword esta inicializado ...
+        if (userKeyword !== undefined){ // si userKeyword esta inicializado ...
             (async function(){
                 setNoMoreUsers(false)
                 setUsersListPage(1)
