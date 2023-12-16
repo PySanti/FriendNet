@@ -15,8 +15,9 @@ import {executeApi} from "../utils/executeApi"
 import {notificationDeleteAPI} from "../api/notificationDelete.api"
 import {useLoadingState} from "../store"
 import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotifications"
-import {getNotificationsFromLocalStorage} from "../utils/getNotificationsFromLocalStorage"
 import {useNotifications} from "../store"
+import {initializeNotifications} from "../utils/initializeNotifications"
+
 /**
  * Componente creado para contener las notificaciones del usuarios
  */
@@ -52,10 +53,7 @@ export function NotificationsContainer(){
     }, [notifications])
 
     useEffect(()=>{
-        const localStorageNotifications = getNotificationsFromLocalStorage()
-        if (notifications.length == 0 && localStorageNotifications){
-            setNotifications(localStorageNotifications)
-        }
+        initializeNotifications(notifications, setNotifications)
         if (!NOTIFICATIONS_WEBSOCKET.current && userData){
             NotificationsWSInitialize(userData.id)
         }
