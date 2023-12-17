@@ -1,6 +1,6 @@
 import {useState, useEffect, useRef} from "react"
 import { MessagesContainer } from "./MessagesContainer"
-import { ChattingUserHeader } from "./ChatingUserHeader"
+import { ClickedUserHeader } from "./ClickedUserHeader"
 import { MsgSendingInput } from "./MsgSendingInput"
 import {CHAT_WEBSOCKET} from "../utils/constants"
 import {ChatWSGroupCreationMsg}         from "../utils/ChatWSGroupCreationMsg"
@@ -104,7 +104,7 @@ export function Chat(){
 
     return (
         <div className="chat-container">
-            {clickedUser  && <ChattingUserHeader/>}
+            {clickedUser  && <ClickedUserHeader/>}
             <MessagesContainer newMsg={newMsg}  messagesHistorialPage={messagesHistorialPage} noMoreMessages={noMoreMessages}/>
             {clickedUser && <MsgSendingInput onMsgSending={(newMsg)=>setNewMsg(newMsg)}/>}
         </div>

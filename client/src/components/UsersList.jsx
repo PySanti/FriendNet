@@ -52,11 +52,8 @@ export function UsersList(){
                 if (!usersIdList.includes(user.id)){
                     usersList.push(user)
                     usersIdList.push(user.id)
-                } else {
-                    console.log(`${user.username} ya esta en la lista, no se agregara`)
                 }
             });
-            console.log(usersIdList)
             setUsersIdList(usersIdList)
             setUsersList(usersList)
         }
@@ -82,9 +79,6 @@ export function UsersList(){
     const formatingFunction = (user)=>{
         return <UserButton key={v4()}user={user}  />
     }
-    useEffect(()=>{
-        console.log(usersList)
-    }, [usersList])
     const scrollDetector = async (event)=>{
         if (canChargeUsersList(event)){
             updateScrollDetectorBlock()
@@ -95,7 +89,6 @@ export function UsersList(){
     useEffect(()=>{
         if (userIsAuthenticated()  && !firstUsersListCall){
             (async function() {
-                console.log('Obteniendo primera pagina de la usersList')
                 await loadUsersList(1)
                 setUsersListPage(2)
                 setFirstUsersListCall(true)

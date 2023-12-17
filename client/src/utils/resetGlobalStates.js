@@ -5,7 +5,6 @@ export function resetGlobalStates(statesList){
     Object.keys(states).forEach(key => {
         state = states[key]
         if (((statesList && statesList.includes(key)) || !statesList) && state.getState().reset){
-            console.log(`reseteando ${key}`)
             state.getState().reset()
         }
     });
