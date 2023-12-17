@@ -1,4 +1,4 @@
-import getNotificationsFromLocalStorage from "./getNotificationsFromLocalStorage"
+import {getNotificationsFromLocalStorage} from "./getNotificationsFromLocalStorage"
 
 
 export function initializeNotificationsList(notifications, notificationsSetter){

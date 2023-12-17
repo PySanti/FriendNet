@@ -1,4 +1,3 @@
-import {PropTypes} from "prop-types"
 import "../styles/NotificationsContainer.css"
 import {  useState } from "react"
 import { v4 } from "uuid"
@@ -6,9 +5,7 @@ import { Notification } from "./Notification"
 import {useEffect} from "react"
 import {useChatGlobeList} from "../store"
 import {getChatGlobesList} from "../utils/getChatGlobesList"
-import {NOTIFICATIONS_WEBSOCKET} from "../utils/constants"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
-import {NotificationsWSInitialize} from "../utils/NotificationsWSInitialize"
 import {useNavigate} from "react-router-dom"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {executeApi} from "../utils/executeApi"
@@ -16,8 +13,7 @@ import {notificationDeleteAPI} from "../api/notificationDelete.api"
 import {useLoadingState} from "../store"
 import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotifications"
 import {useNotifications} from "../store"
-import {initializeNotificationsList} from "../utils/initializeNotificationsList"
-
+import {initStates} from "../utils/initStates"
 /**
  * Componente creado para contener las notificaciones del usuarios
  */
@@ -25,7 +21,6 @@ export function NotificationsContainer(){
     let [notificacionsActivated, setNotificationsActivated] = useState(false)
     let [setChatGlobeList] = useChatGlobeList((state)=>([state.setChatGlobeList]))
     let [notifications, setNotifications] = useNotifications((state)=>([state.notifications, state.setNotifications]))
-    const userData = getUserDataFromLocalStorage()
     const notificationListCls = "notification-list"
     const navigate = useNavigate()
     const [setLoadingState, successfullyLoaded] = useLoadingState((state)=>([state.setLoadingState, state.successfullyLoaded]))
@@ -53,8 +48,7 @@ export function NotificationsContainer(){
     }, [notifications])
 
     useEffect(()=>{
-        initializeNotificationsList(notifications, setNotifications)
-        NotificationsWSInitialize(userData.id)
+        initStates(notifications, setNotifications)
     }, [])
     return (
         <div className="notifications-container">

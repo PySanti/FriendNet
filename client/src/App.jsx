@@ -11,7 +11,6 @@ import {useEffect} from "react"
 import {NOTIFICATIONS_WEBSOCKET} from "./utils/constants"
 import {getUserDataFromLocalStorage} from "./utils/getUserDataFromLocalStorage"
 import {NotificationsWSInitialize} from "./utils/NotificationsWSInitialize"
-import {userIsAuthenticated} from "./utils/userIsAuthenticated"
 import {NotificationsWSCanBeUpdated} from "./utils/NotificationsWSCanBeUpdated"
 import {saveNotificationsInLocalStorage} from "./utils/saveNotificationsInLocalStorage"
 import {logoutUser} from "./utils/logoutUser"
@@ -19,6 +18,7 @@ import {Page404} from "./pages/Page404"
 import {shiftUser} from "./utils/shiftUser"
 import * as states from "./store"
 import {initializeNotificationsList} from "./utils/initializeNotificationsList"
+import {initStates} from "./utils/initStates"
 /**
 /**
  * Toda la implementacion que tenemos del websocket de notificaciones en el app.jsx
@@ -34,8 +34,7 @@ function App() {
   let [usersIdList, setUsersIdList]     = states.useUsersIdList((state)=>[state.usersIdList, state.setUsersIdList])
 
   useEffect(()=>{
-    NotificationsWSInitialize(getUserDataFromLocalStorage().id)
-    initializeNotificationsList(notifications, setNotifications)
+    initStates(notifications, setNotifications)
   }, [])
   useEffect(()=>{
     if (NotificationsWSCanBeUpdated()){
