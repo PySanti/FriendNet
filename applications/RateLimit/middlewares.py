@@ -2,11 +2,11 @@ from django.utils.deprecation import MiddlewareMixin
 from django.http import JsonResponse
 from rest_framework import status
 from .models import RateLimitInfo
-from datetime import datetime
-import pytz
 
 class RateLimitMiddleware(MiddlewareMixin):
+
     def process_request(self, request):
+        # recordar agregar docs a miro
         client_ip = request.META.get('REMOTE_ADDR')
         client = RateLimitInfo.objects.get_or_create(ip=client_ip)[0]
         if client.banned:
@@ -19,4 +19,4 @@ class RateLimitMiddleware(MiddlewareMixin):
                 RateLimitInfo.objects.update_cut_time(client)
             else:
                 print(last_cut_timediff)
-        return JsonResponse({"error" : False}, status=status.HTTP_429_TOO_MANY_REQUESTS)
+        # return JsonResponse({"error" : False}, status=status.HTTP_429_TOO_MANY_REQUESTS)

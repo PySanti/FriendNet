@@ -5,7 +5,7 @@ from django.db import models
 class RateLimitInfo(models.Model):
     ip = models.CharField(unique=True)
     banned = models.BooleanField(default=False)
-    suspended = models.DateTimeField(default=None)
+    suspended = models.DateTimeField(default=None, null=True)
     calls_in_cut = models.PositiveSmallIntegerField(default=0)
     last_cut_time = models.DateTimeField(auto_now_add=True)
     strikes = models.PositiveSmallIntegerField(default=0)

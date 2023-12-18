@@ -8,3 +8,5 @@ class RateLimitInfoManager(manager.Manager):
     def update_cut_time(self, client):
         client.last_cut_time = datetime.now()
         client.save()
+    def client_is_suspended(self, client):
+        return datetime.now(pytz.timezone('UTC')) - client.last_cut_time
