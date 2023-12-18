@@ -7,12 +7,15 @@ import pytz
 
 class RateLimitMiddleware(MiddlewareMixin):
     def process_request(self, request):
+        if client.banned:
+            return JsonResponse({"error" : "banned_ip"}, status=status.HTTP_400_BAD_REQUEST)
+        elif client.suspended:
+            return JsonResponse({"error" : f"suspended ip until"}, status=status.HTTP_400_BAD_REQUEST)
         client_ip = request.META.get('REMOTE_ADDR')
         client = RateLimitInfo.objects.get_or_create(ip=client_ip)[0]
-        last_cut_timediff = int((datetime.now(pytz.timezone('UTC')) - client.last_cut_time).seconds)
+        last_cut_timediff = RateLimitInfo.objects.get_cut_timediff(client)
         if (last_cut_timediff > 5):
-            client.last_cut_time = datetime.now()
-            client.save()
+            RateLimitInfo.objects.update_cut_time(client)
         else:
-            pass
+            print(last_cut_timediff)
         return JsonResponse({"error" : False}, status=status.HTTP_429_TOO_MANY_REQUESTS)
