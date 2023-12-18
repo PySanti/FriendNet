@@ -41,7 +41,8 @@ DJANGO_APPS = [
 LOCAL_APPS = [
     "applications.Usuarios",
     "applications.Chats",
-    "applications.Notifications"
+    "applications.Notifications",
+    "applications.RateLimit"
 ]
 
 THIRD_PARTY_APPS = [
