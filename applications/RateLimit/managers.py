@@ -14,6 +14,7 @@ class RateLimitInfoManager(manager.Manager):
         if client.strikes > 2:
             client.banned = True
             client.suspend_client = None
+            client.calls_in_cut = 0
         else:
             client.suspended_time = datetime.date.today() + datetime.timedelta(days=7)
         client.save()
