@@ -54,7 +54,7 @@ THIRD_PARTY_APPS = [
 SECRET_FILE_PATH = BASE_DIR.parent / 'secrets.json'
 INSTALLED_APPS = LOCAL_APPS + DJANGO_APPS + THIRD_PARTY_APPS
 
-MIDDLEWARE = [
+DJANGO_MIDDLEWARES =  [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     "corsheaders.middleware.CorsMiddleware",
@@ -64,6 +64,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+LOCAL_MIDDLEWARES = [
+    "applications.RateLimit.middlewares.RateLimitMiddleware"
+]
+
+MIDDLEWARE = DJANGO_MIDDLEWARES + LOCAL_MIDDLEWARES
 
 ROOT_URLCONF = 'FriendNet.urls'
 
