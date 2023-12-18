@@ -27,8 +27,6 @@ from applications.Usuarios.utils.constants import (
     BASE_SERIALIZER_ERROR_RESPONSE,
     BASE_UNEXPECTED_ERROR_RESPONSE,
     BASE_ERROR_WHILE_GETTING_MESSAGES_RESPONSE,
-    BASE_RATE_LIMIT_TIMER,
-    BASE_RATE_LIMIT_KEY
 )
 from applications.Usuarios.models import Usuarios
 from applications.Notifications.models import Notifications
@@ -37,8 +35,6 @@ from applications.Notifications.websockets.ws_utils.notification_websocket_is_op
 from .websockets.ws_utils.messages_group_is_full import messages_group_is_full
 from applications.Notifications.websockets.ws_utils.broadcast_notification import broadcast_notification
 from applications.Chats.websockets.ws_utils.broadcast_message import broadcast_message
-from django.utils.decorators import method_decorator
-from django_ratelimit.decorators import ratelimit
 from applications.Usuarios.utils.add_istyping_field import add_istyping_field
 class GetMessagesHistorialAPI(APIView):
     serializer_class        =  GetMessagesHistorialSerializer
@@ -46,7 +42,6 @@ class GetMessagesHistorialAPI(APIView):
     permission_classes      = [IsAuthenticated]
     pagination_class        = MessagesPaginationClass
 
-    @method_decorator(ratelimit(key=BASE_RATE_LIMIT_KEY, rate=BASE_RATE_LIMIT_TIMER, method="POST"))
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
@@ -69,7 +64,6 @@ class SendMsgAPI(APIView):
     serializer_class        = SendMsgSerializer
     authentication_classes  = [JWTAuthentication]
     permission_classes      = [IsAuthenticated]
-    @method_decorator(ratelimit(key=BASE_RATE_LIMIT_KEY, rate=BASE_RATE_LIMIT_TIMER, method="POST"))
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
