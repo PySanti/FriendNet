@@ -28,8 +28,6 @@ class NotificationsWSConsumer(WebsocketConsumer):
             if len(self.channel_layer.groups[str(data['value']["name"])])>1:
                 async_to_sync(self.channel_layer.group_send)(str(data['value']["name"]),{"type" : "broadcast_connection_error_handler"})
             else:
-                session_user = Usuarios.objects.get(id=int(data['value']['name']))
-
                 broadcast_connection_inform(user_id=data['value']["name"], connected=True)
         if (data["type"] == "typing_inform"):
             value = data["value"]

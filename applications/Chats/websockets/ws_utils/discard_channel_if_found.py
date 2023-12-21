@@ -5,8 +5,8 @@ def discard_channel_if_found(target_channel):
     """
         Recibe el canal que se desea buscar
 
-        Si el canal es encontrado en algun grupo, lo elimina y retorna True
-        Si el canal no es encontrado en nigun grupo, retorna False
+        Si el canal es encontrado en algún grupo, lo elimina y retorna True
+        Si el canal no es encontrado en ningún grupo, retorna False
     """
     print_pretty_groups()
     channel_layer = get_channel_layer()

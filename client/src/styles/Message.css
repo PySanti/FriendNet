@@ -19,13 +19,6 @@
     border-bottom-left-radius: 0px;
 }
 
-.not-session-msg .message-date{
-    color : #eee;
-}
-.session-msg .message-date{
-    color : #333;
-}
-
 .message-date{
     font-size: 0.5rem;
 }

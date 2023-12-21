@@ -23,7 +23,13 @@ class ChatWSConsumer(WebsocketConsumer):
 
 
     def broadcast_message_handler(self, event):
+        """
+            Método a ejecutar para transmitir un mensaje en un grupo
+        """
         self.send(text_data=json.dumps(broadcast_dict(broadcast_type="message_broadcast", broadcast_value=event["value"])))
     def broadcast_connection_inform_handler(self, event):
+        """
+            Método a ejecutar para informar a integrante del grupo que el otro se conecto
+        """
         self.send(text_data=json.dumps(broadcast_dict(broadcast_type="connection_inform", broadcast_value=event["value"])))
 
