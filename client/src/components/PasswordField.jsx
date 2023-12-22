@@ -19,7 +19,9 @@ export function PasswordField({errors, registerObject, label}){
                 type={previsualizationActivated ? "text" : "password"} 
                 name={registerObject.name} 
                 {...registerObject}/>
-            <button className="password-visualization" type="button" onClick={()=>setPrevisualizationActivated(!previsualizationActivated)}/>
+            <div className="password-visualization" onClick={()=>setPrevisualizationActivated(!previsualizationActivated)}>
+                <i className="material-symbols-outlined" >{previsualizationActivated ? "Visibility" : "Visibility_Off"}</i>
+            </div>
         </FormField>
     )
 }
