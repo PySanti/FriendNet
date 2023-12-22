@@ -8,8 +8,9 @@ import {PropTypes} from "prop-types"
  */
 export function ActivationCodeField({errors, registerObject}){
     return (
-        <FormField label="Codigo" errors={errors}>
+        <FormField errors={errors}>
             <input
+                placeholder="Código"
                 type        =   "text"
                 maxLength   =   {6}
                 name        =   {registerObject.name}

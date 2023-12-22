@@ -8,8 +8,9 @@ import {PropTypes} from "prop-types"
  */
 export function EmailField({errors, registerObject, defaultValue}){
     return (
-        <FormField label="Correo electrónico" errors={errors}>
+        <FormField  errors={errors}>
             <input 
+                placeholder="Correo electrónico"
                 defaultValue    =   {defaultValue} 
                 type            =   "text"
                 name            =   {registerObject.name}

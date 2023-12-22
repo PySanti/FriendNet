@@ -10,8 +10,9 @@ import {PropTypes} from "prop-types"
  */
 export function UsernameField({errors, registerObject, defaultValue}){
     return (
-        <FormField label="Usuario" errors={errors}>
+        <FormField  errors={errors}>
             <input 
+                placeholder="Nombre de usuario"
                 defaultValue    =   {defaultValue} 
                 type            =   "text"
                 name            =   {registerObject.name}

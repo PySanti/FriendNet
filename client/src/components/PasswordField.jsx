@@ -12,8 +12,9 @@ import { useState } from "react";
 export function PasswordField({errors, registerObject, label}){
     let [previsualizationActivated, setPrevisualizationActivated] = useState(false)
     return (
-        <FormField label={label} errors={errors}>
+        <FormField  errors={errors}>
             <input 
+                placeholder={label}
                 className="password-input" 
                 type={previsualizationActivated ? "text" : "password"} 
                 name={registerObject.name} 
