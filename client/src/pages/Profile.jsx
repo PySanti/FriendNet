@@ -1,13 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { PropTypes } from "prop-types";
 import { Header } from "../components/Header";
 import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { UserNotLogged } from "./UserNotLogged";
 import { useState } from "react";
-import { UserData } from "../components/UserData";
 import { UserInfoForm } from "../components/UserInfoForm";
 import { updateUserDataAPI } from "../api/updateUserData.api";
-import { UserPhoto } from "../components/UserPhoto";
 import { Button } from "../components/Button";
 import "../styles/Profile.css";
 import { v4 } from "uuid";
@@ -63,7 +60,13 @@ export function Profile() {
                 <div className="profile-container">
                     <Header msg="Editando perfil" />
                     <div className="editing-container">
-                        <UserInfoForm userData={profileData} onFormSubmit={onUpdate} extraButtons={[<Button key={v4()} buttonText="Volver" onClickFunction={() => {navigate("/home/")} }/>,]}/>
+                        <UserInfoForm 
+                            userData={profileData} 
+                            onFormSubmit={onUpdate} 
+                            extraButtons={[
+                                <Button key={v4()} buttonText="Volver" onClickFunction={() => {navigate("/home/")} }/>,
+                                <Button key={v4()} buttonText="Modificar Contraseña" onClickFunction={() => {navigate("/home/profile/change_pwd/")} }/>,
+                                ]}/>
                     </div>
                 </div>
             </div>
