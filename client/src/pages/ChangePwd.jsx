@@ -1,4 +1,4 @@
-
+import "../styles/ChangePwdStyles.css"
 import { Header } from "../components/Header";
 import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { UserNotLogged } from "./UserNotLogged";
@@ -49,10 +49,13 @@ export function ChangePwd(){
             <div className="centered-container">
                 <div className="change-pwd-container">
                     <Header msg="Modificando contraseña"/>
-                    <Form onSubmitFunction={changePwd} buttonMsg="Enviar" buttonsList={[<Button key={v4()} buttonText="Volver" onClickFunction={()=>{navigate('/home/profile')}}/>]}>
-                        <PasswordField label="Contrasenia actual" errors={errors.oldPwd && errors.oldPwd.message} registerObject={register("oldPwd", BASE_PASSWORD_CONSTRAINTS)}/>
-                        <PasswordField label="Nueva contraseña" errors={errors.newPwd && errors.newPwd.message} registerObject={register("newPwd", BASE_PASSWORD_CONSTRAINTS)}/>
-                    </Form>
+                    <div className="change-pwd-container__form-container">
+                        <Form onSubmitFunction={changePwd} buttonMsg="Enviar" buttonsList={[<Button key={v4()} buttonText="Volver" onClickFunction={()=>{navigate('/home/profile')}}/>]}>
+                            <PasswordField label="Contrasenia actual" errors={errors.oldPwd && errors.oldPwd.message} registerObject={register("oldPwd", BASE_PASSWORD_CONSTRAINTS)}/>
+                            <PasswordField label="Nueva contraseña" errors={errors.newPwd && errors.newPwd.message} registerObject={register("newPwd", BASE_PASSWORD_CONSTRAINTS)}/>
+                        </Form>
+                    </div>
+
                 </div>
             </div>
         )
