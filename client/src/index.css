@@ -37,6 +37,6 @@ input{
   transition-duration: .2s;
 }
 input:focus{
-  outline: .7px solid var(--base-background-color);
-  box-shadow: 3px 3px 10px #b4b4b4;
+  outline: .5px solid var(--base-background-color);
+  box-shadow: 3px 3px 10px #858585;
 }
