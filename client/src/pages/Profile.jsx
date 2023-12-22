@@ -22,7 +22,7 @@ import {useLoadingState} from "../store"
  * Pagina creada para llevar perfil de usuario, tanto para
  * actualizacion como visualizacion
  */
-export function Profile({ edit }) {
+export function Profile() {
     let   [profileData, setProfileData]                         = useState(getUserDataFromLocalStorage());
     const [ startLoading, setLoadingState, successfullyLoaded ] = useLoadingState((state)=>([state.startLoading, state.setLoadingState, state.successfullyLoaded ]))
     const navigate = useNavigate();
@@ -61,21 +61,9 @@ export function Profile({ edit }) {
         return (
             <div className="centered-container">
                 <div className="profile-container">
-                    <Header msg={edit ? "Editando perfil" : "Viendo perfil"} />
+                    <Header msg="Editando perfil" />
                     <div className="editing-container">
-                        {edit ? 
-                            <UserInfoForm userData={profileData} onFormSubmit={onUpdate} extraButtons={[<Button key={v4()} buttonText="Volver" onClickFunction={() => {navigate("/home/profile/")} }/>,]}/>
-                            : 
-                            <>
-                                <UserData nonShowableAttrs={["is_active","id","photo_link",]} attrsTraductions={{"username": "Nombre de usuario","email": "Correo electrónico"}} />
-                                <UserPhoto photoFile={profileData.photo_link} withInput={false} />
-                                <div className="buttons-section">
-                                    <Button buttonText="Editar Perfil" onClickFunction={() => {navigate("/home/profile/edit")}} />
-                                    <Button buttonText="Volver" onClickFunction={() =>{navigate("/home/")}} />
-                                    <Button buttonText="Modificar Contraseña" onClickFunction={() => {navigate("/home/profile/change_pwd")}} />
-                                </div>
-                            </>
-                        }
+                        <UserInfoForm userData={profileData} onFormSubmit={onUpdate} extraButtons={[<Button key={v4()} buttonText="Volver" onClickFunction={() => {navigate("/home/")} }/>,]}/>
                     </div>
                 </div>
             </div>
@@ -83,9 +71,4 @@ export function Profile({ edit }) {
     }
 }
 
-Profile.propTypes = {
-    edit: PropTypes.bool,
-};
-Profile.defaultProps = {
-    edit: undefined,
-};
+

@@ -122,12 +122,6 @@ function App() {
           }/>
         <Route 
           exact 
-          path='/home/profile/edit'  
-          element={
-              <Profile edit/> 
-          }/>
-        <Route 
-          exact 
           path='/home/profile/change_pwd'  
           element={
               <ChangePwd/> 
