@@ -38,16 +38,16 @@ export function SignUp() {
                             successfullyLoaded()
                             navigate('/signup/activate', {state: generateLocationProps(data.email, data.username, response.data.new_user_id)})
                         } else if (response.data.error == "cloudinary_error"){
-                            setLoadingState("Error con la nube!")
+                            setLoadingState("¡ Error con la nube !")
                         } else {
-                            setLoadingState("Error inesperado creando un usuario para ti !")
+                            setLoadingState("¡ Error inesperado creando un usuario para ti !")
                         }
                     }
                 }else {
-                    setLoadingState("Ya existe un usuario con ese Nombre de usuario o Correo electrónico!")
+                    setLoadingState("¡ Ya existe un usuario con ese Nombre de usuario o Correo electrónico !")
                 }
             } else {
-                setLoadingState("Error inesperado revisando si existe un usuario con esos datos!")
+                setLoadingState("¡ Error inesperado revisando si existe un usuario con esos datos !")
             }
         }
 }
@@ -58,7 +58,7 @@ export function SignUp() {
         return (
             <div className="centered-container">
                 <div className="signup-page-container">
-                    <Header msg="Regístrate de una vez!"/>
+                    <Header msg="¡ Regístrate !"/>
                     <UserInfoForm onFormSubmit={onSignUp} extraButtons={[<Button key={v4()} buttonText="Volver" onClickFunction={()=>{navigate('/')}}/>,]}/>
                 </div>
             </div>

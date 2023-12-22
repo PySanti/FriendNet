@@ -35,7 +35,7 @@ export function AccountActivation() {
             if (response.status == 200){
                 successfullyLoaded()
             } else {
-                setLoadingState('Error inesperado enviando codigo de activacion!')
+                setLoadingState('¡ Error inesperado enviando código de activación !')
             }
         }
     }
@@ -50,11 +50,11 @@ export function AccountActivation() {
                     successfullyLoaded();
                     navigate("/login/");
                 } else {
-                    setLoadingState("Error inesperado activando tu cuenta !")
+                    setLoadingState("¡ Error inesperado activando tu cuenta !")
                 }
             }
         } else {
-            setLoadingState("Código invalido!");
+            setLoadingState("¡ Código invalido !");
         }
     });
     useEffect(() => {

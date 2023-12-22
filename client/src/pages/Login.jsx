@@ -45,17 +45,17 @@ export function Login() {
                             successfullyLoaded()
                             navigate('/home/')
                         } else if (response.data.error == "user_is_online"){
-                            setLoadingState("El usuario ya esta en linea!") 
+                            setLoadingState("¡ El usuario ya esta en linea !") 
                         } else{
-                            setLoadingState("Error inesperado iniciando sesión !")
+                            setLoadingState("¡ Error inesperado iniciando sesión !")
                         } 
                     }
                 }
             } else if (response.data.error == "user_not_exists"){
                 // por seguridad, la api retornara el mismo codigo de error para cuando el usuario o la contrasenia esten mal
-                setLoadingState("Usuario o contraseña inválidos !") 
+                setLoadingState("¡ Usuario o contraseña inválidos !") 
             } else {
-                setLoadingState("Error inesperado buscando datos del usuario !")
+                setLoadingState("¡ Error inesperado buscando datos del usuario !")
             }
         }
     }

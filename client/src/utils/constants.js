@@ -1,4 +1,4 @@
-export const BASE_FALLEN_SERVER_LOG = "Red caída !"
+export const BASE_FALLEN_SERVER_LOG = "¡ Red caída !"
 export const BASE_USER_NOT_EXISTS_ERROR = "user_not_exists"
 export const BACKEND_URL = "http://127.0.0.1:8000/";
 export const BASE_FALLEN_SERVER_ERROR_MSG = "Network Error"
@@ -10,7 +10,7 @@ export const BASE_USERNAME_MIN_LENGTH = 6;
 export const BASE_PASSWORD_MIN_LENGTH = 10;
 export const BASE_LOGIN_REQUIRED_ERROR_MSG = "requires_login"
 export const BASE_UNEXPECTED_ERROR_MESSAGE = "unexpected_error"
-export const BASE_UNEXPECTED_ERROR_LOG = "Error inesperado !"
+export const BASE_UNEXPECTED_ERROR_LOG = "¡ Error inesperado !"
 export const BASE_ACTIVATION_CODE_CONSTRAINTS = {
     required: {
         value: true,

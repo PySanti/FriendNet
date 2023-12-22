@@ -15,21 +15,21 @@ export function Root() {
         return (
             <div className="centered-container">
                 <div className="root-container">
-                    <Header msg="Chatea con quien quieras !"/>
+                    <Header msg="¡ Chatea con quien quieras !"/>
                     <section className="redirect-container">
                         <div className="signin-container">
                             <div className="signin-container__title-container">
                                 <h4 className="signin-container__title">
-                                    Tienes cuenta? 
+                                    ¿Tienes cuenta? 
                                 </h4>
                             </div>
-                            <Button buttonText="Logearme" onClickFunction={()=>{navigate('/login/')}}/>
+                            <Button buttonText="Inicia Sesión" onClickFunction={()=>{navigate('/login/')}}/>
                         </div>
                         <div className="signup-container">
                             <h4>
-                                Aun no tienes cuenta? 
+                                ¿Aun no tienes cuenta? 
                             </h4>
-                            <Button buttonText="Registrarme" onClickFunction={()=>{navigate('/signup/')}} />
+                            <Button buttonText="Regístrate" onClickFunction={()=>{navigate('/signup/')}} />
                         </div>
                     </section>
                 </div>

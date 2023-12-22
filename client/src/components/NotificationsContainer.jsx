@@ -35,7 +35,7 @@ export function NotificationsContainer(){
                 removeAndUpdateNotifications(notification, setNotifications)
                 successfullyLoaded()
             } else {
-                setLoadingState('Ha ocurrido un error eliminando la notificación !')
+                setLoadingState('¡ Ha ocurrido un error eliminando la notificación !')
             }
         }
     }

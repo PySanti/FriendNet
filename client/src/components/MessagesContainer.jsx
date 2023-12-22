@@ -40,10 +40,10 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
                     noMoreMessages.current = true
                     successfullyLoaded()
                 } else if (response.data.error == "error_while_getting_messages"){
-                    setLoadingState('Ha habido un error cargando los mensajes !')
+                    setLoadingState('¡ Ha habido un error cargando los mensajes !')
                 }
             } else {
-                setLoadingState('Error inesperado cargando los mensajes !')
+                setLoadingState('¡ Error inesperado cargando los mensajes !')
             }
         }
     }
@@ -57,7 +57,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
                 setMessagesHistorial([...messagesHistorial, response.data.sended_msg])
                 successfullyLoaded()
             } else {
-                setLoadingState('Error inesperado enviando el mensaje !')
+                setLoadingState('¡ Error inesperado enviando el mensaje !')
             }
         }
     }

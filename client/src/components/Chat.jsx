@@ -53,14 +53,14 @@ export function Chat(){
                 successfullyLoaded()
             } else if (response.status == 400){
                 const log = {
-                    "user_not_found"                    : "Tuvimos problemas para encontrar a ese usuario!",
-                    "error_while_checking_is_online"    : 'Error comprobando si el usuario esta en linea!',
-                    "error_while_getting_messages"      : 'Error buscando mensajes!',
-                    "error_while_deleting_notification" : 'Error borrando notificacion !'
+                    "user_not_found"                    : "¡ Tuvimos problemas para encontrar a ese usuario !",
+                    "error_while_checking_is_online"    : '¡ Error comprobando si el usuario esta en linea !',
+                    "error_while_getting_messages"      : '¡ Error buscando mensajes !',
+                    "error_while_deleting_notification" : '¡ Error borrando notificación !'
                 }[response.data.error]
-                setLoadingState(log ? log : "Error inesperado entrando al chat !")
+                setLoadingState(log ? log : "¡ Error inesperado entrando al chat !")
             } else{
-                setLoadingState('Error inesperado entrando al chat !')
+                setLoadingState('¡ Error inesperado entrando al chat !')
             }
         }
     }

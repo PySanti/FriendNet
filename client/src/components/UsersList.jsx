@@ -71,7 +71,7 @@ export function UsersList(){
             } else if (response.data.error=== "no_more_pages"){
                 setNoMoreUsers(true)
             } else {
-                setLoaderActivated("Ha habido un error cargando la lista de usuarios !")
+                setLoaderActivated("¡ Ha habido un error cargando la lista de usuarios !")
             }
         }
         setLoaderActivated(false)

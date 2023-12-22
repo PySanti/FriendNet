@@ -13,8 +13,8 @@ export function UserNotLogged({msg}){
     return (
         <div className="centered-container">
             <div className="usernot-logged-container">
-                <Header msg={msg ? msg : "Aun no estas logeado"}/>
-                <Button buttonText="Logearme" onClickFunction={()=> {navigate('/')}}/>
+                <Header msg={msg ? msg : "Aun no has iniciado sesión"}/>
+                <Button buttonText="Iniciar sesión" onClickFunction={()=> {navigate('/')}}/>
             </div>
         </div>
     )

@@ -33,13 +33,13 @@ export function ChangeEmailForActivation(){
                     props.userEmail = data.email
                     navigate('/signup/activate', {state: props})
                 } else if (response.data.error==="email_exists"){
-                    setLoadingState("Error, ese email ya fue registrado !")
+                    setLoadingState("¡ Error, ese email ya fue registrado !")
                 } else {
-                    setLoadingState("Error inesperado cambiando tu correo electrónico !")
+                    setLoadingState("¡ Error inesperado cambiando tu correo electrónico !")
                 }
             }
         } else {
-            setLoadingState('No hay cambios !')
+            setLoadingState('¡ No hay cambios !')
         }
     })
     if (userIsAuthenticated()){
