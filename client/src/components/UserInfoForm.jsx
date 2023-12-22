@@ -47,8 +47,8 @@ export function UserInfoForm({ userData, onFormSubmit, extraButtons}) {
         <div className="user-form-container">
             <Form onSubmitFunction={onSubmit}buttonMsg={userData ? "Actualizar" : "Registrar"}buttonsList={extraButtons}>
                 <>
-                    <UsernameField      defaultValue={userData ? userData.username : "juanca"}              errors={errors.username && errors.username.message}         registerObject={register(    "username",    BASE_USERNAME_CONSTRAINTS)}/>
-                    <EmailField         defaultValue={userData ? userData.email : "juanca@gmail.com"}       errors={errors.email && errors.email.message}               registerObject={register(    "email",    BASE_EMAIL_CONSTRAINTS)}/>
+                    <UsernameField      defaultValue={userData ? userData.username : undefined }              errors={errors.username && errors.username.message}         registerObject={register(    "username",    BASE_USERNAME_CONSTRAINTS)}/>
+                    <EmailField         defaultValue={userData ? userData.email : undefined}       errors={errors.email && errors.email.message}               registerObject={register(    "email",    BASE_EMAIL_CONSTRAINTS)}/>
                     {!userData && (
                         <>
                             <PasswordField label="Contraseña"           errors={errors.password && errors.password.message } registerObject={register("password", {     ...BASE_PASSWORD_CONSTRAINTS, validate: passwordChecking("password"), })}/>

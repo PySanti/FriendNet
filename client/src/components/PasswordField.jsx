@@ -16,7 +16,7 @@ export function PasswordField({errors, registerObject, label}){
     const padlockAnimationRef = useRef()
     const handlePadlockClick = ()=>{
         setPrevisualizationActivated(!previsualizationActivated)
-        padlockAnimationRef.current.setSpeed(3)
+        padlockAnimationRef.current.setSpeed(4)
         padlockAnimationRef.current.playSegments(!previsualizationActivated ? [0,95] : [95,210], true)
     }
     return (
