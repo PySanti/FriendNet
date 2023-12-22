@@ -24,7 +24,8 @@
     text-align: center;
     object-fit: cover;
     outline: 3px inset var(--base-background-color);
-    transition: outline .1s;
+    transition-property: outline width height top left object-fit;
+    transition-duration: .1s;
 }
 .user-photo:hover{
     cursor: pointer;
@@ -47,17 +48,15 @@
 }
 
 .big-user-photo{
-    display: none;
     position: absolute;
     width: 0vw;
     height: 0vh;
     outline: none;
     left : 50vw;
     top : 50vh;
-    transition: width .2s, height .2s, top .2s, left .2s;
+
 }
 .big-user-photo__activated{
-    display: flex;
     outline: inherit;
     width: 30vw;
     height: 50vh;
