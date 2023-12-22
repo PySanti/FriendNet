@@ -5,17 +5,19 @@
     align-items: center;
     text-align: center;
     flex-direction: column;
-    width: 10vw;
-    height: 40vh;
+    width: 20vw;
+    height: 50vh;
 
 }
 .user-photo-smaller-container{
-    height: 100%;
+    max-height: 80%;
+    min-height: 80%;
+    width: 100%;
 }
 .user-photo{
-    border-radius: 50px;
+    border-radius: 30px;
     width: 100%;
-    height: 70%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -41,6 +43,7 @@
 }
 .img-input-error-msg{
     font-size: 15px;
+    padding: 1rem;
 }
 
 .big-user-photo{
@@ -60,4 +63,11 @@
     height: 50vh;
     left : 35vw;
     top : 25vh;
+}
+
+.user-photo-input-container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
