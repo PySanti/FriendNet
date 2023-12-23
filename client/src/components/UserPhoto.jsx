@@ -26,8 +26,10 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
     };
     const handleSmallImgClick = (imgType) =>{
         return ()=>{
-            document.getElementById("root").classList.toggle("invisible_root")
-            setBigPhotoActivated(imgType === "small" ? true : false)
+            if (photoFile){
+                document.getElementById("root").classList.toggle("invisible_root")
+                setBigPhotoActivated(imgType === "small"? true : false)
+            }
         }
     }
     const imgProps = (type) => {
