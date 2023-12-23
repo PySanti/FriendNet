@@ -12,14 +12,13 @@ import { UserInfoForm } from "../components/UserInfoForm";
 import { Button } from "../components/Button";
 import { v4 } from "uuid";
 import {useLoadingState} from "../store"
-import {BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
 import {generateLocationProps} from "../utils/generateLocationProps"
 import {executeApi} from "../utils/executeApi"
 /**
  * Page creada para el registro de los usuarios
  */
 export function SignUp() {
-    const [successfullyLoaded, startLoading, setLoadingState] = useLoadingState((state)=>([state.successfullyLoaded, state.startLoading, state.setLoadingState]))
+    const [startLoading, setLoadingState] = useLoadingState((state)=>([state.startLoading, state.setLoadingState]))
     const navigate                                              = useNavigate()
     const onSignUp = async (data) =>{
         startLoading()
@@ -35,7 +34,7 @@ export function SignUp() {
                     }, navigate, setLoadingState)
                     if (response){
                         if (response.status == 200){
-                            successfullyLoaded()
+                            setLoadingState(false)
                             navigate('/signup/activate', {state: generateLocationProps(data.email, data.username, response.data.new_user_id)})
                         } else if (response.data.error == "cloudinary_error"){
                             setLoadingState("¡ Error con la nube !")

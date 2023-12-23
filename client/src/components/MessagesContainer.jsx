@@ -22,7 +22,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     const containerRef                                                  = useRef(null)
     const navigate                                                      = useNavigate()
     const clickedUser                                                   = useClickedUser((state)=>(state.clickedUser))
-    const [setLoadingState,startLoading,  successfullyLoaded]            = useLoadingState((state)=>[state.setLoadingState, state.startLoading, state.successfullyLoaded])
+    const [setLoadingState,startLoading]                                = useLoadingState((state)=>[state.setLoadingState, state.startLoading])
     const [messagesHistorial, setMessagesHistorial]                     = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
 
 
@@ -34,11 +34,11 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
         if (response){
             if (response.status == 200){
                 updateMessagesHistorial(setMessagesHistorial, messagesHistorialPage, response.data !== "no_messages_between" ? response.data.messages_hist : [], messagesHistorial)
-                successfullyLoaded()
+                setLoadingState(false)
             } else if (response.status == 400){
                 if (response.data.error == "no_more_pages"){
                     noMoreMessages.current = true
-                    successfullyLoaded()
+                    setLoadingState(false)
                 } else if (response.data.error == "error_while_getting_messages"){
                     setLoadingState('¡ Ha habido un error cargando los mensajes !')
                 }
@@ -55,7 +55,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
         if (response){
             if (response.status == 200){
                 setMessagesHistorial([...messagesHistorial, response.data.sended_msg])
-                successfullyLoaded()
+                setLoadingState(false)
             } else {
                 setLoadingState('¡ Error inesperado enviando el mensaje !')
             }

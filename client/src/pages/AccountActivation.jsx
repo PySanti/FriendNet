@@ -21,7 +21,7 @@ import {executeApi} from "../utils/executeApi"
  * Pagina creada para llevar activacion de cuenta
  */
 export function AccountActivation() {
-    let [ setLoadingState, successfullyLoaded, startLoading ]               = useLoadingState((state)=>([state.setLoadingState, state.successfullyLoaded, state.startLoading]));
+    let [setLoadingState, startLoading]                                     = useLoadingState((state)=>([state.setLoadingState, state.startLoading]));
     let realActivationCode                                                  = useRef(generateActivationCode());
     const props                                                             = useLocation().state;
     const navigate                                                          = useNavigate();
@@ -32,22 +32,20 @@ export function AccountActivation() {
             return await sendActivationEmailAPI(props.userEmail, props.username, realActivationCode.current) 
         }, navigate, setLoadingState)
         if (response){
-            if (response.status == 200){
-                successfullyLoaded()
-            } else {
+            if (response.status != 200){
                 setLoadingState('¡ Error inesperado enviando código de activación !')
             }
         }
     }
     const onSubmit = handleSubmit(async (data) => {
-        startLoading();
         if (Number(data.activationCode) === Number(realActivationCode.current)) {
+            startLoading()
             const response = await executeApi(async ()=>{
                 return await activateUserAPI(props.userId); 
             }, navigate, setLoadingState)
             if (response){
                 if (response.status == 200){
-                    successfullyLoaded();
+                    setLoadingState(false)
                     navigate("/login/");
                 } else {
                     setLoadingState("¡ Error inesperado activando tu cuenta !")

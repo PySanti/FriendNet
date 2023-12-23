@@ -11,14 +11,13 @@ import { saveUserDataInLocalStorage } from "../utils/saveUserDataInLocalStorage"
 import { saveNotificationsInLocalStorage } from "../utils/saveNotificationsInLocalStorage"
 import {loginUser} from "../utils/loginUser"
 import {useLoadingState} from "../store"
-import {BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
 import {generateLocationProps} from "../utils/generateLocationProps"
 import {executeApi} from "../utils/executeApi"
 /**
  * Pagina creada para llevar logeo de usuarios
  */
 export function Login() {
-    const   [startLoading,  successfullyLoaded, setLoadingState]  = useLoadingState((state)=>([state.startLoading, state.successfullyLoaded, state.setLoadingState]))
+    const   [startLoading, setLoadingState]  = useLoadingState((state)=>([state.startLoading, state.setLoadingState]))
     const   navigate                                                            = useNavigate()
 
     const onLogin = async (data)=>{
@@ -42,7 +41,7 @@ export function Login() {
                             delete userDetail.notifications
                             saveNotificationsInLocalStorage(notifications)
                             saveUserDataInLocalStorage(userDetail)
-                            successfullyLoaded()
+                            setLoadingState(false)
                             navigate('/home/')
                         } else if (response.data.error == "user_is_online"){
                             setLoadingState("¡ El usuario ya esta en linea !") 

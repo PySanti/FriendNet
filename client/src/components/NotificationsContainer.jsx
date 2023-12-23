@@ -23,17 +23,18 @@ export function NotificationsContainer(){
     let [notifications, setNotifications] = useNotifications((state)=>([state.notifications, state.setNotifications]))
     const notificationListCls = "notification-list"
     const navigate = useNavigate()
-    const [setLoadingState, successfullyLoaded] = useLoadingState((state)=>([state.setLoadingState, state.successfullyLoaded]))
+    const [setLoadingState, startLoading] = useLoadingState((state)=>(state.setLoadingState, state.startLoading))
 
 
     const onNotificationDelete = async (notification)=>{
+        startLoading()
         const response = await executeApi(async ()=>{
             return await notificationDeleteAPI(notification.id, getJWTFromLocalStorage().access )
         }, navigate, setLoadingState)
         if (response){
             if (response.status == 200){
                 removeAndUpdateNotifications(notification, setNotifications)
-                successfullyLoaded()
+                setLoadingState(false)
             } else {
                 setLoadingState('¡ Ha ocurrido un error eliminando la notificación !')
             }

@@ -32,7 +32,7 @@ export function Chat(){
     let [messagesHistorial, setMessagesHistorial]                           = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
     let [notifications, setNotifications]                                   = useNotifications((state)=>([state.notifications, state.setNotifications]))
     let lastClickedUser                                                     = useLastClickedUser((state)=>(state.lastClickedUser))
-    const [setLoadingState, startLoading, successfullyLoaded]               = useLoadingState((state)=>([state.setLoadingState, state.startLoading, state.successfullyLoaded]))
+    const [setLoadingState, startLoading                    ]               = useLoadingState((state)=>([state.setLoadingState, state.startLoading]))
     const userData                                                          = getUserDataFromLocalStorage()
     const navigate                                                          = useNavigate()
 
@@ -50,7 +50,7 @@ export function Chat(){
                 if (relatedNotification && response.data.notification_deleted){
                     removeAndUpdateNotifications(relatedNotification, setNotifications)
                 }
-                successfullyLoaded()
+                setLoadingState(false)
             } else if (response.status == 400){
                 const log = {
                     "user_not_found"                    : "¡ Tuvimos problemas para encontrar a ese usuario !",

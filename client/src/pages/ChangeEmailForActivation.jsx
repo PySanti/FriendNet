@@ -16,20 +16,20 @@ import {executeApi} from "../utils/executeApi"
  * Page creada para la modificacion del Email para activacion 
  */
 export function ChangeEmailForActivation(){
-    let [ setLoadingState, successfullyLoaded, startLoading] = useLoadingState((state)=>([state.setLoadingState, state.successfullyLoaded, state.startLoading]))
+    let [ setLoadingState, startLoading] = useLoadingState((state)=>([state.setLoadingState, state.startLoading]))
     const props                                         = useLocation().state
     const  navigate                                     = useNavigate()
     const {register, handleSubmit, formState : {errors}}  = useForm()
     const onSubmit = handleSubmit(async (data)=>{
-        startLoading()
         if (data.email !== props.userEmail){
+            startLoading()
             const response = await executeApi(async ()=>{
                 return await changeEmailForActivationAPI(props.userId, data.email) 
             }, navigate, setLoadingState)
             if (response){
                 if (response.status == 200){
-                    successfullyLoaded()
                     props.userEmail = data.email
+                    setLoadingState(false)
                     navigate('/signup/activate', {state: props})
                 } else if (response.data.error==="email_exists"){
                     setLoadingState("¡ Error, ese email ya fue registrado !")
