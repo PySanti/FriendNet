@@ -15,7 +15,8 @@
     outline: var(--outline-width) solid var(--base-background-color);
 }
 
-.button:hover{
+.button:hover, .button_hovered{
+    background-color: rgb(202, 247, 189);
     cursor: pointer;
     border-bottom-right-radius: 10px;
     border-top-left-radius: 10px;

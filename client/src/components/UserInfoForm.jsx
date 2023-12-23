@@ -21,11 +21,32 @@ import { EmailField } from "./EmailField";
  */
 export function UserInfoForm({ userData, onFormSubmit, extraButtons}) {
     let [currentPhotoFile, setCurrentPhotoFile] = useState(userData ? userData.photo_link : null);
-    const { register, handleSubmit, formState: { errors }, watch} = useForm();
+    let [changeDetected, setChangeDetected] = useState(null)
+    const { register, handleSubmit, formState, watch} = useForm();
+    const errors = formState.errors
     const onSubmit = handleSubmit((data) => {
         data.photo = currentPhotoFile; // currentPhotoFile o es null o es una imagen que ya esta validada o es la misma imagen que el usuario ya tenia
         onFormSubmit(data);
     });
+    useEffect(()=>{
+        if ((Object.keys(errors)).length == 0){
+            if (userData){
+                if (watch("username") !== userData.username || watch("email") !== userData.email || currentPhotoFile !== userData.photo_link){
+                    setChangeDetected(true)
+                } else {
+                    setChangeDetected(false)
+                }
+            } else {
+                if (watch("username") && watch("email") && watch("password") && watch("confirmPwd")){
+                    setChangeDetected(true)
+                } else {
+                    setChangeDetected(false)
+                }
+            }
+        } else {
+            setChangeDetected(false)
+        }
+    }, [formState])
     const passwordChecking = (type) => {
         return (password) => {
             if (password != watch(type === "password" ? "confirmPwd" : "password")) {
@@ -45,7 +66,7 @@ export function UserInfoForm({ userData, onFormSubmit, extraButtons}) {
     }, [userData]);
     return (
         <div className="user-form-container">
-            <Form onSubmitFunction={onSubmit}buttonMsg={userData ? "Actualizar" : "Registrar"}buttonsList={extraButtons}>
+            <Form onSubmitFunction={onSubmit}buttonMsg={userData ? "Actualizar" : "Registrar"}buttonsList={extraButtons} button_hovered={changeDetected}>
                 <>
                     <UsernameField      defaultValue={userData ? userData.username : undefined }              errors={errors.username && errors.username.message}         registerObject={register(    "username",    BASE_USERNAME_CONSTRAINTS)}/>
                     <EmailField         defaultValue={userData ? userData.email : undefined}       errors={errors.email && errors.email.message}               registerObject={register(    "email",    BASE_EMAIL_CONSTRAINTS)}/>

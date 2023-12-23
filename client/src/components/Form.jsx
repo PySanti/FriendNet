@@ -7,13 +7,14 @@ import {PropTypes} from "prop-types"
  * @param {Function}  onSubmitFunction funcion que se ejecutara cuando se envie el formulario
  * @param {String} buttonMsg mensaje de button de submit
  * @param {Array} buttonsList sera una lista de buttons que se deseen renderizar junto al submit button
+ * @param {Boolean} button_hovered sera una lista de buttons que se deseen renderizar junto al submit button
  */
-export function Form({children, onSubmitFunction, buttonMsg, buttonsList}){
+export function Form({children, onSubmitFunction, buttonMsg, buttonsList, button_hovered}){
     return (
         <form className="form-container" onSubmit={onSubmitFunction}>
             {children}
             <div className="form-container-buttons-container">
-                <Button buttonText={buttonMsg} isSubmit/>
+                <Button buttonText={buttonMsg} isSubmit button_hovered={button_hovered}/>
                 {buttonsList}
             </div>
         </form>
@@ -25,7 +26,8 @@ Form.propTypes = {
     children : PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
     onSubmitFunction : PropTypes.func.isRequired,
     buttonMsg : PropTypes.string.isRequired,
-    buttonsList : PropTypes.array
+    buttonsList : PropTypes.array,
+    button_hovered : PropTypes.bool
 }
 Form.defaultProps={
     buttonsList : undefined
