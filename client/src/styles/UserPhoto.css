@@ -7,7 +7,6 @@
     flex-direction: column;
     width: 20vw;
     height: 50vh;
-
 }
 .user-photo-smaller-container{
     max-height: 80%;
@@ -24,7 +23,7 @@
     text-align: center;
     object-fit: cover;
     outline: 3px inset var(--base-background-color);
-    transition-property: outline width height top left object-fit;
+    transition-property: outline width height top left;
     transition-duration: .1s;
 }
 .user-photo:hover{
@@ -49,14 +48,15 @@
 
 .big-user-photo{
     position: absolute;
+    opacity: 0;
     width: 0vw;
     height: 0vh;
     outline: none;
     left : 50vw;
     top : 50vh;
-
 }
 .big-user-photo__activated{
+    opacity: 1;
     outline: inherit;
     width: 30vw;
     height: 50vh;
@@ -70,3 +70,4 @@
     flex-direction: row;
     justify-content: space-around;
 }
+

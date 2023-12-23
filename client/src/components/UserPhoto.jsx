@@ -24,9 +24,15 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
     const bigImgClsName = () => {
         return bigPhotoActivated? `${smallImgClsName} big-user-photo big-user-photo__activated`: `${smallImgClsName} big-user-photo`;
     };
+    const handleSmallImgClick = (imgType) =>{
+        return ()=>{
+            document.getElementById("root").classList.toggle("invisible_root")
+            setBigPhotoActivated(imgType === "small" ? true : false)
+        }
+    }
     const imgProps = (type) => {
         return {
-            onClick: ()=>setBigPhotoActivated(type === "small" ? true : false),
+            onClick: handleSmallImgClick(type),
             className: type === "small" ? smallImgClsName : bigImgClsName(),
             src: currentPhotoName? currentPhotoName: photoFile? photoFile: null,
             alt: ":(",
