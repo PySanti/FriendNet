@@ -2,6 +2,7 @@ import "../styles/Loader.css"
 import {useLoadingState} from "../store"
 import {useEffect} from "react"
 import loading from "../../lottie/loading"
+import success from "../../lottie/success"
 import Lottie from "lottie-react"
 
 /**
@@ -15,6 +16,7 @@ export function Loader(){
      */
     const baseClass = "state-msg"
     const [loadingState, setLoadingState] = useLoadingState((state)=>([state.loadingState, state.setLoadingState]))
+
     useEffect(()=>{
         setLoadingState(false)
     }, [])
@@ -28,7 +30,14 @@ export function Loader(){
                         animationData={loading} 
                     />
                     :
-                    <h2 className={loadingState ? `${baseClass} state-activated` : baseClass}>{loadingState}</h2>
+                    (loadingState === "success") ?
+                        <Lottie 
+                            loop={false}
+                            autoplay={true}
+                            animationData={success} 
+                        />
+                        :
+                        <h2 className={loadingState ? `${baseClass} state-activated` : baseClass}>{loadingState}</h2>
             }
         </div>
     )
