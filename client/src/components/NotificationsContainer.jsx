@@ -5,7 +5,6 @@ import { Notification } from "./Notification"
 import {useEffect} from "react"
 import {useChatGlobeList} from "../store"
 import {getChatGlobesList} from "../utils/getChatGlobesList"
-import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import {useNavigate} from "react-router-dom"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {executeApi} from "../utils/executeApi"
@@ -23,7 +22,7 @@ export function NotificationsContainer(){
     let [notifications, setNotifications] = useNotifications((state)=>([state.notifications, state.setNotifications]))
     const notificationListCls = "notification-list"
     const navigate = useNavigate()
-    const [setLoadingState, startLoading] = useLoadingState((state)=>(state.setLoadingState, state.startLoading))
+    const [setLoadingState, startLoading] = useLoadingState((state)=>([state.setLoadingState, state.startLoading]))
 
 
     const onNotificationDelete = async (notification)=>{
