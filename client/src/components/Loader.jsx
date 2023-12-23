@@ -1,6 +1,8 @@
 import "../styles/Loader.css"
 import {useLoadingState} from "../store"
 import {useEffect} from "react"
+import loading from "../../lottie/loading"
+import Lottie from "lottie-react"
 
 /**
  * Loader creado para mejorar la experiencia de usuario mientras se hace un llamado a api
@@ -18,7 +20,16 @@ export function Loader(){
     }, [])
     return (
         <div className="state-container">
-            <h2 className={loadingState ? `${baseClass} state-activated` : baseClass}>{loadingState}</h2>
+            {
+                (loadingState === "loading") ?
+                    <Lottie 
+                        loop={true}
+                        autoplay={true}
+                        animationData={loading} 
+                    />
+                    :
+                    <h2 className={loadingState ? `${baseClass} state-activated` : baseClass}>{loadingState}</h2>
+            }
         </div>
     )
 }
