@@ -9,18 +9,21 @@ import { Form } from "../components/Form";
 import { UserNotLogged } from "./UserNotLogged";
 import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { UserLogged } from "./UserLogged";
+import {useState, useEffect} from "react"
+import {emptyErrors} from "../utils/emptyErrors"
 import { changeEmailForActivationAPI } from "../api/changeEmailForActivation.api";
 import {useLoadingState} from "../store"
-import {BASE_UNEXPECTED_ERROR_LOG} from "../utils/constants"
 import {executeApi} from "../utils/executeApi"
 /**
  * Page creada para la modificacion del Email para activacion 
  */
 export function ChangeEmailForActivation(){
     let [ setLoadingState, successfullyLoaded, startLoading] = useLoadingState((state)=>([state.setLoadingState, state.successfullyLoaded, state.startLoading]))
+    let [changeDetected, setChangeDetected]             = useState(false)
     const props                                         = useLocation().state
     const  navigate                                     = useNavigate()
-    const {register, handleSubmit, formState:{errors}}  = useForm()
+    const {register, handleSubmit, formState, watch}  = useForm()
+    const errors = formState.errors
     const onSubmit = handleSubmit(async (data)=>{
         startLoading()
         if (data.email !== props.userEmail){
@@ -42,6 +45,17 @@ export function ChangeEmailForActivation(){
             setLoadingState('¡ No hay cambios !')
         }
     })
+    useEffect(()=>{
+        let new_val = false
+        if (emptyErrors(errors) && watch("email") !== props.userEmail){
+            new_val = true
+        } else {
+            new_val = false
+        }
+        if (new_val != changeDetected){
+            setChangeDetected(new_val)
+        }
+    }, [formState])
     if (userIsAuthenticated()){
         return <UserLogged/>
     } else if (!props){
@@ -51,7 +65,12 @@ export function ChangeEmailForActivation(){
             <div className="centered-container">
                 <div className="change-email-container">
                     <Header msg="Cambiando correo para activación"/>
-                    <Form onSubmitFunction={onSubmit} buttonMsg="Cambiar" buttonsList={[<Button key={v4()} buttonText="Volver" onClickFunction={()=>{navigate('/signup/activate', {state: props})}} />]}>
+                    <Form 
+                        onSubmitFunction={onSubmit} 
+                        buttonMsg="Cambiar" 
+                        buttonsList={[<Button key={v4()} buttonText="Volver" onClickFunction={()=>{navigate('/signup/activate', {state: props})}} />]}
+                        button_hovered={changeDetected}
+                        >
                         <EmailField defaultValue={props.userEmail} errors={errors.email && errors.email.message} registerObject={register("email", BASE_EMAIL_CONSTRAINTS)}/>
                     </Form>
                 </div>
