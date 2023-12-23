@@ -53,7 +53,7 @@ export function ChangeEmailForActivation(){
                     <Form 
                         onSubmitFunction={onSubmit} 
                         buttonMsg="Cambiar" 
-                        buttonsList={[<Button key={v4()} buttonText="Volver" onClickFunction={()=>{navigate('/signup/activate', {state: props})}} />]}
+                        buttonsList={[<Button key={v4()} back onClickFunction={()=>{navigate('/signup/activate', {state: props})}} />]}
                         >
                         <EmailField defaultValue={props.userEmail} errors={errors.email && errors.email.message} registerObject={register("email", BASE_EMAIL_CONSTRAINTS)}/>
                     </Form>

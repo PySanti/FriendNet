@@ -6,12 +6,17 @@ import {PropTypes} from "prop-types"
  * @param {Function} onClickFunction
  * @param {Boolean} isSubmit sera true en caso de que sea un button de formulario
  * @param {Boolean} button_hovered
+ * @param {Boolean} back sera true en caso de que sea un back button
  */
-export function Button({buttonText, onClickFunction, isSubmit, button_hovered}){
+export function Button({buttonText, onClickFunction, isSubmit, button_hovered, back}){
     return (
         <div className="button-container">
             <button className={button_hovered ? "button button_hovered" : "button"}type={isSubmit ? "submit" : "button"} onClick={!isSubmit ? onClickFunction : null}>
-                {buttonText}
+                {
+                back ? 
+                "Volver"
+                :
+                buttonText}
             </button>
         </div>
     )

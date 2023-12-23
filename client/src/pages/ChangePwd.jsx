@@ -53,8 +53,9 @@ export function ChangePwd(){
                         <Form 
                             onSubmitFunction={changePwd} 
                             buttonMsg="Modificar" 
-                            buttonsList={[<Button key={v4()} 
-                                buttonText="Volver" 
+                            buttonsList={[<Button 
+                                key={v4()} 
+                                back
                                 onClickFunction={()=>{navigate('/home/profile')}} />]} 
                             >
                             <PasswordField label="Contraseña actual" errors={errors.oldPwd && errors.oldPwd.message} registerObject={register("oldPwd", BASE_PASSWORD_CONSTRAINTS)}/>

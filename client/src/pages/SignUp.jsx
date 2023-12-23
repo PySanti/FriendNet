@@ -58,7 +58,7 @@ export function SignUp() {
             <div className="centered-container">
                 <div className="signup-page-container">
                     <Header msg="¡ Regístrate !"/>
-                    <UserInfoForm onFormSubmit={onSignUp} extraButtons={[<Button key={v4()} buttonText="Volver" onClickFunction={()=>{navigate('/')}}/>,]}/>
+                    <UserInfoForm onFormSubmit={onSignUp} extraButtons={[<Button key={v4()} back onClickFunction={()=>{navigate('/')}}/>,]}/>
                 </div>
             </div>
         )

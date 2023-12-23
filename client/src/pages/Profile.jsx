@@ -64,7 +64,7 @@ export function Profile() {
                             userData={profileData} 
                             onFormSubmit={onUpdate} 
                             extraButtons={[
-                                <Button key={v4()} buttonText="Volver" onClickFunction={() => {navigate("/home/")} }/>,
+                                <Button key={v4()} back onClickFunction={() => {navigate("/home/")} }/>,
                                 <Button key={v4()} buttonText="Modificar Contraseña" onClickFunction={() => {navigate("/home/profile/change_pwd/")} }/>,
                                 ]}/>
                     </div>
