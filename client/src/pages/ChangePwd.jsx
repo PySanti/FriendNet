@@ -10,20 +10,16 @@ import { Button } from "../components/Button";
 import { Form } from "../components/Form";
 import { PasswordField } from "../components/PasswordField";
 import { v4 } from "uuid";
-import {useState, useEffect} from "react"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {executeApi} from "../utils/executeApi"
 import {useLoadingState} from "../store"
-import {emptyErrors} from "../utils/emptyErrors"
 
 
 /**
  * Pagina creado para cambio de contraseña
  */
 export function ChangePwd(){
-    let [changeDetected, setChangeDetected] = useState(false)
-    const {register, handleSubmit, formState, watch} = useForm()
-    const errors = formState.errors
+    const {register, handleSubmit, formState : {errors}} = useForm()
     const navigate = useNavigate()
     const   [ setLoadingState, successfullyLoaded, startLoading] = useLoadingState((state)=>([state.setLoadingState, state.successfullyLoaded, state.startLoading]))
     const changePwd = handleSubmit(async (data)=>{
@@ -45,8 +41,7 @@ export function ChangePwd(){
             setLoadingState("No hay cambios")
         }
     })
-    useEffect(()=>{
-    }, [formState])
+
     if (!userIsAuthenticated()){
         return  <UserNotLogged msg="No puedes cambiar tu contraseña si aun no tienes cuenta o no has iniciado sesión en ella"/>
     } else {
@@ -56,7 +51,6 @@ export function ChangePwd(){
                     <Header msg="Modificando contraseña"/>
                     <div className="change-pwd-container__form-container">
                         <Form 
-                            button_hovered={changeDetected}
                             onSubmitFunction={changePwd} 
                             buttonMsg="Modificar" 
                             buttonsList={[<Button key={v4()} 

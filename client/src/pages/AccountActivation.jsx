@@ -2,7 +2,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { Header } from "../components/Header";
 import { useForm } from "react-hook-form";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 // api's
 import { activateUserAPI } from "../api/activateUser.api";
 import { generateActivationCode } from "../utils/generateActivationCode";
@@ -17,18 +17,15 @@ import { v4 } from "uuid";
 import {BASE_ACTIVATION_CODE_CONSTRAINTS} from "../utils/constants"
 import {useLoadingState} from "../store"
 import {executeApi} from "../utils/executeApi"
-import {emptyErrors} from "../utils/emptyErrors"
 /**
  * Pagina creada para llevar activacion de cuenta
  */
 export function AccountActivation() {
     let [ setLoadingState, successfullyLoaded, startLoading ]               = useLoadingState((state)=>([state.setLoadingState, state.successfullyLoaded, state.startLoading]));
     let realActivationCode                                                  = useRef(generateActivationCode());
-    let [changeDetected, setChangeDetected]                                 =  useState(false)
     const props                                                             = useLocation().state;
     const navigate                                                          = useNavigate();
-    const { register, handleSubmit, formState, watch}                  = useForm();
-    const errors = formState.errors
+    const { register, handleSubmit, formState : {errors}}                  = useForm();
     const handleActivationCodeSending = async ()=>{
         console.log('-> ', realActivationCode.current)
         const response = await executeApi(async ()=>{
@@ -67,9 +64,7 @@ export function AccountActivation() {
             } )()
         }
     }, []);
-    useEffect(()=>{
 
-    }, [formState])
     if (userIsAuthenticated()) {
         return <UserLogged />;
     } else if (!props) {
@@ -83,7 +78,6 @@ export function AccountActivation() {
                         onSubmitFunction={onSubmit} 
                         buttonMsg="Activar" 
                         buttonsList={[<Button key={v4()} buttonText="Volver" onClickFunction={() => {navigate("/")}} />,<Button key={v4()} buttonText="Cambiar correo" onClickFunction={() => {navigate("/signup/activate/change_email", { state: props })}}/>]}
-                        button_hovered={changeDetected}
                         >
                         <ActivationCodeField errors={errors.activationCode && errors.activationCode.message} registerObject={register("activationCode", BASE_ACTIVATION_CODE_CONSTRAINTS)}/>
                     </Form>

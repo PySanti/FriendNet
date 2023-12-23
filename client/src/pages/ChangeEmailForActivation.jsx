@@ -19,11 +19,9 @@ import {executeApi} from "../utils/executeApi"
  */
 export function ChangeEmailForActivation(){
     let [ setLoadingState, successfullyLoaded, startLoading] = useLoadingState((state)=>([state.setLoadingState, state.successfullyLoaded, state.startLoading]))
-    let [changeDetected, setChangeDetected]             = useState(false)
     const props                                         = useLocation().state
     const  navigate                                     = useNavigate()
-    const {register, handleSubmit, formState, watch}  = useForm()
-    const errors = formState.errors
+    const {register, handleSubmit, formState : {errors}}  = useForm()
     const onSubmit = handleSubmit(async (data)=>{
         startLoading()
         if (data.email !== props.userEmail){
@@ -45,9 +43,6 @@ export function ChangeEmailForActivation(){
             setLoadingState('¡ No hay cambios !')
         }
     })
-    useEffect(()=>{
-
-    }, [formState])
     if (userIsAuthenticated()){
         return <UserLogged/>
     } else if (!props){
@@ -61,7 +56,6 @@ export function ChangeEmailForActivation(){
                         onSubmitFunction={onSubmit} 
                         buttonMsg="Cambiar" 
                         buttonsList={[<Button key={v4()} buttonText="Volver" onClickFunction={()=>{navigate('/signup/activate', {state: props})}} />]}
-                        button_hovered={changeDetected}
                         >
                         <EmailField defaultValue={props.userEmail} errors={errors.email && errors.email.message} registerObject={register("email", BASE_EMAIL_CONSTRAINTS)}/>
                     </Form>
