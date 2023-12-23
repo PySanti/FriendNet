@@ -5,15 +5,20 @@
     justify-content: center;
     align-items : center;
     height: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 
 .state-container *{
+    width: 100%;
+}
+.animation_state *{
     max-width: 3rem;
 }
 
-.state-msg{
-    padding-top:1rem ;
-}
-.state-activated{
+
+.state-container .state-activated{
     padding-top: 0;
+    padding-bottom: 0;
 }
+

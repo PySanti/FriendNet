@@ -21,7 +21,7 @@ export function Loader(){
         setLoadingState(false)
     }, [])
     return (
-        <div className="state-container">
+        <div className={loadingState == "loading" || loadingState == "success" ? "state-container animation_state" : "state-container"}>
             {
                 (loadingState === "loading") ?
                     <Lottie 
