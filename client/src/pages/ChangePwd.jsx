@@ -46,16 +46,6 @@ export function ChangePwd(){
         }
     })
     useEffect(()=>{
-        // recordar el por que del uso de new_val
-        let new_val = false
-        if (emptyErrors(errors)){
-            new_val = watch("newPwd") && watch("oldPwd") ?  true : false
-        } else {
-            new_val = false
-        }
-        if (changeDetected != new_val){
-            setChangeDetected(new_val)
-        }
     }, [formState])
     if (!userIsAuthenticated()){
         return  <UserNotLogged msg="No puedes cambiar tu contraseña si aun no tienes cuenta o no has iniciado sesión en ella"/>

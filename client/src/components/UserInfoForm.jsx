@@ -31,28 +31,7 @@ export function UserInfoForm({ userData, onFormSubmit, extraButtons}) {
         onFormSubmit(data);
     });
     useEffect(()=>{
-        // recordar el por que del empleo de new_val
-        let new_val = false
-        if (emptyErrors(errors)){
-            if (userData){
-                if (watch("username") !== userData.username || watch("email") !== userData.email || currentPhotoFile !== userData.photo_link){
-                    new_val = true
-                } else {
-                    new_val = false
-                }
-            } else {
-                if (watch("username") && watch("email") && watch("password") && watch("confirmPwd")){
-                    new_val = true
-                } else {
-                    new_val = false
-                }
-            }
-        } else {
-            new_val = false
-        }
-        if (new_val != changeDetected){
-            setChangeDetected(new_val)
-        }
+
     }, [formState])
     const passwordChecking = (type) => {
         return (password) => {

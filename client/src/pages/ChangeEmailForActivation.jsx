@@ -46,15 +46,7 @@ export function ChangeEmailForActivation(){
         }
     })
     useEffect(()=>{
-        let new_val = false
-        if (emptyErrors(errors) && watch("email") !== props.userEmail){
-            new_val = true
-        } else {
-            new_val = false
-        }
-        if (new_val != changeDetected){
-            setChangeDetected(new_val)
-        }
+
     }, [formState])
     if (userIsAuthenticated()){
         return <UserLogged/>

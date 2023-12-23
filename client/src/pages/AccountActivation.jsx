@@ -68,15 +68,7 @@ export function AccountActivation() {
         }
     }, []);
     useEffect(()=>{
-        let new_val = false
-        if (emptyErrors(errors) && watch("activationCode") == realActivationCode.current){
-            new_val = true
-        } else {
-            new_val = false
-        }
-        if (new_val != changeDetected){
-            setChangeDetected(new_val)
-        }
+
     }, [formState])
     if (userIsAuthenticated()) {
         return <UserLogged />;
