@@ -12,6 +12,8 @@ import { useEffect, useState } from "react";
 import { UsernameField } from "./UsernameField";
 import { PasswordField } from "./PasswordField";
 import { EmailField } from "./EmailField";
+import {emptyErrors} from "../utils/emptyErrors"
+
 /**
  * Componente creado para los formularios de SignUp y Update,
  * teniendo en cuenta las similitudes entre ambos
@@ -29,22 +31,27 @@ export function UserInfoForm({ userData, onFormSubmit, extraButtons}) {
         onFormSubmit(data);
     });
     useEffect(()=>{
-        if ((Object.keys(errors)).length == 0){
+        // recordar el por que del empleo de new_val
+        let new_val = false
+        if (emptyErrors(errors)){
             if (userData){
                 if (watch("username") !== userData.username || watch("email") !== userData.email || currentPhotoFile !== userData.photo_link){
-                    setChangeDetected(true)
+                    new_val = true
                 } else {
-                    setChangeDetected(false)
+                    new_val = false
                 }
             } else {
                 if (watch("username") && watch("email") && watch("password") && watch("confirmPwd")){
-                    setChangeDetected(true)
+                    new_val = true
                 } else {
-                    setChangeDetected(false)
+                    new_val = false
                 }
             }
         } else {
-            setChangeDetected(false)
+            new_val = false
+        }
+        if (new_val != changeDetected){
+            setChangeDetected(new_val)
         }
     }, [formState])
     const passwordChecking = (type) => {

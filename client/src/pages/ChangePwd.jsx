@@ -14,6 +14,7 @@ import {useState, useEffect} from "react"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {executeApi} from "../utils/executeApi"
 import {useLoadingState} from "../store"
+import {emptyErrors} from "../utils/emptyErrors"
 
 
 /**
@@ -21,7 +22,7 @@ import {useLoadingState} from "../store"
  */
 export function ChangePwd(){
     let [changeDetected, setChangeDetected] = useState(false)
-    const {register, handleSubmit, formState} = useForm()
+    const {register, handleSubmit, formState, watch} = useForm()
     const errors = formState.errors
     const navigate = useNavigate()
     const   [ setLoadingState, successfullyLoaded, startLoading] = useLoadingState((state)=>([state.setLoadingState, state.successfullyLoaded, state.startLoading]))
@@ -45,6 +46,16 @@ export function ChangePwd(){
         }
     })
     useEffect(()=>{
+        // recordar el por que del uso de new_val
+        let new_val = false
+        if (emptyErrors(errors)){
+            new_val = watch("newPwd") && watch("oldPwd") ?  true : false
+        } else {
+            new_val = false
+        }
+        if (changeDetected != new_val){
+            setChangeDetected(new_val)
+        }
     }, [formState])
     if (!userIsAuthenticated()){
         return  <UserNotLogged msg="No puedes cambiar tu contraseña si aun no tienes cuenta o no has iniciado sesión en ella"/>
@@ -54,8 +65,15 @@ export function ChangePwd(){
                 <div className="change-pwd-container">
                     <Header msg="Modificando contraseña"/>
                     <div className="change-pwd-container__form-container">
-                        <Form onSubmitFunction={changePwd} buttonMsg="Modificar" buttonsList={[<Button key={v4()} buttonText="Volver" onClickFunction={()=>{navigate('/home/profile')}} button_hovered={changeDetected}/>]}>
-                            <PasswordField label="Contrasenia actual" errors={errors.oldPwd && errors.oldPwd.message} registerObject={register("oldPwd", BASE_PASSWORD_CONSTRAINTS)}/>
+                        <Form 
+                            button_hovered={changeDetected}
+                            onSubmitFunction={changePwd} 
+                            buttonMsg="Modificar" 
+                            buttonsList={[<Button key={v4()} 
+                                buttonText="Volver" 
+                                onClickFunction={()=>{navigate('/home/profile')}} />]} 
+                            >
+                            <PasswordField label="Contraseña actual" errors={errors.oldPwd && errors.oldPwd.message} registerObject={register("oldPwd", BASE_PASSWORD_CONSTRAINTS)}/>
                             <PasswordField label="Nueva contraseña" errors={errors.newPwd && errors.newPwd.message} registerObject={register("newPwd", BASE_PASSWORD_CONSTRAINTS)}/>
                         </Form>
                     </div>
