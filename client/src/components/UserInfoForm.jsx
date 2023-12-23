@@ -12,7 +12,6 @@ import { useEffect, useState } from "react";
 import { UsernameField } from "./UsernameField";
 import { PasswordField } from "./PasswordField";
 import { EmailField } from "./EmailField";
-import {emptyErrors} from "../utils/emptyErrors"
 
 /**
  * Componente creado para los formularios de SignUp y Update,
@@ -23,7 +22,7 @@ import {emptyErrors} from "../utils/emptyErrors"
  */
 export function UserInfoForm({ userData, onFormSubmit, extraButtons}) {
     let [currentPhotoFile, setCurrentPhotoFile] = useState(userData ? userData.photo_link : null);
-    let [changeDetected, setChangeDetected] = useState(null)
+    let [changeDetected, setChangeDetected] = useState(false)
     const { register, handleSubmit, formState, watch} = useForm();
     const errors = formState.errors
     const onSubmit = handleSubmit((data) => {
@@ -31,7 +30,15 @@ export function UserInfoForm({ userData, onFormSubmit, extraButtons}) {
         onFormSubmit(data);
     });
     useEffect(()=>{
-
+        let new_val = false
+        if (userData && Object.keys(errors).length == 0  && (watch("username") !== userData.username || watch("email") !== userData.email || currentPhotoFile !== userData.photo_link)){
+            new_val = true
+        } else {
+            new_val = false
+        }
+        if (new_val != changeDetected){
+            setChangeDetected(new_val)
+        }
     }, [formState])
     const passwordChecking = (type) => {
         return (password) => {

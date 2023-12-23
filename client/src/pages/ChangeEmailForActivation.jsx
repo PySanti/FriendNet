@@ -9,8 +9,6 @@ import { Form } from "../components/Form";
 import { UserNotLogged } from "./UserNotLogged";
 import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { UserLogged } from "./UserLogged";
-import {useState, useEffect} from "react"
-import {emptyErrors} from "../utils/emptyErrors"
 import { changeEmailForActivationAPI } from "../api/changeEmailForActivation.api";
 import {useLoadingState} from "../store"
 import {executeApi} from "../utils/executeApi"
