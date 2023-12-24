@@ -13,6 +13,7 @@ import {disconnectWebsocket} from "../utils/disconnectWebsocket"
 import {CHAT_WEBSOCKET} from "../utils/constants"
 // import { destroy } from 'zustand';
 import {resetGlobalStates} from "../utils/resetGlobalStates"
+import {generateDocumentTitle} from "../utils/generateDocumentTitle"
 
 
 /**
@@ -21,6 +22,7 @@ import {resetGlobalStates} from "../utils/resetGlobalStates"
 export function Home() {
     const navigate                      = useNavigate()
     useEffect(()=>{
+        document.title = generateDocumentTitle("Home")
         return ()=>{
             // esto se ejecutara cuando el componente sea desmontado
             resetGlobalStates(["useClickedUser", "useLastClickedUser", "useMessagesHistorial"])

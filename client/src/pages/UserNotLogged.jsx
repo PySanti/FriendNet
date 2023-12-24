@@ -1,6 +1,11 @@
 import { useNavigate } from "react-router-dom"
 import { Header } from "../components/Header"
 import { Button } from "../components/Button"
+
+import {useEffect} from "react"
+import {generateDocumentTitle} from "../utils/generateDocumentTitle"
+
+
 import {PropTypes} from "prop-types"
 
 /**
@@ -10,6 +15,9 @@ import {PropTypes} from "prop-types"
  */
 export function UserNotLogged({msg}){
     const navigate = useNavigate()
+    useEffect(()=>{
+        document.title = generateDocumentTitle("")
+    }, [])
     return (
         <div className="centered-container">
             <div className="usernot-logged-container">

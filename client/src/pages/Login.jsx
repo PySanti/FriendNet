@@ -13,6 +13,8 @@ import {loginUser} from "../utils/loginUser"
 import {useLoadingState} from "../store"
 import {generateLocationProps} from "../utils/generateLocationProps"
 import {executeApi} from "../utils/executeApi"
+import {useEffect} from "react"
+import {generateDocumentTitle} from "../utils/generateDocumentTitle"
 /**
  * Pagina creada para llevar logeo de usuarios
  */
@@ -58,7 +60,9 @@ export function Login() {
             }
         }
     }
-
+    useEffect(()=>{
+        document.title = generateDocumentTitle("Iniciando Sesión")
+    }, [])
     if (userIsAuthenticated()){
         return <UserLogged/> 
     } else{

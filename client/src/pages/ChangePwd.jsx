@@ -13,6 +13,8 @@ import { v4 } from "uuid";
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {executeApi} from "../utils/executeApi"
 import {useLoadingState} from "../store"
+import {useEffect} from "react"
+import {generateDocumentTitle} from "../utils/generateDocumentTitle"
 
 
 /**
@@ -41,7 +43,10 @@ export function ChangePwd(){
             setLoadingState("No hay cambios")
         }
     })
-
+    useEffect(() => {
+        document.title = generateDocumentTitle("Cambiando Contraseña")
+    }, [])
+    
     if (!userIsAuthenticated()){
         return  <UserNotLogged msg="No puedes cambiar tu contraseña si aun no tienes cuenta o no has iniciado sesión en ella"/>
     } else {

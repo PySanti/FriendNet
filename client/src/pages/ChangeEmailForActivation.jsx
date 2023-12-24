@@ -12,6 +12,9 @@ import { UserLogged } from "./UserLogged";
 import { changeEmailForActivationAPI } from "../api/changeEmailForActivation.api";
 import {useLoadingState} from "../store"
 import {executeApi} from "../utils/executeApi"
+import {useEffect} from "react"
+import {generateDocumentTitle} from "../utils/generateDocumentTitle"
+
 /**
  * Page creada para la modificacion del Email para activacion 
  */
@@ -41,6 +44,10 @@ export function ChangeEmailForActivation(){
             setLoadingState('¡ No hay cambios !')
         }
     })
+    useEffect(() => {
+        document.title = generateDocumentTitle("Cambiando Correo")
+    }, [])
+    
     if (userIsAuthenticated()){
         return <UserLogged/>
     } else if (!props){

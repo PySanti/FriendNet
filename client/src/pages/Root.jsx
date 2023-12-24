@@ -4,11 +4,17 @@ import { UserLogged } from "./UserLogged.jsx"
 import { useNavigate } from "react-router-dom"
 import "../styles/Root.css"
 import { Button } from "../components/Button.jsx"
+import {useEffect} from "react"
+import {generateDocumentTitle} from "../utils/generateDocumentTitle"
+
 /**
  * Pagina de inicio
  */
 export function Root() {
     const navigate = useNavigate()
+    useEffect(()=>{
+        document.title = generateDocumentTitle("Inicio")
+    }, [])
     if (userIsAuthenticated()){
         return <UserLogged/>
     }else{

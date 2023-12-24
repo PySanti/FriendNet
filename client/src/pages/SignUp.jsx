@@ -4,6 +4,9 @@ import { Header }                   from "../components/Header";
 import { createUsuarioAPI }         from "../api/createUsuario.api";
 import { checkExistingUserAPI } from "../api/checkExistingUser.api";
 
+import {useEffect} from "react"
+import {generateDocumentTitle} from "../utils/generateDocumentTitle"
+
 // styles
 import {   useNavigate } from "react-router-dom";
 import { userIsAuthenticated } from "../utils/userIsAuthenticated";
@@ -50,6 +53,9 @@ export function SignUp() {
             }
         }
 }
+    useEffect(()=>{
+        document.title = generateDocumentTitle("Registrando")
+    }, [])
 
     if (userIsAuthenticated()){
         return <UserLogged/>

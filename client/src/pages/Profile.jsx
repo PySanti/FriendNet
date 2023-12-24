@@ -13,6 +13,8 @@ import { getUserDataFromLocalStorage } from "../utils/getUserDataFromLocalStorag
 import { dataIsDiferent } from "../utils/dataIsDiferent";
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {executeApi} from "../utils/executeApi"
+import {useEffect} from "react"
+import {generateDocumentTitle} from "../utils/generateDocumentTitle"
 import {useLoadingState} from "../store"
 
 /**
@@ -50,8 +52,9 @@ export function Profile() {
             setLoadingState("Sin cambios");
         }
     };
-
-
+    useEffect(()=>{
+        document.title = generateDocumentTitle("Perfil")
+    }, [])
     if (!userIsAuthenticated()) {
         return <UserNotLogged msg="No puedes acceder a tu perfil si aun no has iniciado sesión o no tienes cuenta"/>;
     } else {

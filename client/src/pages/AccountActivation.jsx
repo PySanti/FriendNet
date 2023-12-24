@@ -17,6 +17,7 @@ import { v4 } from "uuid";
 import {BASE_ACTIVATION_CODE_CONSTRAINTS} from "../utils/constants"
 import {useLoadingState} from "../store"
 import {executeApi} from "../utils/executeApi"
+import {generateDocumentTitle} from "../utils/generateDocumentTitle"
 /**
  * Pagina creada para llevar activacion de cuenta
  */
@@ -56,6 +57,7 @@ export function AccountActivation() {
         }
     });
     useEffect(() => {
+        document.title = generateDocumentTitle("Activando Cuenta")
         if (props){
             (async function(){
                 await handleActivationCodeSending()
