@@ -12,7 +12,7 @@
     transition-property: outline border;
     transition-duration: .2s;
     box-shadow: 3px 2px 10px;
-    background-color : var(--base-background-color);
+    background-color : var(--base-background-box-color);
     outline: var(--outline-width) solid var(--base-color);
 }
 

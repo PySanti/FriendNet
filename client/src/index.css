@@ -9,6 +9,7 @@ body{
   --base-color : #4ed31a;
   --base-background-color : #fff;
   --base-letter-color : #000;
+  --base-background-box-color : #fff;
   color : var(--base-letter-color);
   background-color:  var(--base-background-color);
   transition-property: background-color color;
@@ -16,7 +17,8 @@ body{
 }
 
 .dark{
-  --base-background-color : #4b4b4b ;
+  --base-background-color : #414141;
+  --base-background-box-color : #c7c5c5;
   --base-letter-color : #dddddd     ;
 }
 
@@ -42,6 +44,7 @@ input{
   transition-property: box-shadow border;
   transition-duration: .2s;
   margin: 0px .4rem;
+  background-color : var(--base-background-box-color);
 }
 input:focus{
   outline: .5px solid var(--base-color);
