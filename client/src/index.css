@@ -19,9 +19,9 @@ input{
 
 .dark{
   background-color:  rgb(71, 71, 71) !important;
-  --base-letter-color : #dddddd !important;
-  color : #fff !important;
+  --base-letter-color : #cccccc !important;
 }
+
 .centered-container{
   /*
   * Para pages de poco contenido que deben ser 
