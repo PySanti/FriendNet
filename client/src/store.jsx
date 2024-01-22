@@ -85,5 +85,3 @@ export const useFirstUsersListCall = create((set)=>({
     setFirstUsersListCall : (new_val)=>(set(()=>({firstUsersListCall : new_val}))),
     reset : ()=>(set(()=>({firstUsersListCall: false})))
 }))
-
-

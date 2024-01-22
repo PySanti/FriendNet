@@ -7,13 +7,20 @@
 input{
   margin: 0px .4rem
 }
-body{
+#root{
   display: flex;
   --base-background-color : #4ed31a;
   --base-letter-color : #000;
   color : var(--base-letter-color);
   background-color:  rgb(255, 255, 255);
+  transition-property: background-color color;
+  transition-duration: .2s;
+}
 
+.dark{
+  background-color:  rgb(71, 71, 71) !important;
+  --base-letter-color : #dddddd !important;
+  color : #fff !important;
 }
 .centered-container{
   /*

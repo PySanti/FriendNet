@@ -14,7 +14,7 @@ import {CHAT_WEBSOCKET} from "../utils/constants"
 // import { destroy } from 'zustand';
 import {resetGlobalStates} from "../utils/resetGlobalStates"
 import {generateDocumentTitle} from "../utils/generateDocumentTitle"
-
+import {DarkModeButton} from "../components/DarkModeButton"
 
 /**
  * Pagina principal del sitio
@@ -38,6 +38,7 @@ export function Home() {
                 <div className="home-container">
                     <Header msg="En el home"/>
                     <div className="buttons-container">
+                        <DarkModeButton/>
                         <NotificationsContainer/>
                         <Button buttonText="Salir" onClickFunction={()=>logoutUser(navigate)}/>
                         <Button buttonText="Perfil" onClickFunction={()=>{navigate('/home/profile/')}}/>

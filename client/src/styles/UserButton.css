@@ -2,6 +2,7 @@
     background-color: inherit;
     border: 1px solid #000;
     outline: none;
+    color : var(--base-letter-color);
 }
 .user-button:hover{
     cursor: pointer;

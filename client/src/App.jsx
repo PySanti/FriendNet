@@ -34,6 +34,7 @@ function App() {
   useEffect(()=>{
     initStates(notifications, setNotifications)
   }, [])
+
   useEffect(()=>{
     if (NotificationsWSCanBeUpdated()){
       NOTIFICATIONS_WEBSOCKET.current.onmessage = (event)=>{
