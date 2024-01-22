@@ -22,13 +22,13 @@
     align-items: center;
     text-align: center;
     object-fit: cover;
-    outline: 3px inset var(--base-background-color);
+    outline: 3px inset var(--base-color);
     transition-property: outline width height top left;
     transition-duration: .1s;
 }
 .user-photo:hover{
     cursor: pointer;
-    outline: 7px inset var(--base-background-color);
+    outline: 7px inset var(--base-color);
 }
 
 .user-photo-input{

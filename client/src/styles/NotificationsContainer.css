@@ -9,7 +9,7 @@
 .notifications-bell{
     width: 30px;
     height: 30px;
-    background-color: var(--base-background-color);
+    background-color: var(--base-color);
     border-radius: 100%;
     border: none;
     transition: background-color .1s;

@@ -4,22 +4,20 @@
   font-size: 24px;
 }
 
-input{
-  margin: 0px .4rem
-}
-#root{
+body{
   display: flex;
-  --base-background-color : #4ed31a;
+  --base-color : #4ed31a;
+  --base-background-color : #fff;
   --base-letter-color : #000;
   color : var(--base-letter-color);
-  background-color:  rgb(255, 255, 255);
+  background-color:  var(--base-background-color);
   transition-property: background-color color;
   transition-duration: .2s;
 }
 
 .dark{
-  background-color:  rgb(71, 71, 71) !important;
-  --base-letter-color : #cccccc !important;
+  --base-background-color : #4b4b4b ;
+  --base-letter-color : #dddddd     ;
 }
 
 .centered-container{
@@ -43,8 +41,9 @@ input{
   border: none;
   transition-property: box-shadow border;
   transition-duration: .2s;
+  margin: 0px .4rem;
 }
 input:focus{
-  outline: .5px solid var(--base-background-color);
+  outline: .5px solid var(--base-color);
   box-shadow: 3px 3px 10px #858585;
 }
