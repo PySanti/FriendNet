@@ -4,6 +4,7 @@ import {useRef} from "react"
 import "../styles/DarkModeButton.css"
 import {useDarkMode} from "../store"
 import {useEffect} from "react"
+import {getDarkModeFromLocalStorage} from "../utils/getDarkModeFromLocalStorage"
 
 /**
  * Componente creado para el dark mode
@@ -28,7 +29,7 @@ export function DarkModeButton(){
     }
 
     useEffect(()=>{
-        const currentDarkMode = (localStorage.getItem("darkMode") == undefined ||  localStorage.getItem("darkMode") == "false") ? false : true;
+        const currentDarkMode = getDarkModeFromLocalStorage()
         updateDarkMode(currentDarkMode)
         if (currentDarkMode)
             darkModeAnimationRef.current.playSegments([0,16], true)
