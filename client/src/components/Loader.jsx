@@ -2,7 +2,7 @@ import "../styles/Loader.css"
 import {useLoadingState} from "../store"
 import {useEffect} from "react"
 import loading from "../../lottie/loading"
-import success from "../../lottie/success2"
+import success from "../../lottie/success"
 import Lottie from "lottie-react"
 
 /**
