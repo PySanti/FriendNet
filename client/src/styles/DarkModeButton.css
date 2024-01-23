@@ -1,10 +1,10 @@
 .dark-mode-button__container {
-    width: 3.3vw;
+    width: 3vw;
     height: auto;
     cursor : pointer;
     position: absolute;
     top : 2vw;
-    left: 90vw;
+    left: 94vw;
     filter : var(--base-image-drop-shadow);
 }
 
