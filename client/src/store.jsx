@@ -85,3 +85,8 @@ export const useFirstUsersListCall = create((set)=>({
     setFirstUsersListCall : (new_val)=>(set(()=>({firstUsersListCall : new_val}))),
     reset : ()=>(set(()=>({firstUsersListCall: false})))
 }))
+
+export const useDarkMode = create((set)=>({
+    darkModeActivated : false,
+    setDarkModeActivated : (new_val)=>(set(()=>({darkModeActivated : new_val}))),
+}))
