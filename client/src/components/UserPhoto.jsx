@@ -18,25 +18,20 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
     let modalContainerRef                           = useRef(null)
     let [errorMsg, setErrorMsg]                     = useState(null);
     let [currentPhotoName, setCurrentPhotoName]     = useState(null);
-    let [bigPhotoActivated, setBigPhotoActivated]   = useState(false);
     const imgInputRef                                 = useRef(null)
     const containerClsName                          = "user-photo-container";
-    const smallImgClsName                           = "user-photo";
-    const bigImgClsName = () => {
-        return bigPhotoActivated? `${smallImgClsName} big-user-photo big-user-photo__activated`: `${smallImgClsName} big-user-photo`;
-    };
-    const handleSmallImgClick = (imgType) =>{
-        return ()=>{
-            if (photoFile){
-                modalContainerRef.current.classList.toggle("modal-container__activated")
-                setBigPhotoActivated(imgType === "small"? true : false)
-            }
+    const handleImgClick = ()=>{
+        if (photoFile){
+            modalContainerRef.current.classList.toggle("modal-container__activated")
+            setTimeout(() => {
+                modalContainerRef.current.style.opacity = modalContainerRef.current.style.opacity == "1"? "0" : "1" ;
+            }, 10);
         }
     }
     const imgProps = (type) => {
         return {
-            onClick: handleSmallImgClick(type),
-            className: type === "small" ? smallImgClsName : bigImgClsName(),
+            onClick: handleImgClick,
+            className: type === "small" ? "user-photo" : `big-user-photo`,
             src: currentPhotoName? currentPhotoName: photoFile? photoFile: null,
             alt: ":(",
         };
@@ -60,9 +55,9 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
     return (
         <div className={    chatPhoto ? `${containerClsName} chat-photo` : containerClsName}>
             <div className="user-photo-smaller-container" >
-                <img {...imgProps("small")} />
+                <img {...imgProps("small")}/>
                 <div className="modal-container" ref={modalContainerRef}>
-                    <img {...imgProps("big")} />
+                    <img {...imgProps("big")}/>
                 </div>
             </div>
             {withInput && (

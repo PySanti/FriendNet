@@ -1,21 +1,6 @@
 /*
     User photo
 */
-.user-photo-container{
-    padding: 1rem;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    text-align: center;
-    flex-direction: column;
-    width: 15vw;
-    height: 40vh;
-}
-.user-photo-smaller-container{
-    min-height: 70%;
-    max-height: 70%;
-    width: 100%;
-}
 .user-photo{
     border-radius: 30px;
     width: 100%;
@@ -33,44 +18,55 @@
 .user-photo:hover{
     outline: 7px inset var(--base-color);
 }
+.user-photo-container{
+    margin: 1rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    width: 15vw;
+    height: 40vh;
+}
+.user-photo-smaller-container{
+    min-height: 70%;
+    max-height: 70%;
+    width: 100%;
+}
+
 
 /*
     Big User Photo
 */
 
 .big-user-photo{
-    object-fit: contain;
+    object-fit: cover;
     cursor: pointer;
-}
-.big-user-photo__activated{
     margin: auto;
     display: block;
     width: 80%;
     max-width: 700px;
 }
+
 .modal-container{
     display: none;
     position: fixed;
     z-index: 1;
-    padding-top: 100px;
     left: 0;
     top: 0;
     width: 100%;
+    opacity: 0;
     height: 100%;
+    padding-top: 10vh;
     overflow: auto;
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0,0,0,0.8);
+    transition-property: opacity ;
+    transition-duration: .3s;
 }
 
 .modal-container__activated{
     display: block;
 }
-
-
-
-.big-user-photo:hover{
-    outline: none;
-}
-
 
 
 
