@@ -17,7 +17,7 @@
 }
 
 .button:hover, .button_hovered{
-    background-color: rgb(202, 247, 189);
+    background-color: rgb(145, 214, 126);
     cursor: pointer;
     border-bottom-right-radius: 10px;
     border-top-left-radius: 10px;
