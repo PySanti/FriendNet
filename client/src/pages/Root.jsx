@@ -33,7 +33,7 @@ export function Root() {
                         </div>
                         <div className="signup-container">
                             <h4>
-                                ¿Aun no tienes cuenta? 
+                                ¿Aun no tienes cuenta?
                             </h4>
                             <Button buttonText="Regístrate" onClickFunction={()=>{navigate('/signup/')}} />
                         </div>

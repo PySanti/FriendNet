@@ -21,7 +21,7 @@ export const BASE_ACTIVATION_CODE_CONSTRAINTS = {
     pattern: {
         value: /^-?\d+$/,
         message:
-            "Por favor, ingresa un codigo valido",
+            "Por favor, ingresa un código valido",
     },
     minLength: {
         value: 6,
@@ -74,4 +74,4 @@ export const CHAT_WEBSOCKET = {
 export const NOTIFICATIONS_WEBSOCKET = {
     'current' : null
 }
-export const BASE_RATE_LIMIT_BLOCK_RESPONSE = "Has hecho muchas solicitudes ultimamente, espera un poco ... "
+export const BASE_RATE_LIMIT_BLOCK_RESPONSE = "Has hecho muchas solicitudes últimamente, espera un poco ... "
