@@ -1,12 +1,10 @@
-.dark-mode-button__container > *{
-    width: 3vw;
+.dark-mode-button__container {
+    width: 3.3vw;
     height: auto;
     cursor : pointer;
-
+    position: absolute;
+    top : 2vw;
+    left: 90vw;
+    filter : var(--base-image-drop-shadow);
 }
 
-.dark-mode-button__container{
-    display: flex;
-    justify-content: center;
-    align-items : center;
-}

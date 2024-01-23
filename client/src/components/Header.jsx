@@ -1,5 +1,4 @@
 import "../styles/Header.css"
-import {DarkModeButton} from "../components/DarkModeButton"
 import {PropTypes} from "prop-types"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import {Loader} from "../components/Loader"
@@ -12,7 +11,6 @@ export function Header({msg}) {
 
     return (
         <>
-            <DarkModeButton/>
             <header className="header-container">
                 <h1 className="header-title">
                     FriendNet{userData && `, ${userData.username}`}

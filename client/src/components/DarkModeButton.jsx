@@ -16,14 +16,12 @@ export function DarkModeButton(){
     }
     return (
         <div className="dark-mode-button__container" onClick={handleClick}>
-            <div className="dark-mode-button">
-                <Lottie 
-                    loop={false}
-                    autoplay={false}
-                    animationData={dark_mode} 
-                    lottieRef={darkModeAnimationRef} 
-                    />
-            </div>
+            <Lottie 
+                loop={false}
+                autoplay={false}
+                animationData={dark_mode} 
+                lottieRef={darkModeAnimationRef} 
+                />
         </div>
     )
 }

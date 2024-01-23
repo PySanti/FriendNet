@@ -17,6 +17,7 @@ import {Page404} from "./pages/Page404"
 import {shiftUser} from "./utils/shiftUser"
 import * as states from "./store"
 import {initStates} from "./utils/initStates"
+import {DarkModeButton} from "./components/DarkModeButton"
 
 /**
 /**
@@ -77,6 +78,7 @@ function App() {
   }, [notifications, usersList, clickedUser])
   return (
     <>
+    <DarkModeButton/>
     <BrowserRouter>
       <Routes>
         <Route 
