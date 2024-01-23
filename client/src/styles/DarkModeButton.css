@@ -1,5 +1,12 @@
-.dark-mode-button__container{
-    width: 5vw;
+.dark-mode-button__container > *{
+    width: 3vw;
     height: auto;
     cursor : pointer;
+
+}
+
+.dark-mode-button__container{
+    display: flex;
+    justify-content: center;
+    align-items : center;
 }

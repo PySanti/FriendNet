@@ -17,6 +17,7 @@ import {Page404} from "./pages/Page404"
 import {shiftUser} from "./utils/shiftUser"
 import * as states from "./store"
 import {initStates} from "./utils/initStates"
+
 /**
 /**
  * Toda la implementacion que tenemos del websocket de notificaciones en el app.jsx
@@ -75,6 +76,7 @@ function App() {
     }
   }, [notifications, usersList, clickedUser])
   return (
+    <>
     <BrowserRouter>
       <Routes>
         <Route 
@@ -133,6 +135,7 @@ function App() {
           }/>
       </Routes>
     </BrowserRouter>
+  </>
   )
 }
 

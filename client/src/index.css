@@ -17,9 +17,9 @@ body{
 }
 
 .dark{
-  --base-background-color : #414141;
+  --base-background-color : #545761;
   --base-background-box-color : #c7c5c5;
-  --base-letter-color : #dddddd     ;
+  --base-letter-color : #ffffff    ;
 }
 
 .centered-container{
@@ -48,5 +48,5 @@ input{
 }
 input:focus{
   outline: .5px solid var(--base-color);
-  box-shadow: 3px 3px 10px #858585;
+  box-shadow: 3px 3px 10px;
 }
