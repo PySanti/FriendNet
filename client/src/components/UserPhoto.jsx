@@ -65,7 +65,7 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
             {withInput && (
                 <>
                     <div className="img-input-error-msg-container">
-                        <h3 className="img-input-error-msg">{errorMsg}</h3>
+                        <h3 className={!errorMsg ? "img-input-error-msg" : "img-input-error-msg img-input-error-msg__activated"}>{errorMsg}</h3>
                     </div>
                     <div className="user-photo-input-container">
                         <input ref={imgInputRef} className="user-photo-input" type="file" onChange={onPhotoChange}/>

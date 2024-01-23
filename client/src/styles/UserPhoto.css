@@ -44,7 +44,13 @@
 .img-input-error-msg{
     font-size: 15px;
     margin: 0;
+    padding: 1rem;
 }
+
+.img-input-error-msg__activated{
+    padding: .6rem;
+}
+
 
 .big-user-photo{
     object-fit: contain;
