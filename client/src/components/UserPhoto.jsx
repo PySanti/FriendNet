@@ -18,7 +18,7 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
     let [errorMsg, setErrorMsg]                     = useState(null);
     let [currentPhotoName, setCurrentPhotoName]     = useState(null);
     let [bigPhotoActivated, setBigPhotoActivated]   = useState(false);
-    const imgInputRef                               = useRef(null)
+    const imgInputRef                                 = useRef(null)
     const containerClsName                          = "user-photo-container";
     const smallImgClsName                           = "user-photo";
     const bigImgClsName = () => {
@@ -27,7 +27,7 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
     const handleSmallImgClick = (imgType) =>{
         return ()=>{
             if (photoFile){
-                document.getElementById("root").classList.toggle("invisible_root")
+                document.getElementsByTagName("body")[0].classList.toggle("invisible")
                 setBigPhotoActivated(imgType === "small"? true : false)
             }
         }
@@ -58,7 +58,7 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
 
     return (
         <div className={    chatPhoto ? `${containerClsName} chat-photo` : containerClsName}>
-            <div className="user-photo-smaller-container">
+            <div className="user-photo-smaller-container" >
                 <img {...imgProps("small")} />
                 <img {...imgProps("big")} />
             </div>

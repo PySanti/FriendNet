@@ -4,6 +4,7 @@
   font-size: 28px;
 }
 
+
 body{
   display: flex;
   --base-color                : #4ed31a;
@@ -21,6 +22,10 @@ body{
   --base-background-color : #22252e;
   --base-background-box-color : #b3aeae;
   --base-letter-color : #ffffff    ;
+}
+
+.invisible{
+  filter : blur(3px);
 }
 
 .centered-container{

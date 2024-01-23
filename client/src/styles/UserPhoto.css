@@ -24,7 +24,7 @@
     object-fit: cover;
     outline: 3px inset var(--base-color);
     cursor: pointer;
-    transition-property: outline width height top left;
+    transition-property: outline width height top left drop-shadow;
     transition-duration: .1s;
 }
 .user-photo:hover{
@@ -70,18 +70,14 @@
     height: 60vh;
     left : 25vw;
     top : 20vh;
-    filter: drop-shadow(2px 2px 0 var(--base-color))
-            drop-shadow(2px -2px 0 var(--base-color))
-            drop-shadow(-2px 2px 0 var(--base-color))
-            drop-shadow(-2px -2px 0 var(--base-color));
+    filter: drop-shadow(5px 5px   3px var(--base-color));
 }
+
 
 .big-user-photo:hover{
     outline: none;
-    filter: drop-shadow(5px 5px 0 var(--base-color))
-            drop-shadow(5px -5px 0 var(--base-color))
-            drop-shadow(-5px 5px 0 var(--base-color))
-            drop-shadow(-5px -5px 0 var(--base-color));
+    filter: drop-shadow(5px 5px   10px var(--base-color));
+
 }
 
 
