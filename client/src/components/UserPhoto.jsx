@@ -19,7 +19,7 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
     let [errorMsg, setErrorMsg]                     = useState(null);
     let [currentPhotoName, setCurrentPhotoName]     = useState(null);
     const imgInputRef                                 = useRef(null)
-    const containerClsName                          = "user-photo-container";
+    const containerClsName                          = "main-container";
     const handleImgClick = ()=>{
         if (photoFile){
             modalContainerRef.current.classList.toggle("modal-container__activated")
@@ -54,7 +54,7 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
 
     return (
         <div className={    chatPhoto ? `${containerClsName} chat-photo` : containerClsName}>
-            <div className="user-photo-smaller-container" >
+            <div className="user-photo-container" >
                 <img {...imgProps("small")}/>
                 <div className="modal-container" ref={modalContainerRef}>
                     <img {...imgProps("big")}/>

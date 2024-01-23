@@ -18,7 +18,7 @@
 .user-photo:hover{
     outline: 7px inset var(--base-color);
 }
-.user-photo-container{
+.main-container{
     margin: 1rem;
     display: flex;
     justify-content: space-around;
@@ -28,7 +28,7 @@
     width: 15vw;
     height: 40vh;
 }
-.user-photo-smaller-container{
+.user-photo-container{
     min-height: 70%;
     max-height: 70%;
     width: 100%;
