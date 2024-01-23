@@ -5,12 +5,12 @@
     align-items: center;
     text-align: center;
     flex-direction: column;
-    width: 20vw;
-    height: 50vh;
+    width: 15vw;
+    height: 40vh;
 }
 .user-photo-smaller-container{
-    max-height: 80%;
-    min-height: 80%;
+    min-height: 70%;
+    max-height: 70%;
     width: 100%;
 }
 .user-photo{
@@ -23,11 +23,11 @@
     text-align: center;
     object-fit: cover;
     outline: 3px inset var(--base-color);
+    cursor: pointer;
     transition-property: outline width height top left;
     transition-duration: .1s;
 }
 .user-photo:hover{
-    cursor: pointer;
     outline: 7px inset var(--base-color);
 }
 
@@ -43,10 +43,11 @@
 }
 .img-input-error-msg{
     font-size: 15px;
-    padding: 1rem;
+    margin: 0;
 }
 
 .big-user-photo{
+    object-fit: contain;
     position: absolute;
     opacity: 0;
     width: 0vw;
@@ -54,20 +55,35 @@
     outline: none;
     left : 50vw;
     top : 50vh;
+    cursor: pointer;
 }
 .big-user-photo__activated{
     opacity: 1;
     outline: inherit;
-    width: 30vw;
-    height: 50vh;
-    left : 35vw;
-    top : 25vh;
+    width: 50vw;
+    height: 60vh;
+    left : 25vw;
+    top : 20vh;
+    filter: drop-shadow(2px 2px 0 var(--base-color))
+            drop-shadow(2px -2px 0 var(--base-color))
+            drop-shadow(-2px 2px 0 var(--base-color))
+            drop-shadow(-2px -2px 0 var(--base-color));
 }
+
+.big-user-photo:hover{
+    outline: none;
+    filter: drop-shadow(5px 5px 0 var(--base-color))
+            drop-shadow(5px -5px 0 var(--base-color))
+            drop-shadow(-5px 5px 0 var(--base-color))
+            drop-shadow(-5px -5px 0 var(--base-color));
+}
+
 
 .user-photo-input-container{
     width: 100%;
     display: flex;
     flex-direction: row;
+    margin: 0;
     justify-content: space-around;
 }
 

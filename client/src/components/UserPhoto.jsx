@@ -68,7 +68,7 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
                         <h3 className="img-input-error-msg">{errorMsg}</h3>
                     </div>
                     <div className="user-photo-input-container">
-                        <input ref={imgInputRef} id="photo-input" className="user-photo-input" type="file" onChange={onPhotoChange}/>
+                        <input ref={imgInputRef} className="user-photo-input" type="file" onChange={onPhotoChange}/>
                         <Button buttonText="Seleccionar" onClickFunction={() => imgInputRef.current.click() }/>
                         <Button buttonText="Borrar" onClickFunction={deleteCurrentPhoto} />
                     </div>
