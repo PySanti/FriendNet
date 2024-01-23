@@ -1,3 +1,4 @@
+import {LOCAL_STORAGE_DARK_MODE_NAME} from "./constants"
 export function getDarkModeFromLocalStorage(){
-    return (localStorage.getItem("darkMode") == undefined ||  localStorage.getItem("darkMode") == "false") ? false : true;
+    return (localStorage.getItem(LOCAL_STORAGE_DARK_MODE_NAME) == undefined ||  localStorage.getItem(LOCAL_STORAGE_DARK_MODE_NAME) == "false") ? false : true;
 }

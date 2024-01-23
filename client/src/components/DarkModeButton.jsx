@@ -5,6 +5,7 @@ import "../styles/DarkModeButton.css"
 import {useDarkMode} from "../store"
 import {useEffect} from "react"
 import {getDarkModeFromLocalStorage} from "../utils/getDarkModeFromLocalStorage"
+import {LOCAL_STORAGE_DARK_MODE_NAME} from "../utils/constants"
 
 /**
  * Componente creado para el dark mode
@@ -21,7 +22,7 @@ export function DarkModeButton(){
         }else{
             body.classList.remove(darkModeClassName)
         }
-        localStorage.setItem("darkMode", newDarkMode)
+        localStorage.setItem(LOCAL_STORAGE_DARK_MODE_NAME, newDarkMode)
     }
     const handleClick = ()=>{
         updateDarkMode(!darkModeActivated)
