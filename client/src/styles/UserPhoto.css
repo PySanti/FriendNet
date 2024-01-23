@@ -1,3 +1,6 @@
+/*
+    User photo
+*/
 .user-photo-container{
     padding: 1rem;
     display: flex;
@@ -31,15 +34,51 @@
     outline: 7px inset var(--base-color);
 }
 
+/*
+    Big User Photo
+*/
+
+.big-user-photo{
+    object-fit: contain;
+    cursor: pointer;
+}
+.big-user-photo__activated{
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+.modal-container{
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-container__activated{
+    display: block;
+}
+
+
+
+.big-user-photo:hover{
+    outline: none;
+}
+
+
+
+
+/*
+    User photo INPUT
+*/
 .user-photo-input{
     display: none;
-}
-.chat-photo{
-    width: 80px;
-    height: inherit;
-}
-.chat-photo > .user-photo{
-    border-radius: 100%;
 }
 .img-input-error-msg{
     font-size: 15px;
@@ -50,42 +89,25 @@
 .img-input-error-msg__activated{
     padding: .6rem;
 }
-
-
-.big-user-photo{
-    object-fit: contain;
-    position: absolute;
-    opacity: 0;
-    width: 0vw;
-    height: 0vh;
-    outline: none;
-    left : 50vw;
-    top : 50vh;
-    cursor: pointer;
-}
-.big-user-photo__activated{
-    opacity: 1;
-    outline: inherit;
-    width: 50vw;
-    height: 60vh;
-    left : 25vw;
-    top : 20vh;
-    filter: drop-shadow(5px 5px   3px var(--base-color));
-}
-
-
-.big-user-photo:hover{
-    outline: none;
-    filter: drop-shadow(5px 5px   10px var(--base-color));
-
-}
-
-
 .user-photo-input-container{
     width: 100%;
     display: flex;
     flex-direction: row;
     margin: 0;
     justify-content: space-around;
+}
+
+
+
+
+/*
+    Chat photo
+*/
+.chat-photo{
+    width: 80px;
+    height: inherit;
+}
+.chat-photo > .user-photo{
+    border-radius: 100%;
 }
 

@@ -24,10 +24,6 @@ body{
   --base-letter-color : #ffffff    ;
 }
 
-.invisible{
-  filter : blur(3px);
-}
-
 .centered-container{
   /*
   * Para pages de poco contenido que deben ser 

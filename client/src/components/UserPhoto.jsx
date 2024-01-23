@@ -15,6 +15,7 @@ import {getImageFileName} from "../utils/getImageFileName"
  * Diseniado para trabajar con states dentro de un formulario
  */
 export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
+    let modalContainerRef                           = useRef(null)
     let [errorMsg, setErrorMsg]                     = useState(null);
     let [currentPhotoName, setCurrentPhotoName]     = useState(null);
     let [bigPhotoActivated, setBigPhotoActivated]   = useState(false);
@@ -27,7 +28,7 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
     const handleSmallImgClick = (imgType) =>{
         return ()=>{
             if (photoFile){
-                document.getElementsByTagName("body")[0].classList.toggle("invisible")
+                modalContainerRef.current.classList.toggle("modal-container__activated")
                 setBigPhotoActivated(imgType === "small"? true : false)
             }
         }
@@ -60,7 +61,9 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
         <div className={    chatPhoto ? `${containerClsName} chat-photo` : containerClsName}>
             <div className="user-photo-smaller-container" >
                 <img {...imgProps("small")} />
-                <img {...imgProps("big")} />
+                <div className="modal-container" ref={modalContainerRef}>
+                    <img {...imgProps("big")} />
+                </div>
             </div>
             {withInput && (
                 <>
