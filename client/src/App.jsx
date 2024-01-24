@@ -1,4 +1,5 @@
 import {BrowserRouter, Routes, Route} from "react-router-dom"
+import {Toaster, toast} from "sonner"
 import {Home} from "./pages/Home.jsx"
 import { Login } from "./pages/Login.jsx"
 import { Root } from "./pages/Root.jsx"
@@ -44,6 +45,7 @@ function App() {
         console.log(data)
         if (data.type == "new_notification"){
             if (data.value.new_notification.sender_user.id != getUserDataFromLocalStorage().id){
+              toast(`Has recibido un mensaje de ${data.value.new_notification.sender_user.username}`)
               const updatedNotifications = [...notifications, data.value.new_notification]
               setNotifications(updatedNotifications)
               saveNotificationsInLocalStorage(updatedNotifications)
@@ -78,6 +80,7 @@ function App() {
   }, [notifications, usersList, clickedUser])
   return (
     <>
+    <Toaster/>
     <DarkModeButton/>
     <BrowserRouter>
       <Routes>
