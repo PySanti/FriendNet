@@ -10,7 +10,7 @@ body{
   --base-color                : #4ed31a;
   --base-background-color     : #fff;
   --base-letter-color         : #000;
-  --base-background-box-color : #fff;
+  --base-background-box-color : #f2f2f2;
   --base-image-drop-shadow    : drop-shadow(0px 0px 6px white);
   --base-error-msg-font-size       : 20px;
   color : var(--base-letter-color);
@@ -37,6 +37,9 @@ body{
   align-items: center;
   justify-content: center;
 }
+
+
+
 
 
 input{

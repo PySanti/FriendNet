@@ -45,8 +45,12 @@ function App() {
         console.log(data)
         if (data.type == "new_notification"){
             if (data.value.new_notification.sender_user.id != getUserDataFromLocalStorage().id){
-              toast(`Has recibido un mensaje de ${data.value.new_notification.sender_user.username}`)
+              const message = data.value.new_notification.message
+              delete data.value.new_notification.message
               const updatedNotifications = [...notifications, data.value.new_notification]
+              toast(data.value.new_notification.sender_user.username, {
+                description:message.length > 20? `${message.substring(0,20)}...` : message,
+              })
               setNotifications(updatedNotifications)
               saveNotificationsInLocalStorage(updatedNotifications)
               shiftUser(usersList, setUsersList, data.value.new_notification.sender_user, usersIdList, setUsersIdList)
@@ -80,7 +84,14 @@ function App() {
   }, [notifications, usersList, clickedUser])
   return (
     <>
-    <Toaster/>
+    <Toaster toastOptions={{
+      style : {
+        border : "1px solid var(--base-letter-color)",
+        backgroundColor : "var(--base-background-color)",
+        color : "var(--base-letter-color)"
+      },
+      duration : 5000
+    }}/>
     <DarkModeButton/>
     <BrowserRouter>
       <Routes>
