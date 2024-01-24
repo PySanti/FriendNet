@@ -1,28 +1,28 @@
-import {PropTypes} from "prop-types"
 import "../styles/UserFilter.css"
 import {useUsersList} from "../store"
+import {useUserKeyword} from "../store"
+import {useEffect, useRef} from "react"
 
 
 /**
  * Filtro de busqueda de usuarios
- * @param {Function} userKeyword 
- * @param {String} userKeywordSetter 
  */
-export function UserFilter({userKeyword, userKeywordSetter}){
+export function UserFilter(){
     const userList = useUsersList((state)=>state.usersList)
+    const inputRef = useRef(null)
+    let [userKeyword, setUserKeyword] = useUserKeyword((state)=>([state.userKeyword, state.setUserKeyword]))
     const onLetterInput = (e)=>{
         // optimizacion
         if (!userKeyword || e.target.value.length <= userKeyword.length || userList.length > 0){
-            userKeywordSetter(e.target.value)
+            setUserKeyword(e.target.value)
         }
     }
+    useEffect(()=>{
+        inputRef.current.value = userKeyword
+    }, [])
     return (
         <div className="user-filter-container">
-            <input placeholder="Busca a un usuario" className="users-filter-input" type="text" onChange={onLetterInput}/>
+            <input ref={inputRef} placeholder="Busca a un usuario" className="users-filter-input" type="text" onChange={onLetterInput}/>
         </div>
     )
-}
-UserFilter.propTypes = {
-    userKeyword : PropTypes.string,
-    userKeywordSetter : PropTypes.func.isRequired
 }

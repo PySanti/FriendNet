@@ -33,7 +33,7 @@ function App() {
   let [clickedUser, setClickedUser]     = states.useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
   let setLastClickedUser                = states.useLastClickedUser((state)=>(state.setLastClickedUser))
   let [usersIdList, setUsersIdList]     = states.useUsersIdList((state)=>[state.usersIdList, state.setUsersIdList])
-
+  let userKeyword                     = states.useUserKeyword((state)=>(state.userKeyword))
   useEffect(()=>{
     initStates(notifications, setNotifications)
   }, [])
@@ -53,7 +53,7 @@ function App() {
               })
               setNotifications(updatedNotifications)
               saveNotificationsInLocalStorage(updatedNotifications)
-              shiftUser(usersList, setUsersList, data.value.new_notification.sender_user, usersIdList, setUsersIdList)
+              shiftUser(usersList, setUsersList, data.value.new_notification.sender_user, usersIdList, setUsersIdList, userKeyword)
             }
         } else if (data.type == "connection_error"){
             logoutUser(undefined)

@@ -1,3 +1,4 @@
+import {useUserKeyword} from "../store"
 import { UserButton } from "./UserButton"
 import "../styles/UsersList.css"
 import { v4 } from "uuid"
@@ -23,7 +24,7 @@ export function UsersList(){
     let [loaderActivated, setLoaderActivated]                       = useState(false)
     let [usersIdList, setUsersIdList]                               = useUsersIdList((state)=>[state.usersIdList, state.setUsersIdList])
     let [usersList, setUsersList]                                   = useUsersList((state)=>([state.usersList, state.setUsersList]))
-    let [ userKeyword, setUserKeyword]                              = useState(undefined)
+    let userKeyword                                              = useUserKeyword((state)=>(state.userKeyword))
     let [scrollDetectorBlock, setScrollDetectorBlock]               = useState(false)
     let [firstUsersListCall, setFirstUsersListCall]                 = useFirstUsersListCall((state)=>[state.firstUsersListCall, state.setFirstUsersListCall])
     const navigate = useNavigate()
@@ -105,7 +106,7 @@ export function UsersList(){
     return (
         <>
             <div className="users-list">
-                <UserFilter userKeyword={userKeyword} userKeywordSetter={setUserKeyword} />
+                <UserFilter/>
                 {usersList.length > 0 ? 
                     <div className="users-list-container"  onScroll={scrollDetector}>
                         {usersList.map(formatingFunction)}

@@ -82,3 +82,12 @@ export const useDarkMode = create((set)=>({
     darkModeActivated : false,
     setDarkModeActivated : (new_val)=>(set(()=>({darkModeActivated : new_val}))),
 }))
+
+
+export const useUserKeyword = create((set)=>({
+    userKeyword : null,
+    setUserKeyword : (new_val)=>(set(()=>({userKeyword : new_val}))),
+    reset : ()=>(set(()=>({userKeyword: null})))
+}))
+
+

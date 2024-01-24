@@ -4,15 +4,19 @@
  * Si el usuario que envio el mensaje no esta en la lista de usuarios,
  * sera agregado al principio de la lista
  */
-export function shiftUser(usersList, usersListSetter, newUser, usersIdList, usersIdListSetter){
+export function shiftUser(usersList, usersListSetter, newUser, usersIdList, usersIdListSetter, userKeyword){
+    let userInList = false
     for (let i = 0; i < usersList.length ; i++){
         if (usersList[i].id === newUser.id){
             usersList.splice(i, 1)
+            userInList = true
         }
     }
-    if (!usersIdList.includes(newUser.id)){
+    if (!usersIdList.includes(newUser.id) && !userKeyword){
         usersIdListSetter(usersIdList.concat([newUser.id]))
     }
-    usersList.unshift(newUser)
-    usersListSetter(usersList)
+    if (!userKeyword || (userKeyword && userInList)){
+        usersList.unshift(newUser)
+        usersListSetter(usersList)
+    }
 }
