@@ -1,6 +1,12 @@
 .input-error{
     font-size: var(--base-error-msg-font-size);
-    padding-top: 1.3rem;
+    padding-top: 1rem;
+    text-align: center;
+}
+
+.input-error-container{
+    display: inline-block;
+    max-width: 99%;
 }
 .input-error-activated{
     padding-top: 0;

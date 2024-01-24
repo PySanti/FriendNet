@@ -16,12 +16,12 @@ export const BASE_ACTIVATION_CODE_CONSTRAINTS = {
     required: {
         value: true,
         message:
-            "Por favor ingresa un código de activación",
+            "Ingresa un código de activación",
     },
     pattern: {
         value: /^-?\d+$/,
         message:
-            "Por favor, ingresa un código valido",
+            "Ingresa un código valido",
     },
     minLength: {
         value: 6,
@@ -34,35 +34,35 @@ export const BASE_PAGE_NOT_FOUND_LOG = "Pagina no encontrada :("
 export const BASE_EMAIL_CONSTRAINTS = {
     required: {
         value: true,
-        message: "Por favor, ingresa tu correo electrónico",
+        message: "Ingresa tu correo electrónico",
     },
     pattern: {
         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-        message: "Por favor, ingresa un correo electrónico valido",
+        message: "Ingresa un correo electrónico valido",
     },
 };
 export const BASE_USERNAME_CONSTRAINTS = {
     required: {
         value: true,
-        message: "Por favor, ingresa el nombre de tu usuario",
+        message: "Ingresa el nombre de tu usuario",
     },
     minLength: {
         value: BASE_USERNAME_MIN_LENGTH,
-        message: `Por favor, ingresa un usuario con al menos ${BASE_USERNAME_MIN_LENGTH} caracteres`,
+        message: `Al menos ${BASE_USERNAME_MIN_LENGTH} caracteres`,
     },
     pattern : {
         value : /^[^\s]+$/,
-        message : "Por favor, ingresa un nombre de usuario sin espacios"
+        message : "Ingresa un nombre de usuario sin espacios"
     }
 };
 export const BASE_PASSWORD_CONSTRAINTS = {
     required: {
         value: true,
-        message: "Por favor, ingresa una contraseña",
+        message: "Ingresa una contraseña",
     },
     minLength: {
         value: BASE_PASSWORD_MIN_LENGTH,
-        message: `Por favor, ingresa una contraseña con al menos ${BASE_PASSWORD_MIN_LENGTH} caracteres`,
+        message: `Al menos ${BASE_PASSWORD_MIN_LENGTH} caracteres`,
     },
 };
 

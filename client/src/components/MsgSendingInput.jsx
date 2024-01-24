@@ -52,7 +52,7 @@ export function MsgSendingInput({onMsgSending}){
         <div className="message-sending-input-container">
             <form onChange = {handleMsgSendingInput} className="message-sending-form" onSubmit={onSubmit}>
                 <input 
-                placeholder="Enviale un mensaje" 
+                placeholder="Envíale un mensaje" 
                 className="message-sending-input" 
                 type="text" 
                 maxLength={BASE_MESSAGE_MAX_LENGTH} 
