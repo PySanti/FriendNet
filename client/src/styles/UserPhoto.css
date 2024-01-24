@@ -77,15 +77,7 @@
 .user-photo-input{
     display: none;
 }
-.img-input-error-msg{
-    font-size: var(--base-error-msg-font-size);
-    margin: 0;
-    padding: 1rem;
-}
 
-.img-input-error-msg__activated{
-    padding: .6rem;
-}
 .user-photo-input-container{
     width: 100%;
     display: flex;

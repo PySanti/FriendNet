@@ -1,4 +1,4 @@
-
+import {toast} from "sonner"
 import { useState,useRef, useEffect } from "react";
 import "../styles/UserPhoto.css";
 import { Button } from "./Button";
@@ -17,7 +17,6 @@ import {getImageFileName} from "../utils/getImageFileName"
 export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
     let modalContainerRef                           = useRef(null)
     let [userPhotoLoaded, setUserPhotoLoaded]       = useState(false);
-    let [errorMsg, setErrorMsg]                     = useState(null);
     let [currentPhotoName, setCurrentPhotoName]     = useState(null);
     const userPhotoRef                              = useRef(null)
     const imgInputRef                                 = useRef(null)
@@ -48,10 +47,9 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
         const imageCheckerResponse = checkImageFormat(file);
         if (imageCheckerResponse === true) {
             photoFileSetter(file);
-            setErrorMsg(null);
             getImageFileName(file, setCurrentPhotoName)
         } else {
-            setErrorMsg(imageCheckerResponse);
+            toast.error(imageCheckerResponse)
         }
     };
     useEffect(()=>{
@@ -69,9 +67,6 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
             </div>
             {withInput && (
                 <>
-                    <div className="img-input-error-msg-container">
-                        <h3 className={!errorMsg ? "img-input-error-msg" : "img-input-error-msg img-input-error-msg__activated"}>{errorMsg}</h3>
-                    </div>
                     <div className="user-photo-input-container">
                         <input ref={imgInputRef} className="user-photo-input" type="file" onChange={onPhotoChange}/>
                         <Button buttonText="Seleccionar" onClickFunction={() => imgInputRef.current.click() }/>
