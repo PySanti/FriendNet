@@ -1,5 +1,5 @@
 
-import { useState,useRef } from "react";
+import { useState,useRef, useEffect } from "react";
 import "../styles/UserPhoto.css";
 import { Button } from "./Button";
 import { PropTypes } from "prop-types";
@@ -16,12 +16,14 @@ import {getImageFileName} from "../utils/getImageFileName"
  */
 export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
     let modalContainerRef                           = useRef(null)
+    let [userPhotoLoaded, setUserPhotoLoaded]       = useState(false);
     let [errorMsg, setErrorMsg]                     = useState(null);
     let [currentPhotoName, setCurrentPhotoName]     = useState(null);
+    const userPhotoRef                              = useRef(null)
     const imgInputRef                                 = useRef(null)
     const containerClsName                          = "main-container";
     const handleImgClick = ()=>{
-        if (photoFile){
+        if (photoFile && userPhotoLoaded){
             modalContainerRef.current.classList.toggle("modal-container__activated")
             setTimeout(() => {
                 modalContainerRef.current.style.opacity = modalContainerRef.current.style.opacity == "1"? "0" : "1" ;
@@ -34,6 +36,7 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
             className: type === "small" ? "user-photo" : `big-user-photo`,
             src: currentPhotoName? currentPhotoName: photoFile? photoFile: null,
             alt: ":(",
+            ref : type=="small"? userPhotoRef : null
         };
     };
     const deleteCurrentPhoto = () => {
@@ -51,7 +54,11 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
             setErrorMsg(imageCheckerResponse);
         }
     };
-
+    useEffect(()=>{
+        userPhotoRef.current.addEventListener("load", ()=>{
+            setUserPhotoLoaded(true)
+        })
+    }, [])
     return (
         <div className={    chatPhoto ? `${containerClsName} chat-photo` : containerClsName}>
             <div className="user-photo-container" >
