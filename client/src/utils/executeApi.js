@@ -11,7 +11,7 @@ import {handleStandardApiErrors} from "./handleStandardApiErrors"
  * 
  * Retornara false en caso de que ya se haya manejado la respuesta de la api
 */
-export async function executeApi(apiCallingFunction, navigateFunc, loadingStateSetter){
+export async function executeApi(apiCallingFunction, navigateFunc){
     let response = undefined
     const condition = true
     while(condition){
@@ -19,7 +19,7 @@ export async function executeApi(apiCallingFunction, navigateFunc, loadingStateS
             response = await apiCallingFunction() 
             break
         } catch(error){
-            if (!handleStandardApiErrors(error, loadingStateSetter)){
+            if (!handleStandardApiErrors(error)){
                 if (error.response.status === 401){ // error por token
                     try {
                         const response = await refreshTokenAPI(getJWTFromLocalStorage().refresh)

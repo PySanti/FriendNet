@@ -20,6 +20,7 @@ export function Loader(){
     useEffect(()=>{
         setLoadingState(false)
     }, [])
+
     return (
         <div className={loadingState == "loading" || loadingState == "success" ? "state-container animation_state" : "state-container"}>
             {
