@@ -1,3 +1,4 @@
+import {toast} from "sonner"
 import "../styles/ChangePwdStyles.css"
 import { Header } from "../components/Header";
 import { userIsAuthenticated } from "../utils/userIsAuthenticated";
@@ -12,7 +13,6 @@ import { PasswordField } from "../components/PasswordField";
 import { v4 } from "uuid";
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {executeApi} from "../utils/executeApi"
-import {useLoadingState} from "../store"
 import {useEffect} from "react"
 import {generateDocumentTitle} from "../utils/generateDocumentTitle"
 
@@ -23,7 +23,6 @@ import {generateDocumentTitle} from "../utils/generateDocumentTitle"
 export function ChangePwd(){
     const {register, handleSubmit, formState : {errors}} = useForm()
     const navigate = useNavigate()
-    const   [ setLoadingState, successfullyLoaded, startLoading] = useLoadingState((state)=>([state.setLoadingState, state.successfullyLoaded, state.startLoading]))
     const changePwd = handleSubmit(async (data)=>{
         if (data['oldPwd'] !== data['newPwd']){
             const response = await executeApi(async ()=>{
@@ -31,15 +30,15 @@ export function ChangePwd(){
             }, navigate)
             if (response){
                 if (response.status == 200){
-                    successfullyLoaded()
+                    toast.success("Contasen modificada exitosamente")
                 } else if (response.data.error === 'invalid_pwd'){
-                    setLoadingState("¡ Error, la contraseña actual es invalida !")
+                    toast.error("¡ Error, la contraseña actual es invalida !")
                 } else {
-                    setLoadingState('¡ Error inesperado cambiando la contraseña !')
+                    toast.error('¡ Error inesperado cambiando la contraseña !')
                 }
             }
         } else {
-            setLoadingState("No hay cambios")
+            toast.error("No hay cambios")
         }
     })
     useEffect(() => {
