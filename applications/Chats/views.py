@@ -75,6 +75,7 @@ class SendMsgAPI(APIView):
                     if (notification_websocket_is_opened(receiver_user.id)):
                         new_notification = Notifications.objects.filter(id=new_notification.id).values("msg", "id")[0]
                         new_notification["sender_user"] = add_istyping_field(Usuarios.objects.filter(id=sender_user.id).values(*USERS_LIST_ATTRS))[0]
+                        new_notification["message"] = request.data["msg"]
                         broadcast_notification(receiver_user.id, new_notification)
                 new_message = Messages.objects.create_message(parent=sender_user, content=request.data['msg'])
                 Chats.objects.send_message(sender_user, receiver_user,new_message)
