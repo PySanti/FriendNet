@@ -12,6 +12,7 @@ body{
   --base-letter-color         : #000;
   --base-background-box-color : #fff;
   --base-image-drop-shadow    : drop-shadow(0px 0px 6px white);
+  --base-error-msg-font-size       : 20px;
   color : var(--base-letter-color);
   background-color:  var(--base-background-color);
   transition-property: background-color color;

@@ -78,7 +78,7 @@
     display: none;
 }
 .img-input-error-msg{
-    font-size: 15px;
+    font-size: var(--base-error-msg-font-size);
     margin: 0;
     padding: 1rem;
 }

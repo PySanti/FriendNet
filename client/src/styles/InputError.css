@@ -1,4 +1,5 @@
 .input-error{
+    font-size: var(--base-error-msg-font-size);
     padding-top: 1.3rem;
 }
 .input-error-activated{

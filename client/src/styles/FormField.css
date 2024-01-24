@@ -4,8 +4,10 @@
     flex-direction: column;
     width: 100%;
 }
+
 .input-pair-container{
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
 }
