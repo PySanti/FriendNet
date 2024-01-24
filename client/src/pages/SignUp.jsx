@@ -24,6 +24,7 @@ export function SignUp() {
     const [startLoading, setLoadingState] = useLoadingState((state)=>([state.startLoading, state.setLoadingState]))
     const navigate                                              = useNavigate()
     const onSignUp = async (data) =>{
+        toast.loading('Creando usuario')
         let response = await executeApi(async ()=>{
             return await checkExistingUserAPI(data['username'], data['email'])
         }, navigate)

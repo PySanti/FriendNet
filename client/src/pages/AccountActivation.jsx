@@ -41,6 +41,7 @@ export function AccountActivation() {
     }
     const onSubmit = handleSubmit(async (data) => {
         if (Number(data.activationCode) === Number(realActivationCode.current)) {
+            toast.loading('Activando cuenta')
             const response = await executeApi(async ()=>{
                 return await activateUserAPI(props.userId); 
             }, navigate)
@@ -53,7 +54,7 @@ export function AccountActivation() {
                 }
             }
         } else {
-            toast.error("Codigo invalido")
+            toast.error("Código invalido")
         }
     });
     useEffect(() => {

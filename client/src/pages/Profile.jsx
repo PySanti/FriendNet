@@ -29,6 +29,7 @@ export function Profile() {
         // el data.photo siempre sera: null, url de imagen actual, un archivo
         const sendingData = { ...data };
         if (dataIsDiferent(data, profileData)) { // lodash
+            toast.loading('Modificando perfil')
             const response = await executeApi(async ()=>{
                 return await updateUserDataAPI( sendingData, getJWTFromLocalStorage().access)
             }, navigate)

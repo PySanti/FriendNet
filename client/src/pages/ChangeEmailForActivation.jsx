@@ -24,6 +24,7 @@ export function ChangeEmailForActivation(){
     const {register, handleSubmit, formState : {errors}}  = useForm()
     const onSubmit = handleSubmit(async (data)=>{
         if (data.email !== props.userEmail){
+            toast.loading('Modificando correo electrónico')
             const response = await executeApi(async ()=>{
                 return await changeEmailForActivationAPI(props.userId, data.email) 
             }, navigate)

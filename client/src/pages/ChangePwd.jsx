@@ -25,6 +25,7 @@ export function ChangePwd(){
     const navigate = useNavigate()
     const changePwd = handleSubmit(async (data)=>{
         if (data['oldPwd'] !== data['newPwd']){
+            toast.loading('Modificando contraseña')
             const response = await executeApi(async ()=>{
                 return await changeUserPwdAPI(data.oldPwd, data.newPwd, getJWTFromLocalStorage().access)
             }, navigate)
