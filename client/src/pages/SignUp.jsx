@@ -1,3 +1,4 @@
+import {toast} from "sonner"
 // react modules
 import { Header }                   from "../components/Header";
 // api's
@@ -14,14 +15,12 @@ import { UserLogged } from "./UserLogged";
 import { UserInfoForm } from "../components/UserInfoForm";
 import { Button } from "../components/Button";
 import { v4 } from "uuid";
-import {useLoadingState} from "../store"
 import {generateLocationProps} from "../utils/generateLocationProps"
 import {executeApi} from "../utils/executeApi"
 /**
  * Page creada para el registro de los usuarios
  */
 export function SignUp() {
-    const [startLoading, setLoadingState] = useLoadingState((state)=>([state.startLoading, state.setLoadingState]))
     const navigate                                              = useNavigate()
     const onSignUp = async (data) =>{
         toast.loading('Creando usuario')
@@ -34,25 +33,25 @@ export function SignUp() {
                     delete data.confirmPwd
                     response = await executeApi(async ()=>{
                         return await createUsuarioAPI(data)
-                    }, navigate, setLoadingState)
+                    }, navigate)
                     if (response){
                         if (response.status == 200){
-                            setLoadingState(false)
+                            toast.success("Usuario creado exitosamente, verifica tu correo electrónico")
                             navigate('/signup/activate', {state: generateLocationProps(data.email, data.username, response.data.new_user_id)})
                         } else if (response.data.error == "cloudinary_error"){
-                            setLoadingState("¡ Error con la nube !")
+                            toast.error("¡ Error con la nube !")
                         } else {
-                            setLoadingState("¡ Error inesperado creando un usuario para ti !")
+                            toast.error("¡ Error inesperado creando tu usuario !")
                         }
                     }
                 }else {
-                    setLoadingState("¡ Ya existe un usuario con ese Nombre de usuario o Correo electrónico !")
+                    toast.error("¡ Ya existe un usuario con ese Nombre de usuario o Correo electrónico !")
                 }
             } else {
-                setLoadingState("¡ Error inesperado revisando si existe un usuario con esos datos !")
+                toast.error("¡ Error inesperado revisando si existe un usuario con esos datos !")
             }
         }
-}
+    }
     useEffect(()=>{
         document.title = generateDocumentTitle("Registrando")
     }, [])

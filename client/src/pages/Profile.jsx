@@ -1,3 +1,4 @@
+import {toast} from "sonner"
 import { useNavigate } from "react-router-dom";
 import { Header } from "../components/Header";
 import { userIsAuthenticated } from "../utils/userIsAuthenticated";
@@ -15,7 +16,6 @@ import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {executeApi} from "../utils/executeApi"
 import {useEffect} from "react"
 import {generateDocumentTitle} from "../utils/generateDocumentTitle"
-import {useLoadingState} from "../store"
 
 /**
  * Pagina creada para llevar perfil de usuario, tanto para
@@ -23,7 +23,6 @@ import {useLoadingState} from "../store"
  */
 export function Profile() {
     let   [profileData, setProfileData]                         = useState(getUserDataFromLocalStorage());
-    const [ startLoading, setLoadingState, successfullyLoaded ] = useLoadingState((state)=>([state.startLoading, state.setLoadingState, state.successfullyLoaded ]))
     const navigate = useNavigate();
     const onUpdate = async (data) => {
         // el data.photo siempre sera: null, url de imagen actual, un archivo
@@ -37,19 +36,19 @@ export function Profile() {
                 if (response.status == 200){
                     setProfileData(response.data.user_data_updated);
                     saveUserDataInLocalStorage(response.data.user_data_updated);
-                    successfullyLoaded();
+                    toast.success("Perfil modificado exitosamente")
                 } else if (response.status == 400){
                     const log = {
                         "username_or_email_taken"   : "¡ El usuario o el email ya están tomados !",
                         "cloudinary_error"          : "¡ Error al subir la imagen a la nube !"
                     }[response.data.error]
-                    setLoadingState(log ? log : '¡ Hubo un error actualizando tus datos !')
+                    toast.error(log ? log : '¡ Hubo un error actualizando tus datos !')
                 } else {
-                    setLoadingState('¡ Hubo un error actualizando tus datos !')
+                    toast.error('¡ Hubo un error actualizando tus datos !')
                 }
             }
         } else {
-            setLoadingState("Sin cambios");
+            toast.error("Sin cambios");
         }
     };
     useEffect(()=>{
