@@ -88,7 +88,8 @@ function App() {
       style : {
         border : "1px solid var(--base-letter-color)",
         backgroundColor : "var(--base-background-color)",
-        color : "var(--base-letter-color)"
+        color : "var(--base-letter-color)",
+        textAlign : "center"
       },
       duration : 5000
     }}/>

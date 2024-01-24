@@ -1,4 +1,5 @@
 import { Header } from "../components/Header";
+import {toast} from "sonner"
 import {  useLocation, useNavigate} from "react-router-dom";
 import { Button } from "../components/Button";
 import { v4 } from "uuid";
@@ -10,7 +11,6 @@ import { UserNotLogged } from "./UserNotLogged";
 import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { UserLogged } from "./UserLogged";
 import { changeEmailForActivationAPI } from "../api/changeEmailForActivation.api";
-import {useLoadingState} from "../store"
 import {executeApi} from "../utils/executeApi"
 import {useEffect} from "react"
 import {generateDocumentTitle} from "../utils/generateDocumentTitle"
@@ -19,7 +19,6 @@ import {generateDocumentTitle} from "../utils/generateDocumentTitle"
  * Page creada para la modificacion del Email para activacion 
  */
 export function ChangeEmailForActivation(){
-    let [ setLoadingState, startLoading] = useLoadingState((state)=>([state.setLoadingState, state.startLoading]))
     const props                                         = useLocation().state
     const  navigate                                     = useNavigate()
     const {register, handleSubmit, formState : {errors}}  = useForm()
@@ -31,16 +30,16 @@ export function ChangeEmailForActivation(){
             if (response){
                 if (response.status == 200){
                     props.userEmail = data.email
-                    setLoadingState(false)
+                    toast.success("Correo electrónico modificado exitosamente")
                     navigate('/signup/activate', {state: props})
                 } else if (response.data.error==="email_exists"){
-                    setLoadingState("¡ Error, ese email ya fue registrado !")
+                    toast.error("¡ Error, ese email ya fue registrado !")
                 } else {
-                    setLoadingState("¡ Error inesperado cambiando tu correo electrónico !")
+                    toast.error("¡ Error inesperado cambiando tu correo electrónico !")
                 }
             }
         } else {
-            setLoadingState('¡ No hay cambios !')
+            toast.error('¡ No hay cambios !')
         }
     })
     useEffect(() => {

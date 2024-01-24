@@ -1,4 +1,6 @@
+import {toast} from "sonner"
 import "../styles/NotificationsContainer.css"
+
 import {  useState } from "react"
 import { v4 } from "uuid"
 import { Notification } from "./Notification"
@@ -9,7 +11,6 @@ import {useNavigate} from "react-router-dom"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {executeApi} from "../utils/executeApi"
 import {notificationDeleteAPI} from "../api/notificationDelete.api"
-import {useLoadingState} from "../store"
 import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotifications"
 import {useNotifications} from "../store"
 import {initStates} from "../utils/initStates"
@@ -22,7 +23,6 @@ export function NotificationsContainer(){
     let [notifications, setNotifications] = useNotifications((state)=>([state.notifications, state.setNotifications]))
     const notificationListCls = "notification-list"
     const navigate = useNavigate()
-    const [setLoadingState, startLoading] = useLoadingState((state)=>([state.setLoadingState, state.startLoading]))
 
 
     const onNotificationDelete = async (notification)=>{
@@ -32,9 +32,8 @@ export function NotificationsContainer(){
         if (response){
             if (response.status == 200){
                 removeAndUpdateNotifications(notification, setNotifications)
-                setLoadingState(false)
             } else {
-                setLoadingState('¡ Ha ocurrido un error eliminando la notificación !')
+                toast.error('¡ Ha ocurrido un error eliminando la notificación !')
             }
         }
     }

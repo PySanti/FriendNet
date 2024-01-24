@@ -2,6 +2,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { Header } from "../components/Header";
 import { useForm } from "react-hook-form";
+import {toast} from "sonner"
 import { useEffect, useRef } from "react";
 // api's
 import { activateUserAPI } from "../api/activateUser.api";
@@ -15,14 +16,12 @@ import { Form } from "../components/Form";
 import { Button } from "../components/Button";
 import { v4 } from "uuid";
 import {BASE_ACTIVATION_CODE_CONSTRAINTS} from "../utils/constants"
-import {useLoadingState} from "../store"
 import {executeApi} from "../utils/executeApi"
 import {generateDocumentTitle} from "../utils/generateDocumentTitle"
 /**
  * Pagina creada para llevar activacion de cuenta
  */
 export function AccountActivation() {
-    let [setLoadingState, startLoading]                                     = useLoadingState((state)=>([state.setLoadingState, state.startLoading]));
     let realActivationCode                                                  = useRef(generateActivationCode());
     const props                                                             = useLocation().state;
     const navigate                                                          = useNavigate();
@@ -33,9 +32,11 @@ export function AccountActivation() {
             return await sendActivationEmailAPI(props.userEmail, props.username, realActivationCode.current) 
         }, navigate)
         if (response){
-            if (response.status != 200){
-                setLoadingState('¡ Error inesperado enviando código de activación !')
-            }
+            if (response.status == 200){
+                toast.success(`Correo de activación enviado `)
+            }  else [
+                toast.error(`Error inesperado enviando correo de activación`)
+            ]
         }
     }
     const onSubmit = handleSubmit(async (data) => {
@@ -45,14 +46,14 @@ export function AccountActivation() {
             }, navigate)
             if (response){
                 if (response.status == 200){
-                    setLoadingState(false)
+                    toast.success("Usuario activado con éxito, bienvenid@")
                     navigate("/login/");
                 } else {
-                    setLoadingState("¡ Error inesperado activando tu cuenta !")
+                    toast.error("Error inesperado activando su cuenta")
                 }
             }
         } else {
-            setLoadingState("¡ Código invalido !");
+            toast.error("Codigo invalido")
         }
     });
     useEffect(() => {

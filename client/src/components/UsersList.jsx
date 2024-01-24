@@ -6,7 +6,6 @@ import {useState, useEffect} from "react"
 import { getUsersListAPI } from "../api/getUsersList.api"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import { userIsAuthenticated } from "../utils/userIsAuthenticated"
-import {useLoadingState} from "../store"
 import {useUsersList} from "../store"
 import {executeApi} from "../utils/executeApi"
 import {useNavigate} from "react-router-dom"
@@ -19,7 +18,6 @@ import {useFirstUsersListCall} from "../store"
  */
 export function UsersList(){
     const loaderClassName                                           ="users-list-loader" 
-    const  setLoadingState                                          = useLoadingState((state)=>(state.setLoadingState))
     let [usersListPage, setUsersListPage]                           = useUsersListPage((state)=>[state.usersListPage, state.setUsersListPage])
     let [noMoreUsers, setNoMoreUsers]                               = useNoMoreUsers((state)=>[state.noMoreUsers, state.setNoMoreUsers])
     let [loaderActivated, setLoaderActivated]                       = useState(false)

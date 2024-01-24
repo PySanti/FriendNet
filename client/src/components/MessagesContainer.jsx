@@ -1,3 +1,4 @@
+import {toast} from "sonner"
 import {PropTypes} from "prop-types"
 import { Message } from "./Message"
 import "../styles/MessagesContainer.css"
@@ -11,7 +12,6 @@ import {getMessagesHistorialAPI} from "../api/getMessagesHistorial.api"
 import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
 import {useClickedUser} from "../store"
 import {useMessagesHistorial} from "../store"
-import {useLoadingState} from "../store"
 /**
  * Componente encargado de renderizar y mantener la lista de mensajes 
  * @param {Object} newMsg state creado para cuando se envia un mensaje nuevo
@@ -22,7 +22,6 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     const containerRef                                                  = useRef(null)
     const navigate                                                      = useNavigate()
     const clickedUser                                                   = useClickedUser((state)=>(state.clickedUser))
-    const [setLoadingState,startLoading]                                = useLoadingState((state)=>[state.setLoadingState, state.startLoading])
     const [messagesHistorial, setMessagesHistorial]                     = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
 
 
@@ -33,16 +32,14 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
         if (response){
             if (response.status == 200){
                 updateMessagesHistorial(setMessagesHistorial, messagesHistorialPage, response.data !== "no_messages_between" ? response.data.messages_hist : [], messagesHistorial)
-                setLoadingState(false)
             } else if (response.status == 400){
                 if (response.data.error == "no_more_pages"){
                     noMoreMessages.current = true
-                    setLoadingState(false)
                 } else if (response.data.error == "error_while_getting_messages"){
-                    setLoadingState('¡ Ha habido un error cargando los mensajes !')
+                    toast.error('¡ Ha habido un error cargando los mensajes !')
                 }
             } else {
-                setLoadingState('¡ Error inesperado cargando los mensajes !')
+                toast.error('¡ Error inesperado cargando los mensajes !')
             }
         }
     }
@@ -53,9 +50,8 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
         if (response){
             if (response.status == 200){
                 setMessagesHistorial([...messagesHistorial, response.data.sended_msg])
-                setLoadingState(false)
             } else {
-                setLoadingState('¡ Error inesperado enviando el mensaje !')
+                toast.error('¡ Error inesperado enviando el mensaje !')
             }
         }
     }
