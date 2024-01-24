@@ -40,11 +40,12 @@
 */
 
 .big-user-photo{
-    object-fit: cover;
+    object-fit: contain;
     cursor: pointer;
     margin: auto;
     display: block;
     width: 80%;
+    max-height: 60%;
     max-width: 700px;
 }
 
