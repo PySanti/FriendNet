@@ -1,3 +1,4 @@
+import {toast} from "sonner"
 import {disconnectWebsocket} from "../utils/disconnectWebsocket"
 import {NOTIFICATIONS_WEBSOCKET} from "../utils/constants"
 import {clearLocalStorage} from "../utils/clearLocalStorage"
@@ -9,4 +10,5 @@ export function redirectExpiredUser(navigateFunc){
     navigateFunc('/')
     clearLocalStorage()
     disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
+    toast.error("Redirigiendo al usuario al inicio por vencimiento de token")
 }
