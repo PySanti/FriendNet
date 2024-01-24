@@ -1,7 +1,6 @@
 import "../styles/Header.css"
 import {PropTypes} from "prop-types"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
-import {Loader} from "../components/Loader"
 /**
  * Cabecera estandar de la pagina
  * @param {String} msg mensaje a renderizar en conjunto con cabecera
@@ -17,7 +16,6 @@ export function Header({msg}) {
                 </h1>
                 {msg && <h2 className="header-msg">{msg}</h2>}
             </header>
-            <Loader/>
         </>
     )
 }

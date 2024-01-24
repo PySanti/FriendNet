@@ -54,14 +54,6 @@ export const useMessagesHistorial = create((set)=>({
 }))
 
 
-export const useLoadingState = create((set)=>({
-    loadingState : null,
-    setLoadingState : (newState)=>(set(()=>({loadingState : newState}))),
-    successfullyLoaded : ()=>(set(()=>({loadingState : "success"}))),
-    startLoading : ()=>(set(()=>({loadingState : "loading"}))),
-}))
-
-
 export const useLastClickedUser = create((set)=>({
     lastClickedUser : null,
     setLastClickedUser : (newLastClicked)=>(set(()=>({lastClickedUser : newLastClicked}))),
