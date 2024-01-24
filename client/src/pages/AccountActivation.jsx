@@ -31,7 +31,7 @@ export function AccountActivation() {
         console.log('-> ', realActivationCode.current)
         const response = await executeApi(async ()=>{
             return await sendActivationEmailAPI(props.userEmail, props.username, realActivationCode.current) 
-        }, navigate, setLoadingState)
+        }, navigate)
         if (response){
             if (response.status != 200){
                 setLoadingState('¡ Error inesperado enviando código de activación !')
@@ -40,10 +40,9 @@ export function AccountActivation() {
     }
     const onSubmit = handleSubmit(async (data) => {
         if (Number(data.activationCode) === Number(realActivationCode.current)) {
-            startLoading()
             const response = await executeApi(async ()=>{
                 return await activateUserAPI(props.userId); 
-            }, navigate, setLoadingState)
+            }, navigate)
             if (response){
                 if (response.status == 200){
                     setLoadingState(false)

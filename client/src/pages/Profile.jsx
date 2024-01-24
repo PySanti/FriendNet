@@ -26,13 +26,12 @@ export function Profile() {
     const [ startLoading, setLoadingState, successfullyLoaded ] = useLoadingState((state)=>([state.startLoading, state.setLoadingState, state.successfullyLoaded ]))
     const navigate = useNavigate();
     const onUpdate = async (data) => {
-        startLoading();
         // el data.photo siempre sera: null, url de imagen actual, un archivo
         const sendingData = { ...data };
         if (dataIsDiferent(data, profileData)) { // lodash
             const response = await executeApi(async ()=>{
                 return await updateUserDataAPI( sendingData, getJWTFromLocalStorage().access)
-            }, navigate, setLoadingState)
+            }, navigate)
             if (response){
                 if (response.status == 200){
                     setProfileData(response.data.user_data_updated);

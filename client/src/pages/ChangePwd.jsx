@@ -26,10 +26,9 @@ export function ChangePwd(){
     const   [ setLoadingState, successfullyLoaded, startLoading] = useLoadingState((state)=>([state.setLoadingState, state.successfullyLoaded, state.startLoading]))
     const changePwd = handleSubmit(async (data)=>{
         if (data['oldPwd'] !== data['newPwd']){
-            startLoading()
             const response = await executeApi(async ()=>{
                 return await changeUserPwdAPI(data.oldPwd, data.newPwd, getJWTFromLocalStorage().access)
-            }, navigate, setLoadingState)
+            }, navigate)
             if (response){
                 if (response.status == 200){
                     successfullyLoaded()

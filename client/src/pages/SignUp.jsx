@@ -24,10 +24,9 @@ export function SignUp() {
     const [startLoading, setLoadingState] = useLoadingState((state)=>([state.startLoading, state.setLoadingState]))
     const navigate                                              = useNavigate()
     const onSignUp = async (data) =>{
-        startLoading()
         let response = await executeApi(async ()=>{
             return await checkExistingUserAPI(data['username'], data['email'])
-        }, navigate, setLoadingState)
+        }, navigate)
         if (response){
             if (response.status == 200){
                 if (!response.data.existing){

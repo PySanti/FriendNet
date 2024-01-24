@@ -64,7 +64,7 @@ export function UsersList(){
         }
         const response = await executeApi(async ()=>{
             return await getUsersListAPI(voidUserKeyword() ? undefined : userKeyword, getUserDataFromLocalStorage().id, page)
-        }, navigate,setLoadingState )
+        }, navigate )
         if (response){
             if (response.status == 200){
                 updateUsers(response.data.users_list)

@@ -27,10 +27,9 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
 
 
     const loadMessages = async ()=>{
-        startLoading()
         const response = await executeApi(async ()=>{
             return await getMessagesHistorialAPI(clickedUser.id, getJWTFromLocalStorage().access, messagesHistorialPage.current)
-        }, navigate, setLoadingState)
+        }, navigate)
         if (response){
             if (response.status == 200){
                 updateMessagesHistorial(setMessagesHistorial, messagesHistorialPage, response.data !== "no_messages_between" ? response.data.messages_hist : [], messagesHistorial)
@@ -48,10 +47,9 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
         }
     }
     const sendMsg = async (data)=>{
-        startLoading()
         const response = await executeApi(async ()=>{
             return await sendMsgAPI(clickedUser.id, data.msg, getJWTFromLocalStorage().access)
-        }, navigate, setLoadingState)
+        }, navigate)
         if (response){
             if (response.status == 200){
                 setMessagesHistorial([...messagesHistorial, response.data.sended_msg])

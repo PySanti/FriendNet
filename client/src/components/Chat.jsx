@@ -9,7 +9,6 @@ import {ChatWSInitialize}               from "../utils/ChatWSInitialize"
 import {useClickedUser}                 from "../store"
 import {getUserDataFromLocalStorage}    from "../utils/getUserDataFromLocalStorage"
 import {useMessagesHistorial} from "../store"
-import {useLoadingState} from "../store"
 import {useNotifications} from "../store"
 import { getRelatedNotification } from "../utils/getRelatedNotification"
 import {diferentUserHasBeenClicked} from "../utils/diferentUserHasBeenClicked"
@@ -33,16 +32,14 @@ export function Chat(){
     let [messagesHistorial, setMessagesHistorial]                           = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
     let [notifications, setNotifications]                                   = useNotifications((state)=>([state.notifications, state.setNotifications]))
     let lastClickedUser                                                     = useLastClickedUser((state)=>(state.lastClickedUser))
-    const [setLoadingState, startLoading                    ]               = useLoadingState((state)=>([state.setLoadingState, state.startLoading]))
     const userData                                                          = getUserDataFromLocalStorage()
     const navigate                                                          = useNavigate()
 
     const enterChatHandler = async ()=>{
         const relatedNotification = getRelatedNotification(clickedUser.id, notifications)
-        startLoading()
         const response = await executeApi(async ()=>{
             return await enterChatAPI(clickedUser.id, relatedNotification? relatedNotification.id : undefined, getJWTFromLocalStorage().access)
-        }, navigate, setLoadingState)
+        }, navigate)
         if (response){
             if (response.status == 200){
                 updateMessagesHistorial(setMessagesHistorial, messagesHistorialPage, response.data.messages_hist!== "no_messages_between" ? response.data.messages_hist : [], messagesHistorial)

@@ -24,10 +24,9 @@ export function Login() {
 
     const onLogin = async (data)=>{
         // en este punto ya se sabe que el usuario no esta autenticado
-        startLoading()
         let response = await executeApi(async ()=>{
             return await getUserDetailAPI(data.username, data.password)
-        }, navigate, setLoadingState)
+        }, navigate)
         if (response){
             if (response.status == 200){
                 const userDetail = response.data.user
@@ -36,7 +35,7 @@ export function Login() {
                 } else {
                     response = await executeApi(async ()=>{
                         return await loginUser(data)
-                    }, navigate, setLoadingState)
+                    }, navigate)
                     if (response){
                         if (response.status == 200){
                             const notifications = userDetail.notifications
