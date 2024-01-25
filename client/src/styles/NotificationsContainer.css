@@ -6,9 +6,26 @@
     align-items: center;
     justify-content: center;
 }
+.notifications-ammount{
+    padding: .3rem;
+    font-size: .6rem;
+    margin-left: -1.4vw;
+    transition: opacity;
+    transition-duration: .5s;
+    opacity: 1;
+}
+.notifications-ammount__activated{
+    opacity: .4;
+}
+.notifications-bell-container{
+    display: flex;
+    flex-direction: row;
+    align-items : start;
+}
+
 .notifications-bell{
+    align-self: flex-end;
     width: 3.5vw;
-    border-radius: 100%;
     border: none;
     cursor: pointer;
     filter : var(--base-image-drop-shadow);

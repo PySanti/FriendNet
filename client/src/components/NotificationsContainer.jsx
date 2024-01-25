@@ -26,12 +26,10 @@ export function NotificationsContainer(){
     const navigate                                          = useNavigate()
     const bellRef                                           = useRef(null)
     const handleNotificationsBellClick = ()=>{
-        console.log(bellRef.current.animationItem.currentFrame)
-        if ([0,92].includes(Math.round(bellRef.current.animationItem.currentFrame))){
-            setNotificationsActivated(!notificacionsActivated)
-            bellRef.current.setSpeed(2.3)
-            bellRef.current.playSegments(notificacionsActivated? [93,0] : [0, 93], true)
-        } 
+        setNotificationsActivated(!notificacionsActivated)
+        const current_frame = Math.round(bellRef.current.animationItem.currentFrame)
+        bellRef.current.setSpeed(2)
+        bellRef.current.playSegments(notificacionsActivated? [current_frame,0] : [current_frame, 93], true)
     }
     const onNotificationDelete = async (notification)=>{
         const response = await executeApi(async ()=>{
@@ -59,13 +57,18 @@ export function NotificationsContainer(){
     }, [])
     return (
         <div className="notifications-container">
-            <div className="notifications-bell" onClick={handleNotificationsBellClick}>
-                <Lottie 
-                    loop={false}
-                    autoplay={false}
-                    animationData={bell} 
-                    lottieRef={bellRef} 
-                    />
+            <div className="notifications-bell-container">
+                <div className="notifications-bell" onClick={handleNotificationsBellClick}>
+                    <Lottie 
+                        loop={false}
+                        autoplay={false}
+                        animationData={bell} 
+                        lottieRef={bellRef} 
+                        />
+                </div>
+                <div className={notificacionsActivated? "notifications-ammount notifications-ammount__activated" : "notifications-ammount"}>
+                    {notifications.length}
+                </div>
             </div>
             <div className={notificacionsActivated ? `${notificationListCls} ${notificationListCls}-active` : notificationListCls}>
                 {(notifications && notifications.length > 0) ?
