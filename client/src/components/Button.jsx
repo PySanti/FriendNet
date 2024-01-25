@@ -23,12 +23,12 @@ export function Button({buttonText, onClickFunction, isSubmit, button_hovered, b
 }
 
 Button.propTypes = {
-    buttonText : PropTypes.string.isRequired,
     onClickFunction : PropTypes.func,
     isSubmit : PropTypes.bool,
     button_hovered : PropTypes.bool
 }
 Button.defaultProps = {
     onClickFunction : undefined,
-    isSubmit : undefined
+    isSubmit : undefined,
+    buttonText : undefined,
 }
