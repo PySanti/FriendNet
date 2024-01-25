@@ -28,25 +28,3 @@
     opacity: 1;
     margin-left: .3vw;
 }
-.notification-list{
-    background-color: #eee;
-    margin-top: .5rem;
-    padding: .4rem;
-    height: auto;
-    width: 20vw;
-    max-height: 15vh;
-    top : calc(+ auto 1vh);
-    flex-direction: column;
-    top: 40vh;
-    overflow: scroll;
-    border : 1px solid #000;
-    position: absolute;
-    opacity: 0;
-}
-.notification-list-active{
-    opacity: 1;
-}
-.no-notifications{
-    text-align: center;
-}
-

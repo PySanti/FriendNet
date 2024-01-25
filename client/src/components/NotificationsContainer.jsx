@@ -18,13 +18,14 @@ import {initStates} from "../utils/initStates"
  * Componente creado para contener las notificaciones del usuarios
  */
 export function NotificationsContainer(){
-    let [notificacionsActivated, setNotificationsActivated] = useState(false)
+    let [notificationsActivated, setNotificationsActivated] = useState(false)
     let [setChatGlobeList]                                  = useChatGlobeList((state)=>([state.setChatGlobeList]))
     let [notifications, setNotifications]                   = useNotifications((state)=>([state.notifications, state.setNotifications]))
     const notificationListCls                               = "notification-list"
     const navigate                                          = useNavigate()
+    const baseNotificationsBellClassName                    = "notifications-bell button"
     const handleNotificationsBellClick = ()=>{
-        setNotificationsActivated(!notificacionsActivated)
+        setNotificationsActivated(!notificationsActivated)
     }
     const onNotificationDelete = async (notification)=>{
         const response = await executeApi(async ()=>{
@@ -53,15 +54,10 @@ export function NotificationsContainer(){
     return (
         <div className="notifications-container">
             <div className="notifications-bell-container">
-                <Button buttonText="Notificaciones" onClickFunction={handleNotificationsBellClick} />
+                <div className={notificationsActivated? `${baseNotificationsBellClassName} button_hovered` : baseNotificationsBellClassName} onClick={handleNotificationsBellClick}>
+                    Notificaciones
+                </div>
                 <div className={notifications.length > 0? "notifications-alert notifications-alert__activated" : "notifications-alert"}></div>
-            </div>
-            <div className={notificacionsActivated ? `${notificationListCls} ${notificationListCls}-active` : notificationListCls}>
-                {(notifications && notifications.length > 0) ?
-                    notifications.map(formatingFunction)
-                    :
-                    <h5 className="no-notifications">No tienes notificaciones</h5>
-                }
             </div>
         </div>
     )
