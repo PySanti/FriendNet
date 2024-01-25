@@ -1,5 +1,5 @@
 import {toast} from "sonner"
-import bell from "../../lottie/bell"
+import bell from "../../lottie/bell2"
 import "../styles/NotificationsContainer.css"
 import Lottie from "lottie-react"
 import {  useState, useRef } from "react"
@@ -27,11 +27,10 @@ export function NotificationsContainer(){
     const bellRef                                           = useRef(null)
     const handleNotificationsBellClick = ()=>{
         console.log(bellRef.current.animationItem.currentFrame)
-        if ([0,34].includes(Math.round(bellRef.current.animationItem.currentFrame))){
-            
+        if ([0,92].includes(Math.round(bellRef.current.animationItem.currentFrame))){
             setNotificationsActivated(!notificacionsActivated)
-            bellRef.current.setSpeed(1.5)
-            bellRef.current.playSegments([0,35], true)
+            bellRef.current.setSpeed(2.3)
+            bellRef.current.playSegments(notificacionsActivated? [93,0] : [0, 93], true)
         } 
     }
     const onNotificationDelete = async (notification)=>{
