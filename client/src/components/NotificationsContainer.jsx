@@ -48,6 +48,9 @@ export function NotificationsContainer(){
     }
     useEffect(()=>{
         setChatGlobeList(getChatGlobesList(notifications))
+        if (notifications.length == 0){
+            setNotificationsActivated(false)
+        }
     }, [notifications])
 
     useEffect(()=>{

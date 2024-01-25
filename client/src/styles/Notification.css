@@ -26,3 +26,13 @@
 }
 
 
+.individual-notification-delete-btn > *{
+    transition-property: filter;
+    transition-duration: .2s;
+}
+
+.individual-notification-delete-btn > *:hover{
+    filter: drop-shadow(0px 0px 2px #f00);
+}
+
+

@@ -14,6 +14,10 @@ export function Notification({notification, onNotificationDelete}){
     let [clickedUser, setClickedUser] = useClickedUser((state)=>[state.clickedUser, state.setClickedUser])
     let setLastClickedUser = useLastClickedUser((state)=>state.setLastClickedUser)
     
+    const handleDeleteClick = (event)=>{
+        onNotificationDelete(notification)
+        event.stopPropagation()
+    }
     const onNotificationClick = async ()=>{
         updateClickedUser(clickedUser, notification.sender_user, setClickedUser, setLastClickedUser)
     }
@@ -22,7 +26,11 @@ export function Notification({notification, onNotificationDelete}){
             <h4 className="individual-notification-content"onClick={onNotificationClick}>
                 {notification.msg}
             </h4>
-            <button className="individual-notification-delete-btn" onClick={()=>onNotificationDelete(notification)}>x</button>
+            <button className="individual-notification-delete-btn" onClick={handleDeleteClick}>
+                <span className="material-symbols-outlined">
+                delete
+                </span>
+            </button>
         </div>
     )
 }
