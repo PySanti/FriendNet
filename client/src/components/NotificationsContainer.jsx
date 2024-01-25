@@ -1,8 +1,7 @@
+import {Button} from "../components/Button"
 import {toast} from "sonner"
-import bell from "../../lottie/bell2"
 import "../styles/NotificationsContainer.css"
-import Lottie from "lottie-react"
-import {  useState, useRef } from "react"
+import {  useState } from "react"
 import { v4 } from "uuid"
 import { Notification } from "./Notification"
 import {useEffect} from "react"
@@ -24,12 +23,8 @@ export function NotificationsContainer(){
     let [notifications, setNotifications]                   = useNotifications((state)=>([state.notifications, state.setNotifications]))
     const notificationListCls                               = "notification-list"
     const navigate                                          = useNavigate()
-    const bellRef                                           = useRef(null)
     const handleNotificationsBellClick = ()=>{
         setNotificationsActivated(!notificacionsActivated)
-        const current_frame = Math.round(bellRef.current.animationItem.currentFrame)
-        bellRef.current.setSpeed(2)
-        bellRef.current.playSegments(notificacionsActivated? [current_frame,0] : [current_frame, 93], true)
     }
     const onNotificationDelete = async (notification)=>{
         const response = await executeApi(async ()=>{
@@ -58,17 +53,8 @@ export function NotificationsContainer(){
     return (
         <div className="notifications-container">
             <div className="notifications-bell-container">
-                <div className="notifications-bell" onClick={handleNotificationsBellClick}>
-                    <Lottie 
-                        loop={false}
-                        autoplay={false}
-                        animationData={bell} 
-                        lottieRef={bellRef} 
-                        />
-                </div>
-                <div className={notificacionsActivated? "notifications-ammount notifications-ammount__activated" : "notifications-ammount"}>
-                    {notifications.length}
-                </div>
+                <Button buttonText="Notificaciones" onClickFunction={handleNotificationsBellClick} />
+                <div className={notifications.length > 0? "notifications-alert notifications-alert__activated" : "notifications-alert"}></div>
             </div>
             <div className={notificacionsActivated ? `${notificationListCls} ${notificationListCls}-active` : notificationListCls}>
                 {(notifications && notifications.length > 0) ?

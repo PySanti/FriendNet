@@ -6,32 +6,28 @@
     align-items: center;
     justify-content: center;
 }
-.notifications-ammount{
-    padding: .3rem;
-    font-size: .6rem;
-    margin-left: -1.4vw;
-    transition: opacity;
-    transition-duration: .5s;
-    opacity: 1;
-}
-.notifications-ammount__activated{
-    opacity: .4;
-}
+
 .notifications-bell-container{
     display: flex;
     flex-direction: row;
     align-items : start;
 }
 
-.notifications-bell{
-    align-self: flex-end;
-    width: 3.5vw;
-    border: none;
-    cursor: pointer;
-    filter : var(--base-image-drop-shadow);
 
+.notifications-alert{
+    background-color : #0f0;
+    border-radius : 20px;
+    width:  .5vw;
+    height: 1vh;
+    margin-left: 0;
+    opacity: 0;
+    transition-property: opacity margin-left;
+    transition-duration: .3s;
 }
-
+.notifications-alert__activated{
+    opacity: 1;
+    margin-left: .3vw;
+}
 .notification-list{
     background-color: #eee;
     margin-top: .5rem;
