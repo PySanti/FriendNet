@@ -14,13 +14,14 @@ export function UserButton({user}){
     let [clickedUser, setClickedUser]   = useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
     let setLastClickedUser              = useLastClickedUser((state)=>(state.setLastClickedUser))
     let chatGlobeList                   = useChatGlobeList((state)=>(state.chatGlobeList))
-
+    const globeCls                      = "user-button-globe"
     return (
         <button className="user-button" onClick={()=>updateClickedUser(clickedUser, user, setClickedUser, setLastClickedUser)}>
-            {user.username}
-            {user.is_typing && " ..."}
-            {chatGlobeList.includes(user.id) &&<div className="user-button-globe">x</div>}
-
+            <div className="user-username">
+                {user.username}
+                {user.is_typing && " ..."}
+            </div>
+            <div className={chatGlobeList.includes(user.id)? `${globeCls} ${globeCls}__activated` : globeCls}></div>
         </button>
     )
 }

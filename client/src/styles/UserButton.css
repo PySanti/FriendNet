@@ -1,10 +1,31 @@
 .user-button{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     background-color: inherit;
     border: 1px solid #000;
     outline: none;
     color : var(--base-letter-color);
+    cursor: pointer;
 }
 .user-button:hover{
-    cursor: pointer;
     border : 1px solid #fff;
 }
+
+.user-button-globe{
+    width:  0vw;
+    height: 0vw;
+    background-color : var(--base-color);
+    border-radius: 30px;
+    margin-left: 0;
+    transition-property: width height margin-left;
+    transition-duration: .3s;
+}
+
+.user-button-globe__activated{
+    width:  1vw;
+    height: 1vw;
+    margin-left: 1vw;
+}
+
