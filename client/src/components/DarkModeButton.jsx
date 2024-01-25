@@ -26,7 +26,8 @@ export function DarkModeButton(){
     }
     const handleClick = ()=>{
         updateDarkMode(!darkModeActivated)
-        darkModeAnimationRef.current.playSegments(!darkModeActivated ? [0,16] : [16,0], true)
+        const currentFrame = darkModeAnimationRef.current.animationItem.currentFrame
+        darkModeAnimationRef.current.playSegments(!darkModeActivated ? [currentFrame,16] : [currentFrame,0], true)
     }
 
     useEffect(()=>{
