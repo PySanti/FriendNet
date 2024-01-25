@@ -6,12 +6,16 @@
     align-items: center;
     text-align: center;
     cursor: pointer;
+    border-radius : 10px;
+
 }
 .individual-notification-container:hover{
-    background-color: #ccc;
+    background-color : var(--base-background-box-color);
 }
 .individual-notification-content{
-    font-size: 20px;
+    width: 100%;
+    text-align: center;
+    font-size: var(--base-button-font-size);
 }
 
 .individual-notification-delete-btn{
@@ -22,6 +26,3 @@
 }
 
 
-.individual-notification-delete-btn:hover{
-    background-color: #f00f;
-}

@@ -1,7 +1,7 @@
 
 .button{
     --outline-width : 4px;
-    font-size: 15px;
+    font-size: var(--base-button-font-size);
     border: none;
     border-radius: 0px;
     border-bottom-left-radius: 10px;
