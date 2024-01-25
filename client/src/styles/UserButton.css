@@ -14,18 +14,18 @@
 }
 
 .user-button-globe{
-    width:  0vw;
-    height: 0vw;
     background-color : var(--base-color);
     border-radius: 30px;
+    width:  .5vw;
+    height: .5vw;
     margin-left: 0;
-    transition-property: width height margin-left;
-    transition-duration: .3s;
+    transform: scale(0,0);
+    transition-property: transform margin-left;
+    transition-duration: .2s;
 }
 
 .user-button-globe__activated{
-    width:  1vw;
-    height: 1vw;
     margin-left: 1vw;
+    transform: scale(1,1);
 }
 

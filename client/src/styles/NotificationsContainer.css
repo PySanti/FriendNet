@@ -38,7 +38,7 @@
 .notifications-list{
     max-height: 0;
     overflow: hidden;
-    transition : max-height .2s;
+    transition : max-height .3s;
 }
 
 .notifications-list__activated{
