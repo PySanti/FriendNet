@@ -7,12 +7,12 @@ import {toast} from "sonner"
  * @param {Function} navigateFunc referencia a la funcion para redirijir al usuario al root
  */
 export function logoutUser(navigateFunc){
-    clearLocalStorage()
     if (navigateFunc){
         disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
         navigateFunc('/')
     } else {
         window.location.href = "/"
     }
+    clearLocalStorage()
     toast.success("Sesión finalizada")
 }

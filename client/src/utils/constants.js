@@ -12,6 +12,7 @@ export const BASE_LOGIN_REQUIRED_ERROR_MSG = "requires_login"
 export const BASE_UNEXPECTED_ERROR_MESSAGE = "unexpected_error"
 export const BASE_UNEXPECTED_ERROR_LOG = "¡ Error inesperado !"
 export const LOCAL_STORAGE_DARK_MODE_NAME = "darkMode"
+export const BASE_USER_TYPING_LOCAL_STORAGE_ATTR = "user_typing"
 export const BASE_ACTIVATION_CODE_CONSTRAINTS = {
     required: {
         value: true,

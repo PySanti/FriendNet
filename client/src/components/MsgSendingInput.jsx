@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form"
 import { BASE_MESSAGE_MAX_LENGTH } from "../utils/constants"
 import {PropTypes} from "prop-types"
 import "../styles/MessageSendingInput.css"
-import {NOTIFICATIONS_WEBSOCKET} from "../utils/constants"
+import {NOTIFICATIONS_WEBSOCKET, BASE_USER_TYPING_LOCAL_STORAGE_ATTR} from "../utils/constants"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import {useClickedUser} from "../store"
 import {NotificationsWSTypingInformMsg} from "../utils/NotificationsWSTypingInformMsg"
@@ -27,6 +27,7 @@ export function MsgSendingInput({onMsgSending}){
     useEffect(()=>{
         if (NOTIFICATIONS_WEBSOCKET.current && userData && clickedUserWhenTyping){
             NOTIFICATIONS_WEBSOCKET.current.send(NotificationsWSTypingInformMsg(clickedUserWhenTyping.id, true))
+            localStorage.setItem(BASE_USER_TYPING_LOCAL_STORAGE_ATTR, clickedUserWhenTyping.id)
         }
     }, [clickedUserWhenTyping])
     useEffect(()=>{
@@ -45,7 +46,8 @@ export function MsgSendingInput({onMsgSending}){
             */
             if (NOTIFICATIONS_WEBSOCKET.current){
                 NOTIFICATIONS_WEBSOCKET.current.send(NotificationsWSTypingInformMsg(clickedUser.id, false))
-            }
+                localStorage.setItem(BASE_USER_TYPING_LOCAL_STORAGE_ATTR, false)
+            } 
         }, 600))
     }
     return (
