@@ -55,9 +55,9 @@ export function Chat(){
                     "error_while_getting_messages"      : '¡ Error buscando mensajes !',
                     "error_while_deleting_notification" : '¡ Error borrando notificación !'
                 }
-                toast.error(errors[response.data.error]? errors[response.data.error] : "Error inesperado entrando al chat")
+                toast.error(errors[response.data.error]? errors[response.data.error] : "¡ Error inesperado entrando al chat !")
             } else{
-                toast.error("Error inesperado entrando al chat")
+                toast.error("¡ Error inesperado entrando al chat !")
             }
         }
     }

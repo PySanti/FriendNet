@@ -24,7 +24,7 @@ export function UsersList(){
     let [loaderActivated, setLoaderActivated]                       = useState(false)
     let [usersIdList, setUsersIdList]                               = useUsersIdList((state)=>[state.usersIdList, state.setUsersIdList])
     let [usersList, setUsersList]                                   = useUsersList((state)=>([state.usersList, state.setUsersList]))
-    let userKeyword                                              = useUserKeyword((state)=>(state.userKeyword))
+    let userKeyword                                                 = useUserKeyword((state)=>(state.userKeyword))
     let [scrollDetectorBlock, setScrollDetectorBlock]               = useState(false)
     let [firstUsersListCall, setFirstUsersListCall]                 = useFirstUsersListCall((state)=>[state.firstUsersListCall, state.setFirstUsersListCall])
     const navigate = useNavigate()
