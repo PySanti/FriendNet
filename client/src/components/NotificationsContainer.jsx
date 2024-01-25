@@ -1,7 +1,8 @@
 import {toast} from "sonner"
+import bell from "../../lottie/bell"
 import "../styles/NotificationsContainer.css"
-
-import {  useState } from "react"
+import Lottie from "lottie-react"
+import {  useState, useRef } from "react"
 import { v4 } from "uuid"
 import { Notification } from "./Notification"
 import {useEffect} from "react"
@@ -19,12 +20,20 @@ import {initStates} from "../utils/initStates"
  */
 export function NotificationsContainer(){
     let [notificacionsActivated, setNotificationsActivated] = useState(false)
-    let [setChatGlobeList] = useChatGlobeList((state)=>([state.setChatGlobeList]))
-    let [notifications, setNotifications] = useNotifications((state)=>([state.notifications, state.setNotifications]))
-    const notificationListCls = "notification-list"
-    const navigate = useNavigate()
-
-
+    let [setChatGlobeList]                                  = useChatGlobeList((state)=>([state.setChatGlobeList]))
+    let [notifications, setNotifications]                   = useNotifications((state)=>([state.notifications, state.setNotifications]))
+    const notificationListCls                               = "notification-list"
+    const navigate                                          = useNavigate()
+    const bellRef                                           = useRef(null)
+    const handleNotificationsBellClick = ()=>{
+        console.log(bellRef.current.animationItem.currentFrame)
+        if ([0,34].includes(Math.round(bellRef.current.animationItem.currentFrame))){
+            
+            setNotificationsActivated(!notificacionsActivated)
+            bellRef.current.setSpeed(1.5)
+            bellRef.current.playSegments([0,35], true)
+        } 
+    }
     const onNotificationDelete = async (notification)=>{
         const response = await executeApi(async ()=>{
             return await notificationDeleteAPI(notification.id, getJWTFromLocalStorage().access )
@@ -38,6 +47,7 @@ export function NotificationsContainer(){
         }
     }
 
+
     const formatingFunction =(notification)=>{
         return <Notification key={v4()} notification={notification} onNotificationDelete={onNotificationDelete}/>
     }
@@ -50,7 +60,14 @@ export function NotificationsContainer(){
     }, [])
     return (
         <div className="notifications-container">
-            <button className="notifications-bell" onClick={()=>{setNotificationsActivated(notificacionsActivated ? false : true)}}></button>
+            <div className="notifications-bell" onClick={handleNotificationsBellClick}>
+                <Lottie 
+                    loop={false}
+                    autoplay={false}
+                    animationData={bell} 
+                    lottieRef={bellRef} 
+                    />
+            </div>
             <div className={notificacionsActivated ? `${notificationListCls} ${notificationListCls}-active` : notificationListCls}>
                 {(notifications && notifications.length > 0) ?
                     notifications.map(formatingFunction)

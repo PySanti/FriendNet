@@ -7,17 +7,14 @@
     justify-content: center;
 }
 .notifications-bell{
-    width: 30px;
-    height: 30px;
-    background-color: var(--base-color);
+    width: 3vw;
     border-radius: 100%;
     border: none;
-    transition: background-color .1s;
-}
-.notifications-bell:hover{
     cursor: pointer;
-    background-color: indianred;
+    filter : var(--base-image-drop-shadow);
+
 }
+
 .notification-list{
     background-color: #eee;
     margin-top: .5rem;
