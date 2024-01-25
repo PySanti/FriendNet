@@ -53,12 +53,20 @@ export function NotificationsContainer(){
     }, [])
     return (
         <div className="notifications-container">
-            <div className="notifications-bell-container">
-                <div className={notificationsActivated? `${baseNotificationsBellClassName} button_hovered` : baseNotificationsBellClassName} onClick={handleNotificationsBellClick}>
-                    Notificaciones
+                <div className="notifications-list-container">
+                    <div className={notificationsActivated? `${baseNotificationsBellClassName} button_hovered` : baseNotificationsBellClassName} onClick={handleNotificationsBellClick}>
+                        Notificaciones
+                        <div className={notificationsActivated ? "notifications-list notifications-list__activated" : "notifications-list"}>
+                            {
+                                (notifications && notifications.length > 0) ?
+                                notifications.map(formatingFunction)
+                                :
+                                <h4 className="no-notifications">No hay notificaciones</h4>
+                            }
+                        </div>
+                    </div>
                 </div>
                 <div className={notifications.length > 0? "notifications-alert notifications-alert__activated" : "notifications-alert"}></div>
-            </div>
         </div>
     )
 }
