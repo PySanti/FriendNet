@@ -10,5 +10,5 @@ export function redirectExpiredUser(navigateFunc){
     navigateFunc('/')
     clearLocalStorage()
     disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
-    toast.error("Redirigiendo al usuario al inicio por vencimiento de token")
+    toast.error("Redirigiendo usuario al inicio por vencimiento de token")
 }
