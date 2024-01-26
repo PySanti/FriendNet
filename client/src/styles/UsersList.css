@@ -1,5 +1,4 @@
 .users-list{
-    height: 50vh;
     display: flex;
     flex-direction: column;
     width: 40% !important;

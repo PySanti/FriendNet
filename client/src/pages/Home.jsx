@@ -35,7 +35,6 @@ export function Home() {
         return (
             <div className="centered-container">
                 <div className="home-container">
-                    <Header msg="En el home"/>
                     <div className="buttons-container">
                         <NotificationsContainer/>
                         <Button buttonText="Salir" onClickFunction={()=>logoutUser(navigate)}/>
