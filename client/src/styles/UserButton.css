@@ -4,13 +4,17 @@
     justify-content: center;
     align-items: center;
     background-color: inherit;
-    outline: none;
+    padding: .2rem;
+    border : none;
+    border-bottom : 1px solid #000;
     color : var(--base-letter-color);
     cursor: pointer;
 }
+
 .user-button:hover{
-    border : 1px solid #fff;
+    background-color : var(--base-background-box-color);
 }
+
 
 .user-button-globe{
     background-color : var(--base-color);

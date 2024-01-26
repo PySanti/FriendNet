@@ -1,12 +1,13 @@
 .users-list{
     display: flex;
     flex-direction: column;
-    width: 40% !important;
+    width: 30% !important;
 }
 .users-list-container{
     height: inherit;
     overflow: scroll;
     display: flex;
+    padding-right: .4rem;
     flex-direction: column;
 }
 .users-list-loader{
