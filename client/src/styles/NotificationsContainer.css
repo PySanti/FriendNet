@@ -12,7 +12,7 @@
     text-align: center;
     height: auto;
     max-height: none;
-    width: 20vw;
+    width: 15vw;
 }
 
 
@@ -44,6 +44,6 @@
 }
 
 .notifications-list__activated{
-    max-height: 15vh;
+    max-height: 10vh;
     overflow: auto;
 }
