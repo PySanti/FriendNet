@@ -67,7 +67,7 @@ export function NotificationsContainer(){
                     }
                 </div>
             </div>
-            <div className={notifications.length > 0? "notifications-alert notifications-alert__activated" : "notifications-alert"}></div>
+            <div className={notifications.length > 0? "notifications-alert notifications-alert__activated" : "notifications-alert"}>{notifications.length}</div>
         </div>
     )
 }

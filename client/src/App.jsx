@@ -85,6 +85,7 @@ function App() {
   return (
     <>
     <Toaster 
+      closeButton
       toastOptions={{
       style : {
         border : "1px solid var(--base-letter-color)",

@@ -19,18 +19,20 @@
 
 
 .notifications-alert{
-    background-color : #0f0;
-    border-radius : 20px;
-    width:  .5vw;
-    height: 1vh;
-    margin-left: 0;
-    opacity: 0;
-    transition-property: opacity margin-left;
+    color : #000;
+    font-weight: 800;
+    margin-left: -1.3vw;
+    margin-top: .3vw;
+    opacity: .2;
+    font-size: 15px;
+    cursor: pointer;
+
+    z-index: 99;
+    transition-property: opacity;
     transition-duration: .3s;
 }
 .notifications-alert__activated{
     opacity: 1;
-    margin-left: .3vw;
 }
 
 
