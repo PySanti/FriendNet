@@ -13,8 +13,8 @@
     width: 100vw;
     display: flex;
     flex-direction: row;
+    justify-content: center;
 }
 .users-interface-container > *{
     border : 1px solid #000;
-    width:  80%;
 }

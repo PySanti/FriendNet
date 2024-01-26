@@ -19,6 +19,7 @@ import {enterChatAPI} from "../api/enterChat.api"
 import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
 import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotifications"
 import {useLastClickedUser} from "../store"
+import "../styles/Chat.css"
 
 /**
  * 
