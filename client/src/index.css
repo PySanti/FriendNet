@@ -57,3 +57,18 @@ input:focus{
   outline: .5px solid var(--base-color);
   box-shadow: 3px 3px 10px;
 }
+
+
+.non-shadow-input{
+  border-radius: 20px;
+  outline: 1px solid #000;
+  border: none;
+  padding: .3rem;
+}
+.non-shadow-input:focus{
+    box-shadow: none;
+}
+.non-shadow-input::placeholder{
+    font-size: 18px;
+    text-align: center;
+}
