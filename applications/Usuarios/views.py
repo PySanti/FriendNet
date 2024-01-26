@@ -144,7 +144,6 @@ class GetUsersListAPI(APIView):
                     result_page = self.pagination_class().paginate_queryset(add_istyping_field(users_list.values(*USERS_LIST_ATTRS)), request)
                 except Exception:
                     return BASE_NO_MORE_PAGES_RESPONSE
-
                 return JsonResponse({"users_list": result_page}, status=status.HTTP_200_OK)
             except Exception:
                 return BASE_UNEXPECTED_ERROR_RESPONSE

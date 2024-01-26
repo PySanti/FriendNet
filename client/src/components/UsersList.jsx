@@ -1,9 +1,10 @@
+import {toast} from "sonner"
 import {useUserKeyword} from "../store"
 import { UserButton } from "./UserButton"
 import "../styles/UsersList.css"
 import { v4 } from "uuid"
 import { UserFilter } from "./UserFilter"
-import {useState, useEffect} from "react"
+import {useState, useEffect, useRef} from "react"
 import { getUsersListAPI } from "../api/getUsersList.api"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import { userIsAuthenticated } from "../utils/userIsAuthenticated"
@@ -14,10 +15,14 @@ import {useUsersIdList} from "../store"
 import {useUsersListPage} from "../store"
 import {useNoMoreUsers} from "../store"
 import {useFirstUsersListCall} from "../store"
+import Lottie from "lottie-react"
+import loading from "../../lottie/loading.json"
+
 /**
  * Recibe la lista de usuarios directa de la api y retorna la lista de elementos jsx
  */
 export function UsersList(){
+    const loadingAnimationRef                                       = useRef(null)
     const loaderClassName                                           ="users-list-loader" 
     let [usersListPage, setUsersListPage]                           = useUsersListPage((state)=>[state.usersListPage, state.setUsersListPage])
     let [noMoreUsers, setNoMoreUsers]                               = useNoMoreUsers((state)=>[state.noMoreUsers, state.setNoMoreUsers])
@@ -70,7 +75,7 @@ export function UsersList(){
             } else if (response.data.error=== "no_more_pages"){
                 setNoMoreUsers(true)
             } else {
-                setLoaderActivated("¡ Ha habido un error cargando la lista de usuarios !")
+                toast.error("¡ Ha habido un error cargando la lista de usuarios !")
             }
         }
         setLoaderActivated(false)
@@ -103,6 +108,15 @@ export function UsersList(){
             })()
         }
     }, [userKeyword])
+    useEffect(()=>{
+        if (loaderActivated){
+            loadingAnimationRef.current.setSpeed(2)
+            loadingAnimationRef.current.play()
+        } else{
+            loadingAnimationRef.current.pause()
+        }
+    }, [loaderActivated])
+
     return (
         <>
             <div className="users-list">
@@ -116,8 +130,14 @@ export function UsersList(){
                         No se han encontrado usuarios
                     </div>
                 }
-                <div className={loaderActivated ? loaderClassName+"__activated" : loaderClassName}>
-                    {loaderActivated && "Cargando ..."}
+                <div className={loaderActivated ? `${loaderClassName} ${loaderClassName+"__activated"}` : loaderClassName}>
+                    <Lottie 
+                        loop={true}
+                        autoPlay={false}
+                        animationData={loading} 
+                        lottieRef={loadingAnimationRef}
+                    />
+
                 </div>
             </div>
         </>
