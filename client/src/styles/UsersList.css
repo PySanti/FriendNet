@@ -15,6 +15,12 @@
     justify-content : center;
     opacity: 0;
 }
+.no-users-msg{
+    display: flex;
+    align-items : center;
+    justify-content: center;
+    height: 100%;
+}
 .users-list-loader__activated{
     opacity: 1;
 }

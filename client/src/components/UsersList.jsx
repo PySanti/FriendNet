@@ -127,9 +127,10 @@ export function UsersList(){
                     </div>
                     :
                     <div className="no-users-msg">
-                        No se han encontrado usuarios
+                        No se han encontrado usuarios :(
                     </div>
                 }
+
                 <div className={loaderActivated ? `${loaderClassName} ${loaderClassName+"__activated"}` : loaderClassName}>
                     <Lottie 
                         loop={true}
