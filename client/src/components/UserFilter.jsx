@@ -22,7 +22,7 @@ export function UserFilter(){
     }, [])
     return (
         <div className="user-filter-container">
-            <input ref={inputRef} placeholder="Busca a un usuario" className="users-filter-input" type="text" onChange={onLetterInput}/>
+            <input ref={inputRef} placeholder="Busca un usuario" className="users-filter-input" type="text" onChange={onLetterInput}/>
         </div>
     )
 }
