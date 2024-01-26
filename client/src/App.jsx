@@ -30,6 +30,7 @@ import {DarkModeButton} from "./components/DarkModeButton"
 function App() {
   let [notifications, setNotifications] = states.useNotifications((state)=>([state.notifications, state.setNotifications]))
   let [usersList, setUsersList]         = states.useUsersList((state)=>([state.usersList, state.setUsersList]))
+  let [typingDB, setTypingDB]           = states.useTypingDB((state)=>[state.typingDB, state.setTypingDB])
   let [clickedUser, setClickedUser]     = states.useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
   let setLastClickedUser                = states.useLastClickedUser((state)=>(state.setLastClickedUser))
   let [usersIdList, setUsersIdList]     = states.useUsersIdList((state)=>[state.usersIdList, state.setUsersIdList])
@@ -37,6 +38,7 @@ function App() {
   useEffect(()=>{
     initStates(notifications, setNotifications)
   }, [])
+
 
   useEffect(()=>{
     if (NotificationsWSCanBeUpdated()){
@@ -70,18 +72,15 @@ function App() {
             }
         } else if (data.type === "typing_inform"){
           if (usersIdList.includes(data.value.user_id)){
-            usersList.map((user)=>{
-              if (user.id == data.value.user_id){
-                user.is_typing = data.value.typing
-              }
-              return user
-            })
-            setUsersList(usersList)
+            typingDB[data.value.user_id] = data.value.typing
+            setTypingDB(typingDB)
           }
         }
       }
     }
   }, [notifications, usersList, clickedUser])
+
+
   return (
     <>
     <Toaster 

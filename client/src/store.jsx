@@ -90,4 +90,14 @@ export const useUserKeyword = create((set)=>({
     reset : ()=>(set(()=>({userKeyword: null})))
 }))
 
+export const useTypingDB = create((set)=>({
+    typingDB : {},
+    setTypingDB : (new_val)=>(set(()=>({typingDB : new_val}))),
+    reset : ()=>(set(()=>({typingDB: {}})))
+}))
+
+
+
+
+
 

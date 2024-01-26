@@ -18,7 +18,7 @@ import {executeApi} from "../utils/executeApi"
 import {enterChatAPI} from "../api/enterChat.api"
 import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
 import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotifications"
-import {useLastClickedUser} from "../store"
+import {useLastClickedUser, useTypingDB} from "../store"
 import "../styles/Chat.css"
 
 /**
@@ -29,6 +29,7 @@ export function Chat(){
     let messagesHistorialPage                                               = useRef(1)
     let noMoreMessages                                                      = useRef(false)
     let [newMsg, setNewMsg]                                                 = useState(null)
+    let [typingDB, setTypingDB]                                             = useTypingDB((state)=>([state.typingDB, state.setTypingDB]))
     let [clickedUser, setClickedUser]                                       = useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
     let [messagesHistorial, setMessagesHistorial]                           = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
     let [notifications, setNotifications]                                   = useNotifications((state)=>([state.notifications, state.setNotifications]))
@@ -73,9 +74,8 @@ export function Chat(){
                 messagesHistorialPage.current = 1
                 noMoreMessages.current = false
                 clickedUser.is_online = false
-                clickedUser.is_typing = false
+                // revisar si estas dos lineas de arriba son necesarias realmente
                 setClickedUser(clickedUser)
-                setMessagesHistorial([])
                 await enterChatHandler()
             })();
         }
@@ -91,7 +91,10 @@ export function Chat(){
                 } else if (data.type === "connection_inform"){
                     if (data.value.user_id == clickedUser.id){
                         clickedUser.is_online = data.value.connected
-                        clickedUser.is_typing = !data.value.connected ? false : clickedUser.is_typing
+                        if (!data.value.connected){
+                            typingDB[clickedUser.id] =  false
+                            setTypingDB(typingDB)
+                        }
                         setClickedUser(clickedUser)
                     }
                 }
