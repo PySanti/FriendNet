@@ -8,7 +8,7 @@
     border : none;
     border-bottom : 1px solid #000;
     color : var(--base-letter-color);
-    cursor: pointer;
+    cursor: pointer; 
 }
 
 .user-button:hover{
@@ -25,6 +25,7 @@
     transform: scale(0,0);
     transition-property: transform margin-left;
     transition-duration: .2s;
+
 }
 
 .user-button-globe__activated{

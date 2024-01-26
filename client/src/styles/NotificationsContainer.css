@@ -23,7 +23,7 @@
     font-weight: 800;
     margin-left: -1.3vw;
     margin-top: .3vw;
-    opacity: .2;
+    opacity: 1;
     font-size: 15px;
     cursor: pointer;
 
@@ -32,7 +32,7 @@
     transition-duration: .3s;
 }
 .notifications-alert__activated{
-    opacity: 1;
+    opacity: .2;
 }
 
 
