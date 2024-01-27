@@ -4,7 +4,6 @@ import {  useState } from "react"
 import { v4 } from "uuid"
 import { Notification } from "./Notification"
 import {useEffect} from "react"
-import {useChatGlobeList} from "../store"
 import {useNavigate} from "react-router-dom"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {executeApi} from "../utils/executeApi"
@@ -17,7 +16,6 @@ import {initStates} from "../utils/initStates"
  */
 export function NotificationsContainer(){
     let [notificationsActivated, setNotificationsActivated] = useState(false)
-    let [setChatGlobeList]                                  = useChatGlobeList((state)=>([state.setChatGlobeList]))
     let [notifications, setNotifications]                   = useNotifications((state)=>([state.notifications, state.setNotifications]))
     const navigate                                          = useNavigate()
     const baseNotificationsBellClassName                    = "notifications-bell button"
@@ -46,7 +44,6 @@ export function NotificationsContainer(){
         return <Notification key={v4()} notification={notifications[notification_id]} onNotificationDelete={onNotificationDelete}/>
     }
     useEffect(()=>{
-        // setChatGlobeList(getChatGlobesList(notifications))
         if (Object.keys(notifications).length == 0){
             setNotificationsActivated(false)
         }
