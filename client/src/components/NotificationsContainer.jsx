@@ -5,7 +5,6 @@ import { v4 } from "uuid"
 import { Notification } from "./Notification"
 import {useEffect} from "react"
 import {useChatGlobeList} from "../store"
-import {getChatGlobesList} from "../utils/getChatGlobesList"
 import {useNavigate} from "react-router-dom"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {executeApi} from "../utils/executeApi"
@@ -23,7 +22,7 @@ export function NotificationsContainer(){
     const navigate                                          = useNavigate()
     const baseNotificationsBellClassName                    = "notifications-bell button"
     const handleNotificationsBellClick = ()=>{
-        if (notifications.length > 0){
+        if (Object.keys(notifications).length > 0){
             setNotificationsActivated(!notificationsActivated)
         } else {
             toast.error("No tienes notificaciones")
@@ -43,12 +42,12 @@ export function NotificationsContainer(){
     }
 
 
-    const formatingFunction =(notification)=>{
-        return <Notification key={v4()} notification={notification} onNotificationDelete={onNotificationDelete}/>
+    const formatingFunction =(notification_id)=>{
+        return <Notification key={v4()} notification={notifications[notification_id]} onNotificationDelete={onNotificationDelete}/>
     }
     useEffect(()=>{
-        setChatGlobeList(getChatGlobesList(notifications))
-        if (notifications.length == 0){
+        // setChatGlobeList(getChatGlobesList(notifications))
+        if (Object.keys(notifications).length == 0){
             setNotificationsActivated(false)
         }
     }, [notifications])
@@ -62,12 +61,12 @@ export function NotificationsContainer(){
                 Notificaciones
                 <div className={notificationsActivated ? "notifications-list notifications-list__activated" : "notifications-list"}>
                     {
-                        (notifications && notifications.length > 0) &&
-                        notifications.map(formatingFunction)
+                        (notifications && Object.keys(notifications).length > 0) &&
+                        Object.keys(notifications).map(formatingFunction)
                     }
                 </div>
             </div>
-            <div className={notificationsActivated? "notifications-alert notifications-alert__activated" : "notifications-alert"}>{notifications.length}</div>
+            <div className={notificationsActivated? "notifications-alert notifications-alert__activated" : "notifications-alert"}>{Object.keys(notifications).length}</div>
         </div>
     )
 }

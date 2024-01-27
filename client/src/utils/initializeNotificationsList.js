@@ -3,7 +3,7 @@ import {getNotificationsFromLocalStorage} from "./getNotificationsFromLocalStora
 
 export function initializeNotificationsList(notifications, notificationsSetter){
     const localStorageNotifications = getNotificationsFromLocalStorage()
-    if (notifications.length == 0 && localStorageNotifications){
+    if (Object.keys(notifications).length == 0 && localStorageNotifications){
         notificationsSetter(localStorageNotifications)
     }
 }

@@ -39,9 +39,9 @@ export function Login() {
                     }, navigate)
                     if (response){
                         if (response.status == 200){
-                            const notifications = userDetail.notifications
+                            const baseNotifications = userDetail.notifications
                             delete userDetail.notifications
-                            saveNotificationsInLocalStorage(notifications)
+                            saveNotificationsInLocalStorage(baseNotifications)
                             saveUserDataInLocalStorage(userDetail)
                             toast.success("Sesión iniciada con éxito")
                             navigate('/home/')

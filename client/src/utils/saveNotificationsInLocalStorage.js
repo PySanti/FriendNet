@@ -3,6 +3,6 @@
  * @param {Array} notifications lista de notificationes
  */
 
-export function saveNotificationsInLocalStorage(notificacions){
-    localStorage.setItem('notifications', JSON.stringify(notificacions))
+export function saveNotificationsInLocalStorage(notifications){
+    localStorage.setItem('notifications', JSON.stringify(notifications))
 }

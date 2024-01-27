@@ -32,9 +32,9 @@ export const useTemporaryUserData = create((set)=>({
 
 
 export const useNotifications = create((set)=>({
-    notifications : [],
+    notifications : {},
     setNotifications : (newNotifications)=>(set(()=>({notifications : newNotifications}))),
-    reset : ()=>(set(()=>({notifications : []})))
+    reset : ()=>(set(()=>({notifications : {}})))
 }))
 
 

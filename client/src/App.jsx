@@ -49,12 +49,12 @@ function App() {
             if (data.value.new_notification.sender_user.id != getUserDataFromLocalStorage().id){
               const message = data.value.new_notification.message
               delete data.value.new_notification.message
-              const updatedNotifications = [...notifications, data.value.new_notification]
+              notifications[data.value.new_notification.sender_user.id] = data.value.new_notification
               toast(data.value.new_notification.sender_user.username, {
                 description:message.length > 20? `${message.substring(0,20)}...` : message,
               })
-              setNotifications(updatedNotifications)
-              saveNotificationsInLocalStorage(updatedNotifications)
+              setNotifications(notifications)
+              saveNotificationsInLocalStorage(notifications)
               shiftUser(usersList, setUsersList, data.value.new_notification.sender_user, usersIdList, setUsersIdList, userKeyword)
             }
         } else if (data.type == "connection_error"){
