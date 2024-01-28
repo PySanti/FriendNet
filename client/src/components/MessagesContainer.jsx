@@ -75,6 +75,11 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
         }
     }, [oldScrollHeight])
     useEffect(()=>{
+        if (containerRef.current && messagesHistorial.length <=10){
+            containerRef.current.scrollTop = containerRef.current.scrollHeight
+        }
+    }, [messagesHistorial])
+    useEffect(()=>{
         if (newMsg){
             (async function(){
                 await sendMsg(newMsg)
