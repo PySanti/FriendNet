@@ -25,6 +25,7 @@ import "../styles/Chat.css"
  * Contenedor unicamente del chat entre el session user y el clicked user
 */
 export function Chat(){
+
     let messagesHistorialPage                                               = useRef(1)
     let noMoreMessages                                                      = useRef(false)
     let [newMsg, setNewMsg]                                                 = useState(null)

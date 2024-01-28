@@ -78,6 +78,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
         if (newMsg){
             (async function(){
                 await sendMsg(newMsg)
+                containerRef.current.scrollTop = containerRef.current.scrollHeight
             })();
         }
     }, [newMsg])
