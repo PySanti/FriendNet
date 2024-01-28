@@ -11,7 +11,7 @@ import {executeApi} from "../utils/executeApi"
 import {getMessagesHistorialAPI} from "../api/getMessagesHistorial.api"
 import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
 import {useClickedUser} from "../store"
-import {useMessagesHistorial} from "../store"
+import {useMessagesHistorial, useLastClickedUser} from "../store"
 /**
  * Componente encargado de renderizar y mantener la lista de mensajes 
  * @param {Object} newMsg state creado para cuando se envia un mensaje nuevo
@@ -23,6 +23,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     const navigate                                                      = useNavigate()
     const clickedUser                                                   = useClickedUser((state)=>(state.clickedUser))
     const [messagesHistorial, setMessagesHistorial]                     = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
+    const lastClickedUser                                               = useLastClickedUser((state)=>(state.lastClickedUser))
 
 
     const loadMessages = async ()=>{
@@ -86,7 +87,13 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
                     {messagesHistorial.map(formatingFunction)}
                 </div>
                 : 
-                <h3 className="messages-container__title">No hay mensajes :(</h3>
+                <h3 className="messages-container__title">
+                    {lastClickedUser?
+                        "No hay mensajes :("
+                        :
+                        "Selecciona un usuario para chatear"
+                    }
+                        </h3>
             }
         </div>
     )
