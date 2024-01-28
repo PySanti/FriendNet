@@ -8,3 +8,8 @@
 .clicked-user__username{
     font-size: 30px;
 }
+
+.clicked-user__typing{
+    margin-top: .5rem;
+    font-size: var(--base-button-font-size);
+}
