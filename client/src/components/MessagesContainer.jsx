@@ -3,7 +3,7 @@ import {PropTypes} from "prop-types"
 import { Message } from "./Message"
 import "../styles/MessagesContainer.css"
 import { v4 } from "uuid"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState} from "react"
 import { getJWTFromLocalStorage } from "../utils/getJWTFromLocalStorage"
 import { useNavigate } from "react-router-dom"
 import { sendMsgAPI } from "../api/sendMsg.api"
@@ -24,7 +24,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     const clickedUser                                                   = useClickedUser((state)=>(state.clickedUser))
     const [messagesHistorial, setMessagesHistorial]                     = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
     const lastClickedUser                                               = useLastClickedUser((state)=>(state.lastClickedUser))
-
+    let [oldScrollHeight, setOldScrollHeight]                           = useState(false)
 
     const loadMessages = async ()=>{
         const response = await executeApi(async ()=>{
@@ -32,6 +32,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
         }, navigate)
         if (response){
             if (response.status == 200){
+                setOldScrollHeight(containerRef.current.scrollHeight)
                 updateMessagesHistorial(setMessagesHistorial, messagesHistorialPage, response.data !== "no_messages_between" ? response.data.messages_hist : [], messagesHistorial)
             } else if (response.status == 400){
                 if (response.data.error == "no_more_pages"){
@@ -70,9 +71,9 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     }
     useEffect(()=>{
         if (containerRef.current){
-            containerRef.current.scrollTop = containerRef.current.scrollHeight
+            containerRef.current.scrollTop += containerRef.current.scrollHeight - oldScrollHeight
         }
-    }, [messagesHistorial])
+    }, [oldScrollHeight])
     useEffect(()=>{
         if (newMsg){
             (async function(){

@@ -5,7 +5,6 @@ export function updateMessagesHistorial(messagesHistorialSetter, pageRef, newMes
     if (pageRef.current === 1){
         messagesHistorialSetter(newMessages)
     } else {
-        messagesHistorial.unshift(...newMessages)
-        messagesHistorialSetter(messagesHistorial)
+        messagesHistorialSetter([...newMessages, ...messagesHistorial])
     }
 }
