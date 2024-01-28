@@ -1,5 +1,6 @@
 from django.db.models import manager
 from datetime import datetime
+from babel.dates import format_datetime
 
 class ChatsManager(manager.Manager):
     def _chat_between(self, id_1, id_2):
@@ -53,5 +54,5 @@ class ChatsManager(manager.Manager):
 
 class MessagesManager(manager.Manager):
     def create_message(self, parent, content):
-        new_message = self.create(parent=parent, content=content, created_at=datetime.now().strftime("%b %d %Y, %H:%M"))
+        new_message = self.create(parent=parent, content=content, created_at=format_datetime(datetime.now(), "MMM dd YYYY, HH:mm", locale='es_ES').capitalize())
         return new_message
