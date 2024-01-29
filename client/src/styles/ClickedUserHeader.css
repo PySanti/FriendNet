@@ -10,6 +10,11 @@
 }
 
 .clicked-user__typing{
-    margin-top: .5rem;
+    padding-top: .7rem;
+    margin-top: .3rem;
     font-size: var(--base-button-font-size);
+}
+
+.clicked-user__typing__activated{
+    padding-top: 0;
 }
