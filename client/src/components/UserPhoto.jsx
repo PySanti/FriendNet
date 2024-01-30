@@ -1,3 +1,5 @@
+import Lottie from "lottie-react"
+import loading from "../../lottie/loading.json"
 import {toast} from "sonner"
 import { useState,useRef, useEffect } from "react";
 import "../styles/UserPhoto.css";
@@ -15,6 +17,7 @@ import {getImageFileName} from "../utils/getImageFileName"
  * Diseniado para trabajar con states dentro de un formulario
  */
 export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
+    const loadingAnimationRef                       = useRef(null)
     let modalContainerRef                           = useRef(null)
     let [userPhotoLoaded, setUserPhotoLoaded]       = useState(false);
     let [currentPhotoName, setCurrentPhotoName]     = useState(null);
@@ -32,7 +35,7 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
     const imgProps = (type) => {
         return {
             onClick: handleImgClick,
-            className: type === "small" ? "user-photo" : `big-user-photo`,
+            className: type === "small" ? (userPhotoLoaded || !photoFile? "user-photo user-photo__activated" : "user-photo") : `big-user-photo`,
             src: currentPhotoName? currentPhotoName: photoFile? photoFile: null,
             alt: ":(",
             ref : type=="small"? userPhotoRef : null
@@ -53,14 +56,29 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
         }
     };
     useEffect(()=>{
-        userPhotoRef.current.addEventListener("load", ()=>{
-            setUserPhotoLoaded(true)
-        })
-    }, [])
+        setUserPhotoLoaded(false)
+        if (photoFile){
+            userPhotoRef.current.addEventListener("load", ()=>{
+                console.log('Imagen cargada')
+                setUserPhotoLoaded(true)
+            })
+        }
+    }, [photoFile])
     return (
         <div className={    chatPhoto ? `${containerClsName} chat-photo` : containerClsName}>
             <div className="user-photo-container" >
                 <img {...imgProps("small")}/>
+                {(!userPhotoLoaded && photoFile) &&
+                    <div className="loading-animation-container">
+                        <Lottie 
+                            loop={true}
+                            autoPlay={true}
+                            animationData={loading} 
+                            lottieRef={loadingAnimationRef}
+                        />
+                    </div>
+                }
+
                 <div className="modal-container" ref={modalContainerRef}>
                     <img {...imgProps("big")}/>
                 </div>
