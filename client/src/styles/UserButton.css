@@ -7,14 +7,16 @@
     padding: .2rem;
     border : none;
     border-bottom : 1px solid var(--base-letter-color);
+    cursor : pointer;
     color : var(--base-letter-color);
-    cursor: pointer;
 }
 
 .user-button:hover{
     background-color : var(--base-background-dark-box-color);
 }
-
+.user-button__username{
+    font-size: 20px;
+}
 
 .user-button-globe{
     background-color : var(--base-color);

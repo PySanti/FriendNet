@@ -17,7 +17,7 @@ export function UserButton({user}){
     const globeCls                      = "user-button-globe"
     return (
         <button className="user-button" onClick={()=>updateClickedUser(clickedUser, user, setClickedUser, setLastClickedUser)}>
-            <div className="user-username">
+            <div className="user-button__username">
                 {user.username}
                 {typingDB[user.id] && " ..."}
             </div>
