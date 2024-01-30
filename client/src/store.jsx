@@ -23,13 +23,6 @@ export const useUsersListPage = create((set)=>({
 
 
 
-export const useTemporaryUserData = create((set)=>({
-    temporaryUserData : [],
-    setTemporaryUserData : (newTemporaryUserData)=>(set(()=>({temporaryUserData : newTemporaryUserData}))),
-    reset : ()=>(set(()=>({temporaryUserData : []})))
-}))
-
-
 
 export const useNotifications = create((set)=>({
     notifications : {},
@@ -83,6 +76,14 @@ export const useUserKeyword = create((set)=>({
     setUserKeyword : (new_val)=>(set(()=>({userKeyword : new_val}))),
     reset : ()=>(set(()=>({userKeyword: null})))
 }))
+
+export const useUserFilterInput = create((set)=>({
+    userFilterInput : null,
+    setUserFilterInput: (new_val)=>(set(()=>({userFilterInput : new_val}))),
+    reset : ()=>(set(()=>({userFilterInput: null})))
+}))
+
+
 
 export const useTypingDB = create((set)=>({
     typingDB : {},
