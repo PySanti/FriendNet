@@ -18,11 +18,15 @@ export function MsgSendingInput({onMsgSending}){
     let [clickedUserWhenTyping, setClickedUserWhenTyping] = useState(null)
     let [lettersCount, setLettersCount] = useState(0)
     const userData                      = getUserDataFromLocalStorage()
+    const resetInput = ()=>{
+        reset()
+        setLettersCount(0)
+    }
     const onSubmit                      = handleSubmit((data)=>{
         const new_msg = data.msg.trim()
         if (new_msg.length > 0){
             onMsgSending(data)
-            reset()
+            resetInput()
         }
     })
 
@@ -33,7 +37,7 @@ export function MsgSendingInput({onMsgSending}){
         }
     }, [clickedUserWhenTyping])
     useEffect(()=>{
-        reset()
+        resetInput()
     }, [clickedUser])
     const handleMsgSendingInput = (e)=>{
         setLettersCount(e.target.value.length)
