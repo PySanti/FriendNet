@@ -12,6 +12,7 @@ import {getMessagesHistorialAPI} from "../api/getMessagesHistorial.api"
 import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
 import {useClickedUser} from "../store"
 import {useMessagesHistorial, useLastClickedUser} from "../store"
+import {BASE_MESSAGES_LIST_PAGE_SIZE} from "../utils/constants"
 /**
  * Componente encargado de renderizar y mantener la lista de mensajes 
  * @param {Object} newMsg state creado para cuando se envia un mensaje nuevo
@@ -62,7 +63,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     }
     const scrollHandler = async (e)=>{
         if (e.target.scrollTop <= 0){
-            if (!noMoreMessages.current && messagesHistorial.length >= 10){  
+            if (!noMoreMessages.current && messagesHistorial.length >= BASE_MESSAGES_LIST_PAGE_SIZE){  
                 messagesHistorialPage.current += 1
                 // la ultima condicion se pone para evitar que se llame a la api cuando no se ha scrolleado
                 await loadMessages()
@@ -75,7 +76,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
         }
     }, [oldScrollHeight])
     useEffect(()=>{
-        if (containerRef.current && messagesHistorial.length <=10){
+        if (containerRef.current && messagesHistorial.length <= BASE_MESSAGES_LIST_PAGE_SIZE){
             containerRef.current.scrollTop = containerRef.current.scrollHeight
         }
     }, [messagesHistorial])
