@@ -1,4 +1,5 @@
 .users-list{
+    --user-list-font-size : 20px;
     display: flex;
     flex-direction: column;
     width: 20%;
@@ -22,6 +23,7 @@
     text-align: center;
     height: 100%;
     padding: 0 .5rem 0 .5rem;
+    font-size: var(--user-list-font-size);
 }
 .users-list-loader__activated{
     opacity: 1;
