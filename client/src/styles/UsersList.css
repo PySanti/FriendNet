@@ -21,6 +21,7 @@
     justify-content: center;
     text-align: center;
     height: 100%;
+    padding: 0 .5rem 0 .5rem;
 }
 .users-list-loader__activated{
     opacity: 1;

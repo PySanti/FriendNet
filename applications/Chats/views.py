@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from applications.Usuarios.utils.constants import BASE_NO_MORE_PAGES_RESPONSE, USERS_LIST_ATTRS
 from rest_framework.views import (
     APIView,
