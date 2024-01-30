@@ -18,6 +18,7 @@ import {Page404} from "./pages/Page404"
 import {shiftUser} from "./utils/shiftUser"
 import * as states from "./store"
 import {initStates} from "./utils/initStates"
+import alert from "./sounds/alert.mp3"
 import {DarkModeButton} from "./components/DarkModeButton"
 
 /**
@@ -35,6 +36,11 @@ function App() {
   let setLastClickedUser                = states.useLastClickedUser((state)=>(state.setLastClickedUser))
   let [usersIdList, setUsersIdList]     = states.useUsersIdList((state)=>[state.usersIdList, state.setUsersIdList])
   let userKeyword                     = states.useUserKeyword((state)=>(state.userKeyword))
+  const audioEffect = ()=>{
+    const alertAudio = new Audio(alert)
+    alertAudio.volume = 0.2
+    alertAudio.play()
+  }
   useEffect(()=>{
     initStates(notifications, setNotifications)
   }, [])
@@ -47,6 +53,7 @@ function App() {
         console.log(data)
         if (data.type == "new_notification"){
             if (data.value.new_notification.sender_user.id != getUserDataFromLocalStorage().id){
+              audioEffect()
               const message = data.value.new_notification.message
               delete data.value.new_notification.message
               notifications[data.value.new_notification.sender_user.id] = data.value.new_notification
