@@ -59,7 +59,6 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
         setUserPhotoLoaded(false)
         if (photoFile){
             userPhotoRef.current.addEventListener("load", ()=>{
-                console.log('Imagen cargada')
                 setUserPhotoLoaded(true)
             })
         }

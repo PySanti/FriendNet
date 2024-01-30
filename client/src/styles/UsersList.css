@@ -1,7 +1,7 @@
 .users-list{
     display: flex;
     flex-direction: column;
-    width: 30%;
+    width: 25%;
 }
 .users-list-container{
     height: inherit;

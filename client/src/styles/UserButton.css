@@ -6,13 +6,13 @@
     background-color: inherit;
     padding: .2rem;
     border : none;
-    border-bottom : 1px solid #000;
+    border-bottom : 1px solid var(--base-letter-color);
     color : var(--base-letter-color);
-    cursor: pointer; 
+    cursor: pointer;
 }
 
 .user-button:hover{
-    background-color : var(--base-background-box-color);
+    background-color : var(--base-background-dark-box-color);
 }
 
 

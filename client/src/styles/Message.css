@@ -3,16 +3,21 @@
     margin-bottom: .4rem;
 }
 .message{
+    color : #000;
     margin-top: .3rem;
     padding: .3rem;
-    border: 1px solid #000;
     border-radius: 10px;
     background-color: rgb(209, 209, 209);
+
+    max-width: 25vw;
+    overflow-wrap: break-word;
 }
 .session-msg{
     align-self: flex-end;
     border-bottom-right-radius: 0px;
 }
+
+
 .not-session-msg{
     background-color : rgb(77, 144, 77);
     align-self: flex-start;

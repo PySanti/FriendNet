@@ -2,11 +2,12 @@
     display: flex;
     align-items: center;
     height: 15vh;
-    background-color: var(--base-background-box-color);
-    border-radius: inherit;
+    background-color: var(--base-background-dark-box-color);
+    border-top-right-radius: inherit;
+    border-top-left-radius: inherit;
 }
 .clicked-user__username{
-    font-size: 30px;
+    font-size: 23px;
 }
 
 .clicked-user__typing{
