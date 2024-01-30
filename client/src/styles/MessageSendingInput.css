@@ -1,4 +1,11 @@
-
+.message-sending-input-container{
+    display: flex;
+    justify-content: center;
+    align-items : center;
+}
+.message-counter{
+    font-size: 10px;
+}
 .message-sending-form{
     margin-top: .3rem;
     display: flex;

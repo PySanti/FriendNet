@@ -16,6 +16,7 @@ export function MsgSendingInput({onMsgSending}){
     let currentTimeoutNumber            = useRef(null); 
     let {register, handleSubmit, reset} = useForm()
     let [clickedUserWhenTyping, setClickedUserWhenTyping] = useState(null)
+    let [lettersCount, setLettersCount] = useState(0)
     const userData                      = getUserDataFromLocalStorage()
     const onSubmit                      = handleSubmit((data)=>{
         const new_msg = data.msg.trim()
@@ -24,6 +25,7 @@ export function MsgSendingInput({onMsgSending}){
             reset()
         }
     })
+
     useEffect(()=>{
         if (NOTIFICATIONS_WEBSOCKET.current && userData && clickedUserWhenTyping){
             NOTIFICATIONS_WEBSOCKET.current.send(NotificationsWSTypingInformMsg(clickedUserWhenTyping.id, true))
@@ -34,6 +36,7 @@ export function MsgSendingInput({onMsgSending}){
         reset()
     }, [clickedUser])
     const handleMsgSendingInput = (e)=>{
+        setLettersCount(e.target.value.length)
         setClickedUserWhenTyping(clickedUser)
         if (currentTimeoutNumber.current){
             clearTimeout(currentTimeoutNumber.current)
@@ -61,6 +64,9 @@ export function MsgSendingInput({onMsgSending}){
                 minLength={1} 
                 {...register("msg")}/>
             </form>
+            <div className="message-counter">
+                {lettersCount}/{BASE_MESSAGE_MAX_LENGTH}
+            </div>
         </div>
     )
 }
