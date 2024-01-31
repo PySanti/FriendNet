@@ -16,6 +16,7 @@ import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {executeApi} from "../utils/executeApi"
 import {useEffect} from "react"
 import {generateDocumentTitle} from "../utils/generateDocumentTitle"
+import {toastedApiCall} from "../utils/toastedApiCall"
 
 /**
  * Pagina creada para llevar perfil de usuario, tanto para
@@ -28,10 +29,9 @@ export function Profile() {
         // el data.photo siempre sera: null, url de imagen actual, un archivo
         const sendingData = { ...data };
         if (dataIsDiferent(data, profileData)) { // lodash
-            toast.loading('Modificando perfil')
-            const response = await executeApi(async ()=>{
+            const response = await toastedApiCall(async ()=>{
                 return await updateUserDataAPI( sendingData, getJWTFromLocalStorage().access)
-            }, navigate)
+            }, navigate, 'Modificando perfil')
             if (response){
                 if (response.status == 200){
                     setProfileData(response.data.user_data_updated);

@@ -18,6 +18,7 @@ import { v4 } from "uuid";
 import {BASE_ACTIVATION_CODE_CONSTRAINTS} from "../utils/constants"
 import {executeApi} from "../utils/executeApi"
 import {generateDocumentTitle} from "../utils/generateDocumentTitle"
+import {toastedApiCall} from "../utils/toastedApiCall"
 /**
  * Pagina creada para llevar activacion de cuenta
  */
@@ -41,10 +42,9 @@ export function AccountActivation() {
     }
     const onSubmit = handleSubmit(async (data) => {
         if (Number(data.activationCode) === Number(realActivationCode.current)) {
-            toast.loading('Activando cuenta')
-            const response = await executeApi(async ()=>{
+            const response = await toastedApiCall(async ()=>{
                 return await activateUserAPI(props.userId); 
-            }, navigate)
+            }, navigate, 'Activando cuenta')
             if (response){
                 if (response.status == 200){
                     toast.success("Usuario activado con éxito, bienvenid@")

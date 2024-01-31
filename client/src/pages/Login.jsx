@@ -13,6 +13,7 @@ import { saveNotificationsInLocalStorage } from "../utils/saveNotificationsInLoc
 import {loginUser} from "../utils/loginUser"
 import {generateLocationProps} from "../utils/generateLocationProps"
 import {executeApi} from "../utils/executeApi"
+import {toastedApiCall} from "../utils/toastedApiCall"
 import {useEffect} from "react"
 import {generateDocumentTitle} from "../utils/generateDocumentTitle"
 /**
@@ -23,10 +24,9 @@ export function Login() {
 
     const onLogin = async (data)=>{
         // en este punto ya se sabe que el usuario no esta autenticado
-        toast.loading("Iniciando sesión")
-        let response = await executeApi(async ()=>{
+        let response = await toastedApiCall(async ()=>{
             return await getUserDetailAPI(data.username, data.password)
-        }, navigate)
+        }, navigate, 'Iniciando sesión')
         if (response){
             if (response.status == 200){
                 const userDetail = response.data.user

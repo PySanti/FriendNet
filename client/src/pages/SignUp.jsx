@@ -17,16 +17,16 @@ import { Button } from "../components/Button";
 import { v4 } from "uuid";
 import {generateLocationProps} from "../utils/generateLocationProps"
 import {executeApi} from "../utils/executeApi"
+import {toastedApiCall} from "../utils/toastedApiCall"
 /**
  * Page creada para el registro de los usuarios
  */
 export function SignUp() {
     const navigate                                              = useNavigate()
     const onSignUp = async (data) =>{
-        toast.loading('Creando usuario')
-        let response = await executeApi(async ()=>{
+        let response = await toastedApiCall(async ()=>{
             return await checkExistingUserAPI(data['username'], data['email'])
-        }, navigate)
+        }, navigate, 'Creando usuario')
         if (response){
             if (response.status == 200){
                 if (!response.data.existing){
