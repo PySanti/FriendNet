@@ -24,12 +24,13 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
     const userPhotoRef                              = useRef(null)
     const imgInputRef                                 = useRef(null)
     const containerClsName                          = "main-container";
+    const modalContainerCls                         = "modal-container"
     const handleImgClick = ()=>{
         if (photoFile && userPhotoLoaded){
-            modalContainerRef.current.classList.toggle("modal-container__activated")
+            modalContainerRef.current.classList.toggle(`${modalContainerCls}__activated`)
             setTimeout(() => {
-                modalContainerRef.current.style.opacity = modalContainerRef.current.style.opacity == "1"? "0" : "1" ;
-            }, 10);
+                modalContainerRef.current.style.opacity = modalContainerRef.current.classList.contains(`${modalContainerCls}__activated`)? "1" : "0"
+            }, 0);
         }
     }
     const imgProps = (type) => {
@@ -78,7 +79,7 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
                     </div>
                 }
 
-                <div className="modal-container" ref={modalContainerRef}>
+                <div className={modalContainerCls} ref={modalContainerRef}>
                     <img {...imgProps("big")}/>
                 </div>
             </div>
