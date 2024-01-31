@@ -8,7 +8,7 @@ from .managers import (
 # Create your models here.
 
 class Messages(models.Model):
-    created_at = models.CharField(max_length=25)
+    created_at = models.CharField(max_length=21)
     parent = models.ForeignKey(Usuarios, on_delete=models.DO_NOTHING)
     content = models.CharField(max_length=200)
     #manager

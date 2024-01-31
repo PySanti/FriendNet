@@ -1,21 +1,26 @@
-import locale
 import pytz
 from datetime import datetime
-from babel.dates import format_datetime
+
+month_dict = {
+    'january'   : 'ene',
+    'february'  : 'feb',
+    'march'     : 'mar',
+    'april'     : 'abr',
+    'may'       : 'may',
+    'june'      : 'jun',
+    'july'      : 'jul',
+    'august'    : 'ago',
+    'september' : 'sep',
+    'october'   : 'oct',
+    'november'  : 'nov',
+    'december'  : 'dic'
+}
+
 
 
 def getCurrentFormatedDate():
-
-    locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
-    now_utc = datetime.now(pytz.utc)
-    timezone_vzla = pytz.timezone('America/Caracas')
-    now_vzla = now_utc.astimezone(timezone_vzla)
-    formatted_date = now_vzla.strftime("%b %d %Y, %I:%M")
-    am_pm = now_vzla.strftime("%p")
-    if am_pm != "AM":
-        am_pm_es = "AM."
-    else:
-        am_pm_es = "PM."
-    formatted_date += " " + am_pm_es
-    formatted_date = formatted_date.capitalize()
+    # Define la zona horaria de Venezuela
+    zona_horaria = pytz.timezone('America/Caracas')
+    formatted_date = datetime.now(zona_horaria).strftime('%d %Y, %I:%M %p')
+    formatted_date = month_dict[datetime.now(zona_horaria).strftime("%B").lower()].capitalize() + " " + formatted_date
     return formatted_date;
