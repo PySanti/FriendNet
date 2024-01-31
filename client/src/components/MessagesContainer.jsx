@@ -96,7 +96,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
                 </div>
                 : 
                 <h3 className="messages-container__title">
-                    {lastClickedUser?
+                    {clickedUser?
                         "No hay mensajes :("
                         :
                         "Selecciona un usuario para chatear"
