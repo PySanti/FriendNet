@@ -61,12 +61,13 @@ export function MsgSendingInput({onMsgSending}){
         <div className="message-sending-input-container">
             <form onChange = {handleMsgSendingInput} className="message-sending-form " onSubmit={onSubmit}>
                 <input 
-                placeholder="Envíale un mensaje" 
-                className="message-sending-input non-shadow-input" 
-                type="text" 
-                maxLength={BASE_MESSAGE_MAX_LENGTH} 
-                minLength={1} 
-                {...register("msg")}/>
+                    id = "message-sending-input"
+                    placeholder="Envíale un mensaje" 
+                    className="message-sending-input non-shadow-input" 
+                    type="text" 
+                    maxLength={BASE_MESSAGE_MAX_LENGTH} 
+                    minLength={1} 
+                    {...register("msg")}/>
             </form>
             <div className="message-counter">
                 {lettersCount}/{BASE_MESSAGE_MAX_LENGTH}

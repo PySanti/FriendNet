@@ -1,13 +1,20 @@
 .message-sending-input-container{
+    margin-top: .3rem;
     display: flex;
     justify-content: center;
-    align-items : center;
+    align-items : end;
+    height: 10vh;
 }
 .message-counter{
     font-size: 10px;
+    align-self: center;
 }
+#message-sending-input{
+    border-bottom-left-radius : 0px;
+    border-bottom-right-radius : 0px;
+}
+
 .message-sending-form{
-    margin-top: .3rem;
     display: flex;
     flex-direction: column;
     align-items: center;
