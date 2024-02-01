@@ -11,8 +11,9 @@ import {executeApi} from "../utils/executeApi"
 import {getMessagesHistorialAPI} from "../api/getMessagesHistorial.api"
 import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
 import {useClickedUser} from "../store"
-import {useMessagesHistorial, useLastClickedUser} from "../store"
+import {useMessagesHistorial} from "../store"
 import {BASE_MESSAGES_LIST_PAGE_SIZE} from "../utils/constants"
+import {nonToastedApiCall} from "../utils/nonToastedApiCall"
 /**
  * Componente encargado de renderizar y mantener la lista de mensajes 
  * @param {Object} newMsg state creado para cuando se envia un mensaje nuevo
@@ -24,7 +25,6 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     const navigate                                                      = useNavigate()
     const clickedUser                                                   = useClickedUser((state)=>(state.clickedUser))
     const [messagesHistorial, setMessagesHistorial]                     = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
-    const lastClickedUser                                               = useLastClickedUser((state)=>(state.lastClickedUser))
     let [oldScrollHeight, setOldScrollHeight]                           = useState(false)
 
     const loadMessages = async ()=>{
@@ -47,9 +47,9 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
         }
     }
     const sendMsg = async (data)=>{
-        const response = await executeApi(async ()=>{
+        const response = await nonToastedApiCall(async ()=>{
             return await sendMsgAPI(clickedUser.id, data.msg, getJWTFromLocalStorage().access)
-        }, navigate)
+        }, navigate, 'Enviando mensaje, espere', 2000)
         if (response){
             if (response.status == 200){
                 setMessagesHistorial([...messagesHistorial, response.data.sended_msg])
