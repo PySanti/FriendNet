@@ -5,7 +5,6 @@ from rest_framework_simplejwt.authentication import (
 )
 from rest_framework.permissions import (
     IsAuthenticated,
-    AllowAny
 )
 from applications.Usuarios.utils.constants import (
     BASE_SERIALIZER_ERROR_RESPONSE,

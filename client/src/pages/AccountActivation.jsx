@@ -15,10 +15,10 @@ import { ActivationCodeField } from "../components/ActivationCodeField";
 import { Form } from "../components/Form";
 import { Button } from "../components/Button";
 import { v4 } from "uuid";
-import {BASE_ACTIVATION_CODE_CONSTRAINTS} from "../utils/constants"
-import {executeApi} from "../utils/executeApi"
+import {BASE_ACTIVATION_CODE_CONSTRAINTS, BASE_NON_TOASTED_API_CALLS_TIMER} from "../utils/constants"
 import {generateDocumentTitle} from "../utils/generateDocumentTitle"
 import {toastedApiCall} from "../utils/toastedApiCall"
+import {nonToastedApiCall} from "../utils/nonToastedApiCall"
 /**
  * Pagina creada para llevar activacion de cuenta
  */
@@ -29,9 +29,9 @@ export function AccountActivation() {
     const { register, handleSubmit, formState : {errors}}                  = useForm();
     const handleActivationCodeSending = async ()=>{
         console.log('-> ', realActivationCode.current)
-        const response = await executeApi(async ()=>{
+        const response = await nonToastedApiCall(async ()=>{
             return await sendActivationEmailAPI(props.userEmail, props.username, realActivationCode.current) 
-        }, navigate)
+        }, navigate, 'Enviando correo de activación, espere', 5000)
         if (response){
             if (response.status == 200){
                 toast.success(`Correo de activación enviado `)

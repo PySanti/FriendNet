@@ -15,9 +15,10 @@ import { UserLogged } from "./UserLogged";
 import { UserInfoForm } from "../components/UserInfoForm";
 import { Button } from "../components/Button";
 import { v4 } from "uuid";
+import {BASE_NON_TOASTED_API_CALLS_TIMER} from "../utils/constants"
 import {generateLocationProps} from "../utils/generateLocationProps"
-import {executeApi} from "../utils/executeApi"
 import {toastedApiCall} from "../utils/toastedApiCall"
+import {nonToastedApiCall} from "../utils/nonToastedApiCall"
 /**
  * Page creada para el registro de los usuarios
  */
@@ -31,9 +32,9 @@ export function SignUp() {
             if (response.status == 200){
                 if (!response.data.existing){
                     delete data.confirmPwd
-                    response = await executeApi(async ()=>{
+                    response = await nonToastedApiCall(async ()=>{
                         return await createUsuarioAPI(data)
-                    }, navigate)
+                    }, navigate, 'Almacenando datos del usuario en el servidor, espere', BASE_NON_TOASTED_API_CALLS_TIMER)
                     if (response){
                         if (response.status == 200){
                             toast.success("Usuario creado exitosamente, verifica tu correo electrónico")

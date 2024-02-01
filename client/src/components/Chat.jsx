@@ -3,7 +3,7 @@ import {useState, useEffect, useRef} from "react"
 import { MessagesContainer } from "./MessagesContainer"
 import { ClickedUserHeader } from "./ClickedUserHeader"
 import { MsgSendingInput } from "./MsgSendingInput"
-import {CHAT_WEBSOCKET} from "../utils/constants"
+import {CHAT_WEBSOCKET, BASE_NON_TOASTED_API_CALLS_TIMER} from "../utils/constants"
 import {ChatWSGroupCreationMsg}         from "../utils/ChatWSGroupCreationMsg"
 import {ChatWSInitialize}               from "../utils/ChatWSInitialize"
 import {useClickedUser}                 from "../store"
@@ -13,7 +13,7 @@ import {useNotifications} from "../store"
 import {diferentUserHasBeenClicked} from "../utils/diferentUserHasBeenClicked"
 import {useNavigate} from "react-router-dom" 
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
-import {executeApi} from "../utils/executeApi"
+import {nonToastedApiCall} from "../utils/nonToastedApiCall"
 import {enterChatAPI} from "../api/enterChat.api"
 import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
 import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotifications"
@@ -39,9 +39,9 @@ export function Chat(){
 
     const enterChatHandler = async ()=>{
         const relatedNotification = notifications[clickedUser.id]
-        const response = await executeApi(async ()=>{
+        const response = await nonToastedApiCall(async ()=>{
             return await enterChatAPI(clickedUser.id, relatedNotification? relatedNotification.id : undefined, getJWTFromLocalStorage().access)
-        }, navigate)
+        }, navigate, 'Entrando al chat, espere', BASE_NON_TOASTED_API_CALLS_TIMER)
         if (response){
             if (response.status == 200){
                 updateMessagesHistorial(setMessagesHistorial, messagesHistorialPage, response.data.messages_hist!== "no_messages_between" ? response.data.messages_hist : [], messagesHistorial)

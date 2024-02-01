@@ -9,10 +9,11 @@ import { LoginForm } from "../components/LoginForm"
 import { Button } from "../components/Button"
 import { v4 } from "uuid"
 import { saveUserDataInLocalStorage } from "../utils/saveUserDataInLocalStorage"
+import {BASE_NON_TOASTED_API_CALLS_TIMER} from "../utils/constants"
 import { saveNotificationsInLocalStorage } from "../utils/saveNotificationsInLocalStorage"
 import {loginUser} from "../utils/loginUser"
 import {generateLocationProps} from "../utils/generateLocationProps"
-import {executeApi} from "../utils/executeApi"
+import {nonToastedApiCall} from "../utils/nonToastedApiCall"
 import {toastedApiCall} from "../utils/toastedApiCall"
 import {useEffect} from "react"
 import {generateDocumentTitle} from "../utils/generateDocumentTitle"
@@ -34,9 +35,9 @@ export function Login() {
                     toast.error('Activa tu cuenta antes de continuar')
                     navigate('/signup/activate', {state: generateLocationProps(userDetail.email, userDetail.username, userDetail.id)})
                 } else {
-                    response = await executeApi(async ()=>{
+                    response = await nonToastedApiCall(async ()=>{
                         return await loginUser(data)
-                    }, navigate)
+                    }, navigate, 'Generando token de seguridad, espere', BASE_NON_TOASTED_API_CALLS_TIMER)
                     if (response){
                         if (response.status == 200){
                             const baseNotifications = userDetail.notifications

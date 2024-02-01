@@ -1,3 +1,4 @@
+import {BASE_NON_TOASTED_API_CALLS_TIMER} from "../utils/constants"
 import {toast} from "sonner"
 import "../styles/NotificationsContainer.css"
 import {  useState } from "react"
@@ -6,7 +7,7 @@ import { Notification } from "./Notification"
 import {useEffect} from "react"
 import {useNavigate} from "react-router-dom"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
-import {executeApi} from "../utils/executeApi"
+import {nonToastedApiCall} from "../utils/nonToastedApiCall"
 import {notificationDeleteAPI} from "../api/notificationDelete.api"
 import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotifications"
 import {useNotifications} from "../store"
@@ -27,9 +28,9 @@ export function NotificationsContainer(){
         }
     }
     const onNotificationDelete = async (notification)=>{
-        const response = await executeApi(async ()=>{
+        const response = await nonToastedApiCall(async ()=>{
             return await notificationDeleteAPI(notification.id, getJWTFromLocalStorage().access )
-        }, navigate)
+        }, navigate, 'Eliminando notificación, espere', BASE_NON_TOASTED_API_CALLS_TIMER)
         if (response){
             if (response.status == 200){
                 removeAndUpdateNotifications(notification, setNotifications)

@@ -7,12 +7,11 @@ import { useEffect, useRef, useState} from "react"
 import { getJWTFromLocalStorage } from "../utils/getJWTFromLocalStorage"
 import { useNavigate } from "react-router-dom"
 import { sendMsgAPI } from "../api/sendMsg.api"
-import {executeApi} from "../utils/executeApi"
 import {getMessagesHistorialAPI} from "../api/getMessagesHistorial.api"
 import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
 import {useClickedUser} from "../store"
 import {useMessagesHistorial} from "../store"
-import {BASE_MESSAGES_LIST_PAGE_SIZE} from "../utils/constants"
+import {BASE_MESSAGES_LIST_PAGE_SIZE, BASE_NON_TOASTED_API_CALLS_TIMER} from "../utils/constants"
 import {nonToastedApiCall} from "../utils/nonToastedApiCall"
 /**
  * Componente encargado de renderizar y mantener la lista de mensajes 
@@ -28,9 +27,9 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     let [oldScrollHeight, setOldScrollHeight]                           = useState(false)
 
     const loadMessages = async ()=>{
-        const response = await executeApi(async ()=>{
+        const response = await nonToastedApiCall(async ()=>{
             return await getMessagesHistorialAPI(clickedUser.id, getJWTFromLocalStorage().access, messagesHistorialPage.current)
-        }, navigate)
+        }, navigate, 'Cargando mensajes, espere', BASE_NON_TOASTED_API_CALLS_TIMER)
         if (response){
             if (response.status == 200){
                 setOldScrollHeight(containerRef.current.scrollHeight)
@@ -49,7 +48,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     const sendMsg = async (data)=>{
         const response = await nonToastedApiCall(async ()=>{
             return await sendMsgAPI(clickedUser.id, data.msg, getJWTFromLocalStorage().access)
-        }, navigate, 'Enviando mensaje, espere', 2000)
+        }, navigate, 'Enviando mensaje, espere', BASE_NON_TOASTED_API_CALLS_TIMER)
         if (response){
             if (response.status == 200){
                 setMessagesHistorial([...messagesHistorial, response.data.sended_msg])

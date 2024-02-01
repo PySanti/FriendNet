@@ -13,7 +13,6 @@ import { saveUserDataInLocalStorage } from "../utils/saveUserDataInLocalStorage"
 import { getUserDataFromLocalStorage } from "../utils/getUserDataFromLocalStorage";
 import { dataIsDiferent } from "../utils/dataIsDiferent";
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
-import {executeApi} from "../utils/executeApi"
 import {useEffect} from "react"
 import {generateDocumentTitle} from "../utils/generateDocumentTitle"
 import {toastedApiCall} from "../utils/toastedApiCall"

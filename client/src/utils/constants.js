@@ -3,6 +3,7 @@ export const BASE_USER_NOT_EXISTS_ERROR = "user_not_exists"
 export const BACKEND_URL = "http://127.0.0.1:8000/";
 export const BASE_FALLEN_SERVER_ERROR_MSG = "Network Error"
 export const JWT_LOCALSTORAGE_NAME = "jwt"
+export const BASE_NON_TOASTED_API_CALLS_TIMER = 2000
 export const UNAUTHORIZED_STATUS_CODE = 401
 export const BASE_MESSAGE_MAX_LENGTH = 200;
 export const BASE_USERNAME_MAX_LENGTH = 15;

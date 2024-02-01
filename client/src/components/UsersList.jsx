@@ -9,7 +9,6 @@ import { getUsersListAPI } from "../api/getUsersList.api"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import { userIsAuthenticated } from "../utils/userIsAuthenticated"
 import {useUsersList} from "../store"
-import {executeApi} from "../utils/executeApi"
 import {useNavigate} from "react-router-dom"
 import {useUsersIdList} from "../store"
 import {useUsersListPage} from "../store"
@@ -17,6 +16,8 @@ import {useNoMoreUsers} from "../store"
 import {useFirstUsersListCall} from "../store"
 import Lottie from "lottie-react"
 import loading from "../../lottie/loading.json"
+import {BASE_NON_TOASTED_API_CALLS_TIMER} from "../utils/constants"
+import {nonToastedApiCall} from "../utils/nonToastedApiCall"
 
 /**
  * Recibe la lista de usuarios directa de la api y retorna la lista de elementos jsx
@@ -66,9 +67,9 @@ export function UsersList(){
         if (page > 1 ){
             setLoaderActivated(true)
         }
-        const response = await executeApi(async ()=>{
+        const response = await nonToastedApiCall(async ()=>{
             return await getUsersListAPI(voidUserKeyword() ? undefined : userKeyword, getUserDataFromLocalStorage().id, page)
-        }, navigate )
+        }, navigate, 'Cargando lista de usuarios, espere', BASE_NON_TOASTED_API_CALLS_TIMER)
         if (response){
             if (response.status == 200){
                 updateUsers(response.data.users_list)
