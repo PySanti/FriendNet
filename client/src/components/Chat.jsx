@@ -100,9 +100,7 @@ export function Chat(){
                 }
             };
         }
-    }, [messagesHistorial, clickedUser])
-
-
+    }, [messagesHistorial])
     return (
         <div className="chat-container">
             {clickedUser  && <ClickedUserHeader/>}
