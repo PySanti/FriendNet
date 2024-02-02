@@ -10,10 +10,9 @@ export function InputError({msg}){
      * tiene contenido, para que cuando lo empiece a tener, no se vea una 
      * modificacion de espacio en el DOM
      */
-    const baseClass = "input-error"
     return (
         <div className="input-error-container">
-            <h2 className={msg ? `${baseClass} input-error-activated` : baseClass}>{msg}</h2>
+            <h2 className="input-error">{msg}</h2>
         </div>
     )
 }

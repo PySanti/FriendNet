@@ -52,7 +52,6 @@ input{
   border: none;
   transition-property: box-shadow border;
   transition-duration: .2s;
-  margin: 0px .4rem;
   background-color : var(--base-background-box-color);
 }
 input:focus{
