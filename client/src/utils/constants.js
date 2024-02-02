@@ -55,7 +55,7 @@ export const BASE_USERNAME_CONSTRAINTS = {
     },
     pattern : {
         value : /^[^\s]+$/,
-        message : "Ingresa un nombre de usuario sin espacios"
+        message : "No debe tener espacios"
     }
 };
 export const BASE_PASSWORD_CONSTRAINTS = {
