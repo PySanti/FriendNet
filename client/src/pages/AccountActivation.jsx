@@ -15,7 +15,7 @@ import { ActivationCodeField } from "../components/ActivationCodeField";
 import { Form } from "../components/Form";
 import { Button } from "../components/Button";
 import { v4 } from "uuid";
-import {BASE_ACTIVATION_CODE_CONSTRAINTS, BASE_NON_TOASTED_API_CALLS_TIMER} from "../utils/constants"
+import {BASE_ACTIVATION_CODE_CONSTRAINTS} from "../utils/constants"
 import {generateDocumentTitle} from "../utils/generateDocumentTitle"
 import {toastedApiCall} from "../utils/toastedApiCall"
 import {nonToastedApiCall} from "../utils/nonToastedApiCall"

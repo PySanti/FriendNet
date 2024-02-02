@@ -11,8 +11,9 @@ export async function  nonToastedApiCall(apiCalling, navigateFunc, loadingMsg, t
             toastId = toast.loading(loadingMsg)
         }
     }, timer);
+
     const response = await executeApi(apiCalling, navigateFunc)
-    
+
     resolved = true
     if (toastId)
         toast.dismiss(toastId)

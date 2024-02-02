@@ -5,6 +5,9 @@
     height: 10vh;
 }
 .message-counter{
+    display: flex;
+    justify-content: center;
+    width: 3vw;
     font-size: 10px;
     align-self: center;
 }
