@@ -61,7 +61,6 @@ export function MsgSendingInput({onMsgSending}){
         <div className="message-sending-input-container">
             <form onChange = {handleMsgSendingInput} className="message-sending-form " onSubmit={onSubmit}>
                 <input 
-                    id = "message-sending-input"
                     placeholder="Envíale un mensaje" 
                     className="message-sending-input non-shadow-input" 
                     type="text" 
