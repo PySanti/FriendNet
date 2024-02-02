@@ -46,7 +46,6 @@ export function Chat(){
             if (response.status == 200){
                 updateMessagesHistorial(setMessagesHistorial, messagesHistorialPage, response.data.messages_hist!== "no_messages_between" ? response.data.messages_hist : [], messagesHistorial)
                 clickedUser.is_online = response.data.is_online
-                setClickedUser(clickedUser)
                 if (relatedNotification && response.data.notification_deleted){
                     removeAndUpdateNotifications(relatedNotification, setNotifications)
                 }
@@ -73,9 +72,6 @@ export function Chat(){
             (async function() {
                 messagesHistorialPage.current = 1
                 noMoreMessages.current = false
-                clickedUser.is_online = false
-                // revisar si estas dos lineas de arriba son necesarias realmente
-                setClickedUser(clickedUser)
                 await enterChatHandler()
             })();
         }

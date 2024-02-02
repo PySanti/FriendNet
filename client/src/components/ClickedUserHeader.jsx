@@ -2,7 +2,6 @@ import { UserPhoto } from "./UserPhoto";
 import "../styles/ClickedUserHeader.css"
 import {useClickedUser, useTypingDB} from "../store"
 
-
 /**
  * Cabecera del chat con datos del usuario
  */
