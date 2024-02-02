@@ -12,12 +12,12 @@ import {NotificationsWSTypingInformMsg} from "../utils/NotificationsWSTypingInfo
  * @param  {Function} onMsgSending funcion que se ejecutara cuando se envie un mensaje
  */
 export function MsgSendingInput({onMsgSending}){
-    let clickedUser                     = useClickedUser((state)=>state.clickedUser)
-    let currentTimeoutNumber            = useRef(null); 
-    let {register, handleSubmit, reset} = useForm()
-    let [clickedUserWhenTyping, setClickedUserWhenTyping] = useState(null)
-    let [lettersCount, setLettersCount] = useState(0)
-    const userData                      = getUserDataFromLocalStorage()
+    let clickedUser                                         = useClickedUser((state)=>state.clickedUser)
+    let {register, handleSubmit, reset}                     = useForm()
+    let [clickedUserWhenTyping, setClickedUserWhenTyping]   = useState(null)
+    let [lettersCount, setLettersCount]                     = useState(0)
+    let [timeoutDB, setTimeoutDB]                           = useState({})
+    const userData                                          = getUserDataFromLocalStorage()
     const resetInput = ()=>{
         reset()
         setLettersCount(0)
@@ -42,10 +42,10 @@ export function MsgSendingInput({onMsgSending}){
     const handleMsgSendingInput = (e)=>{
         setLettersCount(e.target.value.length)
         setClickedUserWhenTyping(clickedUser)
-        if (currentTimeoutNumber.current){
-            clearTimeout(currentTimeoutNumber.current)
+        if (timeoutDB[clickedUser.id]){
+            clearTimeout(timeoutDB[clickedUser.id])
         }
-        currentTimeoutNumber.current = (setTimeout(() => {
+        timeoutDB[clickedUser.id] = (setTimeout(() => {
             setClickedUserWhenTyping(null)
             /**
              * Recordar que en este punto, llamamos a la funcion desde aca,
