@@ -13,11 +13,11 @@
 }
 
 .clicked-user__typing{
-    padding-top: .7rem;
     margin-top: .3rem;
+    height: 3vh;
+    display: flex;
+    justify-content: start;
+    align-items : center;
     font-size: var(--base-button-font-size);
 }
 
-.clicked-user__typing__activated{
-    padding-top: 0;
-}
