@@ -1,0 +1,18 @@
+.page-logo-container{
+    border-radius: 100%;
+    position: absolute;
+    padding: 1vw;
+    display: flex;
+    width: 3vw;
+    height: auto;
+    left: 1vw;
+    top: 2vh;
+    transition-property: background-color;
+    transition-duration: .2s;
+}
+.page-logo{
+    width: inherit;
+    height: auto;
+    left: inherit;
+    top: inherit;
+}

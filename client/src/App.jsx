@@ -20,6 +20,7 @@ import * as states from "./store"
 import {initStates} from "./utils/initStates"
 import alert from "./sounds/alert.mp3"
 import {DarkModeButton} from "./components/DarkModeButton"
+import {PageLogo} from "./components/PageLogo"
 
 /**
 /**
