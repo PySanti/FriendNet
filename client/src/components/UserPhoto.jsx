@@ -23,7 +23,7 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
     let [currentPhotoName, setCurrentPhotoName]     = useState(null);
     const userPhotoRef                              = useRef(null)
     const imgInputRef                                 = useRef(null)
-    const containerClsName                          = "main-container";
+    const containerClsName                          = "user-photo-main-container";
     const modalContainerCls                         = "modal-container"
     const handleImgClick = ()=>{
         if (photoFile && userPhotoLoaded){
