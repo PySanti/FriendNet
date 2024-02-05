@@ -6,7 +6,7 @@
     justify-content: center;
     margin-bottom: 5vh;
     margin-top: 5vh;
-    --title-font-size : 70px;
+    --title-font-size : 60px;
     --msg-font-size : 23px;
 }
 .header-title{
@@ -23,7 +23,7 @@
 
 @media screen and (max-width : 575px){
     .header-container{
-        --title-font-size : 50px;
+        --title-font-size : 40px;
         --msg-font-size : 16px;
     }
 }
@@ -31,14 +31,14 @@
 
 @media screen and (max-width : 300px){
     .header-container{
-        --title-font-size : 35px;
+        --title-font-size : 25px;
         --msg-font-size : 11px;
     }
 }
 
 @media screen and (max-width : 175px){
     .header-container{
-        --title-font-size : 25px;
+        --title-font-size : 15px;
         --msg-font-size : 8px;
     }
 }
