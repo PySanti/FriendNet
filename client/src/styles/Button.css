@@ -3,6 +3,7 @@
     display: flex;
     justify-content: center;
     align-items : center;
+    flex-direction: column;
     --outline-width : 4px;
     font-size: var(--base-button-font-size);
     border: none;
