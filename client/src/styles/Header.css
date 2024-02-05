@@ -33,3 +33,13 @@
     }
 }
 
+@media screen and (max-width : 175px){
+    .header-container{
+        --title-font-size : 25px;
+        --msg-font-size : 8px;
+    }
+}
+
+
+
+

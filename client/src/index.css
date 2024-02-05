@@ -1,4 +1,5 @@
 
+
 *{
   font-family: "futura-pt";
   font-size: 28px;
@@ -72,4 +73,21 @@ input:focus{
 .non-shadow-input::placeholder{
   font-size: 18px;
   text-align: center;
+}
+
+@media screen and (max-width : 575px){
+    body{
+      --base-button-font-size : 11px;
+    }
+}
+
+@media screen and (max-width : 300px){
+    body{
+      --base-button-font-size : 8px;
+    }
+}
+@media screen and (max-width : 175px){
+    body{
+      --base-button-font-size : 6px;
+    }
 }
