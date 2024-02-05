@@ -13,7 +13,10 @@
     font-size: var(--title-font-size);
 }
 .header-msg{
+    display: flex;
+    justify-content: center;
     font-size: var(--msg-font-size);
+    max-width: 30vw;
 }
 
 
