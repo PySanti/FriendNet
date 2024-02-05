@@ -59,6 +59,7 @@ export function ChangePwd(){
                                 key={v4()} 
                                 back
                                 onClickFunction={()=>{navigate('/home/profile')}} />]} 
+                            containsPassword
                             >
                             <PasswordField label="Contraseña actual" errors={errors.oldPwd && errors.oldPwd.message} registerObject={register("oldPwd", BASE_PASSWORD_CONSTRAINTS)}/>
                             <PasswordField label="Nueva contraseña" errors={errors.newPwd && errors.newPwd.message} registerObject={register("newPwd", BASE_PASSWORD_CONSTRAINTS)}/>

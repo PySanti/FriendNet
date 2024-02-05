@@ -80,7 +80,7 @@ input:focus{
 @media screen and (max-width : 575px){
     body{
       --base-button-font-size : 11px;
-      --base-input-font-size : 18px;
+      --base-input-font-size : 16px;
       --base-error-msg-font-size : 14px;
     }
 }

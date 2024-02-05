@@ -8,10 +8,12 @@ import {PropTypes} from "prop-types"
  * @param {String} buttonMsg mensaje de button de submit
  * @param {Array} buttonsList sera una lista de buttons que se deseen renderizar junto al submit button
  * @param {Boolean} button_hovered sera una lista de buttons que se deseen renderizar junto al submit button
+ * @param {Boolean} containsPassword
  */
-export function Form({children, onSubmitFunction, buttonMsg, buttonsList, button_hovered}){
+export function Form({children, onSubmitFunction, buttonMsg, buttonsList, button_hovered, containsPassword}){
+    const baseClsName = "form-container"
     return (
-        <form className="form-container" onSubmit={onSubmitFunction}>
+        <form className={containsPassword? `${baseClsName} password-form` : baseClsName} onSubmit={onSubmitFunction}>
             {children}
             <div className="form-container-buttons-container">
                 <Button buttonText={buttonMsg} isSubmit button_hovered={button_hovered}/>
@@ -27,9 +29,11 @@ Form.propTypes = {
     onSubmitFunction : PropTypes.func.isRequired,
     buttonMsg : PropTypes.string.isRequired,
     buttonsList : PropTypes.array,
-    button_hovered : PropTypes.bool
+    button_hovered : PropTypes.bool,
+    containsPassword : PropTypes.bool,
 }
 Form.defaultProps={
-    buttonsList : undefined
+    buttonsList : undefined,
+    containsPassword : undefined
 }
 

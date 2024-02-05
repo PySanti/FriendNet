@@ -3,11 +3,12 @@
     justify-content: center;
     flex-direction: column;
     width: 100%;
+    align-items : center;
 }
 
 .input-pair-container{
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     width: 100%;
 }
