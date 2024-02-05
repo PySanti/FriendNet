@@ -1,9 +1,12 @@
 .redirect-container{
-    width: 50vw;
+    width: 100%;
+    margin-top: 2rem;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     height: 20vh;
+    --redirect-container-font-size : inherit;
+
 }
 
 .redirect-container >*{
@@ -13,3 +16,25 @@
     justify-content: space-around;
     align-items: center;
 }
+.signup-container__title , .signin-container__title{
+    font-size: var(--redirect-container-font-size);
+}
+
+.root-container{
+    width: 70vw;
+}
+
+@media screen and (max-width : 575px){
+    .signup-container__title , .signin-container__title{
+        font-size: 20px;
+    }
+}
+
+
+@media screen and (max-width : 300px){
+    .signup-container__title , .signin-container__title{
+        font-size: 14px;
+    }
+}
+
+

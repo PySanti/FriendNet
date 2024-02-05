@@ -6,16 +6,30 @@
     justify-content: center;
     margin-bottom: 5vh;
     margin-top: 5vh;
+    --title-font-size : 70px;
+    --msg-font-size : 23px;
 }
 .header-title{
-    font-size: 2.5rem;
+    font-size: var(--title-font-size);
 }
 .header-msg{
-    max-width: 20vw ;
-    font-size: .8rem;
+    font-size: var(--msg-font-size);
 }
 
 
 
+@media screen and (max-width : 575px){
+    .header-container{
+        --title-font-size : 50px;
+        --msg-font-size : 16px;
+    }
+}
 
+
+@media screen and (max-width : 300px){
+    .header-container{
+        --title-font-size : 35px;
+        --msg-font-size : 11px;
+    }
+}
 

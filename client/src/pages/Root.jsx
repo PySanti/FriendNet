@@ -24,15 +24,13 @@ export function Root() {
                     <Header msg="¡ Chatea con quien quieras !"/>
                     <section className="redirect-container">
                         <div className="signin-container">
-                            <div className="signin-container__title-container">
-                                <h4 className="signin-container__title">
-                                    ¿Tienes cuenta? 
-                                </h4>
-                            </div>
+                            <h4 className="signin-container__title">
+                                ¿Tienes cuenta? 
+                            </h4>
                             <Button buttonText="Inicia Sesión" onClickFunction={()=>{navigate('/login/')}}/>
                         </div>
                         <div className="signup-container">
-                            <h4>
+                            <h4 className="signup-container__title">
                                 ¿Aun no tienes cuenta?
                             </h4>
                             <Button buttonText="Regístrate" onClickFunction={()=>{navigate('/signup/')}} />

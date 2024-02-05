@@ -70,6 +70,6 @@ input:focus{
     box-shadow: none;
 }
 .non-shadow-input::placeholder{
-    font-size: 18px;
-    text-align: center;
+  font-size: 18px;
+  text-align: center;
 }

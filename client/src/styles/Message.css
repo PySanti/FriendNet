@@ -1,5 +1,5 @@
 .message-content{
-    font-size: 15px;
+    font-size: var(--base-button-font-size);
     margin-bottom: .4rem;
 }
 .message{
