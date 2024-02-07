@@ -78,6 +78,7 @@ input:focus{
 .non-shadow-input::placeholder{
   font-size: 18px;
   text-align: center;
+
 }
 
 @media screen and (max-width : 575px){

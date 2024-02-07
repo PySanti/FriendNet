@@ -18,3 +18,9 @@
     text-align: center;
     padding: 5rem;
 }
+
+@media screen and (max-width : 900px){
+    .messages-container__title{
+        font-size: 20px;
+    }
+}

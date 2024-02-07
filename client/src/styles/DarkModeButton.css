@@ -4,18 +4,12 @@
     cursor : pointer;
     position: absolute;
     top : 2vh;
-    left: 94%;
+    right: 4vw;
     filter : var(--base-image-drop-shadow);
 }
 
 @media screen and (max-width : 1000px){
     .dark-mode-button__container{
-        width: 5vw;
-        left: 90%;
-    }
-}
-@media screen and (max-width : 600px){
-    .dark-mode-button__container{
-        width: 8vw;
+        width: 6vw;
     }
 }

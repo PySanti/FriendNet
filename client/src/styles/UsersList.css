@@ -32,3 +32,10 @@
 .users-list-loader > *{
     width:3vw;
 }
+
+
+@media screen and (max-width : 900px){
+    .users-list{
+        width: 40%;
+    }
+}
