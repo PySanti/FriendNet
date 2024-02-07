@@ -7,16 +7,15 @@
     justify-content: center;
 }
 .messages-list-container{
-    padding-right: 1rem;
     display: flex;
+    padding-right: 5px;
     flex-direction: column;
     height: auto;
-    width: 90%;
+    width: 98%;
     overflow: scroll;
 }
 .messages-container__title{
     text-align: center;
-    padding: 5rem;
 }
 
 @media screen and (max-width : 900px){
@@ -24,3 +23,11 @@
         font-size: 20px;
     }
 }
+@media screen and (max-width : 700px){
+    .messages-container__title{
+        font-size: 15px;
+    }
+
+}
+
+

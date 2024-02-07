@@ -7,3 +7,8 @@
 .users-filter-input{
     font-size: var(--user-list-font-size);
 }
+
+.users-filter-input::placeholder{
+    font-size: var(--user-list-font-size) ;
+
+}

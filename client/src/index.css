@@ -70,15 +70,13 @@ input:focus{
   border-radius: 20px;
   outline: 1px solid var(--base-letter-color);
   border: none;
-  padding: .3rem;
 }
 .non-shadow-input:focus{
     box-shadow: none;
 }
 .non-shadow-input::placeholder{
-  font-size: 18px;
+  font-size: var(--base-button-font-size);
   text-align: center;
-
 }
 
 @media screen and (max-width : 575px){

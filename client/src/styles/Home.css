@@ -35,9 +35,24 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items : center;
 }
 .users-interface-container > *{
     margin : 0 10px 0 10px;
     border-radius :10px;
     border : 1px solid var(--base-letter-color);
 }
+
+
+@media screen and (max-width : 700px){
+    .users-interface-container{
+        flex-direction: column;
+        height: auto;
+        width: 60vw;
+    }
+    .users-interface-container > *{
+        margin : 0;
+        margin-bottom: 20px;
+    }
+}
+

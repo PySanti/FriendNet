@@ -15,7 +15,7 @@
     background-color : var(--base-background-dark-box-color);
 }
 .user-button__username{
-    font-size: 15px;
+    font-size: var(--user-list-font-size);
 }
 
 .user-button-globe{

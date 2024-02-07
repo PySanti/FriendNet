@@ -21,3 +21,7 @@
     justify-content: center;
 }
 
+.message-sending-input:focus{
+    padding-left: 10px;
+}
+
