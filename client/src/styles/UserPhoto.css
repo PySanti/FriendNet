@@ -7,6 +7,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    font-size: var(--base-input-font-size);
 
     display: none;
 }
@@ -37,11 +38,12 @@
     --base-user-photo-border-radius : 30px;
 }
 .user-photo-container{
+    --size : 70%;
     display: flex;
     justify-content: center;
     align-items : center;
-    min-height: 70%;
-    max-height: 70%;
+    min-height: var(--size);
+    max-height: var(--size);
     width: 100%;
 }
 
@@ -97,16 +99,20 @@
     gap: 1rem;
 }
 
-@media screen and (max-width : 830px){
-    .user-photo-input-container{
-        margin-top: 1rem;
-        flex-direction: column;
+@media screen and (max-width : 1000px){
+    .user-photo-main-container{
+        width: 40vw;
     }
-
 }
 
-
-
+@media screen and (max-width : 400px){
+    .user-photo-container{
+        --size : 50%;
+    }
+    .user-photo-main-container{
+        height: 50vh;
+    }
+}
 
 /*
     Chat photo
