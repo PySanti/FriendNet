@@ -4,9 +4,3 @@
     width: 90%;
 }
 
-@media screen and (max-width : 700px){
-    .chat-container{
-        width: 100%;
-    }
-}
-
