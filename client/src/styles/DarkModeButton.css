@@ -10,6 +10,24 @@
 
 @media screen and (max-width : 1000px){
     .dark-mode-button__container{
-        width: 6vw;
+        width: 5vw;
     }
 }
+
+@media screen and (max-width : 500px){
+    .dark-mode-button__container{
+        width: 7vw;
+    }
+}
+
+@media screen and (max-width : 300px){
+    .dark-mode-button__container{
+        width: 25px;
+    }
+}
+
+
+
+
+
+

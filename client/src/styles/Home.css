@@ -3,20 +3,27 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items : center;
-    margin-bottom : 3vh;
+    margin-left: 30px;
+    margin-bottom : 20px;
     margin-top : 10px;
     width: 100%;
+    gap: 30px;
 }
 
 @media screen and (max-width : 500px){
-.buttons-container{
-    margin-top: 40px;
+    .buttons-container{
+        margin-top: 50px;
+        justify-content: center;
+        margin-left: 0;
+    }
 }
+@media screen and (max-width : 380px){
+    .buttons-container{
+        flex-direction: column;
+    }
 }
 
-.buttons-container > *{
-    padding : 0rem 1rem;
-}
+
 .users-interface-container{
     width: 100vw;
     height: 80vh;

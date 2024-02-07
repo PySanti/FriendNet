@@ -35,8 +35,8 @@ export function Home() {
             <div className="centered-container">
                 <div className="buttons-container">
                     <NotificationsContainer/>
-                    <Button buttonText="Salir" onClickFunction={()=>logoutUser(navigate)}/>
                     <Button buttonText="Perfil" onClickFunction={()=>{navigate('/home/profile/')}}/>
+                    <Button buttonText="Salir" onClickFunction={()=>logoutUser(navigate)}/>
                 </div>
                 <div className="users-interface-container">
                     <UsersList/>

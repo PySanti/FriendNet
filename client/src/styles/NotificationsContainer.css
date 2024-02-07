@@ -24,11 +24,9 @@
 
 }
 @media screen and (max-width : 500px){
-.notifications-bell{
-    width: 45vw;
-}
-
-
+    .notifications-bell{
+        width: 45vw;
+    }
 }
 
 .notifications-alert{
