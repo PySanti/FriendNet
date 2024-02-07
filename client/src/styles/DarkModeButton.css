@@ -3,8 +3,19 @@
     height: auto;
     cursor : pointer;
     position: absolute;
-    top : 2vw;
-    left: 94vw;
+    top : 2vh;
+    left: 94%;
     filter : var(--base-image-drop-shadow);
 }
 
+@media screen and (max-width : 1000px){
+    .dark-mode-button__container{
+        width: 5vw;
+        left: 90%;
+    }
+}
+@media screen and (max-width : 600px){
+    .dark-mode-button__container{
+        width: 8vw;
+    }
+}
