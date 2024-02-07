@@ -26,7 +26,10 @@
 }
 
 
+
+
 .individual-notification-delete-btn > *{
+    font-size: var(--base-button-font-size);
     transition-property: filter;
     transition-duration: .2s;
 }

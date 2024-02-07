@@ -16,12 +16,25 @@
 }
 
 
+@media screen and (max-width : 1000px){
+.notifications-bell{
+    width: 30vw;
+}
 
+
+}
+@media screen and (max-width : 500px){
+.notifications-bell{
+    width: 45vw;
+}
+
+
+}
 
 .notifications-alert{
     color : #000;
     font-weight: 800;
-    margin-left: -1.3vw;
+    margin-left: -15px;
     margin-top: .3vw;
     opacity: .6;
     font-size: var(--base-button-font-size);
@@ -34,8 +47,6 @@
 .notifications-alert__activated{
     opacity: .2;
 }
-
-
 
 .notifications-list{
     max-height: 0;

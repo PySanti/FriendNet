@@ -33,16 +33,14 @@ export function Home() {
     } else {
         return (
             <div className="centered-container">
-                <div className="home-container">
-                    <div className="buttons-container">
-                        <NotificationsContainer/>
-                        <Button buttonText="Salir" onClickFunction={()=>logoutUser(navigate)}/>
-                        <Button buttonText="Perfil" onClickFunction={()=>{navigate('/home/profile/')}}/>
-                    </div>
-                    <div className="users-interface-container">
-                        <UsersList/>
-                        <Chat/>
-                    </div>
+                <div className="buttons-container">
+                    <NotificationsContainer/>
+                    <Button buttonText="Salir" onClickFunction={()=>logoutUser(navigate)}/>
+                    <Button buttonText="Perfil" onClickFunction={()=>{navigate('/home/profile/')}}/>
+                </div>
+                <div className="users-interface-container">
+                    <UsersList/>
+                    <Chat/>
                 </div>
             </div>
         )

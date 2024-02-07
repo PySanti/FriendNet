@@ -3,8 +3,8 @@
     height: auto;
     cursor : pointer;
     position: absolute;
-    top : 2vh;
-    right: 4vw;
+    top : 10px;
+    right: 20px;
     filter : var(--base-image-drop-shadow);
 }
 
