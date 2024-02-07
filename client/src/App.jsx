@@ -36,13 +36,17 @@ function App() {
   let [clickedUser, setClickedUser]     = states.useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
   let setLastClickedUser                = states.useLastClickedUser((state)=>(state.setLastClickedUser))
   let [usersIdList, setUsersIdList]     = states.useUsersIdList((state)=>[state.usersIdList, state.setUsersIdList])
-  let userKeyword                     = states.useUserKeyword((state)=>(state.userKeyword))
+  let setExecutingInSmallDevice         = states.useExecutingInSmallDevice((state)=>(state.setExecutingInSmallDevice))
+  let userKeyword                       = states.useUserKeyword((state)=>(state.userKeyword))
   const audioEffect = ()=>{
     const alertAudio = new Audio(alert)
     alertAudio.volume = 0.2
     alertAudio.play()
   }
   useEffect(()=>{
+    if (window.innerWidth <= 1000){
+      setExecutingInSmallDevice(true)
+    }
     initStates(notifications, setNotifications)
   }, [])
 

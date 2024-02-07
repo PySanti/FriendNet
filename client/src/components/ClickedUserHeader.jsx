@@ -1,15 +1,23 @@
 import { UserPhoto } from "./UserPhoto";
 import "../styles/ClickedUserHeader.css"
 import {useClickedUser, useTypingDB} from "../store"
+import {useExecutingInSmallDevice} from "../store"
 
 /**
  * Cabecera del chat con datos del usuario
  */
 export function ClickedUserHeader(){
-    const clickedUser = useClickedUser((state)=>(state.clickedUser))
+    let executingInSmallDevice = useExecutingInSmallDevice((state)=>(state.executingInSmallDevice))
+    let [clickedUser, setClickedUser] = useClickedUser((state)=>[state.clickedUser, state.setClickedUser])
     const typingDB = useTypingDB((state)=>(state.typingDB))
     return (
         <div className="clicked-user-header-container">
+            {
+                executingInSmallDevice &&
+                <div className="back-chat-button" onClick={()=>setClickedUser(null)}>
+                    x
+                </div>
+            }
             <UserPhoto photoFile={clickedUser.photo_link} chatPhoto/>
             <div className="clicked-user__username-container">
                 <h3 className="clicked-user__username">{clickedUser.username}{clickedUser.is_online && ", en linea"}</h3>

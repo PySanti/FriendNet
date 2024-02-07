@@ -13,12 +13,16 @@ import {CHAT_WEBSOCKET} from "../utils/constants"
 // import { destroy } from 'zustand';
 import {resetGlobalStates} from "../utils/resetGlobalStates"
 import {generateDocumentTitle} from "../utils/generateDocumentTitle"
+import {useExecutingInSmallDevice} from "../store"
+import {useClickedUser} from "../store"
 
 /**
  * Pagina principal del sitio
  */
 export function Home() {
     const navigate                      = useNavigate()
+    let executingInSmallDevice        = useExecutingInSmallDevice((state)=>(state.executingInSmallDevice))
+    let clickedUser                   = useClickedUser((state)=>(state.clickedUser))
     useEffect(()=>{
         document.title = generateDocumentTitle("Home")
         return ()=>{
@@ -39,8 +43,22 @@ export function Home() {
                     <Button buttonText="Salir" onClickFunction={()=>logoutUser(navigate)}/>
                 </div>
                 <div className="users-interface-container">
-                    <UsersList/>
-                    <Chat/>
+                    {
+                        !executingInSmallDevice ?
+                        <>
+                            <UsersList/>
+                            <Chat/>
+                        </>
+                        :
+                        <>
+                            {
+                                clickedUser ?
+                                <Chat/>
+                                :
+                                <UsersList/>
+                            }
+                        </>
+                    }
                 </div>
             </div>
         )

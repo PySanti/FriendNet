@@ -92,6 +92,11 @@ export const useTypingDB = create((set)=>({
 }))
 
 
+export const useExecutingInSmallDevice  = create((set)=>({
+    executingInSmallDevice : false,
+    setExecutingInSmallDevice: (new_val)=>(set(()=>({executingInSmallDevice : new_val}))),
+}))
+
 
 
 
