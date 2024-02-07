@@ -3,18 +3,23 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items : center;
-    margin-left: 30px;
     margin-bottom : 20px;
     margin-top : 10px;
     width: 100%;
     gap: 30px;
 }
 
+.buttons-container > *:first-child{
+    margin-left: 30px;
+}
+
 @media screen and (max-width : 500px){
     .buttons-container{
         margin-top: 50px;
         justify-content: center;
-        margin-left: 0;
+    }
+    .buttons-container > *:first-child{
+        margin-left:0;
     }
 }
 @media screen and (max-width : 380px){
@@ -32,7 +37,7 @@
     justify-content: center;
 }
 .users-interface-container > *{
-    margin : 0 .3rem 0 .3rem;
+    margin : 0 10px 0 10px;
     border-radius :10px;
     border : 1px solid var(--base-letter-color);
 }

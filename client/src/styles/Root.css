@@ -1,6 +1,5 @@
 .redirect-container{
     width: 100%;
-    margin-top: 2rem;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -16,7 +15,7 @@
 }
 .signup-container__title , .signin-container__title{
     font-size: var(--redirect-container-font-size);
-    margin-bottom: 1rem;
+    margin-bottom: 10px;
 }
 
 .root-container{

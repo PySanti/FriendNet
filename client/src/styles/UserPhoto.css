@@ -27,7 +27,7 @@
     outline: 7px inset var(--base-color);
 }
 .user-photo-main-container{
-    margin: 1rem;
+    margin: 10px;
     display: flex;
     justify-content: space-around;
     align-items: center;

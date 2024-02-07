@@ -1,14 +1,13 @@
 .message-content{
     font-size: var(--base-button-font-size);
-    margin-bottom: .4rem;
+    margin-bottom: 5px;
 }
 .message{
     color : #000;
-    margin-top: .3rem;
-    padding: .3rem;
+    margin-top: 5px;
+    padding: 10px;
     border-radius: 10px;
     background-color: rgb(209, 209, 209);
-
     max-width: 25vw;
     overflow-wrap: break-word;
 }

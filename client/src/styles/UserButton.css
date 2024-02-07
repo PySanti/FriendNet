@@ -15,19 +15,19 @@
     background-color : var(--base-background-dark-box-color);
 }
 .user-button__username{
-    font-size: var(--user-list-font-size);
+    font-size: 15px;
 }
 
 .user-button-globe{
     background-color : var(--base-color);
     border-radius: 30px;
-    width:  .5vw;
-    height: .5vw;
+    width:  8px;
+    height: 8px;
     opacity: 0;
 }
 
 .user-button-globe__activated{
-    margin-left: .5vw;
+    margin-left: 10px;
     opacity: 1;
 }
 
