@@ -38,12 +38,18 @@
     .users-list{
         width: 40%;
     }
+    .users-list-loader > *{
+        width:10vw;
+    }
 }
 
 
 @media screen and (max-width : 300px){
     .users-list{
         --user-list-font-size : 12px
+    }
+    .users-list-loader > *{
+        width:15vw;
     }
 }
 
