@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    --redirect-container-font-size : inherit;
+    --redirect-container-font-size : 18px;
 }
 
 .redirect-container >*{
@@ -24,14 +24,21 @@
 
 @media screen and (max-width : 575px){
     .signup-container__title , .signin-container__title{
-        font-size: 20px;
+        font-size: 15px;
+    }
+}
+@media screen and (max-width : 500px){
+    .redirect-container > *{
+        margin: 5vw;
     }
 }
 
 
+
+
 @media screen and (max-width : 300px){
     .signup-container__title , .signin-container__title{
-        font-size: 14px;
+        font-size: 10px;
     }
 }
 

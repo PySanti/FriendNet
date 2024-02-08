@@ -23,6 +23,8 @@
 @media screen and (max-width : 300px){
     .dark-mode-button__container{
         width: 25px;
+        right: 10px;
+        top: 10px;
     }
 }
 
