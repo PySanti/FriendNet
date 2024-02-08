@@ -24,5 +24,22 @@
 }
 
 .message-date{
-    font-size: 10px;
+    font-size: 12px;
+}
+
+
+@media screen and (max-width : 575px){
+    .message-date{
+        font-size: 8px;
+    }
+}
+@media screen and (max-width : 400px){
+    .message{
+        padding: 1.5vw;
+    }
+}
+@media screen and (max-width : 300px){
+    .message-date{
+        font-size: 5px;
+    }
 }

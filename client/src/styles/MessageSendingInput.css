@@ -13,7 +13,11 @@
     margin-left: 20px;
 }
 
-
+@media screen and (max-width : 400px){
+    .message-counter{
+        font-size: 6px;
+    }
+}
 .message-sending-form{
     display: flex;
     flex-direction: column;

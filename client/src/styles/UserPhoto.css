@@ -118,9 +118,29 @@
     Chat photo
 */
 .chat-photo{
-    width: 80px;
-    height: inherit;
+    font-size: var(--base-input-font-size);
+    width: 70px;
+    height: 85px;
+    max-height: 100%;
 }
+
+
+@media screen and (max-width : 575px){
+    .chat-photo{
+        width: 50px;
+        height: 80px;
+    }
+}
+@media screen and (max-width : 450px){
+    .chat-photo{
+        width: 30px;
+        height: 50px;
+    }
+}
+
+
+
+
 
 
 .chat-photo > .user-photo{

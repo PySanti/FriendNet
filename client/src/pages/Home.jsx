@@ -38,9 +38,9 @@ export function Home() {
         return (
             <div className="centered-container">
                 <div className="buttons-container">
-                    <NotificationsContainer/>
-                    <Button buttonText="Perfil" onClickFunction={()=>{navigate('/home/profile/')}}/>
                     <Button buttonText="Salir" onClickFunction={()=>logoutUser(navigate)}/>
+                    <Button buttonText="Perfil" onClickFunction={()=>{navigate('/home/profile/')}}/>
+                    <NotificationsContainer/>
                 </div>
                 <div className={executingInSmallDevice? "users-interface-container small-interface" : "users-interface-container"}>
                     {
