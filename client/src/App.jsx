@@ -96,14 +96,10 @@ function App() {
   return (
     <>
     <Toaster 
+      position="bottom-right"
       closeButton
       toastOptions={{
-      style : {
-        border : "1px solid var(--base-letter-color)",
-        backgroundColor : "var(--base-background-color)",
-        color : "var(--base-letter-color)",
-        textAlign : "center"
-      },
+      className : "toast-style",
       duration : 5000,
     }}/>
     <DarkModeButton/>

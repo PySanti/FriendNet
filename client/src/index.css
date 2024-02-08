@@ -65,7 +65,17 @@ input:focus{
   box-shadow: 3px 3px 10px;
 }
 
+.toast-style{
+  border : 1px solid var(--base-letter-color) !important;
+  background-color : var(--base-background-color) !important;
+  color : var(--base-letter-color) !important;
+  width: 30vw;
+}
 
+
+.toast-style > div[data-content] > div[data-title]{
+  font-size : var(--base-input-font-size) !important;
+}
 .non-shadow-input{
   border-radius: 20px;
   outline: 1px solid var(--base-letter-color);
