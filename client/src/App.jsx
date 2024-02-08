@@ -44,7 +44,7 @@ function App() {
     alertAudio.play()
   }
   useEffect(()=>{
-    if (window.innerWidth <= 1000){
+    if (window.innerWidth <= 800){
       setExecutingInSmallDevice(true)
     }
     initStates(notifications, setNotifications)

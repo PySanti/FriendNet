@@ -43,3 +43,6 @@
 }
 
 
+.small-interface > *{
+    width: 100%;
+}

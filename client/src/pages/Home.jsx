@@ -42,7 +42,7 @@ export function Home() {
                     <Button buttonText="Perfil" onClickFunction={()=>{navigate('/home/profile/')}}/>
                     <Button buttonText="Salir" onClickFunction={()=>logoutUser(navigate)}/>
                 </div>
-                <div className="users-interface-container">
+                <div className={executingInSmallDevice? "users-interface-container small-interface" : "users-interface-container"}>
                     {
                         !executingInSmallDevice ?
                         <>

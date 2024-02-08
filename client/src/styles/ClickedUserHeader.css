@@ -21,3 +21,7 @@
     font-size: var(--base-button-font-size);
 }
 
+.back-chat-button{
+    margin-left: 10px;
+    cursor: pointer;
+}

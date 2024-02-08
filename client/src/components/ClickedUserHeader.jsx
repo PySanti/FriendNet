@@ -14,9 +14,9 @@ export function ClickedUserHeader(){
         <div className="clicked-user-header-container">
             {
                 executingInSmallDevice &&
-                <div className="back-chat-button" onClick={()=>setClickedUser(null)}>
-                    x
-                </div>
+                <span className="material-symbols-outlined back-chat-button" onClick={()=>setClickedUser(null)}>
+                    arrow_back_ios
+                </span>
             }
             <UserPhoto photoFile={clickedUser.photo_link} chatPhoto/>
             <div className="clicked-user__username-container">
