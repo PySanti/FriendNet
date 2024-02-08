@@ -76,6 +76,9 @@ input:focus{
 .toast-style > div[data-content] > div[data-title]{
   font-size : var(--base-input-font-size) !important;
 }
+.toast-style > div[data-content] > div[data-description]{
+  font-size : var(--base-error-msg-font-size) !important;
+}
 .non-shadow-input{
   border-radius: 20px;
   outline: 1px solid var(--base-letter-color);
