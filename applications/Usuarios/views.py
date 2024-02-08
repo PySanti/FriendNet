@@ -192,6 +192,7 @@ class SendActivationEmailAPI(APIView):
         if (serialized_data.is_valid()):
             try:
                 send_activation_mail(
+                    username            =   serialized_data.data["username"],
                     email               =   serialized_data.data['user_email'], 
                     activation_code     =   serialized_data.data['activation_code'])
                 return Response({"email_sended" : True}, status.HTTP_200_OK)
