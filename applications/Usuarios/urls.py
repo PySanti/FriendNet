@@ -9,7 +9,7 @@ from .views import (
     UpdateUserDataAPI,
     ChangeUserPwdAPI,
     GetUsersListAPI,
-    SendActivationEmailAPI,
+    SendEmailAPI,
     ChangeEmailForActivationAPI,
     LoginUserAPI,
     EnterChatApi
@@ -23,7 +23,7 @@ urlpatterns = [
     path('update_user_data/', UpdateUserDataAPI.as_view()),
     path('change_user_pwd/', ChangeUserPwdAPI.as_view()),
     path('get_user_list/', GetUsersListAPI.as_view()),
-    path('send_activation_email/', SendActivationEmailAPI.as_view()),
+    path('send_email/', SendEmailAPI.as_view()),
     path('change_email_for_activation/', ChangeEmailForActivationAPI.as_view()),
     path('token/', LoginUserAPI.as_view(), name='token_obtain_pair'),
     path('enter_chat/', EnterChatApi.as_view())

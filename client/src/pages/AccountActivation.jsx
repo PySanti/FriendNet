@@ -8,7 +8,7 @@ import { useEffect, useRef } from "react";
 import { activateUserAPI } from "../api/activateUser.api";
 import { generateActivationCode } from "../utils/generateActivationCode";
 import { userIsAuthenticated } from "../utils/userIsAuthenticated";
-import { sendActivationEmailAPI } from "../api/sendActivationEmail.api";
+import { sendEmailAPI } from "../api/sendEmail.api";
 import { UserLogged } from "./UserLogged";
 import { UserNotLogged } from "./UserNotLogged";
 import { ActivationCodeField } from "../components/ActivationCodeField";
@@ -30,14 +30,14 @@ export function AccountActivation() {
     const handleActivationCodeSending = async ()=>{
         console.log('-> ', realActivationCode.current)
         const response = await nonToastedApiCall(async ()=>{
-            return await sendActivationEmailAPI(props.userEmail, props.username, realActivationCode.current) 
+            return await sendEmailAPI(props.userEmail, realActivationCode.current, 'bicho') 
         }, navigate, 'Enviando correo de activación, espere', 5000)
         if (response){
             if (response.status == 200){
                 toast.success(`Correo de activación enviado `)
-            }  else [
+            }  else {
                 toast.error("¡ Error inesperado enviando correo de activación !")
-            ]
+            }
         }
     }
     const onSubmit = handleSubmit(async (data) => {

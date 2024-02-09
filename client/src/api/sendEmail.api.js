@@ -6,16 +6,15 @@ import { BACKEND_URL } from '../utils/constants'
 /**
  * Usa utilidad de api para enviar correo con activation_code al usuario username 
  * @param {String} userEmail  
- * @param {String} username  
  * @param {String} activationCode 
  */
-export async function sendActivationEmailAPI(userEmail, username, activationCode){
+export async function sendEmailAPI(userEmail, code, message){
     const data = {
-        'username' : username,
         'user_email' : userEmail,
-        'activation_code' : activationCode,
+        'code' : code,
+        'message' : message
     }
-    return await axios.post(BACKEND_URL + `api/send_activation_email/`,data, config)
+    return await axios.post(BACKEND_URL + `api/send_email/`,data, config)
 }
 
 

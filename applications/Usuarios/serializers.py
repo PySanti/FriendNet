@@ -47,10 +47,10 @@ class GetUsersListSerializer(serializers.Serializer):
     session_user_id = serializers.IntegerField()
     user_keyword = serializers.CharField(required=False)
 
-class SendActivationEmailSerializer(serializers.Serializer):
-    username = serializers.CharField()
+class SendEmailSerializer(serializers.Serializer):
     user_email = serializers.EmailField()
-    activation_code = serializers.CharField()
+    code = serializers.CharField()
+    message = serializers.CharField()
 
 
 class EnterChatSerializer(serializers.Serializer):

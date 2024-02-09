@@ -35,7 +35,7 @@ from .serializers import (
     UpdateUsuariosSerializer,
     ChangeUserPwdSerializer,
     GetUsersListSerializer,
-    SendActivationEmailSerializer,
+    SendEmailSerializer,
     ChangeEmailForActivationSerializer,
     EnterChatSerializer
 )
@@ -184,21 +184,26 @@ class ActivateUserAPI(APIView):
         else:
             return BASE_SERIALIZER_ERROR_RESPONSE
 
-class SendActivationEmailAPI(APIView):
-    serializer_class        = SendActivationEmailSerializer
+class SendEmailAPI(APIView):
+    serializer_class        = SendEmailSerializer
     authentication_classes  = []
     permission_classes      = [AllowAny]
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if (serialized_data.is_valid()):
-            try:
-                send_activation_mail(
-                    username            =   serialized_data.data["username"],
-                    email               =   serialized_data.data['user_email'], 
-                    activation_code     =   serialized_data.data['activation_code'])
-                return Response({"email_sended" : True}, status.HTTP_200_OK)
-            except Exception:
-                return BASE_UNEXPECTED_ERROR_RESPONSE
+            if (Usuarios.objects.user_exists(email=serialized_data.data["user_email"])):
+                user = Usuarios.objects.get(email=serialized_data.data["user_email"])
+                try:
+                    send_activation_mail(
+                        username            =   user.username,
+                        email               =   serialized_data.data['user_email'], 
+                        activation_code     =   serialized_data.data['code'],
+                        message             =   serialized_data.data["message"])
+                    return Response({"email_sended" : True}, status.HTTP_200_OK)
+                except Exception:
+                    return BASE_UNEXPECTED_ERROR_RESPONSE
+            else:
+                return Response({"error" : "user_not_exists"}, status=status.HTTP_400_BAD_REQUEST)
         else:
             return BASE_SERIALIZER_ERROR_RESPONSE
 
