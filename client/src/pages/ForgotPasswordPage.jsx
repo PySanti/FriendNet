@@ -13,6 +13,7 @@ import {useRef, useState} from "react"
 import {CodeField} from "../components/CodeField"
 import {generateActivationCode} from "../utils/generateActivationCode"
 import {PasswordField} from "../components/PasswordField"
+import {recoveryPasswordAPI} from "../api/recoveryPassword.api"
 
 export function ForgotPasswordPage(){
     let [emailSended, setEmailSended] = useState(false)
@@ -46,8 +47,18 @@ export function ForgotPasswordPage(){
             }
         }
     }
-    const handleNewPasswordInput = (data)=>{
-        console.log(data)
+    const handleNewPasswordInput = async (data)=>{
+        let response = await toastedApiCall(async ()=>{
+            return await recoveryPasswordAPI(data.email, data.newPwd)
+        }, navigate, 'Modificando contraseña')
+        if (response){
+            if (response.status == 200){
+                toast.success("Contraseña modificada exitosamente")
+                navigate("/login/")
+            } else {
+                toast.error('¡ Hubo un error inesperado modificando la contraseña !')
+            }
+        }
     }
     return (
             <div className="centered-container">

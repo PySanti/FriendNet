@@ -37,7 +37,8 @@ from .serializers import (
     GetUsersListSerializer,
     SendEmailSerializer,
     ChangeEmailForActivationSerializer,
-    EnterChatSerializer
+    EnterChatSerializer,
+    RecoveryPasswordSerializer
 )
 from rest_framework.response import Response
 from .paginators import (
@@ -55,6 +56,25 @@ from .utils.add_istyping_field import add_istyping_field
 
 
 # non - secured api's
+class RecoveryPasswordAPI(APIView):
+    serializer_class        = RecoveryPasswordSerializer
+    authentication_classes  = []
+    permission_classes      = [AllowAny]
+    def post(self, request, *args, **kwargs):
+        serialized_data = self.serializer_class(data=request.data)
+        if serialized_data.is_valid():
+            try:
+                if (Usuarios.objects.user_exists(email=serialized_data.data["email"])):
+                    user = Usuarios.objects.get(email=serialized_data.data["email"])
+                    user.set_password(serialized_data.data["new_password"])
+                    user.save()
+                    return Response({"success"}, status=status.HTTP_200_OK)
+                else:
+                    return BASE_USER_NOT_EXISTS_RESPONSE
+            except Exception:
+                return BASE_UNEXPECTED_ERROR_RESPONSE
+        else:
+            return BASE_SERIALIZER_ERROR_RESPONSE
 class CheckExistingUserAPI(APIView):
     serializer_class        = CheckExistingUserSerializer
     authentication_classes  = []
@@ -203,7 +223,7 @@ class SendEmailAPI(APIView):
                 except Exception:
                     return BASE_UNEXPECTED_ERROR_RESPONSE
             else:
-                return Response({"error" : "user_not_exists"}, status=status.HTTP_400_BAD_REQUEST)
+                return BASE_USER_NOT_EXISTS_RESPONSE
         else:
             return BASE_SERIALIZER_ERROR_RESPONSE
 

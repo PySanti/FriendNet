@@ -56,3 +56,10 @@ class SendEmailSerializer(serializers.Serializer):
 class EnterChatSerializer(serializers.Serializer):
     receiver_id = serializers.IntegerField()
     related_notification_id = serializers.IntegerField(required=False)
+
+
+class RecoveryPasswordSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+    new_password = serializers.CharField(required=True)
+
+
