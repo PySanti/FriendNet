@@ -52,8 +52,9 @@ from applications.Notifications.models import Notifications
 from .websockets.ws_utils.broadcast_updated_user import broadcast_updated_user
 from .utils.handle_initial_notification_ids import handle_initial_notification_ids
 from .utils.add_istyping_field import add_istyping_field
-# non - secured api's
 
+
+# non - secured api's
 class CheckExistingUserAPI(APIView):
     serializer_class        = CheckExistingUserSerializer
     authentication_classes  = []

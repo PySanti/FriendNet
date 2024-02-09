@@ -70,7 +70,10 @@ export function Login() {
             <div className="centered-container">
                 <div className="login-container">
                     <Header msg="Introduce tus credenciales para ingresar"/>
-                    <LoginForm handleLogin={onLogin} extraButtons={[<Button key={v4()} onClickFunction={()=>{navigate('/')}} back/>]}/>
+                    <LoginForm handleLogin={onLogin} extraButtons={[
+                        <Button key={v4()} onClickFunction={()=>{navigate('/')}} back/>, 
+                        <Button key={v4()} onClickFunction={()=>navigate('/login/forgot_password/')} buttonText="Olvide mi contraseña"/>
+                    ]}/>
                 </div>
             </div>
         )

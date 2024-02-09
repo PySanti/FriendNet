@@ -4,6 +4,7 @@ import {Home} from "./pages/Home.jsx"
 import { Login } from "./pages/Login.jsx"
 import { Root } from "./pages/Root.jsx"
 import { SignUp } from "./pages/SignUp.jsx"
+import {ForgotPasswordPage} from "./pages/ForgotPasswordPage"
 import { AccountActivation } from "./pages/AccountActivation.jsx"
 import { Profile } from "./pages/Profile.jsx"
 import { ChangePwd } from "./pages/ChangePwd.jsx"
@@ -134,6 +135,12 @@ function App() {
           path="/login/"             
           element={ 
               <Login/> 
+          }/>
+        <Route 
+          exact 
+          path="/login/forgot_password"             
+          element={ 
+              <ForgotPasswordPage/> 
           }/>
         <Route 
           exact 
