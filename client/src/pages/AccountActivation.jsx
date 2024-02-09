@@ -11,7 +11,7 @@ import { userIsAuthenticated } from "../utils/userIsAuthenticated";
 import { sendEmailAPI } from "../api/sendEmail.api";
 import { UserLogged } from "./UserLogged";
 import { UserNotLogged } from "./UserNotLogged";
-import { ActivationCodeField } from "../components/ActivationCodeField";
+import { CodeField } from "../components/CodeField";
 import { Form } from "../components/Form";
 import { Button } from "../components/Button";
 import { v4 } from "uuid";
@@ -80,7 +80,7 @@ export function AccountActivation() {
                         buttonMsg="Activar" 
                         buttonsList={[<Button key={v4()} back onClickFunction={() => {navigate("/")}} />,<Button key={v4()} buttonText="Cambiar correo" onClickFunction={() => {navigate("/signup/activate/change_email", { state: props })}}/>]}
                         >
-                        <ActivationCodeField errors={errors.activationCode && errors.activationCode.message} registerObject={register("activationCode", BASE_ACTIVATION_CODE_CONSTRAINTS)}/>
+                        <CodeField errors={errors.activationCode && errors.activationCode.message} registerObject={register("activationCode", BASE_ACTIVATION_CODE_CONSTRAINTS)}/>
                     </Form>
                 </div>
             </div>

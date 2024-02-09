@@ -29,13 +29,10 @@ def send_activation_mail(username, email, activation_code, message):
     """
         Funcion creada para estandarizar envio de mensajes usando brevo
     """
-    try:
-        send_mail(
-            subject         =   message, 
-            html_message    =  activation_mail_html_content(username,activation_code, message),
-            message         =   "", 
-            from_email      =   "friendnetcorp@gmail.com", 
-            recipient_list  =   [email])
-    except Exception as e:
-        print(e)
+    return send_mail(
+        subject         =   message, 
+        html_message    =  activation_mail_html_content(username,activation_code, message),
+        message         =   "", 
+        from_email      =   "friendnetcorp@gmail.com", 
+        recipient_list  =   [email])
 

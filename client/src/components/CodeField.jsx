@@ -6,7 +6,7 @@ import {PropTypes} from "prop-types"
  * @param {Object} errors coleccion de errores del campo creado desde el formulario
  * @param {Object} registerObject objecto devuelto por funcion register del useForm
  */
-export function ActivationCodeField({errors, registerObject}){
+export function CodeField({errors, registerObject}){
     return (
         <FormField errors={errors}>
             <input
@@ -20,12 +20,12 @@ export function ActivationCodeField({errors, registerObject}){
     )
 }
 
-ActivationCodeField.propTypes = {
+CodeField.propTypes = {
     registerObject : PropTypes.object.isRequired,
     errors : PropTypes.string,
 }
 
-ActivationCodeField.defaultProps = {
+CodeField.defaultProps = {
     errors : undefined,
 }
 
