@@ -197,7 +197,6 @@ class SendActivationEmailAPI(APIView):
                     email               =   serialized_data.data['user_email'], 
                     activation_code     =   serialized_data.data['activation_code'])
                 return Response({"email_sended" : True}, status.HTTP_200_OK)
-            
             except Exception:
                 return BASE_UNEXPECTED_ERROR_RESPONSE
         else:

@@ -1,8 +1,8 @@
-import {UsernameField} from "../components/UsernameField"
+import {EmailField} from "../components/EmailField"
 import {Form} from "../components/Form"
 import {Header} from "../components/Header"
 import { useForm } from "react-hook-form";
-import {BASE_USERNAME_CONSTRAINTS} from "../utils/constants"
+import {BASE_EMAIL_CONSTRAINTS} from "../utils/constants"
 import {toastedApiCall} from "../utils/toastedApiCall"
 import {useNavigate} from "react-router-dom"
 import {Button} from "../components/Button"
@@ -19,10 +19,9 @@ export function ForgotPasswordPage(){
                 <div className="login-container">
                     <Header msg="Recuperando cuenta"/>
                     <Form onSubmitFunction={handleSubmit((data)=>{handleUsernameInput(data)})} buttonMsg={"Buscar"} buttonsList={<Button onClickFunction={()=>navigate("/login/")} back/>}>
-                        <UsernameField errors={errors.username && errors.username.message} registerObject={register("username", BASE_USERNAME_CONSTRAINTS)}/>
+                        <EmailField errors={errors.email && errors.email.message} registerObject={register("email", BASE_EMAIL_CONSTRAINTS)}/>
                     </Form>
                 </div>
             </div>
-
     )
 }
