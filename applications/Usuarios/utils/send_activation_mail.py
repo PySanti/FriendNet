@@ -31,9 +31,9 @@ def send_activation_mail(username, email, activation_code, message):
     """
     try:
         send_mail(
-            subject         =   "Activa tu cuenta", 
+            subject         =   message, 
             html_message    =  activation_mail_html_content(username,activation_code, message),
-            message         =   f"Codigo : {activation_code}", 
+            message         =   "", 
             from_email      =   "friendnetcorp@gmail.com", 
             recipient_list  =   [email])
     except Exception as e:
