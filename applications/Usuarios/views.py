@@ -12,6 +12,7 @@ from rest_framework.permissions import (
     AllowAny
 )
 from .utils.set_photo_link import set_photo_link
+from .utils.generate_security_code import generate_security_code
 from .utils.constants import (
     BASE_SERIALIZER_ERROR_RESPONSE,
     USERS_LIST_ATTRS,
@@ -30,12 +31,13 @@ from django.http import JsonResponse
 from .serializers import (
     CreateUsuariosSerializer,
     CheckExistingUserSerializer,
+    CheckSecurityCodeSerializer,
     ActivateUserSerializer,
     GetUserDetailSerializer,
     UpdateUsuariosSerializer,
     ChangeUserPwdSerializer,
     GetUsersListSerializer,
-    SendEmailSerializer,
+    GenerateSendSecurityCodeSerializer,
     ChangeEmailForActivationSerializer,
     EnterChatSerializer,
     RecoveryPasswordSerializer
@@ -66,9 +68,12 @@ class RecoveryPasswordAPI(APIView):
             try:
                 if (Usuarios.objects.user_exists(email=serialized_data.data["email"])):
                     user = Usuarios.objects.get(email=serialized_data.data["email"])
-                    user.set_password(serialized_data.data["new_password"])
-                    user.save()
-                    return Response({"success"}, status=status.HTTP_200_OK)
+                    if (serialized_data.data["security_code"] == user.security_code):
+                        user.set_password(serialized_data.data["new_password"])
+                        user.save()
+                        return Response({"success"}, status=status.HTTP_200_OK)
+                    else:
+                        return Response({"error" : "security_code"}, status=status.HTTP_400_BAD_REQUEST)
                 else:
                     return BASE_USER_NOT_EXISTS_RESPONSE
             except Exception:
@@ -204,20 +209,45 @@ class ActivateUserAPI(APIView):
         else:
             return BASE_SERIALIZER_ERROR_RESPONSE
 
-class SendEmailAPI(APIView):
-    serializer_class        = SendEmailSerializer
+class CheckSecurityCodeAPI(APIView):
+    serializer_class        = CheckSecurityCodeSerializer
     authentication_classes  = []
     permission_classes      = [AllowAny]
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if (serialized_data.is_valid()):
             if (Usuarios.objects.user_exists(email=serialized_data.data["user_email"])):
-                user = Usuarios.objects.get(email=serialized_data.data["user_email"])
                 try:
+                    user = Usuarios.objects.get(email=serialized_data.data["user_email"])
+                    if (serialized_data.data["code"] == user.security_code):
+                        return Response({"success" : "valid_code"}, status=status.HTTP_200_OK)
+                    else:
+                        return Response({"error" : "invalid_security_code"}, status=status.HTTP_400_BAD_REQUEST)
+                except:
+                    return BASE_UNEXPECTED_ERROR_RESPONSE
+            else:
+                return BASE_USER_NOT_EXISTS_RESPONSE
+        else:
+            return BASE_SERIALIZER_ERROR_RESPONSE
+
+class GenerateSendSecurityCodeAPI(APIView):
+    serializer_class        = GenerateSendSecurityCodeSerializer
+    authentication_classes  = []
+    permission_classes      = [AllowAny]
+    def post(self, request, *args, **kwargs):
+        serialized_data = self.serializer_class(data=request.data)
+        if (serialized_data.is_valid()):
+            if (Usuarios.objects.user_exists(email=serialized_data.data["user_email"])):
+                try:
+                    code = generate_security_code()
+                    message = f"{serialized_data.data['message']} - {code}"
+                    user = Usuarios.objects.get(email=serialized_data.data["user_email"])
+                    print(f'Codigo de securidad : {code}')
+                    Usuarios.objects.set_security_code(user, code)
                     send_activation_mail(
                         username            =   user.username,
                         email               =   serialized_data.data['user_email'], 
-                        message             =   serialized_data.data["message"])
+                        message             =   message)
                     return Response({"email_sended" : True}, status.HTTP_200_OK)
                 except Exception:
                     return BASE_UNEXPECTED_ERROR_RESPONSE

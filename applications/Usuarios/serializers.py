@@ -47,9 +47,15 @@ class GetUsersListSerializer(serializers.Serializer):
     session_user_id = serializers.IntegerField()
     user_keyword = serializers.CharField(required=False)
 
-class SendEmailSerializer(serializers.Serializer):
+class GenerateSendSecurityCodeSerializer(serializers.Serializer):
     user_email = serializers.EmailField()
     message = serializers.CharField()
+
+class CheckSecurityCodeSerializer(serializers.Serializer):
+    user_email = serializers.EmailField()
+    code = serializers.CharField(max_length=10)
+
+
 
 
 class EnterChatSerializer(serializers.Serializer):
@@ -60,5 +66,6 @@ class EnterChatSerializer(serializers.Serializer):
 class RecoveryPasswordSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
     new_password = serializers.CharField(required=True)
+    security_code = serializers.CharField(required=True, max_length=10)
 
 

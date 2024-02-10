@@ -4,41 +4,48 @@ import {EmailField} from "../components/EmailField"
 import {Form} from "../components/Form"
 import {Header} from "../components/Header"
 import { useForm } from "react-hook-form";
-import {BASE_EMAIL_CONSTRAINTS, BASE_ACTIVATION_CODE_CONSTRAINTS, BASE_PASSWORD_CONSTRAINTS} from "../utils/constants"
+import {BASE_EMAIL_CONSTRAINTS, BASE_SECURITY_CODE_CONSTRAINTS, BASE_PASSWORD_CONSTRAINTS} from "../utils/constants"
 import {toastedApiCall} from "../utils/toastedApiCall"
-import {sendEmailAPI} from "../api/sendEmail.api"
+import {generateSendSecurityCodeAPI} from "../api/generateSendSecurityCode.api"
 import {useNavigate} from "react-router-dom"
 import {Button} from "../components/Button"
-import {useRef, useState} from "react"
+import { useState} from "react"
 import {CodeField} from "../components/CodeField"
-import {generateActivationCode} from "../utils/generateActivationCode"
 import {PasswordField} from "../components/PasswordField"
 import {recoveryPasswordAPI} from "../api/recoveryPassword.api"
 import {userIsAuthenticated} from "../utils/userIsAuthenticated"
 import {UserLogged} from "../pages/UserLogged"
+import {checkSecurityCodeAPI} from "../api/checkSecurityCode.api"
 
 export function ForgotPasswordPage(){
     let [emailSended, setEmailSended] = useState(false)
     let [codeEntered, setCodeEntered] = useState(false)
-    const realRecoveryCode = useRef(generateActivationCode())
     const navigate = useNavigate()
     const {register, handleSubmit, formState: {errors}}  = useForm()
     const handleCodeInput = async (data)=>{
-        if (realRecoveryCode.current == data.code){
-            toast.success("Código valido, modifica tu contraseña")
-            setCodeEntered(true)
-        } else {
-            toast.error('¡ Código invalido !')
+        let response = await toastedApiCall(async ()=>{
+            return await checkSecurityCodeAPI(data.email, data.code)
+        })
+        if (response){
+            if (response.status == 200){
+                toast.success("Código valido, modifica tu contraseña")
+                setCodeEntered(true)
+            } else {
+                if (response.data.error == "invalid_security_code"){
+                    toast.error('¡ Código invalido !')
+                } else {
+                    toast.error('¡ Hubo un error inesperado revisando el código !')
+                }
+            }
         }
     }
-    const handleUsernameInput = async (data)=>{
+    const handleEmailInput = async (data)=>{
         let response = await toastedApiCall(async ()=>{
-            return await sendEmailAPI(data.email, `Recupera tu cuenta - ${realRecoveryCode.current}`)
+            return await generateSendSecurityCodeAPI(data.email, `Recupera tu cuenta`)
         }, navigate, 'Buscando usuario')
         if (response){
             if (response.status == 200){
                 toast.success('Correo de recuperación enviado')
-                console.log(realRecoveryCode.current)
                 setEmailSended(true)
             } else {
                 if (response.data.error == "user_not_exists"){
@@ -51,7 +58,7 @@ export function ForgotPasswordPage(){
     }
     const handleNewPasswordInput = async (data)=>{
         let response = await toastedApiCall(async ()=>{
-            return await recoveryPasswordAPI(data.email, data.newPwd)
+            return await recoveryPasswordAPI(data.email, data.newPwd, data.code)
         }, navigate, 'Modificando contraseña')
         if (response){
             if (response.status == 200){
@@ -80,13 +87,13 @@ export function ForgotPasswordPage(){
                                 </Form>
                             :
                                 <Form 
-                                    onSubmitFunction={!emailSended? handleSubmit((data)=>{handleUsernameInput(data)}) : handleSubmit((data)=>{handleCodeInput(data)})} 
+                                    onSubmitFunction={!emailSended? handleSubmit((data)=>{handleEmailInput(data)}) : handleSubmit((data)=>{handleCodeInput(data)})} 
                                     buttonMsg={!emailSended ? "Buscar" : "Recuperar"} 
                                     buttonsList={[<Button key={v4()} onClickFunction={()=>navigate("/login/")} back/>]}>
                                     {!emailSended ?
                                         <EmailField errors={errors.email && errors.email.message} registerObject={register("email", BASE_EMAIL_CONSTRAINTS)}/>
                                         :
-                                        <CodeField errors={errors.code && errors.code.message} registerObject={register("code", BASE_ACTIVATION_CODE_CONSTRAINTS)}/>
+                                        <CodeField errors={errors.code && errors.code.message} registerObject={register("code", BASE_SECURITY_CODE_CONSTRAINTS)}/>
                                     }
                                 </Form>
                         }

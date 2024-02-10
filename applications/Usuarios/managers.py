@@ -67,6 +67,9 @@ class UsuariosManager(BaseUserManager):
         """
         user.set_password(new_password)
         user.save()
+    def set_security_code(self, user, security_code):
+        user.security_code = security_code
+        user.save()
     def user_exists(self, username=None, email=None):
         """
             Retorna true en caso de que exista algun usuario con username o email

@@ -15,21 +15,17 @@ export const BASE_UNEXPECTED_ERROR_MESSAGE = "unexpected_error"
 export const BASE_UNEXPECTED_ERROR_LOG = "¡ Error inesperado !"
 export const LOCAL_STORAGE_DARK_MODE_NAME = "darkMode"
 export const BASE_USER_TYPING_LOCAL_STORAGE_ATTR = "user_typing"
-export const BASE_ACTIVATION_CODE_CONSTRAINTS = {
+export const BASE_SECURITY_CODE_LENGTH = 10
+export const BASE_SECURITY_CODE_CONSTRAINTS = {
     required: {
         value: true,
         message:
             "Ingresa un código de activación",
     },
-    pattern: {
-        value: /^-?\d+$/,
-        message:
-            "Ingresa un código valido",
-    },
     minLength: {
-        value: 6,
+        value: BASE_SECURITY_CODE_LENGTH,
         message:
-            "Debes ingresar al menos 6 caracteres",
+            `Debes ingresar al menos ${BASE_SECURITY_CODE_LENGTH} caracteres`,
     },
 }
 

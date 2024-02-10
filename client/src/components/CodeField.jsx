@@ -1,8 +1,8 @@
 import { FormField } from "./FormField";
 import {PropTypes} from "prop-types"
+import {BASE_SECURITY_CODE_LENGTH} from "../utils/constants"
 
 /**
- * Componente creado para campos de activationCode
  * @param {Object} errors coleccion de errores del campo creado desde el formulario
  * @param {Object} registerObject objecto devuelto por funcion register del useForm
  */
@@ -12,7 +12,7 @@ export function CodeField({errors, registerObject}){
             <input
                 placeholder="Código"
                 type        =   "text"
-                maxLength   =   {6}
+                maxLength   =   {BASE_SECURITY_CODE_LENGTH}
                 name        =   {registerObject.name}
                 id          =   {registerObject.name}
                 {...registerObject}/>
