@@ -4,8 +4,8 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 
 
 class BaseUsuariosSerializers(serializers.Serializer):
-    username = serializers.CharField(required=True)
-    email = serializers.EmailField(required=True)
+    username = serializers.CharField()
+    email = serializers.EmailField()
     photo = serializers.SerializerMethodField('get_photo')
     def get_photo(self, obj):
         data = self.context['request']
@@ -15,7 +15,7 @@ class BaseUsuariosSerializers(serializers.Serializer):
             return data['photo']
 
 class CreateUsuariosSerializer(BaseUsuariosSerializers):
-    password = serializers.CharField(required=True) 
+    password = serializers.CharField() 
 
 class UpdateUsuariosSerializer(BaseUsuariosSerializers):
     username = serializers.CharField(required=False)
@@ -64,8 +64,8 @@ class EnterChatSerializer(serializers.Serializer):
 
 
 class RecoveryPasswordSerializer(serializers.Serializer):
-    email = serializers.EmailField(required=True)
-    new_password = serializers.CharField(required=True)
-    security_code = serializers.CharField(required=True, max_length=10)
+    email = serializers.EmailField()
+    new_password = serializers.CharField()
+    security_code = serializers.CharField(max_length=10)
 
 
