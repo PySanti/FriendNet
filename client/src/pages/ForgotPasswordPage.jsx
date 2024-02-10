@@ -14,6 +14,8 @@ import {CodeField} from "../components/CodeField"
 import {generateActivationCode} from "../utils/generateActivationCode"
 import {PasswordField} from "../components/PasswordField"
 import {recoveryPasswordAPI} from "../api/recoveryPassword.api"
+import {userIsAuthenticated} from "../utils/userIsAuthenticated"
+import {UserLogged} from "../pages/UserLogged"
 
 export function ForgotPasswordPage(){
     let [emailSended, setEmailSended] = useState(false)
@@ -60,33 +62,36 @@ export function ForgotPasswordPage(){
             }
         }
     }
-    return (
-            <div className="centered-container">
-                <div className="login-container">
-                    <Header msg="Recuperando cuenta"/>
-                    {
-                        codeEntered ?
-                            <Form
-                                onSubmitFunction={handleSubmit((data)=>{handleNewPasswordInput(data)})} 
-                                buttonMsg="Modificar contraseña"
-                                buttonsList={[<Button key={v4()} onClickFunction={()=>navigate("/login/")} back/>]}
-                            >
-                                <PasswordField label="Nueva contraseña" errors={errors.newPwd && errors.newPwd.message} registerObject={register("newPwd", BASE_PASSWORD_CONSTRAINTS)}/>
-                            </Form>
-                        :
-                            <Form 
-                                onSubmitFunction={!emailSended? handleSubmit((data)=>{handleUsernameInput(data)}) : handleSubmit((data)=>{handleCodeInput(data)})} 
-                                buttonMsg={!emailSended ? "Buscar" : "Recuperar"} 
-                                buttonsList={[<Button key={v4()} onClickFunction={()=>navigate("/login/")} back/>]}>
-                                {!emailSended ?
-                                    <EmailField errors={errors.email && errors.email.message} registerObject={register("email", BASE_EMAIL_CONSTRAINTS)}/>
-                                    :
-                                    <CodeField errors={errors.code && errors.code.message} registerObject={register("code", BASE_ACTIVATION_CODE_CONSTRAINTS)}/>
-                                }
-                            </Form>
-                    }
-
+    if (userIsAuthenticated()){
+        return <UserLogged/>
+    } else {
+        return (
+                <div className="centered-container">
+                    <div className="login-container">
+                        <Header msg="Recuperando cuenta"/>
+                        {
+                            codeEntered ?
+                                <Form
+                                    onSubmitFunction={handleSubmit((data)=>{handleNewPasswordInput(data)})} 
+                                    buttonMsg="Modificar contraseña"
+                                    buttonsList={[<Button key={v4()} onClickFunction={()=>navigate("/login/")} back/>]}
+                                >
+                                    <PasswordField label="Nueva contraseña" errors={errors.newPwd && errors.newPwd.message} registerObject={register("newPwd", BASE_PASSWORD_CONSTRAINTS)}/>
+                                </Form>
+                            :
+                                <Form 
+                                    onSubmitFunction={!emailSended? handleSubmit((data)=>{handleUsernameInput(data)}) : handleSubmit((data)=>{handleCodeInput(data)})} 
+                                    buttonMsg={!emailSended ? "Buscar" : "Recuperar"} 
+                                    buttonsList={[<Button key={v4()} onClickFunction={()=>navigate("/login/")} back/>]}>
+                                    {!emailSended ?
+                                        <EmailField errors={errors.email && errors.email.message} registerObject={register("email", BASE_EMAIL_CONSTRAINTS)}/>
+                                        :
+                                        <CodeField errors={errors.code && errors.code.message} registerObject={register("code", BASE_ACTIVATION_CODE_CONSTRAINTS)}/>
+                                    }
+                                </Form>
+                        }
+                    </div>
                 </div>
-            </div>
-    )
+        )
+    }
 }
