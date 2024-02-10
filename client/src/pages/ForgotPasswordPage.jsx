@@ -31,7 +31,7 @@ export function ForgotPasswordPage(){
     }
     const handleUsernameInput = async (data)=>{
         let response = await toastedApiCall(async ()=>{
-            return await sendEmailAPI(data.email, realRecoveryCode.current, "Recupera tu cuenta")
+            return await sendEmailAPI(data.email, `Recupera tu cuenta - ${realRecoveryCode.current}`)
         }, navigate, 'Buscando usuario')
         if (response){
             if (response.status == 200){

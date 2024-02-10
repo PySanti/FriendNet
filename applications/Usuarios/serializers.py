@@ -49,7 +49,6 @@ class GetUsersListSerializer(serializers.Serializer):
 
 class SendEmailSerializer(serializers.Serializer):
     user_email = serializers.EmailField()
-    code = serializers.CharField()
     message = serializers.CharField()
 
 

@@ -30,7 +30,7 @@ export function AccountActivation() {
     const handleActivationCodeSending = async ()=>{
         console.log('-> ', realActivationCode.current)
         const response = await nonToastedApiCall(async ()=>{
-            return await sendEmailAPI(props.userEmail, realActivationCode.current, 'Activa tu cuenta') 
+            return await sendEmailAPI(props.userEmail, `Activa tu cuenta - ${realActivationCode.current}`) 
         }, navigate, 'Enviando correo de activación, espere', 5000)
         if (response){
             if (response.status == 200){

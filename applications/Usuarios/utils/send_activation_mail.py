@@ -1,6 +1,6 @@
 from django.core.mail import send_mail
 
-def activation_mail_html_content(username, activation_code, message):
+def activation_mail_html_content(username, message):
     return  """
 <html>
     <head>
@@ -20,18 +20,18 @@ def activation_mail_html_content(username, activation_code, message):
                 FriendNet, %s 
             </h1>
             <h3 class="content">
-                %s - %s
+                %s
             </h3>
     </body>
-</html>""" % (username , message, activation_code);
+</html>""" % (username , message);
 
-def send_activation_mail(username, email, activation_code, message):
+def send_activation_mail(username, email, message):
     """
         Funcion creada para estandarizar envio de mensajes usando brevo
     """
     return send_mail(
         subject         =   message, 
-        html_message    =  activation_mail_html_content(username,activation_code, message),
+        html_message    =  activation_mail_html_content(username, message),
         message         =   "", 
         from_email      =   "friendnetcorp@gmail.com", 
         recipient_list  =   [email])

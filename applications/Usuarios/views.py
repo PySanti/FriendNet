@@ -217,7 +217,6 @@ class SendEmailAPI(APIView):
                     send_activation_mail(
                         username            =   user.username,
                         email               =   serialized_data.data['user_email'], 
-                        activation_code     =   serialized_data.data['code'],
                         message             =   serialized_data.data["message"])
                     return Response({"email_sended" : True}, status.HTTP_200_OK)
                 except Exception:
