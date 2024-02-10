@@ -19,6 +19,7 @@ class Usuarios(AbstractBaseUser, PermissionsMixin):
     photo_link      = models.CharField(max_length=120, null=True)
     is_active       = models.BooleanField(default=False)
     notifications   = models.ManyToManyField(Notifications, blank=True)
+    security_code            = models.CharField(blank=True, max_length=10)
     #* MANAGER
     objects         = UsuariosManager()
 
