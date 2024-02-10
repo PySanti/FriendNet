@@ -58,7 +58,9 @@ export const BASE_USERNAME_CONSTRAINTS = {
         message : "No debe tener espacios"
     }
 };
+export const BASE_PASSWORD_MAX_LENGTH = 20
 export const BASE_PASSWORD_CONSTRAINTS = {
+
     required: {
         value: true,
         message: "Ingresa una contraseña",

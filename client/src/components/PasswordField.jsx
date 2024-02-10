@@ -4,6 +4,7 @@ import "../styles/PasswordField.css"
 import { useState, useRef } from "react";
 import padlock from "../../lottie/padlock"
 import Lottie from "lottie-react"
+import {BASE_PASSWORD_MAX_LENGTH} from "../utils/constants"
 
 /**
  * Componente creado para campos de contrasenia
@@ -26,6 +27,7 @@ export function PasswordField({errors, registerObject, label}){
                 className="password-input" 
                 type={previsualizationActivated ? "text" : "password"} 
                 name={registerObject.name} 
+                maxLength={BASE_PASSWORD_MAX_LENGTH}
                 {...registerObject}/>
             <div className="password-visualization" onClick={handlePadlockClick}>
                 <Lottie 
