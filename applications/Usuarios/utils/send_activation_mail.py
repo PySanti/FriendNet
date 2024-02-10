@@ -33,6 +33,6 @@ def send_activation_mail(username, email, message):
         subject         =   message, 
         html_message    =  activation_mail_html_content(username, message),
         message         =   "", 
-        from_email      =   "friendnetcorp@gmail.com", 
+        from_email      =   "friendnet.inc@gmail.com", 
         recipient_list  =   [email])
 

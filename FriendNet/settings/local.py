@@ -34,5 +34,5 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 # Credenciales de inicio de sesión del servidor SMTP
-EMAIL_HOST_USER = "friendnetcorp@gmail.com"
+EMAIL_HOST_USER = "friendnet.inc@gmail.com"
 EMAIL_HOST_PASSWORD = SECRETS['EMAIL_PASSWORD']
