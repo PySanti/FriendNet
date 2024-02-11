@@ -243,11 +243,11 @@ class GenerateSendSecurityCodeAPI(APIView):
                     message = f"{serialized_data.data['message']} - {code}"
                     user = Usuarios.objects.get(email=serialized_data.data["user_email"])
                     print(f'Codigo de securidad : {code}')
-                    Usuarios.objects.set_security_code(user, code)
                     send_activation_mail(
                         username            =   user.username,
                         email               =   serialized_data.data['user_email'], 
                         message             =   message)
+                    Usuarios.objects.set_security_code(user, code)
                     return Response({"email_sended" : True}, status.HTTP_200_OK)
                 except Exception:
                     return BASE_UNEXPECTED_ERROR_RESPONSE
