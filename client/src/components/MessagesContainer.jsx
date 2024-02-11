@@ -24,7 +24,6 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     const navigate                                                      = useNavigate()
     const clickedUser                                                   = useClickedUser((state)=>(state.clickedUser))
     const [messagesHistorial, setMessagesHistorial]                     = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
-    let [oldScrollHeight, setOldScrollHeight]                           = useState(false)
 
     const loadMessages = async ()=>{
         const response = await nonToastedApiCall(async ()=>{
@@ -32,8 +31,11 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
         }, navigate, 'Cargando mensajes, espere', BASE_NON_TOASTED_API_CALLS_TIMER)
         if (response){
             if (response.status == 200){
-                setOldScrollHeight(containerRef.current.scrollHeight)
+                const oldScroll = containerRef.current.scrollHeight
                 updateMessagesHistorial(setMessagesHistorial, messagesHistorialPage, response.data !== "no_messages_between" ? response.data.messages_hist : [], messagesHistorial)
+                setTimeout(() => {
+                    containerRef.current.scrollTop += containerRef.current.scrollHeight - oldScroll
+                }, 0);
             } else if (response.status == 400){
                 if (response.data.error == "no_more_pages"){
                     noMoreMessages.current = true
@@ -69,11 +71,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
             }
         }
     }
-    useEffect(()=>{
-        if (containerRef.current){
-            containerRef.current.scrollTop += containerRef.current.scrollHeight - oldScrollHeight
-        }
-    }, [oldScrollHeight])
+
     useEffect(()=>{
         if (containerRef.current && messagesHistorial.length <= BASE_MESSAGES_LIST_PAGE_SIZE){
             containerRef.current.scrollTop = containerRef.current.scrollHeight
