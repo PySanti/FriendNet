@@ -1,4 +1,3 @@
-import {PageLogo} from "../components/PageLogo"
 import "../styles/Header.css"
 import {PropTypes} from "prop-types"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
@@ -11,11 +10,12 @@ export function Header({msg}) {
 
     return (
         <>
-
-            <PageLogo/>
             <header className="header-container">
                 <h1 className="header-title">
-                    FriendNet{userData && `, ${userData.username}`}
+                    <span className="header-logo-container">
+                        <img className="header-logo" src="/logo3.png"/>
+                    </span>
+                    riendNet{userData && `, ${userData.username}`}
                 </h1>
                 {msg && <h2 className="header-msg">{msg}</h2>}
             </header>
