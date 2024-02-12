@@ -8,6 +8,11 @@ def activation_mail_html_content(username, message):
             .title{
                 font-size : 30px;
             }
+            .header-logo{
+                margin-right: -10px;
+                font-size : 30px;
+                width : 1em;
+            }
             *{
                 text-align : center;
                 font-family : sans-serif;
@@ -16,8 +21,9 @@ def activation_mail_html_content(username, message):
         </style>
     </head>
     <body>
-            <h1 class="title">
-                FriendNet, %s 
+            <h1 className="title">
+                <img class="header-logo" src="https://res.cloudinary.com/dwcabo8hs/image/upload/v1707749976/friendnet/acm1if57gscdalfzfemi.png"/>
+                riendNet, %s 
             </h1>
             <h3 class="content">
                 %s
