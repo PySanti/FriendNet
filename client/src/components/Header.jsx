@@ -11,11 +11,13 @@ export function Header({msg}) {
     return (
         <>
             <header className="header-container">
-                <h1 className="header-title">
+                <h1 className="header-title-container">
                     <span className="header-logo-container">
                         <img className="header-logo" src="/logo3.png"/>
                     </span>
-                    riendNet{userData && `, ${userData.username}`}
+                    <span className="header-content-container">
+                        riendNet{userData && `, ${userData.username}`}
+                    </span>
                 </h1>
                 {msg && <h2 className="header-msg">{msg}</h2>}
             </header>

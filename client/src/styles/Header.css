@@ -8,10 +8,10 @@
     --title-font-size : 60px;
     --msg-font-size : 23px;
 }
-.header-title{
+.header-title-container{
     display: flex;
-    align-items : center;
-    font-size: var(--title-font-size);
+    align-items : flex-end;
+    justify-content: center;
 }
 .header-msg{
     display: flex;
@@ -19,7 +19,9 @@
     font-size: var(--msg-font-size);
     max-width: 20vw;
 }
-
+.header-content-container{
+    font-size: var(--title-font-size);
+}
 .header-logo{
     width: 3vw;
 }
