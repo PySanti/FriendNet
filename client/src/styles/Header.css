@@ -10,7 +10,7 @@
 }
 .header-title-container{
     display: flex;
-    align-items : flex-end;
+    align-items : end;
     justify-content: center;
 }
 .header-msg{
@@ -19,11 +19,14 @@
     font-size: var(--msg-font-size);
     max-width: 20vw;
 }
-.header-content-container{
+.header-content{
     font-size: var(--title-font-size);
 }
+
 .header-logo{
-    width: 3vw;
+    font-size: var(--title-font-size);
+    width: 1em;
+    margin-right: -.08em;
 }
 
 @media screen and (max-width : 850px){
