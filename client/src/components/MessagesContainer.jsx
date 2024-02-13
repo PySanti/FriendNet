@@ -31,10 +31,12 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
         }, navigate, 'Cargando mensajes, espere', BASE_NON_TOASTED_API_CALLS_TIMER)
         if (response){
             if (response.status == 200){
+                containerRef.current.style.overflow = "hidden"
                 const oldScroll = containerRef.current.scrollHeight
                 updateMessagesHistorial(setMessagesHistorial, messagesHistorialPage, response.data !== "no_messages_between" ? response.data.messages_hist : [], messagesHistorial)
                 setTimeout(() => {
                     containerRef.current.scrollTop += containerRef.current.scrollHeight - oldScroll
+                    containerRef.current.style.overflow = "auto"
                 }, 0);
             } else if (response.status == 400){
                 if (response.data.error == "no_more_pages"){
