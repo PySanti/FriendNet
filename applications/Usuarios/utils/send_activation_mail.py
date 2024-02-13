@@ -21,7 +21,7 @@ def activation_mail_html_content(username, message):
         </style>
     </head>
     <body>
-            <h1 className="title">
+            <h1 class="title">
                 <img class="header-logo" src="https://res.cloudinary.com/dwcabo8hs/image/upload/v1707749976/friendnet/acm1if57gscdalfzfemi.png"/>
                 riendNet, %s 
             </h1>
