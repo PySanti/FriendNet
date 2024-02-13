@@ -14,8 +14,14 @@
 }
 
 @media screen and (max-width : 400px){
+
     .message-counter{
         font-size: 6px;
+    }
+}
+@media screen and (max-height : 500px){
+    .message-sending-input{
+        padding: 0;
     }
 }
 .message-sending-form{
