@@ -3,6 +3,7 @@ from rest_framework import status
 
 USERS_LIST_ATTRS = ["id", "username", "photo_link"]
 BASE_USERNAME_MAX_LENGTH = 15
+BASE_EMAIL_MAX_LENGTH = 60
 USER_SHOWABLE_FIELDS = [
     "username",
     "email",

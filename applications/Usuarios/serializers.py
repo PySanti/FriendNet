@@ -1,10 +1,10 @@
 from rest_framework import serializers
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from .utils.constants import BASE_USERNAME_MAX_LENGTH
+from .utils.constants import (BASE_USERNAME_MAX_LENGTH, BASE_EMAIL_MAX_LENGTH)
 
 class BaseUsuariosSerializers(serializers.Serializer):
     username = serializers.CharField(max_length=BASE_USERNAME_MAX_LENGTH)
-    email = serializers.EmailField(max_length=60)
+    email = serializers.EmailField(max_length=BASE_EMAIL_MAX_LENGTH)
     photo = serializers.SerializerMethodField('get_photo')
     def get_photo(self, obj):
         data = self.context['request']
@@ -18,13 +18,13 @@ class CreateUsuariosSerializer(BaseUsuariosSerializers):
 
 class UpdateUsuariosSerializer(BaseUsuariosSerializers):
     username = serializers.CharField(required=False, max_length=BASE_USERNAME_MAX_LENGTH)
-    email = serializers.EmailField(max_length=60)
+    email = serializers.EmailField(max_length=BASE_EMAIL_MAX_LENGTH)
 
 
 
 class ChangeEmailForActivationSerializer(serializers.Serializer):
     user_id = serializers.IntegerField()
-    new_email = serializers.EmailField(max_length=60)
+    new_email = serializers.EmailField(max_length=BASE_EMAIL_MAX_LENGTH)
 
 
 class ActivateUserSerializer(serializers.Serializer):
@@ -36,7 +36,7 @@ class GetUserDetailSerializer(serializers.Serializer):
 
 class CheckExistingUserSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=BASE_USERNAME_MAX_LENGTH)
-    email = serializers.EmailField()
+    email = serializers.EmailField(max_length=BASE_EMAIL_MAX_LENGTH)
 
 class ChangeUserPwdSerializer(serializers.Serializer):
     old_password = serializers.CharField()
@@ -47,11 +47,11 @@ class GetUsersListSerializer(serializers.Serializer):
     user_keyword = serializers.CharField(required=False)
 
 class GenerateSendSecurityCodeSerializer(serializers.Serializer):
-    user_email = serializers.EmailField()
+    user_email = serializers.EmailField(max_length=BASE_EMAIL_MAX_LENGTH)
     message = serializers.CharField()
 
 class CheckSecurityCodeSerializer(serializers.Serializer):
-    user_email = serializers.EmailField()
+    user_email = serializers.EmailField(max_length=BASE_EMAIL_MAX_LENGTH)
     code = serializers.CharField(max_length=10)
 
 
@@ -63,7 +63,7 @@ class EnterChatSerializer(serializers.Serializer):
 
 
 class RecoveryPasswordSerializer(serializers.Serializer):
-    email = serializers.EmailField()
+    email = serializers.EmailField(max_length=BASE_EMAIL_MAX_LENGTH)
     new_password = serializers.CharField()
     security_code = serializers.CharField(max_length=10)
 

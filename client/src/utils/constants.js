@@ -8,6 +8,7 @@ export const UNAUTHORIZED_STATUS_CODE = 401
 export const BASE_MESSAGE_MAX_LENGTH = 200;
 export const BASE_USERNAME_MAX_LENGTH = 15;
 export const BASE_USERNAME_MIN_LENGTH = 6;
+export const BASE_EMAIL_MAX_LENGTH = 60
 export const BASE_MESSAGES_LIST_PAGE_SIZE = 10;
 export const BASE_PASSWORD_MIN_LENGTH = 10;
 export const BASE_LOGIN_REQUIRED_ERROR_MSG = "requires_login"
@@ -28,7 +29,6 @@ export const BASE_SECURITY_CODE_CONSTRAINTS = {
             `Debes ingresar al menos ${BASE_SECURITY_CODE_LENGTH} caracteres`,
     },
 }
-export const BASE_EMAIL_MAX_LENGTH = 60
 
 export const BASE_PAGE_NOT_FOUND_LOG = "Pagina no encontrada :("
 export const BASE_EMAIL_CONSTRAINTS = {
