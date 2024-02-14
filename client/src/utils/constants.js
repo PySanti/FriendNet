@@ -11,6 +11,7 @@ export const BASE_USERNAME_MIN_LENGTH = 6;
 export const BASE_EMAIL_MAX_LENGTH = 60
 export const BASE_MESSAGES_LIST_PAGE_SIZE = 10;
 export const BASE_PASSWORD_MIN_LENGTH = 10;
+export const BASE_PASSWORD_MAX_LENGTH = 30
 export const BASE_LOGIN_REQUIRED_ERROR_MSG = "requires_login"
 export const BASE_UNEXPECTED_ERROR_MESSAGE = "unexpected_error"
 export const BASE_UNEXPECTED_ERROR_LOG = "¡ Error inesperado !"
@@ -55,7 +56,6 @@ export const BASE_USERNAME_CONSTRAINTS = {
         message : "No debe tener espacios"
     }
 };
-export const BASE_PASSWORD_MAX_LENGTH = 20
 export const BASE_PASSWORD_CONSTRAINTS = {
 
     required: {

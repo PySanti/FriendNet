@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from .utils.constants import (BASE_USERNAME_MAX_LENGTH, BASE_EMAIL_MAX_LENGTH)
+from .utils.constants import (BASE_USERNAME_MAX_LENGTH, BASE_EMAIL_MAX_LENGTH, BASE_PASSWORD_MAX_LENGTH)
 
 class BaseUsuariosSerializers(serializers.Serializer):
     username = serializers.CharField(max_length=BASE_USERNAME_MAX_LENGTH)
@@ -14,7 +14,7 @@ class BaseUsuariosSerializers(serializers.Serializer):
             return data['photo']
 
 class CreateUsuariosSerializer(BaseUsuariosSerializers):
-    password = serializers.CharField() 
+    password = serializers.CharField(max_length=BASE_PASSWORD_MAX_LENGTH) 
 
 class UpdateUsuariosSerializer(BaseUsuariosSerializers):
     username = serializers.CharField(required=False, max_length=BASE_USERNAME_MAX_LENGTH)
@@ -32,15 +32,15 @@ class ActivateUserSerializer(serializers.Serializer):
 
 class GetUserDetailSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=BASE_USERNAME_MAX_LENGTH)
-    password = serializers.CharField()
+    password = serializers.CharField(max_length=BASE_PASSWORD_MAX_LENGTH)
 
 class CheckExistingUserSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=BASE_USERNAME_MAX_LENGTH)
     email = serializers.EmailField(max_length=BASE_EMAIL_MAX_LENGTH)
 
 class ChangeUserPwdSerializer(serializers.Serializer):
-    old_password = serializers.CharField()
-    new_password = serializers.CharField()
+    old_password = serializers.CharField(max_length=BASE_PASSWORD_MAX_LENGTH)
+    new_password = serializers.CharField(max_length=BASE_PASSWORD_MAX_LENGTH)
 
 class GetUsersListSerializer(serializers.Serializer):
     session_user_id = serializers.IntegerField()
@@ -64,7 +64,7 @@ class EnterChatSerializer(serializers.Serializer):
 
 class RecoveryPasswordSerializer(serializers.Serializer):
     email = serializers.EmailField(max_length=BASE_EMAIL_MAX_LENGTH)
-    new_password = serializers.CharField()
+    new_password = serializers.CharField(max_length=BASE_PASSWORD_MAX_LENGTH)
     security_code = serializers.CharField(max_length=10)
 
 
