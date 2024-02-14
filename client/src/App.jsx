@@ -48,6 +48,9 @@ function App() {
       setExecutingInSmallDevice(true)
     }
     initStates(notifications, setNotifications)
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      console.log('Navegador en modo obscuro')
+    } 
   }, [])
 
 
