@@ -11,7 +11,7 @@ class Usuarios(AbstractBaseUser, PermissionsMixin):
     #* BASE ATTRS
 
     username        = models.CharField(max_length=15, unique=True)
-    email           = models.EmailField(unique=True)
+    email           = models.EmailField(unique=True, max_length=60)
     is_staff        = models.BooleanField()
     REQUIRED_FIELDS = ['email']
     USERNAME_FIELD  = 'username'

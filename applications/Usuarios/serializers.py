@@ -5,7 +5,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 
 class BaseUsuariosSerializers(serializers.Serializer):
     username = serializers.CharField()
-    email = serializers.EmailField()
+    email = serializers.EmailField(max_length=60)
     photo = serializers.SerializerMethodField('get_photo')
     def get_photo(self, obj):
         data = self.context['request']
@@ -19,13 +19,13 @@ class CreateUsuariosSerializer(BaseUsuariosSerializers):
 
 class UpdateUsuariosSerializer(BaseUsuariosSerializers):
     username = serializers.CharField(required=False)
-    email = serializers.EmailField(required=False)
+    email = serializers.EmailField(max_length=60)
 
 
 
 class ChangeEmailForActivationSerializer(serializers.Serializer):
     user_id = serializers.IntegerField()
-    new_email = serializers.EmailField()
+    new_email = serializers.EmailField(max_length=60)
 
 
 class ActivateUserSerializer(serializers.Serializer):

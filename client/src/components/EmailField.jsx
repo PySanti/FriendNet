@@ -1,4 +1,5 @@
 import { FormField } from "./FormField";
+import {BASE_EMAIL_MAX_LENGTH} from "../utils/constants"
 import {PropTypes} from "prop-types"
 /**
  * Componente creado para campos de email
@@ -15,6 +16,7 @@ export function EmailField({errors, registerObject, defaultValue}){
                 type            =   "text"
                 name            =   {registerObject.name}
                 id              =   {registerObject.name}
+                maxLength       =   {BASE_EMAIL_MAX_LENGTH}
                 {...registerObject}/>
         </FormField>
     )

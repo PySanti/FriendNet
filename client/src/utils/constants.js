@@ -28,6 +28,7 @@ export const BASE_SECURITY_CODE_CONSTRAINTS = {
             `Debes ingresar al menos ${BASE_SECURITY_CODE_LENGTH} caracteres`,
     },
 }
+export const BASE_EMAIL_MAX_LENGTH = 60
 
 export const BASE_PAGE_NOT_FOUND_LOG = "Pagina no encontrada :("
 export const BASE_EMAIL_CONSTRAINTS = {
