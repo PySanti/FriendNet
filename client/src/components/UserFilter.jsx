@@ -1,3 +1,4 @@
+import {BASE_USERNAME_MAX_LENGTH} from "../utils/constants"
 import "../styles/UserFilter.css"
 import {useUsersList} from "../store"
 import {useUserKeyword, useUserFilterInput} from "../store"
@@ -24,7 +25,7 @@ export function UserFilter(){
     }, [])
     return (
         <div className="user-filter-container">
-            <input ref={inputRef} placeholder="Busca un usuario" className="users-filter-input non-shadow-input" type="text" onChange={onLetterInput}/>
+            <input ref={inputRef} placeholder="Busca un usuario" className="users-filter-input non-shadow-input" type="text" onChange={onLetterInput} maxLength={BASE_USERNAME_MAX_LENGTH}/>
         </div>
     )
 }

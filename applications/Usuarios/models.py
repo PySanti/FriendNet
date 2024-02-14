@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from applications.Notifications.models import Notifications
 from .managers import UsuariosManager
-from .utils.constants import (BASE_USERNAME_MAX_LENGTH, BASE_EMAIL_MAX_LENGTH)
+from .utils.constants import (BASE_USERNAME_MAX_LENGTH, BASE_EMAIL_MAX_LENGTH, BASE_SECURITY_CODE_MAX_LENGTH)
 
 # Create your models here.
 class Usuarios(AbstractBaseUser, PermissionsMixin):
@@ -20,7 +20,7 @@ class Usuarios(AbstractBaseUser, PermissionsMixin):
     photo_link      = models.CharField(max_length=120, null=True)
     is_active       = models.BooleanField(default=False)
     notifications   = models.ManyToManyField(Notifications, blank=True)
-    security_code            = models.CharField(blank=True, max_length=10)
+    security_code            = models.CharField(blank=True, max_length=BASE_SECURITY_CODE_MAX_LENGTH)
     #* MANAGER
     objects         = UsuariosManager()
 
