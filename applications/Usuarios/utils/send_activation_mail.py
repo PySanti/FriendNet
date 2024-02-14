@@ -13,9 +13,9 @@ def activation_mail_html_content(message):
         </style>
     </head>
     <body>
-            <h3 class="content">
-                %s
-            </h3>
+        <h3 class="content">
+            %s
+        </h3>
     </body>
 </html>""" % ( message);
 
@@ -25,7 +25,7 @@ def send_activation_mail( email, message):
     """
     return send_mail(
         subject         =   message, 
-        html_message    =  activation_mail_html_content( message),
+        html_message    =  activation_mail_html_content(message),
         message         =   "", 
         from_email      =   "friendnet.inc@gmail.com", 
         recipient_list  =   [email])
