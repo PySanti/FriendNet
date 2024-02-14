@@ -5,13 +5,6 @@ def activation_mail_html_content(message):
 <html>
     <head>
         <style>
-            .title{
-                font-size : 30px;
-            }
-            .header-logo{
-                font-size : 30px;
-                width : 8em;
-            }
             *{
                 text-align : center;
                 font-family : sans-serif;
@@ -20,9 +13,6 @@ def activation_mail_html_content(message):
         </style>
     </head>
     <body>
-            <h1 class="title">
-                <img class="header-logo" src="https://res.cloudinary.com/dwcabo8hs/image/upload/v1707908787/friendnet/lbjmx9aqgziy2otvutfq.png"/>
-            </h1>
             <h3 class="content">
                 %s
             </h3>
