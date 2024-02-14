@@ -11,5 +11,5 @@ class GetMessagesHistorialSerializer(BaseMessagesSerializer):
     pass
 
 class SendMsgSerializer(BaseMessagesSerializer):
-    msg = serializers.CharField()
+    msg = serializers.CharField(max_length=200)
 
