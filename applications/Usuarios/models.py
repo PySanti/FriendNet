@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from applications.Notifications.models import Notifications
 from .managers import UsuariosManager
+from .utils.constants import BASE_USERNAME_MAX_LENGTH
 
 # Create your models here.
 class Usuarios(AbstractBaseUser, PermissionsMixin):
@@ -10,7 +11,7 @@ class Usuarios(AbstractBaseUser, PermissionsMixin):
     """
     #* BASE ATTRS
 
-    username        = models.CharField(max_length=15, unique=True)
+    username        = models.CharField(max_length=BASE_USERNAME_MAX_LENGTH, unique=True)
     email           = models.EmailField(unique=True, max_length=60)
     is_staff        = models.BooleanField()
     REQUIRED_FIELDS = ['email']

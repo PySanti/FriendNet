@@ -1,10 +1,9 @@
 from rest_framework import serializers
-from .models import Usuarios
 from django.core.files.uploadedfile import InMemoryUploadedFile
-
+from .utils.constants import BASE_USERNAME_MAX_LENGTH
 
 class BaseUsuariosSerializers(serializers.Serializer):
-    username = serializers.CharField()
+    username = serializers.CharField(max_length=BASE_USERNAME_MAX_LENGTH)
     email = serializers.EmailField(max_length=60)
     photo = serializers.SerializerMethodField('get_photo')
     def get_photo(self, obj):
@@ -18,7 +17,7 @@ class CreateUsuariosSerializer(BaseUsuariosSerializers):
     password = serializers.CharField() 
 
 class UpdateUsuariosSerializer(BaseUsuariosSerializers):
-    username = serializers.CharField(required=False)
+    username = serializers.CharField(required=False, max_length=BASE_USERNAME_MAX_LENGTH)
     email = serializers.EmailField(max_length=60)
 
 
@@ -32,11 +31,11 @@ class ActivateUserSerializer(serializers.Serializer):
     user_id=serializers.IntegerField()
 
 class GetUserDetailSerializer(serializers.Serializer):
-    username = serializers.CharField(max_length=15)
+    username = serializers.CharField(max_length=BASE_USERNAME_MAX_LENGTH)
     password = serializers.CharField()
 
 class CheckExistingUserSerializer(serializers.Serializer):
-    username = serializers.CharField(max_length=15)
+    username = serializers.CharField(max_length=BASE_USERNAME_MAX_LENGTH)
     email = serializers.EmailField()
 
 class ChangeUserPwdSerializer(serializers.Serializer):

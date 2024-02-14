@@ -2,6 +2,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 USERS_LIST_ATTRS = ["id", "username", "photo_link"]
+BASE_USERNAME_MAX_LENGTH = 15
 USER_SHOWABLE_FIELDS = [
     "username",
     "email",
