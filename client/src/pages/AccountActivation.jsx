@@ -82,7 +82,7 @@ export function AccountActivation() {
         return (
             <div className="centered-container">
                 <div className="account-activation-container">
-                    <Header msg={`Correo de activación enviado a ${props.userEmail}`}/>
+                    <Header msg={`Correo de activación enviado a ${props.userEmail.substring(0,10)}...${props.userEmail.substring(props.userEmail.length-10, props.userEmail.length)}`}/>
                     <Form 
                         onSubmitFunction={onSubmit} 
                         buttonMsg="Activar" 
