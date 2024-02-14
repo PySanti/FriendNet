@@ -35,7 +35,8 @@ export function UsersList(){
     let [firstUsersListCall, setFirstUsersListCall]                 = useFirstUsersListCall((state)=>[state.firstUsersListCall, state.setFirstUsersListCall])
     const navigate = useNavigate()
     const canChargeUsersList = (event)=>{
-        return ((event.target.scrollTop + event.target.clientHeight) >= event.target.scrollHeight) && (!scrollDetectorBlock) && (!noMoreUsers)
+        const bottomArrived = (event.target.scrollTop + event.target.clientHeight) >= (event.target.scrollHeight - (event.target.scrollHeight / 250))
+        return bottomArrived && (!scrollDetectorBlock) && (!noMoreUsers)
     }
     const updateScrollDetectorBlock = ()=>{
         setScrollDetectorBlock(true)
