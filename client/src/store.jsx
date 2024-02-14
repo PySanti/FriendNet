@@ -97,7 +97,11 @@ export const useExecutingInSmallDevice  = create((set)=>({
     setExecutingInSmallDevice: (new_val)=>(set(()=>({executingInSmallDevice : new_val}))),
 }))
 
-
+export const useDefaultDarkModeActivated  = create((set)=>({
+    defaultDarkModeActivated : false,
+    setDefaultDarkModeActivated: (new_val)=>(set(()=>({defaultDarkModeActivated : new_val}))),
+    reset : ()=>(set(()=>({defaultDarkModeActivated: false})))
+}))
 
 
 

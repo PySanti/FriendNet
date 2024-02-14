@@ -38,6 +38,7 @@ function App() {
   let [usersIdList, setUsersIdList]     = states.useUsersIdList((state)=>[state.usersIdList, state.setUsersIdList])
   let setExecutingInSmallDevice         = states.useExecutingInSmallDevice((state)=>(state.setExecutingInSmallDevice))
   let userKeyword                       = states.useUserKeyword((state)=>(state.userKeyword))
+  let setDefaultDarkModeActivated       = states.useDefaultDarkModeActivated((state)=>(state.setDefaultDarkModeActivated))
   const audioEffect = ()=>{
     const alertAudio = new Audio(alert)
     alertAudio.volume = 0.2
@@ -49,7 +50,7 @@ function App() {
     }
     initStates(notifications, setNotifications)
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      console.log('Navegador en modo obscuro')
+      setDefaultDarkModeActivated(true)
     } 
   }, [])
 
