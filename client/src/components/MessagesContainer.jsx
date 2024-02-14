@@ -88,7 +88,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     return (
         <div className="messages-container">
             {messagesHistorial.length !== 0 ?  
-                <div className="messages-list-container" ref={containerRef} onScroll={scrollHandler}>
+                <div className="messages-list-container scrollbar-container" ref={containerRef} onScroll={scrollHandler}>
                     {messagesHistorial.map(formatingFunction)}
                 </div>
                 : 

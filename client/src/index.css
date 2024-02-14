@@ -114,3 +114,6 @@ input:focus{
       --base-error-msg-font-size : 7.2px;
     }
 }
+.scrollbar-container{
+  scrollbar-width: thin;
+}

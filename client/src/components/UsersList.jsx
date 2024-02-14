@@ -124,7 +124,7 @@ export function UsersList(){
             <div className="users-list">
                 <UserFilter/>
                 {usersList.length > 0 ? 
-                    <div className="users-list-container"  onScroll={scrollDetector}>
+                    <div className="users-list-container scrollbar-container"  onScroll={scrollDetector}>
                         {usersList.map(formatingFunction)}
                     </div>
                     :
