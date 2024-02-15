@@ -175,7 +175,6 @@ class GetUsersListAPI(APIView):
                 return BASE_UNEXPECTED_ERROR_RESPONSE
         else:
             return BASE_SERIALIZER_ERROR_RESPONSE
-
 class ChangeEmailForActivationAPI(APIView):
     serializer_class        = ChangeEmailForActivationSerializer
     authentication_classes  = []
@@ -208,7 +207,6 @@ class ActivateUserAPI(APIView):
                 return BASE_UNEXPECTED_ERROR_RESPONSE
         else:
             return BASE_SERIALIZER_ERROR_RESPONSE
-
 class CheckSecurityCodeAPI(APIView):
     serializer_class        = CheckSecurityCodeSerializer
     authentication_classes  = []
@@ -229,7 +227,6 @@ class CheckSecurityCodeAPI(APIView):
                 return BASE_USER_NOT_EXISTS_RESPONSE
         else:
             return BASE_SERIALIZER_ERROR_RESPONSE
-
 class GenerateSendSecurityCodeAPI(APIView):
     serializer_class        = GenerateSendSecurityCodeSerializer
     authentication_classes  = []

@@ -1,9 +1,0 @@
-.user-form-container{
-    display: flex;
-    align-items: center;
-}
-@media screen and (max-width : 500px){
-    .user-form-container{
-        flex-direction: column;
-    }
-}
