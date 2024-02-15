@@ -19,6 +19,8 @@ class ChatWSConsumer(WebsocketConsumer):
         if data['type'] == "group_creation":
             discard_channel_if_found(self.channel_name)
             async_to_sync(self.channel_layer.group_add)(messages_group_name(data['value']['session_user_id'], data['value']['clicked_user_id']),self.channel_name)
+        if data['type'] == "group_delete":
+            discard_channel_if_found(self.channel_name)
         print_pretty_groups()
 
 
