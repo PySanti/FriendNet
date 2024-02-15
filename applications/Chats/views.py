@@ -67,6 +67,8 @@ class SendMsgAPI(APIView):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
             try:
+                if (request.user.id == request.data["receiver_id"]):
+                    return Response({"error" : "same_user"}, status=status.HTTP_400_BAD_REQUEST)
                 sender_user = request.user
                 receiver_user = Usuarios.objects.get(id=request.data['receiver_id'])
                 if (not Notifications.objects.has_notification(receiver_user, sender_user) and (not messages_group_is_full(receiver_user.id, sender_user.id))):

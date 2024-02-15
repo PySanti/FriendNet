@@ -319,6 +319,8 @@ class EnterChatApi(APIView):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
             data = request.data
+            if (request.user.id == data["receiver_id"]):
+                return Response({"error" : "same_user"}, status=status.HTTP_400_BAD_REQUEST)
             try:
                 receiver_user = Usuarios.objects.get(id=data["receiver_id"])
             except Exception:
