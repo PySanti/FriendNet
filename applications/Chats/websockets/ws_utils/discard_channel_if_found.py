@@ -8,6 +8,10 @@ def discard_channel_if_found(target_channel):
         Si el canal es encontrado en algún grupo, lo elimina y retorna True
         Si el canal no es encontrado en ningún grupo, retorna False
     """
+
+    # Recordar, que en este punto, si existe manera de eliminar presencia de channels
+    # usando la key del grupo. Sin embargo, lo hacemos de esta manera para evitar posibles fallos
+    # Ademas que esta manera no es tan ineficiente, comprobado
     print_pretty_groups()
     channel_layer = get_channel_layer()
     for group_name,channels in channel_layer.groups.copy().items():
