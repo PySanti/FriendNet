@@ -13,21 +13,26 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 
 from datetime import timedelta
+from .utils.read_secret_data import read_secret_data
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+SECRET_FILE_PATH = BASE_DIR / 'secrets.json'
+SECRETS = read_secret_data(SECRET_FILE_PATH)
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-
+# BASE CONFIGURATIONS
 
 
 
-# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+ALLOWED_HOSTS = []
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "http://localhost:5175",
+    "http://localhost:5176",
+]
 
-# Application definition
+
 
 DJANGO_APPS = [
     'django.contrib.admin',
@@ -51,9 +56,12 @@ THIRD_PARTY_APPS = [
     "corsheaders",
     "rest_framework_simplejwt.token_blacklist",
 ]
-SECRET_FILE_PATH = BASE_DIR.parent / 'secrets.json'
 INSTALLED_APPS = LOCAL_APPS + DJANGO_APPS + THIRD_PARTY_APPS
 
+
+SECRET_KEY = SECRETS['KEY']
+WSGI_APPLICATION = 'FriendNet.wsgi.application'
+ASGI_APPLICATION = 'FriendNet.asgi.application'  # new
 DJANGO_MIDDLEWARES =  [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -96,13 +104,6 @@ CACHES = {
     }
 }
 
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
-
-# Password validation
-# https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -119,37 +120,15 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.1/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.1/howto/static-files/
-
 STATIC_URL = 'static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'Usuarios.Usuarios'
-
-
-# frontend servers
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "http://localhost:5174",
-    "http://localhost:5175",
-    "http://localhost:5176",
-]
 
 
 SIMPLE_JWT = {
@@ -190,4 +169,31 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
+
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': SECRETS['LOCAL_DB'],
+        'USER': SECRETS['USER'],
+        'PASSWORD': SECRETS['PASSWORD'],
+        'HOST': SECRETS['HOST'],
+        'PORT': SECRETS['PORT'],
+    }
+}
+
+CLOUDINARY_URL = f'cloudinary://{SECRETS["CLOUDINARY__API_KEY"]}:{SECRETS["CLOUDINARY__API_SECRET"]}@{SECRETS["CLOUDINARY__CLOUD_NAME"]}'    
+
+CHANNEL_LAYERS = {
+    'default' : {
+        'BACKEND' : 'channels.layers.InMemoryChannelLayer'
+    }
+}
+EMAIL_BACKEND       = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST          = 'smtp.gmail.com'
+EMAIL_PORT          = 587
+EMAIL_USE_TLS       = True
+EMAIL_HOST_USER     = "friendnet.inc@gmail.com"
+EMAIL_HOST_PASSWORD = SECRETS['EMAIL_PASSWORD']
 
