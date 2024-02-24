@@ -183,7 +183,7 @@ SIMPLE_JWT = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': SECRETS['LOCAL_DB'],
+        'NAME': SECRETS['LOCAL_DB'] if DEBUG else SECRETS['DEPLOY_DB'],
         'USER': SECRETS['USER'],
         'PASSWORD': SECRETS['PASSWORD'],
         'HOST': SECRETS['HOST'],
@@ -208,22 +208,22 @@ EMAIL_HOST_PASSWORD = SECRETS['EMAIL_PASSWORD']
 
 
 # logging
-
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "handlers": {
-        "file": {
-            "level": "DEBUG",
-            "class": "logging.FileHandler",
-            "filename":  "/root/projects/FriendNet/logs/django.log",
+if not DEBUG:
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "handlers": {
+            "file": {
+                "level": "DEBUG",
+                "class": "logging.FileHandler",
+                "filename":  "/root/projects/FriendNet/logs/django.log",
+            },
         },
-    },
-    "loggers": {
-        "django": {
-            "handlers": ["file"],
-            "level": "DEBUG",
-            "propagate": True,
+        "loggers": {
+            "django": {
+                "handlers": ["file"],
+                "level": "DEBUG",
+                "propagate": True,
+            },
         },
-    },
-}
+    }
