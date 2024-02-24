@@ -207,3 +207,25 @@ EMAIL_USE_TLS       = True
 EMAIL_HOST_USER     = "friendnet.inc@gmail.com"
 EMAIL_HOST_PASSWORD = SECRETS['EMAIL_PASSWORD']
 
+
+
+# logging
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "file": {
+            "level": "DEBUG",
+            "class": "logging.FileHandler",
+            "filename":  "/root/projects/FriendNet/logs/django.log",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["file"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
+    },
+}
