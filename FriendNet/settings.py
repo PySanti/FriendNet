@@ -24,14 +24,12 @@ SECRETS = read_secret_data(SECRET_FILE_PATH)
 # BASE CONFIGURATIONS
 
 
-
+BASE_ALLOWED_HOSTS = ('https://friendnet.netlify.app', 'friendnet.online', '64.23.156.104')
 DEBUG = False
-ALLOWED_HOSTS = [
-    'https://friendnet.netlify.app', 'friendnet.online'
-]
-CORS_ALLOWED_ORIGINS = ('https://friendnet.netlify.app', 'friendnet.online')
+ALLOWED_HOSTS = BASE_ALLOWED_HOSTS
+CORS_ALLOWED_ORIGINS = BASE_ALLOWED_HOSTS
 CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = ('https://friendnet.netlify.app', 'friendnet.online')
+CORS_ORIGIN_WHITELIST = BASE_ALLOWED_HOSTS
 
 # https settings
 SESSION_COOKIE_SECURE = True
