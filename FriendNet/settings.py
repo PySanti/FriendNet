@@ -29,6 +29,7 @@ DEBUG = False
 ALLOWED_HOSTS = [
     'https://friendnet.netlify.app'
 ]
+CORS_ALLOWED_ORIGINS = ('https://friendnet.netlify.app',)
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = ('https://friendnet.netlify.app',)
 
