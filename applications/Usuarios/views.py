@@ -124,7 +124,6 @@ class GetUserDetailAPI(APIView):
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
-            print(request.data)
             try:
                 if Usuarios.objects.user_exists(request.data['username']):
                     user = Usuarios.objects.get(username=request.data['username'])
