@@ -26,13 +26,11 @@ SECRETS = read_secret_data(SECRET_FILE_PATH)
 
 
 DEBUG = False
-ALLOWED_HOSTS = (
-    "190.206.219.78"
-,)
+ALLOWED_HOSTS = [
+    'https://friendnet.netlify.app'
+]
 CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = (
-    "190.206.219.78"
-,)
+CORS_ORIGIN_WHITELIST = ('https://friendnet.netlify.app',)
 
 
 
