@@ -24,7 +24,7 @@ SECRETS = read_secret_data(SECRET_FILE_PATH)
 # BASE CONFIGURATIONS
 
 
-BASE_ALLOWED_HOSTS = ('https://friendnet.netlify.app', 'https://friendnet.online', 'http://64.23.156.104')
+BASE_ALLOWED_HOSTS = ('https://friendnet.netlify.app', 'friendnet.online', '64.23.156.104')
 DEBUG = False
 ALLOWED_HOSTS = BASE_ALLOWED_HOSTS
 CORS_ALLOWED_ORIGINS = BASE_ALLOWED_HOSTS
