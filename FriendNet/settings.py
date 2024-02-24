@@ -27,13 +27,12 @@ SECRETS = read_secret_data(SECRET_FILE_PATH)
 
 DEBUG = False
 ALLOWED_HOSTS = [
-    # 'https://friendnet.netlify.app'
-    "*"
+    'https://friendnet.netlify.app'
 ]
-CORS_ALLOWED_ORIGINS = [
-    # 'https://friendnet.netlify.app'
-    "*"
-]
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = ('https://friendnet.netlify.app',)
+
+
 
 
 
@@ -66,9 +65,9 @@ SECRET_KEY = SECRETS['KEY']
 WSGI_APPLICATION = 'FriendNet.wsgi.application'
 ASGI_APPLICATION = 'FriendNet.asgi.application'  # new
 DJANGO_MIDDLEWARES =  [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
