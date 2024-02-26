@@ -24,22 +24,37 @@ SECRETS = read_secret_data(SECRET_FILE_PATH)
 # BASE CONFIGURATIONS
 
 
-BASE_ALLOWED_HOSTS = ['https://friendnet.netlify.app', 'friendnet.online', '64.23.156.104']
+
 DEBUG = False
-ALLOWED_HOSTS = BASE_ALLOWED_HOSTS
-CORS_ALLOWED_ORIGINS = BASE_ALLOWED_HOSTS
-CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = BASE_ALLOWED_HOSTS
-APPEND_SLASH = False
 
-# https settings
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_SSL_REDIRECT = True
+if (DEBUG):
+    CORS_ALLOWED_ORIGINS = [
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "http://localhost:5175",
+        "http://localhost:5176",
+    ]
 
-SECURE_HSTS_SECONDS = 31536000
-SECURE_HSTS_PRELOAD = True
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+else:
+    BASE_ALLOWED_HOSTS = ['https://friendnet.netlify.app', 'friendnet.online', '64.23.156.104']
+    ALLOWED_HOSTS = BASE_ALLOWED_HOSTS
+    CORS_ALLOWED_ORIGINS = BASE_ALLOWED_HOSTS
+    CORS_ORIGIN_ALLOW_ALL = False
+    CORS_ORIGIN_WHITELIST = BASE_ALLOWED_HOSTS
+    APPEND_SLASH = False
+
+    # https settings
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_SSL_REDIRECT = True
+
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_PRELOAD = True
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+
+
+
 
 DJANGO_APPS = [
     'django.contrib.admin',
