@@ -25,7 +25,7 @@ SECRETS = read_secret_data(SECRET_FILE_PATH)
 
 
 
-DEBUG = False
+DEBUG = True
 
 if (DEBUG):
     CORS_ALLOWED_ORIGINS = [
@@ -118,14 +118,6 @@ TEMPLATES = [
         },
     },
 ]
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'unique-snowflake',
-        'TIMEOUT' : None
-    }
-}
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -208,15 +200,27 @@ DATABASES = {
 
 CLOUDINARY_URL = f'cloudinary://{SECRETS["CLOUDINARY__API_KEY"]}:{SECRETS["CLOUDINARY__API_SECRET"]}@{SECRETS["CLOUDINARY__CLOUD_NAME"]}'    
 
-
+REDIS_URL = 'rediss://localhost:6379/0'
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("redis-server-name", 6379)],
+            "hosts": ['redis://localhost:6379'],
         },
     },
 }
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/1',  # Change this according to your Redis server's URL & port
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'TIMEOUT' : None
+        }
+    }
+}
+
+
 
 EMAIL_BACKEND       = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST          = 'smtp.gmail.com'

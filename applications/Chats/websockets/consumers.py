@@ -1,26 +1,37 @@
 from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import async_to_sync
-from .ws_utils.discard_channel_if_found import discard_channel_if_found
 from .ws_utils.print_pretty_groups import print_pretty_groups
 import json
 from .ws_utils.broadcast_dict import broadcast_dict
 from .ws_utils.messages_group_name import messages_group_name
+from .ws_utils.manage_chat_groups import manage_chat_groups
 
 class ChatWSConsumer(WebsocketConsumer):
     def connect(self):
         self.accept()
         print(f'Generando conexion a channel -> {self.channel_name}')
+    
+    def _discard_channel_from_groups(self):
+        async_to_sync(self.channel_layer.group_discard)(self.scope["group_name"], self.channel_name)
+        manage_chat_groups("discard", {"group_name" : self.scope["group_name"] , "channel_name" : self.channel_name})
+        self.scope["group_name"] = None
 
     def disconnect(self, close_code):
-        discard_channel_if_found(self.channel_name)
+        if ("group_name" in self.scope and self.scope["group_name"]):
+            self._discard_channel_from_groups()
+        print_pretty_groups()
 
     def receive(self, text_data):
         data = json.loads(text_data)
         if data['type'] == "group_creation":
-            discard_channel_if_found(self.channel_name)
-            async_to_sync(self.channel_layer.group_add)(messages_group_name(data['value']['session_user_id'], data['value']['clicked_user_id']),self.channel_name)
+            if (("group_name" in self.scope) and self.scope["group_name"]):
+                self._discard_channel_from_groups()
+            self.scope["group_name"] = messages_group_name(data['value']['session_user_id'], data['value']['clicked_user_id'])
+            async_to_sync(self.channel_layer.group_add)(self.scope["group_name"],self.channel_name)
+            manage_chat_groups("append", {"group_name" : self.scope["group_name"] , "channel_name" : self.channel_name})
+
         if data['type'] == "group_delete":
-            discard_channel_if_found(self.channel_name)
+            self._discard_channel_from_groups()
         print_pretty_groups()
 
 

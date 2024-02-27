@@ -1,12 +1,12 @@
 from django.contrib.auth.models import BaseUserManager
-from django.contrib.auth import login
-from django.utils.timezone import  now
-from django.contrib.auth.hashers import check_password
+import redis
 from .utils.constants import (
     USERS_LIST_ATTRS,
     USER_SHOWABLE_FIELDS)
-from channels.layers import get_channel_layer
 from .utils.add_istyping_field import add_istyping_field
+from django.core.cache import cache
+
+
 class UsuariosManager(BaseUserManager):
     def _create_user(self, username, password, email, is_staff, is_superuser, **kwargs):
         new_user = self.model(
@@ -28,7 +28,9 @@ class UsuariosManager(BaseUserManager):
             Revisara si existe algun grupo con el id del usuario, basandose en el estandar de
             los websockets de notificaciones
         """
-        return str(user_id) in get_channel_layer().groups
+        # cache.set("notifications", {})
+        # cache.set("chats", {})
+        return cache.get("notifications") and (str(user_id) in cache.get('notifications'))
     def activate_user(self, user):
         """
             Realiza las funciones necesarias para activar por completo

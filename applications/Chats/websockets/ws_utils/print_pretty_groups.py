@@ -1,9 +1,12 @@
-from channels.layers import get_channel_layer
+from django.core.cache import cache
 def print_pretty_groups():
     """
         Imprimira los grupos actuales almacenados en el channel layer
     """
     print(" ------------------------------------------------ ")
     print('Grupos')
-    for k,v in get_channel_layer().groups.items():
-        print(f'{k} -> {v}')
+    modes = ["notifications", "chats"]
+    for m in modes:
+        if (cache.get(m)):
+            for k,v in cache.get(m).items():
+                print(f'{k} -> {v}')
