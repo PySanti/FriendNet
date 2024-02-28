@@ -14,6 +14,7 @@ def manage_notifications_groups(mode,  val=None):
             groups[val["user_id"]].remove(val["channel_name"])
             if (len(groups[val["user_id"]]) == 0):
                 groups.pop(val["user_id"])
+
         cache.set("notifications", groups)
         return groups
 

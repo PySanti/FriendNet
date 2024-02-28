@@ -200,7 +200,6 @@ DATABASES = {
 
 CLOUDINARY_URL = f'cloudinary://{SECRETS["CLOUDINARY__API_KEY"]}:{SECRETS["CLOUDINARY__API_SECRET"]}@{SECRETS["CLOUDINARY__CLOUD_NAME"]}'    
 
-REDIS_URL = 'rediss://localhost:6379/0'
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
@@ -215,8 +214,8 @@ CACHES = {
         'LOCATION': 'redis://127.0.0.1:6379/1',  # Change this according to your Redis server's URL & port
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-            'TIMEOUT' : None
-        }
+        },
+        'TIMEOUT' : None
     }
 }
 
