@@ -36,7 +36,6 @@ class NotificationsWSConsumer(WebsocketConsumer):
 
     def receive(self, text_data):
         data = json.loads(text_data)
-
         if (data["type"] == "typing_inform"):
             value = data["value"]
             if notification_websocket_is_opened(value["clicked_user_id"]):
