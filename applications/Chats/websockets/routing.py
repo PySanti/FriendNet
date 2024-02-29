@@ -4,5 +4,5 @@ from django.urls import (
 )
 
 chat_websocket_urlpatterns = [
-    path('wss/chat/', ChatWSConsumer.as_asgi()),
+    path('ws/chat/', ChatWSConsumer.as_asgi()),
 ]
