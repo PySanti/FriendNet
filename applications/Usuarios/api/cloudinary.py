@@ -27,8 +27,8 @@ def save_image_cloudinary(image, overwriting=False, current_publicid=None ):
     """
     image_size = get_image_size(copy.deepcopy(image.file), BASE_IMAGES_WIDTH)
     QUALITY = {
-        'width' : image_size[0],
-        'height' : image_size[1],
+        # 'width' : image_size[0],
+        # 'height' : image_size[1],
         'quality' : 'auto:best',
     }
     BASE_IMAGE_UPLOADING_ARGS = {
