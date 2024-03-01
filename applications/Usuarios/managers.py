@@ -28,8 +28,8 @@ class UsuariosManager(BaseUserManager):
             Revisara si existe algun grupo con el id del usuario, basandose en el estandar de
             los websockets de notificaciones
         """
-        cache.set("notifications", {})
-        cache.set("chats", {})
+        # cache.set("notifications", {})
+        # cache.set("chats", {})
         return cache.get("notifications") and (str(user_id) in cache.get('notifications'))
     def activate_user(self, user):
         """
