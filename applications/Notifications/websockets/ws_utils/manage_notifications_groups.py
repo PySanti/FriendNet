@@ -11,7 +11,7 @@ def manage_notifications_groups(mode,  val=None):
             else:
                 groups[val["user_id"]] = [val["channel_name"]]
         elif (mode == "delete"):
-            if (val["channel_name"] in groups[val["user_id"]])
+            if (val["channel_name"] in groups[val["user_id"]]):
                 groups[val["user_id"]].remove(val["channel_name"])
             if (len(groups[val["user_id"]]) == 0):
                 groups.pop(val["user_id"])
