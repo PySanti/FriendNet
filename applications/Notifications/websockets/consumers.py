@@ -13,15 +13,17 @@ class NotificationsWSConsumer(WebsocketConsumer):
     def connect(self):
         self.accept()
         user_id = str(self.scope['url_route']['kwargs']['user_id'])
+        groups = manage_notifications_groups("get")
 
-        async_to_sync(self.channel_layer.group_add)(user_id,self.channel_name)
-        groups = manage_notifications_groups('append', {"user_id" : user_id, "channel_name" : self.channel_name})
+        if ((user_id not in groups) or ((user_id in groups) and (self.channel_name not in groups[user_id]))):
+            async_to_sync(self.channel_layer.group_add)(user_id,self.channel_name)
+            groups = manage_notifications_groups('append', {"user_id" : user_id, "channel_name" : self.channel_name})
 
-        if len(groups[user_id])>1:
-            async_to_sync(self.channel_layer.group_send)(user_id,{"type" : "broadcast_connection_error_handler"})
-        else:
-            broadcast_connection_inform(user_id=user_id, connected=True)
-        print_pretty_groups()
+            if len(groups[user_id])>1:
+                async_to_sync(self.channel_layer.group_send)(user_id,{"type" : "broadcast_connection_error_handler"})
+            else:
+                broadcast_connection_inform(user_id=user_id, connected=True)
+            print_pretty_groups()
 
     def disconnect(self, close_code):
         print('-> Desconectando websocket de notificacion')
