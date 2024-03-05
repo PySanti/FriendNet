@@ -37,14 +37,11 @@ class NotificationsWSConsumer(WebsocketConsumer):
         print_pretty_groups()
 
     def receive(self, text_data):
-        if (text_data == "prueba"):
-            print('Senial de prueba recibida')
-        else:
-            data = json.loads(text_data)
-            if (data["type"] == "typing_inform"):
-                value = data["value"]
-                if notification_websocket_is_opened(value["clicked_user_id"]):
-                    broadcast_typing_inform(**value)
+        data = json.loads(text_data)
+        if (data["type"] == "typing_inform"):
+            value = data["value"]
+            if notification_websocket_is_opened(value["clicked_user_id"]):
+                broadcast_typing_inform(**value)
 
     def broadcast_typing_inform_handler(self, event):
         self.send(text_data=json.dumps(broadcast_dict(broadcast_type="typing_inform", broadcast_value=event["value"])))
