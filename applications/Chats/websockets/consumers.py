@@ -9,7 +9,7 @@ from .ws_utils.manage_chat_groups import manage_chat_groups
 class ChatWSConsumer(WebsocketConsumer):
     def connect(self):
         self.accept()
-        print(f'Generando conexion a channel -> {self.channel_name}')
+        # print(f'Generando conexion a channel -> {self.channel_name}')
     
     def _discard_channel_from_groups(self):
         async_to_sync(self.channel_layer.group_discard)(self.scope["group_name"], self.channel_name)
@@ -19,7 +19,7 @@ class ChatWSConsumer(WebsocketConsumer):
     def disconnect(self, close_code):
         if ("group_name" in self.scope and self.scope["group_name"]):
             self._discard_channel_from_groups()
-        print_pretty_groups()
+        # print_pretty_groups()
 
     def receive(self, text_data):
         data = json.loads(text_data)
@@ -36,7 +36,7 @@ class ChatWSConsumer(WebsocketConsumer):
 
         if data['type'] == "group_delete":
             self._discard_channel_from_groups()
-        print_pretty_groups()
+        # print_pretty_groups()
 
 
     def broadcast_message_handler(self, event):

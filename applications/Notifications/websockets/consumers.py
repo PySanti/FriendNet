@@ -23,7 +23,7 @@ class NotificationsWSConsumer(WebsocketConsumer):
                 async_to_sync(self.channel_layer.group_send)(user_id,{"type" : "broadcast_connection_error_handler"})
             else:
                 broadcast_connection_inform(user_id=user_id, connected=True)
-            print_pretty_groups()
+            # print_pretty_groups()
 
     def disconnect(self, close_code):
         print('-> Desconectando websocket de notificacion')
@@ -34,7 +34,7 @@ class NotificationsWSConsumer(WebsocketConsumer):
         manage_notifications_groups('delete', {"user_id" : user_id, "channel_name" : self.channel_name})
         broadcast_connection_inform(user_id=user_id, connected=False)
 
-        print_pretty_groups()
+        # print_pretty_groups()
 
     def receive(self, text_data):
         if (text_data == "prueba"):
