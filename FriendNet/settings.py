@@ -25,7 +25,7 @@ SECRETS = read_secret_data(SECRET_FILE_PATH)
 
 
 
-DEBUG = True
+DEBUG = False
 
 if (DEBUG):
     CORS_ALLOWED_ORIGINS = [
