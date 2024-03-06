@@ -43,8 +43,7 @@ class NotificationsWSConsumer(WebsocketConsumer):
             if notification_websocket_is_opened(value["clicked_user_id"]):
                 broadcast_typing_inform(**value)
         elif (data["type"] == "ping"):
-            print("Recibiendo ping")
-            self.send("pong")
+            self.send(text_data=json.dumps({"type" : "pong"}))
 
 
     def broadcast_typing_inform_handler(self, event):
