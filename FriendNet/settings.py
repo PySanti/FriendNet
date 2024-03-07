@@ -257,7 +257,7 @@ if not DEBUG:
     'handlers': {
         'websocket': {
             'class': 'logging.FileHandler',
-            'filename': '/root/projects/FriendNet/logs/websocket.log ',  # Ruta al archivo de log
+            'filename': '/root/projects/FriendNet/logs/websocket.log',  # Ruta al archivo de log
         },
     },
     'loggers': {
