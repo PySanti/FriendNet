@@ -5,7 +5,7 @@ def print_pretty_groups():
     """
         Imprimira los grupos actuales almacenados en el channel layer
     """
-    logger = logging.getLogger(__name__)
+    logger = logging.getLogger('django.channels')
     logger.info(" ------------------------------------------------ ")
     modes = ["notifications", "chats"]
     for m in modes:

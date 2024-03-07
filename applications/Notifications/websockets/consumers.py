@@ -11,7 +11,7 @@ from applications.Usuarios.utils.handle_initial_notification_ids import handle_i
 from .ws_utils.manage_notifications_groups import manage_notifications_groups
 
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('django.channels')
 
 class NotificationsWSConsumer(WebsocketConsumer):
     def connect(self):
