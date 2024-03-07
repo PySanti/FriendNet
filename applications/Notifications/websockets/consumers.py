@@ -1,3 +1,4 @@
+import time
 from channels.generic.websocket import WebsocketConsumer
 import logging
 from asgiref.sync import async_to_sync
@@ -50,6 +51,7 @@ class NotificationsWSConsumer(WebsocketConsumer):
             if notification_websocket_is_opened(value["clicked_user_id"]):
                 broadcast_typing_inform(**value)
         elif (data["type"] == "ping"):
+            logger.info(f"pong : {time.time()}")
             user_id = str(self.scope['url_route']['kwargs']['user_id'])
             async_to_sync(self.channel_layer.group_send)(user_id, {"type" : "broadcast_pong"})
 
