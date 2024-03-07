@@ -1,4 +1,5 @@
 from channels.generic.websocket import WebsocketConsumer
+import logging
 from asgiref.sync import async_to_sync
 from applications.Chats.websockets.ws_utils.print_pretty_groups import print_pretty_groups
 import json
@@ -9,11 +10,15 @@ from .ws_utils.notification_websocket_is_opened import notification_websocket_is
 from applications.Usuarios.utils.handle_initial_notification_ids import handle_initial_notification_ids
 from .ws_utils.manage_notifications_groups import manage_notifications_groups
 
+
+logger = logging.getLogger(__name__)
+
 class NotificationsWSConsumer(WebsocketConsumer):
     def connect(self):
         self.accept()
         user_id = str(self.scope['url_route']['kwargs']['user_id'])
         groups = manage_notifications_groups("get")
+        logger.info(f'-> Conectando websocket de notificacion, {user_id}')
 
         if ((user_id not in groups) or ((user_id in groups) and (self.channel_name not in groups[user_id]))):
             async_to_sync(self.channel_layer.group_add)(user_id,self.channel_name)
@@ -26,8 +31,9 @@ class NotificationsWSConsumer(WebsocketConsumer):
             print_pretty_groups()
 
     def disconnect(self, close_code):
-        print('-> Desconectando websocket de notificacion')
         user_id = str(self.scope['url_route']['kwargs']['user_id'])
+        logger.info(f'-> Desconectando websocket de notificacion, {user_id}')
+
         
         if (user_id in manage_notifications_groups("get")):
             async_to_sync(self.channel_layer.group_discard)(user_id, self.channel_name)
