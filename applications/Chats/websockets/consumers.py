@@ -5,6 +5,9 @@ import json
 from .ws_utils.broadcast_dict import broadcast_dict
 from .ws_utils.messages_group_name import messages_group_name
 from .ws_utils.manage_chat_groups import manage_chat_groups
+import logging
+
+logger = logging.getLogger('django.channels')
 
 class ChatWSConsumer(WebsocketConsumer):
     def connect(self):
@@ -18,6 +21,7 @@ class ChatWSConsumer(WebsocketConsumer):
 
     def disconnect(self, close_code):
         if ("group_name" in self.scope and self.scope["group_name"]):
+            logging.info(f"Desconectando websocket de chat, {self.scope["group_name"]}:{self.channel_name[-2:]}")
             self._discard_channel_from_groups()
         print_pretty_groups()
 
@@ -31,6 +35,7 @@ class ChatWSConsumer(WebsocketConsumer):
             groups = manage_chat_groups("get")
             group_name = self.scope["group_name"]
             if (((group_name in groups) and (self.channel_name not in groups[group_name])) or (group_name not in groups)):
+                logging.info(f"Agregando websocket de chat, {self.scope["group_name"]}:{self.channel_name[-2:]}")
                 async_to_sync(self.channel_layer.group_add)(self.scope["group_name"],self.channel_name)
                 manage_chat_groups("append", {"group_name" : self.scope["group_name"] , "channel_name" : self.channel_name})
 
