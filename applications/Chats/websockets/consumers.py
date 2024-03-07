@@ -21,7 +21,7 @@ class ChatWSConsumer(WebsocketConsumer):
 
     def disconnect(self, close_code):
         if ("group_name" in self.scope and self.scope["group_name"]):
-            logger.info(f"Desconectando websocket de chat, {self.scope["group_name"]}:{self.channel_name[-2:]}")
+            logger.info(f"Desconectando websocket de chat, {self.scope["group_name"]}:{self.channel_name}")
             self._discard_channel_from_groups()
         print_pretty_groups()
 
@@ -35,7 +35,7 @@ class ChatWSConsumer(WebsocketConsumer):
             groups = manage_chat_groups("get")
             group_name = self.scope["group_name"]
             if (((group_name in groups) and (self.channel_name not in groups[group_name])) or (group_name not in groups)):
-                logger.info(f"Agregando websocket de chat, {self.scope["group_name"]}:{self.channel_name[-2:]}")
+                logger.info(f"Agregando websocket de chat, {self.scope["group_name"]}:{self.channel_name}")
                 async_to_sync(self.channel_layer.group_add)(self.scope["group_name"],self.channel_name)
                 manage_chat_groups("append", {"group_name" : self.scope["group_name"] , "channel_name" : self.channel_name})
 
