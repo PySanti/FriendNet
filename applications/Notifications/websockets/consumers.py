@@ -27,14 +27,15 @@ class NotificationsWSConsumer(WebsocketConsumer):
 
     def disconnect(self, close_code):
         print('-> Desconectando websocket de notificacion')
-        user_id = self.scope['url_route']['kwargs']['user_id']
+        user_id = str(self.scope['url_route']['kwargs']['user_id'])
+        
+        if (user_id in manage_notifications_groups("get")):
+            async_to_sync(self.channel_layer.group_discard)(user_id, self.channel_name)
+            handle_initial_notification_ids('delete', user_id )
+            manage_notifications_groups('delete', {"user_id" : user_id, "channel_name" : self.channel_name})
+            broadcast_connection_inform(user_id=user_id, connected=False)
 
-        async_to_sync(self.channel_layer.group_discard)(user_id, self.channel_name)
-        handle_initial_notification_ids('delete', user_id )
-        manage_notifications_groups('delete', {"user_id" : user_id, "channel_name" : self.channel_name})
-        broadcast_connection_inform(user_id=user_id, connected=False)
-
-        print_pretty_groups()
+            print_pretty_groups()
 
     def receive(self, text_data):
         data = json.loads(text_data)
@@ -45,6 +46,8 @@ class NotificationsWSConsumer(WebsocketConsumer):
         elif (data["type"] == "ping"):
             user_id = str(self.scope['url_route']['kwargs']['user_id'])
             async_to_sync(self.channel_layer.group_send)(user_id, {"type" : "broadcast_pong"})
+
+
 
 
     def broadcast_pong(self, event):
