@@ -50,16 +50,8 @@ class NotificationsWSConsumer(WebsocketConsumer):
             value = data["value"]
             if notification_websocket_is_opened(value["clicked_user_id"]):
                 broadcast_typing_inform(**value)
-        elif (data["type"] == "ping"):
-            logger.info(f"pong : {time.time()}")
-            user_id = str(self.scope['url_route']['kwargs']['user_id'])
-            async_to_sync(self.channel_layer.group_send)(user_id, {"type" : "broadcast_pong"})
 
 
-
-
-    def broadcast_pong(self, event):
-        self.send(text_data=json.dumps(broadcast_dict(broadcast_type="pong")))
     def broadcast_typing_inform_handler(self, event):
         self.send(text_data=json.dumps(broadcast_dict(broadcast_type="typing_inform", broadcast_value=event["value"])))
     def broadcast_notification_handler(self, event):
