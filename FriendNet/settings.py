@@ -251,3 +251,20 @@ if not DEBUG:
             },
         },
     }
+    LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'websocket': {
+            'class': 'logging.FileHandler',
+            'filename': '/root/projects/FriendNet/logs/websocket.log ',  # Ruta al archivo de log
+        },
+    },
+    'loggers': {
+        'django.channels': {
+            'handlers': ['websocket'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
