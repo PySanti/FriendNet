@@ -28,7 +28,6 @@ class NotificationsWSConsumer(WebsocketConsumer):
 
     def connect(self):
         self.accept()
-
         user_id = str(self.scope['url_route']['kwargs']['user_id'])
         groups = manage_groups("get", BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME)
         logger.info(f'-> Conectando websocket de notificacion, {user_id}')
@@ -65,6 +64,7 @@ class NotificationsWSConsumer(WebsocketConsumer):
 
     def receive(self, text_data):
         data = json.loads(text_data)
+        user_id = str(self.scope['url_route']['kwargs']['user_id'])
 
         # not
         if (data["type"] == "typing_inform"):
@@ -77,7 +77,7 @@ class NotificationsWSConsumer(WebsocketConsumer):
         if data['type'] == "group_creation":
             if (("group_name" in self.scope) and self.scope["group_name"]):
                 self._discard_channel_from_groups()
-            self.scope["group_name"] = messages_group_name(data['value']['session_user_id'], data['value']['clicked_user_id'])
+            self.scope["group_name"] = messages_group_name(user_id, data['value']['clicked_user_id'])
 
             groups = manage_groups("get", BASE_CHATS_WEBSOCKETS_GROUP_NAME)
             group_name = self.scope["group_name"]
@@ -99,16 +99,9 @@ class NotificationsWSConsumer(WebsocketConsumer):
         self.send(text_data=json.dumps(broadcast_dict(broadcast_type="connection_error")))
     def broadcast_updated_user_handler(self, event):
         self.send(text_data=json.dumps(broadcast_dict(broadcast_type="updated_user", broadcast_value=event["value"])))
-
     def broadcast_message_handler(self, event):
-        """
-            Método a ejecutar para transmitir un mensaje en un grupo
-        """
         self.send(text_data=json.dumps(broadcast_dict(broadcast_type="message_broadcast", broadcast_value=event["value"])))
     def broadcast_connection_inform_handler(self, event):
-        """
-            Método a ejecutar para informar a integrante del grupo que el otro se conecto
-        """
         self.send(text_data=json.dumps(broadcast_dict(broadcast_type="connection_inform", broadcast_value=event["value"])))
 
 
