@@ -64,13 +64,13 @@ class NotificationsWSConsumer(WebsocketConsumer):
 
     def receive(self, text_data):
         data = json.loads(text_data)
-        user_id = str(self.scope['url_route']['kwargs']['user_id'])
+        user_id = int(self.scope['url_route']['kwargs']['user_id'])
 
         # not
         if (data["type"] == "typing_inform"):
             value = data["value"]
             if notification_websocket_is_opened(value["clicked_user_id"]):
-                broadcast_typing_inform(**value)
+                broadcast_typing_inform(user_id, **value)
 
 
         # chat

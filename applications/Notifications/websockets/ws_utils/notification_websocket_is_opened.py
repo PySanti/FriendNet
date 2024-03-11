@@ -8,5 +8,4 @@ def notification_websocket_is_opened(user_id):
     """
         Retornara True en caso de que exista algun grupo creado con el user_id como nombre
     """
-    notifications_groups = manage_groups("get", BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME)
-    return str(user_id) in notifications_groups
+    return str(user_id) in manage_groups("get", BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME)
