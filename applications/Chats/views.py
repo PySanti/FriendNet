@@ -31,9 +31,9 @@ from applications.Usuarios.models import Usuarios
 from applications.Notifications.models import Notifications
 # Create your views here.
 from applications.Notifications.websockets.ws_utils.notification_websocket_is_opened import notification_websocket_is_opened
-from .websockets.ws_utils.messages_group_is_full import messages_group_is_full
 from applications.Notifications.websockets.ws_utils.broadcast_notification import broadcast_notification
-from applications.Chats.websockets.ws_utils.broadcast_message import broadcast_message
+from applications.Notifications.websockets.ws_utils.messages_group_is_full import messages_group_is_full
+from applications.Notifications.websockets.ws_utils.broadcast_message import broadcast_message
 from applications.Usuarios.utils.add_istyping_field import add_istyping_field
 class GetMessagesHistorialAPI(APIView):
     serializer_class        =  GetMessagesHistorialSerializer
