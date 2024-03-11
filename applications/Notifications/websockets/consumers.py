@@ -55,8 +55,6 @@ class NotificationsWSConsumer(WebsocketConsumer):
             manage_groups('discard', BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME, {"group_name" : user_id, "channel_name" : self.channel_name})
             broadcast_connection_inform(user_id=user_id, connected=False)
 
-            print_pretty_groups()
-
         # chat
         if ("group_name" in self.scope and self.scope["group_name"]):
             logger.info(f"Desconectando websocket de chat, {self.scope['group_name']}:{self.channel_name}")
