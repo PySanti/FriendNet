@@ -5,6 +5,8 @@ from .utils.constants import (
     USER_SHOWABLE_FIELDS)
 from .utils.add_istyping_field import add_istyping_field
 from django.core.cache import cache
+from applications.Notifications.websockets.ws_utils.manage_groups import manage_groups
+from .utils.constants import BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME
 
 
 class UsuariosManager(BaseUserManager):
@@ -28,9 +30,8 @@ class UsuariosManager(BaseUserManager):
             Revisara si existe algun grupo con el id del usuario, basandose en el estandar de
             los websockets de notificaciones
         """
-        # cache.set("notifications", {})
-        # cache.set("chats", {})
-        return cache.get("notifications") and (str(user_id) in cache.get('notifications'))
+        notifications_groups = manage_groups("get", BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME)
+        return  notifications_groups and (str(user_id) in notifications_groups)
     def activate_user(self, user):
         """
             Realiza las funciones necesarias para activar por completo

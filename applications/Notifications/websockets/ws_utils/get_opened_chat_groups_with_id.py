@@ -1,11 +1,15 @@
 from channels.layers import get_channel_layer
 from django.core.cache import cache
+from .manage_groups import manage_groups
+from applications.Usuarios.utils.constants import BASE_CHATS_WEBSOCKETS_GROUP_NAME
+
+
 def get_opened_chat_groups_with_id(target_id):
     """
         Retornara una lista de los grupos de chat que estan abiertos con el id del usuario
     """
     found_groups = []
-    groups = cache.get("chats")
+    groups = manage_groups("get", BASE_CHATS_WEBSOCKETS_GROUP_NAME)
     if (groups):
         for group_name, channels in groups.items():
             try:

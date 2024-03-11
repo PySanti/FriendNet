@@ -1,5 +1,10 @@
 from django.core.cache import cache
 import logging
+from .manage_groups import manage_groups
+from applications.Usuarios.utils.constants import (
+    BASE_CHATS_WEBSOCKETS_GROUP_NAME,
+    BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME
+)
 
 def print_pretty_groups():
     """
@@ -7,8 +12,9 @@ def print_pretty_groups():
     """
     logger = logging.getLogger('django.channels')
     logger.info(" ------------------------------------------------ ")
-    modes = ["notifications", "chats"]
+    modes = [BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME, BASE_CHATS_WEBSOCKETS_GROUP_NAME]
     for m in modes:
-        if (cache.get(m)):
-            for k,v in cache.get(m).items():
+        current_group = manage_groups("get", m)
+        if current_group:
+            for k,v in current_group.items():
                 logger.info(f'{k} -> {v}')
