@@ -21,7 +21,7 @@ application = ProtocolTypeRouter(
         "http": get_asgi_application(),
         "websocket": AllowedHostsOriginValidator(
                 URLRouter(
-                    [re_path(f'ws/notifications/(?P<user_id>\w+)', NotificationsWSConsumer.as_asgi())],
+                    [re_path(f'ws/notifications/(?P<user_id>\w+)', NotificationsWSConsumer.as_asgi())]
                 )
         ),
     }
