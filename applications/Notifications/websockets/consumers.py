@@ -21,6 +21,7 @@ logger = logging.getLogger('django.channels')
 
 class NotificationsWSConsumer(WebsocketConsumer):
     def _discard_channel_from_groups(self):
+        logger.info(f"Eliminando websocket de chat, {self.scope['group_name']}:{self.channel_name}")
         async_to_sync(self.channel_layer.group_discard)(self.scope["group_name"], self.channel_name)
         manage_groups("discard", BASE_CHATS_WEBSOCKETS_GROUP_NAME, {"group_name" : self.scope["group_name"] , "channel_name" : self.channel_name})
         self.scope["group_name"] = None
@@ -56,8 +57,8 @@ class NotificationsWSConsumer(WebsocketConsumer):
 
         # chat
         if ("group_name" in self.scope and self.scope["group_name"]):
-            logger.info(f"Desconectando websocket de chat, {self.scope['group_name']}:{self.channel_name}")
             self._discard_channel_from_groups()
+
         print_pretty_groups()
 
 
