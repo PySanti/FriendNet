@@ -1,9 +1,6 @@
 import cloudinary
 import cloudinary.uploader
 from ..utils.load_cloudinary_secrets import load_cloudinary_secrets
-from ..utils.get_image_size import get_image_size
-from ..utils.constants import BASE_IMAGES_WIDTH
-import copy
 
 
 
@@ -25,10 +22,7 @@ def save_image_cloudinary(image, overwriting=False, current_publicid=None ):
     """
         Almacena la imagen en cloudinary o la sobreescribe y retorna la url de la misma
     """
-    image_size = get_image_size(copy.deepcopy(image.file), BASE_IMAGES_WIDTH)
     QUALITY = {
-        # 'width' : image_size[0],
-        # 'height' : image_size[1],
         'quality' : 'auto:best',
     }
     BASE_IMAGE_UPLOADING_ARGS = {
