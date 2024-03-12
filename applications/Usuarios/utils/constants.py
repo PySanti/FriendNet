@@ -1,6 +1,11 @@
 from rest_framework.response import Response
 from rest_framework import status
 
+import os
+
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", f'FriendNet.settings')
+
 USERS_LIST_ATTRS = ["id", "username", "photo_link"]
 BASE_USERNAME_MAX_LENGTH = 15
 BASE_EMAIL_MAX_LENGTH = 60
