@@ -1,6 +1,7 @@
 import cloudinary
 import cloudinary.uploader
 from ..utils.load_cloudinary_secrets import load_cloudinary_secrets
+import logging
 
 
 
@@ -18,6 +19,7 @@ signature = cloudinary.utils.api_sign_request(
 
 
 
+logger = logging.getLogger('django')
 def save_image_cloudinary(image, overwriting=False, current_publicid=None ):
     """
         Almacena la imagen en cloudinary o la sobreescribe y retorna la url de la misma
@@ -38,6 +40,7 @@ def save_image_cloudinary(image, overwriting=False, current_publicid=None ):
             **BASE_IMAGE_UPLOADING_ARGS,
             **QUALITY
         )
+    logger.debug(response.__dict__)
     return cloudinary.CloudinaryImage(response['public_id']).build_url(
         format      =   'jpg',
         version     =   response['version'],
