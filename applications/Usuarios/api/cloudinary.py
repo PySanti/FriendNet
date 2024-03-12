@@ -40,7 +40,7 @@ def save_image_cloudinary(image, overwriting=False, current_publicid=None ):
             **QUALITY
         )
     logger = logging.getLogger("django")
-    logger.debug(response)
+    logger.debug(str(response))
     return cloudinary.CloudinaryImage(response['public_id']).build_url(
         format      =   'jpg',
         version     =   response['version'],
