@@ -1,3 +1,4 @@
+import logging
 from ..api.cloudinary import (
     save_image_cloudinary,
     delete_image_cloudinary
@@ -9,12 +10,15 @@ def set_photo_link(sended_data, view_type, photo_file=None, current_photo_link=N
     """
         Genera el campo 'photo_link' a partir del campo 'photo' del formulario enviado desde el frontend
     """
+    logger = logging.getLogger("django")
     if not sended_data['photo']:
+        logger.debug("No se ha recibido imagen")
         sended_data['photo_link'] = None
         if (view_type == "updating") and (current_photo_link):
             delete_image_cloudinary(get_publicid(current_photo_link))
 
     else:
+        logger.debug("Se ha recibido imagen")
         if view_type == "creating":
             sended_data['photo_link'] =  save_image_cloudinary(photo_file) 
         elif (view_type == "updating"): 
