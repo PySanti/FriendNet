@@ -34,13 +34,14 @@ class NotificationsWSConsumer(WebsocketConsumer):
         groups = manage_groups("get", BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME)
         logger.info(f'-> Conectando websocket de notificacion, {user_id}')
         if ((user_id not in groups) or ((user_id in groups) and (self.channel_name not in groups[user_id]))):
+
+            if (user_id in groups) and len(groups[user_id]) == 1:
+                async_to_sync(self.channel_layer.group_send)(user_id,{"type" : "broadcast_connection_error_handler"})
+
             async_to_sync(self.channel_layer.group_add)(user_id,self.channel_name)
             groups = manage_groups('append', BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME, {"group_name" : user_id, "channel_name" : self.channel_name})
 
-            if len(groups[user_id])>1:
-                async_to_sync(self.channel_layer.group_send)(user_id,{"type" : "broadcast_connection_error_handler"})
-            else:
-                broadcast_connection_inform(user_id=user_id, connected=True)
+            broadcast_connection_inform(user_id=user_id, connected=True)
             print_pretty_groups()
 
     def disconnect(self, close_code):
@@ -97,6 +98,7 @@ class NotificationsWSConsumer(WebsocketConsumer):
         self.send(text_data=json.dumps(broadcast_dict(broadcast_type="new_notification", broadcast_value=event["value"])))
     def broadcast_connection_error_handler(self, event):
         self.send(text_data=json.dumps(broadcast_dict(broadcast_type="connection_error")))
+        self.disconnect(10)
     def broadcast_updated_user_handler(self, event):
         self.send(text_data=json.dumps(broadcast_dict(broadcast_type="updated_user", broadcast_value=event["value"])))
     def broadcast_message_handler(self, event):
