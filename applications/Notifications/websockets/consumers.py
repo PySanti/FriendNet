@@ -35,7 +35,7 @@ class NotificationsWSConsumer(WebsocketConsumer):
         logger.info(f'-> Conectando websocket de notificacion, {user_id}')
         if ((user_id not in groups) or ((user_id in groups) and (self.channel_name not in groups[user_id]))):
 
-            if (user_id in groups) and len(groups[user_id]) == 1:
+            if (user_id in groups) and len(groups[user_id]) > 0:
                 async_to_sync(self.channel_layer.group_send)(user_id,{"type" : "broadcast_connection_error_handler"})
 
             async_to_sync(self.channel_layer.group_add)(user_id,self.channel_name)
@@ -48,7 +48,7 @@ class NotificationsWSConsumer(WebsocketConsumer):
 
         # not
         user_id = str(self.scope['url_route']['kwargs']['user_id'])
-        logger.info(f'-> Desconectando websocket de notificacion, {user_id}')
+        logger.info(f'-> Desconectando websocket de notificacion, {user_id}:{self.channel_name}')
 
         
         if (user_id in manage_groups("get", BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME)):
