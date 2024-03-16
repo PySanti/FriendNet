@@ -36,6 +36,7 @@ class NotificationsWSConsumer(WebsocketConsumer):
         if ((user_id not in groups) or ((user_id in groups) and (self.channel_name not in groups[user_id]))):
 
             if (user_id in groups) and len(groups[user_id]) > 0:
+                logger.info("Channel existente detectado, aplicando substitucion de channels")
                 async_to_sync(self.channel_layer.group_send)(user_id,{"type" : "broadcast_connection_error_handler"})
 
             async_to_sync(self.channel_layer.group_add)(user_id,self.channel_name)
