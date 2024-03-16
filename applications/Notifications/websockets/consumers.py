@@ -54,9 +54,11 @@ class NotificationsWSConsumer(WebsocketConsumer):
         
         if (user_id in manage_groups("get", BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME)):
             async_to_sync(self.channel_layer.group_discard)(user_id, self.channel_name)
-            handle_initial_notification_ids('delete', user_id )
             manage_groups('discard', BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME, {"group_name" : user_id, "channel_name" : self.channel_name})
-            broadcast_connection_inform(user_id=user_id, connected=False)
+            notifications_groups = manage_groups('get', BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME)
+            if ((user_id not in notifications_groups) or (len(notifications_groups[user_id]) == 0)):
+                handle_initial_notification_ids('delete', user_id )
+                broadcast_connection_inform(user_id=user_id, connected=False)
 
         # chat
         self._discard_channel_from_groups()
