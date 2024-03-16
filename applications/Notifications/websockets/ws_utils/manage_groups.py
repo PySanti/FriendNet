@@ -13,9 +13,10 @@ def manage_groups(mode, branch, val=None):
             else:
                 groups[group_name] = [channel]
         elif (mode == "discard"):
-            if channel in groups[group_name]:
-                groups[group_name].remove(channel)
-            if len(groups[group_name]) == 0:
-                groups.pop(group_name)
+            if (group_name in groups):
+                if (channel in groups[group_name]):
+                    groups[group_name].remove(channel)
+                if len(groups[group_name]) == 0:
+                    groups.pop(group_name)
         cache.set(branch, groups)
         return groups
