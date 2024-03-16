@@ -98,7 +98,7 @@ class NotificationsWSConsumer(WebsocketConsumer):
     def broadcast_notification_handler(self, event):
         self.send(text_data=json.dumps(broadcast_dict(broadcast_type="new_notification", broadcast_value=event["value"])))
     def broadcast_connection_error_handler(self, event):
-        print(f"----------------------------------------- Alcance de broadcast_connection_error : {self.channel_name}")
+        logger.info(f"----------------------------------------- Alcance de broadcast_connection_error : {self.channel_name}")
         self.send(text_data=json.dumps(broadcast_dict(broadcast_type="connection_error")))
         self.disconnect(10)
     def broadcast_updated_user_handler(self, event):
