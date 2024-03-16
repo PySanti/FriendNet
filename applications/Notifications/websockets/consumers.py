@@ -99,7 +99,10 @@ class NotificationsWSConsumer(WebsocketConsumer):
         self.send(text_data=json.dumps(broadcast_dict(broadcast_type="new_notification", broadcast_value=event["value"])))
     def broadcast_connection_error_handler(self, event):
         logger.info(f"----------------------------------------- Alcance de broadcast_connection_error : {self.channel_name}")
-        self.send(text_data=json.dumps(broadcast_dict(broadcast_type="connection_error")))
+        try:
+            self.send(text_data=json.dumps(broadcast_dict(broadcast_type="connection_error")))
+        except:
+            logger.info(f"----------------------------------------- Fallo al enviar 'broadcast_connection_error'")
         self.disconnect(10)
     def broadcast_updated_user_handler(self, event):
         self.send(text_data=json.dumps(broadcast_dict(broadcast_type="updated_user", broadcast_value=event["value"])))
