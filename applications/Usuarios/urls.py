@@ -12,10 +12,10 @@ from .views import (
     GenerateSendSecurityCodeAPI,
     ChangeEmailForActivationAPI,
     LoginUserAPI,
-    EnterChatApi,
+    EnterChatAPI,
     RecoveryPasswordAPI,
     CheckSecurityCodeAPI,
-    GetUserNotifications
+    GetUserNotificationsAPI
     )
 
 urlpatterns = [
@@ -29,8 +29,8 @@ urlpatterns = [
     path('security_code_sending/', GenerateSendSecurityCodeAPI.as_view()),
     path('change_email_for_activation/', ChangeEmailForActivationAPI.as_view()),
     path('token/', LoginUserAPI.as_view(), name='token_obtain_pair'),
-    path('enter_chat/', EnterChatApi.as_view()),
+    path('enter_chat/', EnterChatAPI.as_view()),
     path('recovery_password/', RecoveryPasswordAPI.as_view()),
     path('check_security_code/', CheckSecurityCodeAPI.as_view()),
-    path('get_user_notifications/', GetUserNotifications.as_view()),
+    path('get_user_notifications/', GetUserNotificationsAPI.as_view()),
 ] 

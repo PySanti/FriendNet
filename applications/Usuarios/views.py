@@ -312,7 +312,7 @@ class ChangeUserPwdAPI(APIView):
 
 
 
-class EnterChatApi(APIView):
+class EnterChatAPI(APIView):
     serializer_class        =  EnterChatSerializer
     authentication_classes  = [JWTAuthentication]
     permission_classes      = [IsAuthenticated]
@@ -352,13 +352,12 @@ class EnterChatApi(APIView):
         else:
             return BASE_SERIALIZER_ERROR_RESPONSE
 
-class GetUserNotifications(APIView):
+class GetUserNotificationsAPI(APIView):
     authentication_classes  = [JWTAuthentication]
     permission_classes      = [IsAuthenticated]
     def post(self, request, *args, **kwargs):
-        print(request.user)
-        print("Ejecutando api ")
         try:
-            pass
+            notifications = Usuarios.objects.get_formated_notifications(request.user)
+            return Response({'recent_notifications' : notifications }, status=status.HTTP_200_OK)
         except Exception:
             return BASE_UNEXPECTED_ERROR_RESPONSE
