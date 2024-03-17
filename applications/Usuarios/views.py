@@ -117,6 +117,8 @@ class CreateUsuariosAPI(APIView):
                 return Response({'error': "cloudinary_error"}, status=status.HTTP_400_BAD_REQUEST)
         else:
             return BASE_SERIALIZER_ERROR_RESPONSE
+
+
 class GetUserDetailAPI(APIView):
     serializer_class = GetUserDetailSerializer
     authentication_classes  = []
@@ -349,3 +351,14 @@ class EnterChatApi(APIView):
                         return Response(messages, status=status.HTTP_200_OK)
         else:
             return BASE_SERIALIZER_ERROR_RESPONSE
+
+class GetUserNotifications(APIView):
+    authentication_classes  = [JWTAuthentication]
+    permission_classes      = [IsAuthenticated]
+    def post(self, request, *args, **kwargs):
+        print(request.user)
+        print("Ejecutando api ")
+        try:
+            pass
+        except Exception:
+            return BASE_UNEXPECTED_ERROR_RESPONSE

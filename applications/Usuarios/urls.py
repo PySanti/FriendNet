@@ -14,7 +14,8 @@ from .views import (
     LoginUserAPI,
     EnterChatApi,
     RecoveryPasswordAPI,
-    CheckSecurityCodeAPI
+    CheckSecurityCodeAPI,
+    GetUserNotifications
     )
 
 urlpatterns = [
@@ -31,4 +32,5 @@ urlpatterns = [
     path('enter_chat/', EnterChatApi.as_view()),
     path('recovery_password/', RecoveryPasswordAPI.as_view()),
     path('check_security_code/', CheckSecurityCodeAPI.as_view()),
+    path('get_user_notifications/', GetUserNotifications.as_view()),
 ] 
