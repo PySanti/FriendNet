@@ -62,7 +62,6 @@ class UsuariosManager(BaseUserManager):
             Recibe al usuario y retorna sus datos formateados
         """
         base_user_data = {i[0]:i[1] for i in user.__dict__.items() if i[0] in USER_SHOWABLE_FIELDS}
-        base_user_data['notifications'] = self.get_formated_notifications(user)
         return base_user_data
     def change_password(self, user, new_password):
         """
