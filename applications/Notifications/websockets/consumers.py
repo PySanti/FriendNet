@@ -70,6 +70,8 @@ class NotificationsWSConsumer(WebsocketConsumer):
     def receive(self, text_data):
         data = json.loads(text_data)
         user_id = int(self.scope['url_route']['kwargs']['user_id'])
+        logger.info("Recibiendo data en el receive")
+        logger.info(data)
 
         # not
         if (data["type"] == "typing_inform"):
