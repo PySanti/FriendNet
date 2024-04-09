@@ -253,7 +253,11 @@ class GenerateSendSecurityCodeAPI(APIView):
 
 class LoginUserAPI(MyTokenObtainPerView):
     def post(self, request, *args, **kwargs):
-        return super().post(request, *args, **kwargs)
+        user = Usuarios.objects.get(username=request.data['username'])
+        if (Usuarios.objects.user_is_online(user.id)):
+            return Response({'error' : 'user_is_online'}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return super().post(request, *args, **kwargs)
 
 
 #  secured api's
