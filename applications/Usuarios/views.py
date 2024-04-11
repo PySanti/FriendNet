@@ -1,3 +1,4 @@
+from asgiref.sync import async_to_sync
 from django.db.models import Case, When
 from django.db import models
 from rest_framework import status
@@ -282,7 +283,7 @@ class UpdateUserDataAPI(APIView):
                     current_photo_link=user.photo_link)
                 try:
                     updated_user = Usuarios.objects.update_user(user, serialized_data)
-                    broadcast_updated_user(updated_user)
+                    async_to_sync(broadcast_updated_user)(updated_user)
                     return JsonResponse({'user_data_updated' : {i[0]:i[1] for i in updated_user.__dict__.items() if i[0] in USER_SHOWABLE_FIELDS}}, status=status.HTTP_200_OK)
                 except:
                     return Response({'error': "error_updating"}, status=status.HTTP_400_BAD_REQUEST)

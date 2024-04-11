@@ -1,4 +1,5 @@
 
+from asgiref.sync import async_to_sync
 from applications.Usuarios.utils.constants import BASE_NO_MORE_PAGES_RESPONSE, USERS_LIST_ATTRS
 from rest_framework.views import (
     APIView,
@@ -78,13 +79,13 @@ class SendMsgAPI(APIView):
                         new_notification = Notifications.objects.filter(id=new_notification.id).values("msg", "id")[0]
                         new_notification["sender_user"] = add_istyping_field(Usuarios.objects.filter(id=sender_user.id).values(*USERS_LIST_ATTRS))[0]
                         new_notification["message"] = request.data["msg"]
-                        broadcast_notification(receiver_user.id, new_notification)
+                        async_to_sync(broadcast_notification)(receiver_user.id, new_notification)
                 new_message = Messages.objects.create_message(parent=sender_user, content=request.data['msg'])
                 Chats.objects.send_message(sender_user, receiver_user,new_message)
                 new_message_values = new_message.__dict__.copy()
                 del new_message_values['_state']
                 if (messages_group_is_full(receiver_user.id, sender_user.id)):
-                    broadcast_message(sender_user.id, receiver_user.id, new_message_values)
+                    async_to_sync(broadcast_message)(sender_user.id, receiver_user.id, new_message_values)
                 return JsonResponse({'sended_msg' : new_message_values}, status=status.HTTP_200_OK)
             except:
                 return BASE_UNEXPECTED_ERROR_RESPONSE

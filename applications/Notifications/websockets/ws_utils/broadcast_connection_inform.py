@@ -1,8 +1,7 @@
 from .get_opened_chat_groups_with_id import get_opened_chat_groups_with_id
 from channels.layers import get_channel_layer
-from asgiref.sync import async_to_sync
 
-def broadcast_connection_inform(user_id, connected):
+async def broadcast_connection_inform(user_id, connected):
     """
         Se encargara de realizar el broadcast del connection_inform:
         Le avisara a todos los grupos de mensajes abiertos con el id user_id
@@ -12,7 +11,7 @@ def broadcast_connection_inform(user_id, connected):
     opened_chat_groups = get_opened_chat_groups_with_id(str(user_id))
     if (opened_chat_groups):
         for group in opened_chat_groups:
-            async_to_sync(channel_layer.group_send)(group,{
+            await channel_layer.group_send(group,{
             'type' : 'broadcast_connection_inform_handler',
             'value' : {
                 "user_id" : user_id,
