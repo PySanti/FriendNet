@@ -1,4 +1,4 @@
-import time
+import asyncio
 from channels.generic.websocket import AsyncWebsocketConsumer
 import logging
 import json
@@ -19,6 +19,12 @@ from applications.Usuarios.utils.constants import (
 logger = logging.getLogger('django.channels')
 
 class NotificationsWSConsumer(AsyncWebsocketConsumer):
+    async def send_ping(self):
+        while True:
+            await self.send(text_data=json.dumps({
+                'type': 'ping'
+            }))
+            await asyncio.sleep(5)
     async def _discard_channel_from_groups(self):
         if (("group_name" in self.scope) and self.scope["group_name"]):
             logger.info(f"Eliminando websocket de chat, {self.scope['group_name']}:{self.channel_name}")
@@ -43,12 +49,14 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
 
             await broadcast_connection_inform(user_id=user_id, connected=True)
             print_pretty_groups()
+            self.ping_task = asyncio.create_task(self.send_ping())
 
     async def disconnect(self, close_code):
 
         # not
         user_id = str(self.scope['url_route']['kwargs']['user_id'])
         logger.info(f'-> Desconectando websocket de notificacion, {user_id}:{self.channel_name}')
+        self.ping_task.cancel()
 
         
         if (user_id in manage_groups("get", BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME)):
