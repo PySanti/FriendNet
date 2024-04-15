@@ -24,7 +24,7 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
     async def send_ping(self):
         while True:
             last_pong_timediff = (datetime.now() - self.last_pong).total_seconds()
-            logger.info(f"Pong diff : {last_pong_timediff}")
+            logger.info(f"Enviando ping. Pong diff : {last_pong_timediff}")
             if (last_pong_timediff > (self.ping_timing*2)):
                 await self.disconnect(10)
                 break
@@ -69,6 +69,7 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
 
         
         if (user_id in manage_groups("get", BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME)):
+            logger.info("-> La desconexion si se dara")
             await self.channel_layer.group_discard(user_id, self.channel_name)
             manage_groups('discard', BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME, {"group_name" : user_id, "channel_name" : self.channel_name})
             notifications_groups = manage_groups('get', BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME)
