@@ -1,6 +1,7 @@
 import asyncio
 from channels.generic.websocket import AsyncWebsocketConsumer
 import logging
+from datetime import datetime
 import json
 from .ws_utils.broadcast_connection_inform import broadcast_connection_inform
 from .ws_utils.broadcast_typing_inform import broadcast_typing_inform
@@ -19,19 +20,26 @@ from applications.Usuarios.utils.constants import (
 logger = logging.getLogger('django.channels')
 
 class NotificationsWSConsumer(AsyncWebsocketConsumer):
+
     async def send_ping(self):
         while True:
-            await self.send(text_data=json.dumps({
-                'type': 'ping'
-            }))
-            await asyncio.sleep(5)
+            last_pong_timediff = (datetime.now() - self.last_pong).total_seconds()
+            logger.info(f"Pong diff : {last_pong_timediff}")
+            if (last_pong_timediff > (self.ping_timing*2)):
+                await self.disconnect(10)
+                break
+            else:
+                await self.send(text_data=json.dumps({
+                    'type': 'ping',
+                }))
+                await asyncio.sleep(self.ping_timing)
+
     async def _discard_channel_from_groups(self):
         if (("group_name" in self.scope) and self.scope["group_name"]):
             logger.info(f"Eliminando websocket de chat, {self.scope['group_name']}:{self.channel_name}")
             await self.channel_layer.group_discard(self.scope["group_name"], self.channel_name)
             manage_groups("discard", BASE_CHATS_WEBSOCKETS_GROUP_NAME, {"group_name" : self.scope["group_name"] , "channel_name" : self.channel_name})
             self.scope["group_name"] = None
-
 
     async def connect(self):
         await self.accept()
@@ -49,10 +57,11 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
 
             await broadcast_connection_inform(user_id=user_id, connected=True)
             print_pretty_groups()
+            self.ping_timing = 10
             self.ping_task = asyncio.create_task(self.send_ping())
+            self.last_pong = datetime.now()
 
     async def disconnect(self, close_code):
-
         # not
         user_id = str(self.scope['url_route']['kwargs']['user_id'])
         logger.info(f'-> Desconectando websocket de notificacion, {user_id}:{self.channel_name}')
@@ -77,7 +86,6 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data):
         data = json.loads(text_data)
         user_id = int(self.scope['url_route']['kwargs']['user_id'])
-
         # not
         if (data["type"] == "typing_inform"):
             value = data["value"]
@@ -99,6 +107,10 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
 
         if data['type'] == "group_delete":
             await self._discard_channel_from_groups()
+        
+        if data['type'] == "pong":
+            self.last_pong = datetime.now()
+            logger.info(f"Recibiendo pong : {self.last_pong}")
         print_pretty_groups()
 
 
