@@ -10,11 +10,12 @@ class RateLimitMiddleware(MiddlewareMixin):
         client = RateLimitInfo.objects.get_or_create(ip=client_ip)[0]
         if client.banned:
             return JsonResponse({"error" : "banned_ip_fucK_u"}, status=status.HTTP_403_FORBIDDEN)
-        if RateLimitInfo.objects.client_is_suspended(client):
-            return JsonResponse({"error" : f"suspended ip until {client.suspended_time}"}, status=status.HTTP_403_FORBIDDEN)
-        if (RateLimitInfo.objects.get_cut_timediff(client) > 5):
-            RateLimitInfo.objects.update_cut(client)
+        elif RateLimitInfo.objects.client_is_suspended(client):
+            return JsonResponse({"error" : f"suspended_ip", "until" : client.suspended_time}, status=status.HTTP_403_FORBIDDEN)
         else:
-            RateLimitInfo.objects.update_calls_in_cut(client)
-            if client.calls_in_cut > 30:
-                RateLimitInfo.objects.suspend_client(client)
+            if (RateLimitInfo.objects.get_cut_timediff(client) > 5):
+                RateLimitInfo.objects.update_cut(client)
+            else:
+                RateLimitInfo.objects.update_calls_in_cut(client)
+                if client.calls_in_cut > 30:
+                    RateLimitInfo.objects.suspend_client(client)
