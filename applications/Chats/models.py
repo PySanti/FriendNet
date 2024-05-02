@@ -26,5 +26,5 @@ class Chats(models.Model):
     def __str__(self) -> str:
         users = list(self.users.all())
         return f"""
-        {users[0].username} - {users[1].username}
+        {users}
         """
