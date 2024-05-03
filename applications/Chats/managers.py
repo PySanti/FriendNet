@@ -14,7 +14,11 @@ class ChatsManager(manager.Manager):
         """
             Retornara el id del ultimo mensaje entre el id_1 y el id_2.
         """
-        return self._chat_between(id_1, id_2).messages.latest("id").id
+        chat = self._chat_between(id_1, id_2)
+        if (chat and len(chat.messages.all()) > 0):
+            return chat.messages.latest("id").id
+        else:
+            return None
     def _get_messages_historial(self, session_user_id, chat_user_id):
         """
             Retorna el historial de mensajes entre session_user
@@ -22,7 +26,6 @@ class ChatsManager(manager.Manager):
         """
         message_pagination_ref = cache.get(f"message_pagination_ref_{session_user_id}")
         if not message_pagination_ref:
-            raise Exception("Revisar funcionalidad de 'message_pagination_ref', presenta fallas")
             return None
         else:
             chat = self._chat_between(session_user_id, chat_user_id)
