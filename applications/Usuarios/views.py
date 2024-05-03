@@ -1,3 +1,4 @@
+from django.core.cache import cache
 from asgiref.sync import async_to_sync
 from django.db.models import Case, When
 from django.db import models
@@ -335,6 +336,7 @@ class EnterChatAPI(APIView):
                     return Response({'error' : 'error_while_checking_is_online'}, status=status.HTTP_400_BAD_REQUEST)
                 else:
                     try:
+                        cache.set(f"message_pagination_ref_{request.user.id}", Chats.objects.get_last_message_ref(data['receiver_id'], request.user.id))
                         messages = Chats.objects.get_messages_historial_ready(request, data['receiver_id'], self)
                     except Exception:
                         return BASE_ERROR_WHILE_GETTING_MESSAGES_RESPONSE

@@ -1,5 +1,7 @@
 from django.db.models import manager
 from .utils.getCurrentFormatedDate import getCurrentFormatedDate
+from django.core.cache import cache
+
 class ChatsManager(manager.Manager):
     def _chat_between(self, id_1, id_2):
         """
@@ -8,13 +10,23 @@ class ChatsManager(manager.Manager):
         """
         chat = self.filter(users__id=id_1).filter(users__id=id_2)
         return chat[0] if chat else None
+    def get_last_message_ref(self, id_1, id_2):
+        """
+            Retornara el id del ultimo mensaje entre el id_1 y el id_2.
+        """
+        return self._chat_between(id_1, id_2).messages.latest("id").id
     def _get_messages_historial(self, session_user_id, chat_user_id):
         """
             Retorna el historial de mensajes entre session_user
             y chat_user en caso de existir, en caso contrario, retorna None
         """
-        chat = self._chat_between(session_user_id, chat_user_id)
-        return chat.messages.all().order_by('-id') if chat else None
+        message_pagination_ref = cache.get(f"message_pagination_ref_{session_user_id}")
+        if not message_pagination_ref:
+            raise Exception("Revisar funcionalidad de 'message_pagination_ref', presenta fallas")
+            return None
+        else:
+            chat = self._chat_between(session_user_id, chat_user_id)
+            return chat.messages.filter(id__lte=message_pagination_ref).order_by('-id') if chat else None
     def _create_chat(self, user_1, user_2):
         """
             Recibe dos usuarios y crea un chat entre ellos
