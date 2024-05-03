@@ -19,10 +19,11 @@ class ChatsManager(manager.Manager):
             return chat.messages.latest("id").id
         else:
             return None
-    def _get_messages_historial(self, session_user_id, chat_user_id):
+    def _get_messages_historial_from_ref(self, session_user_id, chat_user_id):
         """
             Retorna el historial de mensajes entre session_user
-            y chat_user en caso de existir, en caso contrario, retorna None
+            y chat_user a partir del message de referencia
+            en caso de existir, en caso contrario, retorna None
         """
         message_pagination_ref = cache.get(f"message_pagination_ref_{session_user_id}")
         if not message_pagination_ref:
@@ -54,7 +55,7 @@ class ChatsManager(manager.Manager):
             Retornara el historial de mensajes paginado  en un diccionario en caso de que existan mensajes entre 
             los usuarios
         """
-        messages_hist = self._get_messages_historial(request.user.id, receiver_id)
+        messages_hist = self._get_messages_historial_from_ref(request.user.id, receiver_id)
         if (messages_hist):
             try:
                 messages_hist = api.pagination_class().paginate_queryset(messages_hist.values(), request)[::-1]
