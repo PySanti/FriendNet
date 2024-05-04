@@ -1,6 +1,6 @@
 from channels.layers import get_channel_layer
 
-async def broadcast_notification(receiver_id, newNotification):
+async def broadcast_notification(receiver_id, newNotification, message_prev):
     """
         Se encargara de hacer el broadcast de la newNotification al
         websocket del receiver_id
@@ -12,5 +12,6 @@ async def broadcast_notification(receiver_id, newNotification):
     {    
         'type' : 'broadcast_notification_handler',
         'value' : {
-            "new_notification" : newNotification
+            "new_notification" : newNotification,
+            "message_prev" : message_prev
     }})

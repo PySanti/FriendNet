@@ -74,12 +74,12 @@ class SendMsgAPI(APIView):
                 sender_user = request.user
                 receiver_user = Usuarios.objects.get(id=request.data['receiver_id'])
                 if (not Notifications.objects.has_notification(receiver_user, sender_user) and (not messages_group_is_full(receiver_user.id, sender_user.id))):
-                    new_notification = Notifications.objects.add_notification(f"Tienes mensajes nuevos de {sender_user.username}", receiver_user, sender_user)
+                    message_prev = request.data["msg"] if len(request.data["msg"]) <= 15 else f"{request.data['msg'][:15]} ..."
+                    new_notification = Notifications.objects.add_notification(f"{sender_user.username} : {message_prev}", receiver_user, sender_user)
                     if (notification_websocket_is_opened(receiver_user.id)):
                         new_notification = Notifications.objects.filter(id=new_notification.id).values("msg", "id")[0]
                         new_notification["sender_user"] = add_istyping_field(Usuarios.objects.filter(id=sender_user.id).values(*USERS_LIST_ATTRS))[0]
-                        new_notification["message"] = request.data["msg"]
-                        async_to_sync(broadcast_notification)(receiver_user.id, new_notification)
+                        async_to_sync(broadcast_notification)(receiver_user.id, new_notification, message_prev)
                 new_message = Messages.objects.create_message(parent=sender_user, content=request.data['msg'])
                 Chats.objects.send_message(sender_user, receiver_user,new_message)
                 new_message_values = new_message.__dict__.copy()
