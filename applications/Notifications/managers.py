@@ -13,8 +13,7 @@ class NotificationsManager(manager.Manager):
             Agrega una nueva notificacion al field notifications
             del receiver user
         """
-        message_prev = create_message_prev(notification_msg)
-        newNotification = self.create(msg=f"{sender_user.username} : {message_prev}", sender_user_id=sender_user.id)
+        newNotification = self.create(msg=create_message_prev(notification_msg), sender_user_id=sender_user.id)
         receiver_user.notifications.add(newNotification)
         receiver_user.save()
         return newNotification    
