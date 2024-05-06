@@ -19,7 +19,7 @@ class ChatsManager(manager.Manager):
             return chat.messages.latest("id").id
         else:
             return None
-    def _get_messages_historial_from_ref(self, session_user_id, chat_user_id):
+    def _get_all_messages_from_ref(self, session_user_id, chat_user_id):
         """
             Retorna el historial de mensajes entre session_user
             y chat_user a partir del message de referencia
@@ -50,16 +50,16 @@ class ChatsManager(manager.Manager):
 
         chat_between.messages.add(new_message)
         chat_between.save()
-    def get_messages_historial_ready(self, request, receiver_id, api):
+    def get_messages_historial_page(self, request, receiver_id, api):
         """
             Retornara el historial de mensajes paginado  en un diccionario en caso de que existan mensajes entre 
             los usuarios
         """
-        messages_hist = self._get_messages_historial_from_ref(request.user.id, receiver_id)
-        if (messages_hist):
+        messages_from_ref = self._get_all_messages_from_ref(request.user.id, receiver_id)
+        if (messages_from_ref):
             try:
-                messages_hist = api.pagination_class().paginate_queryset(messages_hist.values(), request)[::-1]
-                return {"messages_hist" : messages_hist}
+                final_page = api.pagination_class().paginate_queryset(messages_from_ref.values(), request)[::-1]
+                return {"messages_hist" : final_page}
             except Exception:
                 return "no_more_pages"
         else:

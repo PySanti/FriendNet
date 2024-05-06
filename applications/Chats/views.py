@@ -49,7 +49,7 @@ class GetMessagesHistorialAPI(APIView):
         if serialized_data.is_valid():
             # request.user = sender_user
             try:
-                messages_hist = Chats.objects.get_messages_historial_ready(request, request.data['receiver_id'], self)
+                messages_hist = Chats.objects.get_messages_historial_page(request, request.data['receiver_id'], self)
             except Exception:
                 return BASE_ERROR_WHILE_GETTING_MESSAGES_RESPONSE
             else:

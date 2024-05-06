@@ -337,7 +337,7 @@ class EnterChatAPI(APIView):
                 else:
                     try:
                         cache.set(f"message_pagination_ref_{request.user.id}", Chats.objects.get_last_message_ref(data['receiver_id'], request.user.id))
-                        messages = Chats.objects.get_messages_historial_ready(request, data['receiver_id'], self)
+                        messages = Chats.objects.get_messages_historial_page(request, data['receiver_id'], self)
                     except Exception:
                         return BASE_ERROR_WHILE_GETTING_MESSAGES_RESPONSE
                     else:
