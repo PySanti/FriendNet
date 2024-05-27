@@ -23,8 +23,8 @@ class NotificationsManager(manager.Manager):
     
     def send_notification_mail(self,  receiver_user):
         return send_mail(
-            subject         =   "Tienes mensajes nuevos", 
-            html_message    =  mail_html_content(f"Tienes mensajes nuevos, {receiver_user.username}", "Ingresa <a href='https://friendnet.netlify.app'>aqui</a> para verlos"),
+            subject         =   f"Tienes mensajes nuevos, {receiver_user.username}", 
+            html_message    =  mail_html_content("", "Ingresa <a href='https://friendnet.netlify.app'>aqui</a> para verlos"),
             message         =   "", 
             from_email      =   settings.EMAIL_HOST_USER, 
             recipient_list  =   [receiver_user.email])
