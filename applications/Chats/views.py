@@ -1,4 +1,4 @@
-
+from django.conf import settings
 from .utils.create_message_prev import create_message_prev
 from asgiref.sync import async_to_sync
 from applications.Usuarios.utils.constants import BASE_NO_MORE_PAGES_RESPONSE, USERS_LIST_ATTRS
@@ -80,11 +80,18 @@ class SendMsgAPI(APIView):
                             notification_msg= request.data["msg"], 
                             receiver_user=receiver_user, 
                             sender_user=sender_user)
-
-                    if (notification_websocket_is_opened(receiver_user.id)):
+                    
+                    # en caso de que el usuario este activo
+                    if (notification_websocket_is_opened(receiver_user.id)): 
                         new_notification = Notifications.objects.filter(id=new_notification.id).values("msg", "id")[0]
                         new_notification["sender_user"] = add_istyping_field(Usuarios.objects.filter(id=sender_user.id).values(*USERS_LIST_ATTRS))[0]
                         async_to_sync(broadcast_notification)(receiver_user.id, new_notification)
+                    
+
+                    # en caso de que el usuario no este activo
+                    else:
+                        if (not settings["DEBUG"]): # si estamos en produccion
+                            Notifications.objects.send_notification_mail(receiver_user)
                 new_message = Messages.objects.create_message(parent=sender_user, content=request.data['msg'])
                 Chats.objects.send_message(sender_user, receiver_user,new_message)
                 new_message_values = new_message.__dict__.copy()

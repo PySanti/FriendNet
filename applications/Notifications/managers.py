@@ -1,5 +1,8 @@
 from django.db.models import manager
 from ..Chats.utils.create_message_prev import create_message_prev
+from django.conf import settings
+from applications.Usuarios.utils.mail_html_content import mail_html_content
+from django.core.mail import send_mail
 
 
 class NotificationsManager(manager.Manager):
@@ -17,6 +20,14 @@ class NotificationsManager(manager.Manager):
         receiver_user.notifications.add(newNotification)
         receiver_user.save()
         return newNotification    
+    
+    def send_notification_mail(self,  receiver_user):
+        return send_mail(
+            subject         =   receiver_user.username, 
+            html_message    =  mail_html_content(f"Tienes mensajes nuevos, {receiver_user.username}", "Ingresa aquí para ver tus mensajes nuevos"),
+            message         =   "", 
+            from_email      =   settings["EMAIL_HOST_USER"], 
+            recipient_list  =   [receiver_user.email])
     def delete_notification(self, notificationId):
         """
             Recibe el id de una notificacion y la elimina
