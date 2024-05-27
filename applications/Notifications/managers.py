@@ -26,7 +26,7 @@ class NotificationsManager(manager.Manager):
             subject         =   receiver_user.username, 
             html_message    =  mail_html_content(f"Tienes mensajes nuevos, {receiver_user.username}", "Ingresa aquí para ver tus mensajes nuevos"),
             message         =   "", 
-            from_email      =   settings["EMAIL_HOST_USER"], 
+            from_email      =   settings.EMAIL_HOST_USER, 
             recipient_list  =   [receiver_user.email])
     def delete_notification(self, notificationId):
         """

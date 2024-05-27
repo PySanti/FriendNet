@@ -10,6 +10,6 @@ def send_activation_mail( email, message, code):
         subject         =   message, 
         html_message    =  mail_html_content(message, code),
         message         =   "", 
-        from_email      =   settings["EMAIL_HOST_USER"], 
+        from_email      =   settings.EMAIL_HOST_USER, 
         recipient_list  =   [email])
 

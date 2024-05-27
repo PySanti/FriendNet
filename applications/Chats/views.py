@@ -90,7 +90,7 @@ class SendMsgAPI(APIView):
 
                     # en caso de que el usuario no este activo
                     else:
-                        if (not settings["DEBUG"]): # si estamos en produccion
+                        if (not settings.DEBUG): # si estamos en produccion
                             Notifications.objects.send_notification_mail(receiver_user)
                 new_message = Messages.objects.create_message(parent=sender_user, content=request.data['msg'])
                 Chats.objects.send_message(sender_user, receiver_user,new_message)
