@@ -67,7 +67,7 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
         logger.info(f'-> Desconectando websocket de notificacion, {user_id}:{self.channel_name}')
         self.ping_task.cancel()
 
-        
+        await self._discard_channel_from_groups()
         if (user_id in manage_groups("get", BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME)):
             logger.info("-> La desconexion si se dara")
             await self.channel_layer.group_discard(user_id, self.channel_name)
@@ -81,7 +81,6 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
                 logger.info("No se hara el broadcast_connection_inform")
 
         # chat
-        await self._discard_channel_from_groups()
 
         print_pretty_groups()
 
