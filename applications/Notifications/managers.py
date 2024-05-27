@@ -1,4 +1,5 @@
 from django.db.models import manager
+from django.conf import settings
 from ..Chats.utils.create_message_prev import create_message_prev
 from django.conf import settings
 from applications.Usuarios.utils.mail_html_content import mail_html_content
@@ -32,7 +33,8 @@ class NotificationsManager(manager.Manager):
         """
             Recibe el id de una notificacion y la elimina
         """
-        notification = self.get(id=notificationId)
-        notification.delete()
+        if (not settings.DEBUG):
+            notification = self.get(id=notificationId)
+            notification.delete()
 
 
