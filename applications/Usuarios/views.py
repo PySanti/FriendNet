@@ -328,6 +328,8 @@ class EnterChatAPI(APIView):
                 return Response({"error" : "same_user"}, status=status.HTTP_400_BAD_REQUEST)
             try:
                 receiver_user = Usuarios.objects.get(id=data["receiver_id"])
+                if (not receiver_user.is_active):
+                    raise Exception
             except Exception:
                 return Response({'error' : 'user_not_found'}, status=status.HTTP_400_BAD_REQUEST)
             else:
