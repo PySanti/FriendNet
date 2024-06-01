@@ -1,4 +1,5 @@
 from django.core.cache import cache
+from django.http import QueryDict
 from asgiref.sync import async_to_sync
 from django.db.models import Case, When
 from django.db import models
@@ -259,6 +260,8 @@ class LoginUserAPI(MyTokenObtainPerView):
         if (Usuarios.objects.user_is_online(user.id)):
             return Response({'error' : 'user_is_online'}, status=status.HTTP_400_BAD_REQUEST)
         else:
+            if isinstance(request.data, QueryDict):
+                request.data._mutable = True
             request.data['username'] = user.username
             return super().post(request, *args, **kwargs)
 
