@@ -130,7 +130,7 @@ class GetUserDetailAPI(APIView):
         if serialized_data.is_valid():
             try:
                 if Usuarios.objects.user_exists(request.data['username']):
-                    user = Usuarios.objects.get(username=request.data['username'])
+                    user = Usuarios.objects.get(username__iexact=request.data['username'])
                     if (check_password(request.data['password'], user.password)):
                         formated_user_data = Usuarios.objects.get_formated_user_data(user)
                         return JsonResponse({'user' : formated_user_data}, status=status.HTTP_200_OK)
@@ -255,10 +255,11 @@ class GenerateSendSecurityCodeAPI(APIView):
 
 class LoginUserAPI(MyTokenObtainPerView):
     def post(self, request, *args, **kwargs):
-        user = Usuarios.objects.get(username=request.data['username'])
+        user = Usuarios.objects.get(username__iexact=request.data['username'])
         if (Usuarios.objects.user_is_online(user.id)):
             return Response({'error' : 'user_is_online'}, status=status.HTTP_400_BAD_REQUEST)
         else:
+            request.data['username'] = user.username
             return super().post(request, *args, **kwargs)
 
 
