@@ -39,6 +39,9 @@ class UsuariosManager(BaseUserManager):
         """
         user.is_active = True
         user.save()
+    def deactivate_user(self, user):
+        user.is_active = False
+        user.save()
     def get_formated_notifications(self, user):
         """
             Recibe el usuario y retorna la lista de notificaciones del usuario formateada
