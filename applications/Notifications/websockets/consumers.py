@@ -135,7 +135,7 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
     async def broadcast_message_handler(self, event):
         await self.send(text_data=json.dumps(broadcast_dict(broadcast_type="message_broadcast", broadcast_value=event["value"])))
     async def broadcast_connection_inform_handler(self, event):
-        logger_channels.info("Loggeando desde broadcast handler")
+        logger_channels.info("Broadcast connection inform exitoso !!")
         await self.send(text_data=json.dumps(broadcast_dict(broadcast_type="connection_inform", broadcast_value=event["value"])))
 
 
