@@ -1,7 +1,6 @@
 import cloudinary
 import cloudinary.uploader
 from ..utils.load_cloudinary_secrets import load_cloudinary_secrets
-import logging
 
 
 
@@ -39,9 +38,7 @@ def save_image_cloudinary(image, overwriting=False, current_publicid=None ):
             **BASE_IMAGE_UPLOADING_ARGS,
             **QUALITY
         )
-    logger = logging.getLogger("django")
-    logger.debug("Valor de response :")
-    logger.debug(str(response))
+
     return cloudinary.CloudinaryImage(response['public_id']).build_url(
         format      =   'jpg',
         version     =   response['version'],

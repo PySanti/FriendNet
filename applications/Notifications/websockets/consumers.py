@@ -17,14 +17,16 @@ from applications.Usuarios.utils.constants import (
 )
 
 
-logger = logging.getLogger('django.channels')
+logger_channels = logging.getLogger('django.channels')
+logger_ping_pong = logging.getLogger('pingpong_logger')
 
 class NotificationsWSConsumer(AsyncWebsocketConsumer):
 
     async def send_ping(self):
         while True:
             last_pong_timediff = (datetime.now() - self.last_pong).total_seconds()
-            logger.info(f"Enviando ping. Pong diff : {last_pong_timediff}")
+            user_id = str(self.scope['url_route']['kwargs']['user_id'])
+            logger_ping_pong.info(f"{user_id}, Enviando ping. Pong diff : {last_pong_timediff}")
             if (last_pong_timediff > (self.ping_timing*2)):
                 await self.disconnect(10)
                 break
@@ -36,7 +38,7 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
 
     async def _discard_channel_from_groups(self):
         if (("group_name" in self.scope) and self.scope["group_name"]):
-            logger.info(f"Eliminando websocket de chat, {self.scope['group_name']}:{self.channel_name}")
+            logger_channels.info(f"Eliminando websocket de chat, {self.scope['group_name']}:{self.channel_name}")
             await self.channel_layer.group_discard(self.scope["group_name"], self.channel_name)
             manage_groups("discard", BASE_CHATS_WEBSOCKETS_GROUP_NAME, {"group_name" : self.scope["group_name"] , "channel_name" : self.channel_name})
             self.scope["group_name"] = None
@@ -45,11 +47,11 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
         await self.accept()
         user_id = str(self.scope['url_route']['kwargs']['user_id'])
         groups = manage_groups("get", BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME)
-        logger.info(f'-> Conectando websocket de notificacion, {user_id}')
+        logger_channels.info(f'-> Conectando websocket de notificacion, {user_id}')
         if ((user_id not in groups) or ((user_id in groups) and (self.channel_name not in groups[user_id]))):
 
             if (user_id in groups) and len(groups[user_id]) > 0:
-                logger.info("Channel existente detectado, aplicando substitucion de channels")
+                logger_channels.info("Channel existente detectado, aplicando substitucion de channels")
                 await self.channel_layer.group_send(user_id,{"type" : "broadcast_connection_error_handler"})
 
             await self.channel_layer.group_add(user_id,self.channel_name)
@@ -64,21 +66,21 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
     async def disconnect(self, close_code):
         # not
         user_id = str(self.scope['url_route']['kwargs']['user_id'])
-        logger.info(f'-> Desconectando websocket de notificacion, {user_id}:{self.channel_name}')
+        logger_channels.info(f'-> Desconectando websocket de notificacion, {user_id}:{self.channel_name}')
         self.ping_task.cancel()
 
         await self._discard_channel_from_groups()
         if (user_id in manage_groups("get", BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME)):
-            logger.info("-> La desconexion si se dara")
+            logger_channels.info("-> La desconexion si se dara")
             await self.channel_layer.group_discard(user_id, self.channel_name)
             manage_groups('discard', BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME, {"group_name" : user_id, "channel_name" : self.channel_name})
             notifications_groups = manage_groups('get', BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME)
             if ((user_id not in notifications_groups) or (len(notifications_groups[user_id]) == 0)):
                 handle_initial_notification_ids('delete', user_id )
                 await broadcast_connection_inform(user_id=user_id, connected=False)
-                logger.info("Si se hara el broadcast_connection_inform")
+                logger_channels.info("Si se hara el broadcast_connection_inform")
             else:
-                logger.info("No se hara el broadcast_connection_inform")
+                logger_channels.info("No se hara el broadcast_connection_inform")
 
         # chat
 
@@ -104,7 +106,7 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
             groups = manage_groups("get", BASE_CHATS_WEBSOCKETS_GROUP_NAME)
             group_name = self.scope["group_name"]
             if (((group_name in groups) and (self.channel_name not in groups[group_name])) or (group_name not in groups)):
-                logger.info(f"Agregando websocket de chat, {self.scope['group_name']}:{self.channel_name}")
+                logger_channels.info(f"Agregando websocket de chat, {self.scope['group_name']}:{self.channel_name}")
                 await self.channel_layer.group_add(self.scope["group_name"],self.channel_name)
                 manage_groups("append", BASE_CHATS_WEBSOCKETS_GROUP_NAME, {"group_name" : self.scope["group_name"] , "channel_name" : self.channel_name})
 
@@ -113,7 +115,7 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
         
         if data['type'] == "pong":
             self.last_pong = datetime.now()
-            logger.info(f"Recibiendo pong : {self.last_pong}")
+            logger_ping_pong.info(f"{user_id}, Recibiendo pong : {self.last_pong}")
         print_pretty_groups()
 
 
@@ -122,18 +124,18 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
     async def broadcast_notification_handler(self, event):
         await self.send(text_data=json.dumps(broadcast_dict(broadcast_type="new_notification", broadcast_value=event["value"])))
     async def broadcast_connection_error_handler(self, event):
-        logger.info(f"----------------------------------------- Alcance de broadcast_connection_error : {self.channel_name}")
+        logger_channels.info(f"----------------------------------------- Alcance de broadcast_connection_error : {self.channel_name}")
         try:
             await self.send(text_data=json.dumps(broadcast_dict(broadcast_type="connection_error")))
         except:
-            logger.info(f"----------------------------------------- Fallo al enviar 'broadcast_connection_error'")
+            logger_channels.info(f"----------------------------------------- Fallo al enviar 'broadcast_connection_error'")
         await self.disconnect(10)
     async def broadcast_updated_user_handler(self, event):
         await self.send(text_data=json.dumps(broadcast_dict(broadcast_type="updated_user", broadcast_value=event["value"])))
     async def broadcast_message_handler(self, event):
         await self.send(text_data=json.dumps(broadcast_dict(broadcast_type="message_broadcast", broadcast_value=event["value"])))
     async def broadcast_connection_inform_handler(self, event):
-        logger.info("Loggeando desde broadcast handler")
+        logger_channels.info("Loggeando desde broadcast handler")
         await self.send(text_data=json.dumps(broadcast_dict(broadcast_type="connection_inform", broadcast_value=event["value"])))
 
 

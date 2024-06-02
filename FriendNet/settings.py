@@ -236,15 +236,36 @@ if not DEBUG:
     LOGGING = {
         'version': 1,
         'disable_existing_loggers': False,
+        'formatters': {
+            'verbose': {
+                'format': '{levelname} {asctime} {module} {message}',
+                'style': '{',
+            },
+        },
         'handlers': {
             'file': {
                 'level': 'DEBUG',
                 'class': 'logging.FileHandler',
                 'filename': '/root/projects/FriendNet/logs/django.log',
+                'formatter': 'verbose',
             },
             'websocket': {
+                'level': 'INFO',
                 'class': 'logging.FileHandler',
                 'filename': '/root/projects/FriendNet/logs/websocket.log',
+                'formatter': 'verbose',
+            },
+            'pingpong': {
+                'level': 'DEBUG',
+                'class': 'logging.FileHandler',
+                'filename': '/root/projects/FriendNet/logs/ping-pong.log',
+                'formatter': 'verbose',
+            },
+            'ratelimit': {
+                'level': 'WARNING',
+                'class': 'logging.FileHandler',
+                'filename': '/root/projects/FriendNet/logs/ratelimit.log',
+                'formatter': 'verbose',
             },
         },
         'loggers': {
@@ -257,6 +278,16 @@ if not DEBUG:
                 'handlers': ['websocket'],
                 'level': 'INFO',
                 'propagate': True,
+            },
+            'pingpong_logger': {
+                'handlers': ['pingpong'],
+                'level': 'DEBUG',
+                'propagate': False,
+            },
+            'ratelimit_logger': {
+                'handlers': ['ratelimit'],
+                'level': 'WARNING',
+                'propagate': False,
             },
         },
     }
