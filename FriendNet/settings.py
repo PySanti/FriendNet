@@ -205,7 +205,6 @@ CHANNEL_LAYERS = {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
             "hosts": ['redis://localhost:6379'],
-            "expiry": 5,  # Expiración después de 1 hora (3600 segundos)
         },
     },
 }
