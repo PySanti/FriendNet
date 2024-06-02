@@ -78,7 +78,6 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
             if ((user_id not in notifications_groups) or (len(notifications_groups[user_id]) == 0)):
                 handle_initial_notification_ids('delete', user_id )
                 await broadcast_connection_inform(user_id=user_id, connected=False)
-                logger_channels.info("Si se hara el broadcast_connection_inform")
             else:
                 logger_channels.info("No se hara el broadcast_connection_inform")
 
