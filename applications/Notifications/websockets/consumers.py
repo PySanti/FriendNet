@@ -84,6 +84,7 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
         # chat
 
         print_pretty_groups()
+        await super().disconnect(close_code)
 
 
 
