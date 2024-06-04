@@ -27,7 +27,7 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
             last_pong_timediff = (datetime.now() - self.last_pong).total_seconds()
             user_id = str(self.scope['url_route']['kwargs']['user_id'])
             logger_ping_pong.info(f"{user_id}, Enviando ping. Pong diff : {last_pong_timediff}")
-            if (last_pong_timediff > (self.ping_timing*2)):
+            if (last_pong_timediff > (self.ping_timing*2 + self.ping_timing/3)):
                 await self.disconnect(10)
                 break
             else:
@@ -59,7 +59,7 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
 
             await broadcast_connection_inform(user_id=user_id, connected=True)
             print_pretty_groups()
-            self.ping_timing = 10
+            self.ping_timing = 30
             self.ping_task = asyncio.create_task(self.send_ping())
             self.last_pong = datetime.now()
 
