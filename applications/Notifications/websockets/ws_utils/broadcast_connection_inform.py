@@ -22,7 +22,7 @@ def get_groups():
             print(r.smembers(k))
         elif value_type == 'hash':
             print(r.hgetall(k))
-        elif value_type == 'zset':
+        elif value_type == b'zset':
             logger.info(r.zrange(k, 0, -1))
         else:
             print(f"Tipo de valor no soportado: {value_type}")
