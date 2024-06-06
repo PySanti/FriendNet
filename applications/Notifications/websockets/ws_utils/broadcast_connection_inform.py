@@ -1,11 +1,7 @@
 from .get_opened_chat_groups_with_id import get_opened_chat_groups_with_id
 from channels.layers import get_channel_layer
 import logging
-from ..ws_utils.manage_groups import manage_groups
-from applications.Usuarios.utils.constants import (
-    BASE_CHATS_WEBSOCKETS_GROUP_NAME,
-    BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME
-)
+
 
 logger = logging.getLogger('django.channels')
 async def broadcast_connection_inform(user_id, connected):

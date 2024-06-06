@@ -10,12 +10,7 @@ from applications.Usuarios.utils.handle_initial_notification_ids import handle_i
 from .ws_utils.print_pretty_groups import print_pretty_groups
 from .ws_utils.broadcast_dict import broadcast_dict
 from .ws_utils.messages_group_name import messages_group_name
-from .ws_utils.manage_groups import manage_groups
-from applications.Usuarios.utils.constants import (
-    BASE_CHATS_WEBSOCKETS_GROUP_NAME,
-    BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME
-)
-
+from .ws_utils.get_redis_groups import get_redis_groups
 
 logger_channels = logging.getLogger('django.channels')
 logger_ping_pong = logging.getLogger('pingpong_logger')
@@ -40,13 +35,12 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
         if (("group_name" in self.scope) and self.scope["group_name"]):
             logger_channels.info(f"Eliminando websocket de chat, {self.scope['group_name']}:{self.channel_name}")
             await self.channel_layer.group_discard(self.scope["group_name"], self.channel_name)
-            manage_groups("discard", BASE_CHATS_WEBSOCKETS_GROUP_NAME, {"group_name" : self.scope["group_name"] , "channel_name" : self.channel_name})
             self.scope["group_name"] = None
 
     async def connect(self):
         await self.accept()
         user_id = str(self.scope['url_route']['kwargs']['user_id'])
-        groups = manage_groups("get", BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME)
+        groups = get_redis_groups("notifications")
         logger_channels.info(f'-> Conectando websocket de notificacion, {user_id}')
         if ((user_id not in groups) or ((user_id in groups) and (self.channel_name not in groups[user_id]))):
 
@@ -55,7 +49,6 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
                 await self.channel_layer.group_send(user_id,{"type" : "broadcast_connection_error_handler"})
 
             await self.channel_layer.group_add(user_id,self.channel_name)
-            groups = manage_groups('append', BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME, {"group_name" : user_id, "channel_name" : self.channel_name})
 
             await broadcast_connection_inform(user_id=user_id, connected=True)
             print_pretty_groups()
@@ -74,11 +67,10 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
             pass
 
         await self._discard_channel_from_groups()
-        if (user_id in manage_groups("get", BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME)):
+        if (user_id in get_redis_groups("notifications")):
             logger_channels.info("-> La desconexion si se dara")
             await self.channel_layer.group_discard(user_id, self.channel_name)
-            manage_groups('discard', BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME, {"group_name" : user_id, "channel_name" : self.channel_name})
-            notifications_groups = manage_groups('get', BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME)
+            notifications_groups = get_redis_groups("notifications")
             if ((user_id not in notifications_groups) or (len(notifications_groups[user_id]) == 0)):
                 handle_initial_notification_ids('delete', user_id )
                 await broadcast_connection_inform(user_id=user_id, connected=False)
@@ -106,12 +98,11 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
             await self._discard_channel_from_groups()
             self.scope["group_name"] = messages_group_name(user_id, data['value']['clicked_user_id'])
 
-            groups = manage_groups("get", BASE_CHATS_WEBSOCKETS_GROUP_NAME)
+            groups = get_redis_groups("chats")
             group_name = self.scope["group_name"]
             if (((group_name in groups) and (self.channel_name not in groups[group_name])) or (group_name not in groups)):
                 logger_channels.info(f"Agregando websocket de chat, {self.scope['group_name']}:{self.channel_name}")
                 await self.channel_layer.group_add(self.scope["group_name"],self.channel_name)
-                manage_groups("append", BASE_CHATS_WEBSOCKETS_GROUP_NAME, {"group_name" : self.scope["group_name"] , "channel_name" : self.channel_name})
 
         if data['type'] == "group_delete":
             await self._discard_channel_from_groups()

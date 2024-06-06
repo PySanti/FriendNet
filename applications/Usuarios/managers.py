@@ -4,9 +4,7 @@ from .utils.constants import (
     USERS_LIST_ATTRS,
     USER_SHOWABLE_FIELDS)
 from .utils.add_istyping_field import add_istyping_field
-from django.core.cache import cache
-from applications.Notifications.websockets.ws_utils.manage_groups import manage_groups
-from .utils.constants import BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME
+from applications.Notifications.websockets.ws_utils.get_redis_groups import get_redis_groups
 
 
 class UsuariosManager(BaseUserManager):
@@ -30,7 +28,7 @@ class UsuariosManager(BaseUserManager):
             Revisara si existe algun grupo con el id del usuario, basandose en el estandar de
             los websockets de notificaciones
         """
-        notifications_groups = manage_groups("get", BASE_NOTIFICATIONS_WEBSOCKETS_GROUP_NAME)
+        notifications_groups = get_redis_groups("notifications")
         return  notifications_groups and (str(user_id) in notifications_groups)
     def activate_user(self, user):
         """
