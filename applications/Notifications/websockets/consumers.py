@@ -37,31 +37,8 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
             logger_channels.info(f"Eliminando websocket de chat, {self.scope['group_name']}:{self.channel_name}")
             await self.channel_layer.group_discard(self.scope["group_name"], self.channel_name)
             self.scope["group_name"] = None
-
-    async def connect(self):
-        await self.accept()
-        user_id = str(self.scope['url_route']['kwargs']['user_id'])
-        groups = get_redis_groups("notifications")
-        logger_channels.info(f'-> Conectando websocket de notificacion, {user_id}')
-        if ((user_id not in groups) or ((user_id in groups) and (self.channel_name not in groups[user_id]))):
-
-            if (user_id in groups) and len(groups[user_id]) > 0:
-                logger_channels.info("Channel existente detectado, aplicando substitucion de channels")
-                await self.channel_layer.group_send(user_id,{"type" : "broadcast_connection_error_handler"})
-
-            await self.channel_layer.group_add(user_id,self.channel_name)
-
-            await broadcast_connection_inform(user_id=user_id, connected=True)
-            print_pretty_groups()
-            self.ping_timing = 30
-            self.ping_task = asyncio.create_task(self.send_ping())
-            self.last_pong = datetime.now()
-
-    async def disconnect(self, close_code):
-        await broadcast_connection_inform(user_id=user_id, connected=False)
-        await super().disconnect(close_code)
-        user_id = str(self.scope['url_route']['kwargs']['user_id'])
-        logger_channels.info(f'-> Desconectando websocket de notificacion, {user_id}:{self.channel_name}')
+    
+    async def cancel_ping_task(self, user_id):
         self.ping_task.cancel()
         try:
             await self.ping_task
@@ -70,8 +47,29 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
         else:
             logger_ping_pong.info(f'TAREA DE PING NO FUE CANCELADA para el usuario {user_id}')
 
+    async def connect(self):
+        await self.accept()
+        user_id = str(self.scope['url_route']['kwargs']['user_id'])
+        groups = get_redis_groups("notifications")
+        logger_channels.info(f'-> Conectando websocket de notificacion, {user_id}')
+        if ((user_id not in groups) or ((user_id in groups) and (self.channel_name not in groups[user_id]))):
+            if (user_id in groups) and len(groups[user_id]) > 0:
+                logger_channels.info("Channel existente detectado, aplicando substitucion de channels")
+                await self.channel_layer.group_send(user_id,{"type" : "broadcast_connection_error_handler"})
+            await self.channel_layer.group_add(user_id,self.channel_name)
+            await broadcast_connection_inform(user_id=user_id, connected=True)
+            print_pretty_groups()
+            self.ping_timing = 30
+            self.ping_task = asyncio.create_task(self.send_ping())
+            self.last_pong = datetime.now()
 
+    async def disconnect(self, close_code):
+        user_id = str(self.scope['url_route']['kwargs']['user_id'])
+        logger_channels.info(f'-> Desconectando websocket de notificacion, {user_id}:{self.channel_name}')
+        await broadcast_connection_inform(user_id=user_id, connected=False)
+        await super().disconnect(close_code)
         await self._discard_channel_from_groups()
+        await self.cancel_ping_task(user_id)
         if (user_id in get_redis_groups("notifications")):
             logger_channels.info("-> La desconexion si se dara")
             await self.channel_layer.group_discard(user_id, self.channel_name)
@@ -79,11 +77,6 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
             if ((user_id not in notifications_groups) or (len(notifications_groups[user_id]) == 0)):
                 handle_initial_notification_ids('delete', user_id )
                 cache.delete(f"message_pagination_ref_{user_id}")
-            else:
-                logger_channels.info("No se hara el broadcast_connection_inform")
-
-        # chat
-
         print_pretty_groups()
 
 
