@@ -237,7 +237,7 @@ if not DEBUG:
         'disable_existing_loggers': False,
         'formatters': {
             'verbose': {
-                'format': '{levelname} {asctime} {module} {message}',
+                'format': '{asctime} {message}',
                 'style': '{',
             },
         },
