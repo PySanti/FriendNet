@@ -1,6 +1,7 @@
 from .get_opened_chat_groups_with_id import get_opened_chat_groups_with_id
 from channels.layers import get_channel_layer
 import logging
+from .get_redis_groups import get_redis_groups
 
 
 logger = logging.getLogger('django.channels')
@@ -14,7 +15,7 @@ async def broadcast_connection_inform(user_id, connected):
     opened_chat_groups = get_opened_chat_groups_with_id(str(user_id))
     if (opened_chat_groups):
         for group in opened_chat_groups:
-            logger.info(f"Haciendo broadcast a {group} por connection inform")
+            logger.info(f"Haciendo broadcast a {group}:{get_redis_groups('chats')[group]} por connection inform")
             await channel_layer.group_send(group,{
             'type' : 'broadcast_connection_inform_handler',
             'value' : {
