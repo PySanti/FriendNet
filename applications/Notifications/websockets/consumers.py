@@ -48,6 +48,7 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
             logger_ping_pong.info(f'TAREA DE PING NO FUE CANCELADA para el usuario {user_id}')
 
     async def connect(self):
+        self.scope["group_name"] = None
         await self.accept()
         user_id = str(self.scope['url_route']['kwargs']['user_id'])
         groups = get_redis_groups("notifications")
