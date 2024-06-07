@@ -1,3 +1,4 @@
+from django.core.cache import cache
 import asyncio
 from channels.generic.websocket import AsyncWebsocketConsumer
 import logging
@@ -73,6 +74,7 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
             notifications_groups = get_redis_groups("notifications")
             if ((user_id not in notifications_groups) or (len(notifications_groups[user_id]) == 0)):
                 handle_initial_notification_ids('delete', user_id )
+                cache.delete(f"message_pagination_ref_{user_id}")
                 await broadcast_connection_inform(user_id=user_id, connected=False)
             else:
                 logger_channels.info("No se hara el broadcast_connection_inform")
