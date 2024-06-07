@@ -65,7 +65,9 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
         try:
             await self.ping_task
         except asyncio.CancelledError:
-            pass
+            logger_ping_pong.info(f'Tarea de ping cancelada para el usuario {user_id}')
+        else:
+            logger_ping_pong.info(f'TAREA DE PING NO FUE CANCELADA para el usuario {user_id}')
 
         await self._discard_channel_from_groups()
         if (user_id in get_redis_groups("notifications")):
