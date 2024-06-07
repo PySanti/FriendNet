@@ -58,6 +58,7 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
             self.last_pong = datetime.now()
 
     async def disconnect(self, close_code):
+        await broadcast_connection_inform(user_id=user_id, connected=False)
         await super().disconnect(close_code)
         user_id = str(self.scope['url_route']['kwargs']['user_id'])
         logger_channels.info(f'-> Desconectando websocket de notificacion, {user_id}:{self.channel_name}')
@@ -69,6 +70,7 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
         else:
             logger_ping_pong.info(f'TAREA DE PING NO FUE CANCELADA para el usuario {user_id}')
 
+
         await self._discard_channel_from_groups()
         if (user_id in get_redis_groups("notifications")):
             logger_channels.info("-> La desconexion si se dara")
@@ -77,7 +79,6 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
             if ((user_id not in notifications_groups) or (len(notifications_groups[user_id]) == 0)):
                 handle_initial_notification_ids('delete', user_id )
                 cache.delete(f"message_pagination_ref_{user_id}")
-                await broadcast_connection_inform(user_id=user_id, connected=False)
             else:
                 logger_channels.info("No se hara el broadcast_connection_inform")
 
