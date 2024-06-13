@@ -33,8 +33,7 @@ class NotificationsManager(manager.Manager):
         """
             Recibe el id de una notificacion y la elimina
         """
-        if (not settings.DEBUG):
-            notification = self.get(id=notificationId)
-            notification.delete()
+        notification = self.get(id=notificationId)
+        notification.delete()
 
 

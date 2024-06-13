@@ -58,8 +58,12 @@ from applications.Notifications.models import Notifications
 from .websockets.ws_utils.broadcast_updated_user import broadcast_updated_user
 from .utils.handle_initial_notification_ids import handle_initial_notification_ids
 from .utils.add_istyping_field import add_istyping_field
+import logging
 
 
+
+
+signup_logger = logging.getLogger('signup_logger')
 # non - secured api's
 class RecoveryPasswordAPI(APIView):
     serializer_class        = RecoveryPasswordSerializer
@@ -113,6 +117,7 @@ class CreateUsuariosAPI(APIView):
                 )
                 try:
                     new_user = Usuarios.objects.create_user(**serialized_data)
+                    signup_logger.info(f"NUEVO USUARIO : {new_user.id}-{new_user.username}")
                     return Response({'new_user_id' : new_user.id}, status=status.HTTP_200_OK)
                 except:
                     return Response({'error': "error_creating"}, status=status.HTTP_400_BAD_REQUEST)

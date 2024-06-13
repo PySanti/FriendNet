@@ -7,7 +7,6 @@ async def broadcast_updated_user(updated_user):
         Se encargara de realizar el broadcast a todos los grupos de notificaciones
         cuando el usuario se actualice
     """
-
     for group in get_notifications_groups(updated_user.id):
         await get_channel_layer().group_send(
             group,{

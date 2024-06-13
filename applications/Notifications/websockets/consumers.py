@@ -72,7 +72,6 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
     async def disconnect(self, close_code):
         user_id = str(self.scope['url_route']['kwargs']['user_id'])
         logger_channels.info(f'-> Desconectando websocket de notificacion, {user_id}:{self.channel_name}')
-        await super().disconnect(close_code)
         await self._cancel_ping_task(user_id)
         await self._discard_channel_from_groups()
         if (user_id in get_redis_groups("notifications")):
@@ -84,6 +83,7 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
                 cache.delete(f"message_pagination_ref_{user_id}")
                 await broadcast_connection_inform(user_id=user_id, connected=False)
         print_pretty_groups()
+        return await super().disconnect(close_code)
 
 
 
@@ -115,7 +115,6 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
             self.last_pong = datetime.now()
             logger_ping_pong.info(f"{user_id}, Recibiendo pong : {self.last_pong}")
         print_pretty_groups()
-
 
     async def broadcast_typing_inform_handler(self, event):
         await self.send(text_data=json.dumps(broadcast_dict(broadcast_type="typing_inform", broadcast_value=event["value"])))

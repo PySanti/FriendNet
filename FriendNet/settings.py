@@ -254,6 +254,12 @@ if not DEBUG:
                 'filename': '/root/projects/FriendNet/logs/websocket.log',
                 'formatter': 'verbose',
             },
+            'signup': {
+                'level': 'INFO',
+                'class': 'logging.FileHandler',
+                'filename': '/root/projects/FriendNet/logs/signup.log',
+                'formatter': 'verbose',
+            },
             'pingpong': {
                 'level': 'DEBUG',
                 'class': 'logging.FileHandler',
@@ -286,6 +292,11 @@ if not DEBUG:
             'ratelimit_logger': {
                 'handlers': ['ratelimit'],
                 'level': 'WARNING',
+                'propagate': False,
+            },
+            'signup_logger': {
+                'handlers': ['signup'],
+                'level': 'INFO',
                 'propagate': False,
             },
         },
