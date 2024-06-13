@@ -68,7 +68,7 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
 
     async def disconnect(self, close_code):
         user_id = str(self.scope['url_route']['kwargs']['user_id'])
-        logger_channels.info(f'-> Desconectando websocket , {user_id}:{self.channel_name}')
+        logger_channels.info(f'-> Desconectando websocket , {user_id}:{self.channel_name[-5:]}')
         await self._cancel_ping_task(user_id)
         await self._discard_channel_from_groups()
         if (user_id in get_redis_groups("notifications")):
@@ -129,7 +129,8 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
     async def broadcast_message_handler(self, event):
         await self.send(text_data=json.dumps(broadcast_dict(broadcast_type="message_broadcast", broadcast_value=event["value"])))
     async def broadcast_connection_inform_handler(self, event):
-        logger_channels.info("Broadcast connection inform exitoso !!")
+        user_id = str(self.scope['url_route']['kwargs']['user_id'])
+        logger_channels.info(f"Broadcast connection inform exitoso !!, informando a :    {user_id}")
         await self.send(text_data=json.dumps(broadcast_dict(broadcast_type="connection_inform", broadcast_value=event["value"])))
 
 
