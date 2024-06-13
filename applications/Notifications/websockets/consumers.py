@@ -78,7 +78,10 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
             if ((user_id not in notifications_groups) or (len(notifications_groups[user_id]) == 0)):
                 handle_initial_notification_ids('delete', user_id )
                 cache.delete(f"message_pagination_ref_{user_id}")
-                await broadcast_connection_inform(user_id=user_id, connected=False)
+                if (await broadcast_connection_inform(user_id=user_id, connected=False)):
+                    # recordar que la funcion retornara true en caso de que se haga algun broadcast en realidad
+                    await asyncio.sleep(1)
+        print("Desconectando finalmente websockets")
         print_pretty_groups()
         return await super().disconnect(close_code)
 
