@@ -24,7 +24,7 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
             user_id = str(self.scope['url_route']['kwargs']['user_id'])
             logger_ping_pong.info(f"{user_id}, Enviando ping. Pong diff : {last_pong_timediff}")
             if (last_pong_timediff > (self.ping_timing*2 + self.ping_timing/3)):
-                await self.disconnect(10)
+                await self.disconnect(-1)
                 break
             else:
                 await self.send(text_data=json.dumps({
@@ -41,14 +41,11 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
     async def _cancel_ping_task(self, user_id):
         self.ping_task.cancel()
         try:
-            await self.ping_task
-        except asyncio.CancelledError:
+            await asyncio.wait_for(self.ping_task, timeout=5)
+        except (asyncio.CancelledError, asyncio.TimeoutError):
             logger_ping_pong.info(f'Tarea de ping cancelada para el usuario {user_id}')
         else:
             logger_ping_pong.info(f'TAREA DE PING NO FUE CANCELADA para el usuario {user_id}')
-
-
-
     async def connect(self):
         self.scope["group_name"] = None
         await self.accept()
@@ -66,12 +63,12 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
             await broadcast_connection_inform(user_id=user_id, connected=True)
             print_pretty_groups()
             self.ping_timing = 30
-            self.ping_task = asyncio.create_task(self.send_ping())
+            self.ping_task = asyncio.create_task(self.send_ping(), name="ping-task")
             self.last_pong = datetime.now()
 
     async def disconnect(self, close_code):
         user_id = str(self.scope['url_route']['kwargs']['user_id'])
-        logger_channels.info(f'-> Desconectando websocket de notificacion, {user_id}:{self.channel_name}')
+        logger_channels.info(f'-> Desconectando websocket , {user_id}:{self.channel_name}')
         await self._cancel_ping_task(user_id)
         await self._discard_channel_from_groups()
         if (user_id in get_redis_groups("notifications")):
@@ -126,7 +123,7 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
             await self.send(text_data=json.dumps(broadcast_dict(broadcast_type="connection_error")))
         except:
             logger_channels.info(f"----------------------------------------- Fallo al enviar 'broadcast_connection_error'")
-        await self.disconnect(10)
+        await self.disconnect(-1)
     async def broadcast_updated_user_handler(self, event):
         await self.send(text_data=json.dumps(broadcast_dict(broadcast_type="updated_user", broadcast_value=event["value"])))
     async def broadcast_message_handler(self, event):
