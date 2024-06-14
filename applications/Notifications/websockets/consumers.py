@@ -80,7 +80,7 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
                 cache.delete(f"message_pagination_ref_{user_id}")
                 if (await broadcast_connection_inform(user_id=user_id, connected=False)):
                     # recordar que la funcion retornara true en caso de que se haga algun broadcast en realidad
-                    await asyncio.sleep(2)
+                    await asyncio.sleep(3)
         logger_channels.info("Desconectando finalmente websockets")
         print_pretty_groups()
         return await super().disconnect(close_code)
