@@ -1,3 +1,4 @@
+from applications.Usuarios.utils.convert_to_datetime import convert_to_datetime
 from django.db.models import manager
 from .utils.getCurrentFormatedDate import getCurrentFormatedDate
 from django.core.cache import cache
@@ -64,6 +65,29 @@ class ChatsManager(manager.Manager):
                 return "no_more_pages"
         else:
             return {"messages_hist" : "no_messages_between"}
+    def recent_message_id_list(self, session_user):
+        asociated_chats = self.all().filter(users__id=session_user.id)
+        recent_dict = {}
+        for chat in asociated_chats:
+            chat_users = chat.users.all()
+            if (chat_users.count() == 2):
+                recent_message = chat.messages.order_by('-created_at').first()
+                if (recent_message):
+                    recent_dict[chat_users.exclude(id=session_user.id)[0].username] = convert_to_datetime(recent_message.created_at)
+        sorted_values = list(recent_dict.values()).copy()
+        sorted_values.sort()
+        id_list = [0 for i in range(len(sorted_values))]
+        for user_id, date in recent_dict.items():
+            sorted_index = sorted_values.index(date)
+            if (id_list[sorted_index] == 0):
+                id_list[sorted_index] = user_id
+            else:
+                for i in range(sorted_index, len(sorted_values)):
+                    if (id_list[i] == 0):
+                        id_list[i] = user_id
+                        break
+        return id_list[-1::-1] if id_list else None
+
 
 
 class MessagesManager(manager.Manager):

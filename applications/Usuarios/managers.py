@@ -1,5 +1,4 @@
 from django.contrib.auth.models import BaseUserManager
-import redis
 from .utils.constants import (
     USERS_LIST_ATTRS,
     USER_SHOWABLE_FIELDS)
