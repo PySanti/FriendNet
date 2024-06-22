@@ -70,10 +70,9 @@ class ChatsManager(manager.Manager):
         recent_dict = {}
         for chat in asociated_chats:
             chat_users = chat.users.all()
-            if (chat_users.count() == 2):
-                recent_message = chat.messages.order_by('-created_at').first()
-                if (recent_message):
-                    recent_dict[chat_users.exclude(id=session_user.id)[0].username] = convert_to_datetime(recent_message.created_at)
+            recent_message = chat.messages.order_by('-id').first()
+            if (chat_users.count() == 2) and (recent_message):
+                recent_dict[chat_users.exclude(id=session_user.id)[0].id] = convert_to_datetime(recent_message.created_at)
         sorted_values = list(recent_dict.values()).copy()
         sorted_values.sort()
         id_list = [0 for i in range(len(sorted_values))]
