@@ -12,8 +12,6 @@ def handle_initial_notification_ids(method, session_user_id, notification_ids=No
     if (method == 'get'):
         return cache.get(cache_key)
     elif (method == 'post'):
-        if notification_ids == None:
-            raise Exception('Error, no se envió el notification_ids a la función handle_notification_ids')
         cache.set(cache_key, notification_ids)
     elif (method == 'delete'):
         cache.delete(cache_key)

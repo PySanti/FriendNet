@@ -1,3 +1,4 @@
+from django.db.models import Case, When, IntegerField
 from django.core.cache import cache
 from django.http import QueryDict
 from asgiref.sync import async_to_sync
@@ -160,20 +161,22 @@ class GetUsersListAPI(APIView):
             try:
                 session_user = Usuarios.objects.get(id=serialized_data.data['session_user_id'])
                 senders_notifications_ids = handle_initial_notification_ids('get', session_user.id)
-                if senders_notifications_ids == None or (int(request.query_params.get('page'))== 1):
+                if (int(request.query_params.get('page'))== 1):
                     initial_notifications_list = Chats.objects.recent_message_id_list(session_user)
                     senders_notifications_ids = initial_notifications_list
                     handle_initial_notification_ids('post', session_user.id,initial_notifications_list )
                 if senders_notifications_ids != None:
-                    recent_users_list = Usuarios.objects.filter(id__in=senders_notifications_ids).order_by(
-                        Case(
-                            *[When(id=id_val, then=pos) for pos, id_val in enumerate(senders_notifications_ids)],
-                            default=1  ,
-                            output_field=models.IntegerField(),
-                        )
+                    users_list = Usuarios.objects.annotate(
+                    custom_order=Case(
+                        *[When(id=id_val, then=pos) for pos, id_val in enumerate(senders_notifications_ids)],
+                        default=len(senders_notifications_ids) + 1,
+                        output_field=IntegerField(),
                     )
-                    non_recent_users_list = Usuarios.objects.filter(is_active=True).exclude(id__in=senders_notifications_ids).exclude(id=1)
-                    users_list = recent_users_list.union(non_recent_users_list)
+                    ).filter(
+                        is_active=True
+                    ).exclude(
+                        id=session_user.id
+                    ).order_by('custom_order')
                 else:
                     users_list = Usuarios.objects.filter(is_active=True).exclude(id=serialized_data.data['session_user_id'])
                 if 'user_keyword' in serialized_data.data:
