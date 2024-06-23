@@ -158,37 +158,31 @@ class GetUsersListAPI(APIView):
     def post(self, request, *args, **kwargs):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
-            try:
-                session_user = Usuarios.objects.get(id=serialized_data.data['session_user_id'])
-                senders_notifications_ids = handle_initial_notification_ids('get', session_user.id)
-                if (int(request.query_params.get('page'))== 1):
-                    initial_notifications_list = Chats.objects.recent_message_id_list(session_user)
-                    senders_notifications_ids = initial_notifications_list
-                    handle_initial_notification_ids('post', session_user.id,initial_notifications_list )
-                if senders_notifications_ids != None:
-                    users_list = Usuarios.objects.annotate(
-                    custom_order=Case(
-                        *[When(id=id_val, then=pos) for pos, id_val in enumerate(senders_notifications_ids)],
-                        default=len(senders_notifications_ids) + 1,
-                        output_field=IntegerField(),
-                    )
-                    ).filter(
-                        is_active=True
-                    ).exclude(
-                        id=session_user.id
-                    ).order_by('custom_order')
-                else:
-                    users_list = Usuarios.objects.filter(is_active=True).exclude(id=serialized_data.data['session_user_id'])
-                if 'user_keyword' in serialized_data.data:
-                    users_list = users_list.filter(username__icontains=serialized_data.data['user_keyword'])
-                try:
-                    # pagination
-                    result_page = self.pagination_class().paginate_queryset(add_istyping_field(users_list.values(*USERS_LIST_ATTRS)), request)
-                except Exception:
-                    return BASE_NO_MORE_PAGES_RESPONSE
-                return JsonResponse({"users_list": result_page}, status=status.HTTP_200_OK)
-            except Exception:
-                return BASE_UNEXPECTED_ERROR_RESPONSE
+            session_user = Usuarios.objects.get(id=serialized_data.data['session_user_id'])
+            senders_notifications_ids = handle_initial_notification_ids('get', session_user.id)
+            if (int(request.query_params.get('page'))== 1):
+                initial_notifications_list = Chats.objects.recent_message_id_list(session_user)
+                senders_notifications_ids = initial_notifications_list
+                handle_initial_notification_ids('post', session_user.id,initial_notifications_list )
+            if senders_notifications_ids != None:
+                users_list = Usuarios.objects.annotate(
+                custom_order=Case(
+                    *[When(id=id_val, then=pos) for pos, id_val in enumerate(senders_notifications_ids)],
+                    default=len(senders_notifications_ids) + 1,
+                    output_field=IntegerField(),
+                )
+                ).filter(
+                    is_active=True
+                ).exclude(
+                    id=session_user.id
+                ).order_by('custom_order')
+            else:
+                users_list = Usuarios.objects.filter(is_active=True).exclude(id=serialized_data.data['session_user_id'])
+            if 'user_keyword' in serialized_data.data:
+                users_list = users_list.filter(username__icontains=serialized_data.data['user_keyword'])
+                # pagination
+            result_page = self.pagination_class().paginate_queryset(add_istyping_field(users_list.values(*USERS_LIST_ATTRS)), request)
+            return JsonResponse({"users_list": result_page}, status=status.HTTP_200_OK)
         else:
             return BASE_SERIALIZER_ERROR_RESPONSE
 class ChangeEmailForActivationAPI(APIView):
