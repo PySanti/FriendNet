@@ -161,20 +161,23 @@ class GetUsersListAPI(APIView):
                 session_user = Usuarios.objects.get(id=serialized_data.data['session_user_id'])
                 senders_notifications_ids = handle_initial_notification_ids('get', session_user.id)
                 if senders_notifications_ids == None or (int(request.query_params.get('page'))== 1):
-                    initial_notifications_list = [a['sender_user_id'] for a in list(session_user.notifications.values('sender_user_id'))] 
+                    initial_notifications_list = Chats.objects.recent_message_id_list(session_user)
                     senders_notifications_ids = initial_notifications_list
                     handle_initial_notification_ids('post', session_user.id,initial_notifications_list )
-                users_list = Usuarios.objects.filter(is_active=True).exclude(id=serialized_data.data['session_user_id'])
-                if 'user_keyword' in serialized_data.data:
-                    users_list = users_list.filter(username__icontains=serialized_data.data['user_keyword'])
                 if senders_notifications_ids != None:
-                    users_list = users_list.order_by(
+                    recent_users_list = Usuarios.objects.filter(id__in=senders_notifications_ids).order_by(
                         Case(
-                            When(id__in=senders_notifications_ids, then=0),
-                            default=1,
+                            *[When(id=id_val, then=pos) for pos, id_val in enumerate(senders_notifications_ids)],
+                            default=1  ,
                             output_field=models.IntegerField(),
                         )
                     )
+                    non_recent_users_list = Usuarios.objects.filter(is_active=True).exclude(id__in=senders_notifications_ids).exclude(id=1)
+                    users_list = recent_users_list.union(non_recent_users_list)
+                else:
+                    users_list = Usuarios.objects.filter(is_active=True).exclude(id=serialized_data.data['session_user_id'])
+                if 'user_keyword' in serialized_data.data:
+                    users_list = users_list.filter(username__icontains=serialized_data.data['user_keyword'])
                 try:
                     # pagination
                     result_page = self.pagination_class().paginate_queryset(add_istyping_field(users_list.values(*USERS_LIST_ATTRS)), request)
