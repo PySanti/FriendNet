@@ -170,9 +170,6 @@ class GetUsersListAPI(APIView):
                     session_user, 
                     senders_notifications_ids, 
                     serialized_data.data['user_keyword'] if 'user_keyword' in serialized_data.data else None)
-                django_logger.debug("La cantidad de usuarios en la userslist es ideal" if users_list.count() == Usuarios.objects.filter(is_active=True).count()-1 else "Problemas")
-                for u in users_list:
-                    django_logger.debug(u.username)
                 try:
                     # pagination
                     result_page = self.pagination_class().paginate_queryset(add_istyping_field(users_list.values(*USERS_LIST_ATTRS)), request)
