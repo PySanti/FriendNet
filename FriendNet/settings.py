@@ -273,7 +273,7 @@ if not DEBUG:
                 'formatter': 'verbose',
             },
             'users_list': {
-                'level': 'info',
+                'level': 'INFO',
                 'class': 'logging.FileHandler',
                 'filename': '/root/projects/FriendNet/logs/users_list.log',
                 'formatter': 'verbose',
