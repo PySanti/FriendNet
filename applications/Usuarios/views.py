@@ -63,7 +63,8 @@ import logging
 
 
 
-django_logger = logging.getLogger('django')
+
+users_list_logger = logging.getLogger('users_list_logger')
 signup_logger = logging.getLogger('signup_logger')
 # non - secured api's
 class RecoveryPasswordAPI(APIView):
@@ -159,9 +160,10 @@ class GetUsersListAPI(APIView):
         serialized_data = self.serializer_class(data=request.data)
         if serialized_data.is_valid():
             try:
+                page = int(request.query_params.get('page'))
                 session_user = Usuarios.objects.get(id=serialized_data.data['session_user_id'])
                 senders_notifications_ids = handle_initial_notification_ids('get', session_user.id)
-                if (int(request.query_params.get('page'))== 1):
+                if (page == 1):
                     # si es la primera pagina lo definimos, sino solo lo buscamos
                     initial_notifications_list = Chats.objects.recent_message_id_list(session_user)
                     senders_notifications_ids = initial_notifications_list
@@ -170,6 +172,15 @@ class GetUsersListAPI(APIView):
                     session_user, 
                     senders_notifications_ids, 
                     serialized_data.data['user_keyword'] if 'user_keyword' in serialized_data.data else None)
+                
+
+                # logging 
+                if ((session_user.id == 1) and (page == 1)):
+                    listed_users_list = list(users_list)
+                    users_list_logger.info("Lista de usuarios")
+                    for u in listed_users_list:
+                        user_page = (listed_users_list.index(u)//20)+1
+                        users_list_logger.info(f"{u.username} - {user_page}")
                 try:
                     # pagination
                     result_page = self.pagination_class().paginate_queryset(add_istyping_field(users_list.values(*USERS_LIST_ATTRS)), request)

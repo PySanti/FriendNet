@@ -25,7 +25,7 @@ SECRETS = read_secret_data(SECRET_FILE_PATH)
 
 
 
-DEBUG = False 
+DEBUG = False
 
 if (DEBUG):
     CORS_ALLOWED_ORIGINS = [
@@ -272,6 +272,12 @@ if not DEBUG:
                 'filename': '/root/projects/FriendNet/logs/ratelimit.log',
                 'formatter': 'verbose',
             },
+            'users_list': {
+                'level': 'info',
+                'class': 'logging.FileHandler',
+                'filename': '/root/projects/FriendNet/logs/users_list.log',
+                'formatter': 'verbose',
+            },
         },
         'loggers': {
             'django': {
@@ -296,6 +302,11 @@ if not DEBUG:
             },
             'signup_logger': {
                 'handlers': ['signup'],
+                'level': 'INFO',
+                'propagate': False,
+            },
+            'users_list_logger': {
+                'handlers': ['users_list'],
                 'level': 'INFO',
                 'propagate': False,
             },
