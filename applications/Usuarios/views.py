@@ -1,4 +1,3 @@
-from django.db.models import Case, When, IntegerField
 from django.core.cache import cache
 from django.http import QueryDict
 from asgiref.sync import async_to_sync
@@ -64,6 +63,7 @@ import logging
 
 
 
+django_logger = logging.getLogger('django')
 signup_logger = logging.getLogger('signup_logger')
 # non - secured api's
 class RecoveryPasswordAPI(APIView):
@@ -162,25 +162,17 @@ class GetUsersListAPI(APIView):
                 session_user = Usuarios.objects.get(id=serialized_data.data['session_user_id'])
                 senders_notifications_ids = handle_initial_notification_ids('get', session_user.id)
                 if (int(request.query_params.get('page'))== 1):
+                    # si es la primera pagina lo definimos, sino solo lo buscamos
                     initial_notifications_list = Chats.objects.recent_message_id_list(session_user)
                     senders_notifications_ids = initial_notifications_list
                     handle_initial_notification_ids('post', session_user.id,initial_notifications_list )
-                if senders_notifications_ids != None:
-                    users_list = Usuarios.objects.annotate(
-                    custom_order=Case(
-                        *[When(id=id_val, then=pos) for pos, id_val in enumerate(senders_notifications_ids)],
-                        default=len(senders_notifications_ids) + 1,
-                        output_field=IntegerField(),
-                    )
-                    ).filter(
-                        is_active=True
-                    ).exclude(
-                        id=session_user.id
-                    ).order_by('custom_order')
-                else:
-                    users_list = Usuarios.objects.filter(is_active=True).exclude(id=serialized_data.data['session_user_id'])
-                if 'user_keyword' in serialized_data.data:
-                    users_list = users_list.filter(username__icontains=serialized_data.data['user_keyword'])
+                users_list  = Usuarios.objects.get_filtered_users_list(
+                    session_user, 
+                    senders_notifications_ids, 
+                    serialized_data.data['user_keyword'] if 'user_keyword' in serialized_data.data else None)
+                django_logger.debug("La cantidad de usuarios en la userslist es ideal" if users_list.count() == Usuarios.objects.filter(is_active=True).count()-1 else "Problemas")
+                for u in users_list:
+                    django_logger.debug(u.username)
                 try:
                     # pagination
                     result_page = self.pagination_class().paginate_queryset(add_istyping_field(users_list.values(*USERS_LIST_ATTRS)), request)

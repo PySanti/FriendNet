@@ -1,6 +1,8 @@
 from django.contrib.auth.models import BaseUserManager
+from django.db.models import Case, When, IntegerField
 from .utils.constants import (
     USERS_LIST_ATTRS,
+
     USER_SHOWABLE_FIELDS)
 from .utils.add_istyping_field import add_istyping_field
 from applications.Notifications.websockets.ws_utils.get_redis_groups import get_redis_groups
@@ -93,3 +95,26 @@ class UsuariosManager(BaseUserManager):
         """
         user.email = new_email
         user.save()
+    
+    def get_filtered_users_list(self, session_user, recent_messages_ids, user_keyword):
+        """
+            Se encargara de buscar la lista de usuarios para la view GetUsersList
+        """
+        if recent_messages_ids != None:
+            users_list = self.annotate(
+            custom_order=Case(
+                *[When(id=id_val, then=pos) for pos, id_val in enumerate(recent_messages_ids)],
+                default=len(recent_messages_ids) + 1,
+                output_field=IntegerField(),
+            )
+            ).filter(
+                is_active=True
+            ).exclude(
+                id=session_user.id
+            ).order_by('custom_order')
+        else:
+            users_list = self.filter(is_active=True).exclude(id=session_user.id)
+        if user_keyword:
+            users_list = users_list.filter(username__icontains=user_keyword)
+        
+        return users_list
