@@ -24,7 +24,6 @@ SECRETS = read_secret_data(SECRET_FILE_PATH)
 # BASE CONFIGURATIONS
 
 
-
 DEBUG = False
 
 if (DEBUG):
