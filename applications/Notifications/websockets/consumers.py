@@ -41,8 +41,8 @@ class NotificationsWSConsumer(AsyncWebsocketConsumer):
     async def _cancel_ping_task(self, user_id):
         self.ping_task.cancel()
         try:
-            await asyncio.wait_for(self.ping_task, timeout=5)
-        except (asyncio.CancelledError, asyncio.TimeoutError):
+            await self.ping_task
+        except Exception:
             logger_ping_pong.info(f'Tarea de ping cancelada para el usuario {user_id}')
         else:
             logger_ping_pong.info(f'TAREA DE PING NO FUE CANCELADA para el usuario {user_id}')
