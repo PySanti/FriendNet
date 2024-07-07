@@ -35,7 +35,7 @@ if (DEBUG):
     ]
 
 else:
-    BASE_ALLOWED_HOSTS = ['https://friendnet.netlify.app', 'friendnet.online', '64.23.156.104']
+    BASE_ALLOWED_HOSTS = ['https://friendnet.netlify.app', 'friendnet.online', '64.23.156.104', 'friendnet.netlify.app']
     ALLOWED_HOSTS = BASE_ALLOWED_HOSTS
     CORS_ALLOWED_ORIGINS = BASE_ALLOWED_HOSTS
     CORS_ORIGIN_ALLOW_ALL = False
