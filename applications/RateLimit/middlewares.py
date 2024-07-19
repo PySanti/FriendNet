@@ -14,7 +14,7 @@ class RateLimitMiddleware(MiddlewareMixin):
     def process_request(self, request):
         # recordar agregar docs a miro
         client_ip = get_client_ip(request)
-        if valid_ip(client_ip):
+        if True: #valid_ip(client_ip)
             client = RateLimitInfo.objects.get_or_create(ip=client_ip)[0]
             logger.warning(f"{client.id} ---- {request.path}")
             if client.banned:
