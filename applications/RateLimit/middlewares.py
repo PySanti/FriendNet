@@ -4,8 +4,6 @@ from rest_framework import status
 from .models import RateLimitInfo
 import logging
 from .utils.valid_ip import valid_ip
-from .utils.get_client_ip import get_client_ip
-
 
 logger = logging.getLogger('ratelimit_logger')
 
@@ -13,8 +11,9 @@ logger = logging.getLogger('ratelimit_logger')
 class RateLimitMiddleware(MiddlewareMixin):
     def process_request(self, request):
         # recordar agregar docs a miro
-        client_ip = get_client_ip(request)
-        if True: #valid_ip(client_ip)
+        client_ip = request.headers.get('public')
+        logger.warning(f"~~~~~~~~~~~~~~~~~~~~ Ip del cliente {client_ip}")
+        if valid_ip(client_ip):
             client = RateLimitInfo.objects.get_or_create(ip=client_ip)[0]
             logger.warning(f"{client.id} ---- {request.path}")
             if client.banned:

@@ -53,6 +53,11 @@ else:
 
 
 
+CORS_ALLOW_HEADERS = [
+    "public",
+    'content-type',
+    'authorization'
+]
 
 
 DJANGO_APPS = [
