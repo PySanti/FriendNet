@@ -29,5 +29,5 @@ class RateLimitMiddleware(MiddlewareMixin):
                     if client.calls_in_cut > 30:
                         RateLimitInfo.objects.suspend_client(client)
         else:
-            logger.warning(f"Endpoint : {request.path}, Client Ip : {client_ip}, !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!   DENIED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!11")
+            logger.warning(f"Endpoint : {request.path}, Client Ip : {client_ip}, !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!   DENIED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             return JsonResponse({"error" : "suspicious_ip"}, status=status.HTTP_403_FORBIDDEN)
