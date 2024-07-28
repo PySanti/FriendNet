@@ -12,9 +12,8 @@ class RateLimitMiddleware(MiddlewareMixin):
     def process_request(self, request):
         # recordar agregar docs a miro
         client_ip = request.headers.get('public')
-        logger.warning(f"Endpoint : {request.path}, Client Ip : {client_ip}")
         if client_ip and valid_ip(client_ip):
-            logger.warning(f"Valid ip !")
+            logger.warning(f"Endpoint : {request.path}, Client Ip : {client_ip}, Valid !")
             client = RateLimitInfo.objects.get_or_create(ip=client_ip)[0]
             if client.banned:
                 logger.warning(f"{client.id} ---- banned")
@@ -30,5 +29,5 @@ class RateLimitMiddleware(MiddlewareMixin):
                     if client.calls_in_cut > 30:
                         RateLimitInfo.objects.suspend_client(client)
         else:
-            logger.warning(f"Denied ip !")
+            logger.warning(f"Endpoint : {request.path}, Client Ip : {client_ip}, !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!   DENIED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!11")
             return JsonResponse({"error" : "suspicious_ip"}, status=status.HTTP_403_FORBIDDEN)
